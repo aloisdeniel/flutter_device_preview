@@ -1,5 +1,5 @@
 name: device_preview
-version: 0.1.0-beta
+version: 0.1.1-beta
 author: Aloïs Deniel <alois.deniel@outlook.com>
 description: Preview of your Flutter app on various device screen configurations from one of your devices.
 homepage: https://github.com/aloisdeniel/flutter_device_preview
