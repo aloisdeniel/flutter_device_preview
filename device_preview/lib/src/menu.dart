@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -26,6 +28,25 @@ class DevicePreviewMenu extends StatelessWidget {
         title: "Rotate",
         onTap: () {
           preview.rotate();
+        });
+    yield _Action(
+        icon: Icons.photo_camera,
+        title: "Take a screenshot",
+        onTap: () async {
+          try {
+            final screenshot = await preview.screenshot();
+            final link = await preview.screenshotUploader.upload(screenshot);
+            print("[DevicePreview] Screenshot : $link");
+          } catch (e) {
+            print("[DevicePreview] Error while uploading screenshot : $e");
+          }
+        });
+
+    yield _Action(
+        icon: Icons.devices,
+        title: "${preview.isFrameVisible ? "Hide" : "Show"} device frame",
+        onTap: () {
+          preview.toggleFrame();
         });
 
     yield _SectionHeader("Device");

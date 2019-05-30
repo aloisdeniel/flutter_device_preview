@@ -8,7 +8,8 @@ import 'dart:ui' as ui;
 import 'device_frame_preview.dart';
 import 'devices/devices.dart';
 import 'menu.dart';
-import 'screenshot.dart';
+import 'screenshots/screenshot.dart';
+import 'screenshots/upload_service.dart';
 
 /// Simulates how a [child] would render on different
 /// devices than the current one.
@@ -23,15 +24,14 @@ class DevicePreview extends StatefulWidget {
   /// If not [enabled], the [child] is used directly.
   final bool enabled;
 
-  /// Indicates that a device physical frame should be drawn.
-  final bool isFrameVisible;
-
   /// The previewed widget.
   ///
   /// It is common to give the root application widget.
   final Widget child;
 
   final BoxDecoration background;
+
+  final ScreenshotUploader screenshotUploader;
 
   /// The available devices used for previewing.
   final List<Device> devices;
@@ -40,8 +40,8 @@ class DevicePreview extends StatefulWidget {
   DevicePreview(
       {Key key,
       @required this.child,
-      this.isFrameVisible = true,
       this.devices,
+      this.screenshotUploader = const FileioScreenshotUploader(),
       this.background = const BoxDecoration(
           gradient: LinearGradient(
         colors: [Color(0xFFf5f7fa), Color(0xFFc3cfe2)],
@@ -89,6 +89,7 @@ class DevicePreviewState extends State<DevicePreview> {
   StreamController<DeviceScreenshot> _onScreenshot;
   UniqueKey _appKey = UniqueKey();
   Orientation _orientation = Orientation.portrait;
+  bool _isFrameVisible = true;
 
   MediaQueryData get mediaQuery {
     switch (_orientation) {
@@ -104,7 +105,18 @@ class DevicePreviewState extends State<DevicePreview> {
   /// The curren active device.
   Device get device => _device;
 
+  ScreenshotUploader get screenshotUploader => widget.screenshotUploader;
+
   List<Device> get availableDevices => _devices;
+
+  bool get isFrameVisible => _isFrameVisible;
+
+  set isFrameVisible(bool value) {
+    this._isFrameVisible = value;
+    if (widget.enabled) {
+      this.setState(() {});
+    }
+  }
 
   set orientation(Orientation value) {
     this._orientation = value;
@@ -153,6 +165,8 @@ class DevicePreviewState extends State<DevicePreview> {
     this.setState(() {});
   }
 
+  void toggleFrame() => isFrameVisible = !isFrameVisible;
+
   void _start() {
     _onScreenshot = StreamController<DeviceScreenshot>.broadcast();
     _devices = widget.devices ?? Devices.all;
@@ -167,8 +181,7 @@ class DevicePreviewState extends State<DevicePreview> {
 
   @override
   void didUpdateWidget(DevicePreview oldWidget) {
-    if (oldWidget.enabled != this.widget.enabled ||
-        oldWidget.isFrameVisible != this.widget.isFrameVisible) {
+    if (oldWidget.enabled != this.widget.enabled) {
       this.setState(() {});
     }
 
@@ -190,20 +203,20 @@ class DevicePreviewState extends State<DevicePreview> {
             width: mediaQuery.size.width,
             height: mediaQuery.size.height,
             alignment: Alignment.center,
-            child: RepaintBoundary(
-                key: _repaintKey,
-                child: MediaQuery(
-                    data: mediaQuery,
-                    child: DeviceProvider(
-                        mediaQuery: mediaQuery,
-                        key: _appKey,
-                        device: _device,
-                        child: widget.child)))));
+            child: MediaQuery(
+                data: mediaQuery,
+                child: DeviceProvider(
+                    mediaQuery: mediaQuery,
+                    key: _appKey,
+                    device: _device,
+                    child: widget.child))));
 
-    final preview = this.widget.isFrameVisible
+    var preview = _isFrameVisible
         ? DeviceFramePreview(
             device: device, orientation: this.orientation, child: screen)
         : screen;
+
+    preview = RepaintBoundary(key: _repaintKey, child: preview);
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,

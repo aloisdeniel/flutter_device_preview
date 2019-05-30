@@ -4,7 +4,7 @@ import 'dart:ui' as ui;
 
 import 'package:meta/meta.dart';
 
-import 'devices/devices.dart';
+import '../devices/devices.dart';
 
 class DeviceScreenshot {
   final Device device;
