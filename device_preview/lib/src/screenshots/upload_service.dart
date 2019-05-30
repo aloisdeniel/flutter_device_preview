@@ -14,7 +14,7 @@ class FileioScreenshotUploader extends ScreenshotUploader {
 
   @override
   Future<String> upload(DeviceScreenshot screenshot) async {
-    var request = http.MultipartRequest("POST", Uri.parse("https://file.io"));
+    var request = http.MultipartRequest("POST", Uri.parse("https://file.io/?expires=1"));
     request.files.add(http.MultipartFile.fromBytes("file", screenshot.bytes,
         filename: "screenshot.png"));
     final response = await request.send();
