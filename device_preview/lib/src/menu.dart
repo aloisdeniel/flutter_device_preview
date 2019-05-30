@@ -178,6 +178,9 @@ class _DeviceItem extends StatelessWidget {
       case DeviceType.tv:
         return Icons.tv;
         break;
+      case DeviceType.freeform:
+        return Icons.photo_size_select_small;
+        break;
       default:
         return Icons.phone_android;
         break;

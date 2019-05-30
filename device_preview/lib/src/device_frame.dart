@@ -18,8 +18,7 @@ class DeviceFrame {
   final DeviceNotch notch;
 
   const DeviceFrame(
-      {this.borders = const EdgeInsets.only(
-            top: 38.0, right: 18.0, left: 18.0, bottom: 38.0),
+      {this.borders = const EdgeInsets.all(38.0),
       this.edgeRadius = const BorderRadius.all(Radius.circular(20.0)),
       this.screenRadius = const BorderRadius.all(Radius.circular(8.0)),
       this.notch,

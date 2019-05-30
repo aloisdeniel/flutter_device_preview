@@ -11,6 +11,7 @@ enum DeviceType {
   desktop,
   watch,
   tv,
+  freeform,
 }
 
 class Device {
@@ -52,6 +53,22 @@ class Device {
       @required this.portrait,
       @required this.frame})
       : this.platform = TargetPlatform.fuchsia;
+
+  Device copyWith(
+          {String name,
+          DeviceFrame frame,
+          TargetPlatform platform,
+          DeviceType type,
+          MediaQueryData landscape,
+          MediaQueryData portrait}) =>
+      Device(
+        name: name ?? this.name,
+        frame: frame ?? this.frame,
+        platform: platform ?? this.platform,
+        type: type ?? this.type,
+        landscape: landscape ?? this.landscape,
+        portrait: portrait ?? this.portrait,
+      );
 }
 
 abstract class Devices {
@@ -62,5 +79,6 @@ abstract class Devices {
     apple.iPadAir2,
     apple.iPadPro_129_2,
     apple.watch40mm,
+    apple.iosFreeform,
   ];
 }

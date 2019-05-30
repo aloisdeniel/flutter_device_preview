@@ -20,7 +20,9 @@ class DeviceFramePreview extends StatelessWidget {
   Widget build(BuildContext context) {
     var padding = this.device.frame.borders;
 
-    if (orientation == Orientation.landscape) {
+    final shouldRotate = device.type != DeviceType.freeform && orientation == Orientation.landscape;
+
+    if (shouldRotate) {
       padding = EdgeInsets.only(
         left: padding.top,
         top: padding.right,
@@ -48,7 +50,7 @@ class DeviceFramePreview extends StatelessWidget {
           Positioned.fill(
             child: IgnorePointer(
               child: CustomPaint(
-                  painter: _DeviceFramePainter(this.device, this.orientation)),
+                  painter: _DeviceFramePainter(this.device, shouldRotate)),
             ),
           ),
         ],
@@ -60,13 +62,13 @@ class DeviceFramePreview extends StatelessWidget {
 class _DeviceFramePainter extends CustomPainter {
   final Device device;
 
-  final Orientation orientation;
+  final bool shouldRotate;
 
-  const _DeviceFramePainter(this.device, this.orientation);
+  const _DeviceFramePainter(this.device, this.shouldRotate);
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (orientation == Orientation.landscape) {
+    if (shouldRotate) {
       canvas.translate(size.width / 2, size.height / 2);
     }
 
@@ -75,7 +77,7 @@ class _DeviceFramePainter extends CustomPainter {
         device.portrait.size.width + frame.borders.left + frame.borders.right,
         device.portrait.size.height + frame.borders.top + frame.borders.bottom);
 
-    if (orientation == Orientation.landscape) {
+    if (shouldRotate) {
       canvas.rotate(math.pi / 2);
       canvas.translate(-size.width / 2, -size.height / 2);
     }
@@ -200,7 +202,7 @@ class _DeviceFramePainter extends CustomPainter {
   @override
   bool shouldRepaint(_DeviceFramePainter oldDelegate) =>
       this.device != oldDelegate.device ||
-      this.orientation != oldDelegate.orientation;
+      this.shouldRotate != oldDelegate.shouldRotate;
 
   @override
   bool shouldRebuildSemantics(_DeviceFramePainter oldDelegate) => false;

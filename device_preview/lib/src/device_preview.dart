@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:ui' as ui;
 
+import 'freeform/resizer.dart';
 import 'device_frame_preview.dart';
 import 'devices/devices.dart';
 import 'menu.dart';
@@ -90,8 +91,13 @@ class DevicePreviewState extends State<DevicePreview> {
   UniqueKey _appKey = UniqueKey();
   Orientation _orientation = Orientation.portrait;
   bool _isFrameVisible = true;
+  static const Size _freeformMaxSize = const Size(1920, 1080);
+  Size _freeformSize = _freeformMaxSize;
 
   MediaQueryData get mediaQuery {
+    if (_device.type == DeviceType.freeform)
+      return this._device.portrait.copyWith(size: this._freeformSize);
+
     switch (_orientation) {
       case Orientation.landscape:
         return this._device.landscape;
@@ -103,13 +109,29 @@ class DevicePreviewState extends State<DevicePreview> {
   Orientation get orientation => _orientation;
 
   /// The curren active device.
-  Device get device => _device;
+  Device get device {
+    if (_device.type == DeviceType.freeform) {
+      final query = this.mediaQuery;
+      return _device.copyWith(portrait: query, landscape: query);
+    }
+
+    return _device;
+  }
 
   ScreenshotUploader get screenshotUploader => widget.screenshotUploader;
 
   List<Device> get availableDevices => _devices;
 
   bool get isFrameVisible => _isFrameVisible;
+
+  Size get freeformSize => _freeformSize;
+
+  set freeformSize(Size value) {
+    this._freeformSize = value;
+    if (widget.enabled) {
+      this.setState(() {});
+    }
+  }
 
   set isFrameVisible(bool value) {
     this._isFrameVisible = value;
@@ -192,17 +214,19 @@ class DevicePreviewState extends State<DevicePreview> {
     super.didUpdateWidget(oldWidget);
   }
 
+  Offset _resizeStart;
+
   @override
   Widget build(BuildContext context) {
     if (!widget.enabled) {
       return widget.child;
     }
 
-    final screen = ClipRect(
-        child: Container(
-            width: mediaQuery.size.width,
-            height: mediaQuery.size.height,
-            alignment: Alignment.center,
+    final screen = Container(
+        width: mediaQuery.size.width,
+        height: mediaQuery.size.height,
+        alignment: Alignment.center,
+        child: ClipRect(
             child: MediaQuery(
                 data: mediaQuery,
                 child: DeviceProvider(
@@ -211,12 +235,32 @@ class DevicePreviewState extends State<DevicePreview> {
                     device: _device,
                     child: widget.child))));
 
-    var preview = _isFrameVisible
+    Widget preview = _isFrameVisible
         ? DeviceFramePreview(
             device: device, orientation: this.orientation, child: screen)
         : screen;
 
     preview = RepaintBoundary(key: _repaintKey, child: preview);
+
+    if (_device.type == DeviceType.freeform) {
+      preview = Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          preview,
+          Container(
+            alignment: Alignment.center,
+            width: _freeformMaxSize.width,
+            height: _freeformMaxSize.height,
+            child: Resizer(
+                initialSize: _freeformSize,
+                maxSize: _freeformMaxSize,
+                resized: (size) {
+                  this.freeformSize = size;
+                }),
+          ),
+        ],
+      );
+    }
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -244,6 +288,14 @@ class DevicePreviewState extends State<DevicePreview> {
                 ),
               ),
             )));
+  }
+}
+
+class _DeviceWithFrame extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return null;
   }
 }
 
