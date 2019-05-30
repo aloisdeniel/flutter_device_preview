@@ -5,7 +5,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:ui' as ui;
 
-import 'device_frame.dart';
 import 'device_frame_preview.dart';
 import 'devices/devices.dart';
 import 'menu.dart';
@@ -65,7 +64,9 @@ class DevicePreview extends StatefulWidget {
   }
 
   static MediaQueryData mediaQuery(BuildContext context, {bool nullOk: false}) {
-    return device(context)?.query ?? MediaQuery.of(context, nullOk: nullOk);
+    final provider =
+        context.inheritFromWidgetOfExactType(DeviceProvider) as DeviceProvider;
+    return provider?.mediaQuery ?? MediaQuery.of(context, nullOk: nullOk);
   }
 
   static TargetPlatform platform(BuildContext context) {
@@ -87,20 +88,36 @@ class DevicePreviewState extends State<DevicePreview> {
   GlobalKey _repaintKey = GlobalKey();
   StreamController<DeviceScreenshot> _onScreenshot;
   UniqueKey _appKey = UniqueKey();
+  Orientation _orientation = Orientation.portrait;
+
+  MediaQueryData get mediaQuery {
+    switch (_orientation) {
+      case Orientation.landscape:
+        return this._device.landscape;
+      default:
+        return this._device.portrait;
+    }
+  }
+
+  Orientation get orientation => _orientation;
 
   /// The curren active device.
   Device get device => _device;
 
   List<Device> get availableDevices => _devices;
 
+  set orientation(Orientation value) {
+    this._orientation = value;
+    if (widget.enabled) {
+      this.setState(() {});
+    }
+  }
+
   // Define the current active device.
   set device(Device device) {
+    this._device = device;
     if (widget.enabled) {
-      this.setState(() {
-        this._device = device;
-      });
-    } else {
-      this._device = device;
+      this.setState(() {});
     }
   }
 
@@ -117,13 +134,18 @@ class DevicePreviewState extends State<DevicePreview> {
         _repaintKey.currentContext.findRenderObject();
     final format = ui.ImageByteFormat.png;
     final image =
-        await boundary.toImage(pixelRatio: _device.query.devicePixelRatio);
+        await boundary.toImage(pixelRatio: mediaQuery.devicePixelRatio);
     final byteData = await image.toByteData(format: format);
     final bytes = byteData.buffer.asUint8List();
     final screenshot =
         DeviceScreenshot(device: device, bytes: bytes, format: format);
     _onScreenshot.add(screenshot);
     return screenshot;
+  }
+
+  void rotate() {
+    this.orientation = Orientation
+        .values[(this.orientation.index + 1) % Orientation.values.length];
   }
 
   void restart() {
@@ -165,22 +187,26 @@ class DevicePreviewState extends State<DevicePreview> {
 
     final screen = ClipRect(
         child: Container(
-            width: _device.query.size.width,
-            height: _device.query.size.height,
+            width: mediaQuery.size.width,
+            height: mediaQuery.size.height,
             alignment: Alignment.center,
             child: RepaintBoundary(
                 key: _repaintKey,
                 child: MediaQuery(
-                    data: _device.query,
+                    data: mediaQuery,
                     child: DeviceProvider(
-        key: _appKey,
-                        device: _device, child: widget.child)))));
+                        mediaQuery: mediaQuery,
+                        key: _appKey,
+                        device: _device,
+                        child: widget.child)))));
 
     final preview = this.widget.isFrameVisible
-        ? DeviceFramePreview(frame: device.frame, child: screen)
+        ? DeviceFramePreview(
+            device: device, orientation: this.orientation, child: screen)
         : screen;
 
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
             drawer: DevicePreviewMenu(),
             body: DecoratedBox(
@@ -210,11 +236,16 @@ class DevicePreviewState extends State<DevicePreview> {
 
 class DeviceProvider extends InheritedWidget {
   final Device device;
+  final MediaQueryData mediaQuery;
 
-  DeviceProvider({Key key, @required Widget child, @required this.device})
+  DeviceProvider(
+      {Key key,
+      @required this.mediaQuery,
+      @required Widget child,
+      @required this.device})
       : super(key: key, child: child);
 
   @override
   bool updateShouldNotify(DeviceProvider oldWidget) =>
-      oldWidget.device != this.device;
+      oldWidget.device != this.device || mediaQuery != oldWidget.mediaQuery;
 }

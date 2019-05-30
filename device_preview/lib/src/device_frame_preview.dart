@@ -1,28 +1,54 @@
 import 'package:flutter/widgets.dart';
+import 'dart:math' as math;
 
 import 'device_frame.dart';
+import 'devices/devices.dart';
 
 class DeviceFramePreview extends StatelessWidget {
   final Widget child;
 
-  final DeviceFrame frame;
+  final Device device;
+
+  final Orientation orientation;
 
   const DeviceFramePreview(
       {@required this.child,
-      @required this.frame});
+      @required this.orientation,
+      @required this.device});
 
   @override
   Widget build(BuildContext context) {
+    var padding = this.device.frame.borders;
+
+    if (orientation == Orientation.landscape) {
+      padding = EdgeInsets.only(
+        left: padding.top,
+        top: padding.right,
+        right: padding.bottom,
+        bottom: padding.left,
+      );
+    }
+
     return Padding(
       padding: EdgeInsets.all(32.0),
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          Padding(padding: this.frame.borders, child: this.child),
+          Positioned.fill(
+              child: DecoratedBox(
+            decoration: BoxDecoration(
+                borderRadius: device.frame.edgeRadius,
+                boxShadow: [
+                  BoxShadow(
+                      blurRadius: 70,
+                      color: Color(0xFF000000).withOpacity(0.4)),
+                ]),
+          )),
+          Padding(padding: padding, child: this.child),
           Positioned.fill(
             child: IgnorePointer(
               child: CustomPaint(
-                  painter: _DeviceFramePainter(this.frame)),
+                  painter: _DeviceFramePainter(this.device, this.orientation)),
             ),
           ),
         ],
@@ -32,12 +58,28 @@ class DeviceFramePreview extends StatelessWidget {
 }
 
 class _DeviceFramePainter extends CustomPainter {
-  final DeviceFrame frame;
+  final Device device;
 
-  const _DeviceFramePainter(this.frame);
+  final Orientation orientation;
+
+  const _DeviceFramePainter(this.device, this.orientation);
 
   @override
   void paint(Canvas canvas, Size size) {
+    if (orientation == Orientation.landscape) {
+      canvas.translate(size.width / 2, size.height / 2);
+    }
+
+    final frame = device.frame;
+    size = Size(
+        device.portrait.size.width + frame.borders.left + frame.borders.right,
+        device.portrait.size.height + frame.borders.top + frame.borders.bottom);
+
+    if (orientation == Orientation.landscape) {
+      canvas.rotate(math.pi / 2);
+      canvas.translate(-size.width / 2, -size.height / 2);
+    }
+
     final body = Path()
       ..addRRect(RRect.fromRectAndCorners(
         Offset.zero & size,
@@ -59,9 +101,9 @@ class _DeviceFramePainter extends CustomPainter {
       ));
 
     if (frame.notch != null && frame.notch.width > 0) {
-      final notchRect =
-          Offset((size.width / 2) - (frame.notch.width / 2), frame.borders.top - 1) &
-              Size(frame.notch.width, frame.notch.height + 1);
+      final notchRect = Offset((size.width / 2) - (frame.notch.width / 2),
+              frame.borders.top - 1) &
+          Size(frame.notch.width, frame.notch.height + 1);
 
       final leftCornerMiniRect =
           Offset(notchRect.left - frame.notch.joinRadius.x, notchRect.top) &
@@ -73,9 +115,8 @@ class _DeviceFramePainter extends CustomPainter {
             ..addRRect(RRect.fromRectAndCorners(leftCornerMiniRect,
                 topRight: Radius.circular(frame.notch.joinRadius.x / 2))));
 
-      final rightCornerMiniRect =
-          Offset(notchRect.right, notchRect.top) &
-              Size(frame.notch.joinRadius.x, frame.notch.joinRadius.x);
+      final rightCornerMiniRect = Offset(notchRect.right, notchRect.top) &
+          Size(frame.notch.joinRadius.x, frame.notch.joinRadius.x);
       final rightCorner = Path.combine(
           PathOperation.difference,
           Path()..addRect(rightCornerMiniRect),
@@ -157,7 +198,10 @@ class _DeviceFramePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_DeviceFramePainter oldDelegate) => false;
+  bool shouldRepaint(_DeviceFramePainter oldDelegate) =>
+      this.device != oldDelegate.device ||
+      this.orientation != oldDelegate.orientation;
+
   @override
   bool shouldRebuildSemantics(_DeviceFramePainter oldDelegate) => false;
 }
