@@ -67,6 +67,18 @@ class DevicePreview extends StatefulWidget {
   static MediaQueryData mediaQuery(BuildContext context, {bool nullOk: false}) {
     return device(context)?.query ?? MediaQuery.of(context, nullOk: nullOk);
   }
+
+  static TargetPlatform platform(BuildContext context) {
+    return device(context)?.platform ?? Theme.of(context).platform;
+  }
+
+  static Widget appBuilder(BuildContext context, Widget widget) {
+    return MediaQuery(
+        data: mediaQuery(context),
+        child: Theme(
+            data: Theme.of(context).copyWith(platform: platform(context)),
+            child: widget));
+  }
 }
 
 class DevicePreviewState extends State<DevicePreview> {
@@ -167,7 +179,7 @@ class DevicePreviewState extends State<DevicePreview> {
             body: DecoratedBox(
               decoration: widget.background,
               child: SafeArea(
-                              child: Stack(
+                child: Stack(
                   alignment: Alignment.topLeft,
                   children: <Widget>[
                     Positioned.fill(

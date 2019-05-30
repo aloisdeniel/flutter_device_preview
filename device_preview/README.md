@@ -15,28 +15,28 @@ Targeted features :
 ## Quickstart
 
 ```dart
-void main() => runApp(DevicePreview(
+void main() => runApp(
+  DevicePreview(
     child: MyApp(),
   ),
 );
 ```
 
-## Note
-
-It is recommanded to run the app on a device with a big device (tablet/desktop).
-
-Until the `WidgetsApp` offers a way to override `MediaQuery` (I made a proposal [here](https://github.com/flutter/flutter/issues/33384)), you will have to wrap your pages in a `MediaQuery` with `DevicePreview.mediaQuery` A good candidate is `onGeneratedRoute`.
 
 ```dart
- return MaterialApp(
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      builder: DevicePreview.appBuilder, // <--- Add the builder 
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MediaQuery(
-              data: DevicePreview.mediaQuery(context),
-              child: MyHomePage(title: 'Flutter Demo Home Page')),
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
+  }
+}
 ```
 
 ## Roadmap
