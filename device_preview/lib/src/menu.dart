@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../device_preview.dart';
@@ -12,6 +13,13 @@ class DevicePreviewMenu extends StatelessWidget {
     final androidDevices = preview.availableDevices
         .where((x) => x.platform == TargetPlatform.android)
         .toList();
+
+    yield _Action(
+        icon: Icons.refresh,
+        title: "Restart application",
+        onTap: () {
+          preview.restart();
+        });
 
     if (iosDevices.isNotEmpty) {
       yield _SectionHeader("iOS");
@@ -31,11 +39,44 @@ class DevicePreviewMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(
-        data: ThemeData.dark(),
-          child: Container(
+      data: ThemeData.dark(),
+      child: Container(
         color: Colors.white,
         width: 300,
-        child: Material(child: ListView(children: buildItems(context).toList())),
+        child:
+            Material(child: ListView(children: buildItems(context).toList())),
+      ),
+    );
+  }
+}
+
+class _Action extends StatelessWidget {
+  final GestureTapCallback onTap;
+
+  final String title;
+
+  final IconData icon;
+
+  _Action({@required this.onTap, @required this.icon, @required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        onTap();
+        Navigator.pop(context);
+      },
+      splashColor: Theme.of(context).primaryColor,
+      highlightColor: Theme.of(context).primaryColor.withOpacity(0.5),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
+        child: Row(
+          children: <Widget>[
+            Icon(icon, size: 14),
+            SizedBox(width: 12.0),
+            Expanded(child: Text(title)),
+          ],
+        ),
       ),
     );
   }
@@ -78,21 +119,23 @@ class _DeviceItem extends StatelessWidget {
       duration: const Duration(milliseconds: 200),
       color: isSelected ? Theme.of(context).primaryColor : Colors.transparent,
       child: InkWell(
-        onTap: !isSelected ? () {
-          preview.device = device;
-          Navigator.pop(context);
-        } : null,
+        onTap: !isSelected
+            ? () {
+                preview.device = device;
+                Navigator.pop(context);
+              }
+            : null,
         splashColor: Theme.of(context).primaryColor,
         highlightColor: Theme.of(context).primaryColor.withOpacity(0.5),
-        
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
           child: Row(
             children: <Widget>[
               Container(
-                width: 12.0,
-                child: (isSelected ? Icon(Icons.check, size: 14) : SizedBox())),
-                SizedBox(width: 12.0),
+                  width: 12.0,
+                  child:
+                      (isSelected ? Icon(Icons.check, size: 14) : SizedBox())),
+              SizedBox(width: 12.0),
               Expanded(child: Text(device.name)),
             ],
           ),

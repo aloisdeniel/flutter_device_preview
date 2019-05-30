@@ -86,6 +86,7 @@ class DevicePreviewState extends State<DevicePreview> {
   List<Device> _devices;
   GlobalKey _repaintKey = GlobalKey();
   StreamController<DeviceScreenshot> _onScreenshot;
+  UniqueKey _appKey = UniqueKey();
 
   /// The curren active device.
   Device get device => _device;
@@ -123,6 +124,11 @@ class DevicePreviewState extends State<DevicePreview> {
         DeviceScreenshot(device: device, bytes: bytes, format: format);
     _onScreenshot.add(screenshot);
     return screenshot;
+  }
+
+  void restart() {
+    this._appKey = UniqueKey();
+    this.setState(() {});
   }
 
   void _start() {
@@ -167,6 +173,7 @@ class DevicePreviewState extends State<DevicePreview> {
                 child: MediaQuery(
                     data: _device.query,
                     child: DeviceProvider(
+        key: _appKey,
                         device: _device, child: widget.child)))));
 
     final preview = this.widget.isFrameVisible
