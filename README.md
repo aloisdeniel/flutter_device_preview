@@ -4,7 +4,7 @@
 
 Preview of your app on various device screen configurations from one of your devices and save time when adapting your app visuals for various form factors.
 
-Targeted features :
+Targeted features:
 
 * Preview any device from any device
 * Change Device orientation
@@ -41,11 +41,11 @@ class MyApp extends StatelessWidget {
 
 ## Roadmap
 
-[ ] Show/Hide frame
-[ ] Android devices
-[ ] Desktop devices
-[ ] TV devices
-[ ] Orientations
-[ ] Screenshot (share, mode)
-[ ] Documentation
-[ ] Clean code
+- [ ] Show/Hide frame
+- [ ] Android devices
+- [ ] Desktop devices
+- [ ] TV devices
+- [ ] Orientations
+- [ ] Screenshot (share, mode)
+- [ ] Documentation
+- [ ] Clean code
