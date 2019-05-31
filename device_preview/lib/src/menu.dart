@@ -8,13 +8,6 @@ import '../device_preview.dart';
 class DevicePreviewMenu extends StatelessWidget {
   Iterable<Widget> buildItems(BuildContext context) sync* {
     final preview = DevicePreview.of(context);
-    final iosDevices = preview.availableDevices
-        .where((x) => x.platform == TargetPlatform.iOS)
-        .toList();
-
-    final androidDevices = preview.availableDevices
-        .where((x) => x.platform == TargetPlatform.android)
-        .toList();
 
     yield _SectionHeader("State");
     yield _Action(
@@ -50,6 +43,14 @@ class DevicePreviewMenu extends StatelessWidget {
         });
 
     yield _SectionHeader("Device");
+
+    final iosDevices = preview.availableDevices
+        .where((x) => x.platform == TargetPlatform.iOS)
+        .toList();
+
+    final androidDevices = preview.availableDevices
+        .where((x) => x.platform == TargetPlatform.android)
+        .toList();
 
     if (iosDevices.isNotEmpty) {
       yield _GroupHeader("iOS");
@@ -120,11 +121,11 @@ class _GroupHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 12.0, left: 12.0, bottom: 8.0),
+      padding: const EdgeInsets.only(top: 24.0, left: 12.0, bottom: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Text(title, style: TextStyle(color: Colors.grey)),
+          Text(title, style: TextStyle(fontSize: 10.0, color: Colors.grey)),
         ],
       ),
     );
@@ -139,7 +140,7 @@ class _SectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 24.0, left: 12.0, bottom: 8.0),
+      padding: const EdgeInsets.only(top: 32.0, left: 12.0, bottom: 4.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[

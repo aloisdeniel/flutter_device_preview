@@ -20,7 +20,7 @@ class DeviceFramePreview extends StatelessWidget {
   Widget build(BuildContext context) {
     var padding = this.device.frame.borders;
 
-    final shouldRotate = device.type != DeviceType.freeform && orientation == Orientation.landscape;
+    final shouldRotate = device.canRotate && orientation == Orientation.landscape;
 
     if (shouldRotate) {
       padding = EdgeInsets.only(
@@ -73,9 +73,11 @@ class _DeviceFramePainter extends CustomPainter {
     }
 
     final frame = device.frame;
+    final media = device.portrait ?? device.landscape;
+
     size = Size(
-        device.portrait.size.width + frame.borders.left + frame.borders.right,
-        device.portrait.size.height + frame.borders.top + frame.borders.bottom);
+        media.size.width + frame.borders.left + frame.borders.right,
+        media.size.height + frame.borders.top + frame.borders.bottom);
 
     if (shouldRotate) {
       canvas.rotate(math.pi / 2);

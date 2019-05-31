@@ -41,11 +41,9 @@ class MyApp extends StatelessWidget {
 
 ## Roadmap
 
-[ ] Show/Hide frame
 [ ] Android devices
 [ ] Desktop devices
 [ ] TV devices
-[ ] Orientations
-[ ] Screenshot (share, mode)
+[ ] Local screenshot server
 [ ] Documentation
 [ ] Clean code

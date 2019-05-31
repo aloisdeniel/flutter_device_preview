@@ -4,7 +4,7 @@
 
 Preview of your app on various device screen configurations from one of your devices and save time when adapting your app visuals for various form factors.
 
-Targeted features:
+Targeted features :
 
 * Preview any device from any device
 * Change Device orientation
@@ -29,11 +29,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       builder: DevicePreview.appBuilder, // <--- Add the builder 
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      // ...
     );
   }
 }
@@ -41,11 +37,9 @@ class MyApp extends StatelessWidget {
 
 ## Roadmap
 
-- [ ] Show/Hide frame
-- [ ] Android devices
-- [ ] Desktop devices
-- [ ] TV devices
-- [ ] Orientations
-- [ ] Screenshot (share, mode)
-- [ ] Documentation
-- [ ] Clean code
+[ ] Android devices
+[ ] Desktop devices
+[ ] TV devices
+[ ] Local screenshot server
+[ ] Documentation
+[ ] Clean code

@@ -91,12 +91,16 @@ class DevicePreviewState extends State<DevicePreview> {
   UniqueKey _appKey = UniqueKey();
   Orientation _orientation = Orientation.portrait;
   bool _isFrameVisible = true;
-  static const Size _freeformMaxSize = const Size(1920, 1080);
-  Size _freeformSize = _freeformMaxSize;
+  static const Size freeformMaxSize = const Size(2400, 2400);
+  Size _freeformSize = freeformMaxSize;
 
   MediaQueryData get mediaQuery {
     if (_device.type == DeviceType.freeform)
-      return this._device.portrait.copyWith(size: this._freeformSize);
+      return (this._device.portrait ?? this._device.landscape)
+          .copyWith(size: this._freeformSize);
+
+    if (!_device.canRotate)
+      return this._device.portrait ?? this._device.landscape;
 
     switch (_orientation) {
       case Orientation.landscape:
@@ -112,7 +116,7 @@ class DevicePreviewState extends State<DevicePreview> {
   Device get device {
     if (_device.type == DeviceType.freeform) {
       final query = this.mediaQuery;
-      return _device.copyWith(portrait: query, landscape: query);
+      return _device.copyWith(landscape: query);
     }
 
     return _device;
@@ -214,8 +218,6 @@ class DevicePreviewState extends State<DevicePreview> {
     super.didUpdateWidget(oldWidget);
   }
 
-  Offset _resizeStart;
-
   @override
   Widget build(BuildContext context) {
     if (!widget.enabled) {
@@ -242,25 +244,18 @@ class DevicePreviewState extends State<DevicePreview> {
 
     preview = RepaintBoundary(key: _repaintKey, child: preview);
 
-    if (_device.type == DeviceType.freeform) {
-      preview = Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          preview,
-          Container(
-            alignment: Alignment.center,
-            width: _freeformMaxSize.width,
-            height: _freeformMaxSize.height,
-            child: Resizer(
-                initialSize: _freeformSize,
-                maxSize: _freeformMaxSize,
-                resized: (size) {
-                  this.freeformSize = size;
-                }),
-          ),
-        ],
-      );
-    }
+    final bottomBar = Positioned(
+      bottom: 0,
+      left: 0,
+      right: 0,
+      child: (_device.type == DeviceType.freeform)
+          ? DeviceProvider(
+              mediaQuery: mediaQuery,
+              key: _appKey,
+              device: _device,
+              child: FreeformResizer())
+          : SizedBox(),
+    );
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -273,7 +268,13 @@ class DevicePreviewState extends State<DevicePreview> {
                   alignment: Alignment.topLeft,
                   children: <Widget>[
                     Positioned.fill(
-                        child: FittedBox(fit: BoxFit.contain, child: preview)),
+                        child: Padding(
+                      padding: (_device.type == DeviceType.freeform)
+                          ? const EdgeInsets.only(bottom: 48.0)
+                          : EdgeInsets.zero,
+                      child: FittedBox(fit: BoxFit.contain, child: preview),
+                    )),
+                    bottomBar,
                     Positioned(
                         top: 0,
                         child: Builder(
@@ -288,14 +289,6 @@ class DevicePreviewState extends State<DevicePreview> {
                 ),
               ),
             )));
-  }
-}
-
-class _DeviceWithFrame extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return null;
   }
 }
 

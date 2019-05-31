@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 
-import 'apple.dart' as apple;
+import 'ios.dart' as iosDevice;
 import '../device_frame.dart';
 
-export 'apple.dart';
+export 'ios.dart';
 
 enum DeviceType {
   phone,
@@ -22,37 +22,43 @@ class Device {
   final MediaQueryData landscape;
   final MediaQueryData portrait;
 
+  bool get canRotate => this.landscape != null && this.portrait != null;
+
   const Device(
       {@required this.name,
       @required this.type,
       @required this.platform,
-      @required this.landscape,
-      @required this.portrait,
-      @required this.frame});
+      this.landscape,
+      this.portrait,
+      @required this.frame})
+      : assert(landscape != null || portrait != null);
 
   const Device.iOS(
       {@required this.name,
       @required this.type,
-      @required this.landscape,
-      @required this.portrait,
+      this.landscape,
+      this.portrait,
       @required this.frame})
-      : this.platform = TargetPlatform.iOS;
+      : assert(landscape != null || portrait != null),
+        this.platform = TargetPlatform.iOS;
 
   const Device.android(
       {@required this.name,
       @required this.type,
-      @required this.landscape,
-      @required this.portrait,
+      this.landscape,
+      this.portrait,
       @required this.frame})
-      : this.platform = TargetPlatform.android;
+      : assert(landscape != null || portrait != null),
+        this.platform = TargetPlatform.android;
 
   const Device.fushia(
       {@required this.name,
       @required this.type,
-      @required this.landscape,
-      @required this.portrait,
+      this.landscape,
+      this.portrait,
       @required this.frame})
-      : this.platform = TargetPlatform.fuchsia;
+      : assert(landscape != null || portrait != null),
+        this.platform = TargetPlatform.fuchsia;
 
   Device copyWith(
           {String name,
@@ -72,13 +78,16 @@ class Device {
 }
 
 abstract class Devices {
-  static final all = <Device>[
-    apple.iPhone8,
-    apple.iPhoneXr,
-    apple.iPhoneXs,
-    apple.iPadAir2,
-    apple.iPadPro_129_2,
-    apple.watch40mm,
-    apple.iosFreeform,
+  static final all = <Device>[]..addAll(ios);
+
+  static final ios = <Device>[
+    iosDevice.iPhone8,
+    iosDevice.iPhoneXr,
+    iosDevice.iPhoneXs,
+    iosDevice.iPadAir2,
+    iosDevice.iPadPro_129_2,
+    iosDevice.watch40mm,
+    iosDevice.iosFreeform,
   ];
+
 }
