@@ -8,6 +8,8 @@ Targeted features :
 
 * Preview any device from any device
 * Change Device orientation
+* Freeform device with adjustable resolution and safe areas
+* Dynamic system configuration : language, theme, ...
 * Display a device frames 
 * Change the device at any time but keep the application state
 * Take screenshots
@@ -29,7 +31,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       builder: DevicePreview.appBuilder, // <--- Add the builder 
-      // ...
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -37,6 +43,8 @@ class MyApp extends StatelessWidget {
 
 ## Roadmap
 
+[ ] Language picker
+[ ] Theme picker
 [ ] Android devices
 [ ] Desktop devices
 [ ] TV devices

@@ -8,6 +8,8 @@ Targeted features :
 
 * Preview any device from any device
 * Change Device orientation
+* Freeform device with adjustable resolution and safe areas
+* Dynamic system configuration : language, theme, ...
 * Display a device frames 
 * Change the device at any time but keep the application state
 * Take screenshots
@@ -41,6 +43,8 @@ class MyApp extends StatelessWidget {
 
 ## Roadmap
 
+[ ] Language picker
+[ ] Theme picker
 [ ] Android devices
 [ ] Desktop devices
 [ ] TV devices

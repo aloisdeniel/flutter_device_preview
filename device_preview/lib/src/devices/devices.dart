@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import 'ios.dart' as iosDevice;
+import 'android.dart' as androidDevice;
 import '../device_frame.dart';
 
 export 'ios.dart';
@@ -78,7 +79,7 @@ class Device {
 }
 
 abstract class Devices {
-  static final all = <Device>[]..addAll(ios);
+  static final all = <Device>[]..addAll(ios)..addAll(android);
 
   static final ios = <Device>[
     iosDevice.iPhone8,
@@ -90,4 +91,7 @@ abstract class Devices {
     iosDevice.iosFreeform,
   ];
 
+  static final android = <Device>[
+    androidDevice.freeform,
+  ];
 }
