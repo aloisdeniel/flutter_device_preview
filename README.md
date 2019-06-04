@@ -43,11 +43,11 @@ class MyApp extends StatelessWidget {
 
 ## Roadmap
 
-[ ] Language picker
-[ ] Theme picker
-[ ] Android devices
-[ ] Desktop devices
-[ ] TV devices
-[ ] Local screenshot server
-[ ] Documentation
-[ ] Clean code
+- [ ] Language picker
+- [ ] Theme picker
+- [ ] Android devices
+- [ ] Desktop devices
+- [ ] TV devices
+- [ ] Local screenshot server
+- [ ] Documentation
+- [ ] Clean code
