@@ -37,12 +37,13 @@ class FreeformResizer extends StatelessWidget {
           style: TextStyle(color: inactiveColor, fontSize: 11.0),
         ),
         SizedBox(
-            width: 32,
-            child: Text(
-                  media.size.height.round().toString(),
-              textAlign: TextAlign.center,
-              style: TextStyle(color: activeColor, fontSize: 11.0),
-            )),
+          width: 32,
+          child: Text(
+            media.size.height.round().toString(),
+            textAlign: TextAlign.center,
+            style: TextStyle(color: activeColor, fontSize: 11.0),
+          ),
+        ),
         Slider(
           activeColor: activeColor,
           inactiveColor: inactiveColor,

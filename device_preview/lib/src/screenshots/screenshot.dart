@@ -1,9 +1,6 @@
-
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-
 import 'package:meta/meta.dart';
-
 import '../devices/devices.dart';
 
 class DeviceScreenshot {
