@@ -8,7 +8,9 @@ const iosFreeform = const Device.iOS(
     type: DeviceType.freeform,
     frame: DeviceFrame(),
     landscape: MediaQueryData(
-        padding: EdgeInsets.only(top: 20.0), size: Size(0, 0), devicePixelRatio: 2.0));
+        padding: EdgeInsets.only(top: 20.0),
+        size: Size(0, 0),
+        devicePixelRatio: 2.0));
 
 const iPhone8 = const Device.iOS(
     name: "iPhone 8",

@@ -20,7 +20,8 @@ class DeviceFramePreview extends StatelessWidget {
   Widget build(BuildContext context) {
     var padding = this.device.frame.borders;
 
-    final shouldRotate = device.canRotate && orientation == Orientation.landscape;
+    final shouldRotate =
+        device.canRotate && orientation == Orientation.landscape;
 
     if (shouldRotate) {
       padding = EdgeInsets.only(
@@ -37,15 +38,17 @@ class DeviceFramePreview extends StatelessWidget {
         alignment: Alignment.center,
         children: <Widget>[
           Positioned.fill(
-              child: DecoratedBox(
-            decoration: BoxDecoration(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
                 borderRadius: device.frame.edgeRadius,
                 boxShadow: [
                   BoxShadow(
                       blurRadius: 70,
                       color: Color(0xFF000000).withOpacity(0.4)),
-                ]),
-          )),
+                ],
+              ),
+            ),
+          ),
           Padding(padding: padding, child: this.child),
           Positioned.fill(
             child: IgnorePointer(
@@ -75,8 +78,7 @@ class _DeviceFramePainter extends CustomPainter {
     final frame = device.frame;
     final media = device.portrait ?? device.landscape;
 
-    size = Size(
-        media.size.width + frame.borders.left + frame.borders.right,
+    size = Size(media.size.width + frame.borders.left + frame.borders.right,
         media.size.height + frame.borders.top + frame.borders.bottom);
 
     if (shouldRotate) {
