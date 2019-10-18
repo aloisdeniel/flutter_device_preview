@@ -135,7 +135,6 @@ class DevicePreviewState extends State<DevicePreview> {
       textScaleFactor: _data.textScaleFactor,
       boldText: _data.boldText,
       disableAnimations: _data.disableAnimations,
-      highContrast: _data.highContrast,
       accessibleNavigation: _data.accessibleNavigation,
       invertColors: _data.invertColors,
     );
@@ -188,16 +187,6 @@ class DevicePreviewState extends State<DevicePreview> {
     this._data = _data.copyWith(accessibleNavigation: value)
       ..save(!widget.usePreferences);
 
-    if (widget.enabled) {
-      this.setState(() {});
-    }
-  }
-
-  bool get highContrast => _data.highContrast;
-
-  set highContrast(bool value) {
-    this._data = _data.copyWith(highContrast: value)
-      ..save(!widget.usePreferences);
     if (widget.enabled) {
       this.setState(() {});
     }

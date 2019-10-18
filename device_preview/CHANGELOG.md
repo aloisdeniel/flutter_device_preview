@@ -1,6 +1,10 @@
+## 0.2.3
+
+- Remove hightContrast (not on stable yet).
+
 ## 0.2.2
 
-- Removing desktop dependencies.
+- Remove desktop dependencies.
 
 ## 0.2.1
 
