@@ -32,7 +32,12 @@ class DevicePreview extends StatefulWidget {
 
   /// Whether configuration should be saved to device preferences
   /// between sessions.
+  ///
+  /// Ignored if [data] is defined.
   final bool usePreferences;
+
+  /// The configuration. If not precised, it is loaded from preferences.
+  final DevicePreviewData data;
 
   /// The previewed widget.
   ///
@@ -54,7 +59,8 @@ class DevicePreview extends StatefulWidget {
       {Key key,
       @required this.builder,
       this.devices,
-      this.usePreferences = true,
+      this.data,
+      bool usePreferences = true,
       this.areSettingsEnabled = true,
       this.availablesLocales = defaultAvailableLocales,
       this.screenshotUploader = const FileioScreenshotUploader(),
@@ -69,12 +75,12 @@ class DevicePreview extends StatefulWidget {
       : assert(devices == null || devices.isNotEmpty),
         assert(usePreferences != null),
         assert(areSettingsEnabled != null),
+        this.usePreferences = (data == null) && usePreferences,
         super(key: key);
 
   @override
   DevicePreviewState createState() => DevicePreviewState();
 
-  ///
   static DevicePreviewState of(BuildContext context) =>
       context.ancestorStateOfType(const TypeMatcher<DevicePreviewState>());
 
@@ -96,10 +102,11 @@ class DevicePreview extends StatefulWidget {
 
   static Widget appBuilder(BuildContext context, Widget widget) {
     return MediaQuery(
-        data: mediaQuery(context),
-        child: Theme(
-            data: Theme.of(context).copyWith(platform: platform(context)),
-            child: widget));
+      data: mediaQuery(context),
+      child: Theme(
+          data: Theme.of(context).copyWith(platform: platform(context)),
+          child: widget),
+    );
   }
 }
 
@@ -325,16 +332,23 @@ class DevicePreviewState extends State<DevicePreview> {
   }
 
   Future<void> _loadData() async {
-    var data = await DevicePreviewData.load(!widget.usePreferences);
+    DevicePreviewData data;
+
+    if (widget.data != null) {
+      data = widget.data;
+    } else if (widget.usePreferences) {
+      data = await DevicePreviewData.load();
+    }
+
     if (data != null) {
       if (data.locale == null) {
         data = data.copyWith(locale: _defaultLocale);
       }
       this._data = data;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        this.setState(() {});
+      });
     }
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      this.setState(() {});
-    });
   }
 
   @override
