@@ -42,6 +42,20 @@ class MyApp extends StatelessWidget {
 }
 ```
 
+## FAQ
+
+> Can I use device preview with Desktop embedding ?
+
+Yes, you just have to add thoses dependencies in your `pubspec.yaml` :
+
+```yaml
+device_preview:
+path_provider_fde:
+  git:
+    url: https://github.com/google/flutter-desktop-embedding/
+    path: plugins/flutter_plugins/path_provider_fde
+```
+
 ## Roadmap
 
 [ ] Status bar

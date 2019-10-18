@@ -1,3 +1,7 @@
+## 0.2.2
+
+- Removing desktop dependencies.
+
 ## 0.2.1
 
 - Add trottling for data saving
