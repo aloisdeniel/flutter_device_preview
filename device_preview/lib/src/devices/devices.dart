@@ -2,7 +2,6 @@ import 'package:flutter/widgets.dart';
 
 import 'ios.dart' as iosDevice;
 import 'android.dart' as androidDevice;
-import '../device_frame.dart';
 
 export 'ios.dart';
 
@@ -15,9 +14,16 @@ enum DeviceType {
   freeform,
 }
 
+typedef Widget FrameWidgetBuilder(
+  BuildContext context,
+  Widget screen,
+  Size screenSize,
+  bool isRotated,
+);
+
 class Device {
   final String name;
-  final DeviceFrame frame;
+  final FrameWidgetBuilder frameBuilder;
   final TargetPlatform platform;
   final DeviceType type;
   final MediaQueryData landscape;
@@ -31,46 +37,46 @@ class Device {
       @required this.platform,
       this.landscape,
       this.portrait,
-      @required this.frame})
+      @required this.frameBuilder})
       : assert(landscape != null || portrait != null);
 
-  const Device.iOS(
-      {@required this.name,
-      @required this.type,
-      this.landscape,
-      this.portrait,
-      @required this.frame})
-      : assert(landscape != null || portrait != null),
+  const Device.iOS({
+    @required this.name,
+    @required this.type,
+    this.landscape,
+    this.portrait,
+    @required this.frameBuilder,
+  })  : assert(landscape != null || portrait != null),
         this.platform = TargetPlatform.iOS;
 
-  const Device.android(
-      {@required this.name,
-      @required this.type,
-      this.landscape,
-      this.portrait,
-      @required this.frame})
-      : assert(landscape != null || portrait != null),
+  const Device.android({
+    @required this.name,
+    @required this.type,
+    this.landscape,
+    this.portrait,
+    @required this.frameBuilder,
+  })  : assert(landscape != null || portrait != null),
         this.platform = TargetPlatform.android;
 
-  const Device.fushia(
-      {@required this.name,
-      @required this.type,
-      this.landscape,
-      this.portrait,
-      @required this.frame})
-      : assert(landscape != null || portrait != null),
+  const Device.fushia({
+    @required this.name,
+    @required this.type,
+    this.landscape,
+    this.portrait,
+    @required this.frameBuilder,
+  })  : assert(landscape != null || portrait != null),
         this.platform = TargetPlatform.fuchsia;
 
   Device copyWith(
           {String name,
-          DeviceFrame frame,
+          FrameWidgetBuilder frameBuilder,
           TargetPlatform platform,
           DeviceType type,
           MediaQueryData landscape,
           MediaQueryData portrait}) =>
       Device(
         name: name ?? this.name,
-        frame: frame ?? this.frame,
+        frameBuilder: frameBuilder ?? this.frameBuilder,
         platform: platform ?? this.platform,
         type: type ?? this.type,
         landscape: landscape ?? this.landscape,
@@ -92,6 +98,12 @@ abstract class Devices {
   ];
 
   static final android = <Device>[
+    androidDevice.smallPhone,
+    androidDevice.mediumPhone,
+    androidDevice.largePhone,
+    androidDevice.smallTablet,
+    androidDevice.mediumTablet,
+    androidDevice.watch,
     androidDevice.freeform,
   ];
 }

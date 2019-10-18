@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 import '../device_preview.dart';
+import '../device_preview_data.dart';
 
 class FreeformResizer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final preview = DevicePreview.of(context);
     final media = DevicePreview.mediaQuery(context);
-    const activeColor = Color(0XFF444444);
-    const inactiveColor = Color(0XFFAAAAAA);
+    const activeColor = const Color(0XFF444444);
+    const inactiveColor = const Color(0XFFAAAAAA);
     return Container(
       height: 48,
       padding: EdgeInsets.all(12.0),
@@ -19,7 +20,7 @@ class FreeformResizer extends StatelessWidget {
           inactiveColor: inactiveColor,
           value: preview.freeformSize.width,
           min: 50,
-          max: DevicePreviewState.freeformMaxSize.width,
+          max: DevicePreviewData.freeformMaxSize.width,
           onChanged: (v) {
             preview.freeformSize = Size(v, preview.freeformSize.height);
           },
@@ -49,7 +50,7 @@ class FreeformResizer extends StatelessWidget {
           inactiveColor: inactiveColor,
           value: preview.freeformSize.height,
           min: 50,
-          max: DevicePreviewState.freeformMaxSize.height,
+          max: DevicePreviewData.freeformMaxSize.height,
           onChanged: (v) {
             preview.freeformSize = Size(preview.freeformSize.width, v);
           },

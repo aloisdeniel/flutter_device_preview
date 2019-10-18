@@ -1,4 +1,4 @@
-# flutter_device_preview (WIP)
+# device_preview
 
 ![gif](https://github.com/aloisdeniel/flutter_device_preview/raw/master/device_preview.gif)
 
@@ -7,11 +7,11 @@ Preview of your app on various device screen configurations from one of your dev
 Targeted features :
 
 * Preview any device from any device
-* Change Device orientation
+* Change device orientation
 * Freeform device with adjustable resolution and safe areas
-* Dynamic system configuration : language, theme, ...
-* Display a device frames 
-* Change the device at any time but keep the application state
+* Dynamic system configuration : language, dark mode, text scaling factor
+* Display device frames 
+* Keep the application state
 * Take screenshots
 
 ## Quickstart
@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      locale: DevicePreview.of(context).locale, // <--- Add the locale 
       builder: DevicePreview.appBuilder, // <--- Add the builder 
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -43,11 +44,10 @@ class MyApp extends StatelessWidget {
 
 ## Roadmap
 
-- [ ] Language picker
-- [ ] Theme picker
-- [ ] Android devices
-- [ ] Desktop devices
-- [ ] TV devices
-- [ ] Local screenshot server
-- [ ] Documentation
-- [ ] Clean code
+[ ] Status bar
+[ ] Saving preferences
+[ ] Add custom devices state
+[ ] Desktop devices
+[ ] TV devices
+[ ] Documentation
+[ ] Clean code
