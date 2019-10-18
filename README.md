@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
 ## Roadmap
 
 [ ] Status bar
-[ ] Saving preferences
+[ ] Storage explorer
 [ ] Add custom devices state
 [ ] Desktop devices
 [ ] TV devices

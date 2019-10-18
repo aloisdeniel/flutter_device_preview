@@ -1,3 +1,7 @@
+## 0.2.1
+
+- Add trottling for data saving
+
 ## 0.2.0
 
 - Add Android devices

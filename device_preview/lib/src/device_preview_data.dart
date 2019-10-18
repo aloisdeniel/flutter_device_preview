@@ -109,12 +109,27 @@ class DevicePreviewData {
 
   static const String _preferencesFile = "device_preview.config";
 
-  Future save([bool ignore = false]) async {
+  static Future _saveTask;
+  static DevicePreviewData _saveData;
+
+  save([bool ignore = false]) async {
     if (!ignore) {
+      _saveData = this;
+      if (_saveTask == null) {
+        _saveTask = _save();
+      }
+      await _saveTask;
+    }
+  }
+
+  static Future _save() async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    if (_saveData != null) {
       final dir = await getApplicationDocumentsDirectory();
       final file = File('${dir.path}/$_preferencesFile');
-      await file.writeAsString(jsonEncode(this.toMap()));
+      await file.writeAsString(jsonEncode(_saveData.toMap()));
     }
+    _saveTask = null;
   }
 
   static Future<DevicePreviewData> load([bool ignore = false]) async {
