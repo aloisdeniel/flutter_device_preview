@@ -19,7 +19,7 @@ environment:
 dependencies:
   flutter_platform_widgets:
   device_preview:
-    path: ../device_preview
+    path: ../
   flutter:
     sdk: flutter
   cupertino_icons: ^0.1.2 

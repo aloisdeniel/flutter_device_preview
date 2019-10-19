@@ -438,18 +438,19 @@ class DevicePreviewState extends State<DevicePreview> {
                   ),
                 )),
                 bottomBar,
-                Positioned(
-                  top: 0,
-                  child: Builder(
-                    builder: (context) => IconButton(
-                      icon: Icon(Icons.settings),
-                      tooltip: 'Settings',
-                      onPressed: () {
-                        Scaffold.of(context).openDrawer();
-                      },
+                if (widget.areSettingsEnabled)
+                  Positioned(
+                    top: 0,
+                    child: Builder(
+                      builder: (context) => IconButton(
+                        icon: Icon(Icons.settings),
+                        tooltip: 'Settings',
+                        onPressed: () {
+                          Scaffold.of(context).openDrawer();
+                        },
+                      ),
                     ),
                   ),
-                ),
               ],
             ),
           ),
