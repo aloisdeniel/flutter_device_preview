@@ -4,25 +4,110 @@ import 'package:flutter/material.dart';
 
 import '../device_preview.dart';
 
-class DevicePreviewMenu extends StatelessWidget {
-  Iterable<Widget> buildItems(
-      BuildContext context, NavigatorState rootNavigator) sync* {
-    final preview = DevicePreview.of(context);
+class DevicePreviewMenu extends StatefulWidget {
+  @override
+  _DevicePreviewMenuState createState() => _DevicePreviewMenuState();
+}
 
+class _DevicePreviewMenuState extends State<DevicePreviewMenu> {
+  bool _isOpen = false;
+
+  void open() {
+    if (!_isOpen) this.setState(() => _isOpen = true);
+  }
+
+  void close() {
+    if (_isOpen) this.setState(() => _isOpen = false);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedCrossFade(
+      crossFadeState:
+          _isOpen ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+      duration: const Duration(milliseconds: 200),
+      layoutBuilder: (topChild, topChildKey, bottomChild, bottomChildKey) {
+        return Stack(
+          children: <Widget>[
+            Positioned.fill(
+              key: bottomChildKey,
+              child: bottomChild,
+            ),
+            Positioned.fill(
+              key: topChildKey,
+              child: topChild,
+            ),
+          ],
+        );
+      },
+      firstChild: Align(
+        alignment: Alignment.topLeft,
+        child: GestureDetector(
+          child: Container(
+            margin: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.white60,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(Icons.settings),
+          ),
+          onTap: this.open,
+        ),
+      ),
+      secondChild: IgnorePointer(
+        ignoring: !_isOpen,
+        child: Stack(
+          children: <Widget>[
+            Positioned.fill(
+              key: Key("barrier"),
+              child: GestureDetector(
+                onTap: () {
+                  this.close();
+                },
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeOut,
+                  color: _isOpen ? Colors.black45 : Colors.transparent,
+                  child: SizedBox(),
+                ),
+              ),
+            ),
+            Positioned(
+              key: Key("drawer"),
+              top: 0,
+              bottom: 0,
+              left: 0,
+              width: 320,
+              child: DevicePreviewDrawer(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class DevicePreviewDrawer extends StatelessWidget {
+  Iterable<Widget> buildItems(BuildContext context) sync* {
+    final preview = DevicePreview.of(context);
+    final root = context
+            .ancestorStateOfType(const TypeMatcher<_DevicePreviewMenuState>())
+        as _DevicePreviewMenuState;
     yield _SectionHeader("State");
     yield _Action(
         icon: Icons.refresh,
         title: "Restart application",
         onTap: () {
           preview.restart();
-          rootNavigator.pop();
+          root.close();
         });
     yield _Action(
         icon: Icons.screen_rotation,
         title: "Rotate",
         onTap: () {
           preview.rotate();
-          rootNavigator.pop();
+          root.close();
         });
     yield _Action(
         icon: Icons.photo_camera,
@@ -35,7 +120,7 @@ class DevicePreviewMenu extends StatelessWidget {
           } catch (e) {
             print("[DevicePreview] Error while uploading screenshot : $e");
           }
-          rootNavigator.pop();
+          root.close();
         });
 
     yield _Action(
@@ -43,7 +128,7 @@ class DevicePreviewMenu extends StatelessWidget {
         title: "${preview.isFrameVisible ? "Hide" : "Show"} device frame",
         onTap: () {
           preview.toggleFrame();
-          rootNavigator.pop();
+          root.close();
         });
 
     yield _SectionHeader("Preferences");
@@ -126,7 +211,7 @@ class DevicePreviewMenu extends StatelessWidget {
       for (var device in iosDevices) {
         yield _DeviceItem(device, () {
           preview.device = device;
-          rootNavigator.pop();
+          root.close();
         });
       }
     }
@@ -136,7 +221,7 @@ class DevicePreviewMenu extends StatelessWidget {
       for (var device in androidDevices) {
         yield _DeviceItem(device, () {
           preview.device = device;
-          rootNavigator.pop();
+          root.close();
         });
       }
     }
@@ -144,19 +229,17 @@ class DevicePreviewMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final rootNavigator = Navigator.of(context);
     return Theme(
       data: ThemeData.dark(),
       child: Container(
         color: Colors.white,
         width: 320,
-        child: Material(
-          child: Navigator(
-            onGenerateRoute: (s) => MaterialPageRoute(
-              settings: RouteSettings(isInitialRoute: true),
-              builder: (context) => ListView(
-                children: buildItems(context, rootNavigator).toList(),
-              ),
+        child: MaterialApp(
+          theme: ThemeData.dark(),
+          debugShowCheckedModeBanner: false,
+          home: Material(
+            child: ListView(
+              children: buildItems(context).toList(),
             ),
           ),
         ),
@@ -617,11 +700,20 @@ class _DeviceItem extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
           child: Row(
             children: <Widget>[
-              Container(width: 12.0, child: Icon(_icon(), size: 14)),
+              Container(
+                width: 12.0,
+                child: Icon(
+                  _icon(),
+                  size: 14,
+                ),
+              ),
               SizedBox(width: 12.0),
               Expanded(
-                  child:
-                      Text(device.name, style: TextStyle(color: foreground))),
+                child: Text(
+                  device.name,
+                  style: TextStyle(color: foreground),
+                ),
+              ),
             ],
           ),
         ),

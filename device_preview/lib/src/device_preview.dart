@@ -417,43 +417,39 @@ class DevicePreviewState extends State<DevicePreview> {
           : SizedBox(),
     );
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        drawer: widget.areSettingsEnabled ? DevicePreviewMenu() : null,
-        body: DecoratedBox(
-          decoration: widget.background,
-          child: SafeArea(
-            child: Stack(
-              alignment: Alignment.topLeft,
-              children: <Widget>[
-                Positioned.fill(
-                    child: Padding(
-                  padding: (_device.type == DeviceType.freeform)
-                      ? const EdgeInsets.only(bottom: 48.0)
-                      : EdgeInsets.zero,
-                  child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: preview,
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: MediaQuery(
+        data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
+        child: Stack(
+          children: <Widget>[
+            Positioned.fill(
+              child: DecoratedBox(
+                decoration: widget.background,
+                child: SafeArea(
+                  child: Stack(
+                    alignment: Alignment.topLeft,
+                    children: <Widget>[
+                      Positioned.fill(
+                          child: Padding(
+                        padding: (_device.type == DeviceType.freeform)
+                            ? const EdgeInsets.only(bottom: 48.0)
+                            : EdgeInsets.zero,
+                        child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: preview,
+                        ),
+                      )),
+                      bottomBar,
+                    ],
                   ),
-                )),
-                bottomBar,
-                if (widget.areSettingsEnabled)
-                  Positioned(
-                    top: 0,
-                    child: Builder(
-                      builder: (context) => IconButton(
-                        icon: Icon(Icons.settings),
-                        tooltip: 'Settings',
-                        onPressed: () {
-                          Scaffold.of(context).openDrawer();
-                        },
-                      ),
-                    ),
-                  ),
-              ],
+                ),
+              ),
             ),
-          ),
+            Positioned.fill(
+              child: DevicePreviewMenu(),
+            ),
+          ],
         ),
       ),
     );

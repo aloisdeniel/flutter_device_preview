@@ -1,3 +1,7 @@
+## 0.2.6
+
+- Removed root navigator to fix dialogs.
+
 ## 0.2.5
 
 - Fix settings still visible when `widget.areSettingsEnabled` is `false`.

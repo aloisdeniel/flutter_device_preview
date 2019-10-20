@@ -58,10 +58,13 @@ path_provider_fde:
 
 ## Roadmap
 
-[ ] Status bar
-[ ] Storage explorer
-[ ] Add custom devices state
-[ ] Desktop devices
-[ ] TV devices
-[ ] Documentation
-[ ] Clean code
+- [ ] Status bar
+- [ ] Override WidgetsBinding
+  - [ ] Simulate physical button
+  - [ ] Simulate lifecycle events
+- [ ] Storage explorer
+- [ ] Add custom devices state
+- [ ] Desktop devices
+- [ ] TV devices
+- [ ] Documentation
+- [ ] Clean code
