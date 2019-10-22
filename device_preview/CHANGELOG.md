@@ -1,6 +1,19 @@
+## 0.2.6
+
+- Removed root navigator to fix dialogs.
+
+## 0.2.5
+
+- Fix settings still visible when `widget.areSettingsEnabled` is `false`.
+- Moved example to package folder.
+
+## 0.2.4
+
+- Added optional data to override the loaded one.
+
 ## 0.2.3
 
-- Remove hightContrast (not on stable yet).
+- Remove `hightContrast` (not on stable yet).
 
 ## 0.2.2
 
