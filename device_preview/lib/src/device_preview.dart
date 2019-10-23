@@ -446,9 +446,10 @@ class DevicePreviewState extends State<DevicePreview> {
                 ),
               ),
             ),
-            Positioned.fill(
-              child: DevicePreviewMenu(),
-            ),
+            if (widget.areSettingsEnabled)
+              Positioned.fill(
+                child: DevicePreviewMenu(),
+              ),
           ],
         ),
       ),
