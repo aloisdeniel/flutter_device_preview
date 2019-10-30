@@ -19,7 +19,7 @@ Targeted features :
 ```dart
 void main() => runApp(
   DevicePreview(
-    builder: (context) => MyApp(),
+    child: MyApp(),
   ),
 );
 ```
