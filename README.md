@@ -1,4 +1,6 @@
-# device_preview
+<p align="center">
+  <img src="https://github.com/aloisdeniel/flutter_device_preview/raw/master/logo.png" alt="Device Preview for Flutter" />
+</p>
 
 ![gif](https://github.com/aloisdeniel/flutter_device_preview/raw/master/device_preview.gif)
 
