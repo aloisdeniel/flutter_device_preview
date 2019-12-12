@@ -2,7 +2,7 @@
   <img src="https://github.com/aloisdeniel/flutter_device_preview/raw/master/logo.png" alt="Device Preview for Flutter" />
 </p>
 
-<h4 align="center">Approximate how your app looks and performs on a mobile device.</h4>
+<h4 align="center">Approximate how your app looks and performs on another device.</h4>
 
 <p align="center">
   <a href="https://pub.dartlang.org/packages/device_preview"><img src="https://img.shields.io/pub/v/device_preview.svg"></a>
