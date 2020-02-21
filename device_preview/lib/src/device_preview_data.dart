@@ -123,7 +123,7 @@ class DevicePreviewData {
   static Future _save() async {
     await Future.delayed(const Duration(milliseconds: 500));
     if (_saveData != null) {
-      final dir = await getApplicationDocumentsDirectory();
+      final dir = await getApplicationSupportDirectory();
       final file = File('${dir.path}/$_preferencesFile');
       await file.writeAsString(jsonEncode(_saveData.toMap()));
     }
@@ -132,7 +132,7 @@ class DevicePreviewData {
 
   static Future<DevicePreviewData> load([bool ignore = false]) async {
     if (!ignore) {
-      final dir = await getApplicationDocumentsDirectory();
+      final dir = await getApplicationSupportDirectory();
       final file = File('${dir.path}/$_preferencesFile');
       if (!await file.exists()) return null;
       final json = await file.readAsString();
