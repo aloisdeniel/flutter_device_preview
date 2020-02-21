@@ -7,13 +7,12 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
 void main() {
-  debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
   runApp(DevicePreview(
-    builder: (context) => MyApp(),
+    builder: (context) => ExampleApp(),
   ));
 }
 
-class MyApp extends StatelessWidget {
+class ExampleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context, nullOk: true);
@@ -41,26 +40,24 @@ class MyApp extends StatelessWidget {
           brightness: mediaQuery.platformBrightness,
         ),
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: HomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
     final theme = Theme.of(context);
-    final factor = mediaQuery.textScaleFactor;
     final localeCode = Localizations.localeOf(context).toString();
     final dateFormat = DateFormat.yMMMMEEEEd(localeCode);
     return PlatformScaffold(
@@ -73,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             PlatformText(
               'Hello, it is ' + dateFormat.format(DateTime.now()),
-              style: theme.textTheme.headline,
+              style: theme.textTheme.headline5,
             ),
             PlatformButton(
               child: PlatformText('Open'),
