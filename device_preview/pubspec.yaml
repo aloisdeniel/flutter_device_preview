@@ -1,13 +1,15 @@
 name: device_preview
 version: 0.2.7
 author: Aloïs Deniel <alois.deniel@outlook.com>
-description: Preview of your Flutter app on various device screen configurations from one of your devices.
+description: Approximate how your app looks and performs on another device.
 homepage: https://github.com/aloisdeniel/flutter_device_preview
 
 environment:
   sdk: '>=2.2.2 <3.0.0'
 
 dependencies:
+  http: ^0.12.0
+  flutter_svg: ^0.14.3
   flutter: 
     sdk: flutter 
   meta: ^1.1.8

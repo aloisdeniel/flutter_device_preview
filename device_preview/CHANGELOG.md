@@ -3,6 +3,10 @@
 - Update to stable API surface for macOS
 - Fix API deprecations
 
+## 0.2.6+1
+
+- Updated documentation.
+
 ## 0.2.6
 
 - Removed root navigator to fix dialogs.
