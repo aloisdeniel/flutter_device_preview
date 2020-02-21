@@ -112,7 +112,7 @@ class DevicePreviewData {
   static Future _saveTask;
   static DevicePreviewData _saveData;
 
-  save([bool ignore = false]) async {
+  Future<void> save([bool ignore = false]) async {
     if (!ignore) {
       _saveData = this;
       _saveTask ??= _save();

@@ -176,7 +176,7 @@ class DevicePreviewDrawer extends StatelessWidget {
       title: 'Text scale factor',
       initialValue: preview.textScaleFactor,
       minValue: 0.5,
-      maxValue: 3.0,
+      maxValue: 3,
       onChanged: (v) {
         preview.textScaleFactor = v;
       },

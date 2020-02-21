@@ -429,7 +429,7 @@ class DevicePreviewState extends State<DevicePreview> {
                       Positioned.fill(
                           child: Padding(
                         padding: (_device.type == DeviceType.freeform)
-                            ? const EdgeInsets.only(bottom: 48.0)
+                            ? const EdgeInsets.only(bottom: 48)
                             : EdgeInsets.zero,
                         child: FittedBox(
                           fit: BoxFit.contain,

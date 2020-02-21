@@ -76,7 +76,7 @@ class _MediaQueryInfoState extends State<MediaQueryInfo> {
 
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(12),
         child: ListView(
             children: _device
               ..addAll([

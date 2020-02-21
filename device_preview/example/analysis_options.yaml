@@ -2,4 +2,4 @@ include: package:pedantic/analysis_options.yaml
 
 linter:
   rules:
-    prefer_int_literals
+   - prefer_int_literals
