@@ -1,3 +1,7 @@
+## 0.2.7
+
+- Update to stable API surface for macOS
+
 ## 0.2.6
 
 - Removed root navigator to fix dialogs.
@@ -21,7 +25,7 @@
 
 ## 0.2.1
 
-- Add trottling for data saving
+- Add throttling for data saving
 
 ## 0.2.0
 

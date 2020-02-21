@@ -19,7 +19,7 @@
 
 * Preview any device from any device
 * Change device orientation
-* Dynamic system configuration : language, dark mode, text scaling factor
+* Dynamic system configuration: language, dark mode, text scaling factor
 * Freeform device with adjustable resolution and safe areas
 * Keep the application state
 * Take screenshots

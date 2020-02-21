@@ -1,5 +1,5 @@
 name: device_preview
-version: 0.2.6
+version: 0.2.7
 author: Aloïs Deniel <alois.deniel@outlook.com>
 description: Preview of your Flutter app on various device screen configurations from one of your devices.
 homepage: https://github.com/aloisdeniel/flutter_device_preview
@@ -8,12 +8,19 @@ environment:
   sdk: '>=2.2.2 <3.0.0'
 
 dependencies:
-  meta: ^1.1.6
-  http: ^0.12.0
-  path_provider: ^1.3.1
-  path_provider_macos: ^0.0.3+1
   flutter: 
     sdk: flutter 
+  meta: ^1.1.8
+  http: ^0.12.0+4
+  path_provider: ^1.6.1
+  path_provider_macos: ^0.0.3+1
+
+  # This is a temporary hack to enable Windows to work. It is not recommended
+  # since this package may change at any time in ways that break. 
+  path_provider_fde:
+    git:
+      url: https://github.com/google/flutter-desktop-embedding/
+      path: plugins/flutter_plugins/path_provider_fde
  
 dev_dependencies:
   flutter_test:
