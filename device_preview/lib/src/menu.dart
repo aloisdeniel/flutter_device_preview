@@ -270,7 +270,7 @@ class _Action extends StatelessWidget {
       splashColor: Theme.of(context).primaryColor,
       highlightColor: Theme.of(context).primaryColor.withOpacity(0.5),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         child: Row(
           children: <Widget>[
             if (icon != null) ...[
@@ -278,7 +278,7 @@ class _Action extends StatelessWidget {
                 icon,
                 size: 14,
               ),
-              const SizedBox(width: 12.0),
+              const SizedBox(width: 12),
             ],
             Expanded(
               child: Text(title),
@@ -317,11 +317,11 @@ class _SliderAction extends StatelessWidget {
     final theme = Theme.of(context);
     return Container(
       height: 38,
-      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       child: Row(
         children: <Widget>[
           Icon(icon, size: 14),
-          const SizedBox(width: 12.0),
+          const SizedBox(width: 12),
           Text(title),
           Expanded(
             child: Slider(
@@ -364,11 +364,11 @@ class _SwitchAction extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 38,
-      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       child: Row(
         children: <Widget>[
           Icon(icon, size: 14),
-          const SizedBox(width: 12.0),
+          const SizedBox(width: 12),
           Expanded(
             child: Text(title),
           ),
@@ -578,11 +578,11 @@ class _PickAction<T> extends StatelessWidget {
       splashColor: Theme.of(context).primaryColor,
       highlightColor: Theme.of(context).primaryColor.withOpacity(0.5),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
         child: Row(
           children: <Widget>[
             Icon(icon, size: 14),
-            const SizedBox(width: 12.0),
+            const SizedBox(width: 12),
             Expanded(
               child: Text(title),
             ),
@@ -607,11 +607,11 @@ class _GroupHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 24.0, left: 12.0, bottom: 8.0),
+      padding: const EdgeInsets.only(top: 24, left: 12, bottom: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Text(title, style: TextStyle(fontSize: 10.0, color: Colors.grey)),
+          Text(title, style: TextStyle(fontSize: 10, color: Colors.grey)),
         ],
       ),
     );
@@ -626,7 +626,7 @@ class _SectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 32.0, left: 12.0, bottom: 4.0),
+      padding: const EdgeInsets.only(top: 32, left: 12, bottom: 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -635,7 +635,7 @@ class _SectionHeader extends StatelessWidget {
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: Colors.white)),
-          SizedBox(height: 8.0),
+          SizedBox(height: 8),
           Container(
             color: Colors.grey.withOpacity(0.2),
             height: 1,
@@ -681,7 +681,7 @@ class _DeviceItem extends StatelessWidget {
     final isSelected = preview.device == device;
     final foreground = Theme.of(context)
         .primaryTextTheme
-        .display1
+        .headline4
         .color
         .withOpacity(isSelected ? 1 : 0.5);
 
@@ -693,17 +693,17 @@ class _DeviceItem extends StatelessWidget {
         splashColor: Theme.of(context).primaryColor,
         highlightColor: Theme.of(context).primaryColor.withOpacity(0.5),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 10.0),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
           child: Row(
             children: <Widget>[
               Container(
-                width: 12.0,
+                width: 12,
                 child: Icon(
                   _icon(),
                   size: 14,
                 ),
               ),
-              SizedBox(width: 12.0),
+              SizedBox(width: 12),
               Expanded(
                 child: Text(
                   device.name,
