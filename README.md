@@ -57,17 +57,14 @@ There are some aspects of mobile devices that Device Preview will never be able 
 
 ## FAQ
 
-> Can I use macOS for device previews?
+> What devices can I use for previewing?
 
-Yes, you just have to add those dependencies in your `pubspec.yaml` :
-
-```yaml
-device_preview:
-path_provider_macos:
+If you are running the `beta` or `dev` channel of Flutter, you can use Android or iOS.
+If you are running the `master` channel of Flutter, you can use macOS, Android or iOS.
 
 > What about Windows?
 
-Since Flutter is still in technical preview on Windows, the `path_provider` dependency can be satisfied by adding this dependencies in your `pubspec.yaml`:
+Since Flutter is still in technical preview on Windows, the `path_provider` dependency can be satisfied by adding this dependency in your `pubspec.yaml` if you are on the `master` channel of Flutter:
 
 ```yaml
 device_preview:
