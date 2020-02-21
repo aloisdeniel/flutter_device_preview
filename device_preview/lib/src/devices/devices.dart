@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-import 'ios.dart' as iosDevice;
-import 'android.dart' as androidDevice;
+import 'ios.dart' as ios_device;
+import 'android.dart' as android_device;
 
 export 'ios.dart';
 
@@ -14,7 +14,7 @@ enum DeviceType {
   freeform,
 }
 
-typedef Widget FrameWidgetBuilder(
+typedef FrameWidgetBuilder = Widget Function(
   BuildContext context,
   Widget screen,
   Size screenSize,
@@ -29,7 +29,7 @@ class Device {
   final MediaQueryData landscape;
   final MediaQueryData portrait;
 
-  bool get canRotate => this.landscape != null && this.portrait != null;
+  bool get canRotate => landscape != null && portrait != null;
 
   const Device(
       {@required this.name,
@@ -47,7 +47,7 @@ class Device {
     this.portrait,
     @required this.frameBuilder,
   })  : assert(landscape != null || portrait != null),
-        this.platform = TargetPlatform.iOS;
+        platform = TargetPlatform.iOS;
 
   const Device.android({
     @required this.name,
@@ -56,16 +56,16 @@ class Device {
     this.portrait,
     @required this.frameBuilder,
   })  : assert(landscape != null || portrait != null),
-        this.platform = TargetPlatform.android;
+        platform = TargetPlatform.android;
 
-  const Device.fushia({
+  const Device.fuchsia({
     @required this.name,
     @required this.type,
     this.landscape,
     this.portrait,
     @required this.frameBuilder,
   })  : assert(landscape != null || portrait != null),
-        this.platform = TargetPlatform.fuchsia;
+        platform = TargetPlatform.fuchsia;
 
   Device copyWith(
           {String name,
@@ -85,25 +85,25 @@ class Device {
 }
 
 abstract class Devices {
-  static final all = <Device>[]..addAll(ios)..addAll(android);
+  static final all = <Device>[...ios, ...android];
 
   static final ios = <Device>[
-    iosDevice.iPhone8,
-    iosDevice.iPhoneXr,
-    iosDevice.iPhoneXs,
-    iosDevice.iPadAir2,
-    iosDevice.iPadPro_129_2,
-    iosDevice.watch40mm,
-    iosDevice.iosFreeform,
+    ios_device.iPhone8,
+    ios_device.iPhoneXr,
+    ios_device.iPhoneXs,
+    ios_device.iPadAir2,
+    ios_device.iPadPro_129_2,
+    ios_device.watch40mm,
+    ios_device.iosFreeform,
   ];
 
   static final android = <Device>[
-    androidDevice.smallPhone,
-    androidDevice.mediumPhone,
-    androidDevice.largePhone,
-    androidDevice.smallTablet,
-    androidDevice.mediumTablet,
-    androidDevice.watch,
-    androidDevice.freeform,
+    android_device.smallPhone,
+    android_device.mediumPhone,
+    android_device.largePhone,
+    android_device.smallTablet,
+    android_device.mediumTablet,
+    android_device.watch,
+    android_device.freeform,
   ];
 }

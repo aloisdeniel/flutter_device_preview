@@ -1,3 +1,8 @@
+## 0.2.7
+
+- Update to stable API surface for macOS
+- Fix API deprecations
+
 ## 0.2.6+1
 
 - Updated documentation.
@@ -25,7 +30,7 @@
 
 ## 0.2.1
 
-- Add trottling for data saving
+- Add throttling for data saving
 
 ## 0.2.0
 

@@ -65,34 +65,35 @@ class DevicePreview extends StatefulWidget {
       this.availablesLocales = defaultAvailableLocales,
       this.screenshotUploader = const FileioScreenshotUploader(),
       this.background = const BoxDecoration(
-          gradient: const LinearGradient(
+          gradient: LinearGradient(
         colors: [
-          const Color(0xFFf5f7fa),
-          const Color(0xFFc3cfe2),
+          Color(0xFFf5f7fa),
+          Color(0xFFc3cfe2),
         ],
       )),
       this.enabled = true})
       : assert(devices == null || devices.isNotEmpty),
         assert(usePreferences != null),
         assert(areSettingsEnabled != null),
-        this.usePreferences = (data == null) && usePreferences,
+        usePreferences = (data == null) && usePreferences,
         super(key: key);
 
   @override
   DevicePreviewState createState() => DevicePreviewState();
 
   static DevicePreviewState of(BuildContext context) =>
-      context.ancestorStateOfType(const TypeMatcher<DevicePreviewState>());
+      context.findAncestorStateOfType<DevicePreviewState>();
 
   static Device device(BuildContext context) {
     final provider =
-        context.inheritFromWidgetOfExactType(DeviceProvider) as DeviceProvider;
+        context.dependOnInheritedWidgetOfExactType<DeviceProvider>();
     return provider?.device;
   }
 
-  static MediaQueryData mediaQuery(BuildContext context, {bool nullOk: false}) {
+  static MediaQueryData mediaQuery(BuildContext context,
+      {bool nullOk = false}) {
     final provider =
-        context.inheritFromWidgetOfExactType(DeviceProvider) as DeviceProvider;
+        context.dependOnInheritedWidgetOfExactType<DeviceProvider>();
     return provider?.mediaQuery ?? MediaQuery.of(context, nullOk: nullOk);
   }
 
@@ -111,7 +112,7 @@ class DevicePreview extends StatefulWidget {
 }
 
 class DevicePreviewState extends State<DevicePreview> {
-  GlobalKey _repaintKey = GlobalKey();
+  final _repaintKey = GlobalKey();
   StreamController<DeviceScreenshot> _onScreenshot;
   UniqueKey _appKey = UniqueKey();
   Device get _device => availableDevices[
@@ -123,17 +124,17 @@ class DevicePreviewState extends State<DevicePreview> {
     MediaQueryData result;
 
     if (_device.type == DeviceType.freeform) {
-      result = (this._device.portrait ?? this._device.landscape)
-          .copyWith(size: this._data.freeformSize);
+      result = (_device.portrait ?? _device.landscape)
+          .copyWith(size: _data.freeformSize);
     } else if (!_device.canRotate) {
-      result = this._device.portrait ?? this._device.landscape;
+      result = _device.portrait ?? _device.landscape;
     } else {
       switch (_data.orientation) {
         case Orientation.landscape:
-          result = this._device.landscape;
+          result = _device.landscape;
           break;
         default:
-          result = this._device.portrait;
+          result = _device.portrait;
       }
     }
 
@@ -161,67 +162,65 @@ class DevicePreviewState extends State<DevicePreview> {
   bool get isDarkMode => _data.isDarkMode;
 
   set isDarkMode(bool value) {
-    this._data = _data.copyWith(isDarkMode: value)
-      ..save(!widget.usePreferences);
+    _data = _data.copyWith(isDarkMode: value)..save(!widget.usePreferences);
     if (widget.enabled) {
-      this.setState(() {});
+      setState(() {});
     }
   }
 
   bool get disableAnimations => _data.disableAnimations;
 
   set disableAnimations(bool value) {
-    this._data = _data.copyWith(disableAnimations: value)
+    _data = _data.copyWith(disableAnimations: value)
       ..save(!widget.usePreferences);
     if (widget.enabled) {
-      this.setState(() {});
+      setState(() {});
     }
   }
 
   bool get invertColors => _data.invertColors;
 
   set invertColors(bool value) {
-    this._data = _data.copyWith(invertColors: value)
-      ..save(!widget.usePreferences);
+    _data = _data.copyWith(invertColors: value)..save(!widget.usePreferences);
     if (widget.enabled) {
-      this.setState(() {});
+      setState(() {});
     }
   }
 
   bool get accessibleNavigation => _data.accessibleNavigation;
 
   set accessibleNavigation(bool value) {
-    this._data = _data.copyWith(accessibleNavigation: value)
+    _data = _data.copyWith(accessibleNavigation: value)
       ..save(!widget.usePreferences);
 
     if (widget.enabled) {
-      this.setState(() {});
+      setState(() {});
     }
   }
 
   double get textScaleFactor => _data.textScaleFactor;
 
   set textScaleFactor(double value) {
-    this._data = _data.copyWith(textScaleFactor: value)
+    _data = _data.copyWith(textScaleFactor: value)
       ..save(!widget.usePreferences);
     if (widget.enabled) {
-      this.setState(() {});
+      setState(() {});
     }
   }
 
   bool get boldText => _data.boldText;
 
   set boldText(bool value) {
-    this._data = _data.copyWith(boldText: value)..save(!widget.usePreferences);
+    _data = _data.copyWith(boldText: value)..save(!widget.usePreferences);
     if (widget.enabled) {
-      this.setState(() {});
+      setState(() {});
     }
   }
 
   /// The curren active device.
   Device get device {
     if (_device.type == DeviceType.freeform) {
-      final query = this.mediaQuery;
+      final query = mediaQuery;
       return _device.copyWith(landscape: query);
     }
 
@@ -237,43 +236,40 @@ class DevicePreviewState extends State<DevicePreview> {
   Size get freeformSize => _data.freeformSize;
 
   set locale(Locale value) {
-    this._data = _data.copyWith(locale: value.toString())
+    _data = _data.copyWith(locale: value.toString())
       ..save(!widget.usePreferences);
     if (widget.enabled) {
-      this.setState(() {});
+      setState(() {});
     }
   }
 
   set freeformSize(Size value) {
-    this._data = _data.copyWith(freeformSize: value)
-      ..save(!widget.usePreferences);
+    _data = _data.copyWith(freeformSize: value)..save(!widget.usePreferences);
     if (widget.enabled) {
-      this.setState(() {});
+      setState(() {});
     }
   }
 
   set isFrameVisible(bool value) {
-    this._data = _data.copyWith(isFrameVisible: value)
-      ..save(!widget.usePreferences);
+    _data = _data.copyWith(isFrameVisible: value)..save(!widget.usePreferences);
     if (widget.enabled) {
-      this.setState(() {});
+      setState(() {});
     }
   }
 
   set orientation(Orientation value) {
-    this._data = _data.copyWith(orientation: value)
-      ..save(!widget.usePreferences);
+    _data = _data.copyWith(orientation: value)..save(!widget.usePreferences);
     if (widget.enabled) {
-      this.setState(() {});
+      setState(() {});
     }
   }
 
   // Define the current active device.
   set device(Device device) {
-    this._data = _data.copyWith(deviceIndex: availableDevices.indexOf(device))
+    _data = _data.copyWith(deviceIndex: availableDevices.indexOf(device))
       ..save(!widget.usePreferences);
     if (widget.enabled) {
-      this.setState(() {});
+      setState(() {});
     }
   }
 
@@ -300,13 +296,13 @@ class DevicePreviewState extends State<DevicePreview> {
   }
 
   void rotate() {
-    this.orientation = Orientation
-        .values[(this.orientation.index + 1) % Orientation.values.length];
+    orientation =
+        Orientation.values[(orientation.index + 1) % Orientation.values.length];
   }
 
   void restart() {
-    this._appKey = UniqueKey();
-    this.setState(() {});
+    _appKey = UniqueKey();
+    setState(() {});
   }
 
   void toggleFrame() => isFrameVisible = !isFrameVisible;
@@ -322,12 +318,12 @@ class DevicePreviewState extends State<DevicePreview> {
 
   @override
   void initState() {
-    this._data = DevicePreviewData(
+    _data = DevicePreviewData(
       locale: _defaultLocale,
     );
 
-    this._loadData();
-    this._start();
+    _loadData();
+    _start();
     super.initState();
   }
 
@@ -344,17 +340,17 @@ class DevicePreviewState extends State<DevicePreview> {
       if (data.locale == null) {
         data = data.copyWith(locale: _defaultLocale);
       }
-      this._data = data;
+      _data = data;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        this.setState(() {});
+        setState(() {});
       });
     }
   }
 
   @override
   void didUpdateWidget(DevicePreview oldWidget) {
-    if (oldWidget.enabled != this.widget.enabled) {
-      this.setState(() {});
+    if (oldWidget.enabled != widget.enabled) {
+      setState(() {});
     }
 
     super.didUpdateWidget(oldWidget);
@@ -385,12 +381,12 @@ class DevicePreviewState extends State<DevicePreview> {
       ),
     );
 
-    final isRotated = this.orientation == Orientation.landscape;
+    final isRotated = orientation == Orientation.landscape;
     final screenSize = isRotated || device.portrait == null
         ? device.landscape.size
         : device.portrait.size;
 
-    Widget preview = _data.isFrameVisible
+    var preview = _data.isFrameVisible
         ? device.frameBuilder(
             context,
             screen,
@@ -433,7 +429,7 @@ class DevicePreviewState extends State<DevicePreview> {
                       Positioned.fill(
                           child: Padding(
                         padding: (_device.type == DeviceType.freeform)
-                            ? const EdgeInsets.only(bottom: 48.0)
+                            ? const EdgeInsets.only(bottom: 48)
                             : EdgeInsets.zero,
                         child: FittedBox(
                           fit: BoxFit.contain,
@@ -470,5 +466,5 @@ class DeviceProvider extends InheritedWidget {
 
   @override
   bool updateShouldNotify(DeviceProvider oldWidget) =>
-      oldWidget.device != this.device || mediaQuery != oldWidget.mediaQuery;
+      oldWidget.device != device || mediaQuery != oldWidget.mediaQuery;
 }

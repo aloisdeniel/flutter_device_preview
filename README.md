@@ -19,7 +19,7 @@
 
 * Preview any device from any device
 * Change device orientation
-* Dynamic system configuration : language, dark mode, text scaling factor
+* Dynamic system configuration: language, dark mode, text scaling factor
 * Freeform device with adjustable resolution and safe areas
 * Keep the application state
 * Take screenshots
@@ -32,16 +32,13 @@ void main() => runApp(
     builder: (context) => MyApp(),
   ),
 );
-```
 
-
-```dart
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      locale: DevicePreview.of(context).locale, // <--- Add the locale 
-      builder: DevicePreview.appBuilder, // <--- Add the builder 
+      locale: DevicePreview.of(context).locale, // <--- Add the locale
+      builder: DevicePreview.appBuilder, // <--- Add the builder
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -60,22 +57,32 @@ There are some aspects of mobile devices that Device Preview will never be able 
 
 ## FAQ
 
-> Can I use device preview with Desktop embedding ?
+> What devices can I use for previewing?
 
-Yes, but you have to make sure that you have support for `path_provider` (which is not included yet in the package since Desktop platforms are still in prerelease).
+If you are running the `stable`, `beta` or `dev` channel of Flutter, you can use Android or iOS.
+If you are running the `master` channel of Flutter, you can use macOS, Android or iOS.
 
-* For macOS, you will need the `path_provider_macos`package until `path_provider` package provides an implementation (soon).
-* For Linux and Windows, a (documentation)[https://github.com/google/flutter-desktop-embedding/blob/master/plugins/flutter_plugins/README.md] is available (*this is subject to change*).
+> What about Windows?
 
+Since Flutter is still in technical preview on Windows, the `path_provider` dependency can be satisfied by adding this dependency in your `pubspec.yaml` if you are on the `master` channel of Flutter:
+
+```yaml
+device_preview:
+path_provider_fde:
+  git:
+    url: https://github.com/google/flutter-desktop-embedding/
+    path: plugins/flutter_plugins/path_provider_fde
+```
+This is a temporary solution only. More information about this plug-in can be found [here](https://github.com/google/flutter-desktop-embedding/blob/master/plugins/flutter_plugins/README.md).
 
 ## Ideas and roadmap
 
-- Status bar
-- Override WidgetsBinding
-  - Simulate physical button
-  - Simulate lifecycle events
-- Storage explorer
-- Add custom devices state
-- Desktop devices
-- TV devices
-- Complete documentation
+* Status bar
+* Override WidgetsBinding
+  * Simulate physical button
+  * Simulate lifecycle events
+* Storage explorer
+* Add custom devices state
+* Desktop devices
+* TV devices
+* Complete documentation

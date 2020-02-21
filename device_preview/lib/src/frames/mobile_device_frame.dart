@@ -30,22 +30,22 @@ class MobileDeviceFrame extends StatelessWidget {
       {@required this.child,
       @required this.isRotated,
       @required Size screenSize,
-      this.borderSize = 4.0,
-      this.borders = const EdgeInsets.all(38.0),
-      this.edgeRadius = const BorderRadius.all(Radius.circular(20.0)),
-      this.screenRadius = const BorderRadius.all(Radius.circular(8.0)),
+      this.borderSize = 4,
+      this.borders = const EdgeInsets.all(38),
+      this.edgeRadius = const BorderRadius.all(Radius.circular(20)),
+      this.screenRadius = const BorderRadius.all(Radius.circular(8)),
       this.notch,
       this.fillColor = const Color(0xFF1A1A1A),
       this.buttonColor = const Color(0xFF2A2A2A),
       this.borderColor = const Color(0xFF5A5A5A),
       this.sideButtons = const []})
-      : this.screenSize = isRotated && screenSize != null
+      : screenSize = isRotated && screenSize != null
             ? Size(screenSize.height, screenSize.width)
             : screenSize;
 
   @override
   Widget build(BuildContext context) {
-    var padding = this.borders;
+    var padding = borders;
 
     if (isRotated) {
       padding = EdgeInsets.only(
@@ -57,14 +57,14 @@ class MobileDeviceFrame extends StatelessWidget {
     }
 
     return Padding(
-      padding: EdgeInsets.all(32.0),
+      padding: EdgeInsets.all(32),
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
           Positioned.fill(
             child: DecoratedBox(
               decoration: BoxDecoration(
-                borderRadius: this.edgeRadius,
+                borderRadius: edgeRadius,
                 boxShadow: [
                   BoxShadow(
                       blurRadius: 70,
@@ -75,7 +75,7 @@ class MobileDeviceFrame extends StatelessWidget {
           ),
           Padding(
             padding: padding,
-            child: this.child,
+            child: child,
           ),
           Positioned.fill(
             child: IgnorePointer(
@@ -232,8 +232,8 @@ class _DeviceFramePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_DeviceFramePainter oldDelegate) =>
-      this.device != oldDelegate.device ||
-      this.device.isRotated != oldDelegate.device.isRotated;
+      device != oldDelegate.device ||
+      device.isRotated != oldDelegate.device.isRotated;
 
   @override
   bool shouldRebuildSemantics(_DeviceFramePainter oldDelegate) => false;
@@ -266,32 +266,32 @@ class DeviceSideButton {
       @required this.size,
       @required this.thickness,
       this.radius = const Radius.circular(4)})
-      : this.edge = DeviceEdge.left,
-        this.position = fromTop;
+      : edge = DeviceEdge.left,
+        position = fromTop;
 
   const DeviceSideButton.top(
       {double fromLeft,
       @required this.size,
       @required this.thickness,
       this.radius = const Radius.circular(4)})
-      : this.edge = DeviceEdge.top,
-        this.position = fromLeft;
+      : edge = DeviceEdge.top,
+        position = fromLeft;
 
   const DeviceSideButton.right(
       {@required double fromTop,
       @required this.size,
       @required this.thickness,
       this.radius = const Radius.circular(4)})
-      : this.edge = DeviceEdge.right,
-        this.position = fromTop;
+      : edge = DeviceEdge.right,
+        position = fromTop;
 
   const DeviceSideButton.bottom(
       {@required double fromLeft,
       @required this.size,
       @required this.thickness,
       this.radius = const Radius.circular(4)})
-      : this.edge = DeviceEdge.bottom,
-        this.position = fromLeft;
+      : edge = DeviceEdge.bottom,
+        position = fromLeft;
 }
 
 class DeviceNotch {

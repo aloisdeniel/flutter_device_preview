@@ -8,13 +8,13 @@ class FreeformResizer extends StatelessWidget {
   Widget build(BuildContext context) {
     final preview = DevicePreview.of(context);
     final media = DevicePreview.mediaQuery(context);
-    const activeColor = const Color(0XFF444444);
-    const inactiveColor = const Color(0XFFAAAAAA);
+    const activeColor = Color(0XFF444444);
+    const inactiveColor = Color(0XFFAAAAAA);
     return Material(
       color: Colors.transparent,
       child: Container(
         height: 48,
-        padding: EdgeInsets.all(12.0),
+        padding: EdgeInsets.all(12),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
           Slider(
@@ -32,19 +32,19 @@ class FreeformResizer extends StatelessWidget {
               child: Text(
                 media.size.width.round().toString(),
                 textAlign: TextAlign.center,
-                style: TextStyle(color: activeColor, fontSize: 11.0),
+                style: TextStyle(color: activeColor, fontSize: 11),
               )),
           Text(
-            " x ",
+            ' x ',
             textAlign: TextAlign.center,
-            style: TextStyle(color: inactiveColor, fontSize: 11.0),
+            style: TextStyle(color: inactiveColor, fontSize: 11),
           ),
           SizedBox(
             width: 32,
             child: Text(
               media.size.height.round().toString(),
               textAlign: TextAlign.center,
-              style: TextStyle(color: activeColor, fontSize: 11.0),
+              style: TextStyle(color: activeColor, fontSize: 11),
             ),
           ),
           Slider(
