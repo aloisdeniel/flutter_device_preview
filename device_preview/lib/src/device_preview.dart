@@ -82,18 +82,18 @@ class DevicePreview extends StatefulWidget {
   DevicePreviewState createState() => DevicePreviewState();
 
   static DevicePreviewState of(BuildContext context) =>
-      context.ancestorStateOfType(const TypeMatcher<DevicePreviewState>());
+      context.findAncestorStateOfType<DevicePreviewState>();
 
   static Device device(BuildContext context) {
     final provider =
-        context.inheritFromWidgetOfExactType(DeviceProvider) as DeviceProvider;
+        context.dependOnInheritedWidgetOfExactType<DeviceProvider>();
     return provider?.device;
   }
 
   static MediaQueryData mediaQuery(BuildContext context,
       {bool nullOk = false}) {
     final provider =
-        context.inheritFromWidgetOfExactType(DeviceProvider) as DeviceProvider;
+        context.dependOnInheritedWidgetOfExactType<DeviceProvider>();
     return provider?.mediaQuery ?? MediaQuery.of(context, nullOk: nullOk);
   }
 

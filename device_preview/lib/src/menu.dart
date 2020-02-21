@@ -91,9 +91,7 @@ class _DevicePreviewMenuState extends State<DevicePreviewMenu> {
 class DevicePreviewDrawer extends StatelessWidget {
   Iterable<Widget> buildItems(BuildContext context) sync* {
     final preview = DevicePreview.of(context);
-    final root = context
-            .ancestorStateOfType(const TypeMatcher<_DevicePreviewMenuState>())
-        as _DevicePreviewMenuState;
+    final root = context.findAncestorStateOfType<_DevicePreviewMenuState>();
     yield _SectionHeader('State');
     yield _Action(
         icon: Icons.refresh,
