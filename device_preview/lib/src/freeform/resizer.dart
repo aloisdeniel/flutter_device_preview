@@ -8,8 +8,8 @@ class FreeformResizer extends StatelessWidget {
   Widget build(BuildContext context) {
     final preview = DevicePreview.of(context);
     final media = DevicePreview.mediaQuery(context);
-    const activeColor = const Color(0XFF444444);
-    const inactiveColor = const Color(0XFFAAAAAA);
+    const activeColor = Color(0XFF444444);
+    const inactiveColor = Color(0XFFAAAAAA);
     return Material(
       color: Colors.transparent,
       child: Container(
@@ -35,7 +35,7 @@ class FreeformResizer extends StatelessWidget {
                 style: TextStyle(color: activeColor, fontSize: 11.0),
               )),
           Text(
-            " x ",
+            ' x ',
             textAlign: TextAlign.center,
             style: TextStyle(color: inactiveColor, fontSize: 11.0),
           ),

@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:path_provider/path_provider.dart';
 
 class DevicePreviewData {
-  static const Size freeformMaxSize = const Size(2400, 2400);
+  static const Size freeformMaxSize = Size(2400, 2400);
 
   final Orientation orientation;
   final int deviceIndex;
@@ -66,18 +66,18 @@ class DevicePreviewData {
 
   Map<String, dynamic> toMap() {
     return {
-      "orientation": orientation.index,
-      "deviceIndex": deviceIndex,
-      "locale": locale,
-      "isFrameVisible": isFrameVisible,
-      "isDarkMode": isDarkMode,
-      "boldText": boldText,
-      "disableAnimations": disableAnimations,
-      "highContrast": highContrast,
-      "accessibleNavigation": accessibleNavigation,
-      "invertColors": invertColors,
-      "textScaleFactor": textScaleFactor,
-      "freeformSize": [
+      'orientation': orientation.index,
+      'deviceIndex': deviceIndex,
+      'locale': locale,
+      'isFrameVisible': isFrameVisible,
+      'isDarkMode': isDarkMode,
+      'boldText': boldText,
+      'disableAnimations': disableAnimations,
+      'highContrast': highContrast,
+      'accessibleNavigation': accessibleNavigation,
+      'invertColors': invertColors,
+      'textScaleFactor': textScaleFactor,
+      'freeformSize': [
         freeformSize.width,
         freeformSize.height,
       ],
@@ -87,19 +87,19 @@ class DevicePreviewData {
   factory DevicePreviewData.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
     final size =
-        map["freeformSize"] ?? [freeformMaxSize.width, freeformMaxSize.height];
+        map['freeformSize'] ?? [freeformMaxSize.width, freeformMaxSize.height];
     return DevicePreviewData(
-      orientation: Orientation.values[map["orientation"] ?? 0],
-      deviceIndex: map["deviceIndex"] ?? 0,
-      locale: map["locale"],
-      isFrameVisible: map["isFrameVisible"] ?? false,
-      isDarkMode: map["isDarkMode"] ?? false,
-      boldText: map["boldText"] ?? false,
-      disableAnimations: map["disableAnimations"] ?? false,
-      highContrast: map["highContrast"] ?? false,
-      accessibleNavigation: map["accessibleNavigation"] ?? false,
-      invertColors: map["invertColors"] ?? false,
-      textScaleFactor: map["textScaleFactor"] ?? 1.0,
+      orientation: Orientation.values[map['orientation'] ?? 0],
+      deviceIndex: map['deviceIndex'] ?? 0,
+      locale: map['locale'],
+      isFrameVisible: map['isFrameVisible'] ?? false,
+      isDarkMode: map['isDarkMode'] ?? false,
+      boldText: map['boldText'] ?? false,
+      disableAnimations: map['disableAnimations'] ?? false,
+      highContrast: map['highContrast'] ?? false,
+      accessibleNavigation: map['accessibleNavigation'] ?? false,
+      invertColors: map['invertColors'] ?? false,
+      textScaleFactor: map['textScaleFactor'] ?? 1.0,
       freeformSize: Size(
         size[0],
         size[1],
@@ -107,7 +107,7 @@ class DevicePreviewData {
     );
   }
 
-  static const String _preferencesFile = "device_preview.config";
+  static const String _preferencesFile = 'device_preview.config';
 
   static Future _saveTask;
   static DevicePreviewData _saveData;
@@ -115,9 +115,7 @@ class DevicePreviewData {
   save([bool ignore = false]) async {
     if (!ignore) {
       _saveData = this;
-      if (_saveTask == null) {
-        _saveTask = _save();
-      }
+      _saveTask ??= _save();
       await _saveTask;
     }
   }
@@ -138,7 +136,7 @@ class DevicePreviewData {
       final file = File('${dir.path}/$_preferencesFile');
       if (!await file.exists()) return null;
       final json = await file.readAsString();
-      if (json == null || json.length == 0) return null;
+      if (json == null || json.isEmpty) return null;
       return DevicePreviewData.fromMap(jsonDecode(json));
     }
     return null;

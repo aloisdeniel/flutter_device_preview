@@ -13,11 +13,11 @@ class _DevicePreviewMenuState extends State<DevicePreviewMenu> {
   bool _isOpen = false;
 
   void open() {
-    if (!_isOpen) this.setState(() => _isOpen = true);
+    if (!_isOpen) setState(() => _isOpen = true);
   }
 
   void close() {
-    if (_isOpen) this.setState(() => _isOpen = false);
+    if (_isOpen) setState(() => _isOpen = false);
   }
 
   @override
@@ -52,7 +52,7 @@ class _DevicePreviewMenuState extends State<DevicePreviewMenu> {
             ),
             child: Icon(Icons.settings),
           ),
-          onTap: this.open,
+          onTap: open,
         ),
       ),
       secondChild: IgnorePointer(
@@ -60,10 +60,10 @@ class _DevicePreviewMenuState extends State<DevicePreviewMenu> {
         child: Stack(
           children: <Widget>[
             Positioned.fill(
-              key: Key("barrier"),
+              key: Key('barrier'),
               child: GestureDetector(
                 onTap: () {
-                  this.close();
+                  close();
                 },
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
@@ -74,7 +74,7 @@ class _DevicePreviewMenuState extends State<DevicePreviewMenu> {
               ),
             ),
             Positioned(
-              key: Key("drawer"),
+              key: Key('drawer'),
               top: 0,
               bottom: 0,
               left: 0,
@@ -94,48 +94,48 @@ class DevicePreviewDrawer extends StatelessWidget {
     final root = context
             .ancestorStateOfType(const TypeMatcher<_DevicePreviewMenuState>())
         as _DevicePreviewMenuState;
-    yield _SectionHeader("State");
+    yield _SectionHeader('State');
     yield _Action(
         icon: Icons.refresh,
-        title: "Restart application",
+        title: 'Restart application',
         onTap: () {
           preview.restart();
           root.close();
         });
     yield _Action(
         icon: Icons.screen_rotation,
-        title: "Rotate",
+        title: 'Rotate',
         onTap: () {
           preview.rotate();
           root.close();
         });
     yield _Action(
         icon: Icons.photo_camera,
-        title: "Take a screenshot",
+        title: 'Take a screenshot',
         onTap: () async {
           try {
             final screenshot = await preview.screenshot();
             final link = await preview.screenshotUploader.upload(screenshot);
-            print("[DevicePreview] Screenshot : $link");
+            print('[DevicePreview] Screenshot : $link');
           } catch (e) {
-            print("[DevicePreview] Error while uploading screenshot : $e");
+            print('[DevicePreview] Error while uploading screenshot : $e');
           }
           root.close();
         });
 
     yield _Action(
         icon: Icons.devices,
-        title: "${preview.isFrameVisible ? "Hide" : "Show"} device frame",
+        title: '${preview.isFrameVisible ? "Hide" : "Show"} device frame',
         onTap: () {
           preview.toggleFrame();
           root.close();
         });
 
-    yield _SectionHeader("Preferences");
+    yield _SectionHeader('Preferences');
 
     yield _SwitchAction(
         icon: preview.isDarkMode ? Icons.brightness_low : Icons.brightness_high,
-        title: "Dark mode",
+        title: 'Dark mode',
         initialValue: preview.isDarkMode,
         onChanged: (v) {
           preview.isDarkMode = v;
@@ -143,7 +143,7 @@ class DevicePreviewDrawer extends StatelessWidget {
 
     yield _SwitchAction(
         icon: Icons.movie_filter,
-        title: "Disable animations",
+        title: 'Disable animations',
         initialValue: preview.disableAnimations,
         onChanged: (v) {
           preview.disableAnimations = v;
@@ -151,7 +151,7 @@ class DevicePreviewDrawer extends StatelessWidget {
 
     yield _SwitchAction(
         icon: Icons.invert_colors,
-        title: "Invert colors",
+        title: 'Invert colors',
         initialValue: preview.invertColors,
         onChanged: (v) {
           preview.invertColors = v;
@@ -159,7 +159,7 @@ class DevicePreviewDrawer extends StatelessWidget {
 
     yield _SwitchAction(
         icon: Icons.accessibility_new,
-        title: "Accessible navigation",
+        title: 'Accessible navigation',
         initialValue: preview.accessibleNavigation,
         onChanged: (v) {
           preview.accessibleNavigation = v;
@@ -167,7 +167,7 @@ class DevicePreviewDrawer extends StatelessWidget {
 
     yield _SwitchAction(
         icon: Icons.format_bold,
-        title: "Bold text",
+        title: 'Bold text',
         initialValue: preview.boldText,
         onChanged: (v) {
           preview.boldText = v;
@@ -175,7 +175,7 @@ class DevicePreviewDrawer extends StatelessWidget {
 
     yield _SliderAction(
       icon: Icons.text_fields,
-      title: "Text scale factor",
+      title: 'Text scale factor',
       initialValue: preview.textScaleFactor,
       minValue: 0.5,
       maxValue: 3.0,
@@ -184,11 +184,11 @@ class DevicePreviewDrawer extends StatelessWidget {
       },
     );
 
-    yield _SectionHeader("Localization");
+    yield _SectionHeader('Localization');
 
     yield _PickAction<NamedLocale>(
         icon: Icons.language,
-        title: "Locale",
+        title: 'Locale',
         values: preview.availablesLocales,
         initialValue: preview.availablesLocales
             .firstWhere((x) => x.locale == preview.locale),
@@ -196,7 +196,7 @@ class DevicePreviewDrawer extends StatelessWidget {
           preview.locale = v.locale;
         });
 
-    yield _SectionHeader("Device");
+    yield _SectionHeader('Device');
 
     final iosDevices = preview.availableDevices
         .where((x) => x.platform == TargetPlatform.iOS)
@@ -207,7 +207,7 @@ class DevicePreviewDrawer extends StatelessWidget {
         .toList();
 
     if (iosDevices.isNotEmpty) {
-      yield _GroupHeader("iOS");
+      yield _GroupHeader('iOS');
       for (var device in iosDevices) {
         yield _DeviceItem(device, () {
           preview.device = device;
@@ -217,7 +217,7 @@ class DevicePreviewDrawer extends StatelessWidget {
     }
 
     if (androidDevices.isNotEmpty) {
-      yield _GroupHeader("Android");
+      yield _GroupHeader('Android');
       for (var device in androidDevices) {
         yield _DeviceItem(device, () {
           preview.device = device;
@@ -330,13 +330,13 @@ class _SliderAction extends StatelessWidget {
               value: initialValue,
               max: maxValue,
               min: minValue,
-              onChanged: this.onChanged,
+              onChanged: onChanged,
             ),
           ),
           SizedBox(
               width: 36,
               child: Text(
-                this.initialValue.toStringAsFixed(1),
+                initialValue.toStringAsFixed(1),
               )),
         ],
       ),
@@ -374,7 +374,7 @@ class _SwitchAction extends StatelessWidget {
           ),
           Switch(
             value: initialValue,
-            onChanged: this.onChanged,
+            onChanged: onChanged,
           ),
         ],
       ),
@@ -416,11 +416,11 @@ class _PickPageState<T> extends State<_PickPage<T>> {
       appBar: AppBar(
         title: Row(
           children: <Widget>[
-            Icon(this.widget.icon),
+            Icon(widget.icon),
             SizedBox(
               width: 32,
             ),
-            Text(this.widget.title),
+            Text(widget.title),
           ],
         ),
         actions: <Widget>[
@@ -441,9 +441,7 @@ class _PickPageState<T> extends State<_PickPage<T>> {
         ],
       ),
       body: ListView(
-        children: this
-            .widget
-            .values
+        children: widget.values
             .map(
               (x) => _Action(
                 title: x.toString(),
@@ -477,7 +475,7 @@ class PickPageDelegate<T> extends SearchDelegate<T> {
         progress: transitionAnimation,
       ),
       onPressed: () {
-        this.close(context, null);
+        close(context, null);
       },
     );
   }
@@ -503,20 +501,19 @@ class PickPageDelegate<T> extends SearchDelegate<T> {
             .toString()
             .toLowerCase()
             .trim()
-            .contains(this.query.toLowerCase().trim()))
+            .contains(query.toLowerCase().trim()))
         .toList();
   }
 
   @override
   Widget buildResults(BuildContext context) {
     return ListView(
-      children: this
-          ._filteredValues()
+      children: _filteredValues()
           .map(
             (x) => _Action(
               title: x.toString(),
               onTap: () {
-                this.close(context, x);
+                close(context, x);
               },
             ),
           )
@@ -527,13 +524,12 @@ class PickPageDelegate<T> extends SearchDelegate<T> {
   @override
   Widget buildSuggestions(BuildContext context) {
     return ListView(
-      children: this
-          ._filteredValues()
+      children: _filteredValues()
           .map(
             (x) => _Action(
               title: x.toString(),
               onTap: () {
-                this.close(context, x);
+                close(context, x);
               },
             ),
           )
@@ -568,15 +564,15 @@ class _PickAction<T> extends StatelessWidget {
         final result = await Navigator.of(context).push(
           MaterialPageRoute(
             builder: (c) => _PickPage<T>(
-              title: this.title,
-              icon: this.icon,
-              initialValue: this.initialValue,
-              values: this.values,
+              title: title,
+              icon: icon,
+              initialValue: initialValue,
+              values: values,
             ),
           ),
         );
         if (result != null) {
-          this.onChanged(result);
+          onChanged(result);
         }
       },
       splashColor: Theme.of(context).primaryColor,
@@ -693,7 +689,7 @@ class _DeviceItem extends StatelessWidget {
       duration: const Duration(milliseconds: 200),
       color: isSelected ? Theme.of(context).primaryColor : Colors.transparent,
       child: InkWell(
-        onTap: !isSelected ? this.onTap : null,
+        onTap: !isSelected ? onTap : null,
         splashColor: Theme.of(context).primaryColor,
         highlightColor: Theme.of(context).primaryColor.withOpacity(0.5),
         child: Padding(

@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'devices.dart';
 
 final freeform = Device.android(
-  name: "Android Freeform",
+  name: 'Android Freeform',
   type: DeviceType.freeform,
   frameBuilder: (context, screen, screenSize, isRotated) => MobileDeviceFrame(
     child: screen,
@@ -19,7 +19,7 @@ final freeform = Device.android(
 
 // Android One
 final smallPhone = Device.android(
-  name: "Small phone",
+  name: 'Small phone',
   type: DeviceType.phone,
   frameBuilder: _phoneFrameWithoutNotch,
   landscape: MediaQueryData(
@@ -35,7 +35,7 @@ final smallPhone = Device.android(
 
 // S8
 final mediumPhone = Device.android(
-  name: "Medium phone",
+  name: 'Medium phone',
   type: DeviceType.phone,
   frameBuilder: _phoneFrameWithoutNotch,
   landscape: MediaQueryData(
@@ -51,7 +51,7 @@ final mediumPhone = Device.android(
 
 // Galaxy Note 4
 final largePhone = Device.android(
-  name: "Large phone",
+  name: 'Large phone',
   type: DeviceType.phone,
   frameBuilder: _phoneFrameWithoutNotch,
   landscape: MediaQueryData(
@@ -67,7 +67,7 @@ final largePhone = Device.android(
 
 // Nexus 7
 final smallTablet = Device.android(
-  name: "Small tablet",
+  name: 'Small tablet',
   type: DeviceType.tablet,
   frameBuilder: _phoneFrameWithoutNotch,
   landscape: MediaQueryData(
@@ -83,7 +83,7 @@ final smallTablet = Device.android(
 
 // Galaxy Tab 10
 final mediumTablet = Device.android(
-  name: "Medium tablet",
+  name: 'Medium tablet',
   type: DeviceType.tablet,
   frameBuilder: _phoneFrameWithoutNotch,
   landscape: MediaQueryData(
@@ -99,7 +99,7 @@ final mediumTablet = Device.android(
 
 // LG G Watch
 final watch = Device.android(
-    name: "Watch ",
+    name: 'Watch ',
     type: DeviceType.watch,
     frameBuilder: (context, screen, screenSize, isRotated) => MobileDeviceFrame(
           isRotated: isRotated,

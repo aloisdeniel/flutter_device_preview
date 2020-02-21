@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'devices.dart';
 
 final iosFreeform = Device.iOS(
-    name: "iOS Freeform",
+    name: 'iOS Freeform',
     type: DeviceType.freeform,
     frameBuilder: (context, screen, screenSize, isRotated) => MobileDeviceFrame(
           child: screen,
@@ -15,8 +15,8 @@ final iosFreeform = Device.iOS(
         size: Size(0, 0),
         devicePixelRatio: 2.0));
 
-const iPhone8 = const Device.iOS(
-    name: "iPhone 8",
+const iPhone8 = Device.iOS(
+    name: 'iPhone 8',
     type: DeviceType.phone,
     frameBuilder: _phoneFrameWithoutNotch,
     landscape: MediaQueryData(
@@ -26,8 +26,8 @@ const iPhone8 = const Device.iOS(
         size: Size(375, 667),
         devicePixelRatio: 2.0));
 
-const iPhoneXs = const Device.iOS(
-    name: "iPhone XS",
+const iPhoneXs = Device.iOS(
+    name: 'iPhone XS',
     type: DeviceType.phone,
     portrait: MediaQueryData(
         size: Size(375, 812),
@@ -46,8 +46,8 @@ const iPhoneXs = const Device.iOS(
         devicePixelRatio: 3.0),
     frameBuilder: _phoneFrameWithNotch);
 
-const iPhoneXr = const Device.iOS(
-    name: "iPhone XR",
+const iPhoneXr = Device.iOS(
+    name: 'iPhone XR',
     type: DeviceType.phone,
     portrait: MediaQueryData(
         size: Size(375, 812),
@@ -67,7 +67,7 @@ const iPhoneXr = const Device.iOS(
     frameBuilder: _phoneFrameWithNotch);
 
 final iPadAir2 = Device.iOS(
-  name: "iPad Air 2",
+  name: 'iPad Air 2',
   type: DeviceType.tablet,
   portrait: MediaQueryData(
       padding: EdgeInsets.only(top: 20.0),
@@ -83,7 +83,7 @@ final iPadAir2 = Device.iOS(
 );
 
 final iPadPro_129_2 = Device.iOS(
-  name: "iPad Pro (12.9-inch) (2nd generation)",
+  name: 'iPad Pro (12.9-inch) (2nd generation)',
   type: DeviceType.tablet,
   portrait: MediaQueryData(
       padding: EdgeInsets.only(top: 20),
@@ -96,7 +96,7 @@ final iPadPro_129_2 = Device.iOS(
 );
 
 final watch40mm = Device.iOS(
-    name: "Watch 40mm",
+    name: 'Watch 40mm',
     type: DeviceType.watch,
     frameBuilder: (context, screen, screenSize, isRotated) => MobileDeviceFrame(
           isRotated: isRotated,

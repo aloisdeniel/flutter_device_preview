@@ -14,7 +14,7 @@ enum DeviceType {
   freeform,
 }
 
-typedef Widget FrameWidgetBuilder(
+typedef FrameWidgetBuilder = Widget Function(
   BuildContext context,
   Widget screen,
   Size screenSize,
@@ -29,7 +29,7 @@ class Device {
   final MediaQueryData landscape;
   final MediaQueryData portrait;
 
-  bool get canRotate => this.landscape != null && this.portrait != null;
+  bool get canRotate => landscape != null && portrait != null;
 
   const Device(
       {@required this.name,
@@ -47,7 +47,7 @@ class Device {
     this.portrait,
     @required this.frameBuilder,
   })  : assert(landscape != null || portrait != null),
-        this.platform = TargetPlatform.iOS;
+        platform = TargetPlatform.iOS;
 
   const Device.android({
     @required this.name,
@@ -56,16 +56,16 @@ class Device {
     this.portrait,
     @required this.frameBuilder,
   })  : assert(landscape != null || portrait != null),
-        this.platform = TargetPlatform.android;
+        platform = TargetPlatform.android;
 
-  const Device.fushia({
+  const Device.fuchsia({
     @required this.name,
     @required this.type,
     this.landscape,
     this.portrait,
     @required this.frameBuilder,
   })  : assert(landscape != null || portrait != null),
-        this.platform = TargetPlatform.fuchsia;
+        platform = TargetPlatform.fuchsia;
 
   Device copyWith(
           {String name,
@@ -85,7 +85,7 @@ class Device {
 }
 
 abstract class Devices {
-  static final all = <Device>[]..addAll(ios)..addAll(android);
+  static final all = <Device>[...ios, ...android];
 
   static final ios = <Device>[
     iosDevice.iPhone8,

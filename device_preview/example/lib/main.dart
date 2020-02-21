@@ -22,8 +22,8 @@ class MyApp extends StatelessWidget {
       locale: DevicePreview.of(context)?.locale, // <--
       builder: DevicePreview.appBuilder, // <--
       supportedLocales: const [
-        Locale("en"),
-        Locale("fr", "FR"),
+        Locale('en'),
+        Locale('fr', 'FR'),
       ],
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: theme.textTheme.headline,
             ),
             PlatformButton(
-              child: PlatformText("Open"),
+              child: PlatformText('Open'),
               onPressed: () {
                 showPlatformDialog(
                   context: context,
@@ -85,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     width: 300,
                     padding: const EdgeInsets.all(20),
                     child: PlatformButton(
-                      child: PlatformText("Close"),
+                      child: PlatformText('Close'),
                       onPressed: () {
                         Navigator.pop(context);
                       },

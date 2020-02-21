@@ -32,10 +32,7 @@ void main() => runApp(
     builder: (context) => MyApp(),
   ),
 );
-```
 
-
-```dart
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -60,9 +57,17 @@ There are some aspects of mobile devices that Device Preview will never be able 
 
 ## FAQ
 
-> Can I use device preview with Desktop embedding ?
+> Can I use macOS for device previews?
 
-Yes, you just have to add thoses dependencies in your `pubspec.yaml` :
+Yes, you just have to add those dependencies in your `pubspec.yaml` :
+
+```yaml
+device_preview:
+path_provider_macos:
+
+> What about Windows?
+
+Since Flutter is still in technical preview on Windows, the `path_provider` dependency can be satisfied by adding this dependencies in your `pubspec.yaml`:
 
 ```yaml
 device_preview:
@@ -72,14 +77,16 @@ path_provider_fde:
     path: plugins/flutter_plugins/path_provider_fde
 ```
 
+This is a temporary solution only. More information about this plug-in can be found [here](https://github.com/google/flutter-desktop-embedding/blob/master/plugins/flutter_plugins/README.md).
+
 ## Ideas and roadmap
 
-- Status bar
-- Override WidgetsBinding
-  - Simulate physical button
-  - Simulate lifecycle events
-- Storage explorer
-- Add custom devices state
-- Desktop devices
-- TV devices
-- Complete documentation
+* Status bar
+* Override WidgetsBinding
+  * Simulate physical button
+  * Simulate lifecycle events
+* Storage explorer
+* Add custom devices state
+* Desktop devices
+* TV devices
+* Complete documentation
