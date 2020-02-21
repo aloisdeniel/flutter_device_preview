@@ -59,7 +59,7 @@ There are some aspects of mobile devices that Device Preview will never be able 
 
 > What devices can I use for previewing?
 
-If you are running the `beta` or `dev` channel of Flutter, you can use Android or iOS.
+If you are running the `stable`, `beta` or `dev` channel of Flutter, you can use Android or iOS.
 If you are running the `master` channel of Flutter, you can use macOS, Android or iOS.
 
 > What about Windows?
@@ -73,7 +73,6 @@ path_provider_fde:
     url: https://github.com/google/flutter-desktop-embedding/
     path: plugins/flutter_plugins/path_provider_fde
 ```
-
 This is a temporary solution only. More information about this plug-in can be found [here](https://github.com/google/flutter-desktop-embedding/blob/master/plugins/flutter_plugins/README.md).
 
 ## Ideas and roadmap
