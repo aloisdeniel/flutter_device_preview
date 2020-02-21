@@ -205,43 +205,6 @@ Widget _phoneFrameWithoutNotch(
           ),
         ]);
 
-Widget _tabletFrameWithoutNotch(
-  BuildContext context,
-  Widget screen,
-  Size screenSize,
-  bool isRotated,
-  double width,
-) =>
-    MobileDeviceFrame(
-        isRotated: isRotated,
-        screenSize: screenSize,
-        child: screen,
-        borders: EdgeInsets.only(
-          top: 96.0,
-          right: 42.0,
-          left: 42.0,
-          bottom: 96.0,
-        ),
-        edgeRadius: BorderRadius.all(Radius.circular(56.0)),
-        screenRadius: BorderRadius.all(Radius.circular(2.0)),
-        sideButtons: [
-          DeviceSideButton.right(
-            fromTop: 96,
-            size: 35,
-            thickness: 6,
-          ),
-          DeviceSideButton.right(
-            fromTop: 156,
-            size: 60,
-            thickness: 6,
-          ),
-          DeviceSideButton.top(
-            fromLeft: width - 60 + 42,
-            size: 60,
-            thickness: 6,
-          ),
-        ]);
-
 Widget _tabletThinFrameWithoutNotch(
   BuildContext context,
   Widget screen,
