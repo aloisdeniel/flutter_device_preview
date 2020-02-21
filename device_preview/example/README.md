@@ -1,6 +1,6 @@
-# sample
+# device_preview_example
 
-A new Flutter project.
+Demonstrates
 
 ## Getting Started
 
