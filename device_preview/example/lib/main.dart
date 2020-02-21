@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             PlatformText(
               'Hello, it is ' + dateFormat.format(DateTime.now()),
-              style: theme.textTheme.headline5,
+              style: theme.textTheme.headline,
             ),
             PlatformButton(
               child: PlatformText('Open'),

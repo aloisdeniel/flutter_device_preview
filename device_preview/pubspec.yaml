@@ -13,7 +13,6 @@ dependencies:
   flutter: 
     sdk: flutter 
   meta: ^1.1.8
-  http: ^0.12.0+4
   path_provider: ^1.6.1
   path_provider_macos: ^0.0.3+1
 

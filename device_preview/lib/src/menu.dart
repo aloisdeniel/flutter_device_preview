@@ -40,19 +40,21 @@ class _DevicePreviewMenuState extends State<DevicePreviewMenu> {
           ],
         );
       },
-      firstChild: Align(
-        alignment: Alignment.topLeft,
-        child: GestureDetector(
-          child: Container(
-            margin: const EdgeInsets.all(12),
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.white60,
-              shape: BoxShape.circle,
+      firstChild: SafeArea(
+        child: Align(
+          alignment: Alignment.topLeft,
+          child: GestureDetector(
+            child: Container(
+              margin: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: Colors.white60,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(Icons.settings),
             ),
-            child: Icon(Icons.settings),
+            onTap: open,
           ),
-          onTap: open,
         ),
       ),
       secondChild: IgnorePointer(
@@ -679,7 +681,7 @@ class _DeviceItem extends StatelessWidget {
     final isSelected = preview.device == device;
     final foreground = Theme.of(context)
         .primaryTextTheme
-        .headline4
+        .headline
         .color
         .withOpacity(isSelected ? 1 : 0.5);
 
