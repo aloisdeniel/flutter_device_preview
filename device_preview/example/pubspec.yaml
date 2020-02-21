@@ -4,7 +4,7 @@ description: A simple demonstration of device_preview.
 version: 1.0.1
 
 environment:
-  sdk: ">=2.2.2 <3.0.0" 
+  sdk: '>=2.2.2 <3.0.0'
 
 dependencies:
   flutter_platform_widgets:
@@ -18,8 +18,11 @@ dependencies:
 
 dev_dependencies:
   flutter_test:
-    sdk: flutter
-  pedantic: ^1.9.0
+    sdk: flutter 
+  pedantic: 1.8.0+1
+
+dependency_overrides:
+  pedantic: 1.9.0
 
 flutter:
   uses-material-design: true
