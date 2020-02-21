@@ -62,15 +62,11 @@ There are some aspects of mobile devices that Device Preview will never be able 
 
 > Can I use device preview with Desktop embedding ?
 
-Yes, you just have to add thoses dependencies in your `pubspec.yaml` :
+Yes, but you have to make sure that you have support for `path_provider` (which is not included yet in the package since Desktop platforms are still in prerelease).
 
-```yaml
-device_preview:
-path_provider_fde:
-  git:
-    url: https://github.com/google/flutter-desktop-embedding/
-    path: plugins/flutter_plugins/path_provider_fde
-```
+* For macOS, you will need the `path_provider_macos`package until `path_provider` package provides an implementation (soon).
+* For Linux and Windows, a (documentation)[https://github.com/google/flutter-desktop-embedding/blob/master/plugins/flutter_plugins/README.md] is available (*this is subject to change*).
+
 
 ## Ideas and roadmap
 
