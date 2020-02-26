@@ -1,5 +1,5 @@
 name: device_preview
-version: 0.2.7
+version: 0.3.0
 description: Approximate how your app looks and performs on another device.
 homepage: https://github.com/aloisdeniel/flutter_device_preview
 
@@ -17,10 +17,10 @@ dependencies:
 
   # This is a temporary hack to enable Windows to work. It is not recommended
   # since this package may change at any time in ways that break. 
-  path_provider_fde:
-    git:
-      url: https://github.com/google/flutter-desktop-embedding/
-      path: plugins/flutter_plugins/path_provider_fde
+  #path_provider_fde:
+  #  git:
+  #    url: https://github.com/google/flutter-desktop-embedding/
+  #    path: plugins/flutter_plugins/path_provider_fde
  
 dev_dependencies:
   flutter_test:

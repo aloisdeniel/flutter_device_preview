@@ -1,3 +1,7 @@
+## 0.3.0
+
+- Changed screenshot processor for a more generic solution.
+
 ## 0.2.7
 
 - Update to stable API surface for macOS
