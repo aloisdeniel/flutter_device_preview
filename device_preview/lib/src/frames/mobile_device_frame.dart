@@ -1,6 +1,10 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:math' as math;
 
+/// A generic widget that renders a simulated mobile device frame.
+///
+/// It can simulate a [notch] too.
 class MobileDeviceFrame extends StatelessWidget {
   final Widget child;
 
@@ -24,30 +28,31 @@ class MobileDeviceFrame extends StatelessWidget {
 
   final DeviceNotch notch;
 
-  final bool isRotated;
+  final DeviceOrientation orientation;
 
-  MobileDeviceFrame(
-      {@required this.child,
-      @required this.isRotated,
-      @required Size screenSize,
-      this.borderSize = 4,
-      this.borders = const EdgeInsets.all(38),
-      this.edgeRadius = const BorderRadius.all(Radius.circular(20)),
-      this.screenRadius = const BorderRadius.all(Radius.circular(8)),
-      this.notch,
-      this.fillColor = const Color(0xFF1A1A1A),
-      this.buttonColor = const Color(0xFF2A2A2A),
-      this.borderColor = const Color(0xFF5A5A5A),
-      this.sideButtons = const []})
-      : screenSize = isRotated && screenSize != null
-            ? Size(screenSize.height, screenSize.width)
-            : screenSize;
+  MobileDeviceFrame({
+    @required this.child,
+    @required this.orientation,
+    @required Size screenSize,
+    this.borderSize = 4,
+    this.borders = const EdgeInsets.all(38),
+    this.edgeRadius = const BorderRadius.all(Radius.circular(20)),
+    this.screenRadius = const BorderRadius.all(Radius.circular(8)),
+    this.notch,
+    this.fillColor = const Color(0xFF1A1A1A),
+    this.buttonColor = const Color(0xFF2A2A2A),
+    this.borderColor = const Color(0xFF5A5A5A),
+    this.sideButtons = const [],
+  }) : screenSize =
+            orientation == DeviceOrientation.landscape && screenSize != null
+                ? Size(screenSize.height, screenSize.width)
+                : screenSize;
 
   @override
   Widget build(BuildContext context) {
     var padding = borders;
 
-    if (isRotated) {
+    if (orientation == DeviceOrientation.landscape) {
       padding = EdgeInsets.only(
         left: padding.bottom,
         top: padding.right,
@@ -100,70 +105,106 @@ class _DeviceFramePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (device.isRotated) {
+    if (device.orientation == DeviceOrientation.landscape) {
       canvas.translate(size.width / 2, size.height / 2);
     }
 
     size = Size(
-        device.screenSize.width + device.borders.left + device.borders.right,
-        device.screenSize.height + device.borders.top + device.borders.bottom);
+      device.screenSize.width + device.borders.left + device.borders.right,
+      device.screenSize.height + device.borders.top + device.borders.bottom,
+    );
 
-    if (device.isRotated) {
+    if (device.orientation == DeviceOrientation.landscape) {
       canvas.rotate(math.pi / 2);
       canvas.translate(-size.width / 2, -size.height / 2);
     }
 
     final body = Path()
-      ..addRRect(RRect.fromRectAndCorners(
-        Offset.zero & size,
-        topLeft: device.edgeRadius.topLeft,
-        topRight: device.edgeRadius.topRight,
-        bottomLeft: device.edgeRadius.bottomLeft,
-        bottomRight: device.edgeRadius.bottomRight,
-      ));
+      ..addRRect(
+        RRect.fromRectAndCorners(
+          Offset.zero & size,
+          topLeft: device.edgeRadius.topLeft,
+          topRight: device.edgeRadius.topRight,
+          bottomLeft: device.edgeRadius.bottomLeft,
+          bottomRight: device.edgeRadius.bottomRight,
+        ),
+      );
 
     var screen = Path()
-      ..addRRect(RRect.fromRectAndCorners(
-        Offset(device.borders.left, device.borders.top) &
-            Size(size.width - device.borders.left - device.borders.right,
-                size.height - device.borders.top - device.borders.bottom),
-        topLeft: device.screenRadius.topLeft,
-        topRight: device.screenRadius.topRight,
-        bottomLeft: device.screenRadius.bottomLeft,
-        bottomRight: device.screenRadius.bottomRight,
-      ));
+      ..addRRect(
+        RRect.fromRectAndCorners(
+          Offset(device.borders.left, device.borders.top) &
+              Size(size.width - device.borders.left - device.borders.right,
+                  size.height - device.borders.top - device.borders.bottom),
+          topLeft: device.screenRadius.topLeft,
+          topRight: device.screenRadius.topRight,
+          bottomLeft: device.screenRadius.bottomLeft,
+          bottomRight: device.screenRadius.bottomRight,
+        ),
+      );
 
     if (device.notch != null && device.notch.width > 0) {
       final notchRect = Offset((size.width / 2) - (device.notch.width / 2),
               device.borders.top - 1) &
-          Size(device.notch.width, device.notch.height + 1);
+          Size(
+            device.notch.width,
+            device.notch.height + 1,
+          );
 
       final leftCornerMiniRect =
           Offset(notchRect.left - device.notch.joinRadius.x, notchRect.top) &
-              Size(device.notch.joinRadius.x, device.notch.joinRadius.x);
+              Size(
+                device.notch.joinRadius.x,
+                device.notch.joinRadius.x,
+              );
       final leftCorner = Path.combine(
-          PathOperation.difference,
-          Path()..addRect(leftCornerMiniRect),
-          Path()
-            ..addRRect(RRect.fromRectAndCorners(leftCornerMiniRect,
-                topRight: Radius.circular(device.notch.joinRadius.x / 2))));
+        PathOperation.difference,
+        Path()..addRect(leftCornerMiniRect),
+        Path()
+          ..addRRect(
+            RRect.fromRectAndCorners(
+              leftCornerMiniRect,
+              topRight: Radius.circular(device.notch.joinRadius.x / 2),
+            ),
+          ),
+      );
 
       final rightCornerMiniRect = Offset(notchRect.right, notchRect.top) &
           Size(device.notch.joinRadius.x, device.notch.joinRadius.x);
       final rightCorner = Path.combine(
-          PathOperation.difference,
-          Path()..addRect(rightCornerMiniRect),
-          Path()
-            ..addRRect(RRect.fromRectAndCorners(rightCornerMiniRect,
-                topLeft: Radius.circular(device.notch.joinRadius.x / 2))));
+        PathOperation.difference,
+        Path()..addRect(rightCornerMiniRect),
+        Path()
+          ..addRRect(
+            RRect.fromRectAndCorners(
+              rightCornerMiniRect,
+              topLeft: Radius.circular(device.notch.joinRadius.x / 2),
+            ),
+          ),
+      );
 
       final notchPath = Path()
-        ..addRRect(RRect.fromRectAndCorners(notchRect,
-            bottomLeft: device.notch.radius, bottomRight: device.notch.radius))
-        ..addPath(leftCorner, Offset.zero)
-        ..addPath(rightCorner, Offset.zero);
+        ..addRRect(
+          RRect.fromRectAndCorners(
+            notchRect,
+            bottomLeft: device.notch.radius,
+            bottomRight: device.notch.radius,
+          ),
+        )
+        ..addPath(
+          leftCorner,
+          Offset.zero,
+        )
+        ..addPath(
+          rightCorner,
+          Offset.zero,
+        );
 
-      screen = Path.combine(PathOperation.difference, screen, notchPath);
+      screen = Path.combine(
+        PathOperation.difference,
+        screen,
+        notchPath,
+      );
     }
 
     final bodyWithoutScreen =
@@ -192,30 +233,65 @@ class _DeviceFramePainter extends CustomPainter {
         case DeviceEdge.left:
           final left = bodyBounds.left - b.thickness;
           final top = bodyBounds.top + b.position;
-          final rect = Rect.fromLTWH(left, top, b.thickness, b.size);
-          buttonPath.addRRect(RRect.fromRectAndCorners(rect,
-              topLeft: b.radius, bottomLeft: b.radius));
+          final rect = Rect.fromLTWH(
+            left,
+            top,
+            b.thickness,
+            b.size,
+          );
+          buttonPath.addRRect(
+            RRect.fromRectAndCorners(
+              rect,
+              topLeft: b.radius,
+              bottomLeft: b.radius,
+            ),
+          );
           break;
         case DeviceEdge.right:
           final left = bodyBounds.right;
           final top = bodyBounds.top + b.position;
-          final rect = Rect.fromLTWH(left, top, b.thickness, b.size);
-          buttonPath.addRRect(RRect.fromRectAndCorners(rect,
-              topRight: b.radius, bottomRight: b.radius));
+          final rect = Rect.fromLTWH(
+            left,
+            top,
+            b.thickness,
+            b.size,
+          );
+          buttonPath.addRRect(
+            RRect.fromRectAndCorners(
+              rect,
+              topRight: b.radius,
+              bottomRight: b.radius,
+            ),
+          );
           break;
         case DeviceEdge.top:
           final left = bodyBounds.left + b.position;
           final top = bodyBounds.top - b.thickness;
-          final rect = Rect.fromLTWH(left, top, b.size, b.thickness);
-          buttonPath.addRRect(RRect.fromRectAndCorners(rect,
-              topLeft: b.radius, topRight: b.radius));
+          final rect = Rect.fromLTWH(
+            left,
+            top,
+            b.size,
+            b.thickness,
+          );
+          buttonPath.addRRect(
+            RRect.fromRectAndCorners(
+              rect,
+              topLeft: b.radius,
+              topRight: b.radius,
+            ),
+          );
           break;
         case DeviceEdge.bottom:
           final left = bodyBounds.left + b.position;
           final top = bodyBounds.bottom;
           final rect = Rect.fromLTWH(left, top, b.size, b.thickness);
-          buttonPath.addRRect(RRect.fromRectAndCorners(rect,
-              bottomLeft: b.radius, bottomRight: b.radius));
+          buttonPath.addRRect(
+            RRect.fromRectAndCorners(
+              rect,
+              bottomLeft: b.radius,
+              bottomRight: b.radius,
+            ),
+          );
           break;
         default:
           break;
@@ -233,7 +309,7 @@ class _DeviceFramePainter extends CustomPainter {
   @override
   bool shouldRepaint(_DeviceFramePainter oldDelegate) =>
       device != oldDelegate.device ||
-      device.isRotated != oldDelegate.device.isRotated;
+      device.orientation != oldDelegate.device.orientation;
 
   @override
   bool shouldRebuildSemantics(_DeviceFramePainter oldDelegate) => false;

@@ -6,13 +6,18 @@ import 'devices.dart';
 final freeform = Device.android(
   name: 'Android Freeform',
   type: DeviceType.freeform,
-  frameBuilder: (context, screen, screenSize, isRotated) => MobileDeviceFrame(
+  frameBuilder: (context, screen, screenSize, orientation) => MobileDeviceFrame(
     child: screen,
-    isRotated: isRotated,
+    orientation: orientation,
     screenSize: screenSize,
   ),
   landscape: MediaQueryData(
-      padding: EdgeInsets.only(top: 20), size: Size(0, 0), devicePixelRatio: 2),
+    padding: EdgeInsets.only(
+      top: 20,
+    ),
+    size: Size(0, 0),
+    devicePixelRatio: 2,
+  ),
 );
 
 // Android One
@@ -26,9 +31,12 @@ final smallPhone = Device.android(
     devicePixelRatio: 1.5,
   ),
   portrait: MediaQueryData(
-      padding: EdgeInsets.only(top: 20),
-      size: Size(320, 569),
-      devicePixelRatio: 1.5),
+    padding: EdgeInsets.only(
+      top: 20,
+    ),
+    size: Size(320, 569),
+    devicePixelRatio: 1.5,
+  ),
 );
 
 // S8
@@ -42,9 +50,12 @@ final mediumPhone = Device.android(
     devicePixelRatio: 4,
   ),
   portrait: MediaQueryData(
-      padding: EdgeInsets.only(top: 20),
-      size: Size(360, 740),
-      devicePixelRatio: 4),
+    padding: EdgeInsets.only(
+      top: 20,
+    ),
+    size: Size(360, 740),
+    devicePixelRatio: 4,
+  ),
 );
 
 // Galaxy Note 4
@@ -58,9 +69,12 @@ final largePhone = Device.android(
     devicePixelRatio: 3,
   ),
   portrait: MediaQueryData(
-      padding: EdgeInsets.only(top: 20),
-      size: Size(480, 853),
-      devicePixelRatio: 3),
+    padding: EdgeInsets.only(
+      top: 20,
+    ),
+    size: Size(480, 853),
+    devicePixelRatio: 3,
+  ),
 );
 
 // Nexus 7
@@ -74,9 +88,12 @@ final smallTablet = Device.android(
     devicePixelRatio: 2,
   ),
   portrait: MediaQueryData(
-      padding: EdgeInsets.only(top: 20),
-      size: Size(600, 960),
-      devicePixelRatio: 2),
+    padding: EdgeInsets.only(
+      top: 20,
+    ),
+    size: Size(600, 960),
+    devicePixelRatio: 2,
+  ),
 );
 
 // Galaxy Tab 10
@@ -90,43 +107,47 @@ final mediumTablet = Device.android(
     devicePixelRatio: 2,
   ),
   portrait: MediaQueryData(
-      padding: EdgeInsets.only(top: 20),
-      size: Size(800, 1280),
-      devicePixelRatio: 2),
+    padding: EdgeInsets.only(
+      top: 20,
+    ),
+    size: Size(800, 1280),
+    devicePixelRatio: 2,
+  ),
 );
 
 // LG G Watch
 final watch = Device.android(
-    name: 'Watch ',
-    type: DeviceType.watch,
-    frameBuilder: (context, screen, screenSize, isRotated) => MobileDeviceFrame(
-          isRotated: isRotated,
-          screenSize: screenSize,
-          child: screen,
-          borders: EdgeInsets.all(42),
-          edgeRadius: BorderRadius.all(Radius.circular((187 + 42 * 2) / 2)),
-          screenRadius: BorderRadius.all(Radius.circular((187) / 2)),
-        ),
-    landscape: const MediaQueryData(
-      padding: EdgeInsets.zero,
-      size: Size(187, 187),
-      devicePixelRatio: 2,
-    ),
-    portrait: const MediaQueryData(
-      padding: EdgeInsets.zero,
-      size: Size(187, 187),
-      devicePixelRatio: 2,
-    ));
+  name: 'Watch ',
+  type: DeviceType.watch,
+  frameBuilder: (context, screen, screenSize, orientation) => MobileDeviceFrame(
+    orientation: orientation,
+    screenSize: screenSize,
+    child: screen,
+    borders: EdgeInsets.all(42),
+    edgeRadius: BorderRadius.all(Radius.circular((187 + 42 * 2) / 2)),
+    screenRadius: BorderRadius.all(Radius.circular((187) / 2)),
+  ),
+  landscape: const MediaQueryData(
+    padding: EdgeInsets.zero,
+    size: Size(187, 187),
+    devicePixelRatio: 2,
+  ),
+  portrait: const MediaQueryData(
+    padding: EdgeInsets.zero,
+    size: Size(187, 187),
+    devicePixelRatio: 2,
+  ),
+);
 
 Widget _phoneFrameWithoutNotch(
   BuildContext context,
   Widget screen,
   Size screenSize,
-  bool isRotated,
+  DeviceOrientation orientation,
 ) =>
     MobileDeviceFrame(
       borderSize: 2,
-      isRotated: isRotated,
+      orientation: orientation,
       screenSize: screenSize,
       child: screen,
       borders: EdgeInsets.only(

@@ -115,10 +115,9 @@ class DevicePreviewDrawer extends StatelessWidget {
         onTap: () async {
           try {
             final screenshot = await preview.screenshot();
-            final link = await preview.screenshotUploader.upload(screenshot);
-            print('[DevicePreview] Screenshot : $link');
+            await preview.processScreenshot(screenshot);
           } catch (e) {
-            print('[DevicePreview] Error while uploading screenshot : $e');
+            print('[DevicePreview] Error while processing screenshot : $e');
           }
           root.close();
         });

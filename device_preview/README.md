@@ -19,7 +19,7 @@
 
 * Preview any device from any device
 * Change device orientation
-* Dynamic system configuration : language, dark mode, text scaling factor
+* Dynamic system configuration: language, dark mode, text scaling factor
 * Freeform device with adjustable resolution and safe areas
 * Keep the application state
 * Take screenshots
@@ -32,16 +32,13 @@ void main() => runApp(
     builder: (context) => MyApp(),
   ),
 );
-```
 
-
-```dart
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      locale: DevicePreview.of(context).locale, // <--- Add the locale 
-      builder: DevicePreview.appBuilder, // <--- Add the builder 
+      locale: DevicePreview.of(context).locale, // <--- Add the locale
+      builder: DevicePreview.appBuilder, // <--- Add the builder
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -52,6 +49,81 @@ class MyApp extends StatelessWidget {
 }
 ```
 
+## Customization
+
+### `enabled`
+
+This property can be used to disable the preview.
+
+##### Example
+
+```dart
+DevicePreview(
+  enabled: !kReleaseMode, // Ensures that it is disabled in release mode
+  builder: (context) => MyApp(),
+)
+```
+
+### `usePreferences`
+
+Indicates whether the configuration should be persisted between sessions.
+
+##### Example
+
+```dart
+DevicePreview(
+  usePreferences: false,
+  builder: (context) => MyApp(),
+)
+```
+
+### `areSettingsEnabled`
+
+Indicates whether the settings menu should be available.
+
+##### Example
+
+```dart
+DevicePreview(
+  areSettingsEnabled: false,
+  builder: (context) => MyApp(),
+)
+```
+
+### `background`
+
+The decoration used as the preview window background.
+
+##### Example
+
+```dart
+DevicePreview(
+  background: BoxDecoration(color: Colors.red),
+  builder: (context) => MyApp(),
+)
+```
+
+### `onScreenshot`
+
+The processor used when the user takes a new screenshots.
+
+By default, all screenshots are uploaded to [file.io](https://file.io/) 
+and the links are printed into the debugging console.
+
+##### Example
+
+```dart
+DevicePreview(
+  onScreenshot: (screenshot) {
+    final bytes = screenshot.bytes;
+    //  Send the bytes to a drive, to the file system, to 
+    // the device gallery for example. It may be useful for
+    // preparing your app release for example.
+  },
+  builder: (context) => MyApp(),
+)
+```
+
 ## Limitations
 
 Think of Device Preview as a first-order approximation of how your app looks and feels on a mobile device. With Device Mode you don't actually run your code on a mobile device. You simulate the mobile user experience from your laptop, desktop or tablet.
@@ -60,9 +132,14 @@ There are some aspects of mobile devices that Device Preview will never be able 
 
 ## FAQ
 
-> Can I use device preview with Desktop embedding ?
+> What devices can I use for previewing?
 
-Yes, you just have to add thoses dependencies in your `pubspec.yaml` :
+If you are running the `stable`, `beta` or `dev` channel of Flutter, you can use Android or iOS.
+If you are running the `master` channel of Flutter, you can use macOS, Android or iOS.
+
+> What about Windows?
+
+Since Flutter is still in technical preview on Windows, the `path_provider` dependency can be satisfied by adding this dependency in your `pubspec.yaml` if you are on the `master` channel of Flutter:
 
 ```yaml
 device_preview:
@@ -71,15 +148,16 @@ path_provider_fde:
     url: https://github.com/google/flutter-desktop-embedding/
     path: plugins/flutter_plugins/path_provider_fde
 ```
+This is a temporary solution only. More information about this plug-in can be found [here](https://github.com/google/flutter-desktop-embedding/blob/master/plugins/flutter_plugins/README.md).
 
 ## Ideas and roadmap
 
-- Status bar
-- Override WidgetsBinding
-  - Simulate physical button
-  - Simulate lifecycle events
-- Storage explorer
-- Add custom devices state
-- Desktop devices
-- TV devices
-- Complete documentation
+* Status bar
+* Override WidgetsBinding
+  * Simulate physical button
+  * Simulate lifecycle events
+* Storage explorer
+* Add custom devices state
+* Desktop devices
+* TV devices
+* Complete documentation

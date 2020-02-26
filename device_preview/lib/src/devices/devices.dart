@@ -5,6 +5,7 @@ import 'android.dart' as android_device;
 
 export 'ios.dart';
 
+/// A simulated device type.
 enum DeviceType {
   phone,
   tablet,
@@ -14,19 +15,41 @@ enum DeviceType {
   freeform,
 }
 
+// A device orientation.
+enum DeviceOrientation {
+  landscape,
+  portrait,
+}
+
+/// A builder that creates the frame that represents the physical part of
+/// the device for a given [screen], its [screenSize], and the device
+/// [orientation].
 typedef FrameWidgetBuilder = Widget Function(
   BuildContext context,
   Widget screen,
   Size screenSize,
-  bool isRotated,
+  DeviceOrientation orientation,
 );
 
+/// A simulated device.
 class Device {
+  /// The display name associated to the device.
   final String name;
+
+  /// A builder that creates the frame that represents the physical part of
+  /// the device.
   final FrameWidgetBuilder frameBuilder;
+
+  /// The target platform of the device.
   final TargetPlatform platform;
+
+  /// The device type.
   final DeviceType type;
+
+  /// The media query associated to the landscape mode.
   final MediaQueryData landscape;
+
+  /// The media query associated to the portrait mode.
   final MediaQueryData portrait;
 
   bool get canRotate => landscape != null && portrait != null;

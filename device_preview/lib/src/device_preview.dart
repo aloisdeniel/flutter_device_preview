@@ -18,8 +18,7 @@ import 'screenshots/upload_service.dart';
 /// devices than the current one.
 ///
 /// This previews also allows children to interact from the
-/// [DevicePreviewState.of] methods. One of the main use cases are
-/// the screenshots.
+/// [DevicePreviewState.of] methods.
 ///
 /// See also :
 /// * [Devices] has a set of predefined common devices.
@@ -44,14 +43,18 @@ class DevicePreview extends StatefulWidget {
   /// It is common to give the root application widget.
   final WidgetBuilder builder;
 
+  /// The background decoration for the preview. Defaults to a light gray gradient.
   final BoxDecoration background;
 
-  final ScreenshotUploader screenshotUploader;
+  /// When the user takes a screenshot, this processor is invoked.
+  ///
+  /// Defaults to [FileioScreenshotUploader.upload].
+  final ScreenshotProcessor onScreenshot;
 
   /// The available devices used for previewing.
   final List<Device> devices;
 
-  /// The availables locale available locales.
+  /// The available locales.
   final List<NamedLocale> availablesLocales;
 
   /// Create a new [DevicePreview]
@@ -63,7 +66,7 @@ class DevicePreview extends StatefulWidget {
       bool usePreferences = true,
       this.areSettingsEnabled = true,
       this.availablesLocales = defaultAvailableLocales,
-      this.screenshotUploader = const FileioScreenshotUploader(),
+      this.onScreenshot,
       this.background = const BoxDecoration(
           gradient: LinearGradient(
         colors: [
@@ -81,45 +84,66 @@ class DevicePreview extends StatefulWidget {
   @override
   DevicePreviewState createState() => DevicePreviewState();
 
+  // The state from the closest [DevicePreview] instance that encloses the given
+  /// context.
   static DevicePreviewState of(BuildContext context) =>
       context.findAncestorStateOfType<DevicePreviewState>();
 
+  /// The currently selected [Device], if the preview is [enabled].
   static Device device(BuildContext context) {
     final provider =
-        context.dependOnInheritedWidgetOfExactType<DeviceProvider>();
+        context.dependOnInheritedWidgetOfExactType<_DeviceProvider>();
     return provider?.device;
   }
 
-  static MediaQueryData mediaQuery(BuildContext context,
-      {bool nullOk = false}) {
+  /// The media query of the currently selected device.
+  static MediaQueryData mediaQuery(
+    BuildContext context, {
+    bool nullOk = false,
+  }) {
     final provider =
-        context.dependOnInheritedWidgetOfExactType<DeviceProvider>();
-    return provider?.mediaQuery ?? MediaQuery.of(context, nullOk: nullOk);
+        context.dependOnInheritedWidgetOfExactType<_DeviceProvider>();
+    return provider?.mediaQuery ??
+        MediaQuery.of(
+          context,
+          nullOk: nullOk,
+        );
   }
 
+  /// The current target platform for the currently selected device.
   static TargetPlatform platform(BuildContext context) {
     return device(context)?.platform ?? Theme.of(context).platform;
   }
 
-  static Widget appBuilder(BuildContext context, Widget widget) {
+  /// A global builder that should be inserted into [WidgetApp]'s builder
+  /// to simulated the simulated device screen and platform properties.
+  static Widget appBuilder(
+    BuildContext context,
+    Widget widget,
+  ) {
     return MediaQuery(
       data: mediaQuery(context),
       child: Theme(
-          data: Theme.of(context).copyWith(platform: platform(context)),
-          child: widget),
+        data: Theme.of(context).copyWith(platform: platform(context)),
+        child: widget,
+      ),
     );
   }
 }
 
 class DevicePreviewState extends State<DevicePreview> {
-  final _repaintKey = GlobalKey();
-  StreamController<DeviceScreenshot> _onScreenshot;
-  UniqueKey _appKey = UniqueKey();
-  Device get _device => availableDevices[
-      math.min(_data.deviceIndex, availableDevices.length - 1)];
+  /// The curren active device.
+  Device get device {
+    if (_device.type == DeviceType.freeform) {
+      final query = mediaQuery;
+      return _device.copyWith(landscape: query);
+    }
 
-  DevicePreviewData _data;
+    return _device;
+  }
 
+  /// The media query for the currently selected device, orientation and other
+  /// selected simulated preferences.
   MediaQueryData get mediaQuery {
     MediaQueryData result;
 
@@ -150,17 +174,24 @@ class DevicePreviewState extends State<DevicePreview> {
     return result;
   }
 
+  /// Get the currently selected locale.
   Locale get locale => availablesLocales
-      .firstWhere((x) => x.locale.toString() == _data.locale,
-          orElse: () => availablesLocales.first)
+      .firstWhere(
+        (x) => x.locale.toString() == _data.locale,
+        orElse: () => availablesLocales.first,
+      )
       .locale;
 
+  /// Get the currently selected simulated device orientation.
   Orientation get orientation => _data.orientation;
 
+  /// Get the list of available locales.
   List<NamedLocale> get availablesLocales => widget.availablesLocales;
 
+  /// Indicates whether the dark mode is enabled.
   bool get isDarkMode => _data.isDarkMode;
 
+  /// Update the dark mode.
   set isDarkMode(bool value) {
     _data = _data.copyWith(isDarkMode: value)..save(!widget.usePreferences);
     if (widget.enabled) {
@@ -168,8 +199,34 @@ class DevicePreviewState extends State<DevicePreview> {
     }
   }
 
+  /// Indicates wheter animations are disabled.
   bool get disableAnimations => _data.disableAnimations;
 
+  /// Indicates whether all colors should be inverted (for accessibility purpose).
+  bool get invertColors => _data.invertColors;
+
+  /// The current simulated navigation accessibilty preference.
+  bool get accessibleNavigation => _data.accessibleNavigation;
+
+  /// The current simulated text scale factor accessibilty preference.
+  double get textScaleFactor => _data.textScaleFactor;
+
+  /// Indicates whether the simulated bold text accessibilty preference is enabled.
+  bool get boldText => _data.boldText;
+
+  /// The processor used whenever the user take a new screenshot.
+  ScreenshotProcessor get processScreenshot =>
+      widget.onScreenshot ?? (const FileioScreenshotUploader().upload);
+
+  List<Device> get availableDevices => widget.devices ?? Devices.all;
+
+  /// Indicates whether the simulated physical device frame visibility.
+  bool get isFrameVisible => _data.isFrameVisible;
+
+  /// If in freeform mode, the currently selected simulated screen size.
+  Size get freeformSize => _data.freeformSize;
+
+  /// Set the [disableAnimations].
   set disableAnimations(bool value) {
     _data = _data.copyWith(disableAnimations: value)
       ..save(!widget.usePreferences);
@@ -178,8 +235,7 @@ class DevicePreviewState extends State<DevicePreview> {
     }
   }
 
-  bool get invertColors => _data.invertColors;
-
+  /// Set the [invertColors].
   set invertColors(bool value) {
     _data = _data.copyWith(invertColors: value)..save(!widget.usePreferences);
     if (widget.enabled) {
@@ -187,8 +243,7 @@ class DevicePreviewState extends State<DevicePreview> {
     }
   }
 
-  bool get accessibleNavigation => _data.accessibleNavigation;
-
+  /// Set the [accessibleNavigation].
   set accessibleNavigation(bool value) {
     _data = _data.copyWith(accessibleNavigation: value)
       ..save(!widget.usePreferences);
@@ -198,8 +253,7 @@ class DevicePreviewState extends State<DevicePreview> {
     }
   }
 
-  double get textScaleFactor => _data.textScaleFactor;
-
+  /// Set the [textScaleFactor].
   set textScaleFactor(double value) {
     _data = _data.copyWith(textScaleFactor: value)
       ..save(!widget.usePreferences);
@@ -208,33 +262,7 @@ class DevicePreviewState extends State<DevicePreview> {
     }
   }
 
-  bool get boldText => _data.boldText;
-
-  set boldText(bool value) {
-    _data = _data.copyWith(boldText: value)..save(!widget.usePreferences);
-    if (widget.enabled) {
-      setState(() {});
-    }
-  }
-
-  /// The curren active device.
-  Device get device {
-    if (_device.type == DeviceType.freeform) {
-      final query = mediaQuery;
-      return _device.copyWith(landscape: query);
-    }
-
-    return _device;
-  }
-
-  ScreenshotUploader get screenshotUploader => widget.screenshotUploader;
-
-  List<Device> get availableDevices => widget.devices ?? Devices.all;
-
-  bool get isFrameVisible => _data.isFrameVisible;
-
-  Size get freeformSize => _data.freeformSize;
-
+  /// Set the [locale].
   set locale(Locale value) {
     _data = _data.copyWith(locale: value.toString())
       ..save(!widget.usePreferences);
@@ -243,6 +271,15 @@ class DevicePreviewState extends State<DevicePreview> {
     }
   }
 
+  /// Set the [boldText].
+  set boldText(bool value) {
+    _data = _data.copyWith(boldText: value)..save(!widget.usePreferences);
+    if (widget.enabled) {
+      setState(() {});
+    }
+  }
+
+  /// Set the [freeformSize].
   set freeformSize(Size value) {
     _data = _data.copyWith(freeformSize: value)..save(!widget.usePreferences);
     if (widget.enabled) {
@@ -250,6 +287,7 @@ class DevicePreviewState extends State<DevicePreview> {
     }
   }
 
+  /// Set the [isFrameVisible].
   set isFrameVisible(bool value) {
     _data = _data.copyWith(isFrameVisible: value)..save(!widget.usePreferences);
     if (widget.enabled) {
@@ -257,6 +295,7 @@ class DevicePreviewState extends State<DevicePreview> {
     }
   }
 
+  /// Set the [orientation].
   set orientation(Orientation value) {
     _data = _data.copyWith(orientation: value)..save(!widget.usePreferences);
     if (widget.enabled) {
@@ -285,36 +324,36 @@ class DevicePreviewState extends State<DevicePreview> {
     RenderRepaintBoundary boundary =
         _repaintKey.currentContext.findRenderObject();
     final format = ui.ImageByteFormat.png;
-    final image =
-        await boundary.toImage(pixelRatio: mediaQuery.devicePixelRatio);
-    final byteData = await image.toByteData(format: format);
+    final image = await boundary.toImage(
+      pixelRatio: mediaQuery.devicePixelRatio,
+    );
+    final byteData = await image.toByteData(
+      format: format,
+    );
     final bytes = byteData.buffer.asUint8List();
-    final screenshot =
-        DeviceScreenshot(device: device, bytes: bytes, format: format);
+    final screenshot = DeviceScreenshot(
+      device: device,
+      bytes: bytes,
+      format: format,
+    );
     _onScreenshot.add(screenshot);
     return screenshot;
   }
 
+  /// Change the simulated device orientation between portrait and landscape.
   void rotate() {
     orientation =
         Orientation.values[(orientation.index + 1) % Orientation.values.length];
   }
 
+  /// Restart the application hosted by the simulated device.
   void restart() {
     _appKey = UniqueKey();
     setState(() {});
   }
 
+  /// Change the simulated device frame visibility.
   void toggleFrame() => isFrameVisible = !isFrameVisible;
-
-  void _start() {
-    _onScreenshot = StreamController<DeviceScreenshot>.broadcast();
-  }
-
-  String get _defaultLocale => basicLocaleListResolution(
-        WidgetsBinding.instance.window.locales,
-        widget.availablesLocales.map((x) => x.locale),
-      )?.toString();
 
   @override
   void initState() {
@@ -323,28 +362,8 @@ class DevicePreviewState extends State<DevicePreview> {
     );
 
     _loadData();
-    _start();
+    _onScreenshot = StreamController<DeviceScreenshot>.broadcast();
     super.initState();
-  }
-
-  Future<void> _loadData() async {
-    DevicePreviewData data;
-
-    if (widget.data != null) {
-      data = widget.data;
-    } else if (widget.usePreferences) {
-      data = await DevicePreviewData.load();
-    }
-
-    if (data != null) {
-      if (data.locale == null) {
-        data = data.copyWith(locale: _defaultLocale);
-      }
-      _data = data;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        setState(() {});
-      });
-    }
   }
 
   @override
@@ -370,7 +389,7 @@ class DevicePreviewState extends State<DevicePreview> {
         child: MediaQuery(
           data: mediaQuery,
           child: Builder(
-            builder: (context) => DeviceProvider(
+            builder: (context) => _DeviceProvider(
               mediaQuery: mediaQuery,
               key: _appKey,
               device: _device,
@@ -391,7 +410,9 @@ class DevicePreviewState extends State<DevicePreview> {
             context,
             screen,
             screenSize,
-            isRotated,
+            isRotated
+                ? DeviceOrientation.landscape
+                : DeviceOrientation.portrait,
           )
         : screen;
 
@@ -405,11 +426,12 @@ class DevicePreviewState extends State<DevicePreview> {
       left: 0,
       right: 0,
       child: (_device.type == DeviceType.freeform)
-          ? DeviceProvider(
+          ? _DeviceProvider(
               mediaQuery: mediaQuery,
               key: _appKey,
               device: _device,
-              child: FreeformResizer())
+              child: FreeformResizer(),
+            )
           : SizedBox(),
     );
 
@@ -427,15 +449,16 @@ class DevicePreviewState extends State<DevicePreview> {
                     alignment: Alignment.topLeft,
                     children: <Widget>[
                       Positioned.fill(
-                          child: Padding(
-                        padding: (_device.type == DeviceType.freeform)
-                            ? const EdgeInsets.only(bottom: 48)
-                            : EdgeInsets.zero,
-                        child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: preview,
+                        child: Padding(
+                          padding: (_device.type == DeviceType.freeform)
+                              ? const EdgeInsets.only(bottom: 48)
+                              : EdgeInsets.zero,
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: preview,
+                          ),
                         ),
-                      )),
+                      ),
                       bottomBar,
                     ],
                   ),
@@ -451,20 +474,64 @@ class DevicePreviewState extends State<DevicePreview> {
       ),
     );
   }
+
+  /// The repaint key used for rendering screenshots.
+  final _repaintKey = GlobalKey();
+
+  /// A stream that sends a new value each time the user takes
+  /// a new screenshot.
+  StreamController<DeviceScreenshot> _onScreenshot;
+
+  /// The current application key (used for [restart]).
+  UniqueKey _appKey = UniqueKey();
+
+  /// The currently selected device from the [availableDevices].
+  Device get _device => availableDevices[
+      math.min(_data.deviceIndex, availableDevices.length - 1)];
+
+  /// The current configuration.
+  DevicePreviewData _data;
+
+  /// The default locale from the device.
+  String get _defaultLocale => basicLocaleListResolution(
+        WidgetsBinding.instance.window.locales,
+        widget.availablesLocales.map((x) => x.locale),
+      )?.toString();
+
+  /// Load the configuration from the preferences (if no [data] provided by the user).
+  Future<void> _loadData() async {
+    DevicePreviewData data;
+
+    if (widget.data != null) {
+      data = widget.data;
+    } else if (widget.usePreferences) {
+      data = await DevicePreviewData.load();
+    }
+
+    if (data != null) {
+      if (data.locale == null) {
+        data = data.copyWith(locale: _defaultLocale);
+      }
+      _data = data;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {});
+      });
+    }
+  }
 }
 
-class DeviceProvider extends InheritedWidget {
+class _DeviceProvider extends InheritedWidget {
   final Device device;
   final MediaQueryData mediaQuery;
 
-  DeviceProvider(
-      {Key key,
-      @required this.mediaQuery,
-      @required Widget child,
-      @required this.device})
-      : super(key: key, child: child);
+  _DeviceProvider({
+    Key key,
+    @required this.mediaQuery,
+    @required Widget child,
+    @required this.device,
+  }) : super(key: key, child: child);
 
   @override
-  bool updateShouldNotify(DeviceProvider oldWidget) =>
+  bool updateShouldNotify(_DeviceProvider oldWidget) =>
       oldWidget.device != device || mediaQuery != oldWidget.mediaQuery;
 }

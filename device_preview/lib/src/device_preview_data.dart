@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:flutter/widgets.dart';
 import 'package:path_provider/path_provider.dart';
 
+/// A [DevicePreview] configuration snapshot that can be
+/// serialized to be persisted between session.
 class DevicePreviewData {
   static const Size freeformMaxSize = Size(2400, 2400);
 
@@ -20,7 +22,9 @@ class DevicePreviewData {
   final double textScaleFactor;
   final Size freeformSize;
 
-  DevicePreviewData({
+  /// Creates a new [DevicePreviewData] configuration from all
+  /// properties.
+  const DevicePreviewData({
     this.orientation = Orientation.portrait,
     this.deviceIndex = 0,
     this.locale,
@@ -35,6 +39,8 @@ class DevicePreviewData {
     this.freeformSize = freeformMaxSize,
   });
 
+  /// Copy the current configuration, but updates the given
+  /// properties.
   DevicePreviewData copyWith({
     Orientation orientation,
     int deviceIndex,
@@ -64,6 +70,7 @@ class DevicePreviewData {
         freeformSize: freeformSize ?? this.freeformSize,
       );
 
+  /// Convert the instance to a dynamic map (for serialization).
   Map<String, dynamic> toMap() {
     return {
       'orientation': orientation.index,
@@ -84,6 +91,7 @@ class DevicePreviewData {
     };
   }
 
+  /// Convert a dynamic map to an instance (for deserialization).
   factory DevicePreviewData.fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
     final size =
@@ -107,29 +115,7 @@ class DevicePreviewData {
     );
   }
 
-  static const String _preferencesFile = 'device_preview.config';
-
-  static Future _saveTask;
-  static DevicePreviewData _saveData;
-
-  Future<void> save([bool ignore = false]) async {
-    if (!ignore) {
-      _saveData = this;
-      _saveTask ??= _save();
-      await _saveTask;
-    }
-  }
-
-  static Future _save() async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    if (_saveData != null) {
-      final dir = await getApplicationSupportDirectory();
-      final file = File('${dir.path}/$_preferencesFile');
-      await file.writeAsString(jsonEncode(_saveData.toMap()));
-    }
-    _saveTask = null;
-  }
-
+  /// Load the last saved preferences (until [ignore] is `true`).
   static Future<DevicePreviewData> load([bool ignore = false]) async {
     if (!ignore) {
       final dir = await getApplicationSupportDirectory();
@@ -140,5 +126,28 @@ class DevicePreviewData {
       return DevicePreviewData.fromMap(jsonDecode(json));
     }
     return null;
+  }
+
+  /// Save the current preferences (until [ignore] is `true`).
+  Future<void> save([bool ignore = false]) async {
+    if (!ignore) {
+      _saveData = this;
+      _saveTask ??= _save();
+      await _saveTask;
+    }
+  }
+
+  static const String _preferencesFile = 'device_preview.config';
+  static Future _saveTask;
+  static DevicePreviewData _saveData;
+
+  static Future _save() async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    if (_saveData != null) {
+      final dir = await getApplicationSupportDirectory();
+      final file = File('${dir.path}/$_preferencesFile');
+      await file.writeAsString(jsonEncode(_saveData.toMap()));
+    }
+    _saveTask = null;
   }
 }

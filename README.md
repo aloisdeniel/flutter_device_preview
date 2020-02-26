@@ -49,6 +49,81 @@ class MyApp extends StatelessWidget {
 }
 ```
 
+## Customization
+
+### `enabled`
+
+This property can be used to disable the preview.
+
+##### Example
+
+```dart
+DevicePreview(
+  enabled: !kReleaseMode, // Ensures that it is disabled in release mode
+  builder: (context) => MyApp(),
+)
+```
+
+### `usePreferences`
+
+Indicates whether the configuration should be persisted between sessions.
+
+##### Example
+
+```dart
+DevicePreview(
+  usePreferences: false,
+  builder: (context) => MyApp(),
+)
+```
+
+### `areSettingsEnabled`
+
+Indicates whether the settings menu should be available.
+
+##### Example
+
+```dart
+DevicePreview(
+  areSettingsEnabled: false,
+  builder: (context) => MyApp(),
+)
+```
+
+### `background`
+
+The decoration used as the preview window background.
+
+##### Example
+
+```dart
+DevicePreview(
+  background: BoxDecoration(color: Colors.red),
+  builder: (context) => MyApp(),
+)
+```
+
+### `onScreenshot`
+
+The processor used when the user takes a new screenshots.
+
+By default, all screenshots are uploaded to [file.io](https://file.io/) 
+and the links are printed into the debugging console.
+
+##### Example
+
+```dart
+DevicePreview(
+  onScreenshot: (screenshot) {
+    final bytes = screenshot.bytes;
+    //  Send the bytes to a drive, to the file system, to 
+    // the device gallery for example. It may be useful for
+    // preparing your app release for example.
+  },
+  builder: (context) => MyApp(),
+)
+```
+
 ## Limitations
 
 Think of Device Preview as a first-order approximation of how your app looks and feels on a mobile device. With Device Mode you don't actually run your code on a mobile device. You simulate the mobile user experience from your laptop, desktop or tablet.

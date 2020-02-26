@@ -3,48 +3,57 @@ import 'package:flutter/widgets.dart';
 import 'devices.dart';
 
 final iosFreeform = Device.iOS(
-    name: 'iOS Freeform',
-    type: DeviceType.freeform,
-    frameBuilder: (context, screen, screenSize, isRotated) => MobileDeviceFrame(
-          child: screen,
-          isRotated: isRotated,
-          screenSize: screenSize,
-        ),
-    landscape: MediaQueryData(
-        padding: EdgeInsets.only(top: 20),
-        size: Size(0, 0),
-        devicePixelRatio: 2));
+  name: 'iOS Freeform',
+  type: DeviceType.freeform,
+  frameBuilder: (context, screen, screenSize, orientation) => MobileDeviceFrame(
+    child: screen,
+    orientation: orientation,
+    screenSize: screenSize,
+  ),
+  landscape: MediaQueryData(
+    padding: EdgeInsets.only(top: 20),
+    size: Size(0, 0),
+    devicePixelRatio: 2,
+  ),
+);
 
 const iPhone8 = Device.iOS(
-    name: 'iPhone 8',
-    type: DeviceType.phone,
-    frameBuilder: _phoneFrameWithoutNotch,
-    landscape: MediaQueryData(
-        padding: EdgeInsets.zero, size: Size(667, 375), devicePixelRatio: 2),
-    portrait: MediaQueryData(
-        padding: EdgeInsets.only(top: 20),
-        size: Size(375, 667),
-        devicePixelRatio: 2));
+  name: 'iPhone 8',
+  type: DeviceType.phone,
+  frameBuilder: _phoneFrameWithoutNotch,
+  landscape: MediaQueryData(
+    padding: EdgeInsets.zero,
+    size: Size(667, 375),
+    devicePixelRatio: 2,
+  ),
+  portrait: MediaQueryData(
+    padding: EdgeInsets.only(top: 20),
+    size: Size(375, 667),
+    devicePixelRatio: 2,
+  ),
+);
 
 const iPhoneXs = Device.iOS(
-    name: 'iPhone XS',
-    type: DeviceType.phone,
-    portrait: MediaQueryData(
-        size: Size(375, 812),
-        padding: EdgeInsets.only(
-          top: 44,
-          bottom: 34,
-        ),
-        devicePixelRatio: 3),
-    landscape: MediaQueryData(
-        size: Size(812, 375),
-        padding: EdgeInsets.only(
-          left: 44,
-          right: 44,
-          bottom: 21,
-        ),
-        devicePixelRatio: 3),
-    frameBuilder: _phoneFrameWithNotch);
+  name: 'iPhone XS',
+  type: DeviceType.phone,
+  portrait: MediaQueryData(
+      size: Size(375, 812),
+      padding: EdgeInsets.only(
+        top: 44,
+        bottom: 34,
+      ),
+      devicePixelRatio: 3),
+  landscape: MediaQueryData(
+    size: Size(812, 375),
+    padding: EdgeInsets.only(
+      left: 44,
+      right: 44,
+      bottom: 21,
+    ),
+    devicePixelRatio: 3,
+  ),
+  frameBuilder: _phoneFrameWithNotch,
+);
 
 const iPhoneXr = Device.iOS(
     name: 'iPhone XR',
@@ -79,7 +88,13 @@ final iPadAir2 = Device.iOS(
     devicePixelRatio: 2,
   ),
   frameBuilder: (context, screen, screenSize, isRotated) =>
-      _tabletThinFrameWithoutNotch(context, screen, screenSize, isRotated, 768),
+      _tabletThinFrameWithoutNotch(
+    context,
+    screen,
+    screenSize,
+    isRotated,
+    768,
+  ),
 );
 
 final iPadPro_129_2 = Device.iOS(
@@ -90,16 +105,26 @@ final iPadPro_129_2 = Device.iOS(
       size: Size(1024, 1336),
       devicePixelRatio: 2),
   landscape: MediaQueryData(
-      padding: EdgeInsets.zero, size: Size(1336, 1024), devicePixelRatio: 2),
+    padding: EdgeInsets.zero,
+    size: Size(1336, 1024),
+    devicePixelRatio: 2,
+  ),
   frameBuilder: (context, screen, screenSize, isRotated) =>
-      _tabletThinFrameWithoutNotch(context, screen, screenSize, isRotated, 834),
+      _tabletThinFrameWithoutNotch(
+    context,
+    screen,
+    screenSize,
+    isRotated,
+    834,
+  ),
 );
 
 final watch40mm = Device.iOS(
     name: 'Watch 40mm',
     type: DeviceType.watch,
-    frameBuilder: (context, screen, screenSize, isRotated) => MobileDeviceFrame(
-          isRotated: isRotated,
+    frameBuilder: (context, screen, screenSize, orientation) =>
+        MobileDeviceFrame(
+          orientation: orientation,
           screenSize: screenSize,
           child: screen,
           borders: EdgeInsets.all(16),
@@ -121,10 +146,10 @@ Widget _phoneFrameWithNotch(
   BuildContext context,
   Widget screen,
   Size screenSize,
-  bool isRotated,
+  DeviceOrientation orientation,
 ) =>
     MobileDeviceFrame(
-        isRotated: isRotated,
+        orientation: orientation,
         screenSize: screenSize,
         child: screen,
         borders: EdgeInsets.only(
@@ -168,76 +193,78 @@ Widget _phoneFrameWithoutNotch(
   BuildContext context,
   Widget screen,
   Size screenSize,
-  bool isRotated,
+  DeviceOrientation orientation,
 ) =>
     MobileDeviceFrame(
-        isRotated: isRotated,
-        screenSize: screenSize,
-        child: screen,
-        borders: EdgeInsets.only(
-          top: 96,
-          right: 18,
-          left: 18,
-          bottom: 96,
+      orientation: orientation,
+      screenSize: screenSize,
+      child: screen,
+      borders: EdgeInsets.only(
+        top: 96,
+        right: 18,
+        left: 18,
+        bottom: 96,
+      ),
+      edgeRadius: BorderRadius.all(Radius.circular(56)),
+      screenRadius: BorderRadius.all(Radius.circular(2)),
+      sideButtons: [
+        DeviceSideButton.left(
+          fromTop: 96,
+          size: 35,
+          thickness: 6,
         ),
-        edgeRadius: BorderRadius.all(Radius.circular(56)),
-        screenRadius: BorderRadius.all(Radius.circular(2)),
-        sideButtons: [
-          DeviceSideButton.left(
-            fromTop: 96,
-            size: 35,
-            thickness: 6,
-          ),
-          DeviceSideButton.left(
-            fromTop: 156,
-            size: 60,
-            thickness: 6,
-          ),
-          DeviceSideButton.left(
-            fromTop: 220,
-            size: 60,
-            thickness: 6,
-          ),
-          DeviceSideButton.right(
-            fromTop: 156,
-            size: 60,
-            thickness: 6,
-          ),
-        ]);
+        DeviceSideButton.left(
+          fromTop: 156,
+          size: 60,
+          thickness: 6,
+        ),
+        DeviceSideButton.left(
+          fromTop: 220,
+          size: 60,
+          thickness: 6,
+        ),
+        DeviceSideButton.right(
+          fromTop: 156,
+          size: 60,
+          thickness: 6,
+        ),
+      ],
+    );
 
 Widget _tabletThinFrameWithoutNotch(
   BuildContext context,
   Widget screen,
   Size screenSize,
-  bool isRotated,
+  DeviceOrientation orientation,
   double width,
 ) =>
     MobileDeviceFrame(
-        isRotated: isRotated,
-        screenSize: screenSize,
-        child: screen,
-        borders: EdgeInsets.only(
-          top: 36,
-          right: 36,
-          left: 36,
-          bottom: 36,
+      orientation: orientation,
+      screenSize: screenSize,
+      child: screen,
+      borders: EdgeInsets.only(
+        top: 36,
+        right: 36,
+        left: 36,
+        bottom: 36,
+      ),
+      edgeRadius: BorderRadius.all(Radius.circular(56)),
+      screenRadius: BorderRadius.all(Radius.circular(16)),
+      sideButtons: [
+        DeviceSideButton.right(
+          fromTop: 96,
+          size: 42,
+          thickness: 6,
         ),
-        edgeRadius: BorderRadius.all(Radius.circular(56)),
-        screenRadius: BorderRadius.all(Radius.circular(16)),
-        sideButtons: [
-          DeviceSideButton.right(
-            fromTop: 96,
-            size: 42,
-            thickness: 6,
-          ),
-          DeviceSideButton.right(
-            fromTop: 146,
-            size: 42,
-            thickness: 6,
-          ),
-          DeviceSideButton.top(
-            fromLeft: width - 24,
-            size: 40,
-            thickness: 6,
-          ),
-        ]);
+        DeviceSideButton.right(
+          fromTop: 146,
+          size: 42,
+          thickness: 6,
+        ),
+        DeviceSideButton.top(
+          fromLeft: width - 24,
+          size: 40,
+          thickness: 6,
+        ),
+      ],
+    );
