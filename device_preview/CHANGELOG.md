@@ -1,3 +1,7 @@
+## 0.3.0+1
+
+- Removed `flutter_svg` unused dependency.
+
 ## 0.3.0
 
 - Changed screenshot processor for a more generic solution.
