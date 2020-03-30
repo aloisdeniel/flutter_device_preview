@@ -12,7 +12,7 @@ class FileioScreenshotUploader {
   static const String host = 'https://file.io/?expires=1';
 
   /// Upload a given [screenshot] and print the resulting url in the debugging console.
-  Future<void> upload(DeviceScreenshot screenshot) async {
+  Future<String> upload(DeviceScreenshot screenshot) async {
     var request = http.MultipartRequest('POST', Uri.parse(host));
     request.files.add(
       http.MultipartFile.fromBytes(
@@ -36,5 +36,7 @@ class FileioScreenshotUploader {
 
     final link = body['link'];
     print('[DevicePreview] Screenshot available here : $link');
+
+    return 'Your screenshot is available here : $link';
   }
 }

@@ -21,10 +21,10 @@ class DeviceScreenshot {
   });
 }
 
-/// Process a given [screenshot].
+/// Process a given [screenshot] and returns a displayed message.
 ///
 /// See also :
 ///   * [DevicePreview] uses it to process all the screenshots taken by the user.
-typedef ScreenshotProcessor = Future<void> Function(
+typedef ScreenshotProcessor = Future<String> Function(
   DeviceScreenshot screenshot,
 );

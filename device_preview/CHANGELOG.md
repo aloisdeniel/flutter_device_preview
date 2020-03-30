@@ -1,3 +1,7 @@
+## 0.4.0
+
+- Redesigned UI : now a bottom bar.
+
 ## 0.3.0+1
 
 - Removed `flutter_svg` unused dependency.

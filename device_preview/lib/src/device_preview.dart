@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:device_preview/src/tool_bar/tool_bar.dart';
+import 'package:device_preview/src/tool_bar/tool_bar_style.dart';
+import 'package:device_preview/src/utilities/media_query_observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -7,12 +10,12 @@ import 'dart:ui' as ui;
 import 'dart:math' as math;
 
 import 'device_preview_data.dart';
-import 'freeform/resizer.dart';
 import 'devices/devices.dart';
-import 'menu.dart';
-import 'locales.dart';
+import 'locales/locales.dart';
+import 'locales/default_locales.dart';
 import 'screenshots/screenshot.dart';
 import 'screenshots/upload_service.dart';
+import 'tool_bar/tool_bar_theme.dart';
 
 /// Simulates how a [child] would render on different
 /// devices than the current one.
@@ -54,6 +57,8 @@ class DevicePreview extends StatefulWidget {
   /// The available devices used for previewing.
   final List<Device> devices;
 
+  final DevicePreviewToolBarStyle toolBarStyle;
+
   /// The available locales.
   final List<NamedLocale> availablesLocales;
 
@@ -64,6 +69,7 @@ class DevicePreview extends StatefulWidget {
       this.devices,
       this.data,
       bool usePreferences = true,
+      this.toolBarStyle,
       this.areSettingsEnabled = true,
       this.availablesLocales = defaultAvailableLocales,
       this.onScreenshot,
@@ -92,8 +98,12 @@ class DevicePreview extends StatefulWidget {
   /// The currently selected [Device], if the preview is [enabled].
   static Device device(BuildContext context) {
     final provider =
-        context.dependOnInheritedWidgetOfExactType<_DeviceProvider>();
-    return provider?.device;
+        context.dependOnInheritedWidgetOfExactType<DevicePreviewProvider>();
+    if (provider != null) {
+      return provider.availableDevices[provider.data?.deviceIndex ?? 0];
+    }
+
+    return null;
   }
 
   /// The media query of the currently selected device.
@@ -102,7 +112,7 @@ class DevicePreview extends StatefulWidget {
     bool nullOk = false,
   }) {
     final provider =
-        context.dependOnInheritedWidgetOfExactType<_DeviceProvider>();
+        context.dependOnInheritedWidgetOfExactType<DevicePreviewProvider>();
     return provider?.mediaQuery ??
         MediaQuery.of(
           context,
@@ -149,7 +159,7 @@ class DevicePreviewState extends State<DevicePreview> {
 
     if (_device.type == DeviceType.freeform) {
       result = (_device.portrait ?? _device.landscape)
-          .copyWith(size: _data.freeformSize);
+          .copyWith(size: _data.freeformSize ?? Size(1080, 1920));
     } else if (!_device.canRotate) {
       result = _device.portrait ?? _device.landscape;
     } else {
@@ -174,6 +184,8 @@ class DevicePreviewState extends State<DevicePreview> {
     return result;
   }
 
+  DevicePreviewData get data => _data;
+
   /// Get the currently selected locale.
   Locale get locale => availablesLocales
       .firstWhere(
@@ -193,7 +205,8 @@ class DevicePreviewState extends State<DevicePreview> {
 
   /// Update the dark mode.
   set isDarkMode(bool value) {
-    _data = _data.copyWith(isDarkMode: value)..save(!widget.usePreferences);
+    _data = _data.copyWith(isDarkMode: value);
+    DevicePreviewStorage.save(_data, !widget.usePreferences);
     if (widget.enabled) {
       setState(() {});
     }
@@ -224,12 +237,12 @@ class DevicePreviewState extends State<DevicePreview> {
   bool get isFrameVisible => _data.isFrameVisible;
 
   /// If in freeform mode, the currently selected simulated screen size.
-  Size get freeformSize => _data.freeformSize;
+  Size get freeformSize => _data.freeformSize ?? Size(1080, 1920);
 
   /// Set the [disableAnimations].
   set disableAnimations(bool value) {
-    _data = _data.copyWith(disableAnimations: value)
-      ..save(!widget.usePreferences);
+    _data = _data.copyWith(disableAnimations: value);
+    DevicePreviewStorage.save(_data, !widget.usePreferences);
     if (widget.enabled) {
       setState(() {});
     }
@@ -237,7 +250,8 @@ class DevicePreviewState extends State<DevicePreview> {
 
   /// Set the [invertColors].
   set invertColors(bool value) {
-    _data = _data.copyWith(invertColors: value)..save(!widget.usePreferences);
+    _data = _data.copyWith(invertColors: value);
+    DevicePreviewStorage.save(_data, !widget.usePreferences);
     if (widget.enabled) {
       setState(() {});
     }
@@ -245,8 +259,8 @@ class DevicePreviewState extends State<DevicePreview> {
 
   /// Set the [accessibleNavigation].
   set accessibleNavigation(bool value) {
-    _data = _data.copyWith(accessibleNavigation: value)
-      ..save(!widget.usePreferences);
+    _data = _data.copyWith(accessibleNavigation: value);
+    DevicePreviewStorage.save(_data, !widget.usePreferences);
 
     if (widget.enabled) {
       setState(() {});
@@ -255,8 +269,8 @@ class DevicePreviewState extends State<DevicePreview> {
 
   /// Set the [textScaleFactor].
   set textScaleFactor(double value) {
-    _data = _data.copyWith(textScaleFactor: value)
-      ..save(!widget.usePreferences);
+    _data = _data.copyWith(textScaleFactor: value);
+    DevicePreviewStorage.save(_data, !widget.usePreferences);
     if (widget.enabled) {
       setState(() {});
     }
@@ -264,8 +278,8 @@ class DevicePreviewState extends State<DevicePreview> {
 
   /// Set the [locale].
   set locale(Locale value) {
-    _data = _data.copyWith(locale: value.toString())
-      ..save(!widget.usePreferences);
+    _data = _data.copyWith(locale: value.toString());
+    DevicePreviewStorage.save(_data, !widget.usePreferences);
     if (widget.enabled) {
       setState(() {});
     }
@@ -273,7 +287,8 @@ class DevicePreviewState extends State<DevicePreview> {
 
   /// Set the [boldText].
   set boldText(bool value) {
-    _data = _data.copyWith(boldText: value)..save(!widget.usePreferences);
+    _data = _data.copyWith(boldText: value);
+    DevicePreviewStorage.save(_data, !widget.usePreferences);
     if (widget.enabled) {
       setState(() {});
     }
@@ -281,7 +296,8 @@ class DevicePreviewState extends State<DevicePreview> {
 
   /// Set the [freeformSize].
   set freeformSize(Size value) {
-    _data = _data.copyWith(freeformSize: value)..save(!widget.usePreferences);
+    _data = _data.copyWith(freeformSize: value);
+    DevicePreviewStorage.save(_data, !widget.usePreferences);
     if (widget.enabled) {
       setState(() {});
     }
@@ -289,7 +305,8 @@ class DevicePreviewState extends State<DevicePreview> {
 
   /// Set the [isFrameVisible].
   set isFrameVisible(bool value) {
-    _data = _data.copyWith(isFrameVisible: value)..save(!widget.usePreferences);
+    _data = _data.copyWith(isFrameVisible: value);
+    DevicePreviewStorage.save(_data, !widget.usePreferences);
     if (widget.enabled) {
       setState(() {});
     }
@@ -297,7 +314,8 @@ class DevicePreviewState extends State<DevicePreview> {
 
   /// Set the [orientation].
   set orientation(Orientation value) {
-    _data = _data.copyWith(orientation: value)..save(!widget.usePreferences);
+    _data = _data.copyWith(orientation: value);
+    DevicePreviewStorage.save(_data, !widget.usePreferences);
     if (widget.enabled) {
       setState(() {});
     }
@@ -305,8 +323,8 @@ class DevicePreviewState extends State<DevicePreview> {
 
   // Define the current active device.
   set device(Device device) {
-    _data = _data.copyWith(deviceIndex: availableDevices.indexOf(device))
-      ..save(!widget.usePreferences);
+    _data = _data.copyWith(deviceIndex: availableDevices.indexOf(device));
+    DevicePreviewStorage.save(_data, !widget.usePreferences);
     if (widget.enabled) {
       setState(() {});
     }
@@ -381,94 +399,85 @@ class DevicePreviewState extends State<DevicePreview> {
       return widget.builder(context);
     }
 
-    final screen = Container(
-      width: mediaQuery.size.width,
-      height: mediaQuery.size.height,
-      alignment: Alignment.center,
-      child: ClipRect(
-        child: MediaQuery(
-          data: mediaQuery,
-          child: Builder(
-            builder: (context) => _DeviceProvider(
-              mediaQuery: mediaQuery,
-              key: _appKey,
-              device: _device,
-              child: widget.builder(context),
-            ),
-          ),
-        ),
-      ),
-    );
-
-    final isRotated = orientation == Orientation.landscape;
-    final screenSize = isRotated || device.portrait == null
-        ? device.landscape.size
-        : device.portrait.size;
-
-    var preview = _data.isFrameVisible
-        ? device.frameBuilder(
-            context,
-            screen,
-            screenSize,
-            isRotated
-                ? DeviceOrientation.landscape
-                : DeviceOrientation.portrait,
-          )
-        : screen;
-
-    preview = RepaintBoundary(
-      key: _repaintKey,
-      child: preview,
-    );
-
-    final bottomBar = Positioned(
-      bottom: 0,
-      left: 0,
-      right: 0,
-      child: (_device.type == DeviceType.freeform)
-          ? _DeviceProvider(
-              mediaQuery: mediaQuery,
-              key: _appKey,
-              device: _device,
-              child: FreeformResizer(),
-            )
-          : SizedBox(),
-    );
-
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: MediaQuery(
-        data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
-        child: Stack(
-          children: <Widget>[
-            Positioned.fill(
-              child: DecoratedBox(
-                decoration: widget.background,
-                child: SafeArea(
-                  child: Stack(
-                    alignment: Alignment.topLeft,
-                    children: <Widget>[
-                      Positioned.fill(
-                        child: Padding(
-                          padding: (_device.type == DeviceType.freeform)
-                              ? const EdgeInsets.only(bottom: 48)
-                              : EdgeInsets.zero,
-                          child: FittedBox(
-                            fit: BoxFit.contain,
-                            child: preview,
-                          ),
-                        ),
+    return DevicePreviewToolBarTheme(
+      style: widget.toolBarStyle,
+      child: Directionality(
+        textDirection: TextDirection.ltr,
+        child: Overlay(
+          initialEntries: [
+            OverlayEntry(builder: (context) {
+              final screen = Container(
+                width: mediaQuery.size.width,
+                height: mediaQuery.size.height,
+                alignment: Alignment.center,
+                child: ClipRect(
+                  child: MediaQuery(
+                    data: mediaQuery,
+                    child: Builder(
+                      builder: (context) => DevicePreviewProvider(
+                        mediaQuery: mediaQuery,
+                        key: _appKey,
+                        data: _data,
+                        availableDevices: availableDevices,
+                        child: widget.builder(context),
                       ),
-                      bottomBar,
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-            if (widget.areSettingsEnabled)
-              Positioned.fill(
-                child: DevicePreviewMenu(),
-              ),
+              );
+
+              final isRotated = orientation == Orientation.landscape;
+              final screenSize = isRotated || device.portrait == null
+                  ? device.landscape.size
+                  : device.portrait.size;
+
+              var preview = _data.isFrameVisible
+                  ? device.frameBuilder(
+                      context,
+                      screen,
+                      screenSize,
+                      isRotated
+                          ? DeviceOrientation.landscape
+                          : DeviceOrientation.portrait,
+                    )
+                  : screen;
+
+              preview = RepaintBoundary(
+                key: _repaintKey,
+                child: preview,
+              );
+
+              return Builder(
+                builder: (context) {
+                  return MediaQueryObserver(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Expanded(
+                          key: Key('Preview'),
+                          child: DecoratedBox(
+                            decoration: widget.background,
+                            child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: AnimatedSwitcher(
+                                duration: const Duration(milliseconds: 120),
+                                child: Builder(
+                                  key: Key(
+                                      DevicePreview.of(context).device.name),
+                                  builder: (context) => preview,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        if (widget.areSettingsEnabled)
+                          DevicePreviewToolBar(key: Key('Toolbar')),
+                      ],
+                    ),
+                  );
+                },
+              );
+            }),
           ],
         ),
       ),
@@ -505,7 +514,7 @@ class DevicePreviewState extends State<DevicePreview> {
     if (widget.data != null) {
       data = widget.data;
     } else if (widget.usePreferences) {
-      data = await DevicePreviewData.load();
+      data = await DevicePreviewStorage.load();
     }
 
     if (data != null) {
@@ -520,18 +529,20 @@ class DevicePreviewState extends State<DevicePreview> {
   }
 }
 
-class _DeviceProvider extends InheritedWidget {
-  final Device device;
+class DevicePreviewProvider extends InheritedWidget {
+  final DevicePreviewData data;
   final MediaQueryData mediaQuery;
+  final List<Device> availableDevices;
 
-  _DeviceProvider({
+  DevicePreviewProvider({
     Key key,
+    @required this.availableDevices,
     @required this.mediaQuery,
     @required Widget child,
-    @required this.device,
+    @required this.data,
   }) : super(key: key, child: child);
 
   @override
-  bool updateShouldNotify(_DeviceProvider oldWidget) =>
-      oldWidget.device != device || mediaQuery != oldWidget.mediaQuery;
+  bool updateShouldNotify(DevicePreviewProvider oldWidget) =>
+      oldWidget.data != data || mediaQuery != oldWidget.mediaQuery;
 }

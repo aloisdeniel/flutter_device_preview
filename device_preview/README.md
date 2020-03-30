@@ -103,12 +103,25 @@ DevicePreview(
 )
 ```
 
+### `toolBarStyle`
+
+The style of the bottom toolbar.
+
+```dart
+
+DevicePreview(
+  toolBarStyle: DevicePreviewToolBarStyle.light(),
+  builder: (context) => MyApp(),
+)
+```
+
 ### `onScreenshot`
 
 The processor used when the user takes a new screenshots.
 
 By default, all screenshots are uploaded to [file.io](https://file.io/) 
 and the links are printed into the debugging console.
+
 
 ##### Example
 
