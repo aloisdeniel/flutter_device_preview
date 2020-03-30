@@ -60,7 +60,6 @@ class AccessibilityCheckTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final preview = DevicePreview.of(context);
     final toolBarStyle = DevicePreviewToolBarTheme.of(context);
 
     return GestureDetector(
@@ -114,7 +113,6 @@ class AccessibilityTextScaleTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final preview = DevicePreview.of(context);
     final toolBarStyle = DevicePreviewToolBarTheme.of(context);
 
     return GestureDetector(

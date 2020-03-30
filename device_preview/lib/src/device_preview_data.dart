@@ -63,7 +63,7 @@ abstract class DevicePreviewStorage {
   static Future<DevicePreviewData> load([bool ignore = false]) async {
     if (!ignore) {
       final shared = await SharedPreferences.getInstance();
-      final json = await shared.getString(_preferencesKey);
+      final json = shared.getString(_preferencesKey);
       if (json == null || json.isEmpty) return null;
       return DevicePreviewData.fromJson(jsonDecode(json));
     }

@@ -156,10 +156,10 @@ Since Flutter is still in technical preview on Windows, the `path_provider` depe
 
 ```yaml
 device_preview:
-path_provider_fde:
+shared_preferences_fde:
   git:
     url: https://github.com/google/flutter-desktop-embedding/
-    path: plugins/flutter_plugins/path_provider_fde
+    path: plugins/flutter_plugins/shared_preferences_fde
 ```
 This is a temporary solution only. More information about this plug-in can be found [here](https://github.com/google/flutter-desktop-embedding/blob/master/plugins/flutter_plugins/README.md).
 
@@ -169,8 +169,10 @@ This is a temporary solution only. More information about this plug-in can be fo
 * Override WidgetsBinding
   * Simulate physical button
   * Simulate lifecycle events
+* Favorite devices
+* More device filters : device type, search by name.
 * Storage explorer
-* Add custom devices state
+* Add custom predefineded devices 
 * Desktop devices
 * TV devices
 * Complete documentation

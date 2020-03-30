@@ -1,3 +1,7 @@
+## 0.4.0+1
+
+- Fixed linter issues.
+
 ## 0.4.0
 
 - Redesigned UI : now a bottom bar.
