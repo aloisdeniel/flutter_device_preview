@@ -1,9 +1,12 @@
+## 0.4.1+1
+
+- Fixed an issue with duplicated windows.
+
 ## 0.4.1
 
 - Tool bar is bigger.
 - Windows background is now semi-transparent.
 - Windows can be dragged.
-
 
 ## 0.4.0+1
 

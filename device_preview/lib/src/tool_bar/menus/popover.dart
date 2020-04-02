@@ -14,12 +14,13 @@ class Popover extends StatefulWidget {
   final WidgetBuilder builder;
 
   const Popover({
+    Key key,
     this.size,
     @required this.title,
     @required this.icon,
     @required this.child,
     @required this.builder,
-  });
+  }) : super(key: key);
 
   static void open(BuildContext context) {
     final state = context.findAncestorStateOfType<_PopoverState>();
@@ -67,6 +68,7 @@ class _PopoverState extends State<Popover> {
           ),
         ),
       );
+
       _overlayEntries.add(barrier);
       _overlayEntries.add(popover);
       Overlay.of(context).insertAll(_overlayEntries);
@@ -79,13 +81,17 @@ class _PopoverState extends State<Popover> {
       for (var item in _overlayEntries) {
         item.remove();
       }
+      _overlayEntries.clear();
       _isOpen = false;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(key: _key, child: widget.child);
+    return SizedBox(
+      key: _key,
+      child: widget.child,
+    );
   }
 }
 
@@ -157,6 +163,7 @@ class __PopOverContainerState extends State<_PopOverContainer>
         : widget.startPosition;
 
     return AnimatedPositioned(
+      key: Key('PopUp'),
       duration: duration,
       left: bounds.left + _translate.dx,
       top: bounds.top - media.viewInsets.bottom + _translate.dy,
