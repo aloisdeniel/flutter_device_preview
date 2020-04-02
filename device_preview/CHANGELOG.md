@@ -1,3 +1,7 @@
+## 0.4.2
+
+- Added a virtual keyboard.
+
 ## 0.4.1+1
 
 - Fixed an issue with duplicated windows.

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:device_preview/src/keyboard/virtual_keyboard.dart';
 import 'package:device_preview/src/tool_bar/tool_bar.dart';
 import 'package:device_preview/src/tool_bar/tool_bar_style.dart';
 import 'package:device_preview/src/utilities/media_query_observer.dart';
@@ -162,6 +163,8 @@ class DevicePreview extends StatefulWidget {
 }
 
 class DevicePreviewState extends State<DevicePreview> {
+  bool _isVirtualKeyboardVisible = false;
+
   /// The curren active device.
   Device get device {
     if (_device.type == DeviceType.freeform) {
@@ -178,8 +181,9 @@ class DevicePreviewState extends State<DevicePreview> {
     MediaQueryData result;
 
     if (_device.type == DeviceType.freeform) {
-      result = (_device.portrait ?? _device.landscape)
-          .copyWith(size: _data.freeformSize ?? Size(1080, 1920));
+      result = (_device.portrait ?? _device.landscape).copyWith(
+        size: _data.freeformSize ?? Size(1080, 1920),
+      );
     } else if (!_device.canRotate) {
       result = _device.portrait ?? _device.landscape;
     } else {
@@ -200,6 +204,14 @@ class DevicePreviewState extends State<DevicePreview> {
       accessibleNavigation: _data.accessibleNavigation,
       invertColors: _data.invertColors,
     );
+
+    if (_isVirtualKeyboardVisible) {
+      result = result.copyWith(
+        viewInsets: EdgeInsets.only(
+          bottom: VirtualKeyboard.minHeight + result.padding.bottom,
+        ),
+      );
+    }
 
     return result;
   }
@@ -243,6 +255,9 @@ class DevicePreviewState extends State<DevicePreview> {
 
   /// The current simulated text scale factor accessibilty preference.
   double get textScaleFactor => _data.textScaleFactor;
+
+  /// Indicates whether the virtual keyboard is visible or not.
+  bool get isVirtualKeyboardVisible => _isVirtualKeyboardVisible;
 
   /// Indicates whether the simulated bold text accessibilty preference is enabled.
   bool get boldText => _data.boldText;
@@ -309,6 +324,14 @@ class DevicePreviewState extends State<DevicePreview> {
   set boldText(bool value) {
     _data = _data.copyWith(boldText: value);
     DevicePreviewStorage.save(_data, !widget.usePreferences);
+    if (widget.enabled) {
+      setState(() {});
+    }
+  }
+
+  /// Show or hide the virtual keyboard.
+  set isVirtualKeyboardVisible(bool value) {
+    _isVirtualKeyboardVisible = value;
     if (widget.enabled) {
       setState(() {});
     }
@@ -426,7 +449,7 @@ class DevicePreviewState extends State<DevicePreview> {
         child: Overlay(
           initialEntries: [
             OverlayEntry(builder: (context) {
-              final screen = Container(
+              Widget screen = Container(
                 width: mediaQuery.size.width,
                 height: mediaQuery.size.height,
                 alignment: Alignment.center,
@@ -450,6 +473,28 @@ class DevicePreviewState extends State<DevicePreview> {
               final screenSize = isRotated || device.portrait == null
                   ? device.landscape.size
                   : device.portrait.size;
+
+              screen = Stack(
+                children: <Widget>[
+                  screen,
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: AnimatedCrossFade(
+                      firstChild: SizedBox(),
+                      secondChild: VirtualKeyboard(
+                        height: VirtualKeyboard.minHeight +
+                            mediaQuery.padding.bottom,
+                      ),
+                      crossFadeState: isVirtualKeyboardVisible
+                          ? CrossFadeState.showSecond
+                          : CrossFadeState.showFirst,
+                      duration: const Duration(milliseconds: 500),
+                    ),
+                  ),
+                ],
+              );
 
               var preview = _data.isFrameVisible
                   ? device.frameBuilder(

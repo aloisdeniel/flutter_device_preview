@@ -63,7 +63,7 @@ class _ToolBarButtonState extends State<ToolBarButton> {
 
   IconThemeData iconTheme(DevicePreviewToolBarStyle style) {
     return IconThemeData(
-      size: 15,
+      size: 14,
       color: widget.foregroundColor ?? style.foregroundColor,
     );
   }
@@ -78,7 +78,9 @@ class _ToolBarButtonState extends State<ToolBarButton> {
     if (widget.icon != null && widget.title == null) return Icon(widget.icon);
     return Row(
       children: <Widget>[
-        Icon(widget.icon),
+        Icon(
+          widget.icon,
+        ),
         SizedBox(
           width: 5.0,
         ),
@@ -93,11 +95,9 @@ class _ToolBarButtonState extends State<ToolBarButton> {
     const duration = Duration(milliseconds: 80);
     final toolBarStyle = DevicePreviewToolBarTheme.of(context);
 
-    var padding = EdgeInsets.only(
-      top: 12.0,
-      bottom: 12.0,
-      left: widget.isRoundedLeft ? 16.0 : 12.0,
-      right: widget.isRoundedRight ? 16.0 : 12.0,
+    var padding = EdgeInsets.symmetric(
+      vertical: 10.0,
+      horizontal: 14.0,
     );
 
     // If direct child is an icon, we use same padding everywhere to

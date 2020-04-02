@@ -39,12 +39,13 @@ class _DevicePreviewToolBarState extends State<DevicePreviewToolBar> {
           right: mediaQuery.padding.right,
         ),
         child: SizedBox(
-          height: 64,
+          height: 60,
           child: ListView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.all(12.0),
             children: <Widget>[
               Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Popover(
                     title: 'Devices',
@@ -130,20 +131,35 @@ class _DevicePreviewToolBarState extends State<DevicePreviewToolBar> {
                 ),
               ),
               ToolBarButton(
+                title: 'Rotate',
                 icon: Icons.screen_rotation,
                 onTap: preview.device.type == DeviceType.freeform
                     ? null
                     : () => preview.rotate(),
               ),
               ToolBarButton(
+                title: showTitles ? 'Restart' : null,
                 icon: Icons.refresh,
                 onTap: () => preview.restart(),
               ),
               ToolBarButton(
+                title: !preview.isFrameVisible ? 'Display frame' : 'Hide frame',
                 icon: Icons.border_outer,
                 onTap: () => preview.toggleFrame(),
               ),
               ToolBarButton(
+                title: preview.isVirtualKeyboardVisible
+                    ? 'Hide keyboard'
+                    : 'Show keyboard',
+                icon: preview.isVirtualKeyboardVisible
+                    ? Icons.keyboard_hide
+                    : Icons.keyboard,
+                onTap: () => preview.isVirtualKeyboardVisible =
+                    !preview.isVirtualKeyboardVisible,
+              ),
+              ToolBarButton(
+                title:
+                    showTitles ? (preview.isDarkMode ? 'Light' : 'Dark') : null,
                 icon: preview.isDarkMode
                     ? Icons.brightness_3
                     : Icons.brightness_high,
@@ -157,6 +173,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewToolBar> {
                     ScreenshotPopOver(screenShotmessage ?? ''),
                 child: Builder(
                   builder: (context) => ToolBarButton(
+                    title: showTitles ? 'Take screenshot' : null,
                     icon: Icons.photo_camera,
                     onTap: () async {
                       try {
@@ -180,6 +197,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewToolBar> {
                 builder: (context) => AccessibilityPopOver(),
                 child: Builder(
                   builder: (context) => ToolBarButton(
+                    title: showTitles ? 'Accesibility' : null,
                     icon: Icons.accessibility_new,
                     onTap: () => Popover.open(context),
                   ),
