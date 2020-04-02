@@ -1,3 +1,10 @@
+## 0.4.1
+
+- Tool bar is bigger.
+- Windows background is now semi-transparent.
+- Windows can be dragged.
+
+
 ## 0.4.0+1
 
 - Fixed linter issues.

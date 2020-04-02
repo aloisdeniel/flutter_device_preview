@@ -58,17 +58,9 @@ class _PopoverState extends State<Popover> {
             data: device.data,
             mediaQuery: device.mediaQuery,
             child: _PopOverContainer(
-              child: Column(
-                children: <Widget>[
-                  _PopOverHeader(
-                    title: widget.title,
-                    icon: widget.icon,
-                  ),
-                  Expanded(
-                    child: widget.builder(context),
-                  ),
-                ],
-              ),
+              title: widget.title,
+              icon: widget.icon,
+              child: widget.builder(context),
               size: widget.size ?? Size(300, 500),
               startPosition: _key.absolutePosition,
             ),
@@ -101,8 +93,12 @@ class _PopOverContainer extends StatefulWidget {
   final Rect startPosition;
   final Size size;
   final Widget child;
+  final String title;
+  final IconData icon;
 
   _PopOverContainer({
+    @required this.title,
+    @required this.icon,
     @required this.child,
     @required this.startPosition,
     @required this.size,
@@ -115,6 +111,8 @@ class _PopOverContainer extends StatefulWidget {
 class __PopOverContainerState extends State<_PopOverContainer>
     with WidgetsBindingObserver {
   bool _isStarted;
+  Offset _translate;
+  DragStartDetails _dragStart;
 
   @override
   void didChangeMetrics() {
@@ -124,7 +122,7 @@ class __PopOverContainerState extends State<_PopOverContainer>
   @override
   void initState() {
     // Centered bottom
-
+    _translate = Offset.zero;
     _isStarted = false;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
@@ -147,7 +145,6 @@ class __PopOverContainerState extends State<_PopOverContainer>
     final duration = const Duration(milliseconds: 80);
     final toolBarStyle = DevicePreviewToolBarTheme.of(context);
     final media = MediaQuery.of(context);
-    final removeBottomOffset = media.viewInsets.bottom > 0.0;
 
     var width = math.min(widget.size.width, media.size.width - 2 * spacing);
     final top = widget.startPosition.top - widget.size.height - 5.0;
@@ -161,8 +158,8 @@ class __PopOverContainerState extends State<_PopOverContainer>
 
     return AnimatedPositioned(
       duration: duration,
-      left: bounds.left,
-      top: bounds.top - media.viewInsets.bottom,
+      left: bounds.left + _translate.dx,
+      top: bounds.top - media.viewInsets.bottom + _translate.dy,
       width: bounds.width,
       height: math.min(
           bounds.height,
@@ -175,14 +172,29 @@ class __PopOverContainerState extends State<_PopOverContainer>
         child: AnimatedContainer(
           duration: duration,
           curve: Curves.easeOut,
-          transform: _isStarted
+          transform: (_isStarted
               ? Matrix4.identity()
-              : Matrix4.translationValues(0, 6.0, 0),
+              : Matrix4.translationValues(0, 6.0, 0)),
           decoration: BoxDecoration(
-            color: toolBarStyle.buttonBackgroundColor,
+            color: toolBarStyle.buttonBackgroundColor.withOpacity(0.95),
             borderRadius: BorderRadius.circular(6.0),
           ),
-          child: widget.child,
+          child: Column(
+            children: <Widget>[
+              GestureDetector(
+                onPanUpdate: (u) {
+                  setState(() => _translate += u.delta);
+                },
+                child: _PopOverHeader(
+                  title: widget.title,
+                  icon: widget.icon,
+                ),
+              ),
+              Expanded(
+                child: widget.child,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -220,7 +232,10 @@ class _PopOverHeader extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: toolBarStyle.backgroundColor,
-        borderRadius: BorderRadius.circular(6.0),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(6.0),
+          topRight: Radius.circular(6.0),
+        ),
       ),
       padding: EdgeInsets.all(10.0),
       child: Row(

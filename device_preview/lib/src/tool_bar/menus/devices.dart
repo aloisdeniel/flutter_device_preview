@@ -88,9 +88,7 @@ class PlatformSelector extends StatelessWidget {
                     isSelected ? theme.accentTextTheme.button.color : null,
                 icon: platformIcon(x),
                 onTap: () {
-                  onChanged(isSelected
-                      ? selected.where((v) => v != x).toList()
-                      : [x]);
+                  onChanged([x]);
                 },
               );
             })

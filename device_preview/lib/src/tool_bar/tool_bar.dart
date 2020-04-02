@@ -39,7 +39,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewToolBar> {
           right: mediaQuery.padding.right,
         ),
         child: SizedBox(
-          height: 48,
+          height: 64,
           child: ListView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.all(12.0),

@@ -25,12 +25,17 @@ import 'tool_bar/tool_bar_theme.dart';
 ///
 /// See also :
 /// * [Devices] has a set of predefined common devices.
+/// * [DevicePreviewToolBarStyle] to update the tool bar aspect.
 class DevicePreview extends StatefulWidget {
   /// If not [enabled], the [child] is used directly.
   final bool enabled;
 
-  /// If not enabled, the settings drawer is't available.
-  final bool areSettingsEnabled;
+  /// Indicates whether the tool bar should be visible or not.
+  final bool isToolBarVisible;
+
+  /// Indicates whether the tool bar should be visible or not.
+  @Deprecated('Replaced by `isToolBarVisible`')
+  bool get areSettingsEnabled => isToolBarVisible;
 
   /// Whether configuration should be saved to device preferences
   /// between sessions.
@@ -57,12 +62,25 @@ class DevicePreview extends StatefulWidget {
   /// The available devices used for previewing.
   final List<Device> devices;
 
+  /// Customizing the tool bar aspect.
+  ///
+  /// {@tool snippet}
+  ///
+  /// This sample shows how to apply a light theme.
+  ///
+  /// ```dart
+  /// DevicePreview(
+  ///   toolBarStyle: DevicePreviewToolBarStyle.light(),
+  ///   builder: (context) => MyApp(),
+  /// )
+  /// ```
+  /// {@end-tool}
   final DevicePreviewToolBarStyle toolBarStyle;
 
   /// The available locales.
   final List<NamedLocale> availablesLocales;
 
-  /// Create a new [DevicePreview]
+  /// Create a new [DevicePreview].
   DevicePreview(
       {Key key,
       @required this.builder,
@@ -70,7 +88,8 @@ class DevicePreview extends StatefulWidget {
       this.data,
       bool usePreferences = true,
       this.toolBarStyle,
-      this.areSettingsEnabled = true,
+      bool areSettingsEnabled = true,
+      bool isToolBarVisible = true,
       this.availablesLocales = defaultAvailableLocales,
       this.onScreenshot,
       this.background = const BoxDecoration(
@@ -84,6 +103,7 @@ class DevicePreview extends StatefulWidget {
       : assert(devices == null || devices.isNotEmpty),
         assert(usePreferences != null),
         assert(areSettingsEnabled != null),
+        isToolBarVisible = isToolBarVisible || areSettingsEnabled,
         usePreferences = (data == null) && usePreferences,
         super(key: key);
 
@@ -470,7 +490,7 @@ class DevicePreviewState extends State<DevicePreview> {
                             ),
                           ),
                         ),
-                        if (widget.areSettingsEnabled)
+                        if (widget.isToolBarVisible)
                           DevicePreviewToolBar(key: Key('Toolbar')),
                       ],
                     ),
