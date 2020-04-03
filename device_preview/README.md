@@ -156,11 +156,13 @@ Since Flutter is still in technical preview on Windows, the `path_provider` depe
 
 ```yaml
 device_preview:
-shared_preferences_fde:
+path_provider_fde:
   git:
     url: https://github.com/google/flutter-desktop-embedding/
-    path: plugins/flutter_plugins/shared_preferences_fde
+    path: plugins/flutter_plugins/path_provider_fde
 ```
+You must also turn on Developer Mode in Windows Settings.
+
 This is a temporary solution only. More information about this plug-in can be found [here](https://github.com/google/flutter-desktop-embedding/blob/master/plugins/flutter_plugins/README.md).
 
 ## Ideas and roadmap
