@@ -155,7 +155,7 @@ If you are running the `master` channel of Flutter, you can use macOS, Android o
 Since Flutter is still in technical preview on Windows, the `path_provider` dependency can be satisfied by adding this dependency in your `pubspec.yaml` if you are on the `master` channel of Flutter:
 
 ```yaml
-device_preview:
+device_preview: ^0.4.3
 path_provider_fde:
   git:
     url: https://github.com/google/flutter-desktop-embedding/
