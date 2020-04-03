@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../tool_bar_theme.dart';
+import '../../device_preview_style.dart';
 
 class ScreenshotPopOver extends StatelessWidget {
   final String message;
@@ -9,7 +9,7 @@ class ScreenshotPopOver extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final toolBarStyle = DevicePreviewToolBarTheme.of(context);
+    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Text(

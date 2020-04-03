@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../device_preview.dart';
-import '../tool_bar_theme.dart';
 
 class LocalesPopOver extends StatefulWidget {
   @override
@@ -79,7 +78,7 @@ class _LocaleToolsState extends State<LocaleTools> {
 
   @override
   Widget build(BuildContext context) {
-    final toolBarStyle = DevicePreviewToolBarTheme.of(context);
+    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     return Material(
       child: Container(
         padding: const EdgeInsets.all(10.0),
@@ -118,7 +117,7 @@ class LocaleTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final preview = DevicePreview.of(context);
-    final toolBarStyle = DevicePreviewToolBarTheme.of(context);
+    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     final isSelected = preview.locale.toString() == locale.code;
     return GestureDetector(
       onTap: !isSelected ? () => preview.locale = Locale(locale.code) : null,

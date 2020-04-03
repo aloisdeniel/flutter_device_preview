@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../tool_bar_theme.dart';
+import '../../device_preview_style.dart';
 
 class SizePopOver extends StatelessWidget {
   final double value;
@@ -45,7 +45,7 @@ class SizeTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final toolBarStyle = DevicePreviewToolBarTheme.of(context);
+    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     return GestureDetector(
       onTap: () => onChanged(value),
       child: AnimatedContainer(

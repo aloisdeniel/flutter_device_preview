@@ -6,7 +6,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../device_preview.dart';
 import '../../utilities/spacing.dart';
-import '../tool_bar_theme.dart';
 
 class DevicesPopOver extends StatefulWidget {
   @override
@@ -73,7 +72,7 @@ class PlatformSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final toolBarStyle = DevicePreviewToolBarTheme.of(context);
+    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     final theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.all(10.0),
@@ -160,7 +159,7 @@ class DeviceTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final preview = DevicePreview.of(context);
     final isSelected = preview.device.name == device.name;
-    final toolBarStyle = DevicePreviewToolBarTheme.of(context);
+    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
 
     return GestureDetector(
       onTap: !isSelected ? onTap : null,

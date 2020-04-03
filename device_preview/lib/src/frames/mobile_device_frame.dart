@@ -72,8 +72,9 @@ class MobileDeviceFrame extends StatelessWidget {
                 borderRadius: edgeRadius,
                 boxShadow: [
                   BoxShadow(
-                      blurRadius: 70,
-                      color: Color(0xFF000000).withOpacity(0.4)),
+                    blurRadius: 70,
+                    color: Color(0xFF000000).withOpacity(0.4),
+                  ),
                 ],
               ),
             ),

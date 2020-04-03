@@ -1,3 +1,7 @@
+## 0.4.3
+
+- Added settings window for customizing preview appearance and layout.
+
 ## 0.4.2
 
 - Added a virtual keyboard.

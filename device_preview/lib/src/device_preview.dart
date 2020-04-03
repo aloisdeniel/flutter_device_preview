@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:device_preview/src/keyboard/virtual_keyboard.dart';
-import 'package:device_preview/src/tool_bar/tool_bar.dart';
-import 'package:device_preview/src/tool_bar/tool_bar_style.dart';
+import 'package:device_preview/src/tool_bar/horizontal_toolbar.dart';
+import 'package:device_preview/src/tool_bar/vertical_toolbar.dart';
 import 'package:device_preview/src/utilities/media_query_observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -11,12 +11,13 @@ import 'dart:ui' as ui;
 import 'dart:math' as math;
 
 import 'device_preview_data.dart';
+import 'device_preview_style.dart';
 import 'devices/devices.dart';
 import 'locales/locales.dart';
 import 'locales/default_locales.dart';
 import 'screenshots/screenshot.dart';
 import 'screenshots/upload_service.dart';
-import 'tool_bar/tool_bar_theme.dart';
+import 'storage.dart';
 
 /// Simulates how a [child] would render on different
 /// devices than the current one.
@@ -26,7 +27,7 @@ import 'tool_bar/tool_bar_theme.dart';
 ///
 /// See also :
 /// * [Devices] has a set of predefined common devices.
-/// * [DevicePreviewToolBarStyle] to update the tool bar aspect.
+/// * [DevicePreviewStyle] to update the aspect.
 class DevicePreview extends StatefulWidget {
   /// If not [enabled], the [child] is used directly.
   final bool enabled;
@@ -52,9 +53,6 @@ class DevicePreview extends StatefulWidget {
   /// It is common to give the root application widget.
   final WidgetBuilder builder;
 
-  /// The background decoration for the preview. Defaults to a light gray gradient.
-  final BoxDecoration background;
-
   /// When the user takes a screenshot, this processor is invoked.
   ///
   /// Defaults to [FileioScreenshotUploader.upload].
@@ -63,20 +61,23 @@ class DevicePreview extends StatefulWidget {
   /// The available devices used for previewing.
   final List<Device> devices;
 
-  /// Customizing the tool bar aspect.
+  /// Customizing the tool bar and background aspect.
   ///
   /// {@tool snippet}
   ///
-  /// This sample shows how to apply a light theme.
+  /// This sample shows how to apply a light theme for the toolbar and a custom background.
   ///
   /// ```dart
   /// DevicePreview(
-  ///   toolBarStyle: DevicePreviewToolBarStyle.light(),
+  ///   style: DevicePreviewStyle(
+  ///      background: BoxDecoration(color: const Color(0xFFFF0000)),
+  ///      toolbar: DevicePreviewToolBarStyle.light(),
+  ///   ),
   ///   builder: (context) => MyApp(),
   /// )
   /// ```
   /// {@end-tool}
-  final DevicePreviewToolBarStyle toolBarStyle;
+  final DevicePreviewStyle style;
 
   /// The available locales.
   final List<NamedLocale> availablesLocales;
@@ -88,18 +89,11 @@ class DevicePreview extends StatefulWidget {
       this.devices,
       this.data,
       bool usePreferences = true,
-      this.toolBarStyle,
+      this.style,
       bool areSettingsEnabled = true,
       bool isToolBarVisible = true,
       this.availablesLocales = defaultAvailableLocales,
       this.onScreenshot,
-      this.background = const BoxDecoration(
-          gradient: LinearGradient(
-        colors: [
-          Color(0xFFf5f7fa),
-          Color(0xFFc3cfe2),
-        ],
-      )),
       this.enabled = true})
       : assert(devices == null || devices.isNotEmpty),
         assert(usePreferences != null),
@@ -244,6 +238,9 @@ class DevicePreviewState extends State<DevicePreview> {
     }
   }
 
+  /// The current style.
+  DevicePreviewStyle get style => _style;
+
   /// Indicates wheter animations are disabled.
   bool get disableAnimations => _data.disableAnimations;
 
@@ -278,6 +275,15 @@ class DevicePreviewState extends State<DevicePreview> {
   set disableAnimations(bool value) {
     _data = _data.copyWith(disableAnimations: value);
     DevicePreviewStorage.save(_data, !widget.usePreferences);
+    if (widget.enabled) {
+      setState(() {});
+    }
+  }
+
+  /// Update the [style].
+  set style(DevicePreviewStyle value) {
+    _style = value;
+    DevicePreviewStyleStorage.save(_style, !widget.usePreferences);
     if (widget.enabled) {
       setState(() {});
     }
@@ -441,106 +447,139 @@ class DevicePreviewState extends State<DevicePreview> {
     if (!widget.enabled) {
       return widget.builder(context);
     }
-
-    return DevicePreviewToolBarTheme(
-      style: widget.toolBarStyle,
+    return DevicePreviewTheme(
+      style: style,
       child: Directionality(
         textDirection: TextDirection.ltr,
         child: Overlay(
           initialEntries: [
             OverlayEntry(builder: (context) {
-              Widget screen = Container(
-                width: mediaQuery.size.width,
-                height: mediaQuery.size.height,
-                alignment: Alignment.center,
-                child: ClipRect(
-                  child: MediaQuery(
-                    data: mediaQuery,
-                    child: Builder(
-                      builder: (context) => DevicePreviewProvider(
-                        mediaQuery: mediaQuery,
-                        key: _appKey,
-                        data: _data,
-                        availableDevices: availableDevices,
-                        child: widget.builder(context),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-
-              final isRotated = orientation == Orientation.landscape;
-              final screenSize = isRotated || device.portrait == null
-                  ? device.landscape.size
-                  : device.portrait.size;
-
-              screen = Stack(
-                children: <Widget>[
-                  screen,
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: AnimatedCrossFade(
-                      firstChild: SizedBox(),
-                      secondChild: VirtualKeyboard(
-                        height: VirtualKeyboard.minHeight +
-                            mediaQuery.padding.bottom,
-                      ),
-                      crossFadeState: isVirtualKeyboardVisible
-                          ? CrossFadeState.showSecond
-                          : CrossFadeState.showFirst,
-                      duration: const Duration(milliseconds: 500),
-                    ),
-                  ),
-                ],
-              );
-
-              var preview = _data.isFrameVisible
-                  ? device.frameBuilder(
-                      context,
-                      screen,
-                      screenSize,
-                      isRotated
-                          ? DeviceOrientation.landscape
-                          : DeviceOrientation.portrait,
-                    )
-                  : screen;
-
-              preview = RepaintBoundary(
-                key: _repaintKey,
-                child: preview,
-              );
-
-              return Builder(
-                builder: (context) {
-                  return MediaQueryObserver(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        Expanded(
-                          key: Key('Preview'),
-                          child: DecoratedBox(
-                            decoration: widget.background,
-                            child: FittedBox(
-                              fit: BoxFit.contain,
-                              child: AnimatedSwitcher(
-                                duration: const Duration(milliseconds: 120),
-                                child: Builder(
-                                  key: Key(
-                                      DevicePreview.of(context).device.name),
-                                  builder: (context) => preview,
-                                ),
-                              ),
+              return MediaQueryObserver(
+                child: Builder(
+                  builder: (context) {
+                    final style = DevicePreviewTheme.of(context);
+                    Widget screen = Container(
+                      width: mediaQuery.size.width,
+                      height: mediaQuery.size.height,
+                      alignment: Alignment.center,
+                      child: ClipRect(
+                        child: MediaQuery(
+                          data: mediaQuery,
+                          child: Builder(
+                            builder: (context) => DevicePreviewProvider(
+                              mediaQuery: mediaQuery,
+                              key: _appKey,
+                              data: _data,
+                              availableDevices: availableDevices,
+                              child: widget.builder(context),
                             ),
                           ),
                         ),
-                        if (widget.isToolBarVisible)
-                          DevicePreviewToolBar(key: Key('Toolbar')),
+                      ),
+                    );
+
+                    final isRotated = orientation == Orientation.landscape;
+                    final screenSize = isRotated || device.portrait == null
+                        ? device.landscape.size
+                        : device.portrait.size;
+
+                    screen = Stack(
+                      children: <Widget>[
+                        screen,
+                        Positioned(
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          child: AnimatedCrossFade(
+                            firstChild: SizedBox(),
+                            secondChild: VirtualKeyboard(
+                              height: VirtualKeyboard.minHeight +
+                                  mediaQuery.padding.bottom,
+                            ),
+                            crossFadeState: isVirtualKeyboardVisible
+                                ? CrossFadeState.showSecond
+                                : CrossFadeState.showFirst,
+                            duration: const Duration(milliseconds: 500),
+                          ),
+                        ),
                       ],
-                    ),
-                  );
-                },
+                    );
+
+                    var preview = _data.isFrameVisible
+                        ? device.frameBuilder(
+                            context,
+                            screen,
+                            screenSize,
+                            isRotated
+                                ? DeviceOrientation.landscape
+                                : DeviceOrientation.portrait,
+                          )
+                        : screen;
+
+                    preview = RepaintBoundary(
+                      key: _repaintKey,
+                      child: preview,
+                    );
+
+                    final isToolBarHorizontal = style.toolBar.position ==
+                            DevicePreviewToolBarPosition.bottom ||
+                        style.toolBar.position ==
+                            DevicePreviewToolBarPosition.top;
+
+                    final isToolBarDirectionInverted = style.toolBar.position ==
+                            DevicePreviewToolBarPosition.left ||
+                        style.toolBar.position ==
+                            DevicePreviewToolBarPosition.top;
+
+                    return Builder(
+                      builder: (context) {
+                        return MediaQueryObserver(
+                          child: Flex(
+                            direction: isToolBarHorizontal
+                                ? Axis.vertical
+                                : Axis.horizontal,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              if (widget.isToolBarVisible &&
+                                  isToolBarDirectionInverted)
+                                isToolBarHorizontal
+                                    ? DevicePreviewHorizontalToolBar(
+                                        key: Key('HorizontalToolbar'),
+                                      )
+                                    : DevicePreviewVerticalToolBar(
+                                        key: Key('VerticalToolbar'),
+                                      ),
+                              Expanded(
+                                key: Key('Preview'),
+                                child: DecoratedBox(
+                                  decoration: style.background,
+                                  child: FittedBox(
+                                    fit: BoxFit.contain,
+                                    child: Builder(
+                                      key: Key(DevicePreview.of(context)
+                                          .device
+                                          .name),
+                                      builder: (context) => preview,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              if (widget.isToolBarVisible &&
+                                  !isToolBarDirectionInverted)
+                                isToolBarHorizontal
+                                    ? DevicePreviewHorizontalToolBar(
+                                        key: Key('HorizontalToolbar'),
+                                      )
+                                    : DevicePreviewVerticalToolBar(
+                                        key: Key('VerticalToolbar'),
+                                      ),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
               );
             }),
           ],
@@ -566,6 +605,9 @@ class DevicePreviewState extends State<DevicePreview> {
   /// The current configuration.
   DevicePreviewData _data;
 
+  /// The current style.
+  DevicePreviewStyle _style;
+
   /// The default locale from the device.
   String get _defaultLocale => basicLocaleListResolution(
         WidgetsBinding.instance.window.locales,
@@ -574,22 +616,38 @@ class DevicePreviewState extends State<DevicePreview> {
 
   /// Load the configuration from the preferences (if no [data] provided by the user).
   Future<void> _loadData() async {
+    var shouldSetState = false;
     DevicePreviewData data;
-
-    if (widget.data != null) {
-      data = widget.data;
-    } else if (widget.usePreferences) {
-      data = await DevicePreviewStorage.load();
-    }
-
-    if (data != null) {
-      if (data.locale == null) {
-        data = data.copyWith(locale: _defaultLocale);
+    try {
+      if (widget.data != null) {
+        data = widget.data;
+      } else if (widget.usePreferences) {
+        data = await DevicePreviewStorage.load();
       }
-      _data = data;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+
+      if (data != null) {
+        if (data.locale == null) {
+          data = data.copyWith(locale: _defaultLocale);
+        }
+        _data = data;
+        shouldSetState = true;
+      }
+
+      print('STYLE!');
+      if (widget.style != null) {
+        print('STYLE!!');
+        _style = widget.style;
+      } else if (widget.usePreferences) {
+        print('STYLE!!!');
+        _style = await DevicePreviewStyleStorage.load();
+        print('STYLE!!!!');
+      }
+
+      if (shouldSetState) {
         setState(() {});
-      });
+      }
+    } catch (e) {
+      print(e);
     }
   }
 }

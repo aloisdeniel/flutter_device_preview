@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../../device_preview.dart';
-import '../tool_bar_theme.dart';
 
 class AccessibilityPopOver extends StatelessWidget {
   @override
@@ -60,7 +59,7 @@ class AccessibilityCheckTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final toolBarStyle = DevicePreviewToolBarTheme.of(context);
+    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
 
     return GestureDetector(
       onTap: () => onValueChanged(!value),
@@ -113,51 +112,52 @@ class AccessibilityTextScaleTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final toolBarStyle = DevicePreviewToolBarTheme.of(context);
+    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
 
-    return GestureDetector(
-      onTap: () => onValueChanged(value == 2.0 ? 1.0 : (value + 0.5)),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 100),
-        color: Colors.transparent,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+    return Material(
+      color: Colors.transparent,
+      child: GestureDetector(
+        onTap: () => onValueChanged(value == 2.0 ? 1.0 : (value + 0.5)),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 100),
+          color: Colors.transparent,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Row(
                   children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 12.0,
+                          color: toolBarStyle.foregroundColor,
+                        ),
+                      ),
+                    ),
                     Text(
-                      title,
+                      value?.toString() ?? '',
                       style: TextStyle(
                         fontSize: 12.0,
                         color: toolBarStyle.foregroundColor,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
                 ),
-              ),
-              SizedBox(width: 12),
-              _SelectBox(
-                icon: Icons.looks_two,
-                onValueChanged: (v) {},
-                value: value == 1.00,
-              ),
-              SizedBox(width: 12),
-              _SelectBox(
-                icon: Icons.looks_3,
-                onValueChanged: (v) {},
-                value: value == 1.50,
-              ),
-              SizedBox(width: 12),
-              _SelectBox(
-                icon: Icons.looks_4,
-                onValueChanged: (v) {},
-                value: value == 2.00,
-              ),
-            ],
+                SizedBox(width: 12),
+                Slider(
+                  divisions: 11,
+                  value: value,
+                  onChanged: onValueChanged,
+                  min: 0.25,
+                  max: 3.0,
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -178,7 +178,7 @@ class _SelectBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final toolBarStyle = DevicePreviewToolBarTheme.of(context);
+    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     return AnimatedContainer(
       duration: const Duration(milliseconds: 100),
       padding: EdgeInsets.all(2),

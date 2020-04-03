@@ -1,17 +1,20 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:device_preview/src/utilities/media_query_observer.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:math' as math;
 
 import '../../device_preview.dart';
 import '../../utilities/position.dart';
-import '../tool_bar_theme.dart';
+
+typedef PopoverContentBuilder = Widget Function(
+    BuildContext context, GestureTapCallback onClose);
 
 class Popover extends StatefulWidget {
   final Widget child;
   final String title;
   final IconData icon;
   final Size size;
-  final WidgetBuilder builder;
+  final PopoverContentBuilder builder;
 
   const Popover({
     Key key,
@@ -61,8 +64,8 @@ class _PopoverState extends State<Popover> {
             child: _PopOverContainer(
               title: widget.title,
               icon: widget.icon,
-              child: widget.builder(context),
-              size: widget.size ?? Size(300, 500),
+              child: widget.builder(context, close),
+              size: widget.size ?? Size(280, 420),
               startPosition: _key.absolutePosition,
             ),
           ),
@@ -147,20 +150,70 @@ class __PopOverContainerState extends State<_PopOverContainer>
 
   @override
   Widget build(BuildContext context) {
-    const spacing = 10.0;
     final duration = const Duration(milliseconds: 80);
-    final toolBarStyle = DevicePreviewToolBarTheme.of(context);
+    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     final media = MediaQuery.of(context);
 
-    var width = math.min(widget.size.width, media.size.width - 2 * spacing);
-    final top = widget.startPosition.top - widget.size.height - 5.0;
-    var height = math.min(widget.size.height, media.size.height - top);
-    var left = math.max(10.0, widget.startPosition.center.dx - width / 2);
-    left = math.min(left, media.size.width - spacing - width);
+    var bounds = widget.startPosition;
 
-    final bounds = _isStarted
-        ? Rect.fromLTWH(left, top, width, height)
-        : widget.startPosition;
+    final isHorizontal =
+        toolBarStyle.position == DevicePreviewToolBarPosition.top ||
+            toolBarStyle.position == DevicePreviewToolBarPosition.bottom;
+
+    if (_isStarted) {
+      if (widget.startPosition.top > media.size.height / 2) {
+        final bottom = isHorizontal ? bounds.top : bounds.bottom;
+        if (widget.startPosition.left > media.size.width / 2) {
+          // Bottom-Right of the screen
+          final right = isHorizontal ? bounds.right : bounds.left;
+          bounds = Rect.fromLTRB(
+            right - widget.size.width,
+            bottom - widget.size.height,
+            right,
+            bottom,
+          );
+        } else {
+          // Bottom-Left of the screen
+          final left = isHorizontal ? bounds.left : bounds.right;
+          bounds = Rect.fromLTRB(
+            left,
+            bottom - widget.size.height,
+            left + widget.size.width,
+            bottom,
+          );
+        }
+      } else {
+        final top = isHorizontal ? bounds.bottom : bounds.top;
+        if (widget.startPosition.left > media.size.width / 2) {
+          // Top-Right of the screen
+          final right = isHorizontal ? bounds.right : bounds.left;
+          bounds = Rect.fromLTRB(
+            right - widget.size.width,
+            top,
+            right,
+            top + widget.size.height,
+          );
+        } else {
+          // Top-Left of the screen
+          final left = isHorizontal ? bounds.left : bounds.right;
+          bounds = Rect.fromLTRB(
+            left,
+            top,
+            left + widget.size.width,
+            top + widget.size.height,
+          );
+        }
+      }
+    }
+
+    if (bounds.bottom > media.size.height - media.padding.bottom) {
+      bounds = Offset(bounds.left,
+              media.size.height - media.padding.bottom - bounds.size.height) &
+          bounds.size;
+    }
+    if (bounds.top < media.padding.top) {
+      bounds = Offset(bounds.left, media.padding.top) & bounds.size;
+    }
 
     return AnimatedPositioned(
       key: Key('PopUp'),
@@ -235,7 +288,7 @@ class _PopOverHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final toolBarStyle = DevicePreviewToolBarTheme.of(context);
+    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     return Container(
       decoration: BoxDecoration(
         color: toolBarStyle.backgroundColor,

@@ -111,9 +111,12 @@ abstract class Devices {
   static final all = <Device>[...ios, ...android];
 
   static final ios = <Device>[
+    ios_device.iPhone5,
     ios_device.iPhone8,
-    ios_device.iPhoneXr,
+    ios_device.iPhoneX,
     ios_device.iPhoneXs,
+    ios_device.iPhoneXr,
+    ios_device.iPhoneXsMax,
     ios_device.iPadAir2,
     ios_device.iPadPro_129_2,
     ios_device.watch40mm,

@@ -17,6 +17,22 @@ final iosFreeform = Device.iOS(
   ),
 );
 
+const iPhone5 = Device.iOS(
+  name: 'iPhone 5',
+  type: DeviceType.phone,
+  frameBuilder: _phoneFrameWithoutNotch,
+  landscape: MediaQueryData(
+    padding: EdgeInsets.zero,
+    size: Size(568, 320),
+    devicePixelRatio: 2,
+  ),
+  portrait: MediaQueryData(
+    padding: EdgeInsets.only(top: 20),
+    size: Size(320, 568),
+    devicePixelRatio: 2,
+  ),
+);
+
 const iPhone8 = Device.iOS(
   name: 'iPhone 8',
   type: DeviceType.phone,
@@ -55,25 +71,73 @@ const iPhoneXs = Device.iOS(
   frameBuilder: _phoneFrameWithNotch,
 );
 
+const iPhoneX = Device.iOS(
+  name: 'iPhone X',
+  type: DeviceType.phone,
+  portrait: MediaQueryData(
+      size: Size(375, 812),
+      padding: EdgeInsets.only(
+        top: 44,
+        bottom: 34,
+      ),
+      devicePixelRatio: 3),
+  landscape: MediaQueryData(
+    size: Size(812, 375),
+    padding: EdgeInsets.only(
+      left: 44,
+      right: 44,
+      bottom: 21,
+    ),
+    devicePixelRatio: 3,
+  ),
+  frameBuilder: _phoneFrameWithNotch,
+);
+
+const iPhoneXsMax = Device.iOS(
+  name: 'iPhone XS Max',
+  type: DeviceType.phone,
+  portrait: MediaQueryData(
+    size: Size(414, 896),
+    padding: EdgeInsets.only(
+      top: 44,
+      bottom: 34,
+    ),
+    devicePixelRatio: 3,
+  ),
+  landscape: MediaQueryData(
+    size: Size(896, 414),
+    padding: EdgeInsets.only(
+      left: 44,
+      right: 44,
+      bottom: 21,
+    ),
+    devicePixelRatio: 3,
+  ),
+  frameBuilder: _phoneFrameWithNotch,
+);
+
 const iPhoneXr = Device.iOS(
-    name: 'iPhone XR',
-    type: DeviceType.phone,
-    portrait: MediaQueryData(
-        size: Size(375, 812),
-        padding: EdgeInsets.only(
-          top: 44,
-          bottom: 34,
-        ),
-        devicePixelRatio: 3),
-    landscape: MediaQueryData(
-        size: Size(812, 375),
-        padding: EdgeInsets.only(
-          left: 44,
-          right: 44,
-          bottom: 21,
-        ),
-        devicePixelRatio: 3),
-    frameBuilder: _phoneFrameWithNotch);
+  name: 'iPhone XR',
+  type: DeviceType.phone,
+  portrait: MediaQueryData(
+    size: Size(414, 896),
+    padding: EdgeInsets.only(
+      top: 44,
+      bottom: 34,
+    ),
+    devicePixelRatio: 2,
+  ),
+  landscape: MediaQueryData(
+    size: Size(896, 414),
+    padding: EdgeInsets.only(
+      left: 44,
+      right: 44,
+      bottom: 21,
+    ),
+    devicePixelRatio: 2,
+  ),
+  frameBuilder: _phoneFrameWithNotch,
+);
 
 final iPadAir2 = Device.iOS(
   name: 'iPad Air 2',

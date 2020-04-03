@@ -10,7 +10,6 @@ void main() {
   debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
 
   runApp(DevicePreview(
-    toolBarStyle: DevicePreviewToolBarStyle.light(),
     builder: (context) => ExampleApp(),
   ));
 }
