@@ -29,6 +29,7 @@
 ```dart
 void main() => runApp(
   DevicePreview(
+    enabled: !kReleaseMode,
     builder: (context) => MyApp(),
   ),
 );
