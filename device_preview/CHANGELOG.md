@@ -1,3 +1,7 @@
+## 0.4.4
+
+- Removed debug logs.
+
 ## 0.4.3
 
 - Added settings window for customizing preview appearance and layout.

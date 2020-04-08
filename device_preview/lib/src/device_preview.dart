@@ -633,14 +633,10 @@ class DevicePreviewState extends State<DevicePreview> {
         shouldSetState = true;
       }
 
-      print('STYLE!');
       if (widget.style != null) {
-        print('STYLE!!');
         _style = widget.style;
       } else if (widget.usePreferences) {
-        print('STYLE!!!');
         _style = await DevicePreviewStyleStorage.load();
-        print('STYLE!!!!');
       }
 
       if (shouldSetState) {
