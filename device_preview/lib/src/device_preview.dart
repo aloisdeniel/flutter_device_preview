@@ -424,10 +424,6 @@ class DevicePreviewState extends State<DevicePreview> {
 
   @override
   void initState() {
-    _data = DevicePreviewData(
-      locale: _defaultLocale,
-    );
-
     _loadData();
     _onScreenshot = StreamController<DeviceScreenshot>.broadcast();
     super.initState();
@@ -447,6 +443,14 @@ class DevicePreviewState extends State<DevicePreview> {
     if (!widget.enabled) {
       return widget.builder(context);
     }
+
+    // Build the background gradient while preview data is not available
+    if (_data == null) {
+      return DecoratedBox(
+        decoration: DevicePreviewStyle.light().background,
+      );
+    }
+
     return DevicePreviewTheme(
       style: style,
       child: Directionality(
