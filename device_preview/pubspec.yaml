@@ -16,6 +16,7 @@ dependencies:
   meta: ^1.1.8 
   shared_preferences: ^0.5.6+3
   shared_preferences_macos: ^0.0.1+6
+  image: ^2.1.12
 
   # This is a temporary hack to enable Windows to work. It is not recommended
   # since this package may change at any time in ways that break. 
