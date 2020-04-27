@@ -38,11 +38,10 @@ class _DevicesPopOverState extends State<DevicesPopOver> {
     final all =
         preview.availableDevices.map((e) => e.platform).toSet().toList();
     final selected = this.selected ?? [preview.device?.platform ?? all.first];
-    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
 
     return GestureDetector(
       onPanDown: (_) {
-        FocusScope.of(context).requestFocus(FocusNode()); //remove focus
+        FocusScope.of(context).requestFocus(FocusNode()); //remove search focus
       },
       child: Column(
         children: <Widget>[
@@ -54,38 +53,9 @@ class _DevicesPopOverState extends State<DevicesPopOver> {
               this.selected = v;
             }),
           ),
-          Material(
-            child: Container(
-              color: toolBarStyle.backgroundColor,
-              height: 48,
-              padding: const EdgeInsets.fromLTRB(10, 4, 10, 10),
-              child: TextField(
-                style: TextStyle(
-                    color: toolBarStyle.foregroundColor, fontSize: 12),
-                controller: _searchTEC,
-                decoration: InputDecoration(
-                    hintStyle:
-                        const TextStyle(color: Color(0xFFAAAAAA), fontSize: 12),
-                    hintText: 'Search by device name...',
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                    ),
-                    filled: true,
-                    fillColor: toolBarStyle.foregroundColor.withOpacity(0.12),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    prefixIcon: const Icon(FontAwesomeIcons.search, size: 12),
-                    suffix: InkWell(
-                      child: Icon(
-                        FontAwesomeIcons.times,
-                        size: 12,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      onTap: _clearSearchTEC,
-                    )),
-              ),
-            ),
+          DeviceSearchField(
+            _searchTEC,
+            onClear: _clearSearchTEC,
           ),
           Expanded(
             child: ListView(
@@ -269,6 +239,52 @@ class DeviceTile extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DeviceSearchField extends StatelessWidget {
+  final TextEditingController searchTEC;
+  final VoidCallback onClear;
+  const DeviceSearchField(this.searchTEC, {Key key, @required this.onClear})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
+    return Container(
+      child: Material(
+        child: Container(
+          color: toolBarStyle.backgroundColor,
+          height: 48,
+          padding: const EdgeInsets.fromLTRB(10, 4, 10, 10),
+          child: TextField(
+            style: TextStyle(color: toolBarStyle.foregroundColor, fontSize: 12),
+            controller: searchTEC,
+            decoration: InputDecoration(
+                hintStyle:
+                    const TextStyle(color: Color(0xFFAAAAAA), fontSize: 12),
+                hintText: 'Search by device name...',
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                ),
+                filled: true,
+                fillColor: toolBarStyle.foregroundColor.withOpacity(0.12),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                prefixIcon: const Icon(FontAwesomeIcons.search, size: 12),
+                suffix: InkWell(
+                  child: Icon(
+                    FontAwesomeIcons.times,
+                    size: 12,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  onTap: onClear,
+                )),
           ),
         ),
       ),
