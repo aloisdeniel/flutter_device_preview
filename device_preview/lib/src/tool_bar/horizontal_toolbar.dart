@@ -222,7 +222,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewHorizontalToolBar> {
             ),
             Popover(
               title: 'Settings',
-              size: Size(280, 280),
+              size: Size(280, 320),
               icon: Icons.tune,
               builder: (context, close) => StylePopOver(close),
               child: Builder(

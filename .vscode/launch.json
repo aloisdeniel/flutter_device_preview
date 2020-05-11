@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Dart",
+            "name": "Example",
             "program": "device_preview/example/lib/main.dart",
             "request": "launch",
             "type": "dart"

@@ -266,7 +266,7 @@ class DevicePreviewState extends State<DevicePreview> {
   List<Device> get availableDevices => widget.devices ?? Devices.all;
 
   /// Indicates whether the simulated physical device frame visibility.
-  bool get isFrameVisible => _data.isFrameVisible;
+  bool get isFrameVisible => _data.isFrameVisible ?? true;
 
   /// If in freeform mode, the currently selected simulated screen size.
   Size get freeformSize => _data.freeformSize ?? Size(1080, 1920);

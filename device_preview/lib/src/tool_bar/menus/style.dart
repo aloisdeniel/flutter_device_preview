@@ -16,7 +16,7 @@ class StylePopOver extends StatelessWidget {
     final darkBackground = DevicePreviewStyle.dark();
     final media = MediaQuery.of(context);
     return ListView(
-      padding: EdgeInsets.all(10.0),
+      padding: EdgeInsets.all(10),
       children: [
         _StyleTile(
           title: 'Background theme',
@@ -139,6 +139,24 @@ class StylePopOver extends StatelessWidget {
               ),
           ],
         ),
+        _StyleTile(
+          title: 'Device shadow',
+          options: <Widget>[
+            _SelectBox(
+              isSelected: style.hasFrameShadow,
+              onTap: () {
+                preview.style = style.copyWith(
+                  hasFrameShadow: !style.hasFrameShadow,
+                );
+              },
+              child: Icon(
+                Icons.check,
+                color: style.toolBar.foregroundColor,
+                size: 11,
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -166,7 +184,7 @@ class _StyleTile extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              fontSize: 12.0,
+              fontSize: 12,
               color: toolBarStyle.foregroundColor,
             ),
           ),
@@ -197,7 +215,7 @@ class _SelectBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     return GestureDetector(
-      onTap: !isSelected ? onTap : null,
+      onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 100),
         padding: EdgeInsets.all(2),

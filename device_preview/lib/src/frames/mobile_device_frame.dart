@@ -30,6 +30,8 @@ class MobileDeviceFrame extends StatelessWidget {
 
   final DeviceOrientation orientation;
 
+  final Color shadowColor;
+
   MobileDeviceFrame({
     @required this.child,
     @required this.orientation,
@@ -43,7 +45,9 @@ class MobileDeviceFrame extends StatelessWidget {
     this.buttonColor = const Color(0xFF2A2A2A),
     this.borderColor = const Color(0xFF5A5A5A),
     this.sideButtons = const [],
-  }) : screenSize =
+    Color shadowColor,
+  })  : shadowColor = shadowColor ?? const Color(0xFF000000).withOpacity(0.4),
+        screenSize =
             orientation == DeviceOrientation.landscape && screenSize != null
                 ? Size(screenSize.height, screenSize.width)
                 : screenSize;
@@ -51,6 +55,8 @@ class MobileDeviceFrame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var padding = borders;
+
+    final style = DevicePreviewTheme.of(context);
 
     if (orientation == DeviceOrientation.landscape) {
       padding = EdgeInsets.only(
@@ -71,10 +77,11 @@ class MobileDeviceFrame extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: edgeRadius,
                 boxShadow: [
-                  BoxShadow(
-                    blurRadius: 70,
-                    color: Color(0xFF000000).withOpacity(0.4),
-                  ),
+                  if (style.hasFrameShadow)
+                    BoxShadow(
+                      blurRadius: 70,
+                      color: shadowColor,
+                    ),
                 ],
               ),
             ),

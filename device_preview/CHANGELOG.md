@@ -1,3 +1,7 @@
+## 0.4.6
+
+- Add an option to hide device frame shadow.
+
 ## 0.4.5
 
 - Removed debug prints.

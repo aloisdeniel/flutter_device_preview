@@ -14,9 +14,11 @@ class _$DevicePreviewStyleTearOff {
 
   _DevicePreviewStyle call(
       {@required BoxDecoration background,
+      @required bool hasFrameShadow,
       @required DevicePreviewToolBarStyle toolBar}) {
     return _DevicePreviewStyle(
       background: background,
+      hasFrameShadow: hasFrameShadow,
       toolBar: toolBar,
     );
   }
@@ -27,6 +29,7 @@ const $DevicePreviewStyle = _$DevicePreviewStyleTearOff();
 
 mixin _$DevicePreviewStyle {
   BoxDecoration get background;
+  bool get hasFrameShadow;
   DevicePreviewToolBarStyle get toolBar;
 
   $DevicePreviewStyleCopyWith<DevicePreviewStyle> get copyWith;
@@ -36,7 +39,10 @@ abstract class $DevicePreviewStyleCopyWith<$Res> {
   factory $DevicePreviewStyleCopyWith(
           DevicePreviewStyle value, $Res Function(DevicePreviewStyle) then) =
       _$DevicePreviewStyleCopyWithImpl<$Res>;
-  $Res call({BoxDecoration background, DevicePreviewToolBarStyle toolBar});
+  $Res call(
+      {BoxDecoration background,
+      bool hasFrameShadow,
+      DevicePreviewToolBarStyle toolBar});
 
   $DevicePreviewToolBarStyleCopyWith<$Res> get toolBar;
 }
@@ -52,12 +58,16 @@ class _$DevicePreviewStyleCopyWithImpl<$Res>
   @override
   $Res call({
     Object background = freezed,
+    Object hasFrameShadow = freezed,
     Object toolBar = freezed,
   }) {
     return _then(_value.copyWith(
       background: background == freezed
           ? _value.background
           : background as BoxDecoration,
+      hasFrameShadow: hasFrameShadow == freezed
+          ? _value.hasFrameShadow
+          : hasFrameShadow as bool,
       toolBar: toolBar == freezed
           ? _value.toolBar
           : toolBar as DevicePreviewToolBarStyle,
@@ -81,7 +91,10 @@ abstract class _$DevicePreviewStyleCopyWith<$Res>
           _DevicePreviewStyle value, $Res Function(_DevicePreviewStyle) then) =
       __$DevicePreviewStyleCopyWithImpl<$Res>;
   @override
-  $Res call({BoxDecoration background, DevicePreviewToolBarStyle toolBar});
+  $Res call(
+      {BoxDecoration background,
+      bool hasFrameShadow,
+      DevicePreviewToolBarStyle toolBar});
 
   @override
   $DevicePreviewToolBarStyleCopyWith<$Res> get toolBar;
@@ -100,12 +113,16 @@ class __$DevicePreviewStyleCopyWithImpl<$Res>
   @override
   $Res call({
     Object background = freezed,
+    Object hasFrameShadow = freezed,
     Object toolBar = freezed,
   }) {
     return _then(_DevicePreviewStyle(
       background: background == freezed
           ? _value.background
           : background as BoxDecoration,
+      hasFrameShadow: hasFrameShadow == freezed
+          ? _value.hasFrameShadow
+          : hasFrameShadow as bool,
       toolBar: toolBar == freezed
           ? _value.toolBar
           : toolBar as DevicePreviewToolBarStyle,
@@ -117,18 +134,23 @@ class _$_DevicePreviewStyle
     with DiagnosticableTreeMixin
     implements _DevicePreviewStyle {
   const _$_DevicePreviewStyle(
-      {@required this.background, @required this.toolBar})
+      {@required this.background,
+      @required this.hasFrameShadow,
+      @required this.toolBar})
       : assert(background != null),
+        assert(hasFrameShadow != null),
         assert(toolBar != null);
 
   @override
   final BoxDecoration background;
   @override
+  final bool hasFrameShadow;
+  @override
   final DevicePreviewToolBarStyle toolBar;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DevicePreviewStyle(background: $background, toolBar: $toolBar)';
+    return 'DevicePreviewStyle(background: $background, hasFrameShadow: $hasFrameShadow, toolBar: $toolBar)';
   }
 
   @override
@@ -137,6 +159,7 @@ class _$_DevicePreviewStyle
     properties
       ..add(DiagnosticsProperty('type', 'DevicePreviewStyle'))
       ..add(DiagnosticsProperty('background', background))
+      ..add(DiagnosticsProperty('hasFrameShadow', hasFrameShadow))
       ..add(DiagnosticsProperty('toolBar', toolBar));
   }
 
@@ -147,6 +170,9 @@ class _$_DevicePreviewStyle
             (identical(other.background, background) ||
                 const DeepCollectionEquality()
                     .equals(other.background, background)) &&
+            (identical(other.hasFrameShadow, hasFrameShadow) ||
+                const DeepCollectionEquality()
+                    .equals(other.hasFrameShadow, hasFrameShadow)) &&
             (identical(other.toolBar, toolBar) ||
                 const DeepCollectionEquality().equals(other.toolBar, toolBar)));
   }
@@ -155,6 +181,7 @@ class _$_DevicePreviewStyle
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(background) ^
+      const DeepCollectionEquality().hash(hasFrameShadow) ^
       const DeepCollectionEquality().hash(toolBar);
 
   @override
@@ -165,10 +192,13 @@ class _$_DevicePreviewStyle
 abstract class _DevicePreviewStyle implements DevicePreviewStyle {
   const factory _DevicePreviewStyle(
       {@required BoxDecoration background,
+      @required bool hasFrameShadow,
       @required DevicePreviewToolBarStyle toolBar}) = _$_DevicePreviewStyle;
 
   @override
   BoxDecoration get background;
+  @override
+  bool get hasFrameShadow;
   @override
   DevicePreviewToolBarStyle get toolBar;
   @override
