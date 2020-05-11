@@ -1,7 +1,7 @@
 name: device_preview_example
 description: A simple demonstration of device_preview.
 
-version: 1.0.1
+version: 2.0.0
 
 environment:
   sdk: '>=2.6.0 <3.0.0'
@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_platform_widgets:
+  intl: ^0.16.0
   device_preview:
     path: ../
   cupertino_icons: ^0.1.3
