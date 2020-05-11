@@ -121,7 +121,6 @@ class __PopOverContainerState extends State<_PopOverContainer>
     with WidgetsBindingObserver {
   bool _isStarted;
   Offset _translate;
-  DragStartDetails _dragStart;
 
   @override
   void didChangeMetrics() {

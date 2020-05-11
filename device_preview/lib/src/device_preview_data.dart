@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/widgets.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'utilities/json_converters.dart';
 import 'package:flutter/foundation.dart';
 

@@ -1,6 +1,10 @@
+## 0.4.5
+
+- Removed debug prints.
+
 ## 0.4.4
 
-- Removed debug logs.
+- Removed debug prints.
 
 ## 0.4.3
 

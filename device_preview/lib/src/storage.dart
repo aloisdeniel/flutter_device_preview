@@ -80,7 +80,6 @@ abstract class DevicePreviewStyleStorage {
       map['toolBar.position'] = _saveData.toolBar.position.index;
 
       await shared.setString(_preferencesKey, jsonEncode(map));
-      print('SAVED2');
     }
     _saveTask = null;
   }
@@ -90,7 +89,7 @@ abstract class DevicePreviewStyleStorage {
     if (!ignore) {
       final shared = await SharedPreferences.getInstance();
       final json = shared.getString(_preferencesKey);
-      print('MAP: $json');
+
       if (json == null || json.isEmpty) return null;
       final map = jsonDecode(json);
 
