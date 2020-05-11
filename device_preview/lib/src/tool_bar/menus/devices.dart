@@ -15,30 +15,69 @@ class DevicesPopOver extends StatefulWidget {
 class _DevicesPopOverState extends State<DevicesPopOver> {
   List<TargetPlatform> selected;
 
+  final TextEditingController _searchTEC = TextEditingController();
+  String _searchedText = '';
+
+  @override
+  void initState() {
+    _searchTECListener();
+    super.initState();
+  }
+
+  void _searchTECListener() {
+    _searchTEC.addListener(() {
+      setState(() {
+        _searchedText = _searchTEC.text.replaceAll(' ', '').toLowerCase();
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final preview = DevicePreview.of(context);
     final all =
         preview.availableDevices.map((e) => e.platform).toSet().toList();
     final selected = this.selected ?? [preview.device?.platform ?? all.first];
-    return Column(
-      children: <Widget>[
-        PlatformSelector(
-          all: all,
-          selected: selected,
-          onChanged: (v) => setState(() => this.selected = v),
-        ),
-        Expanded(
-          child: ListView(
-            padding: EdgeInsets.all(10.0),
-            children: preview.availableDevices
-                .where((x) => selected.contains(x.platform))
-                .map((e) => DeviceTile(e, () => preview.device = e))
-                .toList(),
+
+    return GestureDetector(
+      onPanDown: (_) {
+        FocusScope.of(context).requestFocus(FocusNode()); //remove search focus
+      },
+      child: Column(
+        children: <Widget>[
+          PlatformSelector(
+            all: all,
+            selected: selected,
+            onChanged: (v) => setState(() {
+              _clearSearchTEC();
+              this.selected = v;
+            }),
           ),
-        ),
-      ],
+          DeviceSearchField(
+            _searchTEC,
+            onClear: _clearSearchTEC,
+          ),
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.all(10.0),
+              children: preview.availableDevices
+                  .where((x) =>
+                      selected.contains(x.platform) &&
+                      x.name
+                          .replaceAll(' ', '')
+                          .toLowerCase()
+                          .contains(_searchedText))
+                  .map((e) => DeviceTile(e, () => preview.device = e))
+                  .toList(),
+            ),
+          ),
+        ],
+      ),
     );
+  }
+
+  void _clearSearchTEC() {
+    WidgetsBinding.instance.addPostFrameCallback((_) => _searchTEC.clear());
   }
 }
 
@@ -200,6 +239,52 @@ class DeviceTile extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DeviceSearchField extends StatelessWidget {
+  final TextEditingController searchTEC;
+  final VoidCallback onClear;
+  const DeviceSearchField(this.searchTEC, {Key key, @required this.onClear})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
+    return Container(
+      child: Material(
+        child: Container(
+          color: toolBarStyle.backgroundColor,
+          height: 48,
+          padding: const EdgeInsets.fromLTRB(10, 4, 10, 10),
+          child: TextField(
+            style: TextStyle(color: toolBarStyle.foregroundColor, fontSize: 12),
+            controller: searchTEC,
+            decoration: InputDecoration(
+                hintStyle:
+                    const TextStyle(color: Color(0xFFAAAAAA), fontSize: 12),
+                hintText: 'Search by device name...',
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                ),
+                filled: true,
+                fillColor: toolBarStyle.foregroundColor.withOpacity(0.12),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                prefixIcon: const Icon(FontAwesomeIcons.search, size: 12),
+                suffix: InkWell(
+                  child: Icon(
+                    FontAwesomeIcons.times,
+                    size: 12,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  onTap: onClear,
+                )),
           ),
         ),
       ),
