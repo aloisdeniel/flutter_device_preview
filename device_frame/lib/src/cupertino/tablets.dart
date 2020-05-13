@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:device_frame/src/generic/mobile_frame.dart';
 import 'package:flutter/widgets.dart';
 
@@ -95,7 +96,11 @@ class CupertinoTabletWithThinBordersFrame extends StatelessWidget {
           thickness: 6,
         ),
         DeviceSideButton.top(
-          fromLeft: mediaQueryData.size.width + 36 * 2 - 24,
+          fromLeft: math.min(
+                mediaQueryData.size.width,
+                mediaQueryData.size.height,
+              ) -
+              24,
           size: 40,
           thickness: 6,
         ),
