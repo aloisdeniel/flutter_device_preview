@@ -7,6 +7,11 @@
   </a>
 </p>
 
+<p>
+  <img src="https://github.com/aloisdeniel/flutter_frame/raw/master/device_frame/example/example.gif" alt="Device Frame for Flutter" />
+</p>
+
+
 Mockups for common devices.
 
 ## Quickstart
