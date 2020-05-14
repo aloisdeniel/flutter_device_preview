@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:device_frame/src/helpers/orientation.dart';
 
+import '../../device_frame.dart';
 import 'phones.dart';
 import 'tablets.dart';
 
@@ -22,11 +23,17 @@ class CupertinoDeviceFrame extends StatelessWidget {
   final CupertinoDevice device;
   final Orientation orientation;
   final Widget child;
+  final bool isKeyboardVisible;
+  final Duration keyboardTransitionDuration;
+  final DeviceFrameStyle style;
 
   const CupertinoDeviceFrame({
     CupertinoDevice device,
     this.orientation,
     @required this.child,
+    this.style,
+    this.isKeyboardVisible = false,
+    this.keyboardTransitionDuration = const Duration(milliseconds: 500),
   })  : assert(child != null),
         this.device = device ?? CupertinoDevice.iPhoneX;
 
@@ -36,6 +43,9 @@ class CupertinoDeviceFrame extends StatelessWidget {
       case CupertinoDevice.iPadAir2:
         return CupertinoTabletFrame(
           child: child,
+          style: style,
+          isKeyboardVisible: isKeyboardVisible,
+          keyboardTransitionDuration: keyboardTransitionDuration,
           orientation: orientation,
           mediaQueryData: orientation.toMediaQuery(
             size: const Size(768, 1024),
@@ -46,6 +56,9 @@ class CupertinoDeviceFrame extends StatelessWidget {
       case CupertinoDevice.iPadPro129gen2:
         return CupertinoTabletWithThinBordersFrame(
           child: child,
+          style: style,
+          isKeyboardVisible: isKeyboardVisible,
+          keyboardTransitionDuration: keyboardTransitionDuration,
           orientation: orientation,
           mediaQueryData: orientation.toMediaQuery(
             size: const Size(1024, 1336),
@@ -56,6 +69,9 @@ class CupertinoDeviceFrame extends StatelessWidget {
       case CupertinoDevice.iPhone8:
         return CupertinoPhoneFrame(
           child: child,
+          style: style,
+          isKeyboardVisible: isKeyboardVisible,
+          keyboardTransitionDuration: keyboardTransitionDuration,
           orientation: orientation,
           mediaQueryData: orientation.toMediaQuery(
             size: const Size(375, 667),
@@ -66,6 +82,9 @@ class CupertinoDeviceFrame extends StatelessWidget {
       case CupertinoDevice.iPhone5:
         return CupertinoPhoneFrame(
           child: child,
+          style: style,
+          isKeyboardVisible: isKeyboardVisible,
+          keyboardTransitionDuration: keyboardTransitionDuration,
           orientation: orientation,
           mediaQueryData: orientation.toMediaQuery(
             size: const Size(320, 568),
@@ -76,6 +95,9 @@ class CupertinoDeviceFrame extends StatelessWidget {
       case CupertinoDevice.iPhoneXr:
         return CupertinoPhoneWithNotchFrame(
           child: child,
+          style: style,
+          isKeyboardVisible: isKeyboardVisible,
+          keyboardTransitionDuration: keyboardTransitionDuration,
           orientation: orientation,
           mediaQueryData: orientation.toMediaQuery(
             size: const Size(414, 896),
@@ -94,6 +116,9 @@ class CupertinoDeviceFrame extends StatelessWidget {
       case CupertinoDevice.iPhoneXs:
         return CupertinoPhoneWithNotchFrame(
           child: child,
+          style: style,
+          isKeyboardVisible: isKeyboardVisible,
+          keyboardTransitionDuration: keyboardTransitionDuration,
           orientation: orientation,
           mediaQueryData: orientation.toMediaQuery(
             size: const Size(375, 812),
@@ -112,6 +137,9 @@ class CupertinoDeviceFrame extends StatelessWidget {
       case CupertinoDevice.iPhoneXsMax:
         return CupertinoPhoneWithNotchFrame(
           child: child,
+          style: style,
+          isKeyboardVisible: isKeyboardVisible,
+          keyboardTransitionDuration: keyboardTransitionDuration,
           orientation: orientation,
           mediaQueryData: orientation.toMediaQuery(
             size: const Size(414, 896),
@@ -131,6 +159,9 @@ class CupertinoDeviceFrame extends StatelessWidget {
       default:
         return CupertinoPhoneWithNotchFrame(
           child: child,
+          style: style,
+          isKeyboardVisible: isKeyboardVisible,
+          keyboardTransitionDuration: keyboardTransitionDuration,
           orientation: orientation,
           mediaQueryData: orientation.toMediaQuery(
             size: const Size(375, 812),

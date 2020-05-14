@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:device_frame/src/helpers/orientation.dart';
 
+import '../../device_frame.dart';
 import 'phones.dart';
 import 'tablets.dart';
 
@@ -19,10 +20,16 @@ class AndroidDeviceFrame extends StatelessWidget {
   final AndroidDevice device;
   final Orientation orientation;
   final Widget child;
+  final bool isKeyboardVisible;
+  final Duration keyboardTransitionDuration;
+  final DeviceFrameStyle style;
 
   const AndroidDeviceFrame({
     AndroidDevice device,
     this.orientation,
+    this.isKeyboardVisible = false,
+    this.keyboardTransitionDuration = const Duration(milliseconds: 500),
+    this.style,
     @required this.child,
   })  : assert(child != null),
         this.device = device ?? AndroidDevice.mediumPhone;
@@ -33,6 +40,9 @@ class AndroidDeviceFrame extends StatelessWidget {
       case AndroidDevice.smallTablet:
         return AndroidTabletFrame(
           child: child,
+          style: style,
+          isKeyboardVisible: isKeyboardVisible,
+          keyboardTransitionDuration: keyboardTransitionDuration,
           orientation: orientation,
           mediaQueryData: orientation.toMediaQuery(
             size: const Size(600, 960),
@@ -45,6 +55,9 @@ class AndroidDeviceFrame extends StatelessWidget {
       case AndroidDevice.mediumTablet:
         return AndroidTabletFrame(
           child: child,
+          style: style,
+          isKeyboardVisible: isKeyboardVisible,
+          keyboardTransitionDuration: keyboardTransitionDuration,
           orientation: orientation,
           mediaQueryData: orientation.toMediaQuery(
             size: const Size(800, 1280),
@@ -58,6 +71,9 @@ class AndroidDeviceFrame extends StatelessWidget {
       case AndroidDevice.smallPhone:
         return AndroidPhoneFrame(
           child: child,
+          style: style,
+          isKeyboardVisible: isKeyboardVisible,
+          keyboardTransitionDuration: keyboardTransitionDuration,
           orientation: orientation,
           mediaQueryData: orientation.toMediaQuery(
             size: const Size(320, 569),
@@ -70,6 +86,9 @@ class AndroidDeviceFrame extends StatelessWidget {
       case AndroidDevice.largePhone:
         return AndroidPhoneFrame(
           child: child,
+          style: style,
+          isKeyboardVisible: isKeyboardVisible,
+          keyboardTransitionDuration: keyboardTransitionDuration,
           orientation: orientation,
           mediaQueryData: orientation.toMediaQuery(
             size: const Size(480, 853),
@@ -83,6 +102,9 @@ class AndroidDeviceFrame extends StatelessWidget {
       default:
         return AndroidPhoneFrame(
           child: child,
+          style: style,
+          isKeyboardVisible: isKeyboardVisible,
+          keyboardTransitionDuration: keyboardTransitionDuration,
           orientation: orientation,
           mediaQueryData: orientation.toMediaQuery(
             size: const Size(360, 740),

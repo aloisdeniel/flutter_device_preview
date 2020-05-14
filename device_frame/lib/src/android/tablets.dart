@@ -1,16 +1,24 @@
 import 'package:device_frame/src/generic/mobile_frame.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../device_frame.dart';
+
 class AndroidTabletFrame extends StatelessWidget {
   final Orientation orientation;
   final Widget child;
   final MediaQueryData mediaQueryData;
+  final bool isKeyboardVisible;
+  final Duration keyboardTransitionDuration;
+  final DeviceFrameStyle style;
 
   const AndroidTabletFrame({
     Key key,
     @required this.orientation,
     @required this.mediaQueryData,
     @required this.child,
+    this.style,
+    this.isKeyboardVisible = false,
+    this.keyboardTransitionDuration = const Duration(milliseconds: 500),
   })  : assert(mediaQueryData != null),
         super(key: key);
 
@@ -18,8 +26,11 @@ class AndroidTabletFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return MobileDeviceFrame(
       platform: TargetPlatform.android,
+      style: style,
       orientation: orientation,
       mediaQueryData: mediaQueryData,
+      isKeyboardVisible: isKeyboardVisible,
+      keyboardTransitionDuration: keyboardTransitionDuration,
       child: child,
       body: EdgeInsets.only(
         top: 32,

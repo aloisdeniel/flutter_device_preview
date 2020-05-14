@@ -1,3 +1,4 @@
+import 'package:device_frame/src/keyboard/virtual_keyboard.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -31,11 +32,23 @@ class MobileDeviceFrame extends StatelessWidget {
 
   final TargetPlatform platform;
 
+  final Widget keyboard;
+
+  final double keyboardHeight;
+
+  final bool isKeyboardVisible;
+
+  final Duration keyboardTransitionDuration;
+
   MobileDeviceFrame({
     @required this.platform,
     @required this.child,
     @required this.orientation,
     @required this.mediaQueryData,
+    this.isKeyboardVisible = false,
+    this.keyboard = const VirtualKeyboard(),
+    this.keyboardHeight = VirtualKeyboard.minHeight,
+    this.keyboardTransitionDuration = const Duration(milliseconds: 500),
     this.style,
     this.borderSize = 4,
     this.body = const EdgeInsets.all(38),
@@ -43,9 +56,26 @@ class MobileDeviceFrame extends StatelessWidget {
     this.screenRadius = const BorderRadius.all(Radius.circular(8)),
     this.notch,
     this.sideButtons = const [],
-  })  : assert(borderSize != null),
+  })  : assert(keyboard != null),
+        assert(keyboardHeight != null),
+        assert(isKeyboardVisible != null),
+        assert(borderSize != null),
         assert(platform != null),
         assert(body != null);
+
+  MediaQueryData _createMediaQuery(BuildContext context) {
+    var result = this.mediaQueryData;
+
+    if (isKeyboardVisible) {
+      result = result.copyWith(
+        viewInsets: EdgeInsets.only(
+          bottom: VirtualKeyboard.minHeight + result.padding.bottom,
+        ),
+      );
+    }
+
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +90,46 @@ class MobileDeviceFrame extends StatelessWidget {
         bottom: padding.left,
       );
     }
+
+    final childMediaQuery = _createMediaQuery(context);
+
+    final childWithKeyboard = Stack(
+      children: <Widget>[
+        Positioned.fill(
+          child: child,
+        ),
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: AnimatedCrossFade(
+            firstChild: SizedBox(),
+            secondChild: VirtualKeyboard(
+              height:
+                  VirtualKeyboard.minHeight + childMediaQuery.padding.bottom,
+            ),
+            crossFadeState: isKeyboardVisible
+                ? CrossFadeState.showSecond
+                : CrossFadeState.showFirst,
+            duration: keyboardTransitionDuration,
+          ),
+        ),
+      ],
+    );
+
+    final childWithMetadata = MediaQuery(
+      data: childMediaQuery,
+      child: Theme(
+        data: Theme.of(context).copyWith(
+          platform: platform,
+        ),
+        child: SizedBox(
+          width: mediaQueryData.size.width,
+          height: mediaQueryData.size.height,
+          child: childWithKeyboard,
+        ),
+      ),
+    );
 
     return FittedBox(
       child: Padding(
@@ -83,19 +153,7 @@ class MobileDeviceFrame extends StatelessWidget {
             ),
             Padding(
               padding: padding,
-              child: MediaQuery(
-                data: mediaQueryData,
-                child: Theme(
-                  data: Theme.of(context).copyWith(
-                    platform: platform,
-                  ),
-                  child: SizedBox(
-                    width: mediaQueryData.size.width,
-                    height: mediaQueryData.size.height,
-                    child: child,
-                  ),
-                ),
-              ),
+              child: childWithMetadata,
             ),
             Positioned.fill(
               child: IgnorePointer(

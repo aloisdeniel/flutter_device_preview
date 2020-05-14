@@ -1,16 +1,24 @@
 import 'package:device_frame/src/generic/mobile_frame.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../device_frame.dart';
+
 class AndroidPhoneFrame extends StatelessWidget {
   final Orientation orientation;
   final Widget child;
   final MediaQueryData mediaQueryData;
+  final bool isKeyboardVisible;
+  final Duration keyboardTransitionDuration;
+  final DeviceFrameStyle style;
 
   AndroidPhoneFrame({
     Key key,
     @required this.orientation,
     @required this.mediaQueryData,
     @required this.child,
+    this.style,
+    this.isKeyboardVisible = false,
+    this.keyboardTransitionDuration = const Duration(milliseconds: 500),
   })  : assert(mediaQueryData != null),
         super(key: key);
 
@@ -19,7 +27,10 @@ class AndroidPhoneFrame extends StatelessWidget {
     return MobileDeviceFrame(
       platform: TargetPlatform.android,
       orientation: orientation,
+      style: style,
       mediaQueryData: mediaQueryData,
+      isKeyboardVisible: isKeyboardVisible,
+      keyboardTransitionDuration: keyboardTransitionDuration,
       child: child,
       body: EdgeInsets.only(
         top: 64,

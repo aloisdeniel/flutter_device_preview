@@ -14,6 +14,7 @@ class ExampleApp extends StatefulWidget {
 class _ExampleAppState extends State<ExampleApp> {
   bool isDark = true;
   bool hasShadow = true;
+  bool isKeyboard = false;
   Orientation orientation = Orientation.portrait;
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class _ExampleAppState extends State<ExampleApp> {
           child: Scaffold(
             backgroundColor: isDark ? Colors.white : Colors.black,
             appBar: AppBar(
-              title: Text('Device Frame Demo'),
+              title: Text('Device Frames'),
               actions: <Widget>[
                 IconButton(
                   onPressed: () {
@@ -64,6 +65,14 @@ class _ExampleAppState extends State<ExampleApp> {
                   },
                   icon: Icon(Icons.rotate_90_degrees_ccw),
                 ),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      isKeyboard = !isKeyboard;
+                    });
+                  },
+                  icon: Icon(Icons.keyboard),
+                ),
               ],
               bottom: TabBar(
                 isScrollable: true,
@@ -86,6 +95,7 @@ class _ExampleAppState extends State<ExampleApp> {
                 ...CupertinoDevice.values.map(
                   (device) => CupertinoDeviceFrame(
                     orientation: orientation,
+                    isKeyboardVisible: isKeyboard,
                     device: device,
                     child: FakeScreen(),
                   ),
@@ -93,6 +103,7 @@ class _ExampleAppState extends State<ExampleApp> {
                 ...AndroidDevice.values.map(
                   (device) => AndroidDeviceFrame(
                     orientation: orientation,
+                    isKeyboardVisible: isKeyboard,
                     device: device,
                     child: FakeScreen(),
                   ),
@@ -113,13 +124,21 @@ class FakeScreen extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
     return Container(
       color: theme.platform == TargetPlatform.iOS ? Colors.cyan : Colors.green,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text("${theme.platform}"),
-          Text("${mediaQuery.size.width}x${mediaQuery.size.height}"),
-          Text("${mediaQuery.padding}"),
-        ],
+      child: AnimatedPadding(
+        duration: const Duration(milliseconds: 500),
+        padding: EdgeInsets.only(bottom: mediaQuery.viewInsets.bottom),
+        child: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text("${theme.platform}"),
+              Text("Size: ${mediaQuery.size.width}x${mediaQuery.size.height}"),
+              Text("PixelRatio: ${mediaQuery.devicePixelRatio}"),
+              Text("Padding: ${mediaQuery.padding}"),
+              Text("Insets: ${mediaQuery.viewInsets}"),
+            ],
+          ),
+        ),
       ),
     );
   }

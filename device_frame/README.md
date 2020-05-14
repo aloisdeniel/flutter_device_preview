@@ -38,6 +38,15 @@ AndroidDeviceFrame(
 
 ## Usage
 
+### Displaying virtual keyboard
+
+```dart
+AndroidDeviceFrame(
+    isKeyboardVisible: true,
+    // ...
+),
+```
+
 ### Change global theme
 
 ```dart
