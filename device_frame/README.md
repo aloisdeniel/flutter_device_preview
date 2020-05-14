@@ -19,7 +19,7 @@ Mockups for common devices.
 ```dart
 CupertinoDeviceFrame(
     orientation: Orientation.portrait,
-    device: AndroidDevice.iPhoneXs,
+    device: CupertinoDevice.iPhoneXs,
     child: Container(
         child: Text('Hello iOS'),
     ),
