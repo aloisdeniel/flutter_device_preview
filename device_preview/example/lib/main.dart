@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
+import 'package:device_preview_example/screenShotProcessing.dart';
 
 void main() {
   debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
 
   runApp(DevicePreview(
+    onScreenshot: onScreenshot,
     builder: (context) => ExampleApp(),
   ));
 }
