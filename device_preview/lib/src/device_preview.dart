@@ -457,6 +457,7 @@ class DevicePreviewState extends State<DevicePreview> {
               return MediaQueryObserver(
                 child: Builder(
                   builder: (context) {
+                    _repaintKey = GlobalKey();
                     final style = DevicePreviewTheme.of(context);
                     Widget screen = Container(
                       width: mediaQuery.size.width,
@@ -589,7 +590,7 @@ class DevicePreviewState extends State<DevicePreview> {
   }
 
   /// The repaint key used for rendering screenshots.
-  final _repaintKey = GlobalKey();
+  GlobalKey _repaintKey = GlobalKey();
 
   /// A stream that sends a new value each time the user takes
   /// a new screenshot.
