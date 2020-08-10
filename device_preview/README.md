@@ -26,6 +26,8 @@
 
 ## Quickstart
 
+Wrap your app's root widget in a `DevicePreview` and inject the dedicated `builder` and `locale` into your app.
+
 ```dart
 void main() => runApp(
   DevicePreview(
@@ -38,13 +40,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      locale: DevicePreview.of(context).locale, // <--- Add the locale
-      builder: DevicePreview.appBuilder, // <--- Add the builder
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      locale: DevicePreview.of(context).locale, // <--- /!\ Add the locale
+      builder: DevicePreview.appBuilder, // <--- /!\ Add the builder
+      home: HomePage(),
     );
   }
 }

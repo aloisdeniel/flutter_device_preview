@@ -64,3 +64,24 @@ AndroidDeviceFrame(
     // ...
 ),
 ```
+
+### Maintain device media query and theme in an encapsulated app
+
+
+```dart
+AndroidDeviceFrame(
+    // ...
+    child: Builder(
+        builder: (deviceContext) => MaterialApp(
+            theme: Theme.of(context),
+            builder: (context, widget) => MediaQuery(
+                data: MediaQuery.of(deviceContext),
+                child: Theme(
+                    data: Theme.of(deviceContext),
+                    child: widget,
+                ),
+            ),
+        ),
+    ),
+),
+```

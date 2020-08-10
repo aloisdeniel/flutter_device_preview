@@ -1,5 +1,5 @@
 name: device_preview
-version: 0.4.6
+version: 0.4.7
 description: Approximate how your app looks and performs on another device.
 homepage: https://github.com/aloisdeniel/flutter_device_preview
 
@@ -9,8 +9,8 @@ environment:
 dependencies:
   font_awesome_flutter: ^8.8.1
   http: ^0.12.0
-  freezed_annotation: ^0.7.1 
-  json_annotation: ^3.0.0
+  freezed_annotation: ^0.11.0
+  json_annotation: ^3.0.0 
   flutter: 
     sdk: flutter 
   meta: ^1.1.8 
@@ -25,8 +25,8 @@ dependencies:
   #    path: plugins/flutter_plugins/shared_preferences_fde
  
 dev_dependencies:
-  freezed: ^0.10.4
-  json_serializable: ^3.2.0
+  freezed: ^0.11.2
+  json_serializable: ^3.3.0
   build_runner: ^1.8.0
   flutter_test:
     sdk: flutter 

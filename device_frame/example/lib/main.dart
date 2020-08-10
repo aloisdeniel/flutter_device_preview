@@ -90,25 +90,27 @@ class _ExampleAppState extends State<ExampleApp> {
                 ],
               ),
             ),
-            body: TabBarView(
-              children: <Widget>[
-                ...CupertinoDevice.values.map(
-                  (device) => CupertinoDeviceFrame(
-                    orientation: orientation,
-                    isKeyboardVisible: isKeyboard,
-                    device: device,
-                    child: FakeScreen(),
+            body: SafeArea(
+              child: TabBarView(
+                children: <Widget>[
+                  ...CupertinoDevice.values.map(
+                    (device) => CupertinoDeviceFrame(
+                      orientation: orientation,
+                      isKeyboardVisible: isKeyboard,
+                      device: device,
+                      child: FakeScreen(),
+                    ),
                   ),
-                ),
-                ...AndroidDevice.values.map(
-                  (device) => AndroidDeviceFrame(
-                    orientation: orientation,
-                    isKeyboardVisible: isKeyboard,
-                    device: device,
-                    child: FakeScreen(),
+                  ...AndroidDevice.values.map(
+                    (device) => AndroidDeviceFrame(
+                      orientation: orientation,
+                      isKeyboardVisible: isKeyboard,
+                      device: device,
+                      child: FakeScreen(),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

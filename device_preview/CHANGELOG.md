@@ -1,3 +1,7 @@
+## 0.4.7
+
+- Upgraded freezed dependencies.
+
 ## 0.4.6
 
 - Add an option to hide device frame shadow.
