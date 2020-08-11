@@ -12,7 +12,9 @@ dependencies:
   freezed_annotation: ^0.7.1 
   json_annotation: ^3.0.0
   flutter: 
-    sdk: flutter 
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   meta: ^1.1.8 
   shared_preferences: ^0.5.6+3
   shared_preferences_macos: ^0.0.1+6
