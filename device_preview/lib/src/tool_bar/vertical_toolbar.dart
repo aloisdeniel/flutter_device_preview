@@ -2,6 +2,7 @@ import 'package:device_preview/src/tool_bar/menus/accessibility.dart';
 import 'package:device_preview/src/tool_bar/menus/devices.dart';
 import 'package:device_preview/src/tool_bar/menus/size.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import '../../device_preview.dart';
 import '../utilities/spacing.dart';
@@ -199,8 +200,10 @@ class _DevicePreviewToolBarState extends State<DevicePreviewVerticalToolBar> {
                   onTap: () async {
                     try {
                       final screenshot = await preview.screenshot();
+                      var link = await preview.processScreenshot(screenshot);
                       screenShotmessage =
-                          await preview.processScreenshot(screenshot);
+                          'Your screenshot is available here: $link and in your clipboard!';
+                      await Clipboard.setData(ClipboardData(text: link));
                     } catch (e) {
                       screenShotmessage =
                           'Error while processing screenshot : $e';

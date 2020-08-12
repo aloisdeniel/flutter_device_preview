@@ -35,8 +35,8 @@ class FileioScreenshotUploader {
     }
 
     final link = body['link'];
-    print('[DevicePreview] Screenshot available here : $link');
+    print('[DevicePreview] Screenshot available here: $link');
 
-    return 'Your screenshot is available here : $link';
+    return link;
   }
 }
