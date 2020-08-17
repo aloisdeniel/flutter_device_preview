@@ -1,5 +1,5 @@
 name: device_preview
-version: 0.4.7
+version: 0.4.8
 description: Approximate how your app looks and performs on another device.
 homepage: https://github.com/aloisdeniel/flutter_device_preview
 

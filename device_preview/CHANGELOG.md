@@ -1,3 +1,8 @@
+## 0.4.8
+
+- Fixed issues with MaterialLocalization.
+- Added copy to clipboard for image links.
+
 ## 0.4.7
 
 - Upgraded freezed dependencies.
