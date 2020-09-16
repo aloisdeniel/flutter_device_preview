@@ -1,6 +1,8 @@
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 
+import 'package:device_frame/src/svg/frame.dart';
+
 void main() {
   runApp(ExampleApp());
 }
@@ -33,7 +35,8 @@ class _ExampleAppState extends State<ExampleApp> {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: DefaultTabController(
-          length: CupertinoDevice.values.length + AndroidDevice.values.length,
+          length:
+              1 + CupertinoDevice.values.length + AndroidDevice.values.length,
           child: Scaffold(
             backgroundColor: isDark ? Colors.white : Colors.black,
             appBar: AppBar(
@@ -77,6 +80,7 @@ class _ExampleAppState extends State<ExampleApp> {
               bottom: TabBar(
                 isScrollable: true,
                 tabs: [
+                  Tab(text: 'test'),
                   ...CupertinoDevice.values.map(
                     (d) => Tab(
                       text: d.toString().replaceAll('$CupertinoDevice.', ''),
@@ -93,6 +97,48 @@ class _ExampleAppState extends State<ExampleApp> {
             body: SafeArea(
               child: TabBarView(
                 children: <Widget>[
+                  Center(
+                    child: SvgDeviceFrame.asset(
+                      platform: TargetPlatform.iOS,
+                      deviceName: '11pro',
+                      deviceType: 'iphone',
+                      orientation: orientation,
+                      screen: Container(
+                        color: Colors.blue,
+                        child: SafeArea(
+                          child: Container(
+                            color: Colors.red,
+                            child: Center(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Text('Left'),
+                                  Expanded(
+                                    child: Center(
+                                      child: Text(
+                                        'EXAMPLE',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.topRight,
+                                    child: RaisedButton(
+                                      onPressed: () => print('tapped'),
+                                      child: Text(
+                                        'Right',
+                                        textAlign: TextAlign.end,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   ...CupertinoDevice.values.map(
                     (device) => CupertinoDeviceFrame(
                       orientation: orientation,
