@@ -1007,6 +1007,246 @@ class GalleryLocalizationsZu extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'I-PIN';
 
   @override
+  String get demoMotionTitle => 'Motion';
+
+  @override
+  String get demoMotionSubtitle =>
+      'Wonke amaphethini okudlula achazwe ngaphambilini';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Ukuguqulwa Kwesiqukathi';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Iphethini yokuguqulwa kwesiqukathi idizayinelwe ukudlula phakathi kwama-elementi e-UI afaka isiqukathi. Le phethini idala ukuxhumana okubonakalayo phakathi kwama-elementi amabili e-UI';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Imodi yokufiphala';
+
+  @override
+  String get demoContainerTransformTypeFade => 'UKUFIPHALA';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'FIPHALA UDLULELE';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Isihloko';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Umbhalo wesibili';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Okwesibili';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Ikhasi Lemininingwane';
+
+  @override
+  String get demoMotionListTileTitle => 'Into yohlu';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Iphethini ye-axis eyabiwe isetshenziselwa ukuguqulwa okuphakathi kwama-elementi e-UI anobudlelwane be-spatial noma bokuzulazula. Le phethini isebenzisa ukuguqulwa okwabiwe ku-axis ka-x, y, noma u-z ukuze kuphinde kuqiniswe ubudlelwane phakathi kwama-elementi.';
+
+  @override
+  String get demoSharedXAxisTitle => 'I-x-axis eyabiwe';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'EMUVA';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'OKULANDELAYO';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle =>
+      'Yenza umugqa oqondile izifundo zakho';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Izigaba ezenziwe inqwaba zivela njengamaqembu kokuphakelayo kwakho. Ungahlala ushintsha lokhu ngemuva kwesikhathi.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Ubuciko nokwakha';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Ibhizinisi';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Umfanekiso';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Dizayina';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Okokupheka';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Okuhlanganisiwe';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Kuboniswa Ngakunye';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Sawubona David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText =>
+      'Ngena ngemvume nge-akhawunti yakho';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'I-imeyili noma inombolo yefoni';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'UKHOHLWE I-IMEYILI?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'DALA I-AKHAWUNTI';
+
+  @override
+  String get demoSharedYAxisTitle => 'I-y-axis eyabiwe';
+
+  @override
+  String get demoSharedYAxisAlbumCount => 'ama-albhamu angama-268';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Okudlalwe kamuva';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'I-albhamu';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Umculi';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'iminithi';
+
+  @override
+  String get demoSharedZAxisTitle => 'I-z-axis eyabiwe';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Amasethingi';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Ibhega';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Iresiphi yebhega';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Isemishi';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Iresiphi yesemishi';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'I-Dessert';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Iresiphu ye-dessert';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'I-Shrimp';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Iresiphu yepuleti le-shrimp';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Inkalankala';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Iresiphu yepuleti lenkalankala';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Isemeshi yebhifu';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Iresiphu yesemishi yebhifu';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Amaresiphu Alondoloziwe';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Iphrofayela';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Izaziso';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Ubumfihlo';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Usizo';
+
+  @override
+  String get demoFadeThroughTitle => 'Fiphala udlulele';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Iphethini yokufiphala kudlulwe isetshenziselwa ukudlula okuphakathi kwama-elementi e-UI anganabo ubudlelwano obuqinile kokunye.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Ama-albhamu';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Izithombe';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Sesha';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => 'izithombe eziyi-123';
+
+  @override
+  String get demoFadeScaleTitle => 'Ukufiphala';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Iphethini yokufiphala isetshenziselwa ama-elementi e-UI angena noma aphuma ngaphakathi kwemikhawulo yesikrini, njengebhokisi elifiphala phakathi nendawo kusikrini.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'BONISA I-MODAL';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'BONISA I-FAB';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'FIHLA I-FAB';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Xwayisa Ibhokisi';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'KHANSELA';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'LAHLA';
+
+  @override
   String get demoColorsTitle => 'Imibala';
 
   @override

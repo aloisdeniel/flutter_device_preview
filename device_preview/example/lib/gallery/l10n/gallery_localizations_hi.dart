@@ -91,7 +91,7 @@ class GalleryLocalizationsHi extends GalleryLocalizations {
   String get cardsDemoTravelDestinationDescription3 => 'मंदिर';
 
   @override
-  String get homeHeaderGallery => 'गैलरी';
+  String get homeHeaderGallery => 'Gallery';
 
   @override
   String get homeHeaderCategories => 'श्रेणियां';
@@ -989,7 +989,7 @@ class GalleryLocalizationsHi extends GalleryLocalizations {
   String get cupertinoTabBarHomeTab => 'होम';
 
   @override
-  String get cupertinoTabBarChatTab => 'चैट';
+  String get cupertinoTabBarChatTab => 'Chat';
 
   @override
   String get cupertinoTabBarProfileTab => 'प्रोफ़ाइल';
@@ -1006,6 +1006,245 @@ class GalleryLocalizationsHi extends GalleryLocalizations {
 
   @override
   String get demoCupertinoTextFieldPIN => 'पिन';
+
+  @override
+  String get demoMotionTitle => 'मोशन';
+
+  @override
+  String get demoMotionSubtitle => 'पहले से तय किए गए सभी ट्रांज़िशन पैटर्न';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'कंटेनर ट्रांसफ़ॉर्म';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'कंटेनर ट्रांसफ़ॉर्म वाला पैटर्न, उन यूज़र इंटरफ़ेस (यूआई) एलिमेंट के बीच ट्रांज़िशन के लिए डिज़ाइन किया जाता है जिनमें कंटेनर शामिल होता है. इस पैटर्न से दो यूआई एलिमेंट के बीच, दिखने वाला कनेक्शन बनाने में मदद मिलती है';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'फ़ेड मोड';
+
+  @override
+  String get demoContainerTransformTypeFade => 'फ़ेड';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'फ़ेड थ्रू';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'शीर्षक';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'सबटाइटल टेक्स्ट';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle =>
+      'छोटा किया गया सबटाइटल टेक्स्ट';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'ज़्यादा जानकारी वाला पेज';
+
+  @override
+  String get demoMotionListTileTitle => 'आइटम की सूची';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'शेयर्ड ऐक्सिस वाला पैटर्न, उन यूज़र इंटरफ़ेस (यूआई) एलिमेंट के बीच ट्रांज़िशन के लिए इस्तेमाल किया जाता है जो दूरी या नेविगेशन के संदर्भ में एक-दूसरे से जुड़े होते हैं. यह पैटर्न, एलिमेंट के बीच तालमेल को बेहतर बनाने के लिए, ऐक्स, वाई या ज़ेड ऐक्सिस के बीच शेयर होने वाले बदलाव के हिसाब से काम करता है.';
+
+  @override
+  String get demoSharedXAxisTitle => 'शेयर्ड ऐक्स-ऐक्सिस';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'वापस जाएं';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'आगे बढ़ें';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'अपने कोर्स प्रबंधित करें';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'इससे बंडल की गई श्रेणियां, ग्रुप के तौर पर आपकी फ़ीड में दिखेंगी. आप जब चाहें, इसे बदल सकते हैं.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'कला और शिल्प';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'कारोबार';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'चित्रकला';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'डिज़ाइन';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'खान-पान';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'बंडल किया गया कोर्स';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle =>
+      'अलग से दिखाया गया कोर्स';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'नमस्ते, डेविड पार्क';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'अपने खाते से साइन इन करें';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel => 'ईमेल पता या फ़ोन नंबर';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'ईमेल पता भूल गए?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'खाता बनाएं';
+
+  @override
+  String get demoSharedYAxisTitle => 'शेयर्ड वाई-ऐक्सिस';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 एल्बम';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'हाल ही में सुने गए';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'एल्बम';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'कलाकार';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'मिनट';
+
+  @override
+  String get demoSharedZAxisTitle => 'शेयर्ड ज़ेड-ऐक्सिस';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'सेटिंग';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'बर्गर';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'बर्गर बनाने की रेसिपी';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'सैंडविच';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription =>
+      'सैंडविच बनाने की रेसिपी';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'मिठाई';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'मिठाई बनाने की रेसिपी';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'झींगा';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'झींगा बनाने की रेसिपी';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'केकड़ा';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'केकड़ा बनाने की रेसिपी';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'बीफ़ सैंडविच';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'बीफ़ सैंडविच बनाने की रेसिपी';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'सेव की गई रेसिपी';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'प्रोफ़ाइल';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'सूचनाएं';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'निजता';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'सहायता';
+
+  @override
+  String get demoFadeThroughTitle => 'फ़ेड थ्रू';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'फ़ेड थ्रू वाला पैटर्न, उन यूज़र इंटरफ़ेस (यूआई) एलिमेंट के बीच ट्रांज़िशन के लिए इस्तेमाल किया जाता है जिनके बीच बेहतर तालमेल नहीं होता.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'एल्बम';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'फ़ोटो';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'खोज';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 फ़ोटो';
+
+  @override
+  String get demoFadeScaleTitle => 'फ़ेड';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'फ़ेड वाला पैटर्न, उन यूज़र इंटरफ़ेस (यूआई) एलिमेंट के लिए इस्तेमाल किया जाता है जो स्क्रीन की सीमाओं के अंदर ही दिखते हैं और फिर गायब हो जाते हैं. जैसे कि एक डायलॉग जो स्क्रीन के बीचों-बीच दिखता है और फिर गायब हो जाता है.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'अलर्ट दिखाएं';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'एफ़एबी दिखाएं';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'एफ़एबी छिपाएं';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'अलर्ट डायलॉग';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'रद्द करें';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'खारिज करें';
 
   @override
   String get demoColorsTitle => 'रंग';
@@ -1333,7 +1572,7 @@ class GalleryLocalizationsHi extends GalleryLocalizations {
   String get bottomNavigationCommentsTab => 'टिप्पणियां';
 
   @override
-  String get bottomNavigationCalendarTab => 'कैलेंडर';
+  String get bottomNavigationCalendarTab => 'Calendar';
 
   @override
   String get bottomNavigationAccountTab => 'खाता';

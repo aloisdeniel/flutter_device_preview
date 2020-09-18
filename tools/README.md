@@ -1,3 +1,3 @@
 # tools
 
-Project for interrogating the specs of an attached mobile device
+Project for inspecting the specs of device.

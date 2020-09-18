@@ -1006,6 +1006,246 @@ class GalleryLocalizationsFr extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'Code';
 
   @override
+  String get demoMotionTitle => 'Mouvement';
+
+  @override
+  String get demoMotionSubtitle => 'Tous les schémas de transition prédéfinis';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Transformation du conteneur';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Le schéma \"Transformation du conteneur\" est un type de transition conçu pour les éléments d\'UI qui comportent un conteneur. Ce schéma permet de faire visuellement le lien entre deux éléments d\'UI';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Mode Fondu';
+
+  @override
+  String get demoContainerTransformTypeFade => 'FONDU';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'FONDU TOTAL';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Titre';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Texte secondaire';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Secondaire';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Page d\'informations';
+
+  @override
+  String get demoMotionListTileTitle => 'Élément de liste';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Le schéma \"Axe partagé\" est un type de transition utilisé pour des éléments d\'UI qui partagent la même logique spatiale ou de navigation. Ce schéma utilise une transformation basée sur l\'axe x, y ou z pour renforcer le lien de parenté entre ces éléments.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Axe x partagé';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'RETOUR';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'SUIVANT';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Organiser vos cours';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Les cours groupés s\'affichent comme tels dans votre flux. Vous pouvez modifier ce paramètre ultérieurement.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Art et artisanat';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Économie';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Illustration';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Design';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Cuisine';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Cours groupés';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Cours individuels';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Bonjour David Dupond';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText =>
+      'Connectez-vous avec votre compte';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'Adresse e-mail ou numéro de téléphone';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'ADRESSE E-MAIL OUBLIÉE ?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'CRÉER UN COMPTE';
+
+  @override
+  String get demoSharedYAxisTitle => 'Axe y partagé';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 albums';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Écouté récemment';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Album';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Artiste';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min';
+
+  @override
+  String get demoSharedZAxisTitle => 'Axe z partagé';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Paramètres';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Hamburger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Recette de hamburger';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Sandwich';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Recette de sandwich';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Dessert';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Recette de dessert';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Crevettes';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Recette à base de crevettes';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Crabe';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Recette à base de crabe';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Sandwich au bœuf';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Recette de sandwich au bœuf';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Recettes enregistrées';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profil';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Notifications';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Confidentialité';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Aide';
+
+  @override
+  String get demoFadeThroughTitle => 'Fondu total';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Le schéma \"Fondu total\" est un type de transition utilisé pour des éléments d\'UI qui n\'ont pas de lien de parenté fort.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Albums';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Photos';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Rechercher';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 photos';
+
+  @override
+  String get demoFadeScaleTitle => 'Fondu';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Le schéma \"Fondu\" est un type de transition utilisé pour les éléments d\'UI qui apparaissent ou disparaissent sans dépasser de l\'écran. Par exemple, une boîte de dialogue qui apparaît au centre de ce dernier.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'AFFICHER LE MODULE';
+
+  @override
+  String get demoFadeScaleShowFabButton =>
+      'AFFICHER LE BOUTON D\'ACTION FLOTTANT';
+
+  @override
+  String get demoFadeScaleHideFabButton =>
+      'MASQUER LE BOUTON D\'ACTION FLOTTANT';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Boîte de dialogue d\'alerte';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ANNULER';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'SUPPRIMER';
+
+  @override
   String get demoColorsTitle => 'Couleurs';
 
   @override
@@ -3241,6 +3481,232 @@ class GalleryLocalizationsFrCa extends GalleryLocalizationsFr {
 
   @override
   String get demoCupertinoTextFieldPIN => 'NIP';
+
+  @override
+  String get demoMotionTitle => 'Mouvement';
+
+  @override
+  String get demoMotionSubtitle =>
+      'Tous les motifs de la transition prédéfinie';
+
+  @override
+  String get demoContainerTransformTitle => 'Transformation de conteneur';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Le motif de transformation de conteneur est conçu pour les éléments d\'IU qui comprennent un conteneur. Ce motif crée une connexion visible entre deux éléments d\'IU';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Mode Atténuation';
+
+  @override
+  String get demoContainerTransformTypeFade => 'ATTÉNUATION';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'ATTÉNUATION GRADUELLE';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Titre';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Texte secondaire';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Secondaire';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Page de renseignements';
+
+  @override
+  String get demoMotionListTileTitle => 'Élément de liste';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Le motif d\'axe partagé est utilisé pour les transitions entre les éléments d\'IU qui possèdent une relation spatiale ou de navigation. Ce motif utiliser une transformation partagée sur l\'axe x, y ou z afin de renforcer la relation entre les éléments.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Axe x partagé';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'RETOUR';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'SUIVANT';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Rationaliser vos déplacements';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Les catégories groupées s\'affichent comme groupes dans votre flux. Vous pourrez toujours modifier ce paramètre plus tard.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Arts et artisanat';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Affaires';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Illustration';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Conception';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Cuisine';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Groupées';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle =>
+      'Affichées individuellement';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Bonjour David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText =>
+      'Connectez-vous avec votre compte';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'Adresse de courriel ou numéro de téléphone';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'ADRESSE DE COURRIEL OUBLIÉE?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'CRÉER UN COMPTE';
+
+  @override
+  String get demoSharedYAxisTitle => 'Axe y partagé';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 albums';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A à Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Écouté récemment';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Album';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Artiste';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min';
+
+  @override
+  String get demoSharedZAxisTitle => 'Axe z partagé';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Paramètres';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Hamburger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Recette de hamburger';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Sandwich';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Recette de sandwich';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Dessert';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Recette de dessert';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Crevettes';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Recette d\'assiette de crevettes';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Crabe';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Recette d\'assiette de crabe';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Sandwich au bœuf';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Recette de sandwich au bœuf';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Recettes enregistrées';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profil';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Notifications';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Confidentialité';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Aide';
+
+  @override
+  String get demoFadeThroughTitle => 'Atténuation graduelle';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Le motif d\'atténuation graduelle est utilisé pour les transitions entre les éléments d\'IU qui ne possèdent pas de relation marquée entre eux.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Albums';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Photos';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Rechercher';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 photos';
+
+  @override
+  String get demoFadeScaleTitle => 'Atténuation';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Le motif d\'atténuation est utilisé pour les éléments d\'IU qui apparaissent et disparaissent dans limites de l\'écran, comme une boîte de dialogue au centre de l\'écran.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton =>
+      'AFFICHER LA BOÎTE DE DIALOGUE MODALE';
+
+  @override
+  String get demoFadeScaleShowFabButton =>
+      'AFFICHER LE BOUTON FLOTTANT D\'ACTION';
+
+  @override
+  String get demoFadeScaleHideFabButton =>
+      'MASQUER LE BOUTON FLOTTANT D\'ACTION';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Boîte de dialogue d\'alerte';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ANNULER';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'SUPPRIMER';
 
   @override
   String get demoColorsTitle => 'Couleurs';
@@ -5485,6 +5951,228 @@ class GalleryLocalizationsFrCh extends GalleryLocalizationsFr {
 
   @override
   String get demoCupertinoTextFieldPIN => 'Code';
+
+  @override
+  String get demoMotionTitle => 'Mouvement';
+
+  @override
+  String get demoMotionSubtitle => 'Tous les schémas de transition prédéfinis';
+
+  @override
+  String get demoContainerTransformTitle => 'Transformation du conteneur';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Le schéma \"Transformation du conteneur\" est un type de transition conçu pour les éléments d\'UI qui comportent un conteneur. Ce schéma permet de faire visuellement le lien entre deux éléments d\'UI';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Mode Fondu';
+
+  @override
+  String get demoContainerTransformTypeFade => 'FONDU';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'FONDU TOTAL';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Titre';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Texte secondaire';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Secondaire';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Page d\'informations';
+
+  @override
+  String get demoMotionListTileTitle => 'Élément de liste';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Le schéma \"Axe partagé\" est un type de transition utilisé pour des éléments d\'UI qui partagent la même logique spatiale ou de navigation. Ce schéma utilise une transformation basée sur l\'axe x, y ou z pour renforcer le lien de parenté entre ces éléments.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Axe x partagé';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'RETOUR';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'SUIVANT';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Organiser vos cours';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Les cours groupés s\'affichent comme tels dans votre flux. Vous pouvez modifier ce paramètre ultérieurement.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Art et artisanat';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Économie';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Illustration';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Design';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Cuisine';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Cours groupés';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Cours individuels';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Bonjour David Dupond';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText =>
+      'Connectez-vous avec votre compte';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'Adresse e-mail ou numéro de téléphone';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'ADRESSE E-MAIL OUBLIÉE ?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'CRÉER UN COMPTE';
+
+  @override
+  String get demoSharedYAxisTitle => 'Axe y partagé';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 albums';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Écouté récemment';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Album';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Artiste';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min';
+
+  @override
+  String get demoSharedZAxisTitle => 'Axe z partagé';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Paramètres';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Hamburger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Recette de hamburger';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Sandwich';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Recette de sandwich';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Dessert';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Recette de dessert';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Crevettes';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Recette à base de crevettes';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Crabe';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Recette à base de crabe';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Sandwich au bœuf';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Recette de sandwich au bœuf';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Recettes enregistrées';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profil';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Notifications';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Confidentialité';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Aide';
+
+  @override
+  String get demoFadeThroughTitle => 'Fondu total';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Le schéma \"Fondu total\" est un type de transition utilisé pour des éléments d\'UI qui n\'ont pas de lien de parenté fort.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Albums';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Photos';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Rechercher';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 photos';
+
+  @override
+  String get demoFadeScaleTitle => 'Fondu';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Le schéma \"Fondu\" est un type de transition utilisé pour les éléments d\'UI qui apparaissent ou disparaissent sans dépasser de l\'écran. Par exemple, une boîte de dialogue qui apparaît au centre de ce dernier.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'AFFICHER LE MODULE';
+
+  @override
+  String get demoFadeScaleShowFabButton =>
+      'AFFICHER LE BOUTON D\'ACTION FLOTTANT';
+
+  @override
+  String get demoFadeScaleHideFabButton =>
+      'MASQUER LE BOUTON D\'ACTION FLOTTANT';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Boîte de dialogue d\'alerte';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ANNULER';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'SUPPRIMER';
 
   @override
   String get demoColorsTitle => 'Couleurs';

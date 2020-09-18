@@ -999,6 +999,244 @@ class GalleryLocalizationsMn extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'ПИН';
 
   @override
+  String get demoMotionTitle => 'Хөдөлгөөнт';
+
+  @override
+  String get demoMotionSubtitle =>
+      'Бүх урьдчилан тодорхойлсон шилжилтийн загвар';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Контейнерын хэлбэр өөрчлөх';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Контейнерын хэлбэр өөрчлөх загварыг контейнерыг багтаадаг UI элементүүдийн хоорондын шилжилтэд зориулан бүтээсэн. Энэ загвар нь хоёр UI элементийн хооронд харагдахуйц холболт үүсгэдэг';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Уусах горим';
+
+  @override
+  String get demoContainerTransformTypeFade => 'УУСАХ';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'НЭВТ УУСАХ';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Нэр';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Хоёр дахь мөрний текст';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Хоёр дахь мөр';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Дэлгэрэнгүй мэдээллийн хуудас';
+
+  @override
+  String get demoMotionListTileTitle => 'Жагсаалтын зүйл';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Хуваалцсан тэнхлэгийн загварыг орон зайн эсвэл навигацийн харилцаатай UI элементүүдийн хоорондын шилжилтэд ашигладаг. Энэ загвар нь элементүүдийн хоорондын харилцааг бэхжүүлэхийн тулд x, y, эсвэл z тэнхлэг дээр хуваалцсан өөрлөлтийг ашигладаг.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Хуваалцсан x-тэнхлэг';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'БУЦАХ';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'ДАРААХ';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Курсээ оновчтой болгох';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Багцалсан ангиллууд нь таны хангамж дээр бүлгээр харагдана. Та үүнийг дараа нь үргэлж өөрчлөх боломжтой.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Урлаг, гар урлал';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Бизнес';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Зурагт тайлбар';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Дизайн';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Хоол';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Багцалсан';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Тусад нь харуулсан';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Сайн уу, Дэвид Парк';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Бүртгэлээрээ нэвтрэх';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel => 'Имэйл эсвэл утасны дугаар';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'ИМЭЙЛЭЭ МАРТСАН УУ?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'БҮРТГЭЛ ҮҮСГЭХ';
+
+  @override
+  String get demoSharedYAxisTitle => 'Хуваалцсан y-тэнхлэг';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 цомог';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'А-Я';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Хамгийн сүүлд тоглуулсан';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Цомог';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Уран бүтээлч';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'минут';
+
+  @override
+  String get demoSharedZAxisTitle => 'Хуваалцсан z-тэнхлэг';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Тохиргоо';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Бургер';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Бургерын жор';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Хачиртай талх';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Хачиртай талхны жор';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Амттан';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Амттаны жор';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Сам хорхой';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Сам хорхойтой хоолны жор';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Хавч';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription => 'Хавчтай хоолны жор';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle =>
+      'Үхрийн махтай хачиртай талх';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Үхрийн махтай хачиртай талхны жор';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Хадгалсан жорууд';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Профайл';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Мэдэгдлүүд';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Нууцлал';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Тусламж';
+
+  @override
+  String get demoFadeThroughTitle => 'Нэвт уусах';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Нэвт уусах загварыг бие биетэйгээ хүчтэй харилцаагүй UI элементүүдийн хоорондын шилжилтэд ашигладаг.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Цомгууд';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Зургууд';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Хайх';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 зураг';
+
+  @override
+  String get demoFadeScaleTitle => 'Уусах';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Уусах загварыг дэлгэцийн төвд уусдаг харилцах цонх зэрэг дэлгэцийн хүрээ хооронд орж, гардаг UI элементүүдэд ашигладаг.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton =>
+      'ЗАЙЛШГҮЙ ХАРИЛЦАХ ЦОНХЫГ ХАРУУЛАХ';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'FAB-Г ХАРУУЛАХ';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'FAB-Г НУУХ';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Сэрэмжлүүлгийн харилцах цонх';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ЦУЦЛАХ';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'БОЛИХ';
+
+  @override
   String get demoColorsTitle => 'Өнгө';
 
   @override

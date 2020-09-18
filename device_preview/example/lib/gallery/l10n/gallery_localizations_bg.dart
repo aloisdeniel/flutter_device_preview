@@ -1000,6 +1000,248 @@ class GalleryLocalizationsBg extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'ПИН';
 
   @override
+  String get demoMotionTitle => 'Движение';
+
+  @override
+  String get demoMotionSubtitle =>
+      'Всички предварително дефинирани модели за преход';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Трансформиране на контейнер';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Моделът с трансформиране на контейнер е създаден за преходи между елементи на ПИ, които съдържат контейнер. Моделът създава видима връзка между два елемента на ПИ.';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle =>
+      'Режим на плавен преход';
+
+  @override
+  String get demoContainerTransformTypeFade => 'ПЛАВЕН ПРЕХОД';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough =>
+      'ИЗБЛЕДНЯВАНЕ И ПОЯВЯВАНЕ';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Име';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Вторичен текст';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Вторично';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Страница с подробности';
+
+  @override
+  String get demoMotionListTileTitle => 'Списъчен елемент';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Моделът със споделена ос се използва за преходи между елементи на ПИ, които имат пространствена или навигационна връзка. Този модел използва споделена трансформация по оста x, y или z, за да подсили връзката между елементите.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Споделена ос x';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'НАЗАД';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'НАПРЕД';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Рационализирайте курсовете си';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Групираните категории се показват като групи в емисията ви. Винаги можете да промените това по-късно.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Изкуства и занаяти';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Бизнес';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Илюстрация';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Дизайн';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Кулинария';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Групиран';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Показван отделно';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Здравейте, Дейвид Парк';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Влезте с профила си';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'Имейл адрес или телефонен номер';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'ЗАБРАВИЛИ СТЕ ИМЕЙЛ АДРЕСА СИ?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'СЪЗДАВАНЕ НА ПРОФИЛ';
+
+  @override
+  String get demoSharedYAxisTitle => 'Споделена ос y';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 албума';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A – Я';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Пускани скоро';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Албум';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Изпълнител';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'мин';
+
+  @override
+  String get demoSharedZAxisTitle => 'Споделена ос z';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Настройки';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Хамбургер';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Рецепта за хамбургер';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Сандвич';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Рецепта за сандвич';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Десерт';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Рецепта за десерт';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Скариди';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Рецепта за ястие със скариди';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Раци';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Рецепта за ястие с раци';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Сандвич с телешко';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Рецепта за сандвич с телешко';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Запазени рецепти';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Потребителски профил';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Известия';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Поверителност';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Помощ';
+
+  @override
+  String get demoFadeThroughTitle => 'Избледняване и появяване';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Моделът с избледняване и появяване се използва за преходи между елементи на ПИ, които нямат силна връзка помежду си.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Албуми';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Снимки';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Търсене';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 снимки';
+
+  @override
+  String get demoFadeScaleTitle => 'Плавен преход';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Моделът с плавен преход се използва за елементи на ПИ, които влизат в рамките на екрана или излизат от тях, като например диалогов прозорец, който се появява в центъра на екрана.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton =>
+      'ПОКАЗВАНЕ НА МОДАЛЕН ДИАЛОГОВ ПРОЗОРЕЦ';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'ПОКАЗВАНЕ НА ПБД';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'СКРИВАНЕ НА ПБД';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Диалогов прозорец със сигнал';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ОТКАЗ';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'ОТХВЪРЛЯНЕ';
+
+  @override
   String get demoColorsTitle => 'Цветове';
 
   @override

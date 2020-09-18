@@ -92,7 +92,7 @@ class GalleryLocalizationsTe extends GalleryLocalizations {
   String get cardsDemoTravelDestinationDescription3 => 'గుళ్లు';
 
   @override
-  String get homeHeaderGallery => 'గ్యాలరీ';
+  String get homeHeaderGallery => 'Gallery';
 
   @override
   String get homeHeaderCategories => 'వర్గాలు';
@@ -979,7 +979,7 @@ class GalleryLocalizationsTe extends GalleryLocalizations {
   String get cupertinoTabBarHomeTab => 'హోమ్';
 
   @override
-  String get cupertinoTabBarChatTab => 'చాట్';
+  String get cupertinoTabBarChatTab => 'Chat';
 
   @override
   String get cupertinoTabBarProfileTab => 'ప్రొఫైల్';
@@ -996,6 +996,244 @@ class GalleryLocalizationsTe extends GalleryLocalizations {
 
   @override
   String get demoCupertinoTextFieldPIN => 'పిన్';
+
+  @override
+  String get demoMotionTitle => 'చలనం';
+
+  @override
+  String get demoMotionSubtitle => 'ముందే నిర్వచించిన పరివర్తన ఆకృతులు';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'కంటైనర్ పరివర్తన';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'కంటైనర్ కలిగి ఉన్న UI మూలకాల మధ్య పరివర్తనలు చేయడానికి కంటైనర్ పరివర్తన ఆకృతి రూపొందించబడింది. ఈ ఆకృతి రెండు UI మూలకాల మధ్య కనిపించే కనెక్షన్‌ను క్రియేట్ చేస్తుంది';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'ఫేడ్ మోడ్';
+
+  @override
+  String get demoContainerTransformTypeFade => 'ఫేడ్';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'ఫేడ్ త్రూ';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'శీర్షిక';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'రెండవ టెక్స్ట్';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'రెండవ';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'వివరాల పేజీ';
+
+  @override
+  String get demoMotionListTileTitle => 'లిస్ట్ ఐటెమ్';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'ప్రాదేశిక లేదా నావిగేషనల్ సంబంధాలను కలిగిన UI మూలకాల మధ్య పరివర్తనల కోసం షేర్‌డ్ ఆక్సిస్ ఆకృతి ఉపయోగించబడుతుంది. ఈ ఆకృతి, మూలకాల మధ్య సంబంధాన్ని బలోపేతం చేయడానికి x, y, లేదా z ఆక్సిస్‌పై షేర్‌డ్ పరివర్తనను ఉపయోగిస్తుంది.';
+
+  @override
+  String get demoSharedXAxisTitle => 'షేర్‌డ్ x-ఆక్సిస్';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'వెనుకకు';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'తదుపరి';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'మీ కోర్సులను క్రమబద్ధీకరించండి';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'బండిల్ చేయబడిన కేటగిరీలు మీ ఫీడ్‌లో గ్రూప్‌లుగా కనిపిస్తాయి. మీరు దీన్ని తర్వాత ఎప్పుడైనా మార్చవచ్చు.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'కళలు & నైపుణ్యాలు';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'బిజినెస్';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'దృష్టాంత చిత్రం';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'డిజైన్';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'వంట కోర్స్';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'బండిల్ చేయబడిన';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'విడివిడిగా చూపబడింది';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'హాయ్ David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'మీ ఖాతాతో సైన్ ఇన్ చేయండి';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel => 'ఇమెయిల్ లేదా ఫోన్ నంబర్';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'ఇమెయిల్‌ను మర్చిపోయారా?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'ఖాతాను క్రియేట్ చేయండి';
+
+  @override
+  String get demoSharedYAxisTitle => 'షేర్‌డ్ y-ఆక్సిస్';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 ఆల్బమ్‌లు';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'ఇటీవల ప్లే చేసినవి';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'ఆల్బమ్';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'ఆర్టిస్ట్';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'నిమిషం';
+
+  @override
+  String get demoSharedZAxisTitle => 'షేర్‌డ్ z-ఆక్సిస్';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'సెట్టింగ్‌లు';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'బర్గర్';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'బర్గర్ తయారీ విధానం';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'శాండ్విచ్';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription =>
+      'శాండ్విచ్ తయారీ విధానం';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'డెజర్ట్';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'డెజర్ట్ తయారీ విధానం';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'ష్రింప్';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'ష్రింప్ ప్లేట్ తయారీ విధానం';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'పీత';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'పీత ప్లేట్ తయారీ విధానం';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'బీఫ్ శాండ్విచ్';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'బీఫ్ శాండ్విచ్ తయారీ విధానం';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle =>
+      'సేవ్ చేసిన వంటకాల తయారీ విధానాలు';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'ప్రొఫైల్';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'నోటిఫికేషన్‌లు';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'గోప్యత';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'సహాయం';
+
+  @override
+  String get demoFadeThroughTitle => 'ఫేడ్ త్రూ';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'ఒకదానితో ఒకటి బలమైన సంబంధం లేని UI మూలకాల మధ్య పరివర్తనల కోసం ఫేడ్ త్రూ ఆకృతి ఉపయోగించబడుతుంది.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'ఆల్బమ్‌లు';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'ఫోటోలు';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'సెర్చ్';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 ఫోటోలు';
+
+  @override
+  String get demoFadeScaleTitle => 'ఫేడ్';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'స్క్రీన్ మధ్యలో మసకబారే డైలాగ్ వంటి, స్క్రీన్ యొక్క బౌండ్‌లలోకి ప్రవేశించే లేదా నిష్క్రమించే UI మూలకాల కోసం ఫేడ్ ఆకృతి ఉపయోగించబడుతుంది.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'మోడల్‌ను చూపించు';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'FABని చూపించు';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'FABని దాచు';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'అలర్ట్ డైలాగ్';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'రద్దు చేయి';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'విస్మరించు';
 
   @override
   String get demoColorsTitle => 'రంగులు';
@@ -1319,7 +1557,7 @@ class GalleryLocalizationsTe extends GalleryLocalizations {
   String get bottomNavigationCommentsTab => 'వ్యాఖ్యలు';
 
   @override
-  String get bottomNavigationCalendarTab => 'క్యాలెండర్';
+  String get bottomNavigationCalendarTab => 'Calendar';
 
   @override
   String get bottomNavigationAccountTab => 'ఖాతా';

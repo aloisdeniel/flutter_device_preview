@@ -1,14 +1,91 @@
+import 'dart:math';
+
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'button.dart';
 
+/// Display a simulated on screen keyboard at the bottom of a [child] widget.
+///
+/// When [isEnabled] is updated, a [transitionDuration] starts to display
+/// or hide the virtual keyboard.
+///
+/// No interraction is available, its only purpose is to display
+/// the visual and update media query's `viewInsets` for [child].
 class VirtualKeyboard extends StatelessWidget {
+  /// Indicates whether the keyboard is displayed or not.
+  final bool isEnabled;
+
+  /// The widget on top of which the keyboard is displayed.
+  final Widget child;
+
+  /// The transition duration when the keyboard is displayed or hidden.
+  final Duration transitionDuration;
+
+  /// Display a simulated on screen keyboard on top of the given [child] widget.
+  ///
+  /// When [isEnabled] is updated, a [transitionDuration] starts to display
+  /// or hide the virtual keyboard.
+  ///
+  /// No interraction is available, its only purpose is to display
+  /// the visual and update media query's `viewInsets` for [child].
+  const VirtualKeyboard({
+    Key key,
+    @required this.child,
+    this.isEnabled = false,
+    this.transitionDuration = const Duration(milliseconds: 400),
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final insets = EdgeInsets.only(
+      bottom: _VirtualKeyboard.minHeight,
+    );
+    return MediaQuery(
+      data: !isEnabled
+          ? mediaQuery
+          : mediaQuery.copyWith(
+              viewInsets: insets,
+              viewPadding: EdgeInsets.only(
+                top: max(insets.top, mediaQuery.padding.top),
+                left: max(insets.left, mediaQuery.padding.left),
+                right: max(insets.right, mediaQuery.padding.right),
+                bottom: max(insets.bottom, mediaQuery.padding.bottom),
+              ),
+            ),
+      child: Stack(
+        children: <Widget>[
+          Positioned.fill(
+            child: child,
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: AnimatedCrossFade(
+              firstChild: SizedBox(),
+              secondChild: _VirtualKeyboard(
+                height: _VirtualKeyboard.minHeight + mediaQuery.padding.bottom,
+              ),
+              crossFadeState: isEnabled
+                  ? CrossFadeState.showSecond
+                  : CrossFadeState.showFirst,
+              duration: transitionDuration,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _VirtualKeyboard extends StatelessWidget {
   static const double minHeight = 214;
   final double height;
 
-  const VirtualKeyboard({
+  const _VirtualKeyboard({
     double height,
   }) : this.height = height ?? minHeight;
 

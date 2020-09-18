@@ -996,6 +996,244 @@ class GalleryLocalizationsSv extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'Pinkod';
 
   @override
+  String get demoMotionTitle => 'Rörelse';
+
+  @override
+  String get demoMotionSubtitle => 'Alla fördefinierade övergångsmönster';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Behållartransformering';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Mönstret med behållartransformering är avsett för övergångar mellan element i användargränssnittet där en behållare är inblandad. Mönstret ger en synlig koppling mellan två element i användargränssnittet';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Intoningsläge';
+
+  @override
+  String get demoContainerTransformTypeFade => 'TONA IN/UT';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'TONA GENOM';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Namn';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Sekundär text';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Sekundärt';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Informationssida';
+
+  @override
+  String get demoMotionListTileTitle => 'Post i lista';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Mönstret med delad axel används för övergångar mellan element i användargränssnittet som hänger ihop rumsligt eller navigeringsmässigt. Mönstret förstärker den inbördes relationen mellan element med hjälp av en övergång längs en gemensam x-, y- eller z-axel.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Delad x-axel';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'TILLBAKA';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'NÄSTA';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Skräddarsy dina kurser';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Grupperade kategorier visas som grupper i flödet. Du kan alltid ändra detta senare.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Konst och hantverk';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Ekonomi';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Bild';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Design';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Matlagning';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Grupperad';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Visas enskilt';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Hej, David Park!';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Logga in på ditt konto';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'E-postadress eller telefonnummer';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'HAR DU GLÖMT DIN E-POSTADRESS?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'SKAPA KONTO';
+
+  @override
+  String get demoSharedYAxisTitle => 'Delad y-axel';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 album';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A–Ö';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Nyligen spelade';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Album';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Artist';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min';
+
+  @override
+  String get demoSharedZAxisTitle => 'Delad z-axel';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Inställningar';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Hamburgare';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Recept på hamburgare';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Dubbelmacka';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription =>
+      'Recept på dubbelmacka';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Efterrätt';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Recept på efterrätt';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Räkor';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Recept på räktallrik';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Krabba';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription => 'Recept på krabba';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Biffmacka';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Recept på biffmacka';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Sparade recept';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profil';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Aviseringar';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Sekretess';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Hjälp';
+
+  @override
+  String get demoFadeThroughTitle => 'Tona genom';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Mönstret med genomtoning används för övergångar mellan element i användargränssnittet som inte har någon tydlig inbördes koppling.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Album';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Foton';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Sök';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 foton';
+
+  @override
+  String get demoFadeScaleTitle => 'Tona in/ut';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Mönstret med objekt som tonar in/ut används för element i användargränssnittet som kommer in på eller lämnar skärmen, t.ex. en dialogruta som tonar in mitt på skärmen.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'VISA MODALT ARK';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'VISA FLYTANDE ÅTGÄRDSKNAPP';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'DÖLJ FLYTANDE ÅTGÄRDSKNAPP';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Varningsdialogruta';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'AVBRYT';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'IGNORERA';
+
+  @override
   String get demoColorsTitle => 'Färger';
 
   @override

@@ -993,6 +993,243 @@ class GalleryLocalizationsMs extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'Gerakan';
+
+  @override
+  String get demoMotionSubtitle => 'Semua corak peralihan yang dipratentukan';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Pengubahan Bekas';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Corak pengubahan bekas direka bentuk untuk peralihan antara unsur UI yang merangkumi bekas. Corak ini mewujudkan hubungan yang boleh dilihat antara dua unsur UI';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Mod lenyap';
+
+  @override
+  String get demoContainerTransformTypeFade => 'LENYAP';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'LENYAP';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Tajuk';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Teks sekunder';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Sekunder';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Halaman Butiran';
+
+  @override
+  String get demoMotionListTileTitle => 'Item senarai';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Corak paksi dikongsi digunakan untuk peralihan antara unsur UI yang mempunyai perhubungan ruang atau navigasi. Corak ini menggunakan pengubahan dikongsi pada paksi x, y atau z untuk mengukuhkan perhubungan antara unsur.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Paksi x dikongsi';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'KEMBALI';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'SETERUSNYA';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Selaraskan kursus anda';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Kategori yang dihimpun dipaparkan sebagai kumpulan dalam suapan anda. Anda boleh menukar tetapan ini pada bila-bila masa kemudian.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Seni & Pertukangan';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Perniagaan';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Ilustrasi';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Reka bentuk';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Kulinari';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Dihimpunkan';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle =>
+      'Ditunjukkan Secara Berasingan';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Hai, David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Log masuk dengan akaun anda';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel => 'E-mel atau nombor telefon';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'TERLUPA E-MEL?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'BUAT AKAUN';
+
+  @override
+  String get demoSharedYAxisTitle => 'Paksi y dikongsi';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 album';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Dimainkan baru-baru ini';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Album';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Artis';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min';
+
+  @override
+  String get demoSharedZAxisTitle => 'Paksi z dikongsi';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Tetapan';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Burger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Resipi burger';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Sandwic';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Resipi sandwic';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Pencuci mulut';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Resipi pencuci mulut';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Udang';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Resipi sepiring udang';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Ketam';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Resipi sepiring ketam';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Sandwic Daging';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Resipi Sandwic Daging';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Resipi yang Disimpan';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profil';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Pemberitahuan';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Privasi';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Bantuan';
+
+  @override
+  String get demoFadeThroughTitle => 'Lenyap';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Corak lenyap digunakan untuk peralihan antara unsur UI yang tidak mempunyai perhubungan yang kukuh antara satu sama lain.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Album';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Foto';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Cari';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 foto';
+
+  @override
+  String get demoFadeScaleTitle => 'Lenyap';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Corak lenyap digunakan untuk elemen UI yang masuk atau keluar dalam sempadan skrin, seperti dialog yang lenyap di tengah-tengah skrin.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'TUNJUKKAN MODAL';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'TUNJUKKAN FAB';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'SEMBUNYIKAN FAB';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Dialog Makluman';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'BATAL';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'BUANG';
+
+  @override
   String get demoColorsTitle => 'Warna';
 
   @override

@@ -996,6 +996,247 @@ class GalleryLocalizationsNb extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN-kode';
 
   @override
+  String get demoMotionTitle => 'Bevegelse';
+
+  @override
+  String get demoMotionSubtitle =>
+      'Alle de forhåndsdefinerte overgangsmønstrene';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Forvandling av beholder';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Forvandlingsmønsteret til beholderen er utviklet for overganger mellom elementer i brukergrensesnittet som inkluderer en beholder. Dette mønsteret oppretter en synlig forbindelse mellom to elementer i brukergrensesnittet.';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle =>
+      'Modus for å tone ut';
+
+  @override
+  String get demoContainerTransformTypeFade => 'TON UT';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'TON GJENNOM';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Tittel';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Sekundær tekst';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Sekundær';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Detaljside';
+
+  @override
+  String get demoMotionListTileTitle => 'Listeelement';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Det delte aksemønsteret brukes for overganger mellom elementene i brukergrensesnittet som har et romlig eller navigasjonsbasert forhold. Dette mønsteret bruker en delt overgang på X-, Y- eller Z-aksen for å forsterke forholdet mellom elementer.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Delt X-akse';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'TILBAKE';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'NESTE';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Effektiviser kursene dine';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Grupperte kategorier vises som grupper i feeden din. Du kan endre dette når som helst.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Kunst og håndverk';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Bedrift';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Illustrasjon';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Design';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Matlaging';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Gruppert';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Vises enkeltvis';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Hei, David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Logg på med kontoen din';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'E-postadresse eller telefonnummer';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'HAR DU GLEMT E-POSTADRESSEN?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'OPPRETT KONTO';
+
+  @override
+  String get demoSharedYAxisTitle => 'Delt Y-akse';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 album';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A–Å';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Spilt av nylig';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Album';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Artist';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min';
+
+  @override
+  String get demoSharedZAxisTitle => 'Delt Z-akse';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Innstillinger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Hamburger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Hamburgeroppskrift';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Smørbrød';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Smørbrødoppskrift';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Dessert';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Dessertoppskrift';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Reke';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Oppskrift på rekerett';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Krabbe';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Oppskrift på krabberett';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle =>
+      'Smørbrød med storfekjøtt';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Oppskrift på smørbrød med storfekjøtt';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Lagrede oppskrifter';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profil';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Varsler';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Personvern';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Hjelp';
+
+  @override
+  String get demoFadeThroughTitle => 'Ton gjennom';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Gjennomtoningsmønsteret brukes for overganger mellom elementer i brukergrensesnittet som ikke har et sterkt forhold til hverandre.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Album';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Bilder';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Søk';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 bilder';
+
+  @override
+  String get demoFadeScaleTitle => 'Ton ut';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Uttoningsmønsteret brukes for elementer i brukergrensesnittet som går inn eller ut innenfor grensene på skjermen, for eksempel dialoger som toner ut midt på skjermen.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'VIS MODAL';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'VIS SVEVENDE HANDLINGSKNAPP';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'SKJUL SVEVENDE HANDLINGSKNAPP';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Varseldialog';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'AVBRYT';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'FORKAST';
+
+  @override
   String get demoColorsTitle => 'Farger';
 
   @override

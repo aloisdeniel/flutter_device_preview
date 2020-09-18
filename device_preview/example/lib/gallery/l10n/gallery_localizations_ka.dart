@@ -1003,6 +1003,247 @@ class GalleryLocalizationsKa extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN-კოდი';
 
   @override
+  String get demoMotionTitle => 'მოძრაობა';
+
+  @override
+  String get demoMotionSubtitle =>
+      'გადასვლის ყველა წინასწარ განასაზღვრული ნიმუში';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'კონტეინერის გარდაქმნა';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'კონტეინერის გარდაქმნის ნიმუში შექმნილია UI-ის ელემენტებს შორის გადასვლისთვის, რომლებიც კონტეინერს შეიცავს. ეს ნიმუში ხილულ კავშირს ამყარებს UI-ის ორ ელემენტს შორის';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'მილევის რეჟიმი';
+
+  @override
+  String get demoContainerTransformTypeFade => 'მილევა';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'ჩაბნელება';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'სათაური';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'დამხმარე ტექსტი';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'დამხმარე';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'დეტალების გვერდი';
+
+  @override
+  String get demoMotionListTileTitle => 'სიის ერთეული';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'საზიარო ღერძის ნიმუში გამოიყენება UI-ის იმ ელემენტებს შორის გადასვლისთვის, რომლებსაც სივრცული ან ნავიგაციური ურთიერთობა აქვთ. ეს ნიმუში, ელემენტებს შორის ურთიერთობის გასაძლიერებლად, იყენებს საზიარო გარდაქმნას x, y ან z ღერძზე.';
+
+  @override
+  String get demoSharedXAxisTitle => 'საზიარო x-ღერძი';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'უკან';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'შემდეგი';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle =>
+      'მოახდინეთ თქვენი კურსების ოპტიმიზაცია';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'კატეგორიების ნაკრებები თქვენს არხში ჯგუფების სახით გამოჩნდება. ამის შეცვლა ყოველთვის შეგიძლიათ.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'ხელოვნება და ხელობა';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'ბიზნესი';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'ილუსტრაცია';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'დიზაინი';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'კულინარია';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'ნაკრების სახით';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle =>
+      'ინდივიდუალურად ნაჩვენები';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'გამარჯობა, David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'შედით თქვენს ანგარიშში';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'ელფოსტა ან ტელეფონის ნომერი';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'დაგავიწყდათ ელფოსტა?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'ანგარიშის შექმნა';
+
+  @override
+  String get demoSharedYAxisTitle => 'საზიარო y-ღერძი';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 ალბომი';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'ა-ჰ';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'ცოტა ხნის წინ დაკრული';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'ალბომი';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'მუსიკოსი';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'წთ';
+
+  @override
+  String get demoSharedZAxisTitle => 'საზიარო z-ღერძი';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'პარამეტრები';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'ბურგერი';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'ბურგერის რეცეპტი';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'სენდვიჩი';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'სენდვიჩის რეცეპტი';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'დესერტი';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'დესერტის რეცეპტი';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'კრევეტი';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription => 'კრევეტის რეცეპტი';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'კიბორჩხალა';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription => 'კიბორჩხალის რეცეპტი';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle =>
+      'საქონლის ხორცის სენდვიჩი';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'საქონლის ხორცის სენდვიჩის რეცეპტი';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'შენახული რეცეპტები';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'პროფილი';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'შეტყობინებები';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'კონფიდენციალურობა';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'დახმარება';
+
+  @override
+  String get demoFadeThroughTitle => 'ჩაბნელება';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'ჩაბნელების ნიმუში გამოიყენება UI-ის იმ ელემენტებს შორის გადასვლისთვის, რომლებსაც ერთმანეთთან ძლიერი კავშირი არ აქვთ.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'ალბომები';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'ფოტოები';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'ძიება';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 ფოტო';
+
+  @override
+  String get demoFadeScaleTitle => 'მილევა';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'მილევის ნიმუში გამოიყენება UI-ის იმ ელემენტებს შორის გადასვლისთვის, რომლებიც შემოდის ან გადის ეკრანის კიდეების ფარგლებში, მაგალითად, დიალოგური ფანჯარა, რომელიც ეკრანის ცენტრში მიილევა.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'მოდალურის ჩვენება';
+
+  @override
+  String get demoFadeScaleShowFabButton =>
+      'მოქმედების მოლივლივე ღილაკის ჩვენება';
+
+  @override
+  String get demoFadeScaleHideFabButton =>
+      'მოქმედების მოლივლივე ღილაკის დამალვა';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'გაფრთხილების დიალოგური ფანჯარა';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'გაუქმება';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'გაუქმება';
+
+  @override
   String get demoColorsTitle => 'ფერები';
 
   @override

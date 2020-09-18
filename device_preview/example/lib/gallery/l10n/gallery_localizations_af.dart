@@ -994,6 +994,241 @@ class GalleryLocalizationsAf extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'Beweging';
+
+  @override
+  String get demoMotionSubtitle => 'Al die voorafgedefinieerde oorgangspatrone';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Houeromskepping';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Die houeromskeppingpatroon is ontwerp vir oorgang tussen UI-elemente wat \'n houer insluit. Die patroon skep \'n sigbare verbinding tussen twee UI-elemente';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Doofmodus';
+
+  @override
+  String get demoContainerTransformTypeFade => 'DOOF';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'DEURDOOF';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Titel';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Sekondêre teks';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Sekondêr';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Besonderhedebladsy';
+
+  @override
+  String get demoMotionListTileTitle => 'Lysitem';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Die gedeelde-aspatroon word gebruik vir oorgang tussen die UI-elemente wat \'n ruimtelike of navigasieverhouding het. Die patroon gebruik \'n gedeelde omskepping op die x-, y- of z-as om die verhouding tussen elemente te versterk.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Gedeelde x-as';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'TERUG';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'VOLGENDE';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Stroomlyn jou kursusse';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Gebondelde kategorieë verskyn as groepe in jou stroom. Jy kan dit altyd later verander.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Kuns en kunsvlyt';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Besigheid';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Illustrasie';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Ontwerp';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Kookkuns';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Gebondel';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle =>
+      'Word individueel gewys';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Hallo David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Meld aan by jou rekening.';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel => 'E-posadres of foonnommer';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'E-POSADRES VERGEET?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'SKEP REKENING';
+
+  @override
+  String get demoSharedYAxisTitle => 'Gedeelde y-as';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 albums';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Onlangs gespeel';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Album';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Kunstenaar';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min.';
+
+  @override
+  String get demoSharedZAxisTitle => 'Gedeelde z-as';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Instellings';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Burger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Burgerresep';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Toebroodjie';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Toebroodjieresep';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Nagereg';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Nageregresep';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Garnaal';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription => 'Garnaalbordresep';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Krap';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription => 'Krapbordresep';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Beesvleistoebroodjie';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Beesvleistoebroodjieresep';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Gestoorde resepte';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profiel';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Kennisgewings';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Privaatheid';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Hulp';
+
+  @override
+  String get demoFadeThroughTitle => 'Deurdoof';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Die deurdoofpatroon word gebruik vir oorgang tussen UI-elemente wat nie \'n sterk vehouding met mekaar het nie.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Albums';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Foto\'s';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Soek';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 foto\'s';
+
+  @override
+  String get demoFadeScaleTitle => 'Doof';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Die doofpatroon word gebruik vir UI-elemente wat binne die grense van die skerm inkom of uitgaan, soos \'n dialoog wat in die middel van die skerm verdof.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'WYS MODAAL';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'WYS FAB';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'VERSTEEK FAB';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Waarskuwingdialoog';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'KANSELLEER';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'GOOI WEG';
+
+  @override
   String get demoColorsTitle => 'Kleure';
 
   @override

@@ -999,6 +999,247 @@ class GalleryLocalizationsAz extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'Hərəkət';
+
+  @override
+  String get demoMotionSubtitle =>
+      'Əvvəldən müəyyənləşdirilmiş bütün keçid modelləri';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Konteyner Transformasiyası';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Konteyner transformasiya modeli konteyner ehtiva edən UI elementləri arasında keçid üçün nəzərdə tutulmuşdur. Bu model iki UI elementi arasında görünən bağlantı yaradır';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle =>
+      'Solğunlaşma rejimi';
+
+  @override
+  String get demoContainerTransformTypeFade => 'SOLĞUNLAŞMA';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'TƏDRİCƏN SOLĞUNLAŞMA';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Ad';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'İkinci dərəcəli mətn';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'İkinci dərəcəli';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Detallar Səhifəsi';
+
+  @override
+  String get demoMotionListTileTitle => 'Siyahı elementi';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Paylaşılan ox modeli məkan və ya naviqasiya əlaqəsi olan UI elementləri arasında keçid üçün istifadə edilir. Bu model elementlər arasında əlaqəni gücləndirmək üçün x, y və ya z oxunda paylaşılan transformasiya istifadə edir.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Paylaşılan x oxu';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'GERİ';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'NÖVBƏTİ';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle =>
+      'İstiqamətlərinizi dəqiqləşdirin';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Paketlənmiş kateqoriyalar lentinizdə qruplar kimi görünür. Bunu həmişə dəyişə bilərsiniz.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle =>
+      'İncəsənət və Sənətkarlıq';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Biznes';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'İllüstrasiya';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Dizayn';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Kulinariya';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Paketlənmiş';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Fərdi Göstərilir';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Salam, David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Hesabınızla daxil olun';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'E-poçt və ya telefon nömrəsi';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'E-POÇTUNUZU UNUTMUSUNUZ?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'HESAB YARADIN';
+
+  @override
+  String get demoSharedYAxisTitle => 'Paylaşılan y oxu';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 albom';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Son oxudulan';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Albom';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'İfaçı';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'dəq';
+
+  @override
+  String get demoSharedZAxisTitle => 'Paylaşılan z oxu';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Ayarlar';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Burger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Burger resepti';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Sendviç';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Sendviç resepti';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Desert';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Desert resepti';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Krevet';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Krevet yeməyi resepti';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Krab';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription => 'Krab yeməyi resepti';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Mal əti sendviçi';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Mal əti sendviçi resepti';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle =>
+      'Yadda saxlanmış reseptlər';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profil';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Bildirişlər';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Məxfilik';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Yardım';
+
+  @override
+  String get demoFadeThroughTitle => 'Tədricən solğunlaşma';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Tədricən solğunlaşma modeli bir-biri ilə güclü əlaqəsi olmayan UI elementləri arasında keçid üçün istifadə edilir.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Albomlar';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Fotolar';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Axtarış';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 foto';
+
+  @override
+  String get demoFadeScaleTitle => 'Solğunlaşma';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Solğunlaşma modeli ekranın mərkəzində solğunlaşan dialoq kimi ekran hüdudlarına daxil olan və ya çıxan UI elementləri üçün istifadə edilir.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'MODAL GÖSTƏRİLSİN';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'FAB GÖSTƏRİLSİN';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'FAB GİZLƏDİLSİN';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Xəbərdarlıq dialoqu';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'LƏĞV EDİN';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'KƏNARLAŞDIRIN';
+
+  @override
   String get demoColorsTitle => 'Rənglər';
 
   @override

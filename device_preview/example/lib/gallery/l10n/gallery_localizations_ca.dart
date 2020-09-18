@@ -1005,6 +1005,247 @@ class GalleryLocalizationsCa extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'Moviment';
+
+  @override
+  String get demoMotionSubtitle => 'Tots els patrons de transició predefinits';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Transformació de contenidors';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'El patró de transformació de contenidors està dissenyat per a transicions entre elements de la IU que inclouen un contenidor. Aquest patró crea una connexió visible entre 2 elements de la IU.';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Mode d\'atenuació';
+
+  @override
+  String get demoContainerTransformTypeFade => 'ATENUACIÓ';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'ESVAÏMENT';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Títol';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Text secundari';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Secundari';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Pàgina de detalls';
+
+  @override
+  String get demoMotionListTileTitle => 'Element de llista';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'El patró d\'eix compartit s\'utilitza per a transicions entre elements de la IU que tenen una relació espacial o de navegació. Aquest patró utilitza una transformació compartida a l\'eix x, y o z per reforçar la relació entre els elements.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Eix X compartit';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'ENRERE';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'SEGÜENT';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Optimitza els teus cursos';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Les categories agrupades es mostren com a grups al teu feed. Pots canviar aquesta opció en qualsevol moment.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle =>
+      'Arts i treballs manuals';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Negocis';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Il·lustració';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Disseny';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Sector culinari';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Grup';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle =>
+      'Es mostra de manera individual';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Hola, David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText =>
+      'Inicia la sessió amb el teu compte';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'Adreça electrònica o número de telèfon';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'HAS OBLIDAT L\'ADREÇA ELECTRÒNICA?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'CREA UN COMPTE';
+
+  @override
+  String get demoSharedYAxisTitle => 'Eix Y compartit';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 àlbums';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Reproduït recentment';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Àlbum';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Artista';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min';
+
+  @override
+  String get demoSharedZAxisTitle => 'Eix Z compartit';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Configuració';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Hamburguesa';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Recepta d\'hamburguesa';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Entrepà';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Recepta d\'entrepà';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Postres';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Recepta de postres';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Gamba';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Recepta de plat de gambes';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Cranc';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Recepta de plat de cranc';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Entrepà de vedella';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Recepta d\'entrepà de vedella';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Receptes desades';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Perfil';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Notificacions';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Privadesa';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Ajuda';
+
+  @override
+  String get demoFadeThroughTitle => 'Esvaïment';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'El patró d\'esvaïment s\'utilitza per a transicions entre elements de la IU que no tenen una relació estreta entre ells.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Àlbums';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Fotos';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Cerca';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 fotos';
+
+  @override
+  String get demoFadeScaleTitle => 'Atenuació';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'El patró d\'atenuació s\'utilitza en elements de la IU que s\'obren o es tanquen dins dels límits de la pantalla, com ara un quadre de diàleg que s\'atenua al centre de la pantalla.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'MOSTRA EL MODAL';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'MOSTRA EL BAF';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'AMAGA EL BAF';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Quadre de diàleg d\'alerta';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'CANCEL·LA';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'DESCARTA';
+
+  @override
   String get demoColorsTitle => 'Colors';
 
   @override
@@ -1524,7 +1765,7 @@ class GalleryLocalizationsCa extends GalleryLocalizations {
   String get colorsBlueGrey => 'GRIS BLAVÓS';
 
   @override
-  String get placeChennai => 'Madràs';
+  String get placeChennai => 'Chennai';
 
   @override
   String get placeTanjore => 'Thanjavur';

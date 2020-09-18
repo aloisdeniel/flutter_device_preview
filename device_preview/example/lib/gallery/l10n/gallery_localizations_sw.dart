@@ -1004,6 +1004,246 @@ class GalleryLocalizationsSw extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'Picha video';
+
+  @override
+  String get demoMotionSubtitle =>
+      'Michoro yote ya kubadilisha iliyobainishwa mapema';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Ubadilishaji wa Metadata';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Mchoro wa kubadilisha metadata umeundwa ili kubadilisha kati ya vipengele vya kiolesura ambavyo vinajumuisha metadata. Mchoro huu huunda muunganisho unaoonekana kati ya vipengele viwili vya kiolesura';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Hali ya kufifisha';
+
+  @override
+  String get demoContainerTransformTypeFade => 'FIFISHA';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'INAYORUHUSU KUFIFISHA';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Mada';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Maandishi ya mada ndogo';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Mada ndogo';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Ukurasa wa Maelezo';
+
+  @override
+  String get demoMotionListTileTitle => 'Kipengee cha orodha';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Mchoro wa mhimili unaoshirikiwa hutumika kubadilisha kati ya vipengele vya kiolesura ambavyo vina uhusiano wa uelekezaji au wa eneo. Mchoro huu hutumia ubadilishaji unaoshirikiwa kwenye mhimili wa x, y au z ili kutilia mkazo uhusiano kati ya vipengele.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Mhimili wa x unaoshirikiwa';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'NYUMA';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'ENDELEA';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Ratibu kozi zako';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Aina zilizowekwa kwenye mafungu huonekana kama makundi katika mipasho yako. Unaweza kubadilisha mipangilio hii wakati wowote baadaye.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Sanaa na Ufundi';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Biashara';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Mchoro';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Muundo';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Upishi';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Imewekwa katika fungu';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Huonyeshwa moja moja';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Hujambo David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Ingia ukitumia akaunti yako';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'Anwani ya barua pepe au nambari ya simu';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'JE, UMESAHAU ANWANI YA BARUA PEPE?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'FUNGUA AKAUNTI';
+
+  @override
+  String get demoSharedYAxisTitle => 'Mhimili wa y unaoshirikiwa';
+
+  @override
+  String get demoSharedYAxisAlbumCount => 'Albamu 268';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Ulizocheza Karibuni';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Albamu';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Msanii';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'dakika';
+
+  @override
+  String get demoSharedZAxisTitle => 'Mhimili wa z unaoshirikiwa';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Mipangilio';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Baga';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Mapishi ya baga';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Sandwichi';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Mapishi ya sandwichi';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Kitindamlo';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Mapishi ya kitindamlo';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Uduvi';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Mapishi ya mlo wa uduvi';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Kaa';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Mapishi ya mlo wa kaa';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle =>
+      'Sandwichi ya nyama ya ng\'ombe';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Mapishi ya sandwichi ya nyama ya ng\'ombe';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Mapishi Yaliyohifadhiwa';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Wasifu';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Arifa';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Faragha';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Usaidizi';
+
+  @override
+  String get demoFadeThroughTitle => 'Inayoruhusu kufifisha';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Mchoro unaoruhusu kufifisha hutumiwa kubadilisha kati ya vipengele vya kiolesura ambavyo havina uhusiano thabiti kati yake.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Albamu';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Picha';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Tafuta';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => 'Picha 123';
+
+  @override
+  String get demoFadeScaleTitle => 'Fifisha';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Mchoro wa kufifisha hutumiwa kwenye vipengele vya kiolesura vinavyoingia au kuondoka katika mipaka ya skrini, kama vile kidirisha kinachofifia katikati ya skrini.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'ONYESHA KIDIRISHA';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'ONYESHA FAB';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'FICHA FAB';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Kidirisha cha Tahadhari';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'GHAIRI';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'FUTA';
+
+  @override
   String get demoColorsTitle => 'Rangi';
 
   @override

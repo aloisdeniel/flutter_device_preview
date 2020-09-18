@@ -990,6 +990,239 @@ class GalleryLocalizationsLo extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'ໂມຊັນ';
+
+  @override
+  String get demoMotionSubtitle => 'ຮູບແບບການປ່ຽນທີ່ກຳນົດໄວ້ລ່ວງໜ້າທັງໝົດ';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'ການປ່ຽນກ່ອງບັນຈຸ';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'ຮູບແບບການປ່ຽນຕົວບັນຈຸແມ່ນອອກແບບມາສຳລັບການປ່ຽນລະຫວ່າງອົງປະກອບສ່ວນຕິດຕໍ່ຜູ້ໃຊ້ທີ່ມີກ່ອງບັນຈຸໃດໜຶ່ງ. ຮູບແບບນີ້ຈະສ້າງການເຊື່ອມຕໍ່ທີ່ເບິ່ງເຫັນໄດ້ລະຫວ່າງອົງປະກອບສ່ວນຕິດຕໍ່ຜູ້ໃຊ້ສອງອັນ';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'ໂໝດຈາງ';
+
+  @override
+  String get demoContainerTransformTypeFade => 'ຈາງ';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'ຈາງຫາຍ';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'ຫົວຂໍ້';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'ຂໍ້ຄວາມສຳຮອງ';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'ສຳຮອງ';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'ໜ້າລາຍລະອຽດ';
+
+  @override
+  String get demoMotionListTileTitle => 'ລາຍການລາຍຊື່';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'ຮູບແບບແກນທີ່ແບ່ງປັນແມ່ນຖືກໃຊ້ສຳລັບການປ່ຽນລະຫວ່າງອົງປະກອບສ່ວນຕິດຕໍ່ຜູ້ໃຊ້ທີ່ມີຄວາມສຳພັນກ່ຽວກັບການນຳທາງ ຫຼື ຕຳແໜ່ງ. ຮູບແບບນີ້ໃຊ້ຂໍ້ມູນທີ່ແບ່ງປັນຢູ່ແກນ x, y ຫຼື z ເພື່ອສະໜັບສະໜຸນຄວາມສຳພັນລະຫວ່າງອົງປະກອບຕ່າງໆ.';
+
+  @override
+  String get demoSharedXAxisTitle => 'ແກນ x ທີ່ແບ່ງປັນ';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'ກັບຄືນ';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'ຕໍ່ໄປ';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'ເພີ່ມປະສິດທິພາບຫຼັກສູດຂອງທ່ານ';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'ໝວດໝູ່ທີ່ຮວມຈະປາກົດເປັນກຸ່ມໃນຟີດຂອງທ່ານ. ທ່ານສາມາດປ່ຽນຕົວເລືອກນີ້ໄດ້ທຸກເມື່ອໃນພາຍຫຼັງ.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'ສິນລະປະ ແລະ ງານສີມື';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'ທຸລະກິດ';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'ຮູບປະກອບ';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'ການອອກແບບ';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'ການຄົວກິນ';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'ເປັນຊຸດ';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'ສະແດງແຍກກັນ';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'ສະບາຍດີ David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'ເຂົ້າສູ່ລະບົບຫາບັນຊີຂອງທ່ານ';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel => 'ອີເມວ ຫຼື ເບີໂທລະສັບ';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'ລືມ​ອີ​ເມວ​ບໍ?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'ສ້າງບັນຊີ';
+
+  @override
+  String get demoSharedYAxisTitle => 'ແກນ y ທີ່ແບ່ງປັນ';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 ອະລະບ້ຳ';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'ຫຼິ້ນບໍ່ດົນມານີ້';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'ອະລະບໍ້າ';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'ສິນລະປິນ';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'ນທ';
+
+  @override
+  String get demoSharedZAxisTitle => 'ແກນ z ທີ່ແບ່ງປັນ';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'ການຕັ້ງຄ່າ';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'ເບີເກີ';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'ສູດເບີເກີ';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'ແຊນວິດ';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'ສູດແຊນວິດ';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'ຂອງຫວານ';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'ສູດຂອງຫວານ';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'ກຸ້ງ';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription => 'ສູດອາຫານກຸ້ງ';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'ກະປູ';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription => 'ສູດອາຫານປູ';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'ແຊນວິດງົວ';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription => 'ສູດແຊນວິດງົວ';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'ສູດອາຫານທີ່ບັນທຶກໄວ້';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'ໂປຣໄຟລ໌';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'ການແຈ້ງເຕືອນ';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'ຄວາມເປັນສ່ວນຕົວ';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'ຊ່ວຍເຫຼືອ';
+
+  @override
+  String get demoFadeThroughTitle => 'ຈາງຫາຍ';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'ຮູບແບບຈາງຫາຍແມ່ນໃຊ້ສຳລັບການປ່ຽນລະຫວ່າງອົງປະກອບສ່ວນຕິດຕໍ່ຜູ້ໃຊ້ທີ່ບໍ່ມີຄວາມສຳພັນໜັກແນ້ນຕໍ່ກັນແລະກັນ.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'ອະລະບ້ຳ';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'ຮູບພາບ';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'ຊອກຫາ';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 ຮູບ';
+
+  @override
+  String get demoFadeScaleTitle => 'ຈາງ';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'ຮູບແບບຈາງແມ່ນໃຊ້ສຳລັບອົງປະກອບສ່ວນຕິດຕໍ່ຜູ້ໃຊ້ທີ່ເຂົ້າ ຫຼື ອອກພາຍໃນຂອບຂອງໜ້າຈໍ ເຊັ່ນ: ກ່ອງໂຕ້ຕອບທີ່ຈາງເຂົ້າໄປທາງກາງຂອງຈໍ.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'ສະແດງ';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'ສະແດງ FAB';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'ເຊື່ອງ FAB';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'ກ່ອງໂຕ້ຕອບການແຈ້ງເຕືອນ';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ຍົກເລີກ';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'ຍົກເລີກ';
+
+  @override
   String get demoColorsTitle => 'ສີ';
 
   @override

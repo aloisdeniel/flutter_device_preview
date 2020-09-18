@@ -1002,6 +1002,247 @@ class GalleryLocalizationsTl extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'Paggalaw';
+
+  @override
+  String get demoMotionSubtitle =>
+      'Lahat ng naka-predefine na pattern ng transition';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Pag-iiba ng Anyo ng Container';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Idinisenyo ang pattern ng pag-iiba ng anyo ng container para sa mga transition sa pagitan ng mga element ng UI na may container. Gumagawa ang pattern na ito ng nakikitang koneksyon sa pagitan ng dalawang element ng UI';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Fade mode';
+
+  @override
+  String get demoContainerTransformTypeFade => 'FADE';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'FADE THROUGH';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Pamagat';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Pangalawang text';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Pangalawa';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Page ng Mga Detalye';
+
+  @override
+  String get demoMotionListTileTitle => 'Item sa listahan';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Ginagamit ang pattern ng nakabahaging axis para sa mga transition sa pagitan ng mga element ng UI na may ugnayang spatial o para sa pag-navigate. Gumagamit ang pattern na ito ng nakabahaging pag-iiba ng anyo sa x, y, o z axis para mapatibay ang ugnayan sa pagitan ng mga element.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Nakabahaging x-axis';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'BUMALIK';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'SUSUNOD';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle =>
+      'I-streamline ang iyong mga kurso';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Lalabas ang mga naka-bundle na kategorya bilang mga grupo sa iyong feed. Mababago mo ito anumang oras.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Sining at Craft';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Negosyo';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Pagguhit';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Disenyo';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Pagluluto';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Naka-bundle';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle =>
+      'Magkakahiwalay na Ipinapakita';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Kumusta, David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText =>
+      'Mag-sign in gamit ang iyong account';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'Email o numero ng telepono';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'NAKALIMUTAN ANG EMAIL?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'GUMAWA NG ACCOUNT';
+
+  @override
+  String get demoSharedYAxisTitle => 'Nakabahaging y-axis';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 album';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Na-play kamakailan';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Album';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Artist';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'minuto';
+
+  @override
+  String get demoSharedZAxisTitle => 'Nakabahaging z-axis';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Mga Setting';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Burger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Recipe ng burger';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Sandwich';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Recipe ng sandwich';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Panghimagas';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Recipe ng panghimagas';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Hipon';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Recipe ng putaheng hipon';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Alimango';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Recipe ng putaheng alimango';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Beef Sandwich';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Recipe ng Beef Sandwich';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Mga Naka-save na Recipe';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profile';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Mga Notification';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Privacy';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Tulong';
+
+  @override
+  String get demoFadeThroughTitle => 'Fade through';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Ginagamit ang fade through pattern para sa mga transition sa pagitan ng mga element ng UI na walang matibay na ugnayan sa isa\'t isa.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Mga Album';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Mga Larawan';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Maghanap';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 larawan';
+
+  @override
+  String get demoFadeScaleTitle => 'Fade';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Ginagamit ang fade pattern para sa mga element ng UI na pumapasok o lumalabas sa mga hangganan ng screen, gaya ng dialog na nagfe-fade sa gitna ng screen.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'IPAKITA ANG MODAL';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'IPAKITA ANG FAB';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'ITAGO ANG FAB';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Dialog ng Alerto';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'KANSELAHIN';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'I-DISCARD';
+
+  @override
   String get demoColorsTitle => 'Mga Kulay';
 
   @override

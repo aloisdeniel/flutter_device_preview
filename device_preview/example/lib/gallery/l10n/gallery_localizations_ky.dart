@@ -1002,6 +1002,247 @@ class GalleryLocalizationsKy extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN код';
 
   @override
+  String get demoMotionTitle => 'Кыймыл';
+
+  @override
+  String get demoMotionSubtitle => 'Бардык алдын ала аныкталган өтмө шаблондор';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Контейнерди трансформациялоо';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Контейнерди өзгөртүү шаблону колдонуучу интерфейсинин контейнер камтылган элементтерин өзгөртүү үчүн түзүлгөн. Бул шаблон колдонуучу интерфейсинин элементтеринин ортосундагы көрүнүктүү байланышты түзөт';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Бозоруу режими';
+
+  @override
+  String get demoContainerTransformTypeFade => 'БОЗОРУУ';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough =>
+      'ОРТОСУНАН БАШТАП БОЗОРУУ';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Аталышы';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Кошумча текст';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Кошумча';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Чоо-жайынын баракчасы';
+
+  @override
+  String get demoMotionListTileTitle => 'Тизмедеги нерсе';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Бөлүшүлгөн ок шаблону колдонуучу интерфейсинин мейкиндик же чабыттоо катнашы бар элементтерин өзгөртүү үчүн колдонулат. Бул шаблон x, y, же z огунда элементтердин арасындагы байланышты күчүнө киргизүү үчүн, бөлүшүлгөн трансформацияны колдонот.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Бөлүшүлгөн x-огу';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'АРТКА';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'КИЙИНКИ';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Курстарыңызды жөнөкөйлөтүңүз';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Таңылган категориялар түрмөгүңүздө топтор катары көрсөтүлөт. Муну кийин каалаган убакта өзгөртүп алсаңыз болот.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Өнөр жана устачылык';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Ишкердик';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Иллюстрация';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Жасалгалоо';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Кулинария';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Таңылган';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle =>
+      'Жалгыздан көрсөтүлүүдө';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Салам, David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Аккаунтуңуз менен кириңиз';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'Электрондук почта дареги же телефон номери';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'ЭЛЕКТРОНДУК ПОЧТА ДАРЕГИН УНУТУП КАЛДЫҢЫЗБЫ?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'АККАУНТ ТҮЗҮҮ';
+
+  @override
+  String get demoSharedYAxisTitle => 'Бөлүшүлгөн y-огу';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 альбом';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'А-Я';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Акыркы ойнотулгандар';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Альбом';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Аткаруучу';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'мүн';
+
+  @override
+  String get demoSharedZAxisTitle => 'Бөлүшүлгөн z-огу';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Жөндөөлөр';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Бургер';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Бургердин рецепти';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Сэндвич';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Сэндвичтин рецепти';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Десерт';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Десерттин рецепти';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Креветка';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Креветкадан жасалган тамактын рецепти';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Краб';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Крабдан жасалган тамактын рецепти';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle =>
+      'Уй этинен жасалган сэндвич';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Уй этинен жасалган сэндвичтин рецепти';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Сакталган рецепттер';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Профиль';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Билдирмелер';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Купуялык';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Жардам';
+
+  @override
+  String get demoFadeThroughTitle => 'Ортосунан баштап бозоруу';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Ортосунан баштап бозоруу шаблону колдонуучу интерфейсинин бири-бирине болгон күчтүү байланышы жок элеметтерин өзгөртүү үчүн колдонулат.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Альбомдор';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Фото';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Издөө';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 сүрөттөр';
+
+  @override
+  String get demoFadeScaleTitle => 'Бозоруу';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Бозоруу шаблону экрандын чегинин ичиндеги колдонуучу интерфейсинин кирүүчү же чыгуучу элементтери үчүн колдонулат. Мисалы, экрандын борборундагы өңү бозоруп барып көрүнбөй калган диалог.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'МОДАЛДЫК ДИАЛОГДУ КӨРСӨТҮҮ';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'КАБ\'ДЫ КӨРСӨТҮҮ';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'КАБ\'ДЫ ЖАШЫРУУ';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Шашылыш билдирүү диалогу';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ЖОККО ЧЫГАРУУ';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'ӨЧҮРҮҮ';
+
+  @override
   String get demoColorsTitle => 'Түстөр';
 
   @override

@@ -991,6 +991,243 @@ class GalleryLocalizationsHe extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'קוד אימות';
 
   @override
+  String get demoMotionTitle => 'צילום תנועה';
+
+  @override
+  String get demoMotionSubtitle => 'כל דפוסי המעבר המוגדרים מראש';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'טרנספורמציה של קונטיינר';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'דפוס הטרנספורמציה של הקונטיינר תוכנן למעברים בין רכיבי ממשק משתמש שמכילים קונטיינר. דפוס זה יוצר חיבור גלוי בין שני רכיבי ממשק משתמש';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle =>
+      'מצב \'להפוך לשקוף בהדרגה\'';
+
+  @override
+  String get demoContainerTransformTypeFade => 'להפוך לשקוף בהדרגה';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'להפוך לשקוף בהדרגה';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'שם';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'טקסט משני';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'משני';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'דף הפרטים';
+
+  @override
+  String get demoMotionListTileTitle => 'פריט ברשימה';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'דפוס הציר המשותף משמש למעברים בין רכיבי ממשק משתמש עם קשר מרחבי או קשרי ניווט. דפוס זה משתמש בטרנספורמציה משותפת בציר x, ‏y או z כדי לשפר את הקשר בין הרכיבים.';
+
+  @override
+  String get demoSharedXAxisTitle => 'ציר x משותף';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'חזרה';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'הבא';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'לפשט את הקורסים שלכם';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'קטגוריות מקובצות מופיעות כקבוצות בפיד שלכם. אפשר תמיד לשנות את ההגדרה הזו בעתיד.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'יצירה ומלאכה';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'עסקים';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'איור';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'עיצוב';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'בישול';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'חלק מחבילה';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'מוצגות בנפרד';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'שלום David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText =>
+      'יש להיכנס באמצעות החשבון שלך';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel => 'אימייל או מספר טלפון';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'שכחת את כתובת האימייל?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'צור חשבון';
+
+  @override
+  String get demoSharedYAxisTitle => 'ציר y משותף';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 אלבומים';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'א\'-ת\'';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'הושמעו לאחרונה';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'אלבום';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'אמן';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'דקה';
+
+  @override
+  String get demoSharedZAxisTitle => 'ציר z משותף';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'הגדרות';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'המבורגר';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'מתכון להמבורגר';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'סנדוויץ\'';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'מתכון לסנדוויץ\'';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'קינוח';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'מתכון לקינוח';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'חסילון';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'מתכון לצלחת חסילונים';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'סרטן';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription => 'מתכון לצלחת סרטנים';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'סנדוויץ\' בקר';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'מתכון לסנדוויץ\' בקר';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'מתכונים שמורים';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'פרופיל';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'הודעות';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'פרטיות';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'עזרה';
+
+  @override
+  String get demoFadeThroughTitle => 'להפוך לשקוף בהדרגה';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'הדפוס \'להפוך לשקוף בהדרגה\' משמש למעברים בין רכיבי ממשק משתמש שאין ביניהם קשר חזק.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'אלבומים';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'תמונות';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'חיפוש';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 תמונות';
+
+  @override
+  String get demoFadeScaleTitle => 'להפוך לשקוף בהדרגה';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'הדפוס \'להפוך לשקוף בהדרגה\' משמש לרכיבי ממשק משתמש שנכנסים ממסגרת גבולות המסך או נכנסים אליהם, למשל תיבת דו-שיח שמתעמעמת במרכז המסך.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'הצגת מודאל';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'הצגת FAB';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'הסתרת FAB';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'תיבת דו-שיח של התראה';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ביטול';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'סגירה';
+
+  @override
   String get demoColorsTitle => 'צבעים';
 
   @override

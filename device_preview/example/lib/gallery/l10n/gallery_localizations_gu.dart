@@ -91,7 +91,7 @@ class GalleryLocalizationsGu extends GalleryLocalizations {
   String get cardsDemoTravelDestinationDescription3 => 'મંદિરો';
 
   @override
-  String get homeHeaderGallery => 'ગૅલેરી';
+  String get homeHeaderGallery => 'Gallery';
 
   @override
   String get homeHeaderCategories => 'કૅટેગરી';
@@ -972,7 +972,7 @@ class GalleryLocalizationsGu extends GalleryLocalizations {
   String get cupertinoTabBarHomeTab => 'હોમ';
 
   @override
-  String get cupertinoTabBarChatTab => 'ચૅટ';
+  String get cupertinoTabBarChatTab => 'Chat';
 
   @override
   String get cupertinoTabBarProfileTab => 'પ્રોફાઇલ';
@@ -989,6 +989,240 @@ class GalleryLocalizationsGu extends GalleryLocalizations {
 
   @override
   String get demoCupertinoTextFieldPIN => 'પિન';
+
+  @override
+  String get demoMotionTitle => 'મોશન';
+
+  @override
+  String get demoMotionSubtitle => 'પૂર્વવ્યાખ્યાયિત ટ્રાંઝિશનની બધી જ પૅટર્ન';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'કન્ટેનર ટ્રાંસ્ફોર્મ';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'કન્ટેનર ટ્રાંસ્ફોર્મ પૅટર્નની રચના કન્ટેનર સમાવતા UI ઘટકોની વચ્ચે ટ્રાંઝિશન માટે થઈ છે. આ પૅટર્ન બે UI ઘટકોની વચ્ચે એક દેખાતું કનેક્શન બનાવે છે';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'ઝાંખો મોડ';
+
+  @override
+  String get demoContainerTransformTypeFade => 'ઝાંખો';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'ફેડ થ્રૂ';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'શીર્ષક';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'ગૌણ ટેક્સ્ટ';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'ગૌણ';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'વિગતોનું પેજ';
+
+  @override
+  String get demoMotionListTileTitle => 'સૂચિ આઇટમ';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'શેર કરેલી અક્ષ પૅટર્નનો ઉપયોગ તેવા UI ઘટકોની વચ્ચે ટ્રાંઝિશન માટે થાય છે કે જેનો અંતર સંબંધી અથવા નૅવિગેશન સંબંધી સંબંધ હોય છે. આ પૅટર્ન ઘટકોની વચ્ચેના સંબંધને વધુ મજબૂત બનાવવા માટે x, y અથવા z અક્ષ પરના શેર કરેલા ટ્રાંસ્ફોર્મેશનનો ઉપયોગ કરે છે.';
+
+  @override
+  String get demoSharedXAxisTitle => 'શેર કરેલા x-અક્ષ';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'પાછળ';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'આગળ';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'તમારા કોર્સને સુવ્યવસ્થિત કરો';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'બંડલ બનાવેલી કૅટેગરી તમારા ફીડમાં ગ્રૂપ તરીકે દેખાય છે. તમે આને પછીથી ગમે-ત્યારે બદલી શકો છો.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'કળા અને હસ્તકળા';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'વ્યવસાય';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'ઉદાહરણ';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'ડિઝાઇન';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'રસોઈ';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'બંડલ કરેલા';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'વ્યક્તિગત રીતે બતાવેલ';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'નમસ્તે David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'તમારા એકાઉન્ટથી સાઇન ઇન કરો';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel => 'ઇમેઇલ અથવા ફોન નંબર';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'ઇમેઇલ ભૂલી ગયાં છો?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'એકાઉન્ટ બનાવો';
+
+  @override
+  String get demoSharedYAxisTitle => 'શેર કરેલા y-અક્ષ';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 આલ્બમ';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'તાજેતરમાં ચલાવેલા';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'આલ્બમ';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'કલાકાર';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'મિનિટ';
+
+  @override
+  String get demoSharedZAxisTitle => 'શેર કરેલા z-અક્ષ';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'સેટિંગ';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'બર્ગર';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'બર્ગરની રૅસિપિ';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'સૅન્ડવિચ';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'સૅન્ડવિચની રૅસિપિ';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'ડેઝર્ટ';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'ડેઝર્ટની રૅસિપિ';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'ઝીંગા';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription => 'ઝીંગાની રૅસિપિ';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'કરચલા';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription => 'કરચલાની રૅસિપિ';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'બીફ સૅન્ડવિચ';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'બીફ સૅન્ડવિચની રૅસિપિ';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'સાચવેલી રૅસિપિ';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'પ્રોફાઇલ';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'નોટિફિકેશન';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'પ્રાઇવસી';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'સહાય';
+
+  @override
+  String get demoFadeThroughTitle => 'ફેડ થ્રૂ';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'ફેડ થ્રૂ પૅટર્નનો ઉપયોગ તેવા UI ઘટકોની વચ્ચે ટ્રાંઝિશન માટે થાય છે કે જેનો એકબીજાની સાથે મજબૂત સંબંધ હોતો નથી.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'આલ્બમ';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'ફોટા';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'શોધ';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 ફોટા';
+
+  @override
+  String get demoFadeScaleTitle => 'ઝાંખો';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'ફેડ પૅટર્નનો ઉપયોગ તેવા UI ઘટકો માટે થાય છે કે જે સ્ક્રીનની સીમામાં અંદર જાય છે અથવા બહાર નીકળે છે, જેમ કે એક સંવાદ જે સ્ક્રીનના કેંદ્રમાં ફેડ થાય છે.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'મોડલ બતાવો';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'ફેબ બતાવો';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'ફેબ છુપાવો';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'ચેતવણી સંવાદ';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'રદ કરો';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'કાઢી નાખો';
 
   @override
   String get demoColorsTitle => 'રંગો';
@@ -1307,7 +1541,7 @@ class GalleryLocalizationsGu extends GalleryLocalizations {
   String get bottomNavigationCommentsTab => 'કૉમેન્ટ';
 
   @override
-  String get bottomNavigationCalendarTab => 'કૅલેન્ડર';
+  String get bottomNavigationCalendarTab => 'Calendar';
 
   @override
   String get bottomNavigationAccountTab => 'એકાઉન્ટ';

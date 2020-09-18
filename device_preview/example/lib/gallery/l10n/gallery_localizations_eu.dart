@@ -1002,6 +1002,253 @@ class GalleryLocalizationsEu extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN kodea';
 
   @override
+  String get demoMotionTitle => 'Mugimendua';
+
+  @override
+  String get demoMotionSubtitle =>
+      'Aurrez zehaztutako trantsizio-eredu guztiak';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Edukiontzien itxuraldaketa';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Edukiontzi bat daukaten erabiltzaile-interfazeen arteko trantsizioetarako diseinatuta dago edukiontzien itxuraldaketaren eredua. Ereduak ikusizko konexio bat sortzen du erabiltzaile-interfazeko bi elementuren artean.';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle =>
+      'Apurka desagertzearen modua';
+
+  @override
+  String get demoContainerTransformTypeFade => 'APURKA DESAGERTZEA';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough =>
+      'AGERTZEA ETA DESAGERTZEA';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Izena';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Bigarren lerroko testua';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Bigarrena';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Xehetasunen orria';
+
+  @override
+  String get demoMotionListTileTitle => 'Zerrendako elementua';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Harreman espaziala edo nabigazionala daukaten erabiltzaile-interfazeko elementuen arteko trantsizioetarako erabiltzen da partekatutako ardatzaren eredua. Eredu horrek X, Y edo Z ardatzaren itxuraldaketa partekatua erabiltzen du elementuen arteko harremana sendotzeko.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Partekatutako X ardatza';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'ATZERA';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'HURRENGOA';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle =>
+      'Sinplifikatu ikastaroen zerrendak';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Multzokatutako kategoriak talde gisa agertzen dira jarioan. Gero alda dezakezu hori.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Eskulanak';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Enpresa';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Ilustrazioa';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Diseinua';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Sukaldaritza';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Multzokatuta';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle =>
+      'Banaka erakutsiko dira';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Kaixo, David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Hasi saioa kontuarekin';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'Helbide elektronikoa edo telefono-zenbakia';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'HELBIDE ELEKTRONIKOA AHAZTU ZAIZU?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'SORTU KONTUA';
+
+  @override
+  String get demoSharedYAxisTitle => 'Partekatutako Y ardatza';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 album';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Erreproduzitutako azkenak';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Albuma';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Artista';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min';
+
+  @override
+  String get demoSharedZAxisTitle => 'Partekatutako Z ardatza';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Ezarpenak';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Hanburgesa';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription =>
+      'Hanburgesa baten errezeta';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Ogitartekoa';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription =>
+      'Ogitarteko baten errezeta';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Postrea';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Postre baten errezeta';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Izkira';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Izkira-plater baten errezeta';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Karramarroa';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Karramarro-plater baten errezeta';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Behiki-ogitartekoa';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Behiki-ogitarteko baten errezeta';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Gordetako errezetak';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profila';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Jakinarazpenak';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Pribatutasuna';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Laguntza';
+
+  @override
+  String get demoFadeThroughTitle => 'Agertzea eta desagertzea';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Beren artean harreman handirik ez daukaten erabiltzaile-interfazeko elementuen arteko trantsizioetarako erabiltzen da agertzea eta desagertzearen eredua.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Albumak';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Argazkiak';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Bilatu';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 argazki';
+
+  @override
+  String get demoFadeScaleTitle => 'Apurka desagertzea';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Pantailaren ertzean sartzen edo ertzetik ateratzen diren erabiltzaile-interfazeko elementuetarako erabiltzen da apurka desagertzearen eredua; adibidez, pantailaren erdialdean apurka desagertzen den leiho bat.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'ERAKUTSI MODALA';
+
+  @override
+  String get demoFadeScaleShowFabButton =>
+      'ERAKUTSI EKINTZA-BOTOI GAINERAKORRA';
+
+  @override
+  String get demoFadeScaleHideFabButton =>
+      'EZKUTATU EKINTZA-BOTOI GAINERAKORRA';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Alerta-leihoa';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'UTZI';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'BAZTERTU';
+
+  @override
   String get demoColorsTitle => 'Koloreak';
 
   @override
@@ -1184,14 +1431,14 @@ class GalleryLocalizationsEu extends GalleryLocalizations {
 
   @override
   String get demoSelectionControlsSubtitle =>
-      'Kontrol-laukiak, aukera-botoiak eta etengailuak';
+      'Koadroak, aukera-botoiak eta etengailuak';
 
   @override
-  String get demoSelectionControlsCheckboxTitle => 'Kontrol-laukia';
+  String get demoSelectionControlsCheckboxTitle => 'Koadroa';
 
   @override
   String get demoSelectionControlsCheckboxDescription =>
-      'Kontrol-laukiei esker, multzo bereko aukera bat baino gehiago hauta ditzake erabiltzaileak. Kontrol-laukiek Egia eta Gezurra balioak izan ohi dituzte. Hiru aukerakoak badira, aldiz, balio nulua izan ohi dute bi horiez gain.';
+      'Koadroei esker, multzo bereko aukera bat baino gehiago hauta ditzake erabiltzaileak. Koadroek Egia eta Gezurra balioak izan ohi dituzte. Hiru aukerakoak badira, aldiz, balio nulua izan ohi dute bi horiez gain.';
 
   @override
   String get demoSelectionControlsRadioTitle => 'Aukera-botoia';

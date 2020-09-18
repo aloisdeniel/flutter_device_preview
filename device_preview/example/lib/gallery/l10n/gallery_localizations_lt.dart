@@ -1008,6 +1008,245 @@ class GalleryLocalizationsLt extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN kodas';
 
   @override
+  String get demoMotionTitle => 'Judėjimas';
+
+  @override
+  String get demoMotionSubtitle =>
+      'Visi iš anksto nustatyti perkėlimo šablonai';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Sudėtinio rodinio transformavimas';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Sudėtinio rodinio transformavimo šablonas skirtas NS elementams, apimantiems sudėtinį rodinį, perkelti. Naudojant šį šabloną sukuriamas matomas dviejų NS elementų ryšys';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Išblukimo režimas';
+
+  @override
+  String get demoContainerTransformTypeFade => 'IŠBLUKIMAS';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'IŠBLUKIMAS';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Pavadinimas';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Antrinis tekstas';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Antrinis';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Puslapis „Išsami informacija“';
+
+  @override
+  String get demoMotionListTileTitle => 'Sąrašo elementas';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Bendrinamos ašies šablonas naudojamas NS elementams, susietiems erdviniais ar naršymo ryšiais, perkelti. Šis šablonas naudoja bendrinamą transformavimą x, y arba z ašyje elementų ryšiui sustiprinti.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Bendrinama x ašis';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'ATGAL';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'KITAS';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Supaprastinti kursai';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Kategorijų rinkiniai rodomi kaip grupės jūsų sklaidos kanale. Vėliau bet kada galėsite tai pakeisti.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Menai ir amatai';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Verslas';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Iliustracija';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Dizainas';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Kulinarija';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Sugrupuota';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Rodoma atskirai';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Sveiki, David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Prisijunkite prie paskyros';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'El. pašto adresas arba telefono numeris';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'PAMIRŠOTE EL. PAŠTO ADRESĄ?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'SUKURTI PASKYRĄ';
+
+  @override
+  String get demoSharedYAxisTitle => 'Bendrinama y ašis';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 albumai';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A–Ž';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Neseniai leista';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Albumas';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Atlikėjas';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min.';
+
+  @override
+  String get demoSharedZAxisTitle => 'Bendrinama z ašis';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Nustatymai';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Mėsainis';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Mėsainio receptas';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Sumuštinis';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Sumuštinio receptas';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Desertas';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Deserto receptas';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Krevetė';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Krevečių patiekalo receptas';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Krabas';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Krabų patiekalo receptas';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Sumuštinis su jautiena';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Sumuštinio su jautiena receptas';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Išsaugoti receptai';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profilis';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Pranešimai';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Privatumas';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Pagalba';
+
+  @override
+  String get demoFadeThroughTitle => 'Išblukimas';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Išblukimo šablonas naudojamas NS elementams, kurie nėra susieti tvirtais ryšiais, perkelti.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Albumai';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Nuotraukos';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Ieškoti';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 nuotraukos';
+
+  @override
+  String get demoFadeScaleTitle => 'Išblukimas';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Išblukimo šablonas naudojamas NS elementams, kurie patenka į ekrano ribas ar už jų, pvz., dialogo langui, kuris išblunka ekrano centre.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'RODYTI MODALINĮ';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'RODYTI „FAB“';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'SLĖPTI „FAB“';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Įspėjimo dialogo langas';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ATŠAUKTI';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'ATMESTI';
+
+  @override
   String get demoColorsTitle => 'Spalvos';
 
   @override

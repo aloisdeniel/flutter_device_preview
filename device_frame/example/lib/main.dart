@@ -1,8 +1,6 @@
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 
-import 'package:device_frame/src/svg/frame.dart';
-
 void main() {
   runApp(ExampleApp());
 }
@@ -17,15 +15,32 @@ class _ExampleAppState extends State<ExampleApp> {
   bool isDark = true;
   bool hasShadow = true;
   bool isKeyboard = false;
+  List<DeviceIdentifier> allDevices = [
+    ...Devices.ios.all,
+    ...Devices.android.all,
+    ...Devices.macos.all,
+    ...Devices.windows.all,
+  ];
   Orientation orientation = Orientation.portrait;
+  Widget _frame(DeviceIdentifier id) => Center(
+        child: DeviceFrame.identifier(
+          identifier: id,
+          isFrameVisible: hasShadow,
+          orientation: orientation,
+          screen: Container(
+            color: Colors.blue,
+            child: VirtualKeyboard(
+              isEnabled: isKeyboard,
+              child: FakeScreen(),
+            ),
+          ),
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     var style = isDark ? DeviceFrameStyle.dark() : DeviceFrameStyle.light();
-    if (!hasShadow) {
-      style = style.copyWith(
-        shadowColor: Colors.transparent,
-      );
-    }
+
     return DeviceFrameTheme(
       style: style,
       child: MaterialApp(
@@ -35,8 +50,7 @@ class _ExampleAppState extends State<ExampleApp> {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: DefaultTabController(
-          length:
-              1 + CupertinoDevice.values.length + AndroidDevice.values.length,
+          length: allDevices.length,
           child: Scaffold(
             backgroundColor: isDark ? Colors.white : Colors.black,
             appBar: AppBar(
@@ -80,82 +94,20 @@ class _ExampleAppState extends State<ExampleApp> {
               bottom: TabBar(
                 isScrollable: true,
                 tabs: [
-                  Tab(text: 'test'),
-                  ...CupertinoDevice.values.map(
-                    (d) => Tab(
-                      text: d.toString().replaceAll('$CupertinoDevice.', ''),
-                    ),
-                  ),
-                  ...AndroidDevice.values.map(
-                    (d) => Tab(
-                      text: d.toString().replaceAll('$AndroidDevice.', ''),
-                    ),
-                  ),
+                  ...allDevices.map((x) => Tab(text: '${x.type} ${x.name}')),
                 ],
               ),
             ),
             body: SafeArea(
-              child: TabBarView(
-                children: <Widget>[
-                  Center(
-                    child: SvgDeviceFrame.asset(
-                      platform: TargetPlatform.iOS,
-                      deviceName: '11pro',
-                      deviceType: 'iphone',
-                      orientation: orientation,
-                      screen: Container(
-                        color: Colors.blue,
-                        child: SafeArea(
-                          child: Container(
-                            color: Colors.red,
-                            child: Center(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Text('Left'),
-                                  Expanded(
-                                    child: Center(
-                                      child: Text(
-                                        'EXAMPLE',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topRight,
-                                    child: RaisedButton(
-                                      onPressed: () => print('tapped'),
-                                      child: Text(
-                                        'Right',
-                                        textAlign: TextAlign.end,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Builder(
+                  builder: (context) => AnimatedBuilder(
+                    animation: DefaultTabController.of(context),
+                    builder: (context, _) => _frame(
+                        allDevices[DefaultTabController.of(context).index]),
                   ),
-                  ...CupertinoDevice.values.map(
-                    (device) => CupertinoDeviceFrame(
-                      orientation: orientation,
-                      isKeyboardVisible: isKeyboard,
-                      device: device,
-                      child: FakeScreen(),
-                    ),
-                  ),
-                  ...AndroidDevice.values.map(
-                    (device) => AndroidDeviceFrame(
-                      orientation: orientation,
-                      isKeyboardVisible: isKeyboard,
-                      device: device,
-                      child: FakeScreen(),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ),
@@ -165,17 +117,38 @@ class _ExampleAppState extends State<ExampleApp> {
   }
 }
 
-class FakeScreen extends StatelessWidget {
+class FakeScreen extends StatefulWidget {
+  @override
+  _FakeScreenState createState() => _FakeScreenState();
+}
+
+class _FakeScreenState extends State<FakeScreen> {
+  bool isDelayEnded = false;
+
+  @override
+  void initState() {
+    Future.delayed(const Duration(seconds: 2)).then(
+      (value) => setState(
+        () => isDelayEnded = true,
+      ),
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final mediaQuery = MediaQuery.of(context);
+    final color =
+        theme.platform == TargetPlatform.iOS ? Colors.cyan : Colors.green;
     return Container(
-      color: theme.platform == TargetPlatform.iOS ? Colors.cyan : Colors.green,
-      child: AnimatedPadding(
-        duration: const Duration(milliseconds: 500),
-        padding: EdgeInsets.only(bottom: mediaQuery.viewInsets.bottom),
-        child: SafeArea(
+      color: color.shade300,
+      padding: mediaQuery.padding,
+      child: Container(
+        color: color,
+        child: AnimatedPadding(
+          duration: const Duration(milliseconds: 500),
+          padding: EdgeInsets.only(bottom: mediaQuery.viewInsets.bottom),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -184,6 +157,8 @@ class FakeScreen extends StatelessWidget {
               Text("PixelRatio: ${mediaQuery.devicePixelRatio}"),
               Text("Padding: ${mediaQuery.padding}"),
               Text("Insets: ${mediaQuery.viewInsets}"),
+              Text("ViewPadding: ${mediaQuery.viewPadding}"),
+              if (isDelayEnded) Text("---"),
             ],
           ),
         ),

@@ -1003,6 +1003,243 @@ class GalleryLocalizationsRo extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'Animație';
+
+  @override
+  String get demoMotionSubtitle => 'Toate modelele de tranziție predefinite';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Transformarea containerului';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Modelul cu transformarea containerului este creat pentru tranziții între elementele IU care includ un container. Acest model creează o legătură vizibilă între două elemente IU.';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle =>
+      'Modul Afișare gradată/Estompare';
+
+  @override
+  String get demoContainerTransformTypeFade => 'AFIȘARE GRADATĂ/ESTOMPARE';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'ÎNLOCUIRE GRADATĂ';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Titlu';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Text secundar';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Secundar';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Pagina cu detalii';
+
+  @override
+  String get demoMotionListTileTitle => 'Articol din listă';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Modelul cu axă comună este folosit pentru tranziții între elemente IU care au o relație spațială sau de navigare. Acest model folosește o transformare comună pe axa x, y, sau z pentru a evidenția legătura dintre elemente.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Axa x comună';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'ÎNAPOI';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'ÎNAINTE';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Optimizați traiectoriile';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Categoriile apar ca grupuri în feed. Puteți modifica oricând această opțiune.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Artă și artizanat';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Afaceri';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Ilustrații';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Design';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Culinar';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'În grup';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Afișate individual';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Bună ziua, David Park!';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Conectați-vă cu contul dvs.';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'Adresa de e-mail sau numărul de telefon';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'AȚI UITAT ADRESA DE E-MAIL?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'CREAȚI UN CONT';
+
+  @override
+  String get demoSharedYAxisTitle => 'Axa y comună';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 de albume';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A – Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Redate recent';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Album';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Artist';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min.';
+
+  @override
+  String get demoSharedZAxisTitle => 'Axa z comună';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Setări';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Burger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Rețetă de burger';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Sandviș';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Rețetă de sandviș';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Desert';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Rețetă de desert';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Creveți';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription => 'Rețetă cu creveți';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Crab';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription => 'Rețetă cu crab';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Sandviș cu vită';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Rețetă de sandviș cu vită';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Rețete salvate';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profil';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Notificări';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Confidențialitate';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Ajutor';
+
+  @override
+  String get demoFadeThroughTitle => 'Înlocuire gradată';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Modelul de înlocuire gradată este folosit pentru tranziții între elemente IU între care nu există o legătură strânsă.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Albume';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Fotografii';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Căutați';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 de fotografii';
+
+  @override
+  String get demoFadeScaleTitle => 'Afișare gradată/Estompare';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Modelul de afișare gradată/estompare este folosit pentru elemente IU care se afișează sau dispar în limitele ecranului, de exemplu, o casetă de dialog care dispare treptat în centrul ecranului.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'AFIȘAȚI MODALUL';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'AFIȘAȚI FAB';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'ASCUNDEȚI FAB';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Casetă de dialog de tip alertă';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ANULAȚI';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'RENUNȚAȚI';
+
+  @override
   String get demoColorsTitle => 'Culori';
 
   @override

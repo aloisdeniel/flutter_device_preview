@@ -998,6 +998,248 @@ class GalleryLocalizationsLv extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'Kustība';
+
+  @override
+  String get demoMotionSubtitle => 'Visas iepriekš definētās pārejas formas';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Konteinera pārveidošana';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Konteinera pārveidošana ir forma, kas paredzēta pārejai starp lietotāja saskarnes elementiem, kuros ir ietverti konteineri. Izmantojot šo pārejas formu, tiek izveidota redzama saikne starp diviem lietotāja saskarnes elementiem.';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle =>
+      'Pakāpeniskas parādīšanās/izzušanas režīms';
+
+  @override
+  String get demoContainerTransformTypeFade =>
+      'PAKĀPENISKA PARĀDĪŠANĀS/IZZUŠANA';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough =>
+      'PAKĀPENISKA IZZUŠANA UN PARĀDĪŠANĀS';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Virsraksts';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Sekundārais teksts';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Sekundārais';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Detalizētās informācijas lapa';
+
+  @override
+  String get demoMotionListTileTitle => 'Saraksta vienums';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Kopīgās ass formu izmanto pārejām starp lietotāja saskarnes elementiem, kas ir savstarpēji saistīti telpiskās vai navigācijas attiecībās. Šai pārejas formai tiek izmantota kopīga pārveidošana pa x, y vai z asi, lai uzsvērtu attiecības starp elementiem.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Kopīga x ass';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'ATPAKAĻ';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'TĀLĀK';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Kursu efektivitātes uzlabošana';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Kategorijas, kas iekļautas komplektos, plūsmā tiek rādītas pa grupām. To jebkurā laikā varēsiet mainīt.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Māksla un amatniecība';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Uzņēmējdarbība';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Ilustrācija';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Dizains';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Kulinārija';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Iekļauts komplektā';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Tiek rādīts atsevišķi';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Labdien, David Park!';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Pierakstīties kontā';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'E-pasta adrese vai tālruņa numurs';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'VAI AIZMIRSĀT E-PASTA ADRESI?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'IZVEIDOT KONTU';
+
+  @override
+  String get demoSharedYAxisTitle => 'Kopīga y ass';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 albumi';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A–Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Nesen atskaņots';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Albums';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Izpildītājs';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min';
+
+  @override
+  String get demoSharedZAxisTitle => 'Kopīga z ass';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Iestatījumi';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Burgers';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Burgera recepte';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Sviestmaize';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Sviestmaizes recepte';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Deserts';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Deserta recepte';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Garneles';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Garneļu plates recepte';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Krabji';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Krabju plates recepte';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle =>
+      'Sviestmaize ar liellopu gaļu';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Liellopu gaļas sviestmaizes recepte';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Saglabātās receptes';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profils';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Paziņojumi';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Konfidencialitāte';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Palīdzība';
+
+  @override
+  String get demoFadeThroughTitle => 'Pakāpeniska izzušana un parādīšanās';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Pakāpeniskas izzušanas un parādīšanās formu izmanto pārejām starp lietotāja saskarnes elementiem, kas nav cieši savstarpēji saistīti.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Albumi';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Fotoattēli';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Meklēt';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 fotoattēli';
+
+  @override
+  String get demoFadeScaleTitle => 'Pakāpeniska parādīšanās/izzušana';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Pakāpeniskas parādīšanās/izzušanas formu izmanto lietotāja saskarnes elementiem, kas parādās vai pazūd ekrāna robežās, piemēram, dialoglodziņam, kas pakāpeniski parādās ekrāna vidū.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'RĀDĪT MODĀLO LODZIŅU';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'RĀDĪT PELDOŠO DARBĪBAS POGU';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'PASLĒPT PELDOŠO DARBĪBAS POGU';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Brīdinājuma dialoglodziņš';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ATCELT';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'ATMEST';
+
+  @override
   String get demoColorsTitle => 'Krāsas';
 
   @override

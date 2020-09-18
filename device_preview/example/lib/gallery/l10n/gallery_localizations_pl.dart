@@ -1007,6 +1007,241 @@ class GalleryLocalizationsPl extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'Kod PIN';
 
   @override
+  String get demoMotionTitle => 'Animacja';
+
+  @override
+  String get demoMotionSubtitle => 'Wszystkie predefiniowane wzorce przejść';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Przekształcenie kontenera';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Wzorzec przekształcenia kontenera jest przeznaczony dla przejść między elementami interfejsu, które zawierają kontener. Tworzy on widoczne połączenie między dwoma elementami interfejsu.';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Tryb zanikania';
+
+  @override
+  String get demoContainerTransformTypeFade => 'ZANIKANIE';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'PRZENIKANIE';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Tytuł';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Tekst dodatkowy';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Dodatkowy';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Strona z informacjami';
+
+  @override
+  String get demoMotionListTileTitle => 'Element listy';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Wzorzec wspólnej osi jest przeznaczony dla przejść między elementami interfejsu, między którymi istnieje związek przestrzenny lub nawigacyjny. Ten wzorzec używa wspólnej transformacji na osi x, y lub z do wzmocnienia związku między elementami.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Wspólna oś x';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'WSTECZ';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'DALEJ';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Usprawnij swoje kursy';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Na Twojej karcie pakiety kategorii są widoczne jako grupy. Później możesz zmienić to ustawienie.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Sztuka i rzemiosło';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Firma';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Ilustracja';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Projektowanie i design';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Kuchnia';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'W pakiecie';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Wyświetlane osobno';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Cześć,';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Zaloguj się na swoje konto';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel => 'E-mail lub numer telefonu';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'NIE PAMIĘTASZ ADRESU?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'UTWÓRZ KONTO';
+
+  @override
+  String get demoSharedYAxisTitle => 'Wspólna oś y';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 albumów';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A–Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Ostatnio odtwarzane';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Album';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Wykonawca';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min';
+
+  @override
+  String get demoSharedZAxisTitle => 'Wspólna oś z';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Ustawienia';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Burger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Przepis na burgera';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Kanapka';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Przepis na kanapkę';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Deser';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Przepis na deser';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Krewetka';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Przepis na krewetki';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Krab';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription => 'Przepis na kraba';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Kanapka z wołowiną';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Przepis na kanapkę z wołowiną';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Zapisane przepisy';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profil';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Powiadomienia';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Prywatność';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Pomoc';
+
+  @override
+  String get demoFadeThroughTitle => 'Przenikanie';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Wzorzec Przenikanie jest przeznaczony dla przejść między elementami interfejsu, między którymi nie ma wyraźnego związku.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Albumy';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Zdjęcia';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Szukaj';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 zdjęcia';
+
+  @override
+  String get demoFadeScaleTitle => 'Zanikanie';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Wzorzec Zanikanie jest przeznaczony dla elementów interfejsu, które pojawiają się lub znikają na ekranie, na przykład okien dialogowych pojawiających się na środku ekranu.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'POKAŻ MODALNE';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'POKAŻ FAB';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'UKRYJ FAB';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Okno alertu';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ANULUJ';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'ODRZUĆ';
+
+  @override
   String get demoColorsTitle => 'Kolory';
 
   @override

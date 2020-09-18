@@ -989,6 +989,244 @@ class GalleryLocalizationsIs extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'Hreyfing';
+
+  @override
+  String get demoMotionSubtitle => 'Öll forstillt umbreytingarmynstur';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Rammaumbreyting';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Rammaumbreytingarmynstur er hannað fyrir umbreytingu notendaviðmótseininga sem innihalda ramma. Þetta mynstur býr til sýnilega tengingu milli tveggja notendaviðmótseininga';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Dofnunarstilling';
+
+  @override
+  String get demoContainerTransformTypeFade => 'DOFNA';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'DOFNUN Í GEGN';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Titill';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Aukatexti';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Auka';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Upplýsingasíða';
+
+  @override
+  String get demoMotionListTileTitle => 'Listaatriði';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Sameiginlegt mynstur um ás er notað fyrir umbreytingu milli notendaviðmótseininga sem eru með rúmfræðileg tengsl eða flettingartengsl. Þetta mynstur notar sameiginlega umbreytingu á x, y eða z ás til að styrkja tengslin milli eininga.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Deildur x-ás';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'TIL BAKA';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'ÁFRAM';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle =>
+      'Straumlínulagaðu námskeiðin þín';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Flokkar í pakka birtast sem hópar í straumnum þínum. Þú getur alltaf breytt þessu síðar.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'List og handverk';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Fyrirtæki';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Teikning';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Hönnun';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Matreiðsla';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Í pakka';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Birtast sér';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Hæ David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText =>
+      'Skráðu þig inn með reikningnum þínum';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel => 'Netfang eða símanúmer';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'GLEYMT NETFANG?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'STOFNA REIKNING';
+
+  @override
+  String get demoSharedYAxisTitle => 'Deildur y-ás';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 plötur';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A–Ö';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Nýlega spilað';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Plata';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Flytjandi';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'mín.';
+
+  @override
+  String get demoSharedZAxisTitle => 'Deildur z-ás';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Stillingar';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Hamborgari';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Hamborgarauppskrift';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Samloka';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Samlokuuppskrift';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Eftirréttur';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Eftirréttaruppskrift';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Rækja';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Uppskrift að rækjurétti';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Krabbi';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Uppskrift að krabbarétti';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Kjötsamloka';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Kjötsamlokuuppskrift';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Vistaðar uppskriftir';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Prófíll';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Tilkynningar';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Persónuvernd';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Hjálp';
+
+  @override
+  String get demoFadeThroughTitle => 'Dofnun í gegn';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Mynstur með dofnun í gegn er notað fyrir umbreytingu milli notendaviðmótseininga sem hafa ekki sterk tengsl hvor við aðra.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Plötur';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Myndir';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Leit';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 myndir';
+
+  @override
+  String get demoFadeScaleTitle => 'Dofna';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Dofnunarmynstur er notað fyrir notandaviðmótseiningar sem opnast eða lokast innan skjásins, t.d. gluggi sem dofnar á miðju skjásins.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'SÝNA VIÐVÖRUNARGLUGGA';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'SÝNA FLJÓTANDI AÐGERÐAHNAPPA';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'FELA FLJÓTANDI AÐGERÐAHNAPPA';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Viðvörunargluggi';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'HÆTTA VIÐ';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'FLEYGJA';
+
+  @override
   String get demoColorsTitle => 'Litir';
 
   @override

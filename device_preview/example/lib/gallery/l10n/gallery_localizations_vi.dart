@@ -23,7 +23,7 @@ class GalleryLocalizationsVi extends GalleryLocalizations {
 
   @override
   String get bannerDemoText =>
-      'Mật khẩu của bạn đã được cập nhật trên thiết bị khác. Vui lòng đăng nhập lại.';
+      'Mật khẩu của bạn đã được cập nhật trên thiết bị kia. Vui lòng đăng nhập lại.';
 
   @override
   String get bannerDemoResetText => 'Đặt lại biểu ngữ';
@@ -998,6 +998,246 @@ class GalleryLocalizationsVi extends GalleryLocalizations {
 
   @override
   String get demoCupertinoTextFieldPIN => 'Mã PIN';
+
+  @override
+  String get demoMotionTitle => 'Chuyển động';
+
+  @override
+  String get demoMotionSubtitle => 'Tất cả mẫu chuyển đổi định sẵn';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Biến đổi vùng chứa';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Mẫu biến đổi vùng chứa được thiết kế cho quá trình chuyển đổi giữa các thành phần giao diện người dùng có vùng chứa. Mẫu này tạo ra sự kết nối dễ thấy giữa 2 thành phần giao diện người dùng';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Chế độ làm mờ';
+
+  @override
+  String get demoContainerTransformTypeFade => 'LÀM MỜ';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'CHUYỂN MỜ';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Tiêu đề';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Văn bản thứ cấp';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Thứ cấp';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Trang chi tiết';
+
+  @override
+  String get demoMotionListTileTitle => 'Mục danh sách';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Mẫu trục chung được dùng cho quá trình chuyển đổi giữa các thành phần giao diện người dùng có mối quan hệ về hướng hoặc không gian. Mẫu này dùng sự biến đổi chung trên trục x, y hoặc z để củng cố mối quan hệ giữa các thành phần.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Trục x chung';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'QUAY LẠI';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'TIẾP THEO';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Tinh giản các khóa học';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Các danh mục theo gói sẽ xuất hiện ở dạng nhóm trong nguồn cấp dữ liệu của bạn. Bạn luôn có thể thay đổi tùy chọn này vào lúc khác.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Thủ công và mỹ nghệ';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Kinh doanh';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Minh họa';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Thiết kế';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Ẩm thực';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Theo gói';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Hiển thị riêng lẻ';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Xin chào David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText =>
+      'Đăng nhập bằng tài khoản của bạn';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel => 'Email hoặc số điện thoại';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'BẠN QUÊN EMAIL?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'TẠO TÀI KHOẢN';
+
+  @override
+  String get demoSharedYAxisTitle => 'Trục y chung';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 album';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Phát gần đây';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Album';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Nghệ sĩ';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'phút';
+
+  @override
+  String get demoSharedZAxisTitle => 'Trục z chung';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Cài đặt';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Bánh mì kẹp';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription =>
+      'Công thức làm bánh mì kẹp';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Bánh sandwich';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription =>
+      'Công thức làm bánh sandwich';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Món tráng miệng';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription =>
+      'Công thức làm món tráng miệng';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Tôm';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Công thức làm món tôm';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Cua';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Công thức làm món cua';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Bánh sandwich bò';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Công thức làm bánh sandwich bò';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Công thức nấu ăn đã lưu';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Hồ sơ';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Thông báo';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Quyền riêng tư';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Trợ giúp';
+
+  @override
+  String get demoFadeThroughTitle => 'Chuyển mờ';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Mẫu chuyển mờ được dùng cho quá trình chuyển đổi giữa các thành phần giao diện người dùng không có mối quan hệ chặt chẽ với nhau.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Album';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Ảnh';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Tìm kiếm';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 ảnh';
+
+  @override
+  String get demoFadeScaleTitle => 'Làm mờ';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Mẫu làm mờ được dùng cho các thành phần giao diện người dùng đi vào hoặc thoát ra trong phạm vi màn hình, chẳng hạn như một hộp thoại mờ dần ở giữa màn hình.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'HIỆN HỘP THOẠI';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'HIỆN NÚT HÀNH ĐỘNG NỔI';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'ẨN NÚT HÀNH ĐỘNG NỔI';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Hộp thoại thông báo';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'HỦY';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'HỦY';
 
   @override
   String get demoColorsTitle => 'Màu';

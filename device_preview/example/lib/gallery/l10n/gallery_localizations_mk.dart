@@ -1002,6 +1002,247 @@ class GalleryLocalizationsMk extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'Движење';
+
+  @override
+  String get demoMotionSubtitle =>
+      'Сите однапред дефинирани шеми на транзиција';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Трансформирање контејнер';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Шемата за траснформирање контајнер е дизајнирана за транзиции меѓу елементи на корисничкиот интерфејс што вклучуваат контејнер. Шемава создава видлива врска помеѓу два елемента на корисничкиот интерфејс';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle =>
+      'Режим на избледување';
+
+  @override
+  String get demoContainerTransformTypeFade => 'ИЗБЛЕДУВАЊЕ';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'ИЗБЛЕДУВАЊЕ НИЗ СИТЕ';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Наслов';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Секундарен текст';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Секундарен';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Страница со детали';
+
+  @override
+  String get demoMotionListTileTitle => 'Ставка во список';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Шемата на споделена оска се користи за транзиции меѓу елементи на корисничкиот интерфејс што имаат просторна или навигациска врска. Шемава користи споделена трансформација на оските x, y или z за да ја засили врската помеѓу елементите.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Споделена x-оска';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'НАЗАД';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'СЛЕДНО';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Насочете ги вашите курсеви';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Категориите во пакет се појавуваат како групи во вашата активност. Секогаш можете да го промените ова подоцна.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Уметност и ракотворби';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Бизнис';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Илустрација';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Дизајн';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Кулинарство';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Во пакет';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Прикажани засебно';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Здраво David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText =>
+      'Најавете се со вашата сметка';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'Е-пошта или телефонски број';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'ЈА ЗАБОРАВИВТЕ ЛИ Е-ПОШТАТА?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'СОЗДАЈ СМЕТКА';
+
+  @override
+  String get demoSharedYAxisTitle => 'Споделена y-оска';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 албуми';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Ш';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Неодамна пуштени';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Албум';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Изведувач';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'мин.';
+
+  @override
+  String get demoSharedZAxisTitle => 'Споделена z-оска';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Поставки';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Хамбургер';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Рецепт за хамбургер';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Сендвич';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Рецепт за сендвич';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Десерт';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Рецепт за десерт';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Ракчиња';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Рецепт за порција ракчиња';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Рак';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Рецепт за порција рак';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Сендвич со телешко';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Рецепт за сендвич со телешко';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Зачувани рецепти';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Профил';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Известувања';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Приватност';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Помош';
+
+  @override
+  String get demoFadeThroughTitle => 'Избледување низ сите';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Шемата на избледување низ сите се користи за транзиции меѓу елементи на корисничкиот интерфејс што не се цврсто поврзани.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Албуми';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Фотографии';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Пребарување';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 фотографии';
+
+  @override
+  String get demoFadeScaleTitle => 'Избледување';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Шемата на избледување се користи за елементи на корисничкиот интерфејс што влегуваат или излегуваат од границите на екранот, како дијалог што избледува во центарот на екранот.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'ПРИКАЖИ МОДАЛНИ';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'ПРИКАЖИ ЛЕБДЕЧКО КОПЧЕ ЗА ДЕЈСТВО';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'СОКРИЈ ЛЕБДЕЧКО КОПЧЕ ЗА ДЕЈСТВО';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Дијалог на предупредување';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ОТКАЖИ';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'ОТФРЛИ';
+
+  @override
   String get demoColorsTitle => 'Бои';
 
   @override

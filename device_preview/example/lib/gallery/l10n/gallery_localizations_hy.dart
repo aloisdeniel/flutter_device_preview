@@ -1004,6 +1004,248 @@ class GalleryLocalizationsHy extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN կոդ';
 
   @override
+  String get demoMotionTitle => 'Շարժում';
+
+  @override
+  String get demoMotionSubtitle => 'Բոլոր ստանդարտ անցումները';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Զետեղարանի փոխակերպում';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Զետեղարանի փոխակերպումը նախատեսված է միջերեսի՝ զետեղարան պարունակող տարրերի միջև անցումների համար։ Այս էֆեկտը տեսանելի կապ է հաստատում միջերեսի երկու տարրերի միջև։';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle =>
+      'Սահուն հայտնվելու կամ անհետանալու ռեժիմ';
+
+  @override
+  String get demoContainerTransformTypeFade =>
+      'ՍԱՀՈՒՆ ՀԱՅՏՆՎՈՒՄ ԿԱՄ ԱՆՀԵՏԱՑՈՒՄ';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'ՍԱՀՈՒՆ ԱՆՑՈՒՄ';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Անվանում';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Լրացուցիչ տեքստ';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Լրացուցիչ';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Մանրամասների էջ';
+
+  @override
+  String get demoMotionListTileTitle => 'Ցանկի կետ';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Ընդհանուր առանցքի էֆեկտը օգտագործվում է միջերեսի այն տարրերի միջև անցում կատարելու ամար, որոնք կարծես թե տեղակայված են մեկ առանցքի վրա։ Տարրերի միջև կապն ամրապնդելու համար օգտագործվում է համատեղ փոխակերպումը X, Y կամ Z առանցքներով։';
+
+  @override
+  String get demoSharedXAxisTitle => 'Ընդհանուր X առանցք';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'ՀԵՏ';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'ԱՌԱՋ';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Կանոնակարգեք ձեր դասընթացները';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Կատեգորիաների փաթեթները ֆիդում հայտնվում են խմբերի տեսքով։ Դուք ցանկացած ժամանակ կարող եք փոխել սա։';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Արվեստ և արհեստներ';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Բիզնես';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Պատկերազարդում';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Դիզայն';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Խոհարարություն';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Փաթեթով';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Ցուցադրված է առանձին';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Ողջույն, David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Մտեք ձեր հաշիվ';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'Էլ․ հասցե կամ հեռախոսահամար';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'ԷԼ․ ՀԱՍՑԵՆ ՄՈՌԱՑԵ՞Լ ԵՔ';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'ՍՏԵՂԾԵԼ ՀԱՇԻՎ';
+
+  @override
+  String get demoSharedYAxisTitle => 'Ընդհանուր Y առանցք';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 ալբոմ';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A–Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Վերջերս նվագարկվածները';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Ալբոմ';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Կատարող';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'ր';
+
+  @override
+  String get demoSharedZAxisTitle => 'Ընդհանուր Z առանցք';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Կարգավորումներ';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Բուրգեր';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Բուրգերի բաղադրատոմս';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Սենդվիչ';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Սենդվիչի բաղադրատոմս';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Աղանդեր';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Աղանդերի բաղադրատոմս';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Ծովախեցգետին';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Ծովախեցգետնով ուտեստի բաղադրատոմս';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Խաչափառ';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Խաչափառով ուտեստի բաղադրատոմս';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Տավարի մսով սենդվիչ';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Տավարի մսով սենդվիչի բաղադրատոմս';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Պահված բաղադրատոմսեր';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Պրոֆիլ';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Ծանուցումներ';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Գաղտնիություն';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Օգնություն';
+
+  @override
+  String get demoFadeThroughTitle => 'Սահուն անցում';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Սահուն անցումն օգտագործվում է միջերեսի այն տարրերի միջև անցում կատարելու համար, որոնց միջև սերտ կապ չկա։';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Ալբոմներ';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Լուսանկարներ';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Որոնում';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 լուսանկար';
+
+  @override
+  String get demoFadeScaleTitle => 'Սահուն հայտնվում կամ անհետացում';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Այս էֆեկտն օգտագործվում է միջերեսի այն տարրերի համար, որոնք հայտնվում կամ անհետանում են էկրանի սահմաններում։ Օրինակ՝ երկխոսության պատուհանը, որը հայտնվում, այնուհետև անհետանում է էկրանի կենտրոնում։';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'ՑՈՒՑԱԴՐԵԼ ՄՈԴԱԼ ՊԱՏՈՒՀԱՆԸ';
+
+  @override
+  String get demoFadeScaleShowFabButton =>
+      'ՑՈՒՑԱԴՐԵԼ ԳՈՐԾՈՂՈՒԹՅԱՆ ԼՈՂԱՑՈՂ ԿՈՃԱԿԸ';
+
+  @override
+  String get demoFadeScaleHideFabButton =>
+      'ԹԱՔՑՆԵԼ ԳՈՐԾՈՂՈՒԹՅԱՆ ԼՈՂԱՑՈՂ ԿՈՃԱԿԸ';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader =>
+      'Երկխոսության պատուհան՝ ծանուցումով';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ՉԵՂԱՐԿԵԼ';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'ՉԵՂԱՐԿԵԼ';
+
+  @override
   String get demoColorsTitle => 'Գույներ';
 
   @override

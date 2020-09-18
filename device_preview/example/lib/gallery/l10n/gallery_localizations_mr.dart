@@ -973,7 +973,7 @@ class GalleryLocalizationsMr extends GalleryLocalizations {
   String get cupertinoTabBarHomeTab => 'होम';
 
   @override
-  String get cupertinoTabBarChatTab => 'चॅट';
+  String get cupertinoTabBarChatTab => 'Chat';
 
   @override
   String get cupertinoTabBarProfileTab => 'प्रोफाइल';
@@ -990,6 +990,242 @@ class GalleryLocalizationsMr extends GalleryLocalizations {
 
   @override
   String get demoCupertinoTextFieldPIN => 'पिन';
+
+  @override
+  String get demoMotionTitle => 'मोशन';
+
+  @override
+  String get demoMotionSubtitle => 'बदलाचे सर्व पूर्वनिर्धारित पॅटर्न';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'कंटेनर ट्रान्सफॉर्म';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'कंटेनर ट्रान्सफॉर्म पॅटर्न हा कंटेनरचा समावेश असलेल्या UI घटकांदरम्यान बदल करण्यासाठी तयार केला आहे. हा पॅटर्न दोन UI घटकांदरम्यान दृश्यमान कनेक्शन तयार करतो';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'फेड मोड';
+
+  @override
+  String get demoContainerTransformTypeFade => 'फेड';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'फेड थ्रू';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'शीर्षक';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'दुय्यम मजकूर';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'दुय्यम';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'तपशीलांचे पेज';
+
+  @override
+  String get demoMotionListTileTitle => 'सूची आयटम';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'अक्षाचा शेअर केलेला पॅटर्न हा जागा आणि नेव्हिगेशनशी संबंध असलेल्या UI घटकांदरम्यान बदल करण्यासाठी वापरला जातो. हा पॅटर्न घटकांमधील संबंध अधिक बळकट करण्यासाठी x, y, किंवा z अक्षावर एक शेअर केलेले रूपांतरण वापरतो.';
+
+  @override
+  String get demoSharedXAxisTitle => 'शेअर केलेला x अक्ष';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'मागे';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'पुढे';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'तुमचे कोर्स सुलभ करा';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'बंडल केलेल्या वर्गवाऱ्या तुमच्या फीडमध्ये गट म्हणून दिसतात. तुम्ही हे कधीही बदलू शकता.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'कला आणि हस्तकला';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'व्यवसाय';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'इलस्ट्रेशन';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'डिझाइन';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'पाककला';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'बंडल केलेले';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle =>
+      'वैयक्तिकरित्या दाखवलेला';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'हाय David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText =>
+      'तुमचे खाते वापरून साइन इन करा';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel => 'ईमेल किंवा फोन नंबर';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'ईमेल विसरलात का?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'खाते तयार करा';
+
+  @override
+  String get demoSharedYAxisTitle => 'शेअर केलेला y अक्ष';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '२६८ अल्बम';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'अलीकडे प्‍ले केलेले';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'अल्बम';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'कलाकार';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'मिनिट';
+
+  @override
+  String get demoSharedZAxisTitle => 'शेअर केलेला z अक्ष';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'सेटिंग्ज';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'बर्गर';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'बर्गरची पाककृती';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'सँडविच';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'सँडविचची पाककृती';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'डेझर्ट';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'डेझर्टची पाककृती';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'कोळंबी';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription => 'कोळंबीची पाककृती';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'खेकडा';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription => 'खेकड्याची पाककृती';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'बीफ सँडविच';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'बीफ सँडविचची पाककृती';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'सेव्ह केलेल्या पाककृती';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'प्रोफाइल';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'सूचना';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'गोपनीयता';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'मदत';
+
+  @override
+  String get demoFadeThroughTitle => 'फेड थ्रू';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'फेड थ्रू पॅटर्न हा एकमेकांशी घट्ट संबंध नसलेल्या UI घटकांदरम्यान बदल करण्यासाठी वापरला जातो.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'अल्बम';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'फोटो';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'शोध';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '१२३ फोटो';
+
+  @override
+  String get demoFadeScaleTitle => 'फेड';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'फेड पॅटर्न हा स्क्रीनच्या सीमेमध्ये येणाऱ्या किंवा त्याच्या बाहेर जाणाऱ्या UI घटकांसाठी वापरला जातो जसे की, स्क्रीनच्या मध्यभागी फेड होणारा डायलॉग.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'मोडल दाखवा';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'फॅब दाखवा';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'फॅब लपवा';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'सूचना डायलॉग';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'रद्द करा';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'काढून टाका';
 
   @override
   String get demoColorsTitle => 'रंग';

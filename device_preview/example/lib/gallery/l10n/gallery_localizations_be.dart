@@ -1006,6 +1006,245 @@ class GalleryLocalizationsBe extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN-код';
 
   @override
+  String get demoMotionTitle => 'Рух';
+
+  @override
+  String get demoMotionSubtitle => 'Усе стандартныя шаблоны пераходу';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Пераўтварэнне кантэйнера';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Шаблон пераўтварэння кантэйнера распрацаваны для пераходаў паміж элементамі карыстальніцкага інтэрфейсу, якія ўтрымліваюць кантэйнер. Гэты шаблон стварае бачнае злучэнне паміж двума элементамі карыстальніцкага інтэрфейсу';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Рэжым затухання';
+
+  @override
+  String get demoContainerTransformTypeFade => 'ЗАТУХАННЕ';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'ПАСТУПОВАЕ ЗМЯНЕННЕ';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Назва';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Другасны тэкст';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Другасны';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Старонка падрабязных звестак';
+
+  @override
+  String get demoMotionListTileTitle => 'Элемент спіса';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Шаблон абагуленай восі выкарыстоўваецца для пераходаў паміж элементамі карыстальніцкага інтэрфейсу, якія маюць прасторавыя ці навігацыйныя сувязі. Гэты шаблон выкарыстоўвае абагуленае пераўтварэнне на восях x, y ці z для ўзмацнення сувязяў паміж элементамі.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Абагуленая вось x';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'НАЗАД';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'ДАЛЕЙ';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Аптымізуйце свае кірункі';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Звязаныя катэгорыі паказаны ў вашай стужцы ў выглядзе груп. Пазней вы можаце змяніць гэту наладу.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Мастацтва і рамёствы';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Бізнес';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Ілюстрацыя';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Дызайн';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Кулінарыя';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Звязаны';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Паказваецца асобна';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Вітаем у David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText =>
+      'Увайдзіце ў свой уліковы запіс';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'Электронная пошта ці нумар тэлефона';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'ЗАБЫЛІ АДРАС ЭЛЕКТРОННАЙ ПОШТЫ?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'СТВАРЫЦЬ УЛІКОВЫ ЗАПІС';
+
+  @override
+  String get demoSharedYAxisTitle => 'Абагуленая вось y';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 альбомаў';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'А-Я';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Нядаўна прайгравалася';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Альбом';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Выканаўца';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'хв';
+
+  @override
+  String get demoSharedZAxisTitle => 'Абагуленая вось z';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Налады';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Бургер';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Рэцэпт бургера';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Сандвіч';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Рэцэпт сандвіча';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Дэсерт';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Рэцэпт дэсерта';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Крэветкі';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Рэцэпт асарці з крэветкамі';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Краб';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Рэцэпт асарці з крабам';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Сандвіч з ялавічынай';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Рэцэпт сандвіча з ялавічынай';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Захаваныя рэцэпты';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Профіль';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Апавяшчэнні';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Прыватнасць';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Даведка';
+
+  @override
+  String get demoFadeThroughTitle => 'Паступовае змяненне';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Шаблон паступовага змянення выкарыстоўваецца для пераходаў паміж элементамі карыстальніцкага інтэрфейсу, між якімі няма цесных сувязей.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Альбомы';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Фота';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Пошук';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 фота';
+
+  @override
+  String get demoFadeScaleTitle => 'Затуханне';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Шаблон затухання выкарыстоўваецца для элементаў карыстальніцкага інтэрфейсу, якія з\'яўляюцца ці знікаюць у межах экрана, напрыклад для дыялогавага акна, якое затухае ў цэнтры экрана.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'ПАКАЗАЦЬ МАДАЛЬНАЕ АКНО';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'ПАКАЗАЦЬ РУХОМУЮ КНОПКУ ДЗЕЯННЯ';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'СХАВАЦЬ РУХОМУЮ КНОПКУ ДЗЕЯННЯ';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Дыялогавае акно абвесткі';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'СКАСАВАЦЬ';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'АДХІЛІЦЬ';
+
+  @override
   String get demoColorsTitle => 'Колеры';
 
   @override
