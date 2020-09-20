@@ -50,25 +50,25 @@ abstract class Devices {
 class IosDevices {
   const IosDevices._();
 
-  final iphoneSE = const DeviceIdentifier._(
+  final iPhoneSE = const DeviceIdentifier._(
     TargetPlatform.iOS,
     'iphone',
     'se',
   );
 
-  final iphone11 = const DeviceIdentifier._(
+  final iPhone11 = const DeviceIdentifier._(
     TargetPlatform.iOS,
     'iphone',
     '11',
   );
 
-  final iphone11Pro = const DeviceIdentifier._(
+  final iPhone11Pro = const DeviceIdentifier._(
     TargetPlatform.iOS,
     'iphone',
     '11pro',
   );
 
-  final iphone11ProMax = const DeviceIdentifier._(
+  final iPhone11ProMax = const DeviceIdentifier._(
     TargetPlatform.iOS,
     'iphone',
     '11promax',
@@ -96,10 +96,10 @@ class IosDevices {
         iPadMini,
         iPadPro129,
         iPadiPad,
-        iphoneSE,
-        iphone11,
-        iphone11Pro,
-        iphone11ProMax,
+        iPhoneSE,
+        iPhone11,
+        iPhone11Pro,
+        iPhone11ProMax,
       ];
 }
 

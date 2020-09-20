@@ -16,24 +16,16 @@ Mockups for common devices.
 
 ## Quickstart
 
-```dart
-CupertinoDeviceFrame(
+```Dart
+DeviceFrame.identifier(
+    identifier: Devices.ios.iPhone11,
+    isFrameVisible: true,
     orientation: Orientation.portrait,
-    device: AndroidDevice.iPhoneXs,
-    child: Container(
-        child: Text('Hello iOS'),
-    ),
-),
-```
-
-```dart
-AndroidDeviceFrame(
-    orientation: Orientation.portrait,
-    device: AndroidDevice.mediumPhone,
-    child: Container(
+    screen: Container(
+        color: Colors.blue,
         child: Text('Hello Android'),
     ),
-),
+)
 ```
 
 ## Usage
@@ -41,37 +33,23 @@ AndroidDeviceFrame(
 ### Displaying virtual keyboard
 
 ```dart
-AndroidDeviceFrame(
-    isKeyboardVisible: true,
-    // ...
-),
-```
-
-### Change global theme
-
-```dart
-DeviceFrameTheme(
-    style: DeviceFrameStyle.light(),
-    child: /* any frame child will have this style by default */
+DeviceFrame.identifier(
+    identifier: Devices.ios.iPhone11,
+    orientation: orientation,
+    screen: VirtualKeyboard(
+        isEnabled: true,
+        child: // ...
+    ),
 )
-```
-
-### Change local style
-
-```dart
-AndroidDeviceFrame(
-    style: DeviceFrameStyle.light(),
-    // ...
-),
 ```
 
 ### Maintain device media query and theme in an encapsulated app
 
-
 ```dart
-AndroidDeviceFrame(
-    // ...
-    child: Builder(
+DeviceFrame.identifier(
+    identifier: Devices.ios.iPhone11,
+    orientation: orientation,
+    screen: Builder(
         builder: (deviceContext) => MaterialApp(
             theme: Theme.of(context),
             builder: (context, widget) => MediaQuery(
