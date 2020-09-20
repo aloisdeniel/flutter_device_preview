@@ -80,15 +80,22 @@ class IosDevices {
     'mini',
   );
 
-  final iPadPro = const DeviceIdentifier._(
+  final iPadPro129 = const DeviceIdentifier._(
     TargetPlatform.iOS,
     'ipad',
-    'pro',
+    'pro12-9',
+  );
+
+  final iPadiPad = const DeviceIdentifier._(
+    TargetPlatform.iOS,
+    'ipad',
+    'ipad',
   );
 
   List<DeviceIdentifier> get all => [
         iPadMini,
-        iPadPro,
+        iPadPro129,
+        iPadiPad,
         iphoneSE,
         iphone11,
         iphone11Pro,
@@ -98,6 +105,24 @@ class IosDevices {
 
 class AndroidDevices {
   const AndroidDevices._();
+
+  final small = const DeviceIdentifier._(
+    TargetPlatform.android,
+    'phone',
+    'small',
+  );
+
+  final medium = const DeviceIdentifier._(
+    TargetPlatform.android,
+    'phone',
+    'medium',
+  );
+
+  final large = const DeviceIdentifier._(
+    TargetPlatform.android,
+    'phone',
+    'large',
+  );
 
   final pixel3 = const DeviceIdentifier._(
     TargetPlatform.android,
@@ -111,7 +136,13 @@ class AndroidDevices {
     'samsung-s8',
   );
 
-  final samsungNode10Plus = const DeviceIdentifier._(
+  final samsungS20 = const DeviceIdentifier._(
+    TargetPlatform.android,
+    'phone',
+    'samsung-s20',
+  );
+
+  final samsungNote10Plus = const DeviceIdentifier._(
     TargetPlatform.android,
     'phone',
     'samsung-note10plus',
@@ -124,9 +155,13 @@ class AndroidDevices {
   );
 
   List<DeviceIdentifier> get all => [
+        small,
+        medium,
+        large,
         pixel3,
         samsungS8,
-        samsungNode10Plus,
+        samsungS20,
+        samsungNote10Plus,
         nexus9,
       ];
 }

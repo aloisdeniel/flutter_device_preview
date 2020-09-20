@@ -17,12 +17,12 @@
 <ellipse cx="623.471" cy="102.831" rx="5.32413" ry="5.31835" fill="url(#paint4_radial)"/>
 </g>
 <g filter="url(#filter5_f)">
-<circle cx="627.026" cy="100.442" r="0.887738" fill="#75C8FF"/>
+<circle cx="627.026" cy="100.441" r="0.887738" fill="#75C8FF"/>
 </g>
 <g filter="url(#filter6_f)">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M624.112 104.903C625.241 104.58 625.894 103.402 625.57 102.274C625.246 101.145 624.069 100.493 622.94 100.816C621.812 101.14 621.159 102.317 621.483 103.446C621.806 104.574 622.984 105.227 624.112 104.903V104.903Z" fill="#00154F"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M624.112 104.903C625.241 104.58 625.894 103.402 625.57 102.274C625.246 101.145 624.069 100.493 622.94 100.816C621.812 101.14 621.159 102.317 621.483 103.446C621.806 104.574 622.984 105.227 624.112 104.903Z" fill="#00154F"/>
 </g>
-<path d="M64.9158 199.091V199.091V1680.58C64.9158 1681.78 65.8937 1682.76 67.0999 1682.76H1179.28C1180.49 1682.76 1181.47 1681.79 1181.47 1680.58V199.091C1181.47 197.89 1180.49 196.911 1179.28 196.911H67.0999C65.8968 196.911 64.9158 197.887 64.9158 199.091V199.091Z" fill="#212121"/>
+<path d="M64.9158 199.091V1680.58C64.9158 1681.78 65.8937 1682.76 67.0999 1682.76H1179.28C1180.49 1682.76 1181.47 1681.79 1181.47 1680.58V199.091C1181.47 197.89 1180.49 196.911 1179.28 196.911H67.0999C65.8968 196.911 64.9158 197.887 64.9158 199.091Z" fill="#212121"/>
 <rect x="69.2434" y="201.239" width="1107.9" height="1477.2" fill="#FF0000"/>
 <text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="20" letter-spacing="0em"><tspan x="97" y="238.336">name: iPad Mini&#10;</tspan><tspan x="97" y="261.336">density: 2&#10;</tspan><tspan x="97" y="284.336">screen_size: 768x1024&#10;</tspan><tspan x="97" y="307.336">safe_areas: 0,20,0,0|0,20,0,0</tspan></text>
 <defs>
@@ -73,12 +73,12 @@
 <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
 <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
 </filter>
-<filter id="filter5_f" x="624.177" y="97.5931" width="5.6968" height="5.6968" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<filter id="filter5_f" x="624.177" y="97.593" width="5.6968" height="5.6968" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
 <feGaussianBlur stdDeviation="0.980331" result="effect1_foregroundBlur"/>
 </filter>
-<filter id="filter6_f" x="619.439" y="98.7727" width="8.17422" height="8.17422" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<filter id="filter6_f" x="619.439" y="98.7726" width="8.17422" height="8.17422" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
 <feGaussianBlur stdDeviation="0.980331" result="effect1_foregroundBlur"/>
