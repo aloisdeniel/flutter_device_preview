@@ -9,7 +9,7 @@ environment:
 dependencies:
   font_awesome_flutter: ^8.8.1
   http: ^0.12.0
-  freezed_annotation: ^0.12.0
+  freezed_annotation: any
   json_annotation: ^3.0.0 
   flutter: 
     sdk: flutter
