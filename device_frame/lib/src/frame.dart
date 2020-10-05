@@ -79,8 +79,26 @@ class DeviceFrame extends StatefulWidget {
     @required this.screen,
     this.orientation = Orientation.portrait,
     this.isFrameVisible = true,
-  })  : identifier = null,
+  })  : identifier = info.identifier,
         super(key: key);
+
+  static bool isRotated(DeviceInfo info, Orientation orientation) {
+    return info.canRotate && orientation == Orientation.landscape;
+  }
+
+  static MediaQueryData mediaQuery(
+      BuildContext context, DeviceInfo info, Orientation orientation) {
+    final isRotated = DeviceFrame.isRotated(info, orientation);
+    final padding = isRotated ? info.rotatedSafeAreas : info.safeAreas;
+    final mediaQuery = MediaQuery.of(context);
+    return mediaQuery.copyWith(
+      size: info.screenSize,
+      padding: padding,
+      viewInsets: EdgeInsets.zero,
+      viewPadding: padding,
+      devicePixelRatio: info.pixelRatio,
+    );
+  }
 
   @override
   _DeviceFrameState createState() => _DeviceFrameState();
@@ -122,31 +140,21 @@ class _DeviceFrameState extends State<DeviceFrame> {
         );
   }
 
-  bool isRotated(DeviceInfo info) {
-    return info.canRotate && widget.orientation == Orientation.landscape;
-  }
-
-  MediaQueryData _mediaQuery(BuildContext context, DeviceInfo info) {
-    final isRotated = this.isRotated(info);
-    final padding = isRotated ? info.rotatedSafeAreas : info.safeAreas;
-    final mediaQuery = MediaQuery.of(context);
-    return mediaQuery.copyWith(
-      size: info.screenSize,
-      padding: padding,
-      viewInsets: EdgeInsets.zero,
-      viewPadding: padding,
-      devicePixelRatio: info.pixelRatio,
-    );
-  }
-
   ThemeData _theme(BuildContext context) {
+    final density = [
+      DeviceType.desktop,
+      DeviceType.laptop,
+    ].contains(widget.identifier.type)
+        ? VisualDensity.compact
+        : null;
     return Theme.of(context).copyWith(
       platform: widget.identifier.platform,
+      visualDensity: density,
     );
   }
 
   Widget _screen(BuildContext context, DeviceInfo info) {
-    final isRotated = this.isRotated(info);
+    final isRotated = DeviceFrame.isRotated(info, widget.orientation);
     final width = isRotated ? info.screenSize.height : info.screenSize.width;
     final height = isRotated ? info.screenSize.width : info.screenSize.height;
 
@@ -156,7 +164,7 @@ class _DeviceFrameState extends State<DeviceFrame> {
         width: width,
         height: height,
         child: MediaQuery(
-          data: _mediaQuery(context, info),
+          data: DeviceFrame.mediaQuery(context, info, widget.orientation),
           child: Theme(
             data: _theme(context),
             child: widget.screen,
@@ -171,17 +179,20 @@ class _DeviceFrameState extends State<DeviceFrame> {
     return FutureBuilder<DeviceInfo>(
       future: svg,
       builder: (context, value) {
-        if (value.error != null)
+        if (value.error != null) {
           return Center(
             child: Text('Error : ${value.error}'),
           );
+        }
         if (value.data == null) return Container();
         final bounds = value.data.screenPath.getBounds();
 
         final stack = SizedBox(
-          width: widget.isFrameVisible ? value.data.frameWidth : bounds.width,
-          height:
-              widget.isFrameVisible ? value.data.frameHeight : bounds.height,
+          width:
+              widget.isFrameVisible ? value.data.frameSize.width : bounds.width,
+          height: widget.isFrameVisible
+              ? value.data.frameSize.height
+              : bounds.height,
           child: Stack(
             children: [
               if (widget.isFrameVisible)
@@ -211,7 +222,7 @@ class _DeviceFrameState extends State<DeviceFrame> {
           ),
         );
 
-        final isRotated = this.isRotated(value.data);
+        final isRotated = DeviceFrame.isRotated(value.data, widget.orientation);
 
         return FittedBox(
           child: RotatedBox(

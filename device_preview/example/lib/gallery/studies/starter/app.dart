@@ -16,6 +16,8 @@ class StarterApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = MediaQuery.of(context, nullOk: true)?.platformBrightness ==
+        Brightness.dark;
     return MaterialApp(
       title: 'Starter',
       debugShowCheckedModeBanner: false,
@@ -30,9 +32,7 @@ class StarterApp extends StatelessWidget {
       },
 
       home: const HomePage(),
-      themeMode: MediaQuery.of(context).platformBrightness == Brightness.dark
-          ? ThemeMode.dark
-          : ThemeMode.light,
+      themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
       darkTheme: ThemeData.dark().copyWith(
         primaryColor: _primaryColor,
         highlightColor: Colors.transparent,

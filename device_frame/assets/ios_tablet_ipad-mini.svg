@@ -14,7 +14,7 @@
 <ellipse cx="623.471" cy="102.831" rx="11.2398" ry="11.2276" fill="url(#paint3_radial)"/>
 </g>
 <g filter="url(#filter4_d)">
-<ellipse cx="623.471" cy="102.831" rx="5.32413" ry="5.31835" fill="url(#paint4_radial)"/>
+<ellipse cx="623.471" cy="102.831" rx="5.32413" ry="5.31835" fill="url(#paint4_linear)"/>
 </g>
 <g filter="url(#filter5_f)">
 <circle cx="627.026" cy="100.441" r="0.887738" fill="#75C8FF"/>
@@ -24,7 +24,7 @@
 </g>
 <path d="M64.9158 199.091V1680.58C64.9158 1681.78 65.8937 1682.76 67.0999 1682.76H1179.28C1180.49 1682.76 1181.47 1681.79 1181.47 1680.58V199.091C1181.47 197.89 1180.49 196.911 1179.28 196.911H67.0999C65.8968 196.911 64.9158 197.887 64.9158 199.091Z" fill="#212121"/>
 <rect x="69.2434" y="201.239" width="1107.9" height="1477.2" fill="#FF0000"/>
-<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="20" letter-spacing="0em"><tspan x="97" y="238.336">name: iPad Mini&#10;</tspan><tspan x="97" y="261.336">density: 2&#10;</tspan><tspan x="97" y="284.336">screen_size: 768x1024&#10;</tspan><tspan x="97" y="307.336">safe_areas: 0,20,0,0|0,20,0,0</tspan></text>
+<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="20" letter-spacing="0em"><tspan x="97" y="238.336">name: iPad Mini&#10;</tspan><tspan x="97" y="261.336">density: 2&#10;</tspan><tspan x="97" y="284.336">screen_size: 768x1024&#10;</tspan><tspan x="97" y="307.336">safe_areas: 0,20,0,0|0,20,0,0&#10;</tspan><tspan x="97" y="330.336">device_type: tablet</tspan></text>
 <defs>
 <filter id="filter0_i" x="0" y="0" width="1246.38" height="1880.4" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
@@ -115,9 +115,9 @@
 <stop stop-color="white"/>
 <stop offset="1" stop-color="#252525"/>
 </radialGradient>
-<radialGradient id="paint4_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(623.471 97.5127) rotate(90) scale(10.6367 10.6483)">
+<linearGradient id="paint4_linear" x1="623.471" y1="86.876" x2="623.471" y2="108.149" gradientUnits="userSpaceOnUse">
 <stop stop-color="#2A4893"/>
 <stop offset="1" stop-color="#213054"/>
-</radialGradient>
+</linearGradient>
 </defs>
 </svg>

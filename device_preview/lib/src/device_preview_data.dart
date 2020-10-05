@@ -17,6 +17,7 @@ abstract class DevicePreviewData with _$DevicePreviewData {
     @Default(Orientation.portrait) Orientation orientation,
     @Default(0) int deviceIndex,
     String locale,
+    @Default(true) bool isEnabled,
     @Default(true) bool isFrameVisible,
     @Default(false) bool isDarkMode,
     @Default(false) bool boldText,

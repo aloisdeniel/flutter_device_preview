@@ -1,53 +1,47 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../devices.dart';
 
+part 'info.freezed.dart';
+
 /// Info about a device and its frame.
-class DeviceInfo {
-  /// Identifier of the device.
-  final DeviceIdentifier identifier;
+@freezed
+abstract class DeviceInfo with _$DeviceInfo {
+  /// Create a new device info.
+  const factory DeviceInfo({
+    /// Identifier of the device.
+    @required DeviceIdentifier identifier,
 
-  /// The display name of the device.
-  final String name;
+    /// The display name of the device.
+    @required String name,
 
-  /// The safe areas when the device is in portrait orientation.
-  final EdgeInsets safeAreas;
+    /// The safe areas when the device is in landscape orientation.
+    @Default(null) @nullable EdgeInsets rotatedSafeAreas,
 
-  /// The safe areas when the device is in landscape orientation.
-  final EdgeInsets rotatedSafeAreas;
+    /// The safe areas when the device is in portrait orientation.
+    @required EdgeInsets safeAreas,
 
+    /// A shape representing the screen.
+    @required Path screenPath,
+
+    /// The screen pixel density of the device.
+    @required double pixelRatio,
+
+    /// The safe areas when the device is in portrait orientation.
+    @required String svgFrame,
+
+    /// The frame size in pixels.
+    @required Size frameSize,
+
+    /// The size in points of the screen content.
+    @required Size screenSize,
+  }) = _DeviceInfo;
+}
+
+extension DeviceInfoExtension on DeviceInfo {
   /// Indicates whether the device can rotate.
   bool get canRotate => rotatedSafeAreas != null;
-
-  /// A shape representing the screen.
-  final Path screenPath;
-
-  /// The size in points of the screen content.
-  final Size screenSize;
-
-  /// The frame image as a SVG string.
-  final String svgFrame;
-
-  /// The screen pixel density of the device.
-  final double pixelRatio;
-
-  /// The frame size's width.
-  final double frameWidth;
-
-  /// The frame size's height.
-  final double frameHeight;
-
-  /// Create a new device info.
-  const DeviceInfo({
-    @required this.identifier,
-    @required this.name,
-    @required this.rotatedSafeAreas,
-    @required this.safeAreas,
-    @required this.screenPath,
-    @required this.pixelRatio,
-    @required this.svgFrame,
-    @required this.frameWidth,
-    @required this.frameHeight,
-    @required this.screenSize,
-  });
 }

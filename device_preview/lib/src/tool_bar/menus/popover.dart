@@ -45,7 +45,8 @@ class _PopoverState extends State<Popover> {
   bool _isOpen = false;
 
   void open() {
-    final device = DevicePreview.of(context);
+    final provider = DevicePreviewProvider.of(context);
+
     if (!_isOpen) {
       final barrier = OverlayEntry(
         opaque: false,
@@ -58,9 +59,10 @@ class _PopoverState extends State<Popover> {
         opaque: false,
         builder: (context) => MediaQueryObserver(
           child: DevicePreviewProvider(
-            availableDevices: device.availableDevices,
-            data: device.data,
-            mediaQuery: device.mediaQuery,
+            isVirtualKeyboardVisible: provider.isVirtualKeyboardVisible,
+            availableDevices: provider.availableDevices,
+            data: provider.data,
+            mediaQuery: provider.mediaQuery,
             child: _PopOverContainer(
               title: widget.title,
               icon: widget.icon,
@@ -220,11 +222,7 @@ class __PopOverContainerState extends State<_PopOverContainer>
       left: bounds.left + _translate.dx,
       top: bounds.top - media.viewInsets.bottom + _translate.dy,
       width: bounds.width,
-      height: math.min(
-          bounds.height,
-          media.size.height -
-              media.viewInsets.vertical -
-              media.viewPadding.vertical),
+      height: bounds.height,
       child: AnimatedOpacity(
         duration: duration,
         opacity: _isStarted ? 1.0 : 0.0,
@@ -232,11 +230,11 @@ class __PopOverContainerState extends State<_PopOverContainer>
           duration: duration,
           curve: Curves.easeOut,
           transform: (_isStarted
-              ? Matrix4.identity()
-              : Matrix4.translationValues(0, 6.0, 0)),
+              ? (Matrix4.identity())
+              : (Matrix4.translationValues(0, 6, 0)..scale(0.4))),
           decoration: BoxDecoration(
             color: toolBarStyle.buttonBackgroundColor.withOpacity(0.95),
-            borderRadius: BorderRadius.circular(6.0),
+            borderRadius: BorderRadius.circular(6),
           ),
           child: Column(
             children: <Widget>[

@@ -66,7 +66,7 @@
 <g clip-path="url(#clip3)">
 <circle cx="558.477" cy="81.5539" r="11.9231" fill="url(#paint7_radial)"/>
 <g opacity="0.387535" filter="url(#filter10_dd)">
-<circle cx="558.477" cy="81.554" r="7.15385" fill="url(#paint8_radial)"/>
+<circle cx="558.477" cy="81.554" r="7.15385" fill="url(#paint8_linear)"/>
 </g>
 <mask id="mask3" mask-type="alpha" maskUnits="userSpaceOnUse" x="551" y="74" width="15" height="15">
 <circle cx="558.477" cy="81.554" r="7.15385" fill="white"/>
@@ -84,7 +84,7 @@
 </g>
 </g>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M234.646 67.7231C241.495 67.7231 247.046 73.2748 247.046 80.1231C247.687 91.7244 249.955 99.0797 253.544 105.791C257.783 113.718 264.005 119.94 271.933 124.18C279.86 128.419 288.764 130.677 304.207 130.677H628.655C644.098 130.677 653.002 128.419 660.929 124.18C668.857 119.94 675.078 113.718 679.318 105.791C682.906 99.081 685.094 91.6474 685.815 80.1231C685.815 73.2748 691.367 67.7231 698.216 67.7231L759.833 67.7231C795.123 67.7231 807.92 71.3976 820.822 78.2975C833.724 85.1974 843.849 95.3227 850.749 108.224C857.649 121.126 861.323 133.923 861.323 169.214V1675.53C861.323 1710.82 857.649 1723.61 850.749 1736.51C843.849 1749.42 833.724 1759.54 820.822 1766.44C807.92 1773.34 795.123 1777.02 759.833 1777.02H173.029C137.739 1777.02 124.941 1773.34 112.04 1766.44C99.1381 1759.54 89.0128 1749.42 82.1129 1736.51C75.213 1723.61 71.5386 1710.82 71.5386 1675.53V169.214C71.5386 133.923 75.213 121.126 82.1129 108.224C89.0128 95.3227 99.1381 85.1974 112.04 78.2975C124.941 71.3976 137.739 67.7231 173.029 67.7231H234.646Z" fill="#FF0000"/>
-<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="20" letter-spacing="0em"><tspan x="113" y="168.336">name: iPhone 11&#10;</tspan><tspan x="113" y="191.336">density: 2&#10;</tspan><tspan x="113" y="214.336">screen_size: 414x896&#10;</tspan><tspan x="113" y="237.336">safe_areas: 0,44,0,34|44,0,44,21</tspan></text>
+<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="20" letter-spacing="0em"><tspan x="113" y="168.336">name: iPhone 11&#10;</tspan><tspan x="113" y="191.336">density: 2&#10;</tspan><tspan x="113" y="214.336">screen_size: 414x896&#10;</tspan><tspan x="113" y="237.336">safe_areas: 0,44,0,34|44,0,44,21&#10;</tspan><tspan x="113" y="260.336">device_type: phone</tspan></text>
 <defs>
 <filter id="filter0_ii" x="3.81543" y="0" width="925.231" height="1844.74" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
@@ -297,10 +297,10 @@
 <stop stop-color="#434343"/>
 <stop offset="1" stop-color="#121212"/>
 </radialGradient>
-<radialGradient id="paint8_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(558.477 74.4001) rotate(90) scale(14.3077)">
+<linearGradient id="paint8_linear" x1="558.477" y1="60.0925" x2="558.477" y2="88.7078" gradientUnits="userSpaceOnUse">
 <stop stop-color="#2A4893"/>
 <stop offset="1" stop-color="#213054"/>
-</radialGradient>
+</linearGradient>
 <clipPath id="clip0">
 <rect width="103.015" height="2.86154" fill="white" transform="translate(415.877 1841.88)"/>
 </clipPath>

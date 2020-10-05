@@ -145,8 +145,10 @@ Future<DeviceInfo> parseFrameDocument(
     rotatedSafeAreas: safeAreas.length < 2 ? null : safeAreas[1],
     screenPath: screen,
     svgFrame: frame,
-    frameWidth: double.parse(width),
-    frameHeight: double.parse(height),
+    frameSize: Size(
+      double.parse(width),
+      double.parse(height),
+    ),
     screenSize: _parseScreenSize(info['screen_size']),
   );
 }

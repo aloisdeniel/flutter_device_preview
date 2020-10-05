@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:device_preview/src/keyboard/virtual_keyboard.dart';
+import 'package:device_frame/device_frame.dart';
 import 'package:device_preview/src/tool_bar/horizontal_toolbar.dart';
 import 'package:device_preview/src/tool_bar/vertical_toolbar.dart';
 import 'package:device_preview/src/utilities/media_query_observer.dart';
@@ -13,7 +13,6 @@ import 'dart:math' as math;
 
 import 'device_preview_data.dart';
 import 'device_preview_style.dart';
-import 'devices/devices.dart';
 import 'locales/locales.dart';
 import 'locales/default_locales.dart';
 import 'screenshots/screenshot.dart';
@@ -36,10 +35,6 @@ class DevicePreview extends StatefulWidget {
   /// Indicates whether the tool bar should be visible or not.
   final bool isToolBarVisible;
 
-  /// Indicates whether the tool bar should be visible or not.
-  @Deprecated('Replaced by `isToolBarVisible`')
-  bool get areSettingsEnabled => isToolBarVisible;
-
   /// Whether configuration should be saved to device preferences
   /// between sessions.
   ///
@@ -60,7 +55,7 @@ class DevicePreview extends StatefulWidget {
   final ScreenshotProcessor onScreenshot;
 
   /// The available devices used for previewing.
-  final List<Device> devices;
+  final List<DeviceIdentifier> devices;
 
   /// Customizing the tool bar and background aspect.
   ///
@@ -81,27 +76,34 @@ class DevicePreview extends StatefulWidget {
   final DevicePreviewStyle style;
 
   /// The available locales.
-  final List<NamedLocale> availablesLocales;
+  final List<Locale> availableLocales;
 
   /// Create a new [DevicePreview].
-  DevicePreview(
-      {Key key,
-      @required this.builder,
-      this.devices,
-      this.data,
-      bool usePreferences = true,
-      this.style,
-      bool areSettingsEnabled = true,
-      bool isToolBarVisible = true,
-      this.availablesLocales = defaultAvailableLocales,
-      this.onScreenshot,
-      this.enabled = true})
-      : assert(devices == null || devices.isNotEmpty),
+  DevicePreview({
+    Key key,
+    @required this.builder,
+    this.devices,
+    this.data,
+    bool usePreferences = true,
+    this.style,
+    bool areSettingsEnabled = true,
+    bool isToolBarVisible = true,
+    this.availableLocales,
+    this.onScreenshot,
+    this.enabled = true,
+  })  : assert(devices == null || devices.isNotEmpty),
         assert(usePreferences != null),
         assert(areSettingsEnabled != null),
         isToolBarVisible = isToolBarVisible || areSettingsEnabled,
         usePreferences = (data == null) && usePreferences,
         super(key: key);
+
+  static final List<DeviceIdentifier> defaultDevices = [
+    ...Devices.ios.all,
+    ...Devices.android.all,
+    ...Devices.macos.all,
+    ...Devices.windows.all,
+  ];
 
   @override
   DevicePreviewState createState() => DevicePreviewState();
@@ -112,7 +114,7 @@ class DevicePreview extends StatefulWidget {
       context.findAncestorStateOfType<DevicePreviewState>();
 
   /// The currently selected [Device], if the preview is [enabled].
-  static Device device(BuildContext context) {
+  static DeviceInfo device(BuildContext context) {
     final provider =
         context.dependOnInheritedWidgetOfExactType<DevicePreviewProvider>();
     if (provider != null) {
@@ -122,23 +124,20 @@ class DevicePreview extends StatefulWidget {
     return null;
   }
 
-  /// The media query of the currently selected device.
-  static MediaQueryData mediaQuery(
-    BuildContext context, {
-    bool nullOk = false,
-  }) {
+  /// The currently selected [orientation], if the preview is [enabled], else `portrait`.
+  static Orientation orientation(BuildContext context) {
     final provider =
         context.dependOnInheritedWidgetOfExactType<DevicePreviewProvider>();
-    return provider?.mediaQuery ??
-        MediaQuery.of(
-          context,
-          nullOk: nullOk,
-        );
+    if (provider != null) {
+      return provider.data.orientation;
+    }
+
+    return Orientation.portrait;
   }
 
   /// The current target platform for the currently selected device.
   static TargetPlatform platform(BuildContext context) {
-    return device(context)?.platform ?? Theme.of(context).platform;
+    return device(context)?.identifier?.platform ?? Theme.of(context).platform;
   }
 
   /// A global builder that should be inserted into [WidgetApp]'s builder
@@ -147,70 +146,54 @@ class DevicePreview extends StatefulWidget {
     BuildContext context,
     Widget widget,
   ) {
+    final provider =
+        context.dependOnInheritedWidgetOfExactType<DevicePreviewProvider>();
+
+    if (provider == null || !provider.data.isEnabled) return widget;
+
     return MediaQuery(
-      data: mediaQuery(context),
+      data: _mediaQuery(context),
       child: Theme(
-        data: Theme.of(context).copyWith(platform: platform(context)),
+        data: Theme.of(context).copyWith(
+          platform: provider?.deviceInfo?.identifier?.platform,
+          brightness:
+              provider.data.isDarkMode ? Brightness.dark : Brightness.light,
+        ),
         child: widget,
       ),
+    );
+  }
+
+  static MediaQueryData _mediaQuery(BuildContext context) {
+    final provider =
+        context.dependOnInheritedWidgetOfExactType<DevicePreviewProvider>();
+
+    if (provider == null) return null;
+
+    final device = provider.availableDevices[provider.data?.deviceIndex ?? 0];
+    var mediaQuery = DeviceFrame.mediaQuery(
+      context,
+      device,
+      provider.data.orientation,
+    );
+
+    if (provider.isVirtualKeyboardVisible) {
+      mediaQuery = VirtualKeyboard.mediaQuery(mediaQuery);
+    }
+
+    return mediaQuery.copyWith(
+      platformBrightness:
+          provider.data.isDarkMode ? Brightness.dark : Brightness.light,
+      textScaleFactor: provider.data.textScaleFactor,
+      boldText: provider.data.boldText,
+      disableAnimations: provider.data.disableAnimations,
+      accessibleNavigation: provider.data.accessibleNavigation,
+      invertColors: provider.data.invertColors,
     );
   }
 }
 
 class DevicePreviewState extends State<DevicePreview> {
-  bool _isVirtualKeyboardVisible = false;
-
-  /// The curren active device.
-  Device get device {
-    if (_device.type == DeviceType.freeform) {
-      final query = mediaQuery;
-      return _device.copyWith(landscape: query);
-    }
-
-    return _device;
-  }
-
-  /// The media query for the currently selected device, orientation and other
-  /// selected simulated preferences.
-  MediaQueryData get mediaQuery {
-    MediaQueryData result;
-
-    if (_device.type == DeviceType.freeform) {
-      result = (_device.portrait ?? _device.landscape).copyWith(
-        size: _data.freeformSize ?? Size(1080, 1920),
-      );
-    } else if (!_device.canRotate) {
-      result = _device.portrait ?? _device.landscape;
-    } else {
-      switch (_data.orientation) {
-        case Orientation.landscape:
-          result = _device.landscape;
-          break;
-        default:
-          result = _device.portrait;
-      }
-    }
-
-    result = result.copyWith(
-      platformBrightness: _data.isDarkMode ? Brightness.dark : Brightness.light,
-      textScaleFactor: _data.textScaleFactor,
-      boldText: _data.boldText,
-      disableAnimations: _data.disableAnimations,
-      accessibleNavigation: _data.accessibleNavigation,
-      invertColors: _data.invertColors,
-    );
-
-    if (_isVirtualKeyboardVisible) {
-      result = result.copyWith(
-        viewInsets: EdgeInsets.only(
-          bottom: VirtualKeyboard.minHeight + result.padding.bottom,
-        ),
-      );
-    }
-
-    return result;
-  }
-
   DevicePreviewData get data => _data;
 
   /// Get the currently selected locale.
@@ -225,7 +208,17 @@ class DevicePreviewState extends State<DevicePreview> {
   Orientation get orientation => _data.orientation;
 
   /// Get the list of available locales.
-  List<NamedLocale> get availablesLocales => widget.availablesLocales;
+  List<NamedLocale> get availablesLocales => widget.availableLocales == null
+      ? defaultAvailableLocales
+      : widget.availableLocales
+          .map(
+            (available) => defaultAvailableLocales.firstWhere(
+              (all) => all.code == available.toString(),
+              orElse: () => null,
+            ),
+          )
+          .where((x) => x != null)
+          .toList();
 
   /// Indicates whether the dark mode is enabled.
   bool get isDarkMode => _data.isDarkMode;
@@ -234,10 +227,17 @@ class DevicePreviewState extends State<DevicePreview> {
   set isDarkMode(bool value) {
     _data = _data.copyWith(isDarkMode: value);
     DevicePreviewStorage.save(_data, !widget.usePreferences);
-    if (widget.enabled) {
+    if (isEnabled) {
       setState(() {});
     }
   }
+
+  /// Indicates whether the preview is currently enabled.
+  bool get isEnabled => widget.enabled && _data.isEnabled;
+
+  /// Whenever the [screenshot] is called, a new value is pushed to
+  /// this stream.
+  Stream<DeviceScreenshot> get onScreenshot => _onScreenshot.stream;
 
   /// The current style.
   DevicePreviewStyle get style => _style;
@@ -250,6 +250,9 @@ class DevicePreviewState extends State<DevicePreview> {
 
   /// The current simulated navigation accessibilty preference.
   bool get accessibleNavigation => _data.accessibleNavigation;
+
+  /// All available devices.
+  List<DeviceInfo> get availableDevices => _availableDevices;
 
   /// The current simulated text scale factor accessibilty preference.
   double get textScaleFactor => _data.textScaleFactor;
@@ -264,19 +267,20 @@ class DevicePreviewState extends State<DevicePreview> {
   ScreenshotProcessor get processScreenshot =>
       widget.onScreenshot ?? (const FileioScreenshotUploader().upload);
 
-  List<Device> get availableDevices => widget.devices ?? Devices.all;
-
   /// Indicates whether the simulated physical device frame visibility.
   bool get isFrameVisible => _data.isFrameVisible ?? true;
 
-  /// If in freeform mode, the currently selected simulated screen size.
-  Size get freeformSize => _data.freeformSize ?? Size(1080, 1920);
+  /// The currently selected device from the [availableDevices].
+  DeviceInfo get deviceInfo => _availableDevices[math.min(
+        _data.deviceIndex,
+        _availableDevices.length - 1,
+      )];
 
   /// Set the [disableAnimations].
   set disableAnimations(bool value) {
     _data = _data.copyWith(disableAnimations: value);
     DevicePreviewStorage.save(_data, !widget.usePreferences);
-    if (widget.enabled) {
+    if (isEnabled) {
       setState(() {});
     }
   }
@@ -285,7 +289,7 @@ class DevicePreviewState extends State<DevicePreview> {
   set style(DevicePreviewStyle value) {
     _style = value;
     DevicePreviewStyleStorage.save(_style, !widget.usePreferences);
-    if (widget.enabled) {
+    if (isEnabled) {
       setState(() {});
     }
   }
@@ -294,7 +298,7 @@ class DevicePreviewState extends State<DevicePreview> {
   set invertColors(bool value) {
     _data = _data.copyWith(invertColors: value);
     DevicePreviewStorage.save(_data, !widget.usePreferences);
-    if (widget.enabled) {
+    if (isEnabled) {
       setState(() {});
     }
   }
@@ -304,7 +308,7 @@ class DevicePreviewState extends State<DevicePreview> {
     _data = _data.copyWith(accessibleNavigation: value);
     DevicePreviewStorage.save(_data, !widget.usePreferences);
 
-    if (widget.enabled) {
+    if (isEnabled) {
       setState(() {});
     }
   }
@@ -313,7 +317,7 @@ class DevicePreviewState extends State<DevicePreview> {
   set textScaleFactor(double value) {
     _data = _data.copyWith(textScaleFactor: value);
     DevicePreviewStorage.save(_data, !widget.usePreferences);
-    if (widget.enabled) {
+    if (isEnabled) {
       setState(() {});
     }
   }
@@ -322,7 +326,7 @@ class DevicePreviewState extends State<DevicePreview> {
   set locale(Locale value) {
     _data = _data.copyWith(locale: value.toString());
     DevicePreviewStorage.save(_data, !widget.usePreferences);
-    if (widget.enabled) {
+    if (isEnabled) {
       setState(() {});
     }
   }
@@ -331,7 +335,7 @@ class DevicePreviewState extends State<DevicePreview> {
   set boldText(bool value) {
     _data = _data.copyWith(boldText: value);
     DevicePreviewStorage.save(_data, !widget.usePreferences);
-    if (widget.enabled) {
+    if (isEnabled) {
       setState(() {});
     }
   }
@@ -339,16 +343,7 @@ class DevicePreviewState extends State<DevicePreview> {
   /// Show or hide the virtual keyboard.
   set isVirtualKeyboardVisible(bool value) {
     _isVirtualKeyboardVisible = value;
-    if (widget.enabled) {
-      setState(() {});
-    }
-  }
-
-  /// Set the [freeformSize].
-  set freeformSize(Size value) {
-    _data = _data.copyWith(freeformSize: value);
-    DevicePreviewStorage.save(_data, !widget.usePreferences);
-    if (widget.enabled) {
+    if (isEnabled) {
       setState(() {});
     }
   }
@@ -357,7 +352,7 @@ class DevicePreviewState extends State<DevicePreview> {
   set isFrameVisible(bool value) {
     _data = _data.copyWith(isFrameVisible: value);
     DevicePreviewStorage.save(_data, !widget.usePreferences);
-    if (widget.enabled) {
+    if (isEnabled) {
       setState(() {});
     }
   }
@@ -366,34 +361,37 @@ class DevicePreviewState extends State<DevicePreview> {
   set orientation(Orientation value) {
     _data = _data.copyWith(orientation: value);
     DevicePreviewStorage.save(_data, !widget.usePreferences);
-    if (widget.enabled) {
+    if (isEnabled) {
       setState(() {});
     }
+  }
+
+  /// Set the [isEnabled].
+  set isEnabled(bool value) {
+    _data = _data.copyWith(isEnabled: value);
+    DevicePreviewStorage.save(_data, !widget.usePreferences);
+    setState(() {});
   }
 
   // Define the current active device.
-  set device(Device device) {
-    _data = _data.copyWith(deviceIndex: availableDevices.indexOf(device));
+  set device(DeviceIdentifier device) {
+    _data = _data.copyWith(
+      deviceIndex: _availableDevices.indexWhere((x) => x.identifier == device),
+    );
     DevicePreviewStorage.save(_data, !widget.usePreferences);
-    if (widget.enabled) {
+    if (isEnabled) {
       setState(() {});
     }
   }
-
-  /// Indicates whether the preview is currently enabled.
-  bool get enabled => widget.enabled;
-
-  /// Whenever the [screenshot] is called, a new value is pushed to
-  /// this stream.
-  Stream<DeviceScreenshot> get onScreenshot => _onScreenshot.stream;
 
   /// Takes a screenshot with the current configuration.
   Future<DeviceScreenshot> screenshot() async {
     RenderRepaintBoundary boundary =
         _repaintKey.currentContext.findRenderObject();
     final format = ui.ImageByteFormat.png;
+    final device = _availableDevices.elementAt(_data.deviceIndex);
     final image = await boundary.toImage(
-      pixelRatio: mediaQuery.devicePixelRatio,
+      pixelRatio: device.pixelRatio,
     );
     final byteData = await image.toByteData(
       format: format,
@@ -410,8 +408,8 @@ class DevicePreviewState extends State<DevicePreview> {
 
   /// Change the simulated device orientation between portrait and landscape.
   void rotate() {
-    orientation =
-        Orientation.values[(orientation.index + 1) % Orientation.values.length];
+    final index = (orientation.index + 1) % Orientation.values.length;
+    orientation = Orientation.values[index];
   }
 
   /// Restart the application hosted by the simulated device.
@@ -443,157 +441,173 @@ class DevicePreviewState extends State<DevicePreview> {
     super.didUpdateWidget(oldWidget);
   }
 
+  Widget _buildPreview(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+
+    return Padding(
+      padding: EdgeInsets.only(
+        top: 20 + mediaQuery.viewPadding.top,
+        right: 20 + mediaQuery.viewPadding.right,
+        left: 20 + mediaQuery.viewPadding.left,
+        bottom: 20,
+      ),
+      child: FittedBox(
+        fit: BoxFit.contain,
+        child: RepaintBoundary(
+          key: _repaintKey,
+          child: DeviceFrame.info(
+            info: deviceInfo,
+            isFrameVisible: _data.isFrameVisible,
+            orientation: _data.orientation,
+            screen: VirtualKeyboard(
+              isEnabled: _isVirtualKeyboardVisible,
+              child: Theme(
+                data: Theme.of(context).copyWith(
+                  platform: deviceInfo?.identifier?.platform,
+                  brightness: (data?.isDarkMode ?? false)
+                      ? Brightness.dark
+                      : Brightness.light,
+                ),
+                child: MediaQuery(
+                  data: DevicePreview._mediaQuery(context),
+                  child: Builder(
+                    builder: widget.builder,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (!widget.enabled) {
       return widget.builder(context);
     }
-    return DevicePreviewTheme(
-      style: style,
-      child: Localizations(
-        locale: locale,
-        delegates: [
-          GlobalCupertinoLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-        ],
-        child: Directionality(
-          textDirection: TextDirection.ltr,
-          child: Overlay(
-            initialEntries: [
-              OverlayEntry(builder: (context) {
-                return MediaQueryObserver(
-                  child: Builder(
-                    builder: (context) {
-                      final style = DevicePreviewTheme.of(context);
-                      Widget screen = Container(
-                        width: mediaQuery.size.width,
-                        height: mediaQuery.size.height,
-                        alignment: Alignment.center,
-                        child: ClipRect(
-                          child: MediaQuery(
-                            data: mediaQuery,
-                            child: Builder(
-                              builder: (context) => DevicePreviewProvider(
-                                mediaQuery: mediaQuery,
-                                key: _appKey,
-                                data: _data,
-                                availableDevices: availableDevices,
-                                child: widget.builder(context),
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
 
-                      final isRotated = orientation == Orientation.landscape;
-                      final screenSize = isRotated || device.portrait == null
-                          ? device.landscape.size
-                          : device.portrait.size;
-
-                      screen = Stack(
-                        children: <Widget>[
-                          screen,
-                          Positioned(
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            child: AnimatedCrossFade(
-                              firstChild: SizedBox(),
-                              secondChild: VirtualKeyboard(
-                                height: VirtualKeyboard.minHeight +
-                                    mediaQuery.padding.bottom,
-                              ),
-                              crossFadeState: isVirtualKeyboardVisible
-                                  ? CrossFadeState.showSecond
-                                  : CrossFadeState.showFirst,
-                              duration: const Duration(milliseconds: 500),
-                            ),
-                          ),
-                        ],
-                      );
-
-                      var preview = _data.isFrameVisible
-                          ? device.frameBuilder(
-                              context,
-                              screen,
-                              screenSize,
-                              isRotated
-                                  ? DeviceOrientation.landscape
-                                  : DeviceOrientation.portrait,
-                            )
-                          : screen;
-
-                      preview = RepaintBoundary(
-                        key: _repaintKey,
-                        child: preview,
-                      );
-
-                      final isToolBarHorizontal = style.toolBar.position ==
-                              DevicePreviewToolBarPosition.bottom ||
-                          style.toolBar.position ==
-                              DevicePreviewToolBarPosition.top;
-
-                      final isToolBarDirectionInverted =
-                          style.toolBar.position ==
-                                  DevicePreviewToolBarPosition.left ||
-                              style.toolBar.position ==
-                                  DevicePreviewToolBarPosition.top;
-
-                      return Builder(
-                        builder: (context) {
-                          return MediaQueryObserver(
-                            child: Flex(
-                              direction: isToolBarHorizontal
-                                  ? Axis.vertical
-                                  : Axis.horizontal,
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: <Widget>[
-                                if (widget.isToolBarVisible &&
-                                    isToolBarDirectionInverted)
-                                  isToolBarHorizontal
-                                      ? DevicePreviewHorizontalToolBar(
-                                          key: Key('HorizontalToolbar'),
-                                        )
-                                      : DevicePreviewVerticalToolBar(
-                                          key: Key('VerticalToolbar'),
-                                        ),
-                                Expanded(
-                                  key: Key('Preview'),
-                                  child: DecoratedBox(
-                                    decoration: style.background,
-                                    child: FittedBox(
-                                      fit: BoxFit.contain,
-                                      child: Builder(
-                                        key: Key(DevicePreview.of(context)
-                                            .device
-                                            .name),
-                                        builder: (context) => preview,
-                                      ),
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 400),
+        child: _availableDevices == null
+            ? _DevicePreviewLoader()
+            : DevicePreviewTheme(
+                style: style,
+                child: Localizations(
+                  locale: locale,
+                  delegates: [
+                    GlobalCupertinoLocalizations.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                  ],
+                  child: DevicePreviewProvider(
+                    key: _appKey,
+                    data: _data,
+                    isVirtualKeyboardVisible: _isVirtualKeyboardVisible,
+                    mediaQuery: DevicePreview._mediaQuery(context),
+                    availableDevices: _availableDevices,
+                    child: MediaQueryObserver(
+                      child: DecoratedBox(
+                        decoration: style.background,
+                        child: Overlay(
+                          initialEntries: [
+                            OverlayEntry(
+                              builder: (context) {
+                                return Stack(
+                                  children: <Widget>[
+                                    Positioned.fill(
+                                      left: style.toolBar.position ==
+                                              DevicePreviewToolBarPosition.left
+                                          ? DevicePreviewVerticalToolBar.width(
+                                                  context) -
+                                              12
+                                          : 0,
+                                      right: style.toolBar.position ==
+                                              DevicePreviewToolBarPosition.right
+                                          ? DevicePreviewVerticalToolBar.width(
+                                                  context) -
+                                              12
+                                          : 0,
+                                      top: style.toolBar.position ==
+                                              DevicePreviewToolBarPosition.top
+                                          ? DevicePreviewHorizontalToolBar
+                                                  .height(context) -
+                                              12
+                                          : 0,
+                                      bottom: style.toolBar.position ==
+                                              DevicePreviewToolBarPosition
+                                                  .bottom
+                                          ? DevicePreviewHorizontalToolBar
+                                                  .height(context) -
+                                              12
+                                          : 0,
+                                      key: Key('Preview'),
+                                      child: isEnabled
+                                          ? Builder(
+                                              builder: _buildPreview,
+                                            )
+                                          : Builder(
+                                              builder: widget.builder,
+                                            ),
                                     ),
-                                  ),
-                                ),
-                                if (widget.isToolBarVisible &&
-                                    !isToolBarDirectionInverted)
-                                  isToolBarHorizontal
-                                      ? DevicePreviewHorizontalToolBar(
+                                    if (widget.isToolBarVisible &&
+                                        style.toolBar.position ==
+                                            DevicePreviewToolBarPosition.bottom)
+                                      Positioned(
+                                        left: 0,
+                                        bottom: 0,
+                                        right: 0,
+                                        child: DevicePreviewHorizontalToolBar(
                                           key: Key('HorizontalToolbar'),
-                                        )
-                                      : DevicePreviewVerticalToolBar(
+                                        ),
+                                      ),
+                                    if (widget.isToolBarVisible &&
+                                        style.toolBar.position ==
+                                            DevicePreviewToolBarPosition.top)
+                                      Positioned(
+                                        left: 0,
+                                        top: 0,
+                                        right: 0,
+                                        child: DevicePreviewHorizontalToolBar(
+                                          key: Key('HorizontalToolbar'),
+                                        ),
+                                      ),
+                                    if (widget.isToolBarVisible &&
+                                        style.toolBar.position ==
+                                            DevicePreviewToolBarPosition.right)
+                                      Positioned(
+                                        bottom: 0,
+                                        top: 0,
+                                        right: 0,
+                                        child: DevicePreviewVerticalToolBar(
                                           key: Key('VerticalToolbar'),
                                         ),
-                              ],
+                                      ),
+                                    if (widget.isToolBarVisible &&
+                                        style.toolBar.position ==
+                                            DevicePreviewToolBarPosition.left)
+                                      Positioned(
+                                        bottom: 0,
+                                        top: 0,
+                                        left: 0,
+                                        child: DevicePreviewVerticalToolBar(
+                                          key: Key('VerticalToolbar'),
+                                        ),
+                                      ),
+                                  ],
+                                );
+                              },
                             ),
-                          );
-                        },
-                      );
-                    },
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                );
-              }),
-            ],
-          ),
-        ),
+                ),
+              ),
       ),
     );
   }
@@ -601,16 +615,16 @@ class DevicePreviewState extends State<DevicePreview> {
   /// The repaint key used for rendering screenshots.
   final _repaintKey = GlobalKey();
 
+  bool _isVirtualKeyboardVisible = false;
+
+  List<DeviceInfo> _availableDevices;
+
   /// A stream that sends a new value each time the user takes
   /// a new screenshot.
   StreamController<DeviceScreenshot> _onScreenshot;
 
   /// The current application key (used for [restart]).
   UniqueKey _appKey = UniqueKey();
-
-  /// The currently selected device from the [availableDevices].
-  Device get _device => availableDevices[
-      math.min(_data.deviceIndex, availableDevices.length - 1)];
 
   /// The current configuration.
   DevicePreviewData _data;
@@ -621,14 +635,19 @@ class DevicePreviewState extends State<DevicePreview> {
   /// The default locale from the device.
   String get _defaultLocale => basicLocaleListResolution(
         WidgetsBinding.instance.window.locales,
-        widget.availablesLocales.map((x) => x.locale),
+        availablesLocales.map((x) => x.locale).toList(),
       )?.toString();
 
-  /// Load the configuration from the preferences (if no [data] provided by the user).
+  /// Load the configuration from the preferences (if no [data] was provided by the user).
   Future<void> _loadData() async {
-    var shouldSetState = false;
     DevicePreviewData data;
+
     try {
+      _availableDevices = await loadDevicesInfo(
+        context,
+        widget.devices ?? DevicePreview.defaultDevices,
+      );
+
       if (widget.data != null) {
         data = widget.data;
       } else if (widget.usePreferences) {
@@ -640,7 +659,6 @@ class DevicePreviewState extends State<DevicePreview> {
           data = data.copyWith(locale: _defaultLocale);
         }
         _data = data;
-        shouldSetState = true;
       }
 
       if (widget.style != null) {
@@ -648,30 +666,109 @@ class DevicePreviewState extends State<DevicePreview> {
       } else if (widget.usePreferences) {
         _style = await DevicePreviewStyleStorage.load();
       }
-
-      if (shouldSetState) {
-        setState(() {});
-      }
     } catch (e) {
       print(e);
+    } finally {
+      setState(() {});
     }
   }
 }
 
 class DevicePreviewProvider extends InheritedWidget {
   final DevicePreviewData data;
+  final List<DeviceInfo> availableDevices;
   final MediaQueryData mediaQuery;
-  final List<Device> availableDevices;
+  final bool isVirtualKeyboardVisible;
+  DeviceInfo get deviceInfo =>
+      availableDevices[math.min(data.deviceIndex, availableDevices.length - 1)];
+
+  static DevicePreviewProvider of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<DevicePreviewProvider>();
 
   DevicePreviewProvider({
     Key key,
     @required this.availableDevices,
-    @required this.mediaQuery,
     @required Widget child,
+    @required this.mediaQuery,
     @required this.data,
+    @required this.isVirtualKeyboardVisible,
   }) : super(key: key, child: child);
 
   @override
   bool updateShouldNotify(DevicePreviewProvider oldWidget) =>
-      oldWidget.data != data || mediaQuery != oldWidget.mediaQuery;
+      oldWidget.data != data ||
+      oldWidget.mediaQuery != mediaQuery ||
+      oldWidget.isVirtualKeyboardVisible != isVirtualKeyboardVisible;
+}
+
+class _DevicePreviewLoader extends StatefulWidget {
+  const _DevicePreviewLoader({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  __DevicePreviewLoaderState createState() => __DevicePreviewLoaderState();
+}
+
+class __DevicePreviewLoaderState extends State<_DevicePreviewLoader>
+    with SingleTickerProviderStateMixin {
+  static final _opacityTween = Tween<double>(begin: 1, end: 0);
+  Animation<double> animation;
+  AnimationController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+    animation = CurvedAnimation(
+      parent: controller,
+      curve: Curves.easeInOut,
+    );
+    controller.repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.black,
+      child: Opacity(
+        opacity: _opacityTween.evaluate(animation),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.perm_device_information,
+              color: Colors.white,
+              size: 48,
+            ),
+            SizedBox(height: 6),
+            Text(
+              'Device Preview',
+              style: Theme.of(context).textTheme.bodyText1.copyWith(
+                    color: Colors.white,
+                    fontSize: 10,
+                  ),
+            ),
+            SizedBox(height: 4),
+            Text(
+              'Loading',
+              style: Theme.of(context).textTheme.bodyText1.copyWith(
+                    color: Colors.white30,
+                    fontSize: 9,
+                  ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

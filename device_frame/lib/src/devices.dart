@@ -1,4 +1,14 @@
+import 'package:device_frame/device_frame.dart';
 import 'package:flutter/foundation.dart';
+
+enum DeviceType {
+  unknown,
+  phone,
+  tablet,
+  tv,
+  desktop,
+  laptop,
+}
 
 /// A unique identifier that represents a device.
 ///
@@ -8,13 +18,15 @@ import 'package:flutter/foundation.dart';
 /// * [DeviceFrame] to display the frame associated to one of identifiers.
 class DeviceIdentifier {
   final String name;
-  final String type;
+  final DeviceType type;
   final TargetPlatform platform;
 
   String get assetKey {
     final platformKey =
         platform.toString().replaceAll('${TargetPlatform}.', '').toLowerCase();
-    return 'packages/device_frame/assets/${platformKey}_${type}_${name}.svg';
+    final typeKey =
+        type.toString().replaceAll('${DeviceType}.', '').toLowerCase();
+    return 'packages/device_frame/assets/${platformKey}_${typeKey}_${name}.svg';
   }
 
   const DeviceIdentifier._(
@@ -52,43 +64,43 @@ class IosDevices {
 
   final iPhoneSE = const DeviceIdentifier._(
     TargetPlatform.iOS,
-    'iphone',
-    'se',
+    DeviceType.phone,
+    'iphone-se',
   );
 
   final iPhone11 = const DeviceIdentifier._(
     TargetPlatform.iOS,
-    'iphone',
-    '11',
+    DeviceType.phone,
+    'iphone-11',
   );
 
   final iPhone11Pro = const DeviceIdentifier._(
     TargetPlatform.iOS,
-    'iphone',
-    '11pro',
+    DeviceType.phone,
+    'iphone-11pro',
   );
 
   final iPhone11ProMax = const DeviceIdentifier._(
     TargetPlatform.iOS,
-    'iphone',
-    '11promax',
+    DeviceType.phone,
+    'iphone-11promax',
   );
 
   final iPadMini = const DeviceIdentifier._(
     TargetPlatform.iOS,
-    'ipad',
-    'mini',
+    DeviceType.tablet,
+    'ipad-mini',
   );
 
   final iPadPro129 = const DeviceIdentifier._(
     TargetPlatform.iOS,
-    'ipad',
-    'pro12-9',
+    DeviceType.tablet,
+    'ipad-pro12-9',
   );
 
   final iPadiPad = const DeviceIdentifier._(
     TargetPlatform.iOS,
-    'ipad',
+    DeviceType.tablet,
     'ipad',
   );
 
@@ -108,49 +120,49 @@ class AndroidDevices {
 
   final small = const DeviceIdentifier._(
     TargetPlatform.android,
-    'phone',
+    DeviceType.phone,
     'small',
   );
 
   final medium = const DeviceIdentifier._(
     TargetPlatform.android,
-    'phone',
+    DeviceType.phone,
     'medium',
   );
 
   final large = const DeviceIdentifier._(
     TargetPlatform.android,
-    'phone',
+    DeviceType.phone,
     'large',
   );
 
   final pixel3 = const DeviceIdentifier._(
     TargetPlatform.android,
-    'phone',
+    DeviceType.phone,
     'pixel3',
   );
 
   final samsungS8 = const DeviceIdentifier._(
     TargetPlatform.android,
-    'phone',
+    DeviceType.phone,
     'samsung-s8',
   );
 
   final samsungS20 = const DeviceIdentifier._(
     TargetPlatform.android,
-    'phone',
+    DeviceType.phone,
     'samsung-s20',
   );
 
   final samsungNote10Plus = const DeviceIdentifier._(
     TargetPlatform.android,
-    'phone',
+    DeviceType.phone,
     'samsung-note10plus',
   );
 
   final nexus9 = const DeviceIdentifier._(
     TargetPlatform.android,
-    'tablet',
+    DeviceType.tablet,
     'nexus9',
   );
 
@@ -171,13 +183,13 @@ class MacOsDevices {
 
   final iMacPro = const DeviceIdentifier._(
     TargetPlatform.macOS,
-    'imac',
-    'pro',
+    DeviceType.desktop,
+    'imac-pro',
   );
 
   final macbook = const DeviceIdentifier._(
     TargetPlatform.macOS,
-    'macbook',
+    DeviceType.laptop,
     'macbook',
   );
 
@@ -192,25 +204,25 @@ class WindowsDevices {
 
   final surface3 = const DeviceIdentifier._(
     TargetPlatform.windows,
-    'tablet',
+    DeviceType.tablet,
     'surface3',
   );
 
-  final screenWide = const DeviceIdentifier._(
+  final screen = const DeviceIdentifier._(
     TargetPlatform.windows,
+    DeviceType.desktop,
     'screen',
-    'wide',
   );
 
-  final screenSquare = const DeviceIdentifier._(
+  final dellXps13 = const DeviceIdentifier._(
     TargetPlatform.windows,
-    'screen',
-    'square',
+    DeviceType.laptop,
+    'dell-xps13',
   );
 
   List<DeviceIdentifier> get all => [
         surface3,
-        screenWide,
-        screenSquare,
+        screen,
+        dellXps13,
       ];
 }

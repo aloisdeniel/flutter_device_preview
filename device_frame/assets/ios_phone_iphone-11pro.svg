@@ -55,14 +55,14 @@
 <g clip-path="url(#clip5)">
 <circle cx="563.861" cy="73.9843" r="13.6476" fill="url(#paint11_radial)"/>
 <g opacity="0.387535" filter="url(#filter9_dd)">
-<circle cx="563.861" cy="73.9842" r="7.18294" fill="url(#paint12_radial)"/>
+<circle cx="563.861" cy="73.9842" r="7.18294" fill="url(#paint12_linear)"/>
 </g>
 <g filter="url(#filter10_f)">
 <ellipse cx="569.607" cy="72.1885" rx="4.30976" ry="5.38721" fill="#1C5894"/>
 </g>
 </g>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M690.281 73.9842V74.7025C690.281 94.6668 675.048 119.955 640 119.955H290.909C255.861 119.955 240.629 94.6668 240.629 74.7025V73.9842C240.629 64.7506 240.629 55.3086 224.108 55.3086H154.433C96.2047 55.3086 61.0551 90.4583 61.0551 148.687V1711.69C61.0551 1769.92 96.2047 1805.07 154.433 1805.07H775.758C833.986 1805.07 869.136 1769.92 869.136 1711.69V148.687C869.136 90.4583 833.986 55.3086 775.758 55.3086H706.801C690.281 55.3086 690.281 64.7506 690.281 73.9842Z" fill="#FF0000"/>
-<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="20" letter-spacing="0em"><tspan x="113" y="168.336">name: iPhone 11 Pro&#10;</tspan><tspan x="113" y="191.336">density: 3&#10;</tspan><tspan x="113" y="214.336">screen_size: 375x812&#10;</tspan><tspan x="113" y="237.336">safe_areas: 0,44,0,34|44,0,44,21</tspan></text>
+<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="20" letter-spacing="0em"><tspan x="113" y="168.336">name: iPhone 11 Pro&#10;</tspan><tspan x="113" y="191.336">density: 3&#10;</tspan><tspan x="113" y="214.336">screen_size: 375x812&#10;</tspan><tspan x="113" y="237.336">safe_areas: 0,44,0,34|44,0,44,21&#10;</tspan><tspan x="113" y="260.336">device_type: phone</tspan></text>
 <defs>
 <filter id="filter0_i" x="10.0562" y="4.30981" width="910.079" height="1851.76" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
@@ -270,10 +270,10 @@
 <stop stop-color="#434343"/>
 <stop offset="1" stop-color="#121212"/>
 </radialGradient>
-<radialGradient id="paint12_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(563.861 66.8013) rotate(90) scale(14.3659)">
+<linearGradient id="paint12_linear" x1="563.861" y1="52.4354" x2="563.861" y2="81.1672" gradientUnits="userSpaceOnUse">
 <stop stop-color="#2A4893"/>
 <stop offset="1" stop-color="#213054"/>
-</radialGradient>
+</linearGradient>
 <clipPath id="clip0">
 <rect width="918.698" height="1860.38" fill="white" transform="translate(5.74634)"/>
 </clipPath>

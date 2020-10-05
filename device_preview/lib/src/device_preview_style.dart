@@ -58,7 +58,6 @@ class DevicePreviewTheme extends InheritedWidget {
 abstract class DevicePreviewStyle with _$DevicePreviewStyle {
   const factory DevicePreviewStyle({
     @required BoxDecoration background,
-    @required bool hasFrameShadow,
     @required DevicePreviewToolBarStyle toolBar,
   }) = _DevicePreviewStyle;
 
@@ -66,7 +65,6 @@ abstract class DevicePreviewStyle with _$DevicePreviewStyle {
     DevicePreviewToolBarPosition position,
   }) =>
       DevicePreviewStyle(
-        hasFrameShadow: true,
         toolBar: DevicePreviewToolBarStyle.dark(position: position),
         background: BoxDecoration(
           gradient: LinearGradient(
@@ -82,7 +80,6 @@ abstract class DevicePreviewStyle with _$DevicePreviewStyle {
     DevicePreviewToolBarPosition position,
   }) =>
       DevicePreviewStyle(
-        hasFrameShadow: true,
         toolBar: DevicePreviewToolBarStyle.light(position: position),
         background: BoxDecoration(
           gradient: LinearGradient(

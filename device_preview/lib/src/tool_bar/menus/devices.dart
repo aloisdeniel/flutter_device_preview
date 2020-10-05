@@ -1,11 +1,12 @@
-import 'package:device_preview/src/devices/devices.dart';
 import 'package:device_preview/src/tool_bar/button.dart';
+import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../device_preview.dart';
 import '../../utilities/spacing.dart';
+import '../format.dart';
 
 class DevicesPopOver extends StatefulWidget {
   @override
@@ -35,9 +36,12 @@ class _DevicesPopOverState extends State<DevicesPopOver> {
   @override
   Widget build(BuildContext context) {
     final preview = DevicePreview.of(context);
-    final all =
-        preview.availableDevices.map((e) => e.platform).toSet().toList();
-    final selected = this.selected ?? [preview.device?.platform ?? all.first];
+    final all = preview.availableDevices
+        .map((e) => e.identifier.platform)
+        .toSet()
+        .toList();
+    final selected = this.selected ??
+        [preview.deviceInfo?.identifier?.platform ?? all.first];
 
     return GestureDetector(
       onPanDown: (_) {
@@ -59,15 +63,16 @@ class _DevicesPopOverState extends State<DevicesPopOver> {
           ),
           Expanded(
             child: ListView(
-              padding: EdgeInsets.all(10.0),
+              padding: EdgeInsets.all(10),
               children: preview.availableDevices
                   .where((x) =>
-                      selected.contains(x.platform) &&
+                      selected.contains(x.identifier.platform) &&
                       x.name
                           .replaceAll(' ', '')
                           .toLowerCase()
                           .contains(_searchedText))
-                  .map((e) => DeviceTile(e, () => preview.device = e))
+                  .map(
+                      (e) => DeviceTile(e, () => preview.device = e.identifier))
                   .toList(),
             ),
           ),
@@ -100,10 +105,10 @@ class PlatformSelector extends StatelessWidget {
         return FontAwesomeIcons.apple;
       case TargetPlatform.fuchsia:
         return FontAwesomeIcons.google;
-      /*case TargetPlatform.macOS:
+      case TargetPlatform.macOS:
         return FontAwesomeIcons.appleAlt;
       case TargetPlatform.windows:
-        return FontAwesomeIcons.windows;*/
+        return FontAwesomeIcons.windows;
       default:
         return FontAwesomeIcons.mobile;
     }
@@ -114,11 +119,12 @@ class PlatformSelector extends StatelessWidget {
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     final theme = Theme.of(context);
     return Container(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(10),
       color: toolBarStyle.backgroundColor,
       child: Row(
-        children: all
-            .map<Widget>((x) {
+        children: [
+          ...all.map<Widget>(
+            (x) {
               final isSelected = selected.contains(x);
               return ToolBarButton(
                 backgroundColor: isSelected ? theme.accentColor : null,
@@ -129,75 +135,24 @@ class PlatformSelector extends StatelessWidget {
                   onChanged([x]);
                 },
               );
-            })
-            .toList()
-            .spaced(horizontal: 8.0),
+            },
+          ).spaced(horizontal: 8),
+        ],
       ),
     );
   }
 }
 
 class DeviceTile extends StatelessWidget {
-  final Device device;
+  final DeviceInfo device;
   final GestureTapCallback onTap;
 
   DeviceTile(this.device, this.onTap);
 
-  IconData _icon() {
-    switch (device.type) {
-      case DeviceType.tablet:
-        return Icons.tablet_android;
-        break;
-      case DeviceType.watch:
-        return Icons.watch;
-        break;
-      case DeviceType.desktop:
-        return Icons.desktop_mac;
-        break;
-      case DeviceType.tv:
-        return Icons.tv;
-        break;
-      case DeviceType.freeform:
-        return Icons.photo_size_select_small;
-        break;
-      default:
-        return Icons.phone_android;
-        break;
-    }
-  }
-
-  String _type() {
-    switch (device.type) {
-      case DeviceType.tablet:
-        return 'Tablet';
-        break;
-      case DeviceType.watch:
-        return 'Watch';
-        break;
-      case DeviceType.desktop:
-        return 'Desktop';
-        break;
-      case DeviceType.tv:
-        return 'TV';
-        break;
-      case DeviceType.freeform:
-        return 'Freeform';
-        break;
-      default:
-        return 'Phone';
-        break;
-    }
-  }
-
-  String _description() {
-    if (device.type == DeviceType.freeform) return _type();
-    return '${_type()} - ${device.portrait.size.width}x${device.portrait.size.height} - @${device.portrait.devicePixelRatio}';
-  }
-
   @override
   Widget build(BuildContext context) {
     final preview = DevicePreview.of(context);
-    final isSelected = preview.device.name == device.name;
+    final isSelected = preview.deviceInfo.name == device.name;
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
 
     return GestureDetector(
@@ -206,14 +161,17 @@ class DeviceTile extends StatelessWidget {
         duration: const Duration(milliseconds: 100),
         color: isSelected ? Theme.of(context).primaryColor : Colors.transparent,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 12,
+            vertical: 10,
+          ),
           child: Row(
             children: <Widget>[
               Container(
                 width: 12,
                 child: Icon(
-                  _icon(),
-                  size: 12.0,
+                  device.identifier.typeIcon(),
+                  size: 12,
                   color: toolBarStyle.foregroundColor,
                 ),
               ),
@@ -226,12 +184,14 @@ class DeviceTile extends StatelessWidget {
                     Text(
                       device.name,
                       style: TextStyle(
-                          fontSize: 12.0, color: toolBarStyle.foregroundColor),
+                        fontSize: 12,
+                        color: toolBarStyle.foregroundColor,
+                      ),
                     ),
                     Text(
-                      _description(),
+                      device.identifier.typeLabel(),
                       style: TextStyle(
-                        fontSize: 11.0,
+                        fontSize: 11,
                         color: toolBarStyle.foregroundColor.withOpacity(0.5),
                       ),
                     ),
@@ -262,29 +222,38 @@ class DeviceSearchField extends StatelessWidget {
           height: 48,
           padding: const EdgeInsets.fromLTRB(10, 4, 10, 10),
           child: TextField(
-            style: TextStyle(color: toolBarStyle.foregroundColor, fontSize: 12),
+            style: TextStyle(
+              color: toolBarStyle.foregroundColor,
+              fontSize: 12,
+            ),
             controller: searchTEC,
             decoration: InputDecoration(
-                hintStyle:
-                    const TextStyle(color: Color(0xFFAAAAAA), fontSize: 12),
-                hintText: 'Search by device name...',
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 10,
+              hintStyle: const TextStyle(
+                color: Color(0xFFAAAAAA),
+                fontSize: 12,
+              ),
+              hintText: 'Search by device name...',
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 10,
+              ),
+              filled: true,
+              fillColor: toolBarStyle.foregroundColor.withOpacity(0.12),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
+              prefixIcon: const Icon(
+                FontAwesomeIcons.search,
+                size: 12,
+              ),
+              suffix: InkWell(
+                child: Icon(
+                  FontAwesomeIcons.times,
+                  size: 12,
+                  color: Theme.of(context).primaryColor,
                 ),
-                filled: true,
-                fillColor: toolBarStyle.foregroundColor.withOpacity(0.12),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                prefixIcon: const Icon(FontAwesomeIcons.search, size: 12),
-                suffix: InkWell(
-                  child: Icon(
-                    FontAwesomeIcons.times,
-                    size: 12,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                  onTap: onClear,
-                )),
+                onTap: onClear,
+              ),
+            ),
           ),
         ),
       ),

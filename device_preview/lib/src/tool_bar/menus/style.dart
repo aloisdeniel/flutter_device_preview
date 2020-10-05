@@ -139,24 +139,6 @@ class StylePopOver extends StatelessWidget {
               ),
           ],
         ),
-        _StyleTile(
-          title: 'Device shadow',
-          options: <Widget>[
-            _SelectBox(
-              isSelected: style.hasFrameShadow,
-              onTap: () {
-                preview.style = style.copyWith(
-                  hasFrameShadow: !style.hasFrameShadow,
-                );
-              },
-              child: Icon(
-                Icons.check,
-                color: style.toolBar.foregroundColor,
-                size: 11,
-              ),
-            ),
-          ],
-        ),
       ],
     );
   }

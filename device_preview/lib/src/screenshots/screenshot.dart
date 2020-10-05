@@ -1,12 +1,12 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:device_frame/device_frame.dart';
 import 'package:meta/meta.dart';
-import '../devices/devices.dart';
 
 /// A screenshot from a [device].
 class DeviceScreenshot {
   /// The device from which the screenshot was taken from.
-  final Device device;
+  final DeviceInfo device;
 
   /// The binary content of the resulting image file.
   final Uint8List bytes;

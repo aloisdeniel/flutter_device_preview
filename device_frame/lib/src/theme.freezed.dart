@@ -9,6 +9,7 @@ part of 'theme.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$DeviceFrameStyleTearOff {
   const _$DeviceFrameStyleTearOff();
 
@@ -20,15 +21,18 @@ class _$DeviceFrameStyleTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $DeviceFrameStyle = _$DeviceFrameStyleTearOff();
 
+/// @nodoc
 mixin _$DeviceFrameStyle {
   DeviceKeyboardStyle get keyboardStyle;
 
   $DeviceFrameStyleCopyWith<DeviceFrameStyle> get copyWith;
 }
 
+/// @nodoc
 abstract class $DeviceFrameStyleCopyWith<$Res> {
   factory $DeviceFrameStyleCopyWith(
           DeviceFrameStyle value, $Res Function(DeviceFrameStyle) then) =
@@ -38,6 +42,7 @@ abstract class $DeviceFrameStyleCopyWith<$Res> {
   $DeviceKeyboardStyleCopyWith<$Res> get keyboardStyle;
 }
 
+/// @nodoc
 class _$DeviceFrameStyleCopyWithImpl<$Res>
     implements $DeviceFrameStyleCopyWith<$Res> {
   _$DeviceFrameStyleCopyWithImpl(this._value, this._then);
@@ -68,6 +73,7 @@ class _$DeviceFrameStyleCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 abstract class _$DeviceFrameStyleCopyWith<$Res>
     implements $DeviceFrameStyleCopyWith<$Res> {
   factory _$DeviceFrameStyleCopyWith(
@@ -80,6 +86,7 @@ abstract class _$DeviceFrameStyleCopyWith<$Res>
   $DeviceKeyboardStyleCopyWith<$Res> get keyboardStyle;
 }
 
+/// @nodoc
 class __$DeviceFrameStyleCopyWithImpl<$Res>
     extends _$DeviceFrameStyleCopyWithImpl<$Res>
     implements _$DeviceFrameStyleCopyWith<$Res> {
@@ -102,6 +109,7 @@ class __$DeviceFrameStyleCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_DeviceFrameStyle
     with DiagnosticableTreeMixin
     implements _DeviceFrameStyle {
@@ -152,6 +160,7 @@ abstract class _DeviceFrameStyle implements DeviceFrameStyle {
   _$DeviceFrameStyleCopyWith<_DeviceFrameStyle> get copyWith;
 }
 
+/// @nodoc
 class _$DeviceKeyboardStyleTearOff {
   const _$DeviceKeyboardStyleTearOff();
 
@@ -172,9 +181,11 @@ class _$DeviceKeyboardStyleTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $DeviceKeyboardStyle = _$DeviceKeyboardStyleTearOff();
 
+/// @nodoc
 mixin _$DeviceKeyboardStyle {
   Color get backgroundColor;
   Color get button1BackgroundColor;
@@ -185,6 +196,7 @@ mixin _$DeviceKeyboardStyle {
   $DeviceKeyboardStyleCopyWith<DeviceKeyboardStyle> get copyWith;
 }
 
+/// @nodoc
 abstract class $DeviceKeyboardStyleCopyWith<$Res> {
   factory $DeviceKeyboardStyleCopyWith(
           DeviceKeyboardStyle value, $Res Function(DeviceKeyboardStyle) then) =
@@ -197,6 +209,7 @@ abstract class $DeviceKeyboardStyleCopyWith<$Res> {
       Color button2ForegroundColor});
 }
 
+/// @nodoc
 class _$DeviceKeyboardStyleCopyWithImpl<$Res>
     implements $DeviceKeyboardStyleCopyWith<$Res> {
   _$DeviceKeyboardStyleCopyWithImpl(this._value, this._then);
@@ -233,6 +246,7 @@ class _$DeviceKeyboardStyleCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 abstract class _$DeviceKeyboardStyleCopyWith<$Res>
     implements $DeviceKeyboardStyleCopyWith<$Res> {
   factory _$DeviceKeyboardStyleCopyWith(_DeviceKeyboardStyle value,
@@ -247,6 +261,7 @@ abstract class _$DeviceKeyboardStyleCopyWith<$Res>
       Color button2ForegroundColor});
 }
 
+/// @nodoc
 class __$DeviceKeyboardStyleCopyWithImpl<$Res>
     extends _$DeviceKeyboardStyleCopyWithImpl<$Res>
     implements _$DeviceKeyboardStyleCopyWith<$Res> {
@@ -285,6 +300,7 @@ class __$DeviceKeyboardStyleCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_DeviceKeyboardStyle
     with DiagnosticableTreeMixin
     implements _DeviceKeyboardStyle {

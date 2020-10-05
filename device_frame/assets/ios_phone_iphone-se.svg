@@ -144,7 +144,7 @@
 <rect x="64.0316" y="261.844" width="750.084" height="1317.22" rx="6.86053" fill="#222222"/>
 </g>
 <rect x="73.179" y="270.991" width="731.789" height="1298.93" fill="#FF0000"/>
-<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="20" letter-spacing="0em"><tspan x="106" y="319.336">name: iPhone SE&#10;</tspan><tspan x="106" y="342.336">density: 2&#10;</tspan><tspan x="106" y="365.336">screen_size: 320x568&#10;</tspan><tspan x="106" y="388.336">safe_areas: 0,20,0,0|0,20,0,0</tspan></text>
+<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="20" letter-spacing="0em"><tspan x="106" y="319.336">name: iPhone SE&#10;</tspan><tspan x="106" y="342.336">density: 2&#10;</tspan><tspan x="106" y="365.336">screen_size: 320x568&#10;</tspan><tspan x="106" y="388.336">safe_areas: 0,20,0,0|0,20,0,0&#10;</tspan><tspan x="106" y="411.336">device_type: phone</tspan></text>
 <defs>
 <filter id="filter0_ii" x="3.43027" y="580.858" width="6.86053" height="64.0316" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>

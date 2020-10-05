@@ -25,7 +25,7 @@
 <g clip-path="url(#clip0)">
 <circle cx="712.831" cy="33.2212" r="7.90979" fill="url(#paint3_radial)"/>
 <g opacity="0.387535" filter="url(#filter4_dd)">
-<circle cx="712.831" cy="33.2212" r="4.74588" fill="url(#paint4_radial)"/>
+<circle cx="712.831" cy="33.2212" r="4.74588" fill="url(#paint4_linear)"/>
 </g>
 <mask id="mask1" mask-type="alpha" maskUnits="userSpaceOnUse" x="708" y="28" width="10" height="10">
 <circle cx="712.831" cy="33.2212" r="4.74588" fill="white"/>
@@ -48,7 +48,7 @@
 <path d="M1444.01 1502.04C1429.33 1502.04 1417.44 1490.14 1417.44 1475.46V515.531C1417.44 509.205 1421.32 488.113 1425.71 466.397C1425.72 466.349 1430.04 466.34 1430.04 466.34V464.135C1430.04 464.135 1426.18 464.183 1426.19 464.135C1429.96 445.596 1434.05 426.641 1436.25 416.795C1437.39 411.696 1439.55 408.778 1444.01 408.778C1448.47 408.778 1450.63 411.623 1451.78 416.808C1453.94 426.508 1458.04 445.573 1461.82 464.135C1461.82 464.153 1458.38 464.135 1458.38 464.135V466.34C1458.38 466.34 1462.29 466.319 1462.29 466.34C1466.69 488.068 1470.59 509.212 1470.59 515.531V1475.46C1470.59 1490.14 1458.69 1502.04 1444.01 1502.04Z" fill="url(#paint6_radial)"/>
 <path d="M1444.01 1502.04C1429.33 1502.04 1417.44 1490.14 1417.44 1475.46V515.531C1417.44 509.205 1421.32 488.113 1425.71 466.397C1425.72 466.349 1430.04 466.34 1430.04 466.34V464.135C1430.04 464.135 1426.18 464.183 1426.19 464.135C1429.96 445.596 1434.05 426.641 1436.25 416.795C1437.39 411.696 1439.55 408.778 1444.01 408.778C1448.47 408.778 1450.63 411.623 1451.78 416.808C1453.94 426.508 1458.04 445.573 1461.82 464.135C1461.82 464.153 1458.38 464.135 1458.38 464.135V466.34C1458.38 466.34 1462.29 466.319 1462.29 466.34C1466.69 488.068 1470.59 509.212 1470.59 515.531V1475.46C1470.59 1490.14 1458.69 1502.04 1444.01 1502.04Z" fill="url(#paint7_linear)"/>
 </g>
-<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="20" letter-spacing="0em"><tspan x="85" y="109.336">name: iPad Pro (12.9-inch)&#10;</tspan><tspan x="85" y="132.336">density: 2&#10;</tspan><tspan x="85" y="155.336">screen_size: 1024x1366&#10;</tspan><tspan x="85" y="178.336">safe_areas: 0,24,0,20|0,24,0,20</tspan></text>
+<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="20" letter-spacing="0em"><tspan x="85" y="109.336">name: iPad Pro (12.9-inch)&#10;</tspan><tspan x="85" y="132.336">density: 2&#10;</tspan><tspan x="85" y="155.336">screen_size: 1024x1366&#10;</tspan><tspan x="85" y="178.336">safe_areas: 0,24,0,20|0,24,0,20&#10;</tspan><tspan x="85" y="201.336">device_type: tablet</tspan></text>
 <defs>
 <filter id="filter0_i" x="1254.18" y="0" width="78.4652" height="5.69505" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
@@ -176,10 +176,10 @@
 <stop stop-color="#434343"/>
 <stop offset="1" stop-color="#121212"/>
 </radialGradient>
-<radialGradient id="paint4_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(712.831 28.4753) rotate(90) scale(9.49175)">
+<linearGradient id="paint4_linear" x1="712.831" y1="18.9836" x2="712.831" y2="37.9671" gradientUnits="userSpaceOnUse">
 <stop stop-color="#2A4893"/>
 <stop offset="1" stop-color="#213054"/>
-</radialGradient>
+</linearGradient>
 <linearGradient id="paint5_linear" x1="1419.25" y1="427.49" x2="1470.59" y2="427.49" gradientUnits="userSpaceOnUse">
 <stop stop-color="#696969"/>
 <stop offset="0.142499" stop-color="#8A8A8A"/>

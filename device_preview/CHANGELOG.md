@@ -1,3 +1,11 @@
+## [0.5.0-prerelease] - 2020/10/05
+
+* New redesigned frames.
+* Added enabled switch.
+* Removed restart button
+* Fixed issues with conflicting global key.
+* Minor UI tweaks.
+
 ## 0.4.8
 
 - Fixed issues with MaterialLocalization.

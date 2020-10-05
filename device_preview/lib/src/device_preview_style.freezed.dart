@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named
+// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
 
 part of 'device_preview_style.dart';
 
@@ -9,44 +9,44 @@ part of 'device_preview_style.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$DevicePreviewStyleTearOff {
   const _$DevicePreviewStyleTearOff();
 
+// ignore: unused_element
   _DevicePreviewStyle call(
       {@required BoxDecoration background,
-      @required bool hasFrameShadow,
       @required DevicePreviewToolBarStyle toolBar}) {
     return _DevicePreviewStyle(
       background: background,
-      hasFrameShadow: hasFrameShadow,
       toolBar: toolBar,
     );
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $DevicePreviewStyle = _$DevicePreviewStyleTearOff();
 
+/// @nodoc
 mixin _$DevicePreviewStyle {
   BoxDecoration get background;
-  bool get hasFrameShadow;
   DevicePreviewToolBarStyle get toolBar;
 
   $DevicePreviewStyleCopyWith<DevicePreviewStyle> get copyWith;
 }
 
+/// @nodoc
 abstract class $DevicePreviewStyleCopyWith<$Res> {
   factory $DevicePreviewStyleCopyWith(
           DevicePreviewStyle value, $Res Function(DevicePreviewStyle) then) =
       _$DevicePreviewStyleCopyWithImpl<$Res>;
-  $Res call(
-      {BoxDecoration background,
-      bool hasFrameShadow,
-      DevicePreviewToolBarStyle toolBar});
+  $Res call({BoxDecoration background, DevicePreviewToolBarStyle toolBar});
 
   $DevicePreviewToolBarStyleCopyWith<$Res> get toolBar;
 }
 
+/// @nodoc
 class _$DevicePreviewStyleCopyWithImpl<$Res>
     implements $DevicePreviewStyleCopyWith<$Res> {
   _$DevicePreviewStyleCopyWithImpl(this._value, this._then);
@@ -58,16 +58,12 @@ class _$DevicePreviewStyleCopyWithImpl<$Res>
   @override
   $Res call({
     Object background = freezed,
-    Object hasFrameShadow = freezed,
     Object toolBar = freezed,
   }) {
     return _then(_value.copyWith(
       background: background == freezed
           ? _value.background
           : background as BoxDecoration,
-      hasFrameShadow: hasFrameShadow == freezed
-          ? _value.hasFrameShadow
-          : hasFrameShadow as bool,
       toolBar: toolBar == freezed
           ? _value.toolBar
           : toolBar as DevicePreviewToolBarStyle,
@@ -85,21 +81,20 @@ class _$DevicePreviewStyleCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 abstract class _$DevicePreviewStyleCopyWith<$Res>
     implements $DevicePreviewStyleCopyWith<$Res> {
   factory _$DevicePreviewStyleCopyWith(
           _DevicePreviewStyle value, $Res Function(_DevicePreviewStyle) then) =
       __$DevicePreviewStyleCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {BoxDecoration background,
-      bool hasFrameShadow,
-      DevicePreviewToolBarStyle toolBar});
+  $Res call({BoxDecoration background, DevicePreviewToolBarStyle toolBar});
 
   @override
   $DevicePreviewToolBarStyleCopyWith<$Res> get toolBar;
 }
 
+/// @nodoc
 class __$DevicePreviewStyleCopyWithImpl<$Res>
     extends _$DevicePreviewStyleCopyWithImpl<$Res>
     implements _$DevicePreviewStyleCopyWith<$Res> {
@@ -113,16 +108,12 @@ class __$DevicePreviewStyleCopyWithImpl<$Res>
   @override
   $Res call({
     Object background = freezed,
-    Object hasFrameShadow = freezed,
     Object toolBar = freezed,
   }) {
     return _then(_DevicePreviewStyle(
       background: background == freezed
           ? _value.background
           : background as BoxDecoration,
-      hasFrameShadow: hasFrameShadow == freezed
-          ? _value.hasFrameShadow
-          : hasFrameShadow as bool,
       toolBar: toolBar == freezed
           ? _value.toolBar
           : toolBar as DevicePreviewToolBarStyle,
@@ -130,27 +121,23 @@ class __$DevicePreviewStyleCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_DevicePreviewStyle
     with DiagnosticableTreeMixin
     implements _DevicePreviewStyle {
   const _$_DevicePreviewStyle(
-      {@required this.background,
-      @required this.hasFrameShadow,
-      @required this.toolBar})
+      {@required this.background, @required this.toolBar})
       : assert(background != null),
-        assert(hasFrameShadow != null),
         assert(toolBar != null);
 
   @override
   final BoxDecoration background;
   @override
-  final bool hasFrameShadow;
-  @override
   final DevicePreviewToolBarStyle toolBar;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DevicePreviewStyle(background: $background, hasFrameShadow: $hasFrameShadow, toolBar: $toolBar)';
+    return 'DevicePreviewStyle(background: $background, toolBar: $toolBar)';
   }
 
   @override
@@ -159,7 +146,6 @@ class _$_DevicePreviewStyle
     properties
       ..add(DiagnosticsProperty('type', 'DevicePreviewStyle'))
       ..add(DiagnosticsProperty('background', background))
-      ..add(DiagnosticsProperty('hasFrameShadow', hasFrameShadow))
       ..add(DiagnosticsProperty('toolBar', toolBar));
   }
 
@@ -170,9 +156,6 @@ class _$_DevicePreviewStyle
             (identical(other.background, background) ||
                 const DeepCollectionEquality()
                     .equals(other.background, background)) &&
-            (identical(other.hasFrameShadow, hasFrameShadow) ||
-                const DeepCollectionEquality()
-                    .equals(other.hasFrameShadow, hasFrameShadow)) &&
             (identical(other.toolBar, toolBar) ||
                 const DeepCollectionEquality().equals(other.toolBar, toolBar)));
   }
@@ -181,7 +164,6 @@ class _$_DevicePreviewStyle
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(background) ^
-      const DeepCollectionEquality().hash(hasFrameShadow) ^
       const DeepCollectionEquality().hash(toolBar);
 
   @override
@@ -192,22 +174,21 @@ class _$_DevicePreviewStyle
 abstract class _DevicePreviewStyle implements DevicePreviewStyle {
   const factory _DevicePreviewStyle(
       {@required BoxDecoration background,
-      @required bool hasFrameShadow,
       @required DevicePreviewToolBarStyle toolBar}) = _$_DevicePreviewStyle;
 
   @override
   BoxDecoration get background;
-  @override
-  bool get hasFrameShadow;
   @override
   DevicePreviewToolBarStyle get toolBar;
   @override
   _$DevicePreviewStyleCopyWith<_DevicePreviewStyle> get copyWith;
 }
 
+/// @nodoc
 class _$DevicePreviewToolBarStyleTearOff {
   const _$DevicePreviewToolBarStyleTearOff();
 
+// ignore: unused_element
   _DevicePreviewToolBarStyle call(
       {@required Color backgroundColor,
       @required Color foregroundColor,
@@ -224,9 +205,11 @@ class _$DevicePreviewToolBarStyleTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $DevicePreviewToolBarStyle = _$DevicePreviewToolBarStyleTearOff();
 
+/// @nodoc
 mixin _$DevicePreviewToolBarStyle {
   Color get backgroundColor;
   Color get foregroundColor;
@@ -237,6 +220,7 @@ mixin _$DevicePreviewToolBarStyle {
   $DevicePreviewToolBarStyleCopyWith<DevicePreviewToolBarStyle> get copyWith;
 }
 
+/// @nodoc
 abstract class $DevicePreviewToolBarStyleCopyWith<$Res> {
   factory $DevicePreviewToolBarStyleCopyWith(DevicePreviewToolBarStyle value,
           $Res Function(DevicePreviewToolBarStyle) then) =
@@ -249,6 +233,7 @@ abstract class $DevicePreviewToolBarStyleCopyWith<$Res> {
       DevicePreviewToolBarPosition position});
 }
 
+/// @nodoc
 class _$DevicePreviewToolBarStyleCopyWithImpl<$Res>
     implements $DevicePreviewToolBarStyleCopyWith<$Res> {
   _$DevicePreviewToolBarStyleCopyWithImpl(this._value, this._then);
@@ -285,6 +270,7 @@ class _$DevicePreviewToolBarStyleCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 abstract class _$DevicePreviewToolBarStyleCopyWith<$Res>
     implements $DevicePreviewToolBarStyleCopyWith<$Res> {
   factory _$DevicePreviewToolBarStyleCopyWith(_DevicePreviewToolBarStyle value,
@@ -299,6 +285,7 @@ abstract class _$DevicePreviewToolBarStyleCopyWith<$Res>
       DevicePreviewToolBarPosition position});
 }
 
+/// @nodoc
 class __$DevicePreviewToolBarStyleCopyWithImpl<$Res>
     extends _$DevicePreviewToolBarStyleCopyWithImpl<$Res>
     implements _$DevicePreviewToolBarStyleCopyWith<$Res> {
@@ -338,6 +325,7 @@ class __$DevicePreviewToolBarStyleCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_DevicePreviewToolBarStyle
     with DiagnosticableTreeMixin
     implements _DevicePreviewToolBarStyle {

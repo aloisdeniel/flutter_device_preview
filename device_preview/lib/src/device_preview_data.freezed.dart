@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named
+// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
 
 part of 'device_preview_data.dart';
 
@@ -12,13 +12,16 @@ DevicePreviewData _$DevicePreviewDataFromJson(Map<String, dynamic> json) {
   return _DevicePreviewData.fromJson(json);
 }
 
+/// @nodoc
 class _$DevicePreviewDataTearOff {
   const _$DevicePreviewDataTearOff();
 
+// ignore: unused_element
   _DevicePreviewData call(
       {Orientation orientation = Orientation.portrait,
       int deviceIndex = 0,
       String locale,
+      bool isEnabled = true,
       bool isFrameVisible = true,
       bool isDarkMode = false,
       bool boldText = false,
@@ -32,6 +35,7 @@ class _$DevicePreviewDataTearOff {
       orientation: orientation,
       deviceIndex: deviceIndex,
       locale: locale,
+      isEnabled: isEnabled,
       isFrameVisible: isFrameVisible,
       isDarkMode: isDarkMode,
       boldText: boldText,
@@ -43,15 +47,23 @@ class _$DevicePreviewDataTearOff {
       freeformSize: freeformSize,
     );
   }
+
+// ignore: unused_element
+  DevicePreviewData fromJson(Map<String, Object> json) {
+    return DevicePreviewData.fromJson(json);
+  }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $DevicePreviewData = _$DevicePreviewDataTearOff();
 
+/// @nodoc
 mixin _$DevicePreviewData {
   Orientation get orientation;
   int get deviceIndex;
   String get locale;
+  bool get isEnabled;
   bool get isFrameVisible;
   bool get isDarkMode;
   bool get boldText;
@@ -67,6 +79,7 @@ mixin _$DevicePreviewData {
   $DevicePreviewDataCopyWith<DevicePreviewData> get copyWith;
 }
 
+/// @nodoc
 abstract class $DevicePreviewDataCopyWith<$Res> {
   factory $DevicePreviewDataCopyWith(
           DevicePreviewData value, $Res Function(DevicePreviewData) then) =
@@ -75,6 +88,7 @@ abstract class $DevicePreviewDataCopyWith<$Res> {
       {Orientation orientation,
       int deviceIndex,
       String locale,
+      bool isEnabled,
       bool isFrameVisible,
       bool isDarkMode,
       bool boldText,
@@ -86,6 +100,7 @@ abstract class $DevicePreviewDataCopyWith<$Res> {
       @SizeJsonConverter() Size freeformSize});
 }
 
+/// @nodoc
 class _$DevicePreviewDataCopyWithImpl<$Res>
     implements $DevicePreviewDataCopyWith<$Res> {
   _$DevicePreviewDataCopyWithImpl(this._value, this._then);
@@ -99,6 +114,7 @@ class _$DevicePreviewDataCopyWithImpl<$Res>
     Object orientation = freezed,
     Object deviceIndex = freezed,
     Object locale = freezed,
+    Object isEnabled = freezed,
     Object isFrameVisible = freezed,
     Object isDarkMode = freezed,
     Object boldText = freezed,
@@ -116,6 +132,7 @@ class _$DevicePreviewDataCopyWithImpl<$Res>
       deviceIndex:
           deviceIndex == freezed ? _value.deviceIndex : deviceIndex as int,
       locale: locale == freezed ? _value.locale : locale as String,
+      isEnabled: isEnabled == freezed ? _value.isEnabled : isEnabled as bool,
       isFrameVisible: isFrameVisible == freezed
           ? _value.isFrameVisible
           : isFrameVisible as bool,
@@ -141,6 +158,7 @@ class _$DevicePreviewDataCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 abstract class _$DevicePreviewDataCopyWith<$Res>
     implements $DevicePreviewDataCopyWith<$Res> {
   factory _$DevicePreviewDataCopyWith(
@@ -151,6 +169,7 @@ abstract class _$DevicePreviewDataCopyWith<$Res>
       {Orientation orientation,
       int deviceIndex,
       String locale,
+      bool isEnabled,
       bool isFrameVisible,
       bool isDarkMode,
       bool boldText,
@@ -162,6 +181,7 @@ abstract class _$DevicePreviewDataCopyWith<$Res>
       @SizeJsonConverter() Size freeformSize});
 }
 
+/// @nodoc
 class __$DevicePreviewDataCopyWithImpl<$Res>
     extends _$DevicePreviewDataCopyWithImpl<$Res>
     implements _$DevicePreviewDataCopyWith<$Res> {
@@ -177,6 +197,7 @@ class __$DevicePreviewDataCopyWithImpl<$Res>
     Object orientation = freezed,
     Object deviceIndex = freezed,
     Object locale = freezed,
+    Object isEnabled = freezed,
     Object isFrameVisible = freezed,
     Object isDarkMode = freezed,
     Object boldText = freezed,
@@ -194,6 +215,7 @@ class __$DevicePreviewDataCopyWithImpl<$Res>
       deviceIndex:
           deviceIndex == freezed ? _value.deviceIndex : deviceIndex as int,
       locale: locale == freezed ? _value.locale : locale as String,
+      isEnabled: isEnabled == freezed ? _value.isEnabled : isEnabled as bool,
       isFrameVisible: isFrameVisible == freezed
           ? _value.isFrameVisible
           : isFrameVisible as bool,
@@ -220,6 +242,8 @@ class __$DevicePreviewDataCopyWithImpl<$Res>
 }
 
 @JsonSerializable()
+
+/// @nodoc
 class _$_DevicePreviewData
     with DiagnosticableTreeMixin
     implements _DevicePreviewData {
@@ -227,6 +251,7 @@ class _$_DevicePreviewData
       {this.orientation = Orientation.portrait,
       this.deviceIndex = 0,
       this.locale,
+      this.isEnabled = true,
       this.isFrameVisible = true,
       this.isDarkMode = false,
       this.boldText = false,
@@ -238,6 +263,7 @@ class _$_DevicePreviewData
       @SizeJsonConverter() this.freeformSize})
       : assert(orientation != null),
         assert(deviceIndex != null),
+        assert(isEnabled != null),
         assert(isFrameVisible != null),
         assert(isDarkMode != null),
         assert(boldText != null),
@@ -258,6 +284,9 @@ class _$_DevicePreviewData
   final int deviceIndex;
   @override
   final String locale;
+  @JsonKey(defaultValue: true)
+  @override
+  final bool isEnabled;
   @JsonKey(defaultValue: true)
   @override
   final bool isFrameVisible;
@@ -288,7 +317,7 @@ class _$_DevicePreviewData
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DevicePreviewData(orientation: $orientation, deviceIndex: $deviceIndex, locale: $locale, isFrameVisible: $isFrameVisible, isDarkMode: $isDarkMode, boldText: $boldText, disableAnimations: $disableAnimations, highContrast: $highContrast, accessibleNavigation: $accessibleNavigation, invertColors: $invertColors, textScaleFactor: $textScaleFactor, freeformSize: $freeformSize)';
+    return 'DevicePreviewData(orientation: $orientation, deviceIndex: $deviceIndex, locale: $locale, isEnabled: $isEnabled, isFrameVisible: $isFrameVisible, isDarkMode: $isDarkMode, boldText: $boldText, disableAnimations: $disableAnimations, highContrast: $highContrast, accessibleNavigation: $accessibleNavigation, invertColors: $invertColors, textScaleFactor: $textScaleFactor, freeformSize: $freeformSize)';
   }
 
   @override
@@ -299,6 +328,7 @@ class _$_DevicePreviewData
       ..add(DiagnosticsProperty('orientation', orientation))
       ..add(DiagnosticsProperty('deviceIndex', deviceIndex))
       ..add(DiagnosticsProperty('locale', locale))
+      ..add(DiagnosticsProperty('isEnabled', isEnabled))
       ..add(DiagnosticsProperty('isFrameVisible', isFrameVisible))
       ..add(DiagnosticsProperty('isDarkMode', isDarkMode))
       ..add(DiagnosticsProperty('boldText', boldText))
@@ -322,6 +352,9 @@ class _$_DevicePreviewData
                     .equals(other.deviceIndex, deviceIndex)) &&
             (identical(other.locale, locale) ||
                 const DeepCollectionEquality().equals(other.locale, locale)) &&
+            (identical(other.isEnabled, isEnabled) ||
+                const DeepCollectionEquality()
+                    .equals(other.isEnabled, isEnabled)) &&
             (identical(other.isFrameVisible, isFrameVisible) ||
                 const DeepCollectionEquality()
                     .equals(other.isFrameVisible, isFrameVisible)) &&
@@ -357,6 +390,7 @@ class _$_DevicePreviewData
       const DeepCollectionEquality().hash(orientation) ^
       const DeepCollectionEquality().hash(deviceIndex) ^
       const DeepCollectionEquality().hash(locale) ^
+      const DeepCollectionEquality().hash(isEnabled) ^
       const DeepCollectionEquality().hash(isFrameVisible) ^
       const DeepCollectionEquality().hash(isDarkMode) ^
       const DeepCollectionEquality().hash(boldText) ^
@@ -382,6 +416,7 @@ abstract class _DevicePreviewData implements DevicePreviewData {
       {Orientation orientation,
       int deviceIndex,
       String locale,
+      bool isEnabled,
       bool isFrameVisible,
       bool isDarkMode,
       bool boldText,
@@ -401,6 +436,8 @@ abstract class _DevicePreviewData implements DevicePreviewData {
   int get deviceIndex;
   @override
   String get locale;
+  @override
+  bool get isEnabled;
   @override
   bool get isFrameVisible;
   @override

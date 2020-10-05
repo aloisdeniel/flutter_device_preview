@@ -58,7 +58,7 @@
 <circle cx="456.781" cy="274.393" r="8.08552" fill="#D1D1D1" stroke="#B1B1B1" stroke-width="0.703089"/>
 </g>
 <path d="M380.847 289.72H2168.5V1317.55C2168.5 1321.02 2165.69 1323.84 2162.21 1323.84H387.131C383.66 1323.84 380.847 1321.02 380.847 1317.55V289.72Z" fill="#FF0000"/>
-<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="12.5692" letter-spacing="0em"><tspan x="400.329" y="328.54">name: iMac Pro&#10;</tspan><tspan x="400.329" y="343.54">density: 2&#10;</tspan><tspan x="400.329" y="358.54">screen_size: 1422x822</tspan></text>
+<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="12.5692" letter-spacing="0em"><tspan x="400.329" y="328.54">name: iMac Pro&#10;</tspan><tspan x="400.329" y="343.54">density: 2&#10;</tspan><tspan x="400.329" y="358.54">screen_size: 1422x822&#10;</tspan><tspan x="400.329" y="373.54">device_type: desktop</tspan></text>
 </g>
 <g clip-path="url(#clip2)">
 <g filter="url(#filter9_bdd)">

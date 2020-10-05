@@ -1,4 +1,4 @@
-export 'src/devices/devices.dart';
+export 'package:device_frame/device_frame.dart';
 export 'src/device_preview.dart';
 export 'src/device_preview_data.dart';
 export 'src/device_preview_style.dart';

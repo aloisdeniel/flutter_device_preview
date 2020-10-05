@@ -37,24 +37,26 @@ class VirtualKeyboard extends StatelessWidget {
     this.transitionDuration = const Duration(milliseconds: 400),
   }) : super(key: key);
 
+  static MediaQueryData mediaQuery(MediaQueryData mediaQuery) {
+    final insets = EdgeInsets.only(
+      bottom: _VirtualKeyboard.minHeight + mediaQuery.padding.bottom,
+    );
+    return mediaQuery.copyWith(
+      viewInsets: insets,
+      viewPadding: EdgeInsets.only(
+        top: max(insets.top, mediaQuery.padding.top),
+        left: max(insets.left, mediaQuery.padding.left),
+        right: max(insets.right, mediaQuery.padding.right),
+        bottom: max(insets.bottom, mediaQuery.padding.bottom),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    final insets = EdgeInsets.only(
-      bottom: _VirtualKeyboard.minHeight,
-    );
     return MediaQuery(
-      data: !isEnabled
-          ? mediaQuery
-          : mediaQuery.copyWith(
-              viewInsets: insets,
-              viewPadding: EdgeInsets.only(
-                top: max(insets.top, mediaQuery.padding.top),
-                left: max(insets.left, mediaQuery.padding.left),
-                right: max(insets.right, mediaQuery.padding.right),
-                bottom: max(insets.bottom, mediaQuery.padding.bottom),
-              ),
-            ),
+      data: !isEnabled ? mediaQuery : VirtualKeyboard.mediaQuery(mediaQuery),
       child: Stack(
         children: <Widget>[
           Positioned.fill(
@@ -67,7 +69,7 @@ class VirtualKeyboard extends StatelessWidget {
             child: AnimatedCrossFade(
               firstChild: SizedBox(),
               secondChild: _VirtualKeyboard(
-                height: _VirtualKeyboard.minHeight + mediaQuery.padding.bottom,
+                height: _VirtualKeyboard.minHeight,
               ),
               crossFadeState: isEnabled
                   ? CrossFadeState.showSecond
@@ -129,8 +131,13 @@ class _VirtualKeyboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = DeviceFrameTheme.of(context).keyboardStyle;
+    final mediaQuery = MediaQuery.of(context);
     return Container(
-      height: height,
+      height: height + mediaQuery.padding.bottom,
+      padding: EdgeInsets.only(
+        left: mediaQuery.padding.left,
+        right: mediaQuery.padding.right,
+      ),
       color: theme.backgroundColor,
       child: Column(
         children: <Widget>[

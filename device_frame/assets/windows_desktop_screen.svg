@@ -36,20 +36,20 @@
 <path fill-rule="evenodd" clip-rule="evenodd" d="M0 51.2356C0 22.9389 22.9373 0 51.233 0H2829.59C2857.88 0 2880.82 22.9421 2880.82 51.2356V1679.69C2880.82 1707.98 2857.89 1730.92 2829.59 1730.92H51.233C22.939 1730.92 0 1707.98 0 1679.69V51.2356Z" fill="url(#paint11_angular)"/>
 </g>
 <g filter="url(#filter6_di)">
-<path d="M10.0359 51.2358V1679.69C10.0359 1702.44 28.4805 1720.89 51.233 1720.89H2829.59C2852.34 1720.89 2870.79 1702.44 2870.79 1679.69V51.2358C2870.79 28.4863 2852.34 10.0361 2829.59 10.0361H51.233C28.48 10.0361 10.0359 28.4819 10.0359 51.2358Z" fill="url(#paint12_linear)"/>
+<path d="M10.0359 51.2349V1679.69C10.0359 1702.44 28.4805 1720.89 51.233 1720.89H2829.59C2852.34 1720.89 2870.79 1702.44 2870.79 1679.69V51.2349C2870.79 28.4853 2852.34 10.0352 2829.59 10.0352H51.233C28.48 10.0352 10.0359 28.4809 10.0359 51.2349Z" fill="url(#paint12_linear)"/>
 </g>
 <rect x="2554.39" y="1720.89" width="2.11282" height="10.0359" fill="#3F3F3F"/>
 <rect x="324.317" y="1720.89" width="2.11282" height="10.0359" fill="#3F3F3F"/>
 </g>
 </g>
-<rect x="88.2101" y="94.0205" width="2704.4" height="1521.23" fill="url(#paint13_linear)"/>
-<rect x="596" y="329" width="1690" height="32" fill="black"/>
-<path d="M2266.71 345L2271 349.292L2270.29 350L2266 345.708L2261.71 350L2261 349.292L2265.29 345L2261 340.708L2261.71 340L2266 344.292L2270.29 340L2271 340.708L2266.71 345Z" fill="white"/>
-<path d="M2223 340V350H2213V340H2223ZM2222 341.001H2214V348.999H2222V341.001Z" fill="white"/>
-<path d="M2175 344V345.001H2165V344H2175Z" fill="white"/>
-<rect x="596" y="361" width="1690" height="1020" fill="#131313"/>
-<path d="M596 361H2286V1381H596V361Z" fill="#FF0000"/>
-<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="13.471" letter-spacing="0em"><tspan x="629" y="402.604">name:Windows Screen&#10;</tspan><tspan x="629" y="418.604">density: 2&#10;</tspan><tspan x="629" y="434.604">screen_size: 1690x1020&#10;</tspan><tspan x="629" y="450.604">safe_areas: 0,0,0,0</tspan></text>
+<rect x="88.2101" y="94.0195" width="2704.4" height="1521.23" fill="url(#paint13_linear)"/>
+<rect x="502" y="270.486" width="1878" height="35.5598" fill="black"/>
+<path d="M2358.56 288.267L2363.33 293.037L2362.54 293.823L2357.78 289.054L2353.01 293.823L2352.22 293.037L2356.99 288.267L2352.22 283.498L2353.01 282.711L2357.78 287.48L2362.54 282.711L2363.33 283.498L2358.56 288.267Z" fill="white"/>
+<path d="M2309.99 282.711V293.823H2298.88V282.711H2309.99ZM2308.88 283.823H2299.99V292.711H2308.88V283.823Z" fill="white"/>
+<path d="M2256.65 287.154V288.267H2245.54V287.154H2256.65Z" fill="white"/>
+<rect x="502" y="306.047" width="1878" height="1133.47" fill="#131313"/>
+<path d="M502 306.047H2380V1439.51H502V306.047Z" fill="#FF0000"/>
+<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="14.9696" letter-spacing="0em"><tspan x="538.671" y="352.388">name:Windows Screen&#10;</tspan><tspan x="538.671" y="370.388">density: 2&#10;</tspan><tspan x="538.671" y="388.388">screen_size: 1690x1020&#10;</tspan><tspan x="538.671" y="406.388">safe_areas: 0,0,0,0&#10;</tspan><tspan x="538.671" y="424.388">device_type: desktop</tspan></text>
 </g>
 <defs>
 <filter id="filter0_iii" x="1001.05" y="2001.97" width="60.9305" height="6.21891" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
@@ -153,7 +153,7 @@
 <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.253255 0"/>
 <feBlend mode="normal" in2="shape" result="effect1_innerShadow"/>
 </filter>
-<filter id="filter6_di" x="9.50768" y="9.50793" width="2861.81" height="1711.91" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<filter id="filter6_di" x="9.50768" y="9.50695" width="2861.81" height="1711.91" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
 <feOffset/>
@@ -259,11 +259,11 @@
 <stop offset="0.95123" stop-color="#BFBFBF"/>
 <stop offset="1" stop-color="#BFBFBF"/>
 </radialGradient>
-<linearGradient id="paint12_linear" x1="1712.42" y1="-211.226" x2="1556.61" y2="836.726" gradientUnits="userSpaceOnUse">
+<linearGradient id="paint12_linear" x1="1712.42" y1="-211.227" x2="1556.61" y2="836.725" gradientUnits="userSpaceOnUse">
 <stop stop-color="#2C2C2C"/>
 <stop offset="1" stop-color="#1B1B1B"/>
 </linearGradient>
-<linearGradient id="paint13_linear" x1="1440.41" y1="94.0205" x2="1440.41" y2="1615.25" gradientUnits="userSpaceOnUse">
+<linearGradient id="paint13_linear" x1="1440.41" y1="94.0195" x2="1440.41" y2="1615.25" gradientUnits="userSpaceOnUse">
 <stop stop-color="#221D29"/>
 <stop offset="1" stop-color="#293251"/>
 </linearGradient>

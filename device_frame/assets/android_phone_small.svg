@@ -3,7 +3,7 @@
 <path fill-rule="evenodd" clip-rule="evenodd" d="M305.784 0H45.4765C25.6744 0 0 12.6686 0 45.8035V616.98C0 632.01 8.50159 661.5 42.8431 661.5H154.682C155.505 660.89 156.969 660 158.508 660H192.374C193.729 660 195.097 660.89 195.875 661.5H305.784C340.431 661.5 350.457 633.353 350.457 618.825V44.4706C350.457 25.9378 339.503 0 305.784 0Z" fill="url(#paint0_radial)"/>
 </g>
 <g filter="url(#filter1_iiii)">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M45.4355 3.55127C57.3681 3.55127 146.091 3.55127 304.919 3.55127C338.455 3.55127 348.095 28.5445 348.095 46.9238C348.095 58.7607 348.095 196.197 348.095 620.5C348.095 634.908 339.01 660.424 304.919 660.424C297.778 660.424 207.048 660.424 45.4355 660.424C11.6436 660.424 3.24762 633.464 3.24762 618.559C3.24762 204.301 3.24762 68.0637 3.24762 46.9238C3.24762 14.0633 25.9503 3.55127 45.4355 3.55127Z" fill="black"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M45.4355 3.55127C57.3681 3.55127 146.091 3.55127 304.919 3.55127C338.455 3.55127 348.095 28.5445 348.095 46.9238C348.095 58.7607 348.095 196.197 348.095 620.5C348.095 634.908 339.01 660.424 304.919 660.424C297.778 660.424 207.048 660.424 45.4355 660.424C11.6437 660.424 3.24765 633.464 3.24765 618.559C3.24765 204.301 3.24765 68.0637 3.24765 46.9238C3.24765 14.0633 25.9504 3.55127 45.4355 3.55127Z" fill="black"/>
 </g>
 <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="10" width="57" height="638">
 <rect y="10.3335" width="56.392" height="637.667" fill="url(#paint1_linear)"/>
@@ -49,7 +49,7 @@
 <ellipse cx="111.368" cy="29.3913" rx="1.1123" ry="1.08128" fill="white"/>
 </g>
 <rect x="15.6769" y="52.4312" width="320" height="569" rx="8" fill="#FF0000"/>
-<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="10.9388" letter-spacing="0em"><tspan x="36.1146" y="82.6886">name: Small Phone&#10;</tspan><tspan x="36.1146" y="95.6886">density: 2&#10;</tspan><tspan x="36.1146" y="108.689">screen_size: 320x569&#10;</tspan><tspan x="36.1146" y="121.689">safe_areas: 0,24,0,0|0,24,0,0</tspan></text>
+<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="10.9388" letter-spacing="0em"><tspan x="36.1146" y="82.6886">name: Small Phone&#10;</tspan><tspan x="36.1146" y="95.6886">density: 2&#10;</tspan><tspan x="36.1146" y="108.689">screen_size: 320x569&#10;</tspan><tspan x="36.1146" y="121.689">safe_areas: 0,24,0,0|0,24,0,0&#10;</tspan><tspan x="36.1146" y="134.689">device_type: phone</tspan></text>
 <defs>
 <filter id="filter0_i" x="0" y="0" width="350.457" height="661.5" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
@@ -61,7 +61,7 @@
 <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.3 0"/>
 <feBlend mode="normal" in2="shape" result="effect1_innerShadow"/>
 </filter>
-<filter id="filter1_iiii" x="3.24762" y="3.55127" width="344.847" height="657.168" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<filter id="filter1_iiii" x="3.24765" y="3.55127" width="344.847" height="657.168" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>

@@ -105,7 +105,7 @@
 </g>
 </g>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M838.106 25.709H73.1248C21.6723 25.709 21.6757 32.3857 21.6966 74.4971C21.6971 75.3618 21.6975 76.2416 21.6975 77.1365V1806.39C21.6975 1807.28 21.6971 1808.16 21.6966 1809.03C21.6757 1851.14 21.6723 1857.81 73.1248 1857.81H838.106C889.558 1857.81 889.555 1851.14 889.534 1809.03C889.533 1808.16 889.533 1807.28 889.533 1806.39V77.1365C889.533 76.2415 889.533 75.3618 889.534 74.497C889.555 32.3857 889.558 25.709 838.106 25.709ZM455.615 96.8234C469.262 96.8234 480.324 85.7606 480.324 72.1141C480.324 58.4675 469.262 47.4048 455.615 47.4048C441.969 47.4048 430.906 58.4675 430.906 72.1141C430.906 85.7606 441.969 96.8234 455.615 96.8234Z" fill="#FF0000"/>
-<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="20" letter-spacing="0em"><tspan x="59" y="177.336">name: Samsung Galaxy Note 10 Plus&#10;</tspan><tspan x="59" y="200.336">density: 3&#10;</tspan><tspan x="59" y="223.336">screen_size: 480x1014&#10;</tspan><tspan x="59" y="246.336">safe_areas: 0,48,0,0|48,24,48,0</tspan></text>
+<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="20" letter-spacing="0em"><tspan x="59" y="177.336">name: Samsung Galaxy Note 10 Plus&#10;</tspan><tspan x="59" y="200.336">density: 3&#10;</tspan><tspan x="59" y="223.336">screen_size: 480x1014&#10;</tspan><tspan x="59" y="246.336">safe_areas: 0,48,0,0|48,24,48,0&#10;</tspan><tspan x="59" y="269.336">device_type: phone</tspan></text>
 <defs>
 <filter id="filter0_iiiiiiii" x="6.02686" y="-1.41066" width="899.177" height="1903.82" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
