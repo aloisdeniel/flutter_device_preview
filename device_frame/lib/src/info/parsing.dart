@@ -42,7 +42,7 @@ Future<DeviceInfo> parseFrameDocument(
 
   final infoNode = document.descendants.firstWhere(
     (node) =>
-        node is XmlElement && node.name.toString().toLowerCase() == "text",
+        node is XmlElement && node.name.toString().toLowerCase() == 'text',
     orElse: () => throw Exception(
       'The svg image should have a "text" node that defines device metadata',
     ),
@@ -69,7 +69,7 @@ Future<DeviceInfo> parseFrameDocument(
   var screenNode = document.descendants.firstWhere(
     (node) {
       return node is XmlElement &&
-          node.name.toString().toLowerCase() == "path" &&
+          node.name.toString().toLowerCase() == 'path' &&
           node.getAttribute('fill')?.toString() == '#FF0000';
     },
     orElse: () => null,
@@ -83,7 +83,7 @@ Future<DeviceInfo> parseFrameDocument(
     screenNode = document.descendants.firstWhere(
       (node) {
         return node is XmlElement &&
-            node.name.toString().toLowerCase() == "rect" &&
+            node.name.toString().toLowerCase() == 'rect' &&
             node.getAttribute('fill')?.toString() == '#FF0000';
       },
       orElse: () => throw Exception(
@@ -110,7 +110,7 @@ Future<DeviceInfo> parseFrameDocument(
   // Moving defs at first position
   final defs = document.descendants.firstWhere(
     (node) {
-      return node is XmlElement && node.name.toString() == "defs";
+      return node is XmlElement && node.name.toString() == 'defs';
     },
     orElse: () => null,
   );

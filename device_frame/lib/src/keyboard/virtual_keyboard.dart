@@ -89,13 +89,13 @@ class _VirtualKeyboard extends StatelessWidget {
 
   const _VirtualKeyboard({
     double height,
-  }) : this.height = height ?? minHeight;
+  }) : height = height ?? minHeight;
 
   Widget _row(List<Widget> children) {
     return Padding(
       padding: const EdgeInsets.only(
-        top: 12.0,
-        left: 12.0,
+        top: 12,
+        left: 12,
       ),
       child: Row(
         children: children,

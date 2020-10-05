@@ -667,8 +667,10 @@ class DevicePreviewState extends State<DevicePreview> {
         _style = await DevicePreviewStyleStorage.load();
       }
     } catch (e) {
-      print(e);
+      print('Error while loading data: $e');
     } finally {
+      _data ??= DevicePreviewData();
+      _style ??= DevicePreviewStyle.dark();
       setState(() {});
     }
   }

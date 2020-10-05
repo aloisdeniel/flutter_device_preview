@@ -10,7 +10,6 @@ void main() {
   debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
 
   runApp(DevicePreview(
-    enabled: false,
     availableLocales: GalleryLocalizations.supportedLocales,
     builder: (context) => StarterApp(),
   ));
