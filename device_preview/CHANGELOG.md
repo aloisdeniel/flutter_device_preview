@@ -1,3 +1,7 @@
+## [0.5.0-prerelease.2] - 2020/10/06
+
+* Added linux devices.
+
 ## [0.5.0-prerelease] - 2020/10/05
 
 * New redesigned frames.

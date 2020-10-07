@@ -18,10 +18,10 @@ class StylePopOver extends StatelessWidget {
     return ListView(
       padding: EdgeInsets.all(10),
       children: [
-        _StyleTile(
+        WrapOptionsTile(
           title: 'Background theme',
           options: <Widget>[
-            _SelectBox(
+            SelectBox(
               isSelected: style.background == lightBackground.background,
               onTap: () => preview.style =
                   style.copyWith(background: lightBackground.background),
@@ -29,7 +29,7 @@ class StylePopOver extends StatelessWidget {
                 decoration: lightBackground.background,
               ),
             ),
-            _SelectBox(
+            SelectBox(
               isSelected: style.background == darkBackground.background,
               onTap: () => preview.style =
                   style.copyWith(background: darkBackground.background),
@@ -39,10 +39,10 @@ class StylePopOver extends StatelessWidget {
             ),
           ],
         ),
-        _StyleTile(
+        WrapOptionsTile(
           title: 'Toolbar theme',
           options: <Widget>[
-            _SelectBox(
+            SelectBox(
               isSelected: style.toolBar.backgroundColor ==
                   darkBackground.toolBar.backgroundColor,
               onTap: () => preview.style = style.copyWith(
@@ -53,7 +53,7 @@ class StylePopOver extends StatelessWidget {
                 decoration: lightBackground.background,
               ),
             ),
-            _SelectBox(
+            SelectBox(
               isSelected: style.toolBar.backgroundColor ==
                   lightBackground.toolBar.backgroundColor,
               onTap: () => preview.style = style.copyWith(
@@ -66,12 +66,12 @@ class StylePopOver extends StatelessWidget {
             ),
           ],
         ),
-        _StyleTile(
+        WrapOptionsTile(
           title: 'Toolbar position',
           options: <Widget>[
             if (DevicePreviewTheme.isPositionAvailableForWidth(
                 DevicePreviewToolBarPosition.left, media.size.width))
-              _SelectBox(
+              SelectBox(
                 isSelected:
                     style.toolBar.position == DevicePreviewToolBarPosition.left,
                 onTap: () {
@@ -88,7 +88,7 @@ class StylePopOver extends StatelessWidget {
               ),
             if (DevicePreviewTheme.isPositionAvailableForWidth(
                 DevicePreviewToolBarPosition.top, media.size.width))
-              _SelectBox(
+              SelectBox(
                 isSelected:
                     style.toolBar.position == DevicePreviewToolBarPosition.top,
                 onTap: () {
@@ -105,7 +105,7 @@ class StylePopOver extends StatelessWidget {
               ),
             if (DevicePreviewTheme.isPositionAvailableForWidth(
                 DevicePreviewToolBarPosition.right, media.size.width))
-              _SelectBox(
+              SelectBox(
                 isSelected: style.toolBar.position ==
                     DevicePreviewToolBarPosition.right,
                 onTap: () {
@@ -122,7 +122,7 @@ class StylePopOver extends StatelessWidget {
               ),
             if (DevicePreviewTheme.isPositionAvailableForWidth(
                 DevicePreviewToolBarPosition.bottom, media.size.width))
-              _SelectBox(
+              SelectBox(
                 isSelected: style.toolBar.position ==
                     DevicePreviewToolBarPosition.bottom,
                 onTap: () {
@@ -144,11 +144,11 @@ class StylePopOver extends StatelessWidget {
   }
 }
 
-class _StyleTile extends StatelessWidget {
+class WrapOptionsTile extends StatelessWidget {
   final String title;
   final List<Widget> options;
 
-  _StyleTile({
+  WrapOptionsTile({
     @required this.title,
     @required this.options,
   });
@@ -182,12 +182,12 @@ class _StyleTile extends StatelessWidget {
   }
 }
 
-class _SelectBox extends StatelessWidget {
+class SelectBox extends StatelessWidget {
   final bool isSelected;
   final GestureTapCallback onTap;
   final Widget child;
 
-  const _SelectBox({
+  const SelectBox({
     @required this.isSelected,
     @required this.onTap,
     @required this.child,

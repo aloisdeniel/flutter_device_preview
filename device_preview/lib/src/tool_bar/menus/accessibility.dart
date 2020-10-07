@@ -8,12 +8,15 @@ class AccessibilityPopOver extends StatelessWidget {
   Widget build(BuildContext context) {
     final preview = DevicePreview.of(context);
     return ListView(
-      padding: EdgeInsets.all(10.0),
+      padding: EdgeInsets.all(10),
       children: [
-        AccessibilityTextScaleTile(
+        SliderTile(
           title: 'Text scale factor',
           value: preview.textScaleFactor,
           onValueChanged: (v) => preview.textScaleFactor = v,
+          min: 0.25,
+          max: 3,
+          divisions: 11,
         ),
         AccessibilityCheckTile(
           title: 'Invert colors',
@@ -99,72 +102,6 @@ class AccessibilityCheckTile extends StatelessWidget {
   }
 }
 
-class AccessibilityTextScaleTile extends StatelessWidget {
-  final String title;
-  final double value;
-  final ValueChanged<double> onValueChanged;
-
-  AccessibilityTextScaleTile({
-    @required this.title,
-    @required this.value,
-    @required this.onValueChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
-
-    return Material(
-      color: Colors.transparent,
-      child: GestureDetector(
-        onTap: () => onValueChanged(value == 2.0 ? 1.0 : (value + 0.5)),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 100),
-          color: Colors.transparent,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        title,
-                        style: TextStyle(
-                          fontSize: 12.0,
-                          color: toolBarStyle.foregroundColor,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      value?.toString() ?? '',
-                      style: TextStyle(
-                        fontSize: 12.0,
-                        color: toolBarStyle.foregroundColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(width: 12),
-                Slider(
-                  divisions: 11,
-                  value: value,
-                  onChanged: onValueChanged,
-                  min: 0.25,
-                  max: 3.0,
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _SelectBox extends StatelessWidget {
   final IconData icon;
   final bool value;
@@ -206,6 +143,82 @@ class _SelectBox extends StatelessWidget {
                 color: toolBarStyle.foregroundColor.withOpacity(0.3),
                 size: 11,
               ),
+      ),
+    );
+  }
+}
+
+class SliderTile extends StatelessWidget {
+  final String title;
+  final double value;
+  final double min;
+  final double max;
+  final int divisions;
+  final ValueChanged<double> onValueChanged;
+
+  const SliderTile({
+    @required this.title,
+    @required this.min,
+    @required this.max,
+    @required this.divisions,
+    @required this.value,
+    @required this.onValueChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
+    return Material(
+      color: Colors.transparent,
+      child: GestureDetector(
+        onTap: () {
+          final range = (max - min);
+          onValueChanged(
+            value == max ? range / 2 : (value + (range / divisions)),
+          );
+        },
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 100),
+          color: Colors.transparent,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: toolBarStyle.foregroundColor,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      value?.toString() ?? '',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: toolBarStyle.foregroundColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(width: 12),
+                Slider(
+                  divisions: divisions, // 11,
+                  value: value,
+                  onChanged: onValueChanged,
+                  min: min, //0.25,
+                  max: max, // 3.0,
+                )
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

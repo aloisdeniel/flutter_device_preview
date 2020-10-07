@@ -1,3 +1,11 @@
+## [0.3.0-prerelease4] - 2020/10/06
+
+* Fixed `loadDevicesInfo`.
+
+## [0.3.0-prerelease3] - 2020/10/06
+
+* Added linux devices.
+
 ## [0.3.0-prerelease2] - 2020/10/05
 
 * New redesigned frames.

@@ -25,10 +25,13 @@ Future<DeviceInfo> loadDeviceInfo(
 Future<List<DeviceInfo>> loadDevicesInfo(
   BuildContext context,
   List<DeviceIdentifier> devices,
-) {
-  return Future.wait(
-    devices.map((device) => loadDeviceInfo(context, device)),
-  );
+) async {
+  final result = <DeviceInfo>[];
+
+  for (var device in devices) {
+    result.add(await loadDeviceInfo(context, device));
+  }
+  return result;
 }
 
 /// Parse the [svgContent] associated to [identifier] and extract all

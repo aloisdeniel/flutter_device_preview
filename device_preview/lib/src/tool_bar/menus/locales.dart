@@ -93,12 +93,17 @@ class _LocaleToolsState extends State<LocaleTools> {
             decoration: InputDecoration(
               filled: true,
               fillColor: toolBarStyle.foregroundColor.withOpacity(0.12),
-              contentPadding:
-                  EdgeInsets.symmetric(vertical: 0, horizontal: 10.0),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4.0),
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 0,
+                horizontal: 10,
               ),
-              suffixIcon: Icon(Icons.search),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
+              suffixIcon: Icon(
+                Icons.search,
+                color: toolBarStyle.foregroundColor.withOpacity(0.12),
+              ),
             ),
             controller: controller,
             onChanged: widget.onFilterChanged,
@@ -132,12 +137,12 @@ class LocaleTile extends StatelessWidget {
               Text(
                 locale.name,
                 style: TextStyle(
-                    fontSize: 12.0, color: toolBarStyle.foregroundColor),
+                    fontSize: 12, color: toolBarStyle.foregroundColor),
               ),
               Text(
                 locale.code,
                 style: TextStyle(
-                  fontSize: 11.0,
+                  fontSize: 11,
                   color: toolBarStyle.foregroundColor.withOpacity(0.5),
                 ),
               ),

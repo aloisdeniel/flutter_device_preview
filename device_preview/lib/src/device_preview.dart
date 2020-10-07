@@ -9,8 +9,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'dart:ui' as ui;
-import 'dart:math' as math;
 
+import 'custom_device.dart';
 import 'device_preview_data.dart';
 import 'device_preview_style.dart';
 import 'locales/locales.dart';
@@ -103,6 +103,7 @@ class DevicePreview extends StatefulWidget {
     ...Devices.android.all,
     ...Devices.macos.all,
     ...Devices.windows.all,
+    ...Devices.linux.all,
   ];
 
   @override
@@ -117,11 +118,7 @@ class DevicePreview extends StatefulWidget {
   static DeviceInfo device(BuildContext context) {
     final provider =
         context.dependOnInheritedWidgetOfExactType<DevicePreviewProvider>();
-    if (provider != null) {
-      return provider.availableDevices[provider.data?.deviceIndex ?? 0];
-    }
-
-    return null;
+    return provider?.deviceInfo;
   }
 
   /// The currently selected [orientation], if the preview is [enabled], else `portrait`.
@@ -156,6 +153,12 @@ class DevicePreview extends StatefulWidget {
       child: Theme(
         data: Theme.of(context).copyWith(
           platform: provider?.deviceInfo?.identifier?.platform,
+          visualDensity: [
+            DeviceType.desktop,
+            DeviceType.laptop,
+          ].contains(provider?.deviceInfo?.identifier?.type)
+              ? VisualDensity.compact
+              : VisualDensity.comfortable,
           brightness:
               provider.data.isDarkMode ? Brightness.dark : Brightness.light,
         ),
@@ -170,7 +173,7 @@ class DevicePreview extends StatefulWidget {
 
     if (provider == null) return null;
 
-    final device = provider.availableDevices[provider.data?.deviceIndex ?? 0];
+    final device = provider?.deviceInfo;
     var mediaQuery = DeviceFrame.mediaQuery(
       context,
       device,
@@ -271,10 +274,21 @@ class DevicePreviewState extends State<DevicePreview> {
   bool get isFrameVisible => _data.isFrameVisible ?? true;
 
   /// The currently selected device from the [availableDevices].
-  DeviceInfo get deviceInfo => _availableDevices[math.min(
-        _data.deviceIndex,
-        _availableDevices.length - 1,
-      )];
+  DeviceInfo get deviceInfo {
+    if (data?.deviceIdentifier == 'custom_device') {
+      return CustomDeviceInfo(data?.customDevice);
+    }
+    return availableDevices.firstWhere(
+      (x) => x.identifier.assetKey == data?.deviceIdentifier,
+      orElse: () => availableDevices.first,
+    );
+  }
+
+  /// Indicate whether the current device is a custom one.
+  bool get isCustomDevice {
+    return deviceInfo?.identifier?.assetKey ==
+        CustomDeviceIdentifier.identifier;
+  }
 
   /// Set the [disableAnimations].
   set disableAnimations(bool value) {
@@ -376,7 +390,28 @@ class DevicePreviewState extends State<DevicePreview> {
   // Define the current active device.
   set device(DeviceIdentifier device) {
     _data = _data.copyWith(
-      deviceIndex: _availableDevices.indexWhere((x) => x.identifier == device),
+      deviceIdentifier: device.assetKey,
+    );
+    DevicePreviewStorage.save(_data, !widget.usePreferences);
+    if (isEnabled) {
+      setState(() {});
+    }
+  }
+
+  // Update the current custom device.
+  set customDevice(CustomDeviceInfoData data) {
+    _data = _data.copyWith(
+      customDevice: data,
+    );
+    DevicePreviewStorage.save(_data, !widget.usePreferences);
+    if (isEnabled) {
+      setState(() {});
+    }
+  }
+
+  void enableCustomDevice() {
+    _data = _data.copyWith(
+      deviceIdentifier: CustomDeviceIdentifier.identifier,
     );
     DevicePreviewStorage.save(_data, !widget.usePreferences);
     if (isEnabled) {
@@ -389,7 +424,7 @@ class DevicePreviewState extends State<DevicePreview> {
     RenderRepaintBoundary boundary =
         _repaintKey.currentContext.findRenderObject();
     final format = ui.ImageByteFormat.png;
-    final device = _availableDevices.elementAt(_data.deviceIndex);
+    final device = deviceInfo;
     final image = await boundary.toImage(
       pixelRatio: device.pixelRatio,
     );
@@ -421,10 +456,22 @@ class DevicePreviewState extends State<DevicePreview> {
   /// Change the simulated device frame visibility.
   void toggleFrame() => isFrameVisible = !isFrameVisible;
 
+  static final _defaultCustomDevice = CustomDeviceInfoData(
+    id: 'custom_device',
+    name: 'Custom',
+    pixelRatio: 2,
+    platform: TargetPlatform.android,
+    safeAreas: EdgeInsets.only(top: 20),
+    rotatedSafeAreas: EdgeInsets.only(top: 20),
+    screenSize: Size(512, 1024),
+    type: DeviceType.tablet,
+  );
+
   @override
   void initState() {
     _data = DevicePreviewData(
       locale: _defaultLocale,
+      customDevice: _defaultCustomDevice,
     );
 
     _loadData();
@@ -658,6 +705,11 @@ class DevicePreviewState extends State<DevicePreview> {
         if (data.locale == null) {
           data = data.copyWith(locale: _defaultLocale);
         }
+        if (data.customDevice == null) {
+          data = data.copyWith(
+            customDevice: _defaultCustomDevice,
+          );
+        }
         _data = data;
       }
 
@@ -681,8 +733,15 @@ class DevicePreviewProvider extends InheritedWidget {
   final List<DeviceInfo> availableDevices;
   final MediaQueryData mediaQuery;
   final bool isVirtualKeyboardVisible;
-  DeviceInfo get deviceInfo =>
-      availableDevices[math.min(data.deviceIndex, availableDevices.length - 1)];
+  DeviceInfo get deviceInfo {
+    if (data?.deviceIdentifier == CustomDeviceIdentifier.identifier) {
+      return CustomDeviceInfo(data?.customDevice);
+    }
+    return availableDevices.firstWhere(
+      (x) => x.identifier.assetKey == data?.deviceIdentifier,
+      orElse: () => availableDevices.first,
+    );
+  }
 
   static DevicePreviewProvider of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<DevicePreviewProvider>();
@@ -694,7 +753,10 @@ class DevicePreviewProvider extends InheritedWidget {
     @required this.mediaQuery,
     @required this.data,
     @required this.isVirtualKeyboardVisible,
-  }) : super(key: key, child: child);
+  }) : super(
+          key: key,
+          child: child,
+        );
 
   @override
   bool updateShouldNotify(DevicePreviewProvider oldWidget) =>

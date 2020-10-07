@@ -16,6 +16,7 @@
 	"settings": {
 		"editor.formatOnPaste": true,
 		"editor.formatOnSave": true,
-		"editor.formatOnType": true
+		"editor.formatOnType": true,
+		"dart.flutterSdkPath": "/Users/alois/Sources/flutter"
 	}
 }

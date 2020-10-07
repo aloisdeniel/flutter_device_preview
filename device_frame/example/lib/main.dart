@@ -20,6 +20,7 @@ class _ExampleAppState extends State<ExampleApp> {
     ...Devices.android.all,
     ...Devices.macos.all,
     ...Devices.windows.all,
+    ...Devices.linux.all,
   ];
   Orientation orientation = Orientation.portrait;
   Widget _frame(DeviceIdentifier id) => Center(

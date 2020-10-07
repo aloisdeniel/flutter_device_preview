@@ -18,10 +18,10 @@ class _$DevicePreviewDataTearOff {
 
 // ignore: unused_element
   _DevicePreviewData call(
-      {Orientation orientation = Orientation.portrait,
-      int deviceIndex = 0,
-      String locale,
-      bool isEnabled = true,
+      {bool isEnabled = true,
+      Orientation orientation = Orientation.portrait,
+      @nullable String deviceIdentifier,
+      String locale = 'en-US',
       bool isFrameVisible = true,
       bool isDarkMode = false,
       bool boldText = false,
@@ -30,12 +30,12 @@ class _$DevicePreviewDataTearOff {
       bool accessibleNavigation = false,
       bool invertColors = false,
       double textScaleFactor = 1.0,
-      @SizeJsonConverter() Size freeformSize}) {
+      @nullable CustomDeviceInfoData customDevice}) {
     return _DevicePreviewData(
-      orientation: orientation,
-      deviceIndex: deviceIndex,
-      locale: locale,
       isEnabled: isEnabled,
+      orientation: orientation,
+      deviceIdentifier: deviceIdentifier,
+      locale: locale,
       isFrameVisible: isFrameVisible,
       isDarkMode: isDarkMode,
       boldText: boldText,
@@ -44,7 +44,7 @@ class _$DevicePreviewDataTearOff {
       accessibleNavigation: accessibleNavigation,
       invertColors: invertColors,
       textScaleFactor: textScaleFactor,
-      freeformSize: freeformSize,
+      customDevice: customDevice,
     );
   }
 
@@ -60,20 +60,46 @@ const $DevicePreviewData = _$DevicePreviewDataTearOff();
 
 /// @nodoc
 mixin _$DevicePreviewData {
-  Orientation get orientation;
-  int get deviceIndex;
-  String get locale;
+  /// Indicate whether the device simulation is enabled.
   bool get isEnabled;
+
+  /// The current orientation of the device
+  Orientation get orientation;
+
+  /// The currently selected device.
+  @nullable
+  String get deviceIdentifier;
+
+  /// The currently selected device locale.
+  String get locale;
+
+  /// Indicate whether the frame is currently visible.
   bool get isFrameVisible;
+
+  /// Indicate whether the mode is currently dark.
   bool get isDarkMode;
+
+  /// Indicate whether texts are forced to bold.
   bool get boldText;
+
+  /// Indicate whether animations are disabled.
   bool get disableAnimations;
+
+  /// Indicate whether the highcontrast mode is activated.
   bool get highContrast;
+
+  /// Indicate whether the navigation is in accessible mode.
   bool get accessibleNavigation;
+
+  /// Indicate whether image colors are inverted.
   bool get invertColors;
+
+  /// The current text scaling factor.
   double get textScaleFactor;
-  @SizeJsonConverter()
-  Size get freeformSize;
+
+  /// The custom device configuration
+  @nullable
+  CustomDeviceInfoData get customDevice;
 
   Map<String, dynamic> toJson();
   $DevicePreviewDataCopyWith<DevicePreviewData> get copyWith;
@@ -85,10 +111,10 @@ abstract class $DevicePreviewDataCopyWith<$Res> {
           DevicePreviewData value, $Res Function(DevicePreviewData) then) =
       _$DevicePreviewDataCopyWithImpl<$Res>;
   $Res call(
-      {Orientation orientation,
-      int deviceIndex,
+      {bool isEnabled,
+      Orientation orientation,
+      @nullable String deviceIdentifier,
       String locale,
-      bool isEnabled,
       bool isFrameVisible,
       bool isDarkMode,
       bool boldText,
@@ -97,7 +123,9 @@ abstract class $DevicePreviewDataCopyWith<$Res> {
       bool accessibleNavigation,
       bool invertColors,
       double textScaleFactor,
-      @SizeJsonConverter() Size freeformSize});
+      @nullable CustomDeviceInfoData customDevice});
+
+  $CustomDeviceInfoDataCopyWith<$Res> get customDevice;
 }
 
 /// @nodoc
@@ -111,10 +139,10 @@ class _$DevicePreviewDataCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object orientation = freezed,
-    Object deviceIndex = freezed,
-    Object locale = freezed,
     Object isEnabled = freezed,
+    Object orientation = freezed,
+    Object deviceIdentifier = freezed,
+    Object locale = freezed,
     Object isFrameVisible = freezed,
     Object isDarkMode = freezed,
     Object boldText = freezed,
@@ -123,16 +151,17 @@ class _$DevicePreviewDataCopyWithImpl<$Res>
     Object accessibleNavigation = freezed,
     Object invertColors = freezed,
     Object textScaleFactor = freezed,
-    Object freeformSize = freezed,
+    Object customDevice = freezed,
   }) {
     return _then(_value.copyWith(
+      isEnabled: isEnabled == freezed ? _value.isEnabled : isEnabled as bool,
       orientation: orientation == freezed
           ? _value.orientation
           : orientation as Orientation,
-      deviceIndex:
-          deviceIndex == freezed ? _value.deviceIndex : deviceIndex as int,
+      deviceIdentifier: deviceIdentifier == freezed
+          ? _value.deviceIdentifier
+          : deviceIdentifier as String,
       locale: locale == freezed ? _value.locale : locale as String,
-      isEnabled: isEnabled == freezed ? _value.isEnabled : isEnabled as bool,
       isFrameVisible: isFrameVisible == freezed
           ? _value.isFrameVisible
           : isFrameVisible as bool,
@@ -152,9 +181,20 @@ class _$DevicePreviewDataCopyWithImpl<$Res>
       textScaleFactor: textScaleFactor == freezed
           ? _value.textScaleFactor
           : textScaleFactor as double,
-      freeformSize:
-          freeformSize == freezed ? _value.freeformSize : freeformSize as Size,
+      customDevice: customDevice == freezed
+          ? _value.customDevice
+          : customDevice as CustomDeviceInfoData,
     ));
+  }
+
+  @override
+  $CustomDeviceInfoDataCopyWith<$Res> get customDevice {
+    if (_value.customDevice == null) {
+      return null;
+    }
+    return $CustomDeviceInfoDataCopyWith<$Res>(_value.customDevice, (value) {
+      return _then(_value.copyWith(customDevice: value));
+    });
   }
 }
 
@@ -166,10 +206,10 @@ abstract class _$DevicePreviewDataCopyWith<$Res>
       __$DevicePreviewDataCopyWithImpl<$Res>;
   @override
   $Res call(
-      {Orientation orientation,
-      int deviceIndex,
+      {bool isEnabled,
+      Orientation orientation,
+      @nullable String deviceIdentifier,
       String locale,
-      bool isEnabled,
       bool isFrameVisible,
       bool isDarkMode,
       bool boldText,
@@ -178,7 +218,10 @@ abstract class _$DevicePreviewDataCopyWith<$Res>
       bool accessibleNavigation,
       bool invertColors,
       double textScaleFactor,
-      @SizeJsonConverter() Size freeformSize});
+      @nullable CustomDeviceInfoData customDevice});
+
+  @override
+  $CustomDeviceInfoDataCopyWith<$Res> get customDevice;
 }
 
 /// @nodoc
@@ -194,10 +237,10 @@ class __$DevicePreviewDataCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object orientation = freezed,
-    Object deviceIndex = freezed,
-    Object locale = freezed,
     Object isEnabled = freezed,
+    Object orientation = freezed,
+    Object deviceIdentifier = freezed,
+    Object locale = freezed,
     Object isFrameVisible = freezed,
     Object isDarkMode = freezed,
     Object boldText = freezed,
@@ -206,16 +249,17 @@ class __$DevicePreviewDataCopyWithImpl<$Res>
     Object accessibleNavigation = freezed,
     Object invertColors = freezed,
     Object textScaleFactor = freezed,
-    Object freeformSize = freezed,
+    Object customDevice = freezed,
   }) {
     return _then(_DevicePreviewData(
+      isEnabled: isEnabled == freezed ? _value.isEnabled : isEnabled as bool,
       orientation: orientation == freezed
           ? _value.orientation
           : orientation as Orientation,
-      deviceIndex:
-          deviceIndex == freezed ? _value.deviceIndex : deviceIndex as int,
+      deviceIdentifier: deviceIdentifier == freezed
+          ? _value.deviceIdentifier
+          : deviceIdentifier as String,
       locale: locale == freezed ? _value.locale : locale as String,
-      isEnabled: isEnabled == freezed ? _value.isEnabled : isEnabled as bool,
       isFrameVisible: isFrameVisible == freezed
           ? _value.isFrameVisible
           : isFrameVisible as bool,
@@ -235,8 +279,9 @@ class __$DevicePreviewDataCopyWithImpl<$Res>
       textScaleFactor: textScaleFactor == freezed
           ? _value.textScaleFactor
           : textScaleFactor as double,
-      freeformSize:
-          freeformSize == freezed ? _value.freeformSize : freeformSize as Size,
+      customDevice: customDevice == freezed
+          ? _value.customDevice
+          : customDevice as CustomDeviceInfoData,
     ));
   }
 }
@@ -248,10 +293,10 @@ class _$_DevicePreviewData
     with DiagnosticableTreeMixin
     implements _DevicePreviewData {
   const _$_DevicePreviewData(
-      {this.orientation = Orientation.portrait,
-      this.deviceIndex = 0,
-      this.locale,
-      this.isEnabled = true,
+      {this.isEnabled = true,
+      this.orientation = Orientation.portrait,
+      @nullable this.deviceIdentifier,
+      this.locale = 'en-US',
       this.isFrameVisible = true,
       this.isDarkMode = false,
       this.boldText = false,
@@ -260,10 +305,10 @@ class _$_DevicePreviewData
       this.accessibleNavigation = false,
       this.invertColors = false,
       this.textScaleFactor = 1.0,
-      @SizeJsonConverter() this.freeformSize})
-      : assert(orientation != null),
-        assert(deviceIndex != null),
-        assert(isEnabled != null),
+      @nullable this.customDevice})
+      : assert(isEnabled != null),
+        assert(orientation != null),
+        assert(locale != null),
         assert(isFrameVisible != null),
         assert(isDarkMode != null),
         assert(boldText != null),
@@ -276,48 +321,75 @@ class _$_DevicePreviewData
   factory _$_DevicePreviewData.fromJson(Map<String, dynamic> json) =>
       _$_$_DevicePreviewDataFromJson(json);
 
+  @JsonKey(defaultValue: true)
+  @override
+
+  /// Indicate whether the device simulation is enabled.
+  final bool isEnabled;
   @JsonKey(defaultValue: Orientation.portrait)
   @override
+
+  /// The current orientation of the device
   final Orientation orientation;
-  @JsonKey(defaultValue: 0)
   @override
-  final int deviceIndex;
+
+  /// The currently selected device.
+  @nullable
+  final String deviceIdentifier;
+  @JsonKey(defaultValue: 'en-US')
   @override
+
+  /// The currently selected device locale.
   final String locale;
   @JsonKey(defaultValue: true)
   @override
-  final bool isEnabled;
-  @JsonKey(defaultValue: true)
-  @override
+
+  /// Indicate whether the frame is currently visible.
   final bool isFrameVisible;
   @JsonKey(defaultValue: false)
   @override
+
+  /// Indicate whether the mode is currently dark.
   final bool isDarkMode;
   @JsonKey(defaultValue: false)
   @override
+
+  /// Indicate whether texts are forced to bold.
   final bool boldText;
   @JsonKey(defaultValue: false)
   @override
+
+  /// Indicate whether animations are disabled.
   final bool disableAnimations;
   @JsonKey(defaultValue: false)
   @override
+
+  /// Indicate whether the highcontrast mode is activated.
   final bool highContrast;
   @JsonKey(defaultValue: false)
   @override
+
+  /// Indicate whether the navigation is in accessible mode.
   final bool accessibleNavigation;
   @JsonKey(defaultValue: false)
   @override
+
+  /// Indicate whether image colors are inverted.
   final bool invertColors;
   @JsonKey(defaultValue: 1.0)
   @override
+
+  /// The current text scaling factor.
   final double textScaleFactor;
   @override
-  @SizeJsonConverter()
-  final Size freeformSize;
+
+  /// The custom device configuration
+  @nullable
+  final CustomDeviceInfoData customDevice;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DevicePreviewData(orientation: $orientation, deviceIndex: $deviceIndex, locale: $locale, isEnabled: $isEnabled, isFrameVisible: $isFrameVisible, isDarkMode: $isDarkMode, boldText: $boldText, disableAnimations: $disableAnimations, highContrast: $highContrast, accessibleNavigation: $accessibleNavigation, invertColors: $invertColors, textScaleFactor: $textScaleFactor, freeformSize: $freeformSize)';
+    return 'DevicePreviewData(isEnabled: $isEnabled, orientation: $orientation, deviceIdentifier: $deviceIdentifier, locale: $locale, isFrameVisible: $isFrameVisible, isDarkMode: $isDarkMode, boldText: $boldText, disableAnimations: $disableAnimations, highContrast: $highContrast, accessibleNavigation: $accessibleNavigation, invertColors: $invertColors, textScaleFactor: $textScaleFactor, customDevice: $customDevice)';
   }
 
   @override
@@ -325,10 +397,10 @@ class _$_DevicePreviewData
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'DevicePreviewData'))
-      ..add(DiagnosticsProperty('orientation', orientation))
-      ..add(DiagnosticsProperty('deviceIndex', deviceIndex))
-      ..add(DiagnosticsProperty('locale', locale))
       ..add(DiagnosticsProperty('isEnabled', isEnabled))
+      ..add(DiagnosticsProperty('orientation', orientation))
+      ..add(DiagnosticsProperty('deviceIdentifier', deviceIdentifier))
+      ..add(DiagnosticsProperty('locale', locale))
       ..add(DiagnosticsProperty('isFrameVisible', isFrameVisible))
       ..add(DiagnosticsProperty('isDarkMode', isDarkMode))
       ..add(DiagnosticsProperty('boldText', boldText))
@@ -337,24 +409,24 @@ class _$_DevicePreviewData
       ..add(DiagnosticsProperty('accessibleNavigation', accessibleNavigation))
       ..add(DiagnosticsProperty('invertColors', invertColors))
       ..add(DiagnosticsProperty('textScaleFactor', textScaleFactor))
-      ..add(DiagnosticsProperty('freeformSize', freeformSize));
+      ..add(DiagnosticsProperty('customDevice', customDevice));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _DevicePreviewData &&
-            (identical(other.orientation, orientation) ||
-                const DeepCollectionEquality()
-                    .equals(other.orientation, orientation)) &&
-            (identical(other.deviceIndex, deviceIndex) ||
-                const DeepCollectionEquality()
-                    .equals(other.deviceIndex, deviceIndex)) &&
-            (identical(other.locale, locale) ||
-                const DeepCollectionEquality().equals(other.locale, locale)) &&
             (identical(other.isEnabled, isEnabled) ||
                 const DeepCollectionEquality()
                     .equals(other.isEnabled, isEnabled)) &&
+            (identical(other.orientation, orientation) ||
+                const DeepCollectionEquality()
+                    .equals(other.orientation, orientation)) &&
+            (identical(other.deviceIdentifier, deviceIdentifier) ||
+                const DeepCollectionEquality()
+                    .equals(other.deviceIdentifier, deviceIdentifier)) &&
+            (identical(other.locale, locale) ||
+                const DeepCollectionEquality().equals(other.locale, locale)) &&
             (identical(other.isFrameVisible, isFrameVisible) ||
                 const DeepCollectionEquality()
                     .equals(other.isFrameVisible, isFrameVisible)) &&
@@ -379,18 +451,18 @@ class _$_DevicePreviewData
             (identical(other.textScaleFactor, textScaleFactor) ||
                 const DeepCollectionEquality()
                     .equals(other.textScaleFactor, textScaleFactor)) &&
-            (identical(other.freeformSize, freeformSize) ||
+            (identical(other.customDevice, customDevice) ||
                 const DeepCollectionEquality()
-                    .equals(other.freeformSize, freeformSize)));
+                    .equals(other.customDevice, customDevice)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(orientation) ^
-      const DeepCollectionEquality().hash(deviceIndex) ^
-      const DeepCollectionEquality().hash(locale) ^
       const DeepCollectionEquality().hash(isEnabled) ^
+      const DeepCollectionEquality().hash(orientation) ^
+      const DeepCollectionEquality().hash(deviceIdentifier) ^
+      const DeepCollectionEquality().hash(locale) ^
       const DeepCollectionEquality().hash(isFrameVisible) ^
       const DeepCollectionEquality().hash(isDarkMode) ^
       const DeepCollectionEquality().hash(boldText) ^
@@ -399,7 +471,7 @@ class _$_DevicePreviewData
       const DeepCollectionEquality().hash(accessibleNavigation) ^
       const DeepCollectionEquality().hash(invertColors) ^
       const DeepCollectionEquality().hash(textScaleFactor) ^
-      const DeepCollectionEquality().hash(freeformSize);
+      const DeepCollectionEquality().hash(customDevice);
 
   @override
   _$DevicePreviewDataCopyWith<_DevicePreviewData> get copyWith =>
@@ -413,10 +485,10 @@ class _$_DevicePreviewData
 
 abstract class _DevicePreviewData implements DevicePreviewData {
   const factory _DevicePreviewData(
-      {Orientation orientation,
-      int deviceIndex,
+      {bool isEnabled,
+      Orientation orientation,
+      @nullable String deviceIdentifier,
       String locale,
-      bool isEnabled,
       bool isFrameVisible,
       bool isDarkMode,
       bool boldText,
@@ -425,38 +497,442 @@ abstract class _DevicePreviewData implements DevicePreviewData {
       bool accessibleNavigation,
       bool invertColors,
       double textScaleFactor,
-      @SizeJsonConverter() Size freeformSize}) = _$_DevicePreviewData;
+      @nullable CustomDeviceInfoData customDevice}) = _$_DevicePreviewData;
 
   factory _DevicePreviewData.fromJson(Map<String, dynamic> json) =
       _$_DevicePreviewData.fromJson;
 
   @override
-  Orientation get orientation;
-  @override
-  int get deviceIndex;
-  @override
-  String get locale;
-  @override
+
+  /// Indicate whether the device simulation is enabled.
   bool get isEnabled;
   @override
+
+  /// The current orientation of the device
+  Orientation get orientation;
+  @override
+
+  /// The currently selected device.
+  @nullable
+  String get deviceIdentifier;
+  @override
+
+  /// The currently selected device locale.
+  String get locale;
+  @override
+
+  /// Indicate whether the frame is currently visible.
   bool get isFrameVisible;
   @override
+
+  /// Indicate whether the mode is currently dark.
   bool get isDarkMode;
   @override
+
+  /// Indicate whether texts are forced to bold.
   bool get boldText;
   @override
+
+  /// Indicate whether animations are disabled.
   bool get disableAnimations;
   @override
+
+  /// Indicate whether the highcontrast mode is activated.
   bool get highContrast;
   @override
+
+  /// Indicate whether the navigation is in accessible mode.
   bool get accessibleNavigation;
   @override
+
+  /// Indicate whether image colors are inverted.
   bool get invertColors;
   @override
+
+  /// The current text scaling factor.
   double get textScaleFactor;
   @override
-  @SizeJsonConverter()
-  Size get freeformSize;
+
+  /// The custom device configuration
+  @nullable
+  CustomDeviceInfoData get customDevice;
   @override
   _$DevicePreviewDataCopyWith<_DevicePreviewData> get copyWith;
+}
+
+CustomDeviceInfoData _$CustomDeviceInfoDataFromJson(Map<String, dynamic> json) {
+  return _CustomDeviceInfoData.fromJson(json);
+}
+
+/// @nodoc
+class _$CustomDeviceInfoDataTearOff {
+  const _$CustomDeviceInfoDataTearOff();
+
+// ignore: unused_element
+  _CustomDeviceInfoData call(
+      {@required String id,
+      @required DeviceType type,
+      @required TargetPlatform platform,
+      @required String name,
+      @nullable @EdgeInsetsJsonConverter() EdgeInsets rotatedSafeAreas = null,
+      @required @EdgeInsetsJsonConverter() EdgeInsets safeAreas,
+      @required double pixelRatio,
+      @required @SizeJsonConverter() Size screenSize}) {
+    return _CustomDeviceInfoData(
+      id: id,
+      type: type,
+      platform: platform,
+      name: name,
+      rotatedSafeAreas: rotatedSafeAreas,
+      safeAreas: safeAreas,
+      pixelRatio: pixelRatio,
+      screenSize: screenSize,
+    );
+  }
+
+// ignore: unused_element
+  CustomDeviceInfoData fromJson(Map<String, Object> json) {
+    return CustomDeviceInfoData.fromJson(json);
+  }
+}
+
+/// @nodoc
+// ignore: unused_element
+const $CustomDeviceInfoData = _$CustomDeviceInfoDataTearOff();
+
+/// @nodoc
+mixin _$CustomDeviceInfoData {
+  /// Identifier of the device.
+  String get id;
+
+  /// The device type.
+  DeviceType get type;
+
+  /// The device operating system.
+  TargetPlatform get platform;
+
+  /// The display name of the device.
+  String get name;
+
+  /// The safe areas when the device is in landscape orientation.
+  @nullable
+  @EdgeInsetsJsonConverter()
+  EdgeInsets get rotatedSafeAreas;
+
+  /// The safe areas when the device is in portrait orientation.
+  @EdgeInsetsJsonConverter()
+  EdgeInsets get safeAreas;
+
+  /// The screen pixel density of the device.
+  double get pixelRatio;
+
+  /// The size in points of the screen content.
+  @SizeJsonConverter()
+  Size get screenSize;
+
+  Map<String, dynamic> toJson();
+  $CustomDeviceInfoDataCopyWith<CustomDeviceInfoData> get copyWith;
+}
+
+/// @nodoc
+abstract class $CustomDeviceInfoDataCopyWith<$Res> {
+  factory $CustomDeviceInfoDataCopyWith(CustomDeviceInfoData value,
+          $Res Function(CustomDeviceInfoData) then) =
+      _$CustomDeviceInfoDataCopyWithImpl<$Res>;
+  $Res call(
+      {String id,
+      DeviceType type,
+      TargetPlatform platform,
+      String name,
+      @nullable @EdgeInsetsJsonConverter() EdgeInsets rotatedSafeAreas,
+      @EdgeInsetsJsonConverter() EdgeInsets safeAreas,
+      double pixelRatio,
+      @SizeJsonConverter() Size screenSize});
+}
+
+/// @nodoc
+class _$CustomDeviceInfoDataCopyWithImpl<$Res>
+    implements $CustomDeviceInfoDataCopyWith<$Res> {
+  _$CustomDeviceInfoDataCopyWithImpl(this._value, this._then);
+
+  final CustomDeviceInfoData _value;
+  // ignore: unused_field
+  final $Res Function(CustomDeviceInfoData) _then;
+
+  @override
+  $Res call({
+    Object id = freezed,
+    Object type = freezed,
+    Object platform = freezed,
+    Object name = freezed,
+    Object rotatedSafeAreas = freezed,
+    Object safeAreas = freezed,
+    Object pixelRatio = freezed,
+    Object screenSize = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: id == freezed ? _value.id : id as String,
+      type: type == freezed ? _value.type : type as DeviceType,
+      platform:
+          platform == freezed ? _value.platform : platform as TargetPlatform,
+      name: name == freezed ? _value.name : name as String,
+      rotatedSafeAreas: rotatedSafeAreas == freezed
+          ? _value.rotatedSafeAreas
+          : rotatedSafeAreas as EdgeInsets,
+      safeAreas:
+          safeAreas == freezed ? _value.safeAreas : safeAreas as EdgeInsets,
+      pixelRatio:
+          pixelRatio == freezed ? _value.pixelRatio : pixelRatio as double,
+      screenSize:
+          screenSize == freezed ? _value.screenSize : screenSize as Size,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$CustomDeviceInfoDataCopyWith<$Res>
+    implements $CustomDeviceInfoDataCopyWith<$Res> {
+  factory _$CustomDeviceInfoDataCopyWith(_CustomDeviceInfoData value,
+          $Res Function(_CustomDeviceInfoData) then) =
+      __$CustomDeviceInfoDataCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String id,
+      DeviceType type,
+      TargetPlatform platform,
+      String name,
+      @nullable @EdgeInsetsJsonConverter() EdgeInsets rotatedSafeAreas,
+      @EdgeInsetsJsonConverter() EdgeInsets safeAreas,
+      double pixelRatio,
+      @SizeJsonConverter() Size screenSize});
+}
+
+/// @nodoc
+class __$CustomDeviceInfoDataCopyWithImpl<$Res>
+    extends _$CustomDeviceInfoDataCopyWithImpl<$Res>
+    implements _$CustomDeviceInfoDataCopyWith<$Res> {
+  __$CustomDeviceInfoDataCopyWithImpl(
+      _CustomDeviceInfoData _value, $Res Function(_CustomDeviceInfoData) _then)
+      : super(_value, (v) => _then(v as _CustomDeviceInfoData));
+
+  @override
+  _CustomDeviceInfoData get _value => super._value as _CustomDeviceInfoData;
+
+  @override
+  $Res call({
+    Object id = freezed,
+    Object type = freezed,
+    Object platform = freezed,
+    Object name = freezed,
+    Object rotatedSafeAreas = freezed,
+    Object safeAreas = freezed,
+    Object pixelRatio = freezed,
+    Object screenSize = freezed,
+  }) {
+    return _then(_CustomDeviceInfoData(
+      id: id == freezed ? _value.id : id as String,
+      type: type == freezed ? _value.type : type as DeviceType,
+      platform:
+          platform == freezed ? _value.platform : platform as TargetPlatform,
+      name: name == freezed ? _value.name : name as String,
+      rotatedSafeAreas: rotatedSafeAreas == freezed
+          ? _value.rotatedSafeAreas
+          : rotatedSafeAreas as EdgeInsets,
+      safeAreas:
+          safeAreas == freezed ? _value.safeAreas : safeAreas as EdgeInsets,
+      pixelRatio:
+          pixelRatio == freezed ? _value.pixelRatio : pixelRatio as double,
+      screenSize:
+          screenSize == freezed ? _value.screenSize : screenSize as Size,
+    ));
+  }
+}
+
+@JsonSerializable()
+
+/// @nodoc
+class _$_CustomDeviceInfoData
+    with DiagnosticableTreeMixin
+    implements _CustomDeviceInfoData {
+  const _$_CustomDeviceInfoData(
+      {@required this.id,
+      @required this.type,
+      @required this.platform,
+      @required this.name,
+      @nullable @EdgeInsetsJsonConverter() this.rotatedSafeAreas = null,
+      @required @EdgeInsetsJsonConverter() this.safeAreas,
+      @required this.pixelRatio,
+      @required @SizeJsonConverter() this.screenSize})
+      : assert(id != null),
+        assert(type != null),
+        assert(platform != null),
+        assert(name != null),
+        assert(safeAreas != null),
+        assert(pixelRatio != null),
+        assert(screenSize != null);
+
+  factory _$_CustomDeviceInfoData.fromJson(Map<String, dynamic> json) =>
+      _$_$_CustomDeviceInfoDataFromJson(json);
+
+  @override
+
+  /// Identifier of the device.
+  final String id;
+  @override
+
+  /// The device type.
+  final DeviceType type;
+  @override
+
+  /// The device operating system.
+  final TargetPlatform platform;
+  @override
+
+  /// The display name of the device.
+  final String name;
+  @JsonKey(defaultValue: null)
+  @override
+
+  /// The safe areas when the device is in landscape orientation.
+  @nullable
+  @EdgeInsetsJsonConverter()
+  final EdgeInsets rotatedSafeAreas;
+  @override
+
+  /// The safe areas when the device is in portrait orientation.
+  @EdgeInsetsJsonConverter()
+  final EdgeInsets safeAreas;
+  @override
+
+  /// The screen pixel density of the device.
+  final double pixelRatio;
+  @override
+
+  /// The size in points of the screen content.
+  @SizeJsonConverter()
+  final Size screenSize;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'CustomDeviceInfoData(id: $id, type: $type, platform: $platform, name: $name, rotatedSafeAreas: $rotatedSafeAreas, safeAreas: $safeAreas, pixelRatio: $pixelRatio, screenSize: $screenSize)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'CustomDeviceInfoData'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('type', type))
+      ..add(DiagnosticsProperty('platform', platform))
+      ..add(DiagnosticsProperty('name', name))
+      ..add(DiagnosticsProperty('rotatedSafeAreas', rotatedSafeAreas))
+      ..add(DiagnosticsProperty('safeAreas', safeAreas))
+      ..add(DiagnosticsProperty('pixelRatio', pixelRatio))
+      ..add(DiagnosticsProperty('screenSize', screenSize));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _CustomDeviceInfoData &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.type, type) ||
+                const DeepCollectionEquality().equals(other.type, type)) &&
+            (identical(other.platform, platform) ||
+                const DeepCollectionEquality()
+                    .equals(other.platform, platform)) &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.rotatedSafeAreas, rotatedSafeAreas) ||
+                const DeepCollectionEquality()
+                    .equals(other.rotatedSafeAreas, rotatedSafeAreas)) &&
+            (identical(other.safeAreas, safeAreas) ||
+                const DeepCollectionEquality()
+                    .equals(other.safeAreas, safeAreas)) &&
+            (identical(other.pixelRatio, pixelRatio) ||
+                const DeepCollectionEquality()
+                    .equals(other.pixelRatio, pixelRatio)) &&
+            (identical(other.screenSize, screenSize) ||
+                const DeepCollectionEquality()
+                    .equals(other.screenSize, screenSize)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(type) ^
+      const DeepCollectionEquality().hash(platform) ^
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(rotatedSafeAreas) ^
+      const DeepCollectionEquality().hash(safeAreas) ^
+      const DeepCollectionEquality().hash(pixelRatio) ^
+      const DeepCollectionEquality().hash(screenSize);
+
+  @override
+  _$CustomDeviceInfoDataCopyWith<_CustomDeviceInfoData> get copyWith =>
+      __$CustomDeviceInfoDataCopyWithImpl<_CustomDeviceInfoData>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_CustomDeviceInfoDataToJson(this);
+  }
+}
+
+abstract class _CustomDeviceInfoData implements CustomDeviceInfoData {
+  const factory _CustomDeviceInfoData(
+          {@required String id,
+          @required DeviceType type,
+          @required TargetPlatform platform,
+          @required String name,
+          @nullable @EdgeInsetsJsonConverter() EdgeInsets rotatedSafeAreas,
+          @required @EdgeInsetsJsonConverter() EdgeInsets safeAreas,
+          @required double pixelRatio,
+          @required @SizeJsonConverter() Size screenSize}) =
+      _$_CustomDeviceInfoData;
+
+  factory _CustomDeviceInfoData.fromJson(Map<String, dynamic> json) =
+      _$_CustomDeviceInfoData.fromJson;
+
+  @override
+
+  /// Identifier of the device.
+  String get id;
+  @override
+
+  /// The device type.
+  DeviceType get type;
+  @override
+
+  /// The device operating system.
+  TargetPlatform get platform;
+  @override
+
+  /// The display name of the device.
+  String get name;
+  @override
+
+  /// The safe areas when the device is in landscape orientation.
+  @nullable
+  @EdgeInsetsJsonConverter()
+  EdgeInsets get rotatedSafeAreas;
+  @override
+
+  /// The safe areas when the device is in portrait orientation.
+  @EdgeInsetsJsonConverter()
+  EdgeInsets get safeAreas;
+  @override
+
+  /// The screen pixel density of the device.
+  double get pixelRatio;
+  @override
+
+  /// The size in points of the screen content.
+  @SizeJsonConverter()
+  Size get screenSize;
+  @override
+  _$CustomDeviceInfoDataCopyWith<_CustomDeviceInfoData> get copyWith;
 }

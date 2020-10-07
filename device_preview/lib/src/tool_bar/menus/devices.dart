@@ -1,5 +1,10 @@
+import 'dart:math' as math;
+
+import 'package:device_preview/src/custom_device.dart';
 import 'package:device_preview/src/tool_bar/button.dart';
 import 'package:device_frame/device_frame.dart';
+import 'package:device_preview/src/tool_bar/menus/accessibility.dart';
+import 'package:device_preview/src/tool_bar/menus/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -18,6 +23,7 @@ class _DevicesPopOverState extends State<DevicesPopOver> {
 
   final TextEditingController _searchTEC = TextEditingController();
   String _searchedText = '';
+  bool _isCustomDevice;
 
   @override
   void initState() {
@@ -43,6 +49,7 @@ class _DevicesPopOverState extends State<DevicesPopOver> {
     final selected = this.selected ??
         [preview.deviceInfo?.identifier?.platform ?? all.first];
 
+    final isCustomDevice = _isCustomDevice ?? preview.isCustomDevice;
     return GestureDetector(
       onPanDown: (_) {
         FocusScope.of(context).requestFocus(FocusNode()); //remove search focus
@@ -52,29 +59,37 @@ class _DevicesPopOverState extends State<DevicesPopOver> {
           PlatformSelector(
             all: all,
             selected: selected,
-            onChanged: (v) => setState(() {
-              _clearSearchTEC();
-              this.selected = v;
-            }),
+            onChanged: (v) {
+              setState(() {
+                _clearSearchTEC();
+                _isCustomDevice = false;
+                this.selected = v;
+              });
+            },
+            onCustomDeviceEnabled: () {
+              setState(() => _isCustomDevice = true);
+            },
           ),
           DeviceSearchField(
             _searchTEC,
             onClear: _clearSearchTEC,
           ),
           Expanded(
-            child: ListView(
-              padding: EdgeInsets.all(10),
-              children: preview.availableDevices
-                  .where((x) =>
-                      selected.contains(x.identifier.platform) &&
-                      x.name
-                          .replaceAll(' ', '')
-                          .toLowerCase()
-                          .contains(_searchedText))
-                  .map(
-                      (e) => DeviceTile(e, () => preview.device = e.identifier))
-                  .toList(),
-            ),
+            child: isCustomDevice
+                ? CustomDevicePanel()
+                : ListView(
+                    padding: EdgeInsets.all(10),
+                    children: preview.availableDevices
+                        .where((x) =>
+                            selected.contains(x.identifier.platform) &&
+                            x.name
+                                .replaceAll(' ', '')
+                                .toLowerCase()
+                                .contains(_searchedText))
+                        .map((e) =>
+                            DeviceTile(e, () => preview.device = e.identifier))
+                        .toList(),
+                  ),
           ),
         ],
       ),
@@ -90,34 +105,23 @@ class PlatformSelector extends StatelessWidget {
   final List<TargetPlatform> all;
   final List<TargetPlatform> selected;
   final ValueChanged<List<TargetPlatform>> onChanged;
+  final VoidCallback onCustomDeviceEnabled;
 
   const PlatformSelector({
     @required this.all,
     @required this.selected,
     @required this.onChanged,
+    @required this.onCustomDeviceEnabled,
   });
-
-  IconData platformIcon(TargetPlatform platform) {
-    switch (platform) {
-      case TargetPlatform.android:
-        return FontAwesomeIcons.android;
-      case TargetPlatform.iOS:
-        return FontAwesomeIcons.apple;
-      case TargetPlatform.fuchsia:
-        return FontAwesomeIcons.google;
-      case TargetPlatform.macOS:
-        return FontAwesomeIcons.appleAlt;
-      case TargetPlatform.windows:
-        return FontAwesomeIcons.windows;
-      default:
-        return FontAwesomeIcons.mobile;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     final theme = Theme.of(context);
+
+    final preview = DevicePreview.of(context);
+    final isCustomSelected = preview.deviceInfo?.identifier?.assetKey ==
+        CustomDeviceIdentifier.identifier;
     return Container(
       padding: const EdgeInsets.all(10),
       color: toolBarStyle.backgroundColor,
@@ -130,15 +134,181 @@ class PlatformSelector extends StatelessWidget {
                 backgroundColor: isSelected ? theme.accentColor : null,
                 foregroundColor:
                     isSelected ? theme.accentTextTheme.button.color : null,
-                icon: platformIcon(x),
+                icon: x.platformIcon(),
                 onTap: () {
                   onChanged([x]);
                 },
               );
             },
           ).spaced(horizontal: 8),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 6),
+            decoration: BoxDecoration(
+              color: theme.accentTextTheme.button.color.withOpacity(0.4),
+              borderRadius: BorderRadius.circular(3),
+            ),
+            width: 2,
+            height: 2,
+          ),
+          ToolBarButton(
+            backgroundColor: isCustomSelected ? theme.accentColor : null,
+            foregroundColor:
+                isCustomSelected ? theme.accentTextTheme.button.color : null,
+            icon: Icons.phonelink_setup_outlined,
+            onTap: () {
+              if (!isCustomSelected) {
+                preview.enableCustomDevice();
+              }
+              onCustomDeviceEnabled();
+            },
+          ),
         ],
       ),
+    );
+  }
+}
+
+class CustomDevicePanel extends StatelessWidget {
+  const CustomDevicePanel({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final preview = DevicePreview.of(context);
+    final customDevice = preview.data.customDevice;
+    return ListView(
+      padding: EdgeInsets.zero,
+      children: [
+        WrapOptionsTile(
+          title: 'Target platform',
+          options: <Widget>[
+            PlatformSelectBox(
+              platform: TargetPlatform.android,
+            ),
+            PlatformSelectBox(
+              platform: TargetPlatform.iOS,
+            ),
+            PlatformSelectBox(
+              platform: TargetPlatform.macOS,
+            ),
+            PlatformSelectBox(
+              platform: TargetPlatform.windows,
+            ),
+            PlatformSelectBox(
+              platform: TargetPlatform.linux,
+            ),
+          ],
+        ),
+        WrapOptionsTile(
+          title: 'Device type',
+          options: <Widget>[
+            DeviceTypeSelectBox(
+              type: DeviceType.phone,
+            ),
+            DeviceTypeSelectBox(
+              type: DeviceType.tablet,
+            ),
+            DeviceTypeSelectBox(
+              type: DeviceType.laptop,
+            ),
+            DeviceTypeSelectBox(
+              type: DeviceType.desktop,
+            ),
+          ],
+        ),
+        SectionHeader(
+          title: 'Screen size',
+        ),
+        SliderRowTile(
+          title: 'Width',
+          value: customDevice.screenSize.width,
+          onValueChanged: (v) {
+            preview.customDevice = customDevice.copyWith(
+              screenSize: Size(v, customDevice.screenSize.height),
+            );
+          },
+          min: 128,
+          max: 2688,
+          divisions: 10,
+        ),
+        SliderRowTile(
+          title: 'Height',
+          value: customDevice.screenSize.height,
+          onValueChanged: (v) {
+            preview.customDevice = customDevice.copyWith(
+              screenSize: Size(
+                customDevice.screenSize.width,
+                v,
+              ),
+            );
+          },
+          min: 128,
+          max: 2688,
+          divisions: 10,
+        ),
+        SectionHeader(
+          title: 'Safe areas',
+        ),
+        SliderRowTile(
+          title: 'Left',
+          value: customDevice.safeAreas.left,
+          onValueChanged: (v) {
+            preview.customDevice = customDevice.copyWith(
+              safeAreas: customDevice.safeAreas.copyWith(left: v),
+            );
+          },
+          min: 0,
+          max: 128,
+          divisions: 8,
+        ),
+        SliderRowTile(
+          title: 'Top',
+          value: customDevice.safeAreas.top,
+          onValueChanged: (v) {
+            preview.customDevice = customDevice.copyWith(
+              safeAreas: customDevice.safeAreas.copyWith(top: v),
+            );
+          },
+          min: 0,
+          max: 128,
+          divisions: 8,
+        ),
+        SliderRowTile(
+          title: 'Right',
+          value: customDevice.safeAreas.right,
+          onValueChanged: (v) {
+            preview.customDevice = customDevice.copyWith(
+              safeAreas: customDevice.safeAreas.copyWith(right: v),
+            );
+          },
+          min: 0,
+          max: 128,
+          divisions: 8,
+        ),
+        SliderRowTile(
+          title: 'Bottom',
+          value: customDevice.safeAreas.bottom,
+          onValueChanged: (v) {
+            preview.customDevice = customDevice.copyWith(
+              safeAreas: customDevice.safeAreas.copyWith(bottom: v),
+            );
+          },
+          min: 0,
+          max: 128,
+          divisions: 8,
+        ),
+        SliderTile(
+          title: 'Screen density',
+          value: customDevice.pixelRatio,
+          onValueChanged: (v) {
+            preview.customDevice = customDevice.copyWith(pixelRatio: v);
+          },
+          min: 1,
+          max: 4,
+          divisions: 3,
+        )
+      ],
     );
   }
 }
@@ -147,7 +317,10 @@ class DeviceTile extends StatelessWidget {
   final DeviceInfo device;
   final GestureTapCallback onTap;
 
-  DeviceTile(this.device, this.onTap);
+  const DeviceTile(
+    this.device,
+    this.onTap,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -228,8 +401,8 @@ class DeviceSearchField extends StatelessWidget {
             ),
             controller: searchTEC,
             decoration: InputDecoration(
-              hintStyle: const TextStyle(
-                color: Color(0xFFAAAAAA),
+              hintStyle: TextStyle(
+                color: toolBarStyle.foregroundColor.withOpacity(0.5),
                 fontSize: 12,
               ),
               hintText: 'Search by device name...',
@@ -241,8 +414,9 @@ class DeviceSearchField extends StatelessWidget {
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(4),
               ),
-              prefixIcon: const Icon(
+              prefixIcon: Icon(
                 FontAwesomeIcons.search,
+                color: toolBarStyle.foregroundColor.withOpacity(0.5),
                 size: 12,
               ),
               suffix: InkWell(
@@ -253,6 +427,155 @@ class DeviceSearchField extends StatelessWidget {
                 ),
                 onTap: onClear,
               ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DeviceTypeSelectBox extends StatelessWidget {
+  final DeviceType type;
+  const DeviceTypeSelectBox({
+    Key key,
+    @required this.type,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final preview = DevicePreview.of(context);
+    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
+    return SelectBox(
+      isSelected: preview.data.customDevice.type == type,
+      onTap: () => preview.customDevice = preview.data.customDevice.copyWith(
+        type: type,
+      ),
+      child: Icon(
+        type.typeIcon(),
+        color: toolBarStyle.foregroundColor,
+        size: 11,
+      ),
+    );
+  }
+}
+
+class PlatformSelectBox extends StatelessWidget {
+  final TargetPlatform platform;
+  const PlatformSelectBox({
+    Key key,
+    @required this.platform,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final preview = DevicePreview.of(context);
+    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
+    return SelectBox(
+      isSelected: preview.data.customDevice.platform == platform,
+      onTap: () => preview.customDevice = preview.data.customDevice.copyWith(
+        platform: platform,
+      ),
+      child: Icon(
+        platform.platformIcon(),
+        color: toolBarStyle.foregroundColor,
+        size: 11,
+      ),
+    );
+  }
+}
+
+class SectionHeader extends StatelessWidget {
+  final String title;
+
+  const SectionHeader({
+    @required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 12,
+        right: 12,
+        top: 20,
+      ),
+      child: Text(
+        title,
+        style: TextStyle(
+          fontSize: 12,
+          color: toolBarStyle.foregroundColor,
+        ),
+      ),
+    );
+  }
+}
+
+class SliderRowTile extends StatelessWidget {
+  final String title;
+  final double value;
+  final double min;
+  final double max;
+  final int divisions;
+  final ValueChanged<double> onValueChanged;
+
+  const SliderRowTile({
+    @required this.title,
+    @required this.min,
+    @required this.max,
+    @required this.divisions,
+    @required this.value,
+    @required this.onValueChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
+    return Material(
+      color: Colors.transparent,
+      child: GestureDetector(
+        onTap: () {
+          final range = (max - min);
+          onValueChanged(
+            value == max ? min : (value + (range / divisions)),
+          );
+        },
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 100),
+          color: Colors.transparent,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12,
+            ),
+            child: Row(
+              children: <Widget>[
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 9,
+                    color: toolBarStyle.foregroundColor.withOpacity(0.7),
+                  ),
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Slider(
+                    divisions: divisions, // 11,
+                    value: value,
+                    onChanged: onValueChanged,
+                    min: min, //0.25,
+                    max: max, // 3.0,
+                  ),
+                ),
+                Text(
+                  value?.toString() ?? '',
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: toolBarStyle.foregroundColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
           ),
         ),

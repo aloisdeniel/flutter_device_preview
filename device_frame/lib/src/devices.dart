@@ -57,6 +57,7 @@ abstract class Devices {
   static final android = const AndroidDevices._();
   static final macos = const MacOsDevices._();
   static final windows = const WindowsDevices._();
+  static final linux = const LinuxDevices._();
 }
 
 class IosDevices {
@@ -224,5 +225,19 @@ class WindowsDevices {
         surface3,
         screen,
         dellXps13,
+      ];
+}
+
+class LinuxDevices {
+  const LinuxDevices._();
+
+  final screen = const DeviceIdentifier._(
+    TargetPlatform.linux,
+    DeviceType.desktop,
+    'screen',
+  );
+
+  List<DeviceIdentifier> get all => [
+        screen,
       ];
 }
