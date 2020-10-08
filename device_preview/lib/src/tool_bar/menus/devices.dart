@@ -50,6 +50,12 @@ class _DevicesPopOverState extends State<DevicesPopOver> {
         [preview.deviceInfo?.identifier?.platform ?? all.first];
 
     final isCustomDevice = _isCustomDevice ?? preview.isCustomDevice;
+    final devices = (preview.availableDevices
+        .where((x) =>
+            selected.contains(x.identifier.platform) &&
+            x.name.replaceAll(' ', '').toLowerCase().contains(_searchedText))
+        .toList()
+          ..sort((x, y) => x.screenSize.width.compareTo(y.screenSize.width)));
     return GestureDetector(
       onPanDown: (_) {
         FocusScope.of(context).requestFocus(FocusNode()); //remove search focus
@@ -79,13 +85,7 @@ class _DevicesPopOverState extends State<DevicesPopOver> {
                 ? CustomDevicePanel()
                 : ListView(
                     padding: EdgeInsets.all(10),
-                    children: preview.availableDevices
-                        .where((x) =>
-                            selected.contains(x.identifier.platform) &&
-                            x.name
-                                .replaceAll(' ', '')
-                                .toLowerCase()
-                                .contains(_searchedText))
+                    children: devices
                         .map((e) =>
                             DeviceTile(e, () => preview.device = e.identifier))
                         .toList(),
@@ -135,7 +135,7 @@ class PlatformSelector extends StatelessWidget {
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     final theme = Theme.of(context);
     final preview = DevicePreview.of(context);
-    final isCustomSelected = preview.deviceInfo?.identifier?.assetKey ==
+    final isCustomSelected = preview.deviceInfo?.identifier?.toString() ==
         CustomDeviceIdentifier.identifier;
     return Container(
       padding: const EdgeInsets.all(10),

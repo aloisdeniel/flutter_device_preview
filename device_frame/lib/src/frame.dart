@@ -86,8 +86,13 @@ class DeviceFrame extends StatelessWidget {
     final padding = isRotated
         ? info.rotatedSafeAreas
         : (info?.safeAreas ?? mediaQuery.padding);
+
+    final screenSize = info != null ? info.screenSize : mediaQuery.size;
+    final width = isRotated ? screenSize.height : screenSize.width;
+    final height = isRotated ? screenSize.width : screenSize.height;
+
     return mediaQuery.copyWith(
-      size: info?.screenSize ?? mediaQuery.size,
+      size: Size(width, height),
       padding: padding,
       viewInsets: EdgeInsets.zero,
       viewPadding: padding,

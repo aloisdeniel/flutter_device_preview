@@ -274,14 +274,14 @@ class DevicePreviewState extends State<DevicePreview> {
       return CustomDeviceInfo(data?.customDevice);
     }
     return availableDevices.firstWhere(
-      (x) => x.identifier.assetKey == data?.deviceIdentifier,
+      (x) => x.identifier.toString() == data?.deviceIdentifier,
       orElse: () => availableDevices.first,
     );
   }
 
   /// Indicate whether the current device is a custom one.
   bool get isCustomDevice {
-    return deviceInfo?.identifier?.assetKey ==
+    return deviceInfo?.identifier?.toString() ==
         CustomDeviceIdentifier.identifier;
   }
 
@@ -385,7 +385,7 @@ class DevicePreviewState extends State<DevicePreview> {
   // Define the current active device.
   set device(DeviceIdentifier device) {
     _data = _data.copyWith(
-      deviceIdentifier: device.assetKey,
+      deviceIdentifier: device?.toString(),
     );
     DevicePreviewStorage.save(_data, !widget.usePreferences);
     if (isEnabled) {
@@ -682,7 +682,7 @@ class DevicePreviewProvider extends InheritedWidget {
       return CustomDeviceInfo(data?.customDevice);
     }
     return availableDevices.firstWhere(
-      (x) => x.identifier.assetKey == data?.deviceIdentifier,
+      (x) => x.identifier.toString() == data?.deviceIdentifier,
       orElse: () => availableDevices.first,
     );
   }

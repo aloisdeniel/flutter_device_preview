@@ -1,4 +1,4 @@
-## [0.5.0-prerelease.7] - 2020/10/08
+## [0.5.0-prerelease.10] - 2020/10/08
 
 * Fixed device screen clip.
 
