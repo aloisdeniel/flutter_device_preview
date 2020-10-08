@@ -58,7 +58,7 @@ class _DevicesPopOverState extends State<DevicesPopOver> {
         children: <Widget>[
           PlatformSelector(
             all: all,
-            selected: selected,
+            selected: isCustomDevice ? [] : selected,
             onChanged: (v) {
               setState(() {
                 _clearSearchTEC();
@@ -114,11 +114,26 @@ class PlatformSelector extends StatelessWidget {
     @required this.onCustomDeviceEnabled,
   });
 
+  List<TargetPlatform> _orderPlatforms() {
+    int getIndex(TargetPlatform d) {
+      final index = <TargetPlatform>[
+        TargetPlatform.iOS,
+        TargetPlatform.android,
+        TargetPlatform.macOS,
+        TargetPlatform.windows,
+        TargetPlatform.linux,
+      ].indexOf(d);
+      return index == -1 ? 1000 : index;
+    }
+
+    ;
+    return all.toList()..sort((x, y) => getIndex(x).compareTo(getIndex(y)));
+  }
+
   @override
   Widget build(BuildContext context) {
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     final theme = Theme.of(context);
-
     final preview = DevicePreview.of(context);
     final isCustomSelected = preview.deviceInfo?.identifier?.assetKey ==
         CustomDeviceIdentifier.identifier;
@@ -127,7 +142,7 @@ class PlatformSelector extends StatelessWidget {
       color: toolBarStyle.backgroundColor,
       child: Row(
         children: [
-          ...all.map<Widget>(
+          ..._orderPlatforms().map<Widget>(
             (x) {
               final isSelected = selected.contains(x);
               return ToolBarButton(
@@ -150,17 +165,20 @@ class PlatformSelector extends StatelessWidget {
             width: 2,
             height: 2,
           ),
-          ToolBarButton(
-            backgroundColor: isCustomSelected ? theme.accentColor : null,
-            foregroundColor:
-                isCustomSelected ? theme.accentTextTheme.button.color : null,
-            icon: Icons.phonelink_setup_outlined,
-            onTap: () {
-              if (!isCustomSelected) {
-                preview.enableCustomDevice();
-              }
-              onCustomDeviceEnabled();
-            },
+          Opacity(
+            opacity: selected.isEmpty ? 1 : 0.5,
+            child: ToolBarButton(
+              backgroundColor: isCustomSelected ? theme.accentColor : null,
+              foregroundColor:
+                  isCustomSelected ? theme.accentTextTheme.button.color : null,
+              icon: Icons.phonelink_setup_outlined,
+              onTap: () {
+                if (!isCustomSelected) {
+                  preview.enableCustomDevice();
+                }
+                onCustomDeviceEnabled();
+              },
+            ),
           ),
         ],
       ),

@@ -49,7 +49,7 @@
 <ellipse cx="111.368" cy="29.3913" rx="1.1123" ry="1.08128" fill="white"/>
 </g>
 <rect x="15.6769" y="52.4312" width="320" height="569" rx="8" fill="#FF0000"/>
-<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="10.9388" letter-spacing="0em"><tspan x="36.1146" y="82.6886">name: Small Phone&#10;</tspan><tspan x="36.1146" y="95.6886">density: 2&#10;</tspan><tspan x="36.1146" y="108.689">screen_size: 320x569&#10;</tspan><tspan x="36.1146" y="121.689">safe_areas: 0,24,0,0|0,24,0,0&#10;</tspan><tspan x="36.1146" y="134.689">device_type: phone</tspan></text>
+<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="10.9388" letter-spacing="0em"><tspan x="36.1146" y="82.6886">name: Small Phone&#10;</tspan><tspan x="36.1146" y="95.6886">density: 2&#10;</tspan><tspan x="36.1146" y="108.689">screen_size: 320x569&#10;</tspan><tspan x="36.1146" y="121.689">safe_areas: 0,24,0,0|0,24,0,0</tspan></text>
 <defs>
 <filter id="filter0_i" x="0" y="0" width="350.457" height="661.5" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>

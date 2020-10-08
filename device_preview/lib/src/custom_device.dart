@@ -84,7 +84,7 @@ class CustomDeviceInfo implements DeviceInfo {
   double get pixelRatio => data.pixelRatio;
 
   @override
-  EdgeInsets get rotatedSafeAreas => data.rotatedSafeAreas;
+  EdgeInsets get rotatedSafeAreas => null;
 
   @override
   EdgeInsets get safeAreas => data.safeAreas;

@@ -49,7 +49,7 @@
 <path d="M2256.65 287.154V288.267H2245.54V287.154H2256.65Z" fill="white"/>
 <rect x="502" y="306.047" width="1878" height="1133.47" fill="#131313"/>
 <path d="M502 306.047H2380V1439.51H502V306.047Z" fill="#FF0000"/>
-<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="14.9696" letter-spacing="0em"><tspan x="538.671" y="352.388">name:Windows Screen&#10;</tspan><tspan x="538.671" y="370.388">density: 2&#10;</tspan><tspan x="538.671" y="388.388">screen_size: 1690x1020&#10;</tspan><tspan x="538.671" y="406.388">safe_areas: 0,0,0,0&#10;</tspan><tspan x="538.671" y="424.388">device_type: desktop</tspan></text>
+<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="14.9696" letter-spacing="0em"><tspan x="538.671" y="352.388">name:Windows Screen&#10;</tspan><tspan x="538.671" y="370.388">density: 2&#10;</tspan><tspan x="538.671" y="388.388">screen_size: 1690x1020&#10;</tspan><tspan x="538.671" y="406.388">safe_areas: 0,0,0,0</tspan></text>
 </g>
 <defs>
 <filter id="filter0_iii" x="1001.05" y="2001.97" width="60.9305" height="6.21891" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">

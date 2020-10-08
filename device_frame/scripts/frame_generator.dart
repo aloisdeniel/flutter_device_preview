@@ -1,46 +1,39 @@
-import 'dart:ui';
+import 'dart:io';
 
-import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:path/path.dart' as path;
 import 'package:xml/xml.dart';
-import 'package:path_drawing/path_drawing.dart';
 
-import '../devices.dart';
-import 'info.dart';
-
-/// Parse svg file from assets with the [device] identifier and extract all
-/// info contained inside it.
-Future<DeviceInfo> loadDeviceInfo(
-  BuildContext context,
-  DeviceIdentifier device,
-) {
-  return DefaultAssetBundle.of(context).loadString(device.assetKey).then(
-        (content) => parseFrameDocument(context, device, content),
-      );
-}
-
-/// Parse all svg files from assets with [devices] identifiers and extract all
-/// info contained inside them.
-Future<List<DeviceInfo>> loadDevicesInfo(
-  BuildContext context,
-  List<DeviceIdentifier> devices,
-) async {
-  final result = <DeviceInfo>[];
-
-  for (var device in devices) {
-    result.add(await loadDeviceInfo(context, device));
+/// Parses all frame svg files from `assets` folder
+/// and generate a dart class.
+Future<void> main() async {
+  final scriptDirectory = path.dirname(
+      path.dirname(Platform.script.toString().replaceAll('file://', '')));
+  final assetsDirectory = Directory(path.join(scriptDirectory, 'assets'));
+  final files = await assetsDirectory.list().toList();
+  final deviceInfos = <String>[];
+  for (var file in files.where((x) => path.extension(x.path) == '.svg')) {
+    final content = await File(file.path).readAsString();
+    final name = path.basenameWithoutExtension(file.path);
+    final deviceInfo = _generateDeviceInfo(name, content);
+    deviceInfos.add(deviceInfo);
   }
-  return result;
+
+  final outputFile = File(path.join(scriptDirectory, 'lib/src/devices.g.dart'));
+  await outputFile.writeAsString('''
+part of 'devices.dart';
+
+final _allDevices = [${deviceInfos.join(',')}];
+  ''');
+
+  await Process.run('flutter', ['dartfmt', outputFile.path]);
 }
 
 /// Parse the [svgContent] associated to [identifier] and extract all
 /// info contained inside it.
-Future<DeviceInfo> parseFrameDocument(
-  BuildContext context,
-  DeviceIdentifier identifier,
+String _generateDeviceInfo(
+  String name,
   String svgContent,
-) async {
+) {
   final document = XmlDocument.parse(svgContent);
 
   final infoNode = document.descendants.firstWhere(
@@ -68,7 +61,7 @@ Future<DeviceInfo> parseFrameDocument(
     ),
   );
 
-  Path screen;
+  String screen;
   var screenNode = document.descendants.firstWhere(
     (node) {
       return node is XmlElement &&
@@ -80,8 +73,7 @@ Future<DeviceInfo> parseFrameDocument(
   if (screenNode != null) {
     final data = screenNode.getAttribute('d');
     assert(data != null, 'The screen path should have a "d" property');
-    screen = parseSvgPathData(data);
-    screen.fillType = PathFillType.evenOdd;
+    screen = 'parseSvgPathData(\'$data\')..fillType = PathFillType.evenOdd';
   } else {
     screenNode = document.descendants.firstWhere(
       (node) {
@@ -99,15 +91,15 @@ Future<DeviceInfo> parseFrameDocument(
     assert(width != null, 'The screen rect must have a width');
     assert(height != null, 'The screen rect must have a height');
 
-    screen = Path()
+    screen = '''Path()
       ..addRect(
         Rect.fromLTWH(
-          double.tryParse(screenNode.getAttribute('x')) ?? 0,
-          double.tryParse(screenNode.getAttribute('y')) ?? 0,
-          double.parse(width),
-          double.parse(height),
+          ${double.tryParse(screenNode.getAttribute('x')) ?? 0},
+          ${double.tryParse(screenNode.getAttribute('y')) ?? 0},
+          ${double.parse(width)},
+          ${double.parse(height)},
         ),
-      );
+      )''';
   }
 
   // Moving defs at first position
@@ -133,32 +125,49 @@ Future<DeviceInfo> parseFrameDocument(
 
   final safeAreas = info.containsKey('safe_areas')
       ? info['safe_areas'].split('|').map(_parseInsets).toList()
-      : const <EdgeInsets>[];
+      : const <String>[];
   final frame = document.toXmlString();
-  await precachePicture(
-    StringPicture(SvgPicture.svgStringDecoder, frame),
-    context,
-  );
 
-  return DeviceInfo(
-    identifier: identifier,
-    name: info['name'],
-    pixelRatio: double.parse(info['density'] ?? '1'),
-    safeAreas: safeAreas.isEmpty ? EdgeInsets.zero : safeAreas.first,
-    rotatedSafeAreas: safeAreas.length < 2 ? null : safeAreas[1],
-    screenPath: screen,
-    svgFrame: frame,
+  return '''DeviceInfo(
+    identifier: ${_parseIdentifier(name)},
+    name: \'${info['name']}\',
+    pixelRatio: ${double.parse(info['density'] ?? '1')},
+    safeAreas: ${safeAreas.isEmpty ? 'EdgeInsets.zero' : safeAreas.first},
+    rotatedSafeAreas: ${safeAreas.length < 2 ? null : safeAreas[1]},
+    screenPath: $screen,
+    svgFrame: \'\'\'${frame}\'\'\',
     frameSize: Size(
-      double.parse(width),
-      double.parse(height),
+      ${double.parse(width)},
+      ${double.parse(height)}
     ),
-    screenSize: _parseScreenSize(info['screen_size']),
-  );
+    screenSize: ${_parseScreenSize(info['screen_size'])},
+  )''';
+}
+
+String _parseIdentifier(String fileName) {
+  final splits = fileName.split('_');
+  var platform = splits[0];
+  switch (platform) {
+    case 'ios':
+      platform = 'iOS';
+      break;
+    case 'macos':
+      platform = 'macOS';
+      break;
+    default:
+  }
+
+  final type = splits[1];
+  final name = splits[2];
+
+  return '''
+  const DeviceIdentifier._(TargetPlatform.$platform, DeviceType.$type, \'$name\',)
+  ''';
 }
 
 /// Parse an [EdgeInsets] where [text] is in the form `<left>,<top>,<right>,<bottom>`.
-EdgeInsets _parseInsets(String text) {
-  if (text == null) return EdgeInsets.zero;
+String _parseInsets(String text) {
+  if (text == null) return 'EdgeInsets.zero';
 
   final splits = text.split(',').map((e) => double.parse(e.trim())).toList();
 
@@ -167,22 +176,22 @@ EdgeInsets _parseInsets(String text) {
   final right = splits.length > 2 ? splits[2] : left;
   final bottom = splits.length > 3 ? splits[3] : top;
 
-  return EdgeInsets.only(
-    left: left,
-    top: top,
-    right: right,
-    bottom: bottom,
-  );
+  return '''EdgeInsets.only(
+    left: $left,
+    top: $top,
+    right: $right,
+    bottom: $bottom,
+  )''';
 }
 
 /// Parse a [Size] where [text] is in the form `<width>x<height>`.
-Size _parseScreenSize(String text) {
-  if (text == null) return Size.zero;
+String _parseScreenSize(String text) {
+  if (text == null) return 'Size.zero';
 
   final splits = text.split('x').map((e) => double.parse(e.trim())).toList();
   final width = splits.isEmpty ? 0 : splits.first;
-  return Size(
-    width,
-    splits.length > 1 ? splits[1] : width,
-  );
+  return '''Size(
+    $width,
+    ${splits.length > 1 ? splits[1] : width}
+  )''';
 }

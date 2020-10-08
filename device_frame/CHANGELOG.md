@@ -1,3 +1,19 @@
+## [0.3.0-prerelease8] - 2020/10/07
+
+* Fixed screen clip when frame not visible.
+
+## [0.3.0-prerelease7] - 2020/10/07
+
+* Device info is preparsed through a tool and device info access is now synchronous.
+
+## [0.3.0-prerelease6] - 2020/10/07
+
+* Hiding screen while loading.
+
+## [0.3.0-prerelease5] - 2020/10/07
+
+* Keeping screen in tree to keep its state.
+
 ## [0.3.0-prerelease4] - 2020/10/06
 
 * Fixed `loadDevicesInfo`.

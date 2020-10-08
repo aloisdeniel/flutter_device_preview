@@ -49,7 +49,7 @@
 <ellipse cx="330.453" cy="78.0965" rx="1.54441" ry="1.50134" fill="white"/>
 </g>
 <rect x="45.0234" y="137.028" width="800" height="1280" rx="12" fill="#FF0000"/>
-<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="27.6561" letter-spacing="0em"><tspan x="91.3064" y="208.624">name: Large Phone&#10;</tspan><tspan x="91.3064" y="240.624">density: 3&#10;</tspan><tspan x="91.3064" y="272.624">screen_size: 800x1280&#10;</tspan><tspan x="91.3064" y="304.624">safe_areas: 0,24,0,0|0,24,0,0&#10;</tspan><tspan x="91.3064" y="336.624">device_type: phone</tspan></text>
+<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="27.6561" letter-spacing="0em"><tspan x="91.3064" y="208.624">name: Large Phone&#10;</tspan><tspan x="91.3064" y="240.624">density: 3&#10;</tspan><tspan x="91.3064" y="272.624">screen_size: 800x1280&#10;</tspan><tspan x="91.3064" y="304.624">safe_areas: 0,24,0,0|0,24,0,0</tspan></text>
 <defs>
 <filter id="filter0_i" x="0" y="0" width="886.042" height="1525.06" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>

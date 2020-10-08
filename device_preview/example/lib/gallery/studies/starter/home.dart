@@ -10,8 +10,22 @@ import '../../layout/adaptive.dart';
 
 const appBarDesktopHeight = 128.0;
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage();
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool loaded = false;
+
+  @override
+  void initState() {
+    Future.delayed(const Duration(seconds: 2))
+        .then((_) => setState(() => loaded = true));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +41,7 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              GalleryLocalizations.of(context).starterAppGenericHeadline,
+              (loaded ? 'LOADED' : '...'),
               style: textTheme.subhead.copyWith(
                 color: colorScheme.onSecondary,
               ),

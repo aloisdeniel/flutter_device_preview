@@ -64,7 +64,7 @@
 <ellipse cx="158.344" cy="87.9543" rx="2.20076" ry="2.13938" fill="white"/>
 </g>
 <rect x="39.6331" y="143.399" width="778.249" height="1556.5" rx="32.427" fill="#FF0000"/>
-<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="20" letter-spacing="0em"><tspan x="77" y="198.336">name: Pixel 3&#10;</tspan><tspan x="77" y="221.336">density: 2&#10;</tspan><tspan x="77" y="244.336">screen_size: 540x1080&#10;</tspan><tspan x="77" y="267.336">safe_areas: 0,24,0,0|0,24,0,0&#10;</tspan><tspan x="77" y="290.336">device_type: phone</tspan></text>
+<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="20" letter-spacing="0em"><tspan x="77" y="198.336">name: Pixel 3&#10;</tspan><tspan x="77" y="221.336">density: 2&#10;</tspan><tspan x="77" y="244.336">screen_size: 540x1080&#10;</tspan><tspan x="77" y="267.336">safe_areas: 0,24,0,0|0,24,0,0</tspan></text>
 <defs>
 <filter id="filter0_i" x="0" y="0" width="855.353" height="1832" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>

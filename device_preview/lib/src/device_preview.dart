@@ -18,6 +18,7 @@ import 'locales/default_locales.dart';
 import 'screenshots/screenshot.dart';
 import 'screenshots/upload_service.dart';
 import 'storage.dart';
+import 'utilities/position.dart';
 
 /// Simulates how a [child] would render on different
 /// devices than the current one.
@@ -55,7 +56,7 @@ class DevicePreview extends StatefulWidget {
   final ScreenshotProcessor onScreenshot;
 
   /// The available devices used for previewing.
-  final List<DeviceIdentifier> devices;
+  final List<DeviceInfo> devices;
 
   /// Customizing the tool bar and background aspect.
   ///
@@ -98,13 +99,7 @@ class DevicePreview extends StatefulWidget {
         usePreferences = (data == null) && usePreferences,
         super(key: key);
 
-  static final List<DeviceIdentifier> defaultDevices = [
-    ...Devices.ios.all,
-    ...Devices.android.all,
-    ...Devices.macos.all,
-    ...Devices.windows.all,
-    ...Devices.linux.all,
-  ];
+  static final List<DeviceInfo> defaultDevices = Devices.all;
 
   @override
   DevicePreviewState createState() => DevicePreviewState();
@@ -447,12 +442,6 @@ class DevicePreviewState extends State<DevicePreview> {
     orientation = Orientation.values[index];
   }
 
-  /// Restart the application hosted by the simulated device.
-  void restart() {
-    _appKey = UniqueKey();
-    setState(() {});
-  }
-
   /// Change the simulated device frame visibility.
   void toggleFrame() => isFrameVisible = !isFrameVisible;
 
@@ -490,7 +479,6 @@ class DevicePreviewState extends State<DevicePreview> {
 
   Widget _buildPreview(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-
     return Padding(
       padding: EdgeInsets.only(
         top: 20 + mediaQuery.viewPadding.top,
@@ -502,8 +490,8 @@ class DevicePreviewState extends State<DevicePreview> {
         fit: BoxFit.contain,
         child: RepaintBoundary(
           key: _repaintKey,
-          child: DeviceFrame.info(
-            info: deviceInfo,
+          child: DeviceFrame(
+            device: deviceInfo,
             isFrameVisible: _data.isFrameVisible,
             orientation: _data.orientation,
             screen: VirtualKeyboard(
@@ -518,6 +506,7 @@ class DevicePreviewState extends State<DevicePreview> {
                 child: MediaQuery(
                   data: DevicePreview._mediaQuery(context),
                   child: Builder(
+                    key: _appKey,
                     builder: widget.builder,
                   ),
                 ),
@@ -532,7 +521,10 @@ class DevicePreviewState extends State<DevicePreview> {
   @override
   Widget build(BuildContext context) {
     if (!widget.enabled) {
-      return widget.builder(context);
+      return Builder(
+        key: _appKey,
+        builder: widget.builder,
+      );
     }
 
     return Directionality(
@@ -541,115 +533,69 @@ class DevicePreviewState extends State<DevicePreview> {
         duration: const Duration(milliseconds: 400),
         child: _availableDevices == null
             ? _DevicePreviewLoader()
-            : DevicePreviewTheme(
-                style: style,
-                child: Localizations(
-                  locale: locale,
-                  delegates: [
-                    GlobalCupertinoLocalizations.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                  ],
-                  child: DevicePreviewProvider(
-                    key: _appKey,
-                    data: _data,
-                    isVirtualKeyboardVisible: _isVirtualKeyboardVisible,
-                    mediaQuery: DevicePreview._mediaQuery(context),
-                    availableDevices: _availableDevices,
-                    child: MediaQueryObserver(
-                      child: DecoratedBox(
-                        decoration: style.background,
-                        child: Overlay(
-                          initialEntries: [
-                            OverlayEntry(
-                              builder: (context) {
-                                return Stack(
-                                  children: <Widget>[
-                                    Positioned.fill(
-                                      left: style.toolBar.position ==
-                                              DevicePreviewToolBarPosition.left
-                                          ? DevicePreviewVerticalToolBar.width(
-                                                  context) -
-                                              12
-                                          : 0,
-                                      right: style.toolBar.position ==
-                                              DevicePreviewToolBarPosition.right
-                                          ? DevicePreviewVerticalToolBar.width(
-                                                  context) -
-                                              12
-                                          : 0,
-                                      top: style.toolBar.position ==
-                                              DevicePreviewToolBarPosition.top
-                                          ? DevicePreviewHorizontalToolBar
-                                                  .height(context) -
-                                              12
-                                          : 0,
-                                      bottom: style.toolBar.position ==
-                                              DevicePreviewToolBarPosition
-                                                  .bottom
-                                          ? DevicePreviewHorizontalToolBar
-                                                  .height(context) -
-                                              12
-                                          : 0,
-                                      key: Key('Preview'),
-                                      child: isEnabled
-                                          ? Builder(
-                                              builder: _buildPreview,
-                                            )
-                                          : Builder(
-                                              builder: widget.builder,
-                                            ),
-                                    ),
-                                    if (widget.isToolBarVisible &&
-                                        style.toolBar.position ==
-                                            DevicePreviewToolBarPosition.bottom)
-                                      Positioned(
-                                        left: 0,
-                                        bottom: 0,
-                                        right: 0,
-                                        child: DevicePreviewHorizontalToolBar(
-                                          key: Key('HorizontalToolbar'),
-                                        ),
-                                      ),
-                                    if (widget.isToolBarVisible &&
-                                        style.toolBar.position ==
-                                            DevicePreviewToolBarPosition.top)
-                                      Positioned(
-                                        left: 0,
-                                        top: 0,
-                                        right: 0,
-                                        child: DevicePreviewHorizontalToolBar(
-                                          key: Key('HorizontalToolbar'),
-                                        ),
-                                      ),
-                                    if (widget.isToolBarVisible &&
-                                        style.toolBar.position ==
-                                            DevicePreviewToolBarPosition.right)
-                                      Positioned(
-                                        bottom: 0,
-                                        top: 0,
-                                        right: 0,
-                                        child: DevicePreviewVerticalToolBar(
-                                          key: Key('VerticalToolbar'),
-                                        ),
-                                      ),
-                                    if (widget.isToolBarVisible &&
-                                        style.toolBar.position ==
-                                            DevicePreviewToolBarPosition.left)
-                                      Positioned(
-                                        bottom: 0,
-                                        top: 0,
-                                        left: 0,
-                                        child: DevicePreviewVerticalToolBar(
-                                          key: Key('VerticalToolbar'),
-                                        ),
-                                      ),
-                                  ],
-                                );
-                              },
+            : MediaQueryObserver(
+                child: DevicePreviewProvider(
+                  data: _data,
+                  isVirtualKeyboardVisible: _isVirtualKeyboardVisible,
+                  mediaQuery: DevicePreview._mediaQuery(context),
+                  availableDevices: _availableDevices,
+                  child: DecoratedBox(
+                    decoration: style.background,
+                    child: Builder(
+                      builder: (context) => Stack(
+                        children: <Widget>[
+                          Positioned.fill(
+                            left: style.toolBar.position ==
+                                    DevicePreviewToolBarPosition.left
+                                ? DevicePreviewVerticalToolBar.width(context) -
+                                    12
+                                : 0,
+                            right: style.toolBar.position ==
+                                    DevicePreviewToolBarPosition.right
+                                ? DevicePreviewVerticalToolBar.width(context) -
+                                    12
+                                : 0,
+                            top: style.toolBar.position ==
+                                    DevicePreviewToolBarPosition.top
+                                ? DevicePreviewHorizontalToolBar.height(
+                                        context) -
+                                    12
+                                : 0,
+                            bottom: style.toolBar.position ==
+                                    DevicePreviewToolBarPosition.bottom
+                                ? DevicePreviewHorizontalToolBar.height(
+                                        context) -
+                                    12
+                                : 0,
+                            key: Key('Preview'),
+                            child: isEnabled
+                                ? Builder(
+                                    builder: _buildPreview,
+                                  )
+                                : Builder(
+                                    key: _appKey,
+                                    builder: widget.builder,
+                                  ),
+                          ),
+                          Positioned.fill(
+                            key: Key('Tools'),
+                            child: DevicePreviewTheme(
+                              style: style,
+                              child: Localizations(
+                                locale: locale,
+                                delegates: [
+                                  GlobalCupertinoLocalizations.delegate,
+                                  GlobalMaterialLocalizations.delegate,
+                                  GlobalWidgetsLocalizations.delegate,
+                                ],
+                                child: _ToolsOverlay(
+                                  style: style,
+                                  isToolBarVisible: widget.isToolBarVisible,
+                                ),
+                              ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -670,8 +616,8 @@ class DevicePreviewState extends State<DevicePreview> {
   /// a new screenshot.
   StreamController<DeviceScreenshot> _onScreenshot;
 
-  /// The current application key (used for [restart]).
-  UniqueKey _appKey = UniqueKey();
+  /// The current application key.
+  final GlobalKey _appKey = GlobalKey();
 
   /// The current configuration.
   DevicePreviewData _data;
@@ -690,10 +636,8 @@ class DevicePreviewState extends State<DevicePreview> {
     DevicePreviewData data;
 
     try {
-      _availableDevices = await loadDevicesInfo(
-        context,
-        widget.devices ?? DevicePreview.defaultDevices,
-      );
+      await DeviceFrame.precache(context);
+      _availableDevices = Devices.all;
 
       if (widget.data != null) {
         data = widget.data;
@@ -833,6 +777,98 @@ class __DevicePreviewLoaderState extends State<_DevicePreviewLoader>
           ],
         ),
       ),
+    );
+  }
+}
+
+class _ToolsOverlay extends StatefulWidget {
+  final bool isToolBarVisible;
+  final DevicePreviewStyle style;
+  const _ToolsOverlay({
+    Key key,
+    @required this.isToolBarVisible,
+    @required this.style,
+  }) : super(key: key);
+
+  @override
+  _ToolsOverlayState createState() => _ToolsOverlayState();
+}
+
+class _ToolsOverlayState extends State<_ToolsOverlay> {
+  /// To get the global overlay position on screen.
+  final GlobalKey _overlayKey = GlobalKey();
+
+  @override
+  void initState() {
+    // Forcing rebuild to update absolute postion in `_overlayKey`
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) => setState(() {}),
+    );
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Overlay(
+      key: _overlayKey,
+      initialEntries: [
+        OverlayEntry(
+          builder: (context) {
+            return Stack(
+              children: [
+                if (widget.isToolBarVisible &&
+                    widget.style.toolBar.position ==
+                        DevicePreviewToolBarPosition.bottom)
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: DevicePreviewHorizontalToolBar(
+                      key: Key('HorizontalToolbar'),
+                      overlayPosition: _overlayKey.absolutePosition,
+                    ),
+                  ),
+                if (widget.isToolBarVisible &&
+                    widget.style.toolBar.position ==
+                        DevicePreviewToolBarPosition.top)
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    child: DevicePreviewHorizontalToolBar(
+                      key: Key('HorizontalToolbar'),
+                      overlayPosition: _overlayKey.absolutePosition,
+                    ),
+                  ),
+                if (widget.isToolBarVisible &&
+                    widget.style.toolBar.position ==
+                        DevicePreviewToolBarPosition.right)
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: DevicePreviewVerticalToolBar(
+                      key: Key('VerticalToolbar'),
+                      overlayPosition: _overlayKey.absolutePosition,
+                    ),
+                  ),
+                if (widget.isToolBarVisible &&
+                    widget.style.toolBar.position ==
+                        DevicePreviewToolBarPosition.left)
+                  Positioned(
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                    child: DevicePreviewVerticalToolBar(
+                      key: Key('VerticalToolbar'),
+                      overlayPosition: _overlayKey.absolutePosition,
+                    ),
+                  ),
+              ],
+            );
+          },
+        ),
+      ],
     );
   }
 }

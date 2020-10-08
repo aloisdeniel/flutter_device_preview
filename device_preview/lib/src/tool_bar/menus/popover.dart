@@ -1,7 +1,6 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:device_preview/src/utilities/media_query_observer.dart';
 import 'package:flutter/widgets.dart';
-import 'dart:math' as math;
 
 import '../../device_preview.dart';
 import '../../utilities/position.dart';
@@ -14,11 +13,13 @@ class Popover extends StatefulWidget {
   final String title;
   final IconData icon;
   final Size size;
+  final Rect parentBounds;
   final PopoverContentBuilder builder;
 
   const Popover({
     Key key,
     this.size,
+    @required this.parentBounds,
     @required this.title,
     @required this.icon,
     @required this.child,
@@ -55,6 +56,10 @@ class _PopoverState extends State<Popover> {
         ),
       );
 
+      final startPosition = Offset(
+        _key.absolutePosition.left - (widget.parentBounds?.left ?? 0),
+        _key.absolutePosition.top - (widget.parentBounds?.top ?? 0),
+      );
       final popover = OverlayEntry(
         opaque: false,
         builder: (context) => MediaQueryObserver(
@@ -68,7 +73,8 @@ class _PopoverState extends State<Popover> {
               icon: widget.icon,
               child: widget.builder(context, close),
               size: widget.size ?? Size(280, 420),
-              startPosition: _key.absolutePosition,
+              startPosition: startPosition & _key.absolutePosition.size,
+              parentBounds: widget.parentBounds,
             ),
           ),
         ),
@@ -106,6 +112,7 @@ class _PopOverContainer extends StatefulWidget {
   final Widget child;
   final String title;
   final IconData icon;
+  final Rect parentBounds;
 
   _PopOverContainer({
     @required this.title,
@@ -113,6 +120,7 @@ class _PopOverContainer extends StatefulWidget {
     @required this.child,
     @required this.startPosition,
     @required this.size,
+    @required this.parentBounds,
   });
 
   @override
@@ -156,15 +164,15 @@ class __PopOverContainerState extends State<_PopOverContainer>
     final media = MediaQuery.of(context);
 
     var bounds = widget.startPosition;
-
+    final parentBounds = widget.parentBounds ?? (Offset.zero & media.size);
     final isHorizontal =
         toolBarStyle.position == DevicePreviewToolBarPosition.top ||
             toolBarStyle.position == DevicePreviewToolBarPosition.bottom;
 
     if (_isStarted) {
-      if (widget.startPosition.top > media.size.height / 2) {
+      if (widget.startPosition.top > parentBounds.height / 2) {
         final bottom = isHorizontal ? bounds.top : bounds.bottom;
-        if (widget.startPosition.left > media.size.width / 2) {
+        if (widget.startPosition.left > parentBounds.width / 2) {
           // Bottom-Right of the screen
           final right = isHorizontal ? bounds.right : bounds.left;
           bounds = Rect.fromLTRB(
@@ -185,7 +193,7 @@ class __PopOverContainerState extends State<_PopOverContainer>
         }
       } else {
         final top = isHorizontal ? bounds.bottom : bounds.top;
-        if (widget.startPosition.left > media.size.width / 2) {
+        if (widget.startPosition.left > parentBounds.width / 2) {
           // Top-Right of the screen
           final right = isHorizontal ? bounds.right : bounds.left;
           bounds = Rect.fromLTRB(
@@ -205,11 +213,13 @@ class __PopOverContainerState extends State<_PopOverContainer>
           );
         }
       }
+    } else {
+      bounds = Offset(bounds.left, bounds.top) & widget.size;
     }
 
-    if (bounds.bottom > media.size.height - media.padding.bottom) {
+    if (bounds.bottom > parentBounds.height - media.padding.bottom) {
       bounds = Offset(bounds.left,
-              media.size.height - media.padding.bottom - bounds.size.height) &
+              parentBounds.height - media.padding.bottom - bounds.size.height) &
           bounds.size;
     }
     if (bounds.top < media.padding.top) {
@@ -217,7 +227,6 @@ class __PopOverContainerState extends State<_PopOverContainer>
     }
 
     return AnimatedPositioned(
-      key: Key('PopUp'),
       duration: duration,
       left: bounds.left + _translate.dx,
       top: bounds.top - media.viewInsets.bottom + _translate.dy,
@@ -231,7 +240,7 @@ class __PopOverContainerState extends State<_PopOverContainer>
           curve: Curves.easeOut,
           transform: (_isStarted
               ? (Matrix4.identity())
-              : (Matrix4.translationValues(0, 6, 0)..scale(0.4))),
+              : (Matrix4.translationValues(0, 6, 0)..scale(0.8))),
           decoration: BoxDecoration(
             color: toolBarStyle.buttonBackgroundColor.withOpacity(0.95),
             borderRadius: BorderRadius.circular(6),
@@ -299,11 +308,11 @@ class _PopOverHeader extends StatelessWidget {
         children: <Widget>[
           Icon(
             icon,
-            size: 12.0,
+            size: 12,
             color: toolBarStyle.foregroundColor,
           ),
           SizedBox(
-            width: 6.0,
+            width: 6,
           ),
           Text(
             title,

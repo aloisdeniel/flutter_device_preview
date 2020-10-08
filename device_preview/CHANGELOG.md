@@ -1,3 +1,24 @@
+## [0.5.0-prerelease.7] - 2020/10/08
+
+* Fixed device screen clip.
+
+## [0.5.0-prerelease.6] - 2020/10/08
+
+* Fixed hidden popovers when not fullscreen.
+* Fixed overflow errors.
+
+## [0.5.0-prerelease.5] - 2020/10/07
+
+* Improved loading time.
+
+## [0.5.0-prerelease.4] - 2020/10/07
+
+* Keeping state of application when enabling/disabling preview.
+
+## [0.5.0-prerelease.3] - 2020/10/07
+
+* Custom device selector.
+
 ## [0.5.0-prerelease.2] - 2020/10/06
 
 * Added linux devices.

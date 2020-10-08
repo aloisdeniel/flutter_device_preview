@@ -1,13 +1,12 @@
 name: device_frame
 description: Mockups for common devices.
-version: 0.3.0-prerelease4
+version: 0.3.0-prerelease8
 homepage: https://github.com/aloisdeniel/flutter_device_preview
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  xml: ^4.2.0
   flutter_svg: ^0.19.0
   path_drawing: ^0.4.1+1
   freezed_annotation: ^0.12.0 
@@ -19,7 +18,4 @@ dev_dependencies:
   json_serializable: ^3.5.0
   freezed: ^0.12.1
   pedantic: ^1.9.0
-
-flutter:
-  assets:
-    - assets/
+  xml: ^4.2.0

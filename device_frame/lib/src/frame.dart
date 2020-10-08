@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'devices.dart';
 import 'info/info.dart';
-import 'info/parsing.dart';
 
 /// Simulate a physical device and embedding a virtual
 /// [screen] into it.
@@ -25,7 +24,7 @@ import 'info/parsing.dart';
 ///
 /// * [Devices] to get all available devices.
 ///
-class DeviceFrame extends StatefulWidget {
+class DeviceFrame extends StatelessWidget {
   /// The unique identifier of the simulated device.
   final DeviceIdentifier identifier;
 
@@ -37,7 +36,7 @@ class DeviceFrame extends StatefulWidget {
   final Widget screen;
 
   /// All information related to the device.
-  final DeviceInfo info;
+  final DeviceInfo device;
 
   /// The current frame simulated orientation.
   ///
@@ -48,23 +47,6 @@ class DeviceFrame extends StatefulWidget {
   /// only the screen is displayed.
   final bool isFrameVisible;
 
-  /// Load the device frame corresponding to given [identifier] and displays
-  /// the given [screen] into the simulated device.
-  ///
-  /// The orientation of the device can be updated if the frame supports
-  /// it (else it is ignored).
-  ///
-  /// If [isFrameVisible] is `true`, only the [screen] is displayed, but clipped with
-  /// the device screen shape.
-  DeviceFrame.identifier({
-    Key key,
-    @required this.identifier,
-    @required this.screen,
-    this.orientation = Orientation.portrait,
-    this.isFrameVisible = true,
-  })  : info = null,
-        super(key: key);
-
   /// Displays the given [screen] into the given [info]
   /// simulated device.
   ///
@@ -73,90 +55,65 @@ class DeviceFrame extends StatefulWidget {
   ///
   /// If [isFrameVisible] is `true`, only the [screen] is displayed, but clipped with
   /// the device screen shape.
-  DeviceFrame.info({
+  DeviceFrame({
     Key key,
-    @required this.info,
+    @required this.device,
     @required this.screen,
     this.orientation = Orientation.portrait,
     this.isFrameVisible = true,
-  })  : identifier = info.identifier,
+  })  : identifier = device.identifier,
         super(key: key);
 
   static bool isRotated(DeviceInfo info, Orientation orientation) {
-    return info.canRotate && orientation == Orientation.landscape;
+    return info != null &&
+        info.canRotate &&
+        orientation == Orientation.landscape;
+  }
+
+  static Future<void> precache(BuildContext context) async {
+    for (var device in Devices.all) {
+      await precachePicture(
+        StringPicture(SvgPicture.svgStringDecoder, device.svgFrame),
+        context,
+      );
+    }
   }
 
   static MediaQueryData mediaQuery(
       BuildContext context, DeviceInfo info, Orientation orientation) {
-    final isRotated = DeviceFrame.isRotated(info, orientation);
-    final padding = isRotated ? info.rotatedSafeAreas : info.safeAreas;
     final mediaQuery = MediaQuery.of(context);
+    final isRotated = DeviceFrame.isRotated(info, orientation);
+    final padding = isRotated
+        ? info.rotatedSafeAreas
+        : (info?.safeAreas ?? mediaQuery.padding);
     return mediaQuery.copyWith(
-      size: info.screenSize,
+      size: info?.screenSize ?? mediaQuery.size,
       padding: padding,
       viewInsets: EdgeInsets.zero,
       viewPadding: padding,
-      devicePixelRatio: info.pixelRatio,
+      devicePixelRatio: info?.pixelRatio ?? mediaQuery.devicePixelRatio,
     );
-  }
-
-  @override
-  _DeviceFrameState createState() => _DeviceFrameState();
-}
-
-class _DeviceFrameState extends State<DeviceFrame> {
-  Future<DeviceInfo> svg;
-
-  @override
-  void initState() {
-    svg = _update();
-    super.initState();
-  }
-
-  @override
-  void didUpdateWidget(DeviceFrame oldWidget) {
-    if (oldWidget.info != widget.info ||
-        oldWidget.identifier != widget.identifier) {
-      setState(() {
-        svg = _update();
-      });
-    }
-    super.didUpdateWidget(oldWidget);
-  }
-
-  Future<DeviceInfo> _update() async {
-    if (widget.info != null) {
-      return Future.value(widget.info);
-    }
-
-    return DefaultAssetBundle.of(context)
-        .loadString(widget.identifier.assetKey)
-        .then(
-          (content) => parseFrameDocument(
-            context,
-            widget.identifier,
-            content,
-          ),
-        );
   }
 
   ThemeData _theme(BuildContext context) {
     final density = [
       DeviceType.desktop,
       DeviceType.laptop,
-    ].contains(widget.identifier.type)
+    ].contains(identifier.type)
         ? VisualDensity.compact
         : null;
     return Theme.of(context).copyWith(
-      platform: widget.identifier.platform,
+      platform: identifier.platform,
       visualDensity: density,
     );
   }
 
   Widget _screen(BuildContext context, DeviceInfo info) {
-    final isRotated = DeviceFrame.isRotated(info, widget.orientation);
-    final width = isRotated ? info.screenSize.height : info.screenSize.width;
-    final height = isRotated ? info.screenSize.width : info.screenSize.height;
+    final mediaQuery = MediaQuery.of(context);
+    final isRotated = DeviceFrame.isRotated(info, orientation);
+    final screenSize = info != null ? info.screenSize : mediaQuery.size;
+    final width = isRotated ? screenSize.height : screenSize.width;
+    final height = isRotated ? screenSize.width : screenSize.height;
 
     return RotatedBox(
       quarterTurns: isRotated ? 1 : 0,
@@ -164,10 +121,10 @@ class _DeviceFrameState extends State<DeviceFrame> {
         width: width,
         height: height,
         child: MediaQuery(
-          data: DeviceFrame.mediaQuery(context, info, widget.orientation),
+          data: DeviceFrame.mediaQuery(context, info, orientation),
           child: Theme(
             data: _theme(context),
-            child: widget.screen,
+            child: screen,
           ),
         ),
       ),
@@ -176,61 +133,47 @@ class _DeviceFrameState extends State<DeviceFrame> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<DeviceInfo>(
-      future: svg,
-      builder: (context, value) {
-        if (value.error != null) {
-          return Center(
-            child: Text('Error : ${value.error}'),
-          );
-        }
-        if (value.data == null) return Container();
-        final bounds = value.data.screenPath.getBounds();
-
-        final stack = SizedBox(
-          width:
-              widget.isFrameVisible ? value.data.frameSize.width : bounds.width,
-          height: widget.isFrameVisible
-              ? value.data.frameSize.height
-              : bounds.height,
-          child: Stack(
-            children: [
-              if (widget.isFrameVisible)
-                Positioned.fill(
-                  key: Key('frame'),
-                  child: SvgPicture.string(
-                    value.data.svgFrame,
-                    key: Key(widget.identifier.assetKey),
-                  ),
-                ),
-              Positioned(
-                key: Key('screen'),
-                left: widget.isFrameVisible ? bounds.left : 0,
-                top: widget.isFrameVisible ? bounds.top : 0,
-                width: bounds.width,
-                height: bounds.height,
-                child: ClipPath(
-                  child: FittedBox(
-                    child: _screen(context, value.data),
-                  ),
-                  clipper: _ScreenClipper(
-                    value.data.screenPath,
-                  ),
-                ),
+    final frameSize = device.frameSize;
+    final bounds = device.screenPath.getBounds();
+    final stack = SizedBox(
+      width: isFrameVisible ? frameSize.width : bounds.width,
+      height: isFrameVisible ? frameSize.height : bounds.height,
+      child: Stack(
+        children: [
+          if (isFrameVisible)
+            Positioned.fill(
+              key: Key('frame'),
+              child: SvgPicture.string(
+                device.svgFrame,
+                key: ValueKey(identifier),
               ),
-            ],
+            ),
+          Positioned(
+            key: Key('Screen'),
+            left: isFrameVisible ? bounds.left : 0,
+            top: isFrameVisible ? bounds.top : 0,
+            width: bounds.width,
+            height: bounds.height,
+            child: ClipPath(
+              child: FittedBox(
+                child: _screen(context, device),
+              ),
+              clipper: _ScreenClipper(
+                device.screenPath,
+              ),
+            ),
           ),
-        );
+        ],
+      ),
+    );
 
-        final isRotated = DeviceFrame.isRotated(value.data, widget.orientation);
+    final isRotated = DeviceFrame.isRotated(device, orientation);
 
-        return FittedBox(
-          child: RotatedBox(
-            quarterTurns: isRotated ? -1 : 0,
-            child: stack,
-          ),
-        );
-      },
+    return FittedBox(
+      child: RotatedBox(
+        quarterTurns: isRotated ? -1 : 0,
+        child: stack,
+      ),
     );
   }
 }
@@ -242,6 +185,7 @@ class _ScreenClipper extends CustomClipper<Path> {
 
   @override
   Path getClip(Size size) {
+    final path = (this.path ?? (Path()..addRect(Offset.zero & size)));
     final bounds = path.getBounds();
     var transform = Matrix4.translationValues(-bounds.left, -bounds.top, 0);
 

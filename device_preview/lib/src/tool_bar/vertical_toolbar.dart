@@ -15,18 +15,19 @@ import 'menus/screenshot.dart';
 import 'menus/style.dart';
 
 class DevicePreviewVerticalToolBar extends StatefulWidget {
-  DevicePreviewVerticalToolBar({
+  final Rect overlayPosition;
+  const DevicePreviewVerticalToolBar({
     Key key,
+    @required this.overlayPosition,
   }) : super(key: key);
 
   static double width(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     return 180 +
         12 +
         (toolBarStyle.position == DevicePreviewToolBarPosition.left
-            ? mediaQuery.padding.left
-            : mediaQuery.padding.right);
+            ? WidgetsBinding.instance.window.padding.left
+            : WidgetsBinding.instance.window.padding.right);
   }
 
   @override
@@ -45,6 +46,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewVerticalToolBar> {
 
     final deviceButton = Popover(
       title: 'Devices',
+      parentBounds: widget.overlayPosition,
       icon: Icons.devices,
       builder: (context, _) => DevicesPopOver(),
       child: Builder(
@@ -102,6 +104,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewVerticalToolBar> {
                   deviceButton,
                   Popover(
                     title: 'Locales',
+                    parentBounds: widget.overlayPosition,
                     icon: Icons.language,
                     builder: (context, _) => LocalesPopOver(),
                     child: Builder(
@@ -147,6 +150,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewVerticalToolBar> {
                   ),
                   Popover(
                     title: 'Screenshot',
+                    parentBounds: widget.overlayPosition,
                     size: Size(300, 300),
                     icon: Icons.photo_camera,
                     builder: (context, _) =>
@@ -176,6 +180,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewVerticalToolBar> {
                   ),
                   Popover(
                     title: 'Accesibility',
+                    parentBounds: widget.overlayPosition,
                     icon: Icons.accessibility_new,
                     size: Size(280, 300),
                     builder: (context, _) => AccessibilityPopOver(),
@@ -189,6 +194,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewVerticalToolBar> {
                   ),
                   Popover(
                     title: 'Settings',
+                    parentBounds: widget.overlayPosition,
                     size: Size(280, 320),
                     icon: Icons.tune,
                     builder: (context, close) => StylePopOver(close),

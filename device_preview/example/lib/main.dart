@@ -9,8 +9,19 @@ import 'gallery/studies/starter/app.dart';
 void main() {
   debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
 
-  runApp(DevicePreview(
-    availableLocales: GalleryLocalizations.supportedLocales,
-    builder: (context) => StarterApp(),
+  runApp(Row(
+    textDirection: TextDirection.ltr,
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      /*Expanded(
+        child: Container(color: Colors.red),
+      ),*/
+      Expanded(
+        child: DevicePreview(
+          availableLocales: GalleryLocalizations.supportedLocales,
+          builder: (context) => StarterApp(),
+        ),
+      ),
+    ],
   ));
 }

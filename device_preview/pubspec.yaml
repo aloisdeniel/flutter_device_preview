@@ -1,5 +1,5 @@
 name: device_preview
-version: 0.5.0-prerelease.3
+version: 0.5.0-prerelease.7
 description: Approximate how your app looks and performs on another device.
 homepage: https://github.com/aloisdeniel/flutter_device_preview
 
@@ -11,7 +11,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  device_frame: ^0.3.0-prerelease4
+  device_frame: ^0.3.0-prerelease8
   font_awesome_flutter: ^8.9.0
   http: ^0.12.2 
   freezed_annotation: ^0.12.0

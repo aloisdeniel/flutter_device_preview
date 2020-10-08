@@ -1,7 +1,7 @@
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
   runApp(ExampleApp());
 }
 
@@ -15,7 +15,16 @@ class _ExampleAppState extends State<ExampleApp> {
   bool isDark = true;
   bool hasShadow = true;
   bool isKeyboard = false;
-  List<DeviceIdentifier> allDevices = [
+  bool isEnabled = true;
+
+  @override
+  void initState() {
+    DeviceFrame.precache(context);
+    super.initState();
+  }
+
+  final GlobalKey screenKey = GlobalKey();
+  List<DeviceInfo> allDevices = [
     ...Devices.ios.all,
     ...Devices.android.all,
     ...Devices.macos.all,
@@ -23,16 +32,16 @@ class _ExampleAppState extends State<ExampleApp> {
     ...Devices.linux.all,
   ];
   Orientation orientation = Orientation.portrait;
-  Widget _frame(DeviceIdentifier id) => Center(
-        child: DeviceFrame.identifier(
-          identifier: id,
+  Widget _frame(DeviceInfo device) => Center(
+        child: DeviceFrame(
+          device: device,
           isFrameVisible: hasShadow,
           orientation: orientation,
           screen: Container(
             color: Colors.blue,
             child: VirtualKeyboard(
               isEnabled: isKeyboard,
-              child: FakeScreen(),
+              child: FakeScreen(key: screenKey),
             ),
           ),
         ),
@@ -91,11 +100,20 @@ class _ExampleAppState extends State<ExampleApp> {
                   },
                   icon: Icon(Icons.keyboard),
                 ),
+                /*IconButton(
+                  onPressed: () {
+                    setState(() {
+                      isEnabled = !isEnabled;
+                    });
+                  },
+                  icon: Icon(Icons.check),
+                ),*/
               ],
               bottom: TabBar(
                 isScrollable: true,
                 tabs: [
-                  ...allDevices.map((x) => Tab(text: '${x.type} ${x.name}')),
+                  ...allDevices
+                      .map((x) => Tab(text: '${x.identifier.type} ${x.name}')),
                 ],
               ),
             ),
@@ -103,11 +121,13 @@ class _ExampleAppState extends State<ExampleApp> {
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Builder(
-                  builder: (context) => AnimatedBuilder(
-                    animation: DefaultTabController.of(context),
-                    builder: (context, _) => _frame(
-                        allDevices[DefaultTabController.of(context).index]),
-                  ),
+                  builder: (context) => !isEnabled
+                      ? FakeScreen(key: screenKey)
+                      : AnimatedBuilder(
+                          animation: DefaultTabController.of(context),
+                          builder: (context, _) => _frame(allDevices[
+                              DefaultTabController.of(context).index]),
+                        ),
                 ),
               ),
             ),
@@ -119,6 +139,7 @@ class _ExampleAppState extends State<ExampleApp> {
 }
 
 class FakeScreen extends StatefulWidget {
+  const FakeScreen({Key key}) : super(key: key);
   @override
   _FakeScreenState createState() => _FakeScreenState();
 }

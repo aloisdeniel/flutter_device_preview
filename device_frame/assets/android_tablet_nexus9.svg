@@ -112,7 +112,7 @@
 <rect x="114.952" y="272.089" width="1624.1" height="2164.05" rx="2.10922" fill="#121212"/>
 </g>
 <path d="M117.061 276.197C117.061 275.093 117.957 274.197 119.061 274.197H1734.94C1736.04 274.197 1736.94 275.093 1736.94 276.197V2432.03C1736.94 2433.14 1736.04 2434.03 1734.94 2434.03H119.061C117.957 2434.03 117.061 2433.14 117.061 2432.03V276.197Z" fill="#FF0000"/>
-<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="20" letter-spacing="0em"><tspan x="148" y="330.336">name: Nexus 9&#10;</tspan><tspan x="148" y="353.336">density: 2&#10;</tspan><tspan x="148" y="376.336">screen_size: 768x1024&#10;</tspan><tspan x="148" y="399.336">safe_areas: 0,20,0,0|0,20,0,0&#10;</tspan><tspan x="148" y="422.336">device_type: tablet</tspan></text>
+<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="20" letter-spacing="0em"><tspan x="148" y="330.336">name: Nexus 9&#10;</tspan><tspan x="148" y="353.336">density: 2&#10;</tspan><tspan x="148" y="376.336">screen_size: 768x1024&#10;</tspan><tspan x="148" y="399.336">safe_areas: 0,20,0,0|0,20,0,0</tspan></text>
 </g>
 <defs>
 <filter id="filter0_i" x="912.235" y="134.99" width="29.529" height="31.6382" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
