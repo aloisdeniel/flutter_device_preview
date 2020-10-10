@@ -1,8 +1,9 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:device_preview/src/state/store.dart';
+import 'package:device_preview/src/views/device_preview_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-import '../../device_preview.dart';
+import 'package:provider/provider.dart';
 
 class LocalesPopOver extends StatefulWidget {
   @override
@@ -13,7 +14,9 @@ class _LocalesPopOverState extends State<LocalesPopOver> {
   String filter = '';
   @override
   Widget build(BuildContext context) {
-    final preview = DevicePreview.of(context);
+    final locales = context.select(
+      (DevicePreviewStore store) => store.locales,
+    );
     return Column(
       children: <Widget>[
         LocaleTools(
@@ -23,7 +26,7 @@ class _LocalesPopOverState extends State<LocalesPopOver> {
         Expanded(
           child: ListView(
             padding: EdgeInsets.all(10.0),
-            children: preview.availablesLocales
+            children: locales
                 .where((x) {
                   final filter = this.filter.trim().toLowerCase();
                   return filter.isEmpty ||
@@ -81,13 +84,13 @@ class _LocaleToolsState extends State<LocaleTools> {
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     return Material(
       child: Container(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10),
         color: toolBarStyle.backgroundColor,
         child: SizedBox(
           height: 34,
           child: TextField(
             style: TextStyle(
-              fontSize: 11.0,
+              fontSize: 11,
               color: toolBarStyle.foregroundColor,
             ),
             decoration: InputDecoration(
@@ -121,11 +124,18 @@ class LocaleTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final preview = DevicePreview.of(context);
+    final selectedLocale = context.select(
+      (DevicePreviewStore store) => store.data.locale,
+    );
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
-    final isSelected = preview.locale.toString() == locale.code;
+    final isSelected = selectedLocale == locale.code;
     return GestureDetector(
-      onTap: !isSelected ? () => preview.locale = Locale(locale.code) : null,
+      onTap: !isSelected
+          ? () {
+              final store = context.read<DevicePreviewStore>();
+              store.data = store.data.copyWith(locale: locale.code);
+            }
+          : null,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 100),
         color: isSelected ? Theme.of(context).primaryColor : Colors.transparent,

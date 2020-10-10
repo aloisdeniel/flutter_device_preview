@@ -1,14 +1,17 @@
 import 'dart:math' as math;
 
-import 'package:device_preview/src/tool_bar/menus/accessibility.dart';
-import 'package:device_preview/src/tool_bar/menus/devices.dart';
+import 'package:device_preview/src/state/store.dart';
+import 'package:device_preview/src/views/device_preview_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import '../../device_preview.dart';
-import '../utilities/spacing.dart';
+import '../../utilities/spacing.dart';
 
 import 'button.dart';
+import 'menus/accessibility.dart';
+import 'menus/devices.dart';
 import 'menus/locales.dart';
 import 'menus/popover.dart';
 import 'menus/screenshot.dart';
@@ -39,7 +42,37 @@ class _DevicePreviewToolBarState extends State<DevicePreviewVerticalToolBar> {
 
   @override
   Widget build(BuildContext context) {
-    final preview = DevicePreview.of(context);
+    final isEnabled = context.select(
+      (DevicePreviewStore store) => store.data.isEnabled,
+    );
+
+    final isFrameVisible = context.select(
+      (DevicePreviewStore store) => store.data.isFrameVisible,
+    );
+
+    final name = context.select(
+      (DevicePreviewStore store) => store.deviceInfo.name,
+    );
+
+    final deviceType = context.select(
+      (DevicePreviewStore store) => store.deviceInfo.identifier.type,
+    );
+
+    final locale = context.select(
+      (DevicePreviewStore store) => store.data.locale,
+    );
+
+    final rotatedSafeAreas = context.select(
+      (DevicePreviewStore store) => store.deviceInfo.rotatedSafeAreas,
+    );
+
+    final isVirtualKeyboardVisible = context.select(
+      (DevicePreviewStore store) => store.data.isVirtualKeyboardVisible,
+    );
+
+    final isDarkMode = context.select(
+      (DevicePreviewStore store) => store.data.isDarkMode,
+    );
     final mediaQuery = MediaQuery.of(context);
     final showTitles = mediaQuery.size.width > 500;
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
@@ -51,7 +84,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewVerticalToolBar> {
       builder: (context, _) => DevicesPopOver(),
       child: Builder(
         builder: (context) => ToolBarButton(
-          title: preview.deviceInfo?.name,
+          title: name,
           icon: Icons.phone_android,
           onTap: () => Popover.open(context),
         ),
@@ -80,15 +113,18 @@ class _DevicePreviewToolBarState extends State<DevicePreviewVerticalToolBar> {
                 child: Material(
                   color: Colors.transparent,
                   child: Switch(
-                    value: preview.isEnabled ?? true,
-                    onChanged: (v) => preview.isEnabled = v,
+                    value: isEnabled ?? true,
+                    onChanged: (v) {
+                      final state = context.read<DevicePreviewStore>();
+                      state.data = state.data.copyWith(isEnabled: v);
+                    },
                     activeColor: toolBarStyle.foregroundColor.withOpacity(1),
                     inactiveTrackColor:
                         toolBarStyle.foregroundColor.withOpacity(0.22),
                   ),
                 ),
               ),
-              if (!preview.isEnabled)
+              if (!isEnabled)
                 Align(
                   alignment: Alignment.center,
                   child: Text(
@@ -99,7 +135,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewVerticalToolBar> {
                     ),
                   ),
                 ),
-              if (preview.isEnabled)
+              if (isEnabled)
                 ...[
                   deviceButton,
                   Popover(
@@ -110,43 +146,49 @@ class _DevicePreviewToolBarState extends State<DevicePreviewVerticalToolBar> {
                     child: Builder(
                       builder: (context) => ToolBarButton(
                         isRounded: true,
-                        title: showTitles ? preview.locale?.toString() : null,
+                        title: showTitles ? locale : null,
                         icon: Icons.language,
                         onTap: () => Popover.open(context),
                       ),
                     ),
                   ),
-                  if (preview.deviceInfo?.rotatedSafeAreas != null)
+                  if (rotatedSafeAreas != null)
                     ToolBarButton(
                       title: 'Rotate',
                       icon: Icons.screen_rotation,
-                      onTap: () => preview.rotate(),
+                      onTap: () {
+                        final state = context.read<DevicePreviewStore>();
+                        state.rotate();
+                      },
                     ),
                   ToolBarButton(
-                    title: !preview.isFrameVisible
-                        ? 'Display frame'
-                        : 'Hide frame',
+                    title: !isFrameVisible ? 'Display frame' : 'Hide frame',
                     icon: Icons.border_outer,
-                    onTap: () => preview.toggleFrame(),
+                    onTap: () {
+                      final state = context.read<DevicePreviewStore>();
+                      state.toggleFrame();
+                    },
                   ),
                   ToolBarButton(
-                    title: preview.isVirtualKeyboardVisible
+                    title: isVirtualKeyboardVisible
                         ? 'Hide keyboard'
                         : 'Show keyboard',
-                    icon: preview.isVirtualKeyboardVisible
+                    icon: isVirtualKeyboardVisible
                         ? Icons.keyboard_hide
                         : Icons.keyboard,
-                    onTap: () => preview.isVirtualKeyboardVisible =
-                        !preview.isVirtualKeyboardVisible,
+                    onTap: () {
+                      final state = context.read<DevicePreviewStore>();
+                      state.toggleVirtualKeyboard();
+                    },
                   ),
                   ToolBarButton(
-                    title: showTitles
-                        ? (preview.isDarkMode ? 'Light' : 'Dark')
-                        : null,
-                    icon: preview.isDarkMode
-                        ? Icons.brightness_3
-                        : Icons.brightness_high,
-                    onTap: () => preview.isDarkMode = !preview.isDarkMode,
+                    title: showTitles ? (isDarkMode ? 'Light' : 'Dark') : null,
+                    icon:
+                        isDarkMode ? Icons.brightness_3 : Icons.brightness_high,
+                    onTap: () {
+                      final state = context.read<DevicePreviewStore>();
+                      state.toggleDarkMode();
+                    },
                   ),
                   Popover(
                     title: 'Screenshot',
@@ -161,9 +203,10 @@ class _DevicePreviewToolBarState extends State<DevicePreviewVerticalToolBar> {
                         icon: Icons.photo_camera,
                         onTap: () async {
                           try {
-                            final screenshot = await preview.screenshot();
-                            var link =
-                                await preview.processScreenshot(screenshot);
+                            final screenshot =
+                                await DevicePreview.screenshot(context);
+                            var link = await DevicePreview.processScreenshot(
+                                context, screenshot);
                             screenShotmessage =
                                 'Your screenshot is available here: $link and in your clipboard!';
                             await Clipboard.setData(ClipboardData(text: link));

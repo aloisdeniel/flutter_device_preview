@@ -1,11 +1,27 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/widgets.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'utilities/json_converters.dart';
+
+import '../utilities/json_converters.dart';
 import 'package:flutter/foundation.dart';
 
-part 'device_preview_data.freezed.dart';
-part 'device_preview_data.g.dart';
+part 'state.freezed.dart';
+part 'state.g.dart';
+
+@freezed
+abstract class DevicePreviewState with _$DevicePreviewState {
+  const factory DevicePreviewState.notInitialized() =
+      _NotInitializedDevicePreviewState;
+
+  const factory DevicePreviewState.initializing() =
+      _InitializingDevicePreviewState;
+
+  const factory DevicePreviewState.initialized({
+    @required List<DeviceInfo> devices,
+    @required List<NamedLocale> locales,
+    @required DevicePreviewData data,
+  }) = _InitializedDevicePreviewState;
+}
 
 /// A [DevicePreview] configuration snapshot that can be
 /// serialized to be persisted between sessions.
@@ -35,6 +51,9 @@ abstract class DevicePreviewData with _$DevicePreviewData {
     /// Indicate whether texts are forced to bold.
     @Default(false) bool boldText,
 
+    /// Indicate whether the virtual keyboard is visible.
+    @Default(false) bool isVirtualKeyboardVisible,
+
     /// Indicate whether animations are disabled.
     @Default(false) bool disableAnimations,
 
@@ -49,6 +68,7 @@ abstract class DevicePreviewData with _$DevicePreviewData {
 
     /// The current text scaling factor.
     @Default(1.0) double textScaleFactor,
+    @nullable DevicePreviewSettingsData settings,
 
     /// The custom device configuration
     @nullable CustomDeviceInfoData customDevice,
@@ -93,4 +113,43 @@ abstract class CustomDeviceInfoData with _$CustomDeviceInfoData {
 
   factory CustomDeviceInfoData.fromJson(Map<String, dynamic> json) =>
       _$CustomDeviceInfoDataFromJson(json);
+}
+
+/// Settings of device preview itself (tool bar position, background style).
+@freezed
+abstract class DevicePreviewSettingsData with _$DevicePreviewSettingsData {
+  /// Create a new set of settings.
+  const factory DevicePreviewSettingsData({
+    /// The toolbar position.
+    @Default(DevicePreviewToolBarPositionData.bottom)
+        DevicePreviewToolBarPositionData toolbarPosition,
+
+    /// The theme of the toolbar.
+    @Default(DevicePreviewToolBarThemeData.dark)
+        DevicePreviewToolBarThemeData toolbarTheme,
+
+    /// The theme of the background.
+    @Default(DevicePreviewBackgroundThemeData.light)
+        DevicePreviewBackgroundThemeData backgroundTheme,
+  }) = _DevicePreviewSettingsData;
+
+  factory DevicePreviewSettingsData.fromJson(Map<String, dynamic> json) =>
+      _$DevicePreviewSettingsDataFromJson(json);
+}
+
+enum DevicePreviewToolBarThemeData {
+  dark,
+  light,
+}
+
+enum DevicePreviewBackgroundThemeData {
+  dark,
+  light,
+}
+
+enum DevicePreviewToolBarPositionData {
+  bottom,
+  top,
+  left,
+  right,
 }

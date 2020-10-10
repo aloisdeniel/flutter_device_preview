@@ -6,6 +6,8 @@ import 'package:flutter/src/foundation/platform.dart';
 import 'package:flutter/src/painting/edge_insets.dart';
 import 'package:meta/meta.dart';
 
+import 'state.dart';
+
 /// A device info that can be customized at runtime to update
 /// the current preview.
 ///
@@ -108,9 +110,6 @@ class CustomDeviceIdentifier implements DeviceIdentifier {
   const CustomDeviceIdentifier(this.data);
 
   static const identifier = 'custom_device';
-
-  @override
-  String get assetKey => identifier;
 
   @override
   String get name => data.name;

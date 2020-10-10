@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+/// A json converter for [Size].
 class SizeJsonConverter implements JsonConverter<Size, Object> {
   const SizeJsonConverter();
 

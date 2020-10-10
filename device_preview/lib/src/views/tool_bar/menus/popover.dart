@@ -1,9 +1,8 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:device_preview/src/utilities/media_query_observer.dart';
+import 'package:device_preview/src/views/device_preview_style.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../device_preview.dart';
-import '../../utilities/position.dart';
+import '../../../utilities/position.dart';
 
 typedef PopoverContentBuilder = Widget Function(
     BuildContext context, GestureTapCallback onClose);
@@ -46,8 +45,6 @@ class _PopoverState extends State<Popover> {
   bool _isOpen = false;
 
   void open() {
-    final provider = DevicePreviewProvider.of(context);
-
     if (!_isOpen) {
       final barrier = OverlayEntry(
         opaque: false,
@@ -63,19 +60,13 @@ class _PopoverState extends State<Popover> {
       final popover = OverlayEntry(
         opaque: false,
         builder: (context) => MediaQueryObserver(
-          child: DevicePreviewProvider(
-            isVirtualKeyboardVisible: provider.isVirtualKeyboardVisible,
-            availableDevices: provider.availableDevices,
-            data: provider.data,
-            mediaQuery: provider.mediaQuery,
-            child: _PopOverContainer(
-              title: widget.title,
-              icon: widget.icon,
-              child: widget.builder(context, close),
-              size: widget.size ?? Size(280, 420),
-              startPosition: startPosition & _key.absolutePosition.size,
-              parentBounds: widget.parentBounds,
-            ),
+          child: _PopOverContainer(
+            title: widget.title,
+            icon: widget.icon,
+            child: widget.builder(context, close),
+            size: widget.size ?? Size(280, 420),
+            startPosition: startPosition & _key.absolutePosition.size,
+            parentBounds: widget.parentBounds,
           ),
         ),
       );

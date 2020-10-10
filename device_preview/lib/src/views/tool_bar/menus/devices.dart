@@ -1,16 +1,16 @@
-import 'dart:math' as math;
-
-import 'package:device_preview/src/custom_device.dart';
-import 'package:device_preview/src/tool_bar/button.dart';
+import 'package:device_preview/src/state/custom_device.dart';
+import 'package:device_preview/src/state/store.dart';
+import 'package:device_preview/src/views/device_preview_style.dart';
+import 'package:device_preview/src/views/tool_bar/button.dart';
 import 'package:device_frame/device_frame.dart';
-import 'package:device_preview/src/tool_bar/menus/accessibility.dart';
-import 'package:device_preview/src/tool_bar/menus/style.dart';
+import 'package:device_preview/src/views/tool_bar/menus/accessibility.dart';
+import 'package:device_preview/src/views/tool_bar/menus/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
-import '../../../device_preview.dart';
-import '../../utilities/spacing.dart';
+import '../../../utilities/spacing.dart';
 import '../format.dart';
 
 class DevicesPopOver extends StatefulWidget {
@@ -41,21 +41,36 @@ class _DevicesPopOverState extends State<DevicesPopOver> {
 
   @override
   Widget build(BuildContext context) {
-    final preview = DevicePreview.of(context);
-    final all = preview.availableDevices
-        .map((e) => e.identifier.platform)
-        .toSet()
-        .toList();
-    final selected = this.selected ??
-        [preview.deviceInfo?.identifier?.platform ?? all.first];
+    final all = context.select(
+      (DevicePreviewStore store) =>
+          store.devices.map((e) => e.identifier.platform).toSet().toList(),
+    );
 
-    final isCustomDevice = _isCustomDevice ?? preview.isCustomDevice;
-    final devices = (preview.availableDevices
-        .where((x) =>
-            selected.contains(x.identifier.platform) &&
-            x.name.replaceAll(' ', '').toLowerCase().contains(_searchedText))
-        .toList()
-          ..sort((x, y) => x.screenSize.width.compareTo(y.screenSize.width)));
+    final platform = context.select(
+      (DevicePreviewStore store) => store.deviceInfo.identifier.platform,
+    );
+
+    var isCustomDevice = context.select(
+      (DevicePreviewStore store) => store.isCustomDevice,
+    );
+    isCustomDevice = _isCustomDevice ?? isCustomDevice;
+
+    final selected = this.selected ?? [platform ?? all.first];
+
+    final devices = context.select(
+      (DevicePreviewStore store) => store.devices
+          .where((x) =>
+              selected.contains(x.identifier.platform) &&
+              x.name.replaceAll(' ', '').toLowerCase().contains(_searchedText))
+          .toList()
+            ..sort((x, y) {
+              final result = x.screenSize.width.compareTo(y.screenSize.width);
+              return result == 0
+                  ? x.screenSize.height.compareTo(y.screenSize.height)
+                  : result;
+            }),
+    );
+
     return GestureDetector(
       onPanDown: (_) {
         FocusScope.of(context).requestFocus(FocusNode()); //remove search focus
@@ -86,8 +101,15 @@ class _DevicesPopOverState extends State<DevicesPopOver> {
                 : ListView(
                     padding: EdgeInsets.all(10),
                     children: devices
-                        .map((e) =>
-                            DeviceTile(e, () => preview.device = e.identifier))
+                        .map(
+                          (e) => DeviceTile(
+                            e,
+                            () {
+                              final state = context.read<DevicePreviewStore>();
+                              state.selectDevice(e.identifier);
+                            },
+                          ),
+                        )
                         .toList(),
                   ),
           ),
@@ -134,9 +156,11 @@ class PlatformSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     final theme = Theme.of(context);
-    final preview = DevicePreview.of(context);
-    final isCustomSelected = preview.deviceInfo?.identifier?.toString() ==
-        CustomDeviceIdentifier.identifier;
+    final isCustomSelected = context.select(
+      (DevicePreviewStore store) =>
+          store.deviceInfo.identifier.toString() ==
+          CustomDeviceIdentifier.identifier,
+    );
     return Container(
       padding: const EdgeInsets.all(10),
       color: toolBarStyle.backgroundColor,
@@ -174,7 +198,8 @@ class PlatformSelector extends StatelessWidget {
               icon: Icons.phonelink_setup_outlined,
               onTap: () {
                 if (!isCustomSelected) {
-                  preview.enableCustomDevice();
+                  final state = context.read<DevicePreviewStore>();
+                  state.enableCustomDevice();
                 }
                 onCustomDeviceEnabled();
               },
@@ -193,8 +218,10 @@ class CustomDevicePanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final preview = DevicePreview.of(context);
-    final customDevice = preview.data.customDevice;
+    final customDevice = context.select(
+      (DevicePreviewStore store) => store.data.customDevice,
+    );
+
     return ListView(
       padding: EdgeInsets.zero,
       children: [
@@ -242,9 +269,10 @@ class CustomDevicePanel extends StatelessWidget {
           title: 'Width',
           value: customDevice.screenSize.width,
           onValueChanged: (v) {
-            preview.customDevice = customDevice.copyWith(
+            final store = context.read<DevicePreviewStore>();
+            store.updateCustomDevice(customDevice.copyWith(
               screenSize: Size(v, customDevice.screenSize.height),
-            );
+            ));
           },
           min: 128,
           max: 2688,
@@ -254,10 +282,13 @@ class CustomDevicePanel extends StatelessWidget {
           title: 'Height',
           value: customDevice.screenSize.height,
           onValueChanged: (v) {
-            preview.customDevice = customDevice.copyWith(
-              screenSize: Size(
-                customDevice.screenSize.width,
-                v,
+            final store = context.read<DevicePreviewStore>();
+            store.updateCustomDevice(
+              customDevice.copyWith(
+                screenSize: Size(
+                  customDevice.screenSize.width,
+                  v,
+                ),
               ),
             );
           },
@@ -272,8 +303,11 @@ class CustomDevicePanel extends StatelessWidget {
           title: 'Left',
           value: customDevice.safeAreas.left,
           onValueChanged: (v) {
-            preview.customDevice = customDevice.copyWith(
-              safeAreas: customDevice.safeAreas.copyWith(left: v),
+            final store = context.read<DevicePreviewStore>();
+            store.updateCustomDevice(
+              customDevice.copyWith(
+                safeAreas: customDevice.safeAreas.copyWith(left: v),
+              ),
             );
           },
           min: 0,
@@ -284,8 +318,11 @@ class CustomDevicePanel extends StatelessWidget {
           title: 'Top',
           value: customDevice.safeAreas.top,
           onValueChanged: (v) {
-            preview.customDevice = customDevice.copyWith(
-              safeAreas: customDevice.safeAreas.copyWith(top: v),
+            final store = context.read<DevicePreviewStore>();
+            store.updateCustomDevice(
+              customDevice.copyWith(
+                safeAreas: customDevice.safeAreas.copyWith(top: v),
+              ),
             );
           },
           min: 0,
@@ -296,8 +333,11 @@ class CustomDevicePanel extends StatelessWidget {
           title: 'Right',
           value: customDevice.safeAreas.right,
           onValueChanged: (v) {
-            preview.customDevice = customDevice.copyWith(
-              safeAreas: customDevice.safeAreas.copyWith(right: v),
+            final store = context.read<DevicePreviewStore>();
+            store.updateCustomDevice(
+              customDevice.copyWith(
+                safeAreas: customDevice.safeAreas.copyWith(right: v),
+              ),
             );
           },
           min: 0,
@@ -308,8 +348,11 @@ class CustomDevicePanel extends StatelessWidget {
           title: 'Bottom',
           value: customDevice.safeAreas.bottom,
           onValueChanged: (v) {
-            preview.customDevice = customDevice.copyWith(
-              safeAreas: customDevice.safeAreas.copyWith(bottom: v),
+            final store = context.read<DevicePreviewStore>();
+            store.updateCustomDevice(
+              customDevice.copyWith(
+                safeAreas: customDevice.safeAreas.copyWith(bottom: v),
+              ),
             );
           },
           min: 0,
@@ -320,7 +363,10 @@ class CustomDevicePanel extends StatelessWidget {
           title: 'Screen density',
           value: customDevice.pixelRatio,
           onValueChanged: (v) {
-            preview.customDevice = customDevice.copyWith(pixelRatio: v);
+            final store = context.read<DevicePreviewStore>();
+            store.updateCustomDevice(
+              customDevice.copyWith(pixelRatio: v),
+            );
           },
           min: 1,
           max: 4,
@@ -342,8 +388,11 @@ class DeviceTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final preview = DevicePreview.of(context);
-    final isSelected = preview.deviceInfo.name == device.name;
+    final selectedIdentifier = context.select(
+      (DevicePreviewStore store) => store.deviceInfo.identifier,
+    );
+
+    final isSelected = selectedIdentifier == device.identifier;
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
 
     return GestureDetector(
@@ -462,13 +511,23 @@ class DeviceTypeSelectBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final preview = DevicePreview.of(context);
+    final customDevice = context.select(
+      (DevicePreviewStore store) {
+        final store = context.read<DevicePreviewStore>();
+        store.data.customDevice;
+      },
+    );
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     return SelectBox(
-      isSelected: preview.data.customDevice.type == type,
-      onTap: () => preview.customDevice = preview.data.customDevice.copyWith(
-        type: type,
-      ),
+      isSelected: customDevice.type == type,
+      onTap: () {
+        final store = context.read<DevicePreviewStore>();
+        store.updateCustomDevice(
+          customDevice.copyWith(
+            type: type,
+          ),
+        );
+      },
       child: Icon(
         type.typeIcon(),
         color: toolBarStyle.foregroundColor,
@@ -487,13 +546,23 @@ class PlatformSelectBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final preview = DevicePreview.of(context);
+    final customDevice = context.select(
+      (DevicePreviewStore store) {
+        final store = context.read<DevicePreviewStore>();
+        store.data.customDevice;
+      },
+    );
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     return SelectBox(
-      isSelected: preview.data.customDevice.platform == platform,
-      onTap: () => preview.customDevice = preview.data.customDevice.copyWith(
-        platform: platform,
-      ),
+      isSelected: customDevice.platform == platform,
+      onTap: () {
+        final store = context.read<DevicePreviewStore>();
+        store.updateCustomDevice(
+          customDevice.copyWith(
+            platform: platform,
+          ),
+        );
+      },
       child: Icon(
         platform.platformIcon(),
         color: toolBarStyle.foregroundColor,

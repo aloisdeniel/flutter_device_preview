@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'device_preview_data.dart';
+part of 'state.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -17,11 +17,16 @@ _$_DevicePreviewData _$_$_DevicePreviewDataFromJson(Map<String, dynamic> json) {
     isFrameVisible: json['isFrameVisible'] as bool ?? true,
     isDarkMode: json['isDarkMode'] as bool ?? false,
     boldText: json['boldText'] as bool ?? false,
+    isVirtualKeyboardVisible: json['isVirtualKeyboardVisible'] as bool ?? false,
     disableAnimations: json['disableAnimations'] as bool ?? false,
     highContrast: json['highContrast'] as bool ?? false,
     accessibleNavigation: json['accessibleNavigation'] as bool ?? false,
     invertColors: json['invertColors'] as bool ?? false,
     textScaleFactor: (json['textScaleFactor'] as num)?.toDouble() ?? 1.0,
+    settings: json['settings'] == null
+        ? null
+        : DevicePreviewSettingsData.fromJson(
+            json['settings'] as Map<String, dynamic>),
     customDevice: json['customDevice'] == null
         ? null
         : CustomDeviceInfoData.fromJson(
@@ -39,11 +44,13 @@ Map<String, dynamic> _$_$_DevicePreviewDataToJson(
       'isFrameVisible': instance.isFrameVisible,
       'isDarkMode': instance.isDarkMode,
       'boldText': instance.boldText,
+      'isVirtualKeyboardVisible': instance.isVirtualKeyboardVisible,
       'disableAnimations': instance.disableAnimations,
       'highContrast': instance.highContrast,
       'accessibleNavigation': instance.accessibleNavigation,
       'invertColors': instance.invertColors,
       'textScaleFactor': instance.textScaleFactor,
+      'settings': instance.settings,
       'customDevice': instance.customDevice,
     };
 
@@ -129,4 +136,49 @@ const _$TargetPlatformEnumMap = {
   TargetPlatform.linux: 'linux',
   TargetPlatform.macOS: 'macOS',
   TargetPlatform.windows: 'windows',
+};
+
+_$_DevicePreviewSettingsData _$_$_DevicePreviewSettingsDataFromJson(
+    Map<String, dynamic> json) {
+  return _$_DevicePreviewSettingsData(
+    toolbarPosition: _$enumDecodeNullable(
+            _$DevicePreviewToolBarPositionDataEnumMap,
+            json['toolbarPosition']) ??
+        DevicePreviewToolBarPositionData.bottom,
+    toolbarTheme: _$enumDecodeNullable(
+            _$DevicePreviewToolBarThemeDataEnumMap, json['toolbarTheme']) ??
+        DevicePreviewToolBarThemeData.dark,
+    backgroundTheme: _$enumDecodeNullable(
+            _$DevicePreviewBackgroundThemeDataEnumMap,
+            json['backgroundTheme']) ??
+        DevicePreviewBackgroundThemeData.light,
+  );
+}
+
+Map<String, dynamic> _$_$_DevicePreviewSettingsDataToJson(
+        _$_DevicePreviewSettingsData instance) =>
+    <String, dynamic>{
+      'toolbarPosition':
+          _$DevicePreviewToolBarPositionDataEnumMap[instance.toolbarPosition],
+      'toolbarTheme':
+          _$DevicePreviewToolBarThemeDataEnumMap[instance.toolbarTheme],
+      'backgroundTheme':
+          _$DevicePreviewBackgroundThemeDataEnumMap[instance.backgroundTheme],
+    };
+
+const _$DevicePreviewToolBarPositionDataEnumMap = {
+  DevicePreviewToolBarPositionData.bottom: 'bottom',
+  DevicePreviewToolBarPositionData.top: 'top',
+  DevicePreviewToolBarPositionData.left: 'left',
+  DevicePreviewToolBarPositionData.right: 'right',
+};
+
+const _$DevicePreviewToolBarThemeDataEnumMap = {
+  DevicePreviewToolBarThemeData.dark: 'dark',
+  DevicePreviewToolBarThemeData.light: 'light',
+};
+
+const _$DevicePreviewBackgroundThemeDataEnumMap = {
+  DevicePreviewBackgroundThemeData.dark: 'dark',
+  DevicePreviewBackgroundThemeData.light: 'light',
 };

@@ -1,7 +1,10 @@
+import 'package:device_preview/src/state/state.dart';
+import 'package:device_preview/src/state/store.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
 
 part 'device_preview_style.freezed.dart';
 
@@ -25,7 +28,7 @@ class DevicePreviewTheme extends InheritedWidget {
     return true;
   }
 
-  DevicePreviewTheme({
+  const DevicePreviewTheme({
     @required this.style,
     @required Widget child,
   }) : super(child: child);
@@ -34,10 +37,54 @@ class DevicePreviewTheme extends InheritedWidget {
     final widget =
         context.dependOnInheritedWidgetOfExactType<DevicePreviewTheme>();
 
-    var result = widget?.style ?? DevicePreviewStyle.light();
+    var result = widget?.style;
+
+    /// If no theme, the tool preferences are used.
+    if (result == null) {
+      final settings = context.select(
+        (DevicePreviewStore store) => store.settings,
+      );
+
+      final position = () {
+        switch (settings.toolbarPosition) {
+          case DevicePreviewToolBarPositionData.top:
+            return DevicePreviewToolBarPosition.top;
+
+          case DevicePreviewToolBarPositionData.left:
+            return DevicePreviewToolBarPosition.left;
+          case DevicePreviewToolBarPositionData.right:
+            return DevicePreviewToolBarPosition.right;
+          default:
+            return DevicePreviewToolBarPosition.bottom;
+        }
+      }();
+
+      result = DevicePreviewStyle(
+        toolBar: settings.toolbarTheme == DevicePreviewToolBarThemeData.dark
+            ? DevicePreviewToolBarStyle.dark(position: position)
+            : DevicePreviewToolBarStyle.light(position: position),
+        background: BoxDecoration(
+          gradient:
+              settings.backgroundTheme == DevicePreviewBackgroundThemeData.dark
+                  ? LinearGradient(
+                      colors: [
+                        Color(0xFF111111),
+                        Color(0xFF222222),
+                      ],
+                    )
+                  : LinearGradient(
+                      colors: [
+                        Color(0xFFf5f7fa),
+                        Color(0xFFc3cfe2),
+                      ],
+                    ),
+        ),
+      );
+    }
 
     // If toolbar position isn't supported, fallback to bottom.
-    final media = MediaQuery.of(context);
+    final media = MediaQuery.of(context, nullOk: true) ??
+        MediaQueryData.fromWindow(WidgetsBinding.instance.window);
     if (!DevicePreviewTheme.isPositionAvailableForWidth(
         result.toolBar.position, media.size.width)) {
       result = result.copyWith(

@@ -21,10 +21,9 @@ class StarterApp extends StatelessWidget {
     return MaterialApp(
       title: 'Starter',
       debugShowCheckedModeBanner: false,
-      locale: DevicePreview.of(context)?.locale, // <--
+      locale: DevicePreview.locale(context), // <--
       builder: DevicePreview.appBuilder, // <--
-      supportedLocales:
-          DevicePreview.of(context)?.availablesLocales?.map((x) => x.locale),
+      supportedLocales: DevicePreview.allLocales(context),
       localizationsDelegates: GalleryLocalizations.localizationsDelegates,
       initialRoute: StarterApp.defaultRoute,
       routes: {

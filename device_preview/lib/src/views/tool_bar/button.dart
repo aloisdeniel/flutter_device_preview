@@ -1,3 +1,4 @@
+import 'package:device_preview/src/views/device_preview_style.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../device_preview.dart';

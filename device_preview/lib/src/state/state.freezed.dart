@@ -1,13 +1,506 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
 
-part of 'device_preview_data.dart';
+part of 'state.dart';
 
 // **************************************************************************
 // FreezedGenerator
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
+
+/// @nodoc
+class _$DevicePreviewStateTearOff {
+  const _$DevicePreviewStateTearOff();
+
+// ignore: unused_element
+  _NotInitializedDevicePreviewState notInitialized() {
+    return const _NotInitializedDevicePreviewState();
+  }
+
+// ignore: unused_element
+  _InitializingDevicePreviewState initializing() {
+    return const _InitializingDevicePreviewState();
+  }
+
+// ignore: unused_element
+  _InitializedDevicePreviewState initialized(
+      {@required List<DeviceInfo> devices,
+      @required List<NamedLocale> locales,
+      @required DevicePreviewData data}) {
+    return _InitializedDevicePreviewState(
+      devices: devices,
+      locales: locales,
+      data: data,
+    );
+  }
+}
+
+/// @nodoc
+// ignore: unused_element
+const $DevicePreviewState = _$DevicePreviewStateTearOff();
+
+/// @nodoc
+mixin _$DevicePreviewState {
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result notInitialized(),
+    @required Result initializing(),
+    @required
+        Result initialized(List<DeviceInfo> devices, List<NamedLocale> locales,
+            DevicePreviewData data),
+  });
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result notInitialized(),
+    Result initializing(),
+    Result initialized(List<DeviceInfo> devices, List<NamedLocale> locales,
+        DevicePreviewData data),
+    @required Result orElse(),
+  });
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result notInitialized(_NotInitializedDevicePreviewState value),
+    @required Result initializing(_InitializingDevicePreviewState value),
+    @required Result initialized(_InitializedDevicePreviewState value),
+  });
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result notInitialized(_NotInitializedDevicePreviewState value),
+    Result initializing(_InitializingDevicePreviewState value),
+    Result initialized(_InitializedDevicePreviewState value),
+    @required Result orElse(),
+  });
+}
+
+/// @nodoc
+abstract class $DevicePreviewStateCopyWith<$Res> {
+  factory $DevicePreviewStateCopyWith(
+          DevicePreviewState value, $Res Function(DevicePreviewState) then) =
+      _$DevicePreviewStateCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$DevicePreviewStateCopyWithImpl<$Res>
+    implements $DevicePreviewStateCopyWith<$Res> {
+  _$DevicePreviewStateCopyWithImpl(this._value, this._then);
+
+  final DevicePreviewState _value;
+  // ignore: unused_field
+  final $Res Function(DevicePreviewState) _then;
+}
+
+/// @nodoc
+abstract class _$NotInitializedDevicePreviewStateCopyWith<$Res> {
+  factory _$NotInitializedDevicePreviewStateCopyWith(
+          _NotInitializedDevicePreviewState value,
+          $Res Function(_NotInitializedDevicePreviewState) then) =
+      __$NotInitializedDevicePreviewStateCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$NotInitializedDevicePreviewStateCopyWithImpl<$Res>
+    extends _$DevicePreviewStateCopyWithImpl<$Res>
+    implements _$NotInitializedDevicePreviewStateCopyWith<$Res> {
+  __$NotInitializedDevicePreviewStateCopyWithImpl(
+      _NotInitializedDevicePreviewState _value,
+      $Res Function(_NotInitializedDevicePreviewState) _then)
+      : super(_value, (v) => _then(v as _NotInitializedDevicePreviewState));
+
+  @override
+  _NotInitializedDevicePreviewState get _value =>
+      super._value as _NotInitializedDevicePreviewState;
+}
+
+/// @nodoc
+class _$_NotInitializedDevicePreviewState
+    with DiagnosticableTreeMixin
+    implements _NotInitializedDevicePreviewState {
+  const _$_NotInitializedDevicePreviewState();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'DevicePreviewState.notInitialized()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'DevicePreviewState.notInitialized'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _NotInitializedDevicePreviewState);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result notInitialized(),
+    @required Result initializing(),
+    @required
+        Result initialized(List<DeviceInfo> devices, List<NamedLocale> locales,
+            DevicePreviewData data),
+  }) {
+    assert(notInitialized != null);
+    assert(initializing != null);
+    assert(initialized != null);
+    return notInitialized();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result notInitialized(),
+    Result initializing(),
+    Result initialized(List<DeviceInfo> devices, List<NamedLocale> locales,
+        DevicePreviewData data),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (notInitialized != null) {
+      return notInitialized();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result notInitialized(_NotInitializedDevicePreviewState value),
+    @required Result initializing(_InitializingDevicePreviewState value),
+    @required Result initialized(_InitializedDevicePreviewState value),
+  }) {
+    assert(notInitialized != null);
+    assert(initializing != null);
+    assert(initialized != null);
+    return notInitialized(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result notInitialized(_NotInitializedDevicePreviewState value),
+    Result initializing(_InitializingDevicePreviewState value),
+    Result initialized(_InitializedDevicePreviewState value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (notInitialized != null) {
+      return notInitialized(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _NotInitializedDevicePreviewState implements DevicePreviewState {
+  const factory _NotInitializedDevicePreviewState() =
+      _$_NotInitializedDevicePreviewState;
+}
+
+/// @nodoc
+abstract class _$InitializingDevicePreviewStateCopyWith<$Res> {
+  factory _$InitializingDevicePreviewStateCopyWith(
+          _InitializingDevicePreviewState value,
+          $Res Function(_InitializingDevicePreviewState) then) =
+      __$InitializingDevicePreviewStateCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$InitializingDevicePreviewStateCopyWithImpl<$Res>
+    extends _$DevicePreviewStateCopyWithImpl<$Res>
+    implements _$InitializingDevicePreviewStateCopyWith<$Res> {
+  __$InitializingDevicePreviewStateCopyWithImpl(
+      _InitializingDevicePreviewState _value,
+      $Res Function(_InitializingDevicePreviewState) _then)
+      : super(_value, (v) => _then(v as _InitializingDevicePreviewState));
+
+  @override
+  _InitializingDevicePreviewState get _value =>
+      super._value as _InitializingDevicePreviewState;
+}
+
+/// @nodoc
+class _$_InitializingDevicePreviewState
+    with DiagnosticableTreeMixin
+    implements _InitializingDevicePreviewState {
+  const _$_InitializingDevicePreviewState();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'DevicePreviewState.initializing()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'DevicePreviewState.initializing'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _InitializingDevicePreviewState);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result notInitialized(),
+    @required Result initializing(),
+    @required
+        Result initialized(List<DeviceInfo> devices, List<NamedLocale> locales,
+            DevicePreviewData data),
+  }) {
+    assert(notInitialized != null);
+    assert(initializing != null);
+    assert(initialized != null);
+    return initializing();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result notInitialized(),
+    Result initializing(),
+    Result initialized(List<DeviceInfo> devices, List<NamedLocale> locales,
+        DevicePreviewData data),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (initializing != null) {
+      return initializing();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result notInitialized(_NotInitializedDevicePreviewState value),
+    @required Result initializing(_InitializingDevicePreviewState value),
+    @required Result initialized(_InitializedDevicePreviewState value),
+  }) {
+    assert(notInitialized != null);
+    assert(initializing != null);
+    assert(initialized != null);
+    return initializing(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result notInitialized(_NotInitializedDevicePreviewState value),
+    Result initializing(_InitializingDevicePreviewState value),
+    Result initialized(_InitializedDevicePreviewState value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (initializing != null) {
+      return initializing(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _InitializingDevicePreviewState implements DevicePreviewState {
+  const factory _InitializingDevicePreviewState() =
+      _$_InitializingDevicePreviewState;
+}
+
+/// @nodoc
+abstract class _$InitializedDevicePreviewStateCopyWith<$Res> {
+  factory _$InitializedDevicePreviewStateCopyWith(
+          _InitializedDevicePreviewState value,
+          $Res Function(_InitializedDevicePreviewState) then) =
+      __$InitializedDevicePreviewStateCopyWithImpl<$Res>;
+  $Res call(
+      {List<DeviceInfo> devices,
+      List<NamedLocale> locales,
+      DevicePreviewData data});
+
+  $DevicePreviewDataCopyWith<$Res> get data;
+}
+
+/// @nodoc
+class __$InitializedDevicePreviewStateCopyWithImpl<$Res>
+    extends _$DevicePreviewStateCopyWithImpl<$Res>
+    implements _$InitializedDevicePreviewStateCopyWith<$Res> {
+  __$InitializedDevicePreviewStateCopyWithImpl(
+      _InitializedDevicePreviewState _value,
+      $Res Function(_InitializedDevicePreviewState) _then)
+      : super(_value, (v) => _then(v as _InitializedDevicePreviewState));
+
+  @override
+  _InitializedDevicePreviewState get _value =>
+      super._value as _InitializedDevicePreviewState;
+
+  @override
+  $Res call({
+    Object devices = freezed,
+    Object locales = freezed,
+    Object data = freezed,
+  }) {
+    return _then(_InitializedDevicePreviewState(
+      devices:
+          devices == freezed ? _value.devices : devices as List<DeviceInfo>,
+      locales:
+          locales == freezed ? _value.locales : locales as List<NamedLocale>,
+      data: data == freezed ? _value.data : data as DevicePreviewData,
+    ));
+  }
+
+  @override
+  $DevicePreviewDataCopyWith<$Res> get data {
+    if (_value.data == null) {
+      return null;
+    }
+    return $DevicePreviewDataCopyWith<$Res>(_value.data, (value) {
+      return _then(_value.copyWith(data: value));
+    });
+  }
+}
+
+/// @nodoc
+class _$_InitializedDevicePreviewState
+    with DiagnosticableTreeMixin
+    implements _InitializedDevicePreviewState {
+  const _$_InitializedDevicePreviewState(
+      {@required this.devices, @required this.locales, @required this.data})
+      : assert(devices != null),
+        assert(locales != null),
+        assert(data != null);
+
+  @override
+  final List<DeviceInfo> devices;
+  @override
+  final List<NamedLocale> locales;
+  @override
+  final DevicePreviewData data;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'DevicePreviewState.initialized(devices: $devices, locales: $locales, data: $data)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'DevicePreviewState.initialized'))
+      ..add(DiagnosticsProperty('devices', devices))
+      ..add(DiagnosticsProperty('locales', locales))
+      ..add(DiagnosticsProperty('data', data));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _InitializedDevicePreviewState &&
+            (identical(other.devices, devices) ||
+                const DeepCollectionEquality()
+                    .equals(other.devices, devices)) &&
+            (identical(other.locales, locales) ||
+                const DeepCollectionEquality()
+                    .equals(other.locales, locales)) &&
+            (identical(other.data, data) ||
+                const DeepCollectionEquality().equals(other.data, data)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(devices) ^
+      const DeepCollectionEquality().hash(locales) ^
+      const DeepCollectionEquality().hash(data);
+
+  @override
+  _$InitializedDevicePreviewStateCopyWith<_InitializedDevicePreviewState>
+      get copyWith => __$InitializedDevicePreviewStateCopyWithImpl<
+          _InitializedDevicePreviewState>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result notInitialized(),
+    @required Result initializing(),
+    @required
+        Result initialized(List<DeviceInfo> devices, List<NamedLocale> locales,
+            DevicePreviewData data),
+  }) {
+    assert(notInitialized != null);
+    assert(initializing != null);
+    assert(initialized != null);
+    return initialized(devices, locales, data);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result notInitialized(),
+    Result initializing(),
+    Result initialized(List<DeviceInfo> devices, List<NamedLocale> locales,
+        DevicePreviewData data),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (initialized != null) {
+      return initialized(devices, locales, data);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result notInitialized(_NotInitializedDevicePreviewState value),
+    @required Result initializing(_InitializingDevicePreviewState value),
+    @required Result initialized(_InitializedDevicePreviewState value),
+  }) {
+    assert(notInitialized != null);
+    assert(initializing != null);
+    assert(initialized != null);
+    return initialized(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result notInitialized(_NotInitializedDevicePreviewState value),
+    Result initializing(_InitializingDevicePreviewState value),
+    Result initialized(_InitializedDevicePreviewState value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (initialized != null) {
+      return initialized(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _InitializedDevicePreviewState implements DevicePreviewState {
+  const factory _InitializedDevicePreviewState(
+      {@required List<DeviceInfo> devices,
+      @required List<NamedLocale> locales,
+      @required DevicePreviewData data}) = _$_InitializedDevicePreviewState;
+
+  List<DeviceInfo> get devices;
+  List<NamedLocale> get locales;
+  DevicePreviewData get data;
+  _$InitializedDevicePreviewStateCopyWith<_InitializedDevicePreviewState>
+      get copyWith;
+}
+
 DevicePreviewData _$DevicePreviewDataFromJson(Map<String, dynamic> json) {
   return _DevicePreviewData.fromJson(json);
 }
@@ -25,11 +518,13 @@ class _$DevicePreviewDataTearOff {
       bool isFrameVisible = true,
       bool isDarkMode = false,
       bool boldText = false,
+      bool isVirtualKeyboardVisible = false,
       bool disableAnimations = false,
       bool highContrast = false,
       bool accessibleNavigation = false,
       bool invertColors = false,
       double textScaleFactor = 1.0,
+      @nullable DevicePreviewSettingsData settings,
       @nullable CustomDeviceInfoData customDevice}) {
     return _DevicePreviewData(
       isEnabled: isEnabled,
@@ -39,11 +534,13 @@ class _$DevicePreviewDataTearOff {
       isFrameVisible: isFrameVisible,
       isDarkMode: isDarkMode,
       boldText: boldText,
+      isVirtualKeyboardVisible: isVirtualKeyboardVisible,
       disableAnimations: disableAnimations,
       highContrast: highContrast,
       accessibleNavigation: accessibleNavigation,
       invertColors: invertColors,
       textScaleFactor: textScaleFactor,
+      settings: settings,
       customDevice: customDevice,
     );
   }
@@ -82,6 +579,9 @@ mixin _$DevicePreviewData {
   /// Indicate whether texts are forced to bold.
   bool get boldText;
 
+  /// Indicate whether the virtual keyboard is visible.
+  bool get isVirtualKeyboardVisible;
+
   /// Indicate whether animations are disabled.
   bool get disableAnimations;
 
@@ -96,6 +596,8 @@ mixin _$DevicePreviewData {
 
   /// The current text scaling factor.
   double get textScaleFactor;
+  @nullable
+  DevicePreviewSettingsData get settings;
 
   /// The custom device configuration
   @nullable
@@ -118,13 +620,16 @@ abstract class $DevicePreviewDataCopyWith<$Res> {
       bool isFrameVisible,
       bool isDarkMode,
       bool boldText,
+      bool isVirtualKeyboardVisible,
       bool disableAnimations,
       bool highContrast,
       bool accessibleNavigation,
       bool invertColors,
       double textScaleFactor,
+      @nullable DevicePreviewSettingsData settings,
       @nullable CustomDeviceInfoData customDevice});
 
+  $DevicePreviewSettingsDataCopyWith<$Res> get settings;
   $CustomDeviceInfoDataCopyWith<$Res> get customDevice;
 }
 
@@ -146,11 +651,13 @@ class _$DevicePreviewDataCopyWithImpl<$Res>
     Object isFrameVisible = freezed,
     Object isDarkMode = freezed,
     Object boldText = freezed,
+    Object isVirtualKeyboardVisible = freezed,
     Object disableAnimations = freezed,
     Object highContrast = freezed,
     Object accessibleNavigation = freezed,
     Object invertColors = freezed,
     Object textScaleFactor = freezed,
+    Object settings = freezed,
     Object customDevice = freezed,
   }) {
     return _then(_value.copyWith(
@@ -168,6 +675,9 @@ class _$DevicePreviewDataCopyWithImpl<$Res>
       isDarkMode:
           isDarkMode == freezed ? _value.isDarkMode : isDarkMode as bool,
       boldText: boldText == freezed ? _value.boldText : boldText as bool,
+      isVirtualKeyboardVisible: isVirtualKeyboardVisible == freezed
+          ? _value.isVirtualKeyboardVisible
+          : isVirtualKeyboardVisible as bool,
       disableAnimations: disableAnimations == freezed
           ? _value.disableAnimations
           : disableAnimations as bool,
@@ -181,10 +691,23 @@ class _$DevicePreviewDataCopyWithImpl<$Res>
       textScaleFactor: textScaleFactor == freezed
           ? _value.textScaleFactor
           : textScaleFactor as double,
+      settings: settings == freezed
+          ? _value.settings
+          : settings as DevicePreviewSettingsData,
       customDevice: customDevice == freezed
           ? _value.customDevice
           : customDevice as CustomDeviceInfoData,
     ));
+  }
+
+  @override
+  $DevicePreviewSettingsDataCopyWith<$Res> get settings {
+    if (_value.settings == null) {
+      return null;
+    }
+    return $DevicePreviewSettingsDataCopyWith<$Res>(_value.settings, (value) {
+      return _then(_value.copyWith(settings: value));
+    });
   }
 
   @override
@@ -213,13 +736,17 @@ abstract class _$DevicePreviewDataCopyWith<$Res>
       bool isFrameVisible,
       bool isDarkMode,
       bool boldText,
+      bool isVirtualKeyboardVisible,
       bool disableAnimations,
       bool highContrast,
       bool accessibleNavigation,
       bool invertColors,
       double textScaleFactor,
+      @nullable DevicePreviewSettingsData settings,
       @nullable CustomDeviceInfoData customDevice});
 
+  @override
+  $DevicePreviewSettingsDataCopyWith<$Res> get settings;
   @override
   $CustomDeviceInfoDataCopyWith<$Res> get customDevice;
 }
@@ -244,11 +771,13 @@ class __$DevicePreviewDataCopyWithImpl<$Res>
     Object isFrameVisible = freezed,
     Object isDarkMode = freezed,
     Object boldText = freezed,
+    Object isVirtualKeyboardVisible = freezed,
     Object disableAnimations = freezed,
     Object highContrast = freezed,
     Object accessibleNavigation = freezed,
     Object invertColors = freezed,
     Object textScaleFactor = freezed,
+    Object settings = freezed,
     Object customDevice = freezed,
   }) {
     return _then(_DevicePreviewData(
@@ -266,6 +795,9 @@ class __$DevicePreviewDataCopyWithImpl<$Res>
       isDarkMode:
           isDarkMode == freezed ? _value.isDarkMode : isDarkMode as bool,
       boldText: boldText == freezed ? _value.boldText : boldText as bool,
+      isVirtualKeyboardVisible: isVirtualKeyboardVisible == freezed
+          ? _value.isVirtualKeyboardVisible
+          : isVirtualKeyboardVisible as bool,
       disableAnimations: disableAnimations == freezed
           ? _value.disableAnimations
           : disableAnimations as bool,
@@ -279,6 +811,9 @@ class __$DevicePreviewDataCopyWithImpl<$Res>
       textScaleFactor: textScaleFactor == freezed
           ? _value.textScaleFactor
           : textScaleFactor as double,
+      settings: settings == freezed
+          ? _value.settings
+          : settings as DevicePreviewSettingsData,
       customDevice: customDevice == freezed
           ? _value.customDevice
           : customDevice as CustomDeviceInfoData,
@@ -300,11 +835,13 @@ class _$_DevicePreviewData
       this.isFrameVisible = true,
       this.isDarkMode = false,
       this.boldText = false,
+      this.isVirtualKeyboardVisible = false,
       this.disableAnimations = false,
       this.highContrast = false,
       this.accessibleNavigation = false,
       this.invertColors = false,
       this.textScaleFactor = 1.0,
+      @nullable this.settings,
       @nullable this.customDevice})
       : assert(isEnabled != null),
         assert(orientation != null),
@@ -312,6 +849,7 @@ class _$_DevicePreviewData
         assert(isFrameVisible != null),
         assert(isDarkMode != null),
         assert(boldText != null),
+        assert(isVirtualKeyboardVisible != null),
         assert(disableAnimations != null),
         assert(highContrast != null),
         assert(accessibleNavigation != null),
@@ -359,6 +897,11 @@ class _$_DevicePreviewData
   @JsonKey(defaultValue: false)
   @override
 
+  /// Indicate whether the virtual keyboard is visible.
+  final bool isVirtualKeyboardVisible;
+  @JsonKey(defaultValue: false)
+  @override
+
   /// Indicate whether animations are disabled.
   final bool disableAnimations;
   @JsonKey(defaultValue: false)
@@ -382,6 +925,9 @@ class _$_DevicePreviewData
   /// The current text scaling factor.
   final double textScaleFactor;
   @override
+  @nullable
+  final DevicePreviewSettingsData settings;
+  @override
 
   /// The custom device configuration
   @nullable
@@ -389,7 +935,7 @@ class _$_DevicePreviewData
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DevicePreviewData(isEnabled: $isEnabled, orientation: $orientation, deviceIdentifier: $deviceIdentifier, locale: $locale, isFrameVisible: $isFrameVisible, isDarkMode: $isDarkMode, boldText: $boldText, disableAnimations: $disableAnimations, highContrast: $highContrast, accessibleNavigation: $accessibleNavigation, invertColors: $invertColors, textScaleFactor: $textScaleFactor, customDevice: $customDevice)';
+    return 'DevicePreviewData(isEnabled: $isEnabled, orientation: $orientation, deviceIdentifier: $deviceIdentifier, locale: $locale, isFrameVisible: $isFrameVisible, isDarkMode: $isDarkMode, boldText: $boldText, isVirtualKeyboardVisible: $isVirtualKeyboardVisible, disableAnimations: $disableAnimations, highContrast: $highContrast, accessibleNavigation: $accessibleNavigation, invertColors: $invertColors, textScaleFactor: $textScaleFactor, settings: $settings, customDevice: $customDevice)';
   }
 
   @override
@@ -404,11 +950,14 @@ class _$_DevicePreviewData
       ..add(DiagnosticsProperty('isFrameVisible', isFrameVisible))
       ..add(DiagnosticsProperty('isDarkMode', isDarkMode))
       ..add(DiagnosticsProperty('boldText', boldText))
+      ..add(DiagnosticsProperty(
+          'isVirtualKeyboardVisible', isVirtualKeyboardVisible))
       ..add(DiagnosticsProperty('disableAnimations', disableAnimations))
       ..add(DiagnosticsProperty('highContrast', highContrast))
       ..add(DiagnosticsProperty('accessibleNavigation', accessibleNavigation))
       ..add(DiagnosticsProperty('invertColors', invertColors))
       ..add(DiagnosticsProperty('textScaleFactor', textScaleFactor))
+      ..add(DiagnosticsProperty('settings', settings))
       ..add(DiagnosticsProperty('customDevice', customDevice));
   }
 
@@ -436,6 +985,11 @@ class _$_DevicePreviewData
             (identical(other.boldText, boldText) ||
                 const DeepCollectionEquality()
                     .equals(other.boldText, boldText)) &&
+            (identical(
+                    other.isVirtualKeyboardVisible, isVirtualKeyboardVisible) ||
+                const DeepCollectionEquality().equals(
+                    other.isVirtualKeyboardVisible,
+                    isVirtualKeyboardVisible)) &&
             (identical(other.disableAnimations, disableAnimations) ||
                 const DeepCollectionEquality()
                     .equals(other.disableAnimations, disableAnimations)) &&
@@ -451,6 +1005,9 @@ class _$_DevicePreviewData
             (identical(other.textScaleFactor, textScaleFactor) ||
                 const DeepCollectionEquality()
                     .equals(other.textScaleFactor, textScaleFactor)) &&
+            (identical(other.settings, settings) ||
+                const DeepCollectionEquality()
+                    .equals(other.settings, settings)) &&
             (identical(other.customDevice, customDevice) ||
                 const DeepCollectionEquality()
                     .equals(other.customDevice, customDevice)));
@@ -466,11 +1023,13 @@ class _$_DevicePreviewData
       const DeepCollectionEquality().hash(isFrameVisible) ^
       const DeepCollectionEquality().hash(isDarkMode) ^
       const DeepCollectionEquality().hash(boldText) ^
+      const DeepCollectionEquality().hash(isVirtualKeyboardVisible) ^
       const DeepCollectionEquality().hash(disableAnimations) ^
       const DeepCollectionEquality().hash(highContrast) ^
       const DeepCollectionEquality().hash(accessibleNavigation) ^
       const DeepCollectionEquality().hash(invertColors) ^
       const DeepCollectionEquality().hash(textScaleFactor) ^
+      const DeepCollectionEquality().hash(settings) ^
       const DeepCollectionEquality().hash(customDevice);
 
   @override
@@ -492,11 +1051,13 @@ abstract class _DevicePreviewData implements DevicePreviewData {
       bool isFrameVisible,
       bool isDarkMode,
       bool boldText,
+      bool isVirtualKeyboardVisible,
       bool disableAnimations,
       bool highContrast,
       bool accessibleNavigation,
       bool invertColors,
       double textScaleFactor,
+      @nullable DevicePreviewSettingsData settings,
       @nullable CustomDeviceInfoData customDevice}) = _$_DevicePreviewData;
 
   factory _DevicePreviewData.fromJson(Map<String, dynamic> json) =
@@ -533,6 +1094,10 @@ abstract class _DevicePreviewData implements DevicePreviewData {
   bool get boldText;
   @override
 
+  /// Indicate whether the virtual keyboard is visible.
+  bool get isVirtualKeyboardVisible;
+  @override
+
   /// Indicate whether animations are disabled.
   bool get disableAnimations;
   @override
@@ -551,6 +1116,9 @@ abstract class _DevicePreviewData implements DevicePreviewData {
 
   /// The current text scaling factor.
   double get textScaleFactor;
+  @override
+  @nullable
+  DevicePreviewSettingsData get settings;
   @override
 
   /// The custom device configuration
@@ -935,4 +1503,246 @@ abstract class _CustomDeviceInfoData implements CustomDeviceInfoData {
   Size get screenSize;
   @override
   _$CustomDeviceInfoDataCopyWith<_CustomDeviceInfoData> get copyWith;
+}
+
+DevicePreviewSettingsData _$DevicePreviewSettingsDataFromJson(
+    Map<String, dynamic> json) {
+  return _DevicePreviewSettingsData.fromJson(json);
+}
+
+/// @nodoc
+class _$DevicePreviewSettingsDataTearOff {
+  const _$DevicePreviewSettingsDataTearOff();
+
+// ignore: unused_element
+  _DevicePreviewSettingsData call(
+      {DevicePreviewToolBarPositionData toolbarPosition =
+          DevicePreviewToolBarPositionData.bottom,
+      DevicePreviewToolBarThemeData toolbarTheme =
+          DevicePreviewToolBarThemeData.dark,
+      DevicePreviewBackgroundThemeData backgroundTheme =
+          DevicePreviewBackgroundThemeData.light}) {
+    return _DevicePreviewSettingsData(
+      toolbarPosition: toolbarPosition,
+      toolbarTheme: toolbarTheme,
+      backgroundTheme: backgroundTheme,
+    );
+  }
+
+// ignore: unused_element
+  DevicePreviewSettingsData fromJson(Map<String, Object> json) {
+    return DevicePreviewSettingsData.fromJson(json);
+  }
+}
+
+/// @nodoc
+// ignore: unused_element
+const $DevicePreviewSettingsData = _$DevicePreviewSettingsDataTearOff();
+
+/// @nodoc
+mixin _$DevicePreviewSettingsData {
+  /// The toolbar position.
+  DevicePreviewToolBarPositionData get toolbarPosition;
+
+  /// The theme of the toolbar.
+  DevicePreviewToolBarThemeData get toolbarTheme;
+
+  /// The theme of the background.
+  DevicePreviewBackgroundThemeData get backgroundTheme;
+
+  Map<String, dynamic> toJson();
+  $DevicePreviewSettingsDataCopyWith<DevicePreviewSettingsData> get copyWith;
+}
+
+/// @nodoc
+abstract class $DevicePreviewSettingsDataCopyWith<$Res> {
+  factory $DevicePreviewSettingsDataCopyWith(DevicePreviewSettingsData value,
+          $Res Function(DevicePreviewSettingsData) then) =
+      _$DevicePreviewSettingsDataCopyWithImpl<$Res>;
+  $Res call(
+      {DevicePreviewToolBarPositionData toolbarPosition,
+      DevicePreviewToolBarThemeData toolbarTheme,
+      DevicePreviewBackgroundThemeData backgroundTheme});
+}
+
+/// @nodoc
+class _$DevicePreviewSettingsDataCopyWithImpl<$Res>
+    implements $DevicePreviewSettingsDataCopyWith<$Res> {
+  _$DevicePreviewSettingsDataCopyWithImpl(this._value, this._then);
+
+  final DevicePreviewSettingsData _value;
+  // ignore: unused_field
+  final $Res Function(DevicePreviewSettingsData) _then;
+
+  @override
+  $Res call({
+    Object toolbarPosition = freezed,
+    Object toolbarTheme = freezed,
+    Object backgroundTheme = freezed,
+  }) {
+    return _then(_value.copyWith(
+      toolbarPosition: toolbarPosition == freezed
+          ? _value.toolbarPosition
+          : toolbarPosition as DevicePreviewToolBarPositionData,
+      toolbarTheme: toolbarTheme == freezed
+          ? _value.toolbarTheme
+          : toolbarTheme as DevicePreviewToolBarThemeData,
+      backgroundTheme: backgroundTheme == freezed
+          ? _value.backgroundTheme
+          : backgroundTheme as DevicePreviewBackgroundThemeData,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$DevicePreviewSettingsDataCopyWith<$Res>
+    implements $DevicePreviewSettingsDataCopyWith<$Res> {
+  factory _$DevicePreviewSettingsDataCopyWith(_DevicePreviewSettingsData value,
+          $Res Function(_DevicePreviewSettingsData) then) =
+      __$DevicePreviewSettingsDataCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {DevicePreviewToolBarPositionData toolbarPosition,
+      DevicePreviewToolBarThemeData toolbarTheme,
+      DevicePreviewBackgroundThemeData backgroundTheme});
+}
+
+/// @nodoc
+class __$DevicePreviewSettingsDataCopyWithImpl<$Res>
+    extends _$DevicePreviewSettingsDataCopyWithImpl<$Res>
+    implements _$DevicePreviewSettingsDataCopyWith<$Res> {
+  __$DevicePreviewSettingsDataCopyWithImpl(_DevicePreviewSettingsData _value,
+      $Res Function(_DevicePreviewSettingsData) _then)
+      : super(_value, (v) => _then(v as _DevicePreviewSettingsData));
+
+  @override
+  _DevicePreviewSettingsData get _value =>
+      super._value as _DevicePreviewSettingsData;
+
+  @override
+  $Res call({
+    Object toolbarPosition = freezed,
+    Object toolbarTheme = freezed,
+    Object backgroundTheme = freezed,
+  }) {
+    return _then(_DevicePreviewSettingsData(
+      toolbarPosition: toolbarPosition == freezed
+          ? _value.toolbarPosition
+          : toolbarPosition as DevicePreviewToolBarPositionData,
+      toolbarTheme: toolbarTheme == freezed
+          ? _value.toolbarTheme
+          : toolbarTheme as DevicePreviewToolBarThemeData,
+      backgroundTheme: backgroundTheme == freezed
+          ? _value.backgroundTheme
+          : backgroundTheme as DevicePreviewBackgroundThemeData,
+    ));
+  }
+}
+
+@JsonSerializable()
+
+/// @nodoc
+class _$_DevicePreviewSettingsData
+    with DiagnosticableTreeMixin
+    implements _DevicePreviewSettingsData {
+  const _$_DevicePreviewSettingsData(
+      {this.toolbarPosition = DevicePreviewToolBarPositionData.bottom,
+      this.toolbarTheme = DevicePreviewToolBarThemeData.dark,
+      this.backgroundTheme = DevicePreviewBackgroundThemeData.light})
+      : assert(toolbarPosition != null),
+        assert(toolbarTheme != null),
+        assert(backgroundTheme != null);
+
+  factory _$_DevicePreviewSettingsData.fromJson(Map<String, dynamic> json) =>
+      _$_$_DevicePreviewSettingsDataFromJson(json);
+
+  @JsonKey(defaultValue: DevicePreviewToolBarPositionData.bottom)
+  @override
+
+  /// The toolbar position.
+  final DevicePreviewToolBarPositionData toolbarPosition;
+  @JsonKey(defaultValue: DevicePreviewToolBarThemeData.dark)
+  @override
+
+  /// The theme of the toolbar.
+  final DevicePreviewToolBarThemeData toolbarTheme;
+  @JsonKey(defaultValue: DevicePreviewBackgroundThemeData.light)
+  @override
+
+  /// The theme of the background.
+  final DevicePreviewBackgroundThemeData backgroundTheme;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'DevicePreviewSettingsData(toolbarPosition: $toolbarPosition, toolbarTheme: $toolbarTheme, backgroundTheme: $backgroundTheme)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'DevicePreviewSettingsData'))
+      ..add(DiagnosticsProperty('toolbarPosition', toolbarPosition))
+      ..add(DiagnosticsProperty('toolbarTheme', toolbarTheme))
+      ..add(DiagnosticsProperty('backgroundTheme', backgroundTheme));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _DevicePreviewSettingsData &&
+            (identical(other.toolbarPosition, toolbarPosition) ||
+                const DeepCollectionEquality()
+                    .equals(other.toolbarPosition, toolbarPosition)) &&
+            (identical(other.toolbarTheme, toolbarTheme) ||
+                const DeepCollectionEquality()
+                    .equals(other.toolbarTheme, toolbarTheme)) &&
+            (identical(other.backgroundTheme, backgroundTheme) ||
+                const DeepCollectionEquality()
+                    .equals(other.backgroundTheme, backgroundTheme)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(toolbarPosition) ^
+      const DeepCollectionEquality().hash(toolbarTheme) ^
+      const DeepCollectionEquality().hash(backgroundTheme);
+
+  @override
+  _$DevicePreviewSettingsDataCopyWith<_DevicePreviewSettingsData>
+      get copyWith =>
+          __$DevicePreviewSettingsDataCopyWithImpl<_DevicePreviewSettingsData>(
+              this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_DevicePreviewSettingsDataToJson(this);
+  }
+}
+
+abstract class _DevicePreviewSettingsData implements DevicePreviewSettingsData {
+  const factory _DevicePreviewSettingsData(
+          {DevicePreviewToolBarPositionData toolbarPosition,
+          DevicePreviewToolBarThemeData toolbarTheme,
+          DevicePreviewBackgroundThemeData backgroundTheme}) =
+      _$_DevicePreviewSettingsData;
+
+  factory _DevicePreviewSettingsData.fromJson(Map<String, dynamic> json) =
+      _$_DevicePreviewSettingsData.fromJson;
+
+  @override
+
+  /// The toolbar position.
+  DevicePreviewToolBarPositionData get toolbarPosition;
+  @override
+
+  /// The theme of the toolbar.
+  DevicePreviewToolBarThemeData get toolbarTheme;
+  @override
+
+  /// The theme of the background.
+  DevicePreviewBackgroundThemeData get backgroundTheme;
+  @override
+  _$DevicePreviewSettingsDataCopyWith<_DevicePreviewSettingsData> get copyWith;
 }
