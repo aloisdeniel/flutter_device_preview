@@ -94,7 +94,7 @@ class DevicePreview extends StatefulWidget {
   })  : assert(devices == null || devices.isNotEmpty),
         assert(usePreferences != null),
         assert(isToolBarVisible != null || areSettingsEnabled != null),
-        isToolBarVisible = areSettingsEnabled ?? areSettingsEnabled,
+        isToolBarVisible = areSettingsEnabled ?? isToolbarVisible,
         usePreferences = (data == null) && usePreferences,
         super(key: key);
 
