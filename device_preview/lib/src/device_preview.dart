@@ -85,15 +85,16 @@ class DevicePreview extends StatefulWidget {
     this.data,
     bool usePreferences = true,
     this.style,
-    bool areSettingsEnabled = true,
+    @Deprecated('Replaced by `isToolBarVisible`')
+    bool areSettingsEnabled,
     bool isToolBarVisible = true,
     this.availableLocales,
     this.onScreenshot,
     this.enabled = true,
   })  : assert(devices == null || devices.isNotEmpty),
         assert(usePreferences != null),
-        assert(areSettingsEnabled != null),
-        isToolBarVisible = isToolBarVisible || areSettingsEnabled,
+        assert(isToolBarVisible != null || areSettingsEnabled != null),
+        isToolBarVisible = areSettingsEnabled ?? areSettingsEnabled,
         usePreferences = (data == null) && usePreferences,
         super(key: key);
 
