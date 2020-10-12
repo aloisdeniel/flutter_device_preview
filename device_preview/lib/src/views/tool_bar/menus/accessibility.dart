@@ -7,75 +7,74 @@ import 'package:provider/provider.dart';
 class AccessibilityPopOver extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final textScaleFactor = context.select(
-      (DevicePreviewStore store) => store.data.textScaleFactor,
-    );
-
-    final invertColors = context.select(
-      (DevicePreviewStore store) => store.data.invertColors,
-    );
-
-    final accessibleNavigation = context.select(
-      (DevicePreviewStore store) => store.data.accessibleNavigation,
-    );
-
-    final disableAnimations = context.select(
-      (DevicePreviewStore store) => store.data.disableAnimations,
-    );
-
-    final boldText = context.select(
-      (DevicePreviewStore store) => store.data.boldText,
-    );
-
     return ListView(
       padding: EdgeInsets.all(10),
       children: [
-        SliderTile(
-          title: 'Text scale factor',
-          value: textScaleFactor,
-          onValueChanged: (v) {
-            final state = context.read<DevicePreviewStore>();
-            state.data = state.data.copyWith(textScaleFactor: v);
-          },
-          min: 0.25,
-          max: 3,
-          divisions: 11,
+        Selector(
+          selector: (context, DevicePreviewStore store) =>
+              store.data.textScaleFactor,
+          builder: (context, textScaleFactor, _) => SliderTile(
+            title: 'Text scale factor',
+            value: textScaleFactor,
+            onValueChanged: (v) {
+              final state = context.read<DevicePreviewStore>();
+              state.data = state.data.copyWith(textScaleFactor: v);
+            },
+            min: 0.25,
+            max: 3,
+            divisions: 11,
+          ),
         ),
-        AccessibilityCheckTile(
-          title: 'Invert colors',
-          value: invertColors,
-          icon: Icons.invert_colors,
-          onValueChanged: (v) {
-            final state = context.read<DevicePreviewStore>();
-            state.data = state.data.copyWith(invertColors: v);
-          },
+        Selector(
+          selector: (context, DevicePreviewStore store) =>
+              store.data.invertColors,
+          builder: (context, invertColors, _) => AccessibilityCheckTile(
+            title: 'Invert colors',
+            value: invertColors,
+            icon: Icons.invert_colors,
+            onValueChanged: (v) {
+              final state = context.read<DevicePreviewStore>();
+              state.data = state.data.copyWith(invertColors: v);
+            },
+          ),
         ),
-        AccessibilityCheckTile(
-          title: 'Accessible navigation',
-          value: accessibleNavigation,
-          icon: Icons.accessible_forward,
-          onValueChanged: (v) {
-            final state = context.read<DevicePreviewStore>();
-            state.data = state.data.copyWith(accessibleNavigation: v);
-          },
+        Selector(
+          selector: (context, DevicePreviewStore store) =>
+              store.data.accessibleNavigation,
+          builder: (context, accessibleNavigation, _) => AccessibilityCheckTile(
+            title: 'Accessible navigation',
+            value: accessibleNavigation,
+            icon: Icons.accessible_forward,
+            onValueChanged: (v) {
+              final state = context.read<DevicePreviewStore>();
+              state.data = state.data.copyWith(accessibleNavigation: v);
+            },
+          ),
         ),
-        AccessibilityCheckTile(
-          title: 'Disable animations',
-          value: disableAnimations,
-          icon: Icons.movie,
-          onValueChanged: (v) {
-            final state = context.read<DevicePreviewStore>();
-            state.data = state.data.copyWith(disableAnimations: v);
-          },
+        Selector(
+          selector: (context, DevicePreviewStore store) =>
+              store.data.disableAnimations,
+          builder: (context, disableAnimations, _) => AccessibilityCheckTile(
+            title: 'Disable animations',
+            value: disableAnimations,
+            icon: Icons.movie,
+            onValueChanged: (v) {
+              final state = context.read<DevicePreviewStore>();
+              state.data = state.data.copyWith(disableAnimations: v);
+            },
+          ),
         ),
-        AccessibilityCheckTile(
-          title: 'Bold text',
-          value: boldText,
-          icon: Icons.format_bold,
-          onValueChanged: (v) {
-            final state = context.read<DevicePreviewStore>();
-            state.data = state.data.copyWith(boldText: v);
-          },
+        Selector(
+          selector: (context, DevicePreviewStore store) => store.data.boldText,
+          builder: (context, boldText, _) => AccessibilityCheckTile(
+            title: 'Bold text',
+            value: boldText,
+            icon: Icons.format_bold,
+            onValueChanged: (v) {
+              final state = context.read<DevicePreviewStore>();
+              state.data = state.data.copyWith(boldText: v);
+            },
+          ),
         ),
       ],
     );

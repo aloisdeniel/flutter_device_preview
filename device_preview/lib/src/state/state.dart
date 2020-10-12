@@ -30,6 +30,9 @@ abstract class DevicePreviewData with _$DevicePreviewData {
   /// Create a new [DevicePreviewData] configuration from all
   /// properties.
   const factory DevicePreviewData({
+    /// Indicate whether the toolbar is visible.
+    @Default(true) bool isToolbarVisible,
+
     /// Indicate whether the device simulation is enabled.
     @Default(true) bool isEnabled,
 

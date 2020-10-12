@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:device_frame/device_frame.dart';
 import 'package:device_preview/src/state/state.dart';
 import 'package:device_preview/src/state/store.dart';
+import 'package:device_preview/src/storage.dart';
 import 'package:device_preview/src/utilities/media_query_observer.dart';
-import 'package:device_preview/src/views/tool_bar/horizontal_toolbar.dart';
-import 'package:device_preview/src/views/tool_bar/vertical_toolbar.dart';
+import 'package:device_preview/src/views/tool_bar/toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -32,13 +32,7 @@ class DevicePreview extends StatefulWidget {
   final bool enabled;
 
   /// Indicates whether the tool bar should be visible or not.
-  final bool isToolBarVisible;
-
-  /// Whether configuration should be saved to device preferences
-  /// between sessions.
-  ///
-  /// Ignored if [data] is defined.
-  final bool usePreferences;
+  final bool isToolbarVisible;
 
   /// The configuration. If not precised, it is loaded from preferences.
   final DevicePreviewData data;
@@ -77,24 +71,28 @@ class DevicePreview extends StatefulWidget {
   /// The available locales.
   final List<Locale> availableLocales;
 
+  /// The storage used to persist preferences.
+  ///
+  /// By default, it saves preferences to the local device preferences.
+  ///
+  /// To disable settings persistence use `DevicePreviewStorage.none()`.
+  final DevicePreviewStorage storage;
+
   /// Create a new [DevicePreview].
   DevicePreview({
     Key key,
     @required this.builder,
     this.devices,
     this.data,
-    bool usePreferences = true,
     this.style,
-    bool areSettingsEnabled = true,
-    bool isToolBarVisible = true,
+    this.isToolbarVisible = true,
     this.availableLocales,
+    DevicePreviewStorage storage,
     this.onScreenshot,
     this.enabled = true,
   })  : assert(devices == null || devices.isNotEmpty),
-        assert(usePreferences != null),
-        assert(areSettingsEnabled != null),
-        isToolBarVisible = isToolBarVisible || areSettingsEnabled,
-        usePreferences = (data == null) && usePreferences,
+        assert(isToolbarVisible != null),
+        storage = storage ?? DevicePreviewStorage.preferences(),
         super(key: key);
 
   static final List<DeviceInfo> defaultDevices = Devices.all;
@@ -112,11 +110,41 @@ class DevicePreview extends StatefulWidget {
 
   /// Currently defined locale.
   static Locale locale(BuildContext context) {
-    final state = Provider.of<DevicePreviewStore>(context);
-    final splits = state.data.locale.split('_');
+    final store = Provider.of<DevicePreviewStore>(context);
+    final splits = store.data.locale.split('_');
     return Locale(
       splits[0],
       splits.length > 1 ? splits[1] : null,
+    );
+  }
+
+  /// Make the toolbar visible to the user.
+  ///
+  /// If [enablePreview] is set to `true`, then the device preview is also enabled
+  /// when appearing.
+  static void showToolbar(
+    BuildContext context, {
+    bool enablePreview = true,
+  }) {
+    final store = Provider.of<DevicePreviewStore>(context);
+    store.data = store.data.copyWith(
+      isToolbarVisible: true,
+      isEnabled: enablePreview,
+    );
+  }
+
+  /// Hide the toolbar.
+  ///
+  /// If [disablePreview] is set to `false`, then the device preview stays active even
+  /// if the toolbar is not visible anymore.
+  static void hideToolbar(
+    BuildContext context, {
+    bool disablePreview = true,
+  }) {
+    final store = Provider.of<DevicePreviewStore>(context);
+    store.data = store.data.copyWith(
+      isToolbarVisible: false,
+      isEnabled: !disablePreview,
     );
   }
 
@@ -345,7 +373,7 @@ class _DevicePreviewState extends State<DevicePreview> {
       create: (context) => DevicePreviewStore(
         devices: widget.devices,
         locales: widget.availableLocales,
-        useStorage: widget.usePreferences,
+        storage: widget.storage,
       ),
       builder: (context, child) {
         final isInitialized = context.select(
@@ -363,6 +391,11 @@ class _DevicePreviewState extends State<DevicePreview> {
           (DevicePreviewStore store) => store.data.isEnabled,
         );
 
+        final isToolbarVisible = widget.isToolbarVisible &&
+            context.select(
+              (DevicePreviewStore store) => store.data.isToolbarVisible,
+            );
+
         final style = DevicePreviewTheme.of(context);
 
         return Directionality(
@@ -377,23 +410,25 @@ class _DevicePreviewState extends State<DevicePreview> {
                   builder: (context) => Stack(
                     children: <Widget>[
                       Positioned.fill(
-                        left: style.toolBar.position ==
-                                DevicePreviewToolBarPosition.left
-                            ? DevicePreviewVerticalToolBar.width(context) - 12
+                        left: isToolbarVisible &&
+                                style.toolBar.position ==
+                                    DevicePreviewToolBarPosition.left
+                            ? DevicePreviewToolBar.width(context) - 12
                             : 0,
-                        right: style.toolBar.position ==
-                                DevicePreviewToolBarPosition.right
-                            ? DevicePreviewVerticalToolBar.width(context) - 12
+                        right: isToolbarVisible &&
+                                style.toolBar.position ==
+                                    DevicePreviewToolBarPosition.right
+                            ? DevicePreviewToolBar.width(context) - 12
                             : 0,
-                        top: style.toolBar.position ==
-                                DevicePreviewToolBarPosition.top
-                            ? DevicePreviewHorizontalToolBar.height(context) -
-                                12
+                        top: isToolbarVisible &&
+                                style.toolBar.position ==
+                                    DevicePreviewToolBarPosition.top
+                            ? DevicePreviewToolBar.height(context) - 12
                             : 0,
-                        bottom: style.toolBar.position ==
-                                DevicePreviewToolBarPosition.bottom
-                            ? DevicePreviewHorizontalToolBar.height(context) -
-                                12
+                        bottom: isToolbarVisible &&
+                                style.toolBar.position ==
+                                    DevicePreviewToolBarPosition.bottom
+                            ? DevicePreviewToolBar.height(context) - 12
                             : 0,
                         key: Key('Preview'),
                         child: isEnabled
@@ -405,16 +440,16 @@ class _DevicePreviewState extends State<DevicePreview> {
                                 builder: widget.builder,
                               ),
                       ),
-                      Positioned.fill(
-                        key: Key('Tools'),
-                        child: DevicePreviewTheme(
-                          style: style,
-                          child: _ToolsOverlay(
+                      if (isToolbarVisible)
+                        Positioned.fill(
+                          key: Key('Toolbar'),
+                          child: DevicePreviewTheme(
                             style: style,
-                            isToolBarVisible: widget.isToolBarVisible,
+                            child: _ToolsOverlay(
+                              style: style,
+                            ),
                           ),
                         ),
-                      ),
                     ],
                   ),
                 ),
@@ -513,11 +548,9 @@ class __DevicePreviewLoaderState extends State<_DevicePreviewLoader>
 }
 
 class _ToolsOverlay extends StatefulWidget {
-  final bool isToolBarVisible;
   final DevicePreviewStyle style;
   const _ToolsOverlay({
     Key key,
-    @required this.isToolBarVisible,
     @required this.style,
   }) : super(key: key);
 
@@ -554,51 +587,47 @@ class _ToolsOverlayState extends State<_ToolsOverlay> {
             builder: (context) {
               return Stack(
                 children: [
-                  if (widget.isToolBarVisible &&
-                      widget.style.toolBar.position ==
-                          DevicePreviewToolBarPosition.bottom)
+                  if (widget.style.toolBar.position ==
+                      DevicePreviewToolBarPosition.bottom)
                     Positioned(
                       left: 0,
                       right: 0,
                       bottom: 0,
-                      child: DevicePreviewHorizontalToolBar(
-                        key: Key('HorizontalToolbar'),
+                      child: DevicePreviewToolBar(
+                        key: Key('Bar'),
                         overlayPosition: _overlayKey.absolutePosition,
                       ),
                     ),
-                  if (widget.isToolBarVisible &&
-                      widget.style.toolBar.position ==
-                          DevicePreviewToolBarPosition.top)
+                  if (widget.style.toolBar.position ==
+                      DevicePreviewToolBarPosition.top)
                     Positioned(
                       left: 0,
                       right: 0,
                       top: 0,
-                      child: DevicePreviewHorizontalToolBar(
-                        key: Key('HorizontalToolbar'),
+                      child: DevicePreviewToolBar(
+                        key: Key('Bar'),
                         overlayPosition: _overlayKey.absolutePosition,
                       ),
                     ),
-                  if (widget.isToolBarVisible &&
-                      widget.style.toolBar.position ==
-                          DevicePreviewToolBarPosition.right)
+                  if (widget.style.toolBar.position ==
+                      DevicePreviewToolBarPosition.right)
                     Positioned(
                       top: 0,
                       right: 0,
                       bottom: 0,
-                      child: DevicePreviewVerticalToolBar(
-                        key: Key('VerticalToolbar'),
+                      child: DevicePreviewToolBar(
+                        key: Key('Bar'),
                         overlayPosition: _overlayKey.absolutePosition,
                       ),
                     ),
-                  if (widget.isToolBarVisible &&
-                      widget.style.toolBar.position ==
-                          DevicePreviewToolBarPosition.left)
+                  if (widget.style.toolBar.position ==
+                      DevicePreviewToolBarPosition.left)
                     Positioned(
                       left: 0,
                       top: 0,
                       bottom: 0,
-                      child: DevicePreviewVerticalToolBar(
-                        key: Key('VerticalToolbar'),
+                      child: DevicePreviewToolBar(
+                        key: Key('Bar'),
                         overlayPosition: _overlayKey.absolutePosition,
                       ),
                     ),

@@ -12,10 +12,6 @@ class StylePopOver extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final settings = context.select(
-      (DevicePreviewStore store) => store.settings,
-    );
-
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     final lightBackground = DevicePreviewStyle.light();
     final darkBackground = DevicePreviewStyle.dark();
@@ -26,28 +22,36 @@ class StylePopOver extends StatelessWidget {
         WrapOptionsTile(
           title: 'Background theme',
           options: <Widget>[
-            SelectBox(
-              isSelected: settings.backgroundTheme ==
-                  DevicePreviewBackgroundThemeData.light,
-              onTap: () {
-                final state = context.read<DevicePreviewStore>();
-                state.settings = settings.copyWith(
-                    backgroundTheme: DevicePreviewBackgroundThemeData.light);
-              },
-              child: Container(
-                decoration: lightBackground.background,
+            Selector(
+              selector: (context, DevicePreviewStore store) =>
+                  store.settings.backgroundTheme,
+              builder: (context, backgroundTheme, _) => SelectBox(
+                isSelected:
+                    backgroundTheme == DevicePreviewBackgroundThemeData.light,
+                onTap: () {
+                  final store = context.read<DevicePreviewStore>();
+                  store.settings = store.settings.copyWith(
+                      backgroundTheme: DevicePreviewBackgroundThemeData.light);
+                },
+                child: Container(
+                  decoration: lightBackground.background,
+                ),
               ),
             ),
-            SelectBox(
-              isSelected: settings.backgroundTheme ==
-                  DevicePreviewBackgroundThemeData.dark,
-              onTap: () {
-                final state = context.read<DevicePreviewStore>();
-                state.settings = settings.copyWith(
-                    backgroundTheme: DevicePreviewBackgroundThemeData.dark);
-              },
-              child: Container(
-                decoration: darkBackground.background,
+            Selector(
+              selector: (context, DevicePreviewStore store) =>
+                  store.settings.backgroundTheme,
+              builder: (context, backgroundTheme, _) => SelectBox(
+                isSelected:
+                    backgroundTheme == DevicePreviewBackgroundThemeData.dark,
+                onTap: () {
+                  final store = context.read<DevicePreviewStore>();
+                  store.settings = store.settings.copyWith(
+                      backgroundTheme: DevicePreviewBackgroundThemeData.dark);
+                },
+                child: Container(
+                  decoration: darkBackground.background,
+                ),
               ),
             ),
           ],
@@ -55,28 +59,34 @@ class StylePopOver extends StatelessWidget {
         WrapOptionsTile(
           title: 'Toolbar theme',
           options: <Widget>[
-            SelectBox(
-              isSelected:
-                  settings.toolbarTheme == DevicePreviewToolBarThemeData.light,
-              onTap: () {
-                final state = context.read<DevicePreviewStore>();
-                state.settings = settings.copyWith(
-                    toolbarTheme: DevicePreviewToolBarThemeData.light);
-              },
-              child: Container(
-                decoration: lightBackground.background,
+            Selector(
+              selector: (context, DevicePreviewStore store) =>
+                  store.settings.toolbarTheme,
+              builder: (context, toolbarTheme, _) => SelectBox(
+                isSelected: toolbarTheme == DevicePreviewToolBarThemeData.light,
+                onTap: () {
+                  final store = context.read<DevicePreviewStore>();
+                  store.settings = store.settings.copyWith(
+                      toolbarTheme: DevicePreviewToolBarThemeData.light);
+                },
+                child: Container(
+                  decoration: lightBackground.background,
+                ),
               ),
             ),
-            SelectBox(
-              isSelected:
-                  settings.toolbarTheme == DevicePreviewToolBarThemeData.dark,
-              onTap: () {
-                final state = context.read<DevicePreviewStore>();
-                state.settings = settings.copyWith(
-                    toolbarTheme: DevicePreviewToolBarThemeData.dark);
-              },
-              child: Container(
-                decoration: darkBackground.background,
+            Selector(
+              selector: (context, DevicePreviewStore store) =>
+                  store.settings.toolbarTheme,
+              builder: (context, toolbarTheme, _) => SelectBox(
+                isSelected: toolbarTheme == DevicePreviewToolBarThemeData.dark,
+                onTap: () {
+                  final store = context.read<DevicePreviewStore>();
+                  store.settings = store.settings.copyWith(
+                      toolbarTheme: DevicePreviewToolBarThemeData.dark);
+                },
+                child: Container(
+                  decoration: darkBackground.background,
+                ),
               ),
             ),
           ],
@@ -86,66 +96,84 @@ class StylePopOver extends StatelessWidget {
           options: <Widget>[
             if (DevicePreviewTheme.isPositionAvailableForWidth(
                 DevicePreviewToolBarPosition.left, media.size.width))
-              SelectBox(
-                isSelected: settings.toolbarPosition ==
-                    DevicePreviewToolBarPositionData.left,
-                onTap: () {
-                  final state = context.read<DevicePreviewStore>();
-                  state.settings = settings.copyWith(
-                      toolbarPosition: DevicePreviewToolBarPositionData.left);
-                },
-                child: Icon(
-                  Icons.border_left,
-                  color: toolBarStyle.foregroundColor,
-                  size: 11,
+              Selector(
+                selector: (context, DevicePreviewStore store) =>
+                    store.settings.toolbarPosition,
+                builder: (context, toolbarPosition, _) => SelectBox(
+                  isSelected:
+                      toolbarPosition == DevicePreviewToolBarPositionData.left,
+                  onTap: () {
+                    final store = context.read<DevicePreviewStore>();
+                    store.settings = store.settings.copyWith(
+                        toolbarPosition: DevicePreviewToolBarPositionData.left);
+                  },
+                  child: Icon(
+                    Icons.border_left,
+                    color: toolBarStyle.foregroundColor,
+                    size: 11,
+                  ),
                 ),
               ),
             if (DevicePreviewTheme.isPositionAvailableForWidth(
                 DevicePreviewToolBarPosition.top, media.size.width))
-              SelectBox(
-                isSelected: settings.toolbarPosition ==
-                    DevicePreviewToolBarPositionData.top,
-                onTap: () {
-                  final state = context.read<DevicePreviewStore>();
-                  state.settings = settings.copyWith(
-                      toolbarPosition: DevicePreviewToolBarPositionData.top);
-                },
-                child: Icon(
-                  Icons.border_top,
-                  color: toolBarStyle.foregroundColor,
-                  size: 11,
+              Selector(
+                selector: (context, DevicePreviewStore store) =>
+                    store.settings.toolbarPosition,
+                builder: (context, toolbarPosition, _) => SelectBox(
+                  isSelected:
+                      toolbarPosition == DevicePreviewToolBarPositionData.top,
+                  onTap: () {
+                    final store = context.read<DevicePreviewStore>();
+                    store.settings = store.settings.copyWith(
+                        toolbarPosition: DevicePreviewToolBarPositionData.top);
+                  },
+                  child: Icon(
+                    Icons.border_top,
+                    color: toolBarStyle.foregroundColor,
+                    size: 11,
+                  ),
                 ),
               ),
             if (DevicePreviewTheme.isPositionAvailableForWidth(
                 DevicePreviewToolBarPosition.right, media.size.width))
-              SelectBox(
-                isSelected: settings.toolbarPosition ==
-                    DevicePreviewToolBarPositionData.right,
-                onTap: () {
-                  final state = context.read<DevicePreviewStore>();
-                  state.settings = settings.copyWith(
-                      toolbarPosition: DevicePreviewToolBarPositionData.right);
-                },
-                child: Icon(
-                  Icons.border_right,
-                  color: toolBarStyle.foregroundColor,
-                  size: 11,
+              Selector(
+                selector: (context, DevicePreviewStore store) =>
+                    store.settings.toolbarPosition,
+                builder: (context, toolbarPosition, _) => SelectBox(
+                  isSelected:
+                      toolbarPosition == DevicePreviewToolBarPositionData.right,
+                  onTap: () {
+                    final store = context.read<DevicePreviewStore>();
+                    store.settings = store.settings.copyWith(
+                        toolbarPosition:
+                            DevicePreviewToolBarPositionData.right);
+                  },
+                  child: Icon(
+                    Icons.border_right,
+                    color: toolBarStyle.foregroundColor,
+                    size: 11,
+                  ),
                 ),
               ),
             if (DevicePreviewTheme.isPositionAvailableForWidth(
                 DevicePreviewToolBarPosition.bottom, media.size.width))
-              SelectBox(
-                isSelected: settings.toolbarPosition ==
-                    DevicePreviewToolBarPositionData.bottom,
-                onTap: () {
-                  final state = context.read<DevicePreviewStore>();
-                  state.settings = settings.copyWith(
-                      toolbarPosition: DevicePreviewToolBarPositionData.bottom);
-                },
-                child: Icon(
-                  Icons.border_bottom,
-                  color: toolBarStyle.foregroundColor,
-                  size: 11,
+              Selector(
+                selector: (context, DevicePreviewStore store) =>
+                    store.settings.toolbarPosition,
+                builder: (context, toolbarPosition, _) => SelectBox(
+                  isSelected: toolbarPosition ==
+                      DevicePreviewToolBarPositionData.bottom,
+                  onTap: () {
+                    final store = context.read<DevicePreviewStore>();
+                    store.settings = store.settings.copyWith(
+                        toolbarPosition:
+                            DevicePreviewToolBarPositionData.bottom);
+                  },
+                  child: Icon(
+                    Icons.border_bottom,
+                    color: toolBarStyle.foregroundColor,
+                    size: 11,
+                  ),
                 ),
               ),
           ],

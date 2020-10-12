@@ -4,37 +4,68 @@ import 'package:device_preview/src/state/state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class DevicePreviewStorage {
+  const DevicePreviewStorage();
+
+  factory DevicePreviewStorage.none() => NoDevicePreviewStorage();
+
+  factory DevicePreviewStorage.preferences({
+    String preferenceKey =
+        PreferencesDevicePreviewStorage.defaultPreferencesKey,
+  }) =>
+      PreferencesDevicePreviewStorage(
+        preferenceKey: preferenceKey,
+      );
+
+  Future<void> save(DevicePreviewData data);
+
+  Future<DevicePreviewData> load();
+}
+
+class NoDevicePreviewStorage extends DevicePreviewStorage {
+  const NoDevicePreviewStorage();
+
+  @override
+  Future<DevicePreviewData> load() => Future<DevicePreviewData>.value(null);
+
+  @override
+  Future<void> save(DevicePreviewData data) => Future.value();
+}
+
+class PreferencesDevicePreviewStorage extends DevicePreviewStorage {
+  PreferencesDevicePreviewStorage({
+    this.preferenceKey = defaultPreferencesKey,
+  }) : assert(preferenceKey != null);
+
+  final String preferenceKey;
+
   /// Save the current preferences (until [ignore] is `true`).
-  static Future<void> save(DevicePreviewData data,
-      [bool ignore = false]) async {
-    if (!ignore) {
-      _saveData = data;
-      _saveTask ??= _save();
-      await _saveTask;
-    }
+  @override
+  Future<void> save(DevicePreviewData data) async {
+    _saveData = data;
+    _saveTask ??= _save();
+    await _saveTask;
   }
 
-  static const String _preferencesKey = 'device_preview.settings';
-  static Future _saveTask;
-  static DevicePreviewData _saveData;
+  static const String defaultPreferencesKey = 'device_preview.settings';
+  Future _saveTask;
+  DevicePreviewData _saveData;
 
-  static Future _save() async {
+  Future _save() async {
     await Future.delayed(const Duration(milliseconds: 500));
     if (_saveData != null) {
       final shared = await SharedPreferences.getInstance();
-      await shared.setString(_preferencesKey, jsonEncode(_saveData.toJson()));
+      await shared.setString(preferenceKey, jsonEncode(_saveData.toJson()));
     }
     _saveTask = null;
   }
 
   /// Load the last saved preferences (until [ignore] is `true`).
-  static Future<DevicePreviewData> load([bool ignore = false]) async {
-    if (!ignore) {
-      final shared = await SharedPreferences.getInstance();
-      final json = shared.getString(_preferencesKey);
-      if (json == null || json.isEmpty) return null;
-      return DevicePreviewData.fromJson(jsonDecode(json));
-    }
-    return null;
+  @override
+  Future<DevicePreviewData> load() async {
+    final shared = await SharedPreferences.getInstance();
+    final json = shared.getString(preferenceKey);
+    print(json);
+    if (json == null || json.isEmpty) return null;
+    return DevicePreviewData.fromJson(jsonDecode(json));
   }
 }

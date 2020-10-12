@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:pedantic/pedantic.dart';
 
 import '../../device_preview.dart';
 import '../storage.dart';
@@ -13,15 +14,15 @@ class DevicePreviewStore extends ChangeNotifier {
   DevicePreviewStore({
     List<Locale> locales,
     List<DeviceInfo> devices,
-    this.useStorage = false,
-  }) {
+    @required this.storage,
+  }) : assert(storage != null) {
     initialize(
       locales: locales,
       devices: devices,
     );
   }
 
-  final bool useStorage;
+  final DevicePreviewStorage storage;
 
   DevicePreviewState _state = DevicePreviewState.notInitialized();
 
@@ -66,21 +67,18 @@ class DevicePreviewStore extends ChangeNotifier {
           availaiableLocales.map((x) => x.locale).toList(),
         )?.toString();
 
-        var data = DevicePreviewData(
-          locale: defaultLocale,
-          customDevice: _defaultCustomDevice,
-        );
         devices = devices ?? Devices.all;
-
+        DevicePreviewData data;
         try {
-          if (useStorage) {
-            data = await DevicePreviewStorage.load();
-          }
+          data = await storage.load();
         } catch (e) {
           print('[device_preview] Error while restoring data: $e');
         }
 
-        data ??= DevicePreviewData();
+        data ??= DevicePreviewData(
+          locale: defaultLocale,
+          customDevice: _defaultCustomDevice,
+        );
 
         if (data.locale == null) {
           data = data.copyWith(locale: defaultLocale);
@@ -112,7 +110,7 @@ extension DevicePreviewStateHelperExtensions on DevicePreviewStore {
     state = state.maybeMap(
       initialized: (state) {
         final result = state.copyWith(data: data);
-        DevicePreviewStorage.save(data, !useStorage);
+        unawaited(storage.save(data));
         return result;
       },
       orElse: () => throw Exception('Not initialized'),

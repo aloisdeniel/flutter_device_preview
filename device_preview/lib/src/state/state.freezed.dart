@@ -511,7 +511,8 @@ class _$DevicePreviewDataTearOff {
 
 // ignore: unused_element
   _DevicePreviewData call(
-      {bool isEnabled = true,
+      {bool isToolbarVisible = true,
+      bool isEnabled = true,
       Orientation orientation = Orientation.portrait,
       @nullable String deviceIdentifier,
       String locale = 'en-US',
@@ -527,6 +528,7 @@ class _$DevicePreviewDataTearOff {
       @nullable DevicePreviewSettingsData settings,
       @nullable CustomDeviceInfoData customDevice}) {
     return _DevicePreviewData(
+      isToolbarVisible: isToolbarVisible,
       isEnabled: isEnabled,
       orientation: orientation,
       deviceIdentifier: deviceIdentifier,
@@ -557,6 +559,9 @@ const $DevicePreviewData = _$DevicePreviewDataTearOff();
 
 /// @nodoc
 mixin _$DevicePreviewData {
+  /// Indicate whether the toolbar is visible.
+  bool get isToolbarVisible;
+
   /// Indicate whether the device simulation is enabled.
   bool get isEnabled;
 
@@ -613,7 +618,8 @@ abstract class $DevicePreviewDataCopyWith<$Res> {
           DevicePreviewData value, $Res Function(DevicePreviewData) then) =
       _$DevicePreviewDataCopyWithImpl<$Res>;
   $Res call(
-      {bool isEnabled,
+      {bool isToolbarVisible,
+      bool isEnabled,
       Orientation orientation,
       @nullable String deviceIdentifier,
       String locale,
@@ -644,6 +650,7 @@ class _$DevicePreviewDataCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object isToolbarVisible = freezed,
     Object isEnabled = freezed,
     Object orientation = freezed,
     Object deviceIdentifier = freezed,
@@ -661,6 +668,9 @@ class _$DevicePreviewDataCopyWithImpl<$Res>
     Object customDevice = freezed,
   }) {
     return _then(_value.copyWith(
+      isToolbarVisible: isToolbarVisible == freezed
+          ? _value.isToolbarVisible
+          : isToolbarVisible as bool,
       isEnabled: isEnabled == freezed ? _value.isEnabled : isEnabled as bool,
       orientation: orientation == freezed
           ? _value.orientation
@@ -729,7 +739,8 @@ abstract class _$DevicePreviewDataCopyWith<$Res>
       __$DevicePreviewDataCopyWithImpl<$Res>;
   @override
   $Res call(
-      {bool isEnabled,
+      {bool isToolbarVisible,
+      bool isEnabled,
       Orientation orientation,
       @nullable String deviceIdentifier,
       String locale,
@@ -764,6 +775,7 @@ class __$DevicePreviewDataCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object isToolbarVisible = freezed,
     Object isEnabled = freezed,
     Object orientation = freezed,
     Object deviceIdentifier = freezed,
@@ -781,6 +793,9 @@ class __$DevicePreviewDataCopyWithImpl<$Res>
     Object customDevice = freezed,
   }) {
     return _then(_DevicePreviewData(
+      isToolbarVisible: isToolbarVisible == freezed
+          ? _value.isToolbarVisible
+          : isToolbarVisible as bool,
       isEnabled: isEnabled == freezed ? _value.isEnabled : isEnabled as bool,
       orientation: orientation == freezed
           ? _value.orientation
@@ -828,7 +843,8 @@ class _$_DevicePreviewData
     with DiagnosticableTreeMixin
     implements _DevicePreviewData {
   const _$_DevicePreviewData(
-      {this.isEnabled = true,
+      {this.isToolbarVisible = true,
+      this.isEnabled = true,
       this.orientation = Orientation.portrait,
       @nullable this.deviceIdentifier,
       this.locale = 'en-US',
@@ -843,7 +859,8 @@ class _$_DevicePreviewData
       this.textScaleFactor = 1.0,
       @nullable this.settings,
       @nullable this.customDevice})
-      : assert(isEnabled != null),
+      : assert(isToolbarVisible != null),
+        assert(isEnabled != null),
         assert(orientation != null),
         assert(locale != null),
         assert(isFrameVisible != null),
@@ -859,6 +876,11 @@ class _$_DevicePreviewData
   factory _$_DevicePreviewData.fromJson(Map<String, dynamic> json) =>
       _$_$_DevicePreviewDataFromJson(json);
 
+  @JsonKey(defaultValue: true)
+  @override
+
+  /// Indicate whether the toolbar is visible.
+  final bool isToolbarVisible;
   @JsonKey(defaultValue: true)
   @override
 
@@ -935,7 +957,7 @@ class _$_DevicePreviewData
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DevicePreviewData(isEnabled: $isEnabled, orientation: $orientation, deviceIdentifier: $deviceIdentifier, locale: $locale, isFrameVisible: $isFrameVisible, isDarkMode: $isDarkMode, boldText: $boldText, isVirtualKeyboardVisible: $isVirtualKeyboardVisible, disableAnimations: $disableAnimations, highContrast: $highContrast, accessibleNavigation: $accessibleNavigation, invertColors: $invertColors, textScaleFactor: $textScaleFactor, settings: $settings, customDevice: $customDevice)';
+    return 'DevicePreviewData(isToolbarVisible: $isToolbarVisible, isEnabled: $isEnabled, orientation: $orientation, deviceIdentifier: $deviceIdentifier, locale: $locale, isFrameVisible: $isFrameVisible, isDarkMode: $isDarkMode, boldText: $boldText, isVirtualKeyboardVisible: $isVirtualKeyboardVisible, disableAnimations: $disableAnimations, highContrast: $highContrast, accessibleNavigation: $accessibleNavigation, invertColors: $invertColors, textScaleFactor: $textScaleFactor, settings: $settings, customDevice: $customDevice)';
   }
 
   @override
@@ -943,6 +965,7 @@ class _$_DevicePreviewData
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'DevicePreviewData'))
+      ..add(DiagnosticsProperty('isToolbarVisible', isToolbarVisible))
       ..add(DiagnosticsProperty('isEnabled', isEnabled))
       ..add(DiagnosticsProperty('orientation', orientation))
       ..add(DiagnosticsProperty('deviceIdentifier', deviceIdentifier))
@@ -965,6 +988,9 @@ class _$_DevicePreviewData
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _DevicePreviewData &&
+            (identical(other.isToolbarVisible, isToolbarVisible) ||
+                const DeepCollectionEquality()
+                    .equals(other.isToolbarVisible, isToolbarVisible)) &&
             (identical(other.isEnabled, isEnabled) ||
                 const DeepCollectionEquality()
                     .equals(other.isEnabled, isEnabled)) &&
@@ -1016,6 +1042,7 @@ class _$_DevicePreviewData
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(isToolbarVisible) ^
       const DeepCollectionEquality().hash(isEnabled) ^
       const DeepCollectionEquality().hash(orientation) ^
       const DeepCollectionEquality().hash(deviceIdentifier) ^
@@ -1044,7 +1071,8 @@ class _$_DevicePreviewData
 
 abstract class _DevicePreviewData implements DevicePreviewData {
   const factory _DevicePreviewData(
-      {bool isEnabled,
+      {bool isToolbarVisible,
+      bool isEnabled,
       Orientation orientation,
       @nullable String deviceIdentifier,
       String locale,
@@ -1063,6 +1091,10 @@ abstract class _DevicePreviewData implements DevicePreviewData {
   factory _DevicePreviewData.fromJson(Map<String, dynamic> json) =
       _$_DevicePreviewData.fromJson;
 
+  @override
+
+  /// Indicate whether the toolbar is visible.
+  bool get isToolbarVisible;
   @override
 
   /// Indicate whether the device simulation is enabled.

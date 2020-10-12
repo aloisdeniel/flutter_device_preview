@@ -8,6 +8,7 @@ part of 'state.dart';
 
 _$_DevicePreviewData _$_$_DevicePreviewDataFromJson(Map<String, dynamic> json) {
   return _$_DevicePreviewData(
+    isToolbarVisible: json['isToolbarVisible'] as bool ?? true,
     isEnabled: json['isEnabled'] as bool ?? true,
     orientation:
         _$enumDecodeNullable(_$OrientationEnumMap, json['orientation']) ??
@@ -37,6 +38,7 @@ _$_DevicePreviewData _$_$_DevicePreviewDataFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$_$_DevicePreviewDataToJson(
         _$_DevicePreviewData instance) =>
     <String, dynamic>{
+      'isToolbarVisible': instance.isToolbarVisible,
       'isEnabled': instance.isEnabled,
       'orientation': _$OrientationEnumMap[instance.orientation],
       'deviceIdentifier': instance.deviceIdentifier,
