@@ -17,7 +17,7 @@ class StylePopOver extends StatelessWidget {
     final darkBackground = DevicePreviewStyle.dark();
     final media = MediaQuery.of(context);
     return ListView(
-      padding: EdgeInsets.all(10),
+      padding: toolBarStyle.spacing.regular,
       children: [
         WrapOptionsTile(
           title: 'Background theme',
@@ -197,7 +197,7 @@ class WrapOptionsTile extends StatelessWidget {
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      padding: toolBarStyle.spacing.regular,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -211,8 +211,8 @@ class WrapOptionsTile extends StatelessWidget {
           ),
           SizedBox(height: 6),
           Wrap(
-            spacing: 10,
-            runSpacing: 10,
+            spacing: toolBarStyle.spacing.regular.top,
+            runSpacing: toolBarStyle.spacing.regular.top,
             children: options,
           )
         ],

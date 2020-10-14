@@ -6,10 +6,13 @@ import 'package:flutter/widgets.dart';
 import 'package:pedantic/pedantic.dart';
 
 import '../../device_preview.dart';
-import '../storage.dart';
+import '../storage/storage.dart';
 import 'custom_device.dart';
 import 'state.dart';
 
+/// The store is a container for the current [state] of the device preview.
+///
+/// Whenever the state changes, it notifies its listener so that they can update themselves.
 class DevicePreviewStore extends ChangeNotifier {
   DevicePreviewStore({
     List<Locale> locales,
@@ -22,17 +25,22 @@ class DevicePreviewStore extends ChangeNotifier {
     );
   }
 
-  final DevicePreviewStorage storage;
-
   DevicePreviewState _state = DevicePreviewState.notInitialized();
 
+  /// The storage used to persist the states's data.
+  final DevicePreviewStorage storage;
+
+  /// The curren state of the device preview.
   DevicePreviewState get state => _state;
 
+  /// Update the state with [value] and notifies all listeners
+  /// of a change.
   set state(DevicePreviewState value) {
     _state = value;
     notifyListeners();
   }
 
+  /// The default custom device when never edited.
   static final _defaultCustomDevice = CustomDeviceInfoData(
     id: CustomDeviceIdentifier.identifier,
     name: 'Custom',
@@ -101,11 +109,17 @@ class DevicePreviewStore extends ChangeNotifier {
 
 /// A set of extension to triggers updates of the state.
 extension DevicePreviewStateHelperExtensions on DevicePreviewStore {
+  /// Access to the current state's data.
+  ///
+  /// Throws an exception if not initialized.
   DevicePreviewData get data => state.maybeMap(
         initialized: (state) => state.data,
         orElse: () => throw Exception('Not initialized'),
       );
 
+  /// Defines the current state's data.
+  ///
+  /// Throws an exception if not initialized.
   set data(DevicePreviewData data) {
     state = state.maybeMap(
       initialized: (state) {
@@ -117,16 +131,25 @@ extension DevicePreviewStateHelperExtensions on DevicePreviewStore {
     );
   }
 
+  /// Access to all available locales.
+  ///
+  /// Throws an exception if not initialized.
   List<NamedLocale> get locales => state.maybeMap(
         initialized: (state) => state.locales,
         orElse: () => throw Exception('Not initialized'),
       );
 
+  /// Access to all available devices.
+  ///
+  /// Throws an exception if not initialized.
   List<DeviceInfo> get devices => state.maybeMap(
         initialized: (state) => state.devices,
         orElse: () => throw Exception('Not initialized'),
       );
 
+  /// Access to device preview settings from state's data.
+  ///
+  /// Throws an exception if not initialized.
   DevicePreviewSettingsData get settings =>
       data.settings ?? DevicePreviewSettingsData();
 
@@ -135,6 +158,8 @@ extension DevicePreviewStateHelperExtensions on DevicePreviewStore {
   }
 
   /// The currently selected device from the [availableDevices].
+  ///
+  /// Throws an exception if not initialized.
   DeviceInfo get deviceInfo {
     if (data?.deviceIdentifier == CustomDeviceIdentifier.identifier) {
       return CustomDeviceInfo(data?.customDevice);
@@ -148,7 +173,9 @@ extension DevicePreviewStateHelperExtensions on DevicePreviewStore {
     );
   }
 
-  /// Get the currently selected locale.
+  /// Get the currently selected locale from state's data.
+  ///
+  /// Throws an exception if not initialized.
   Locale get locale => state.maybeMap(
         initialized: (state) => state.locales
             .firstWhere(

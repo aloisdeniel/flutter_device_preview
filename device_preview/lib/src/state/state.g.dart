@@ -23,6 +23,10 @@ _$_DevicePreviewData _$_$_DevicePreviewDataFromJson(Map<String, dynamic> json) {
     highContrast: json['highContrast'] as bool ?? false,
     accessibleNavigation: json['accessibleNavigation'] as bool ?? false,
     invertColors: json['invertColors'] as bool ?? false,
+    pluginData: (json['pluginData'] as Map<String, dynamic>)?.map(
+          (k, e) => MapEntry(k, e as Map<String, dynamic>),
+        ) ??
+        {},
     textScaleFactor: (json['textScaleFactor'] as num)?.toDouble() ?? 1.0,
     settings: json['settings'] == null
         ? null
@@ -51,6 +55,7 @@ Map<String, dynamic> _$_$_DevicePreviewDataToJson(
       'highContrast': instance.highContrast,
       'accessibleNavigation': instance.accessibleNavigation,
       'invertColors': instance.invertColors,
+      'pluginData': instance.pluginData,
       'textScaleFactor': instance.textScaleFactor,
       'settings': instance.settings,
       'customDevice': instance.customDevice,

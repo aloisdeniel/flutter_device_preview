@@ -1,6 +1,7 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/views/device_preview_style.dart';
+import 'package:device_preview/src/views/widgets/popover.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -17,15 +18,17 @@ class _LocalesPopOverState extends State<LocalesPopOver> {
     final locales = context.select(
       (DevicePreviewStore store) => store.locales,
     );
+    final theme = DevicePreviewTheme.of(context);
     return Column(
       children: <Widget>[
-        LocaleTools(
-          filter: filter,
-          onFilterChanged: (v) => setState(() => filter = v),
+        PopoverSearchField(
+          hintText: 'Search by locale name or code',
+          text: filter,
+          onTextChanged: (value) => setState(() => filter = value),
         ),
         Expanded(
           child: ListView(
-            padding: EdgeInsets.all(10.0),
+            padding: theme.toolBar.spacing.regular,
             children: locales
                 .where((x) {
                   final filter = this.filter.trim().toLowerCase();
@@ -38,81 +41,6 @@ class _LocalesPopOverState extends State<LocalesPopOver> {
           ),
         ),
       ],
-    );
-  }
-}
-
-class LocaleTools extends StatefulWidget {
-  final String filter;
-  final ValueChanged<String> onFilterChanged;
-
-  const LocaleTools({
-    @required this.filter,
-    @required this.onFilterChanged,
-  });
-
-  @override
-  _LocaleToolsState createState() => _LocaleToolsState();
-}
-
-class _LocaleToolsState extends State<LocaleTools> {
-  TextEditingController controller;
-
-  @override
-  void initState() {
-    controller = TextEditingController(text: widget.filter);
-    super.initState();
-  }
-
-  @override
-  void didUpdateWidget(LocaleTools oldWidget) {
-    if (controller.text != widget.filter) {
-      controller.text = widget.filter;
-      setState(() => {});
-    }
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
-    return Material(
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        color: toolBarStyle.backgroundColor,
-        child: SizedBox(
-          height: 34,
-          child: TextField(
-            style: TextStyle(
-              fontSize: 11,
-              color: toolBarStyle.foregroundColor,
-            ),
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: toolBarStyle.foregroundColor.withOpacity(0.12),
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: 0,
-                horizontal: 10,
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-              ),
-              suffixIcon: Icon(
-                Icons.search,
-                color: toolBarStyle.foregroundColor.withOpacity(0.12),
-              ),
-            ),
-            controller: controller,
-            onChanged: widget.onFilterChanged,
-          ),
-        ),
-      ),
     );
   }
 }
@@ -140,7 +68,7 @@ class LocaleTile extends StatelessWidget {
         duration: const Duration(milliseconds: 100),
         color: isSelected ? Theme.of(context).primaryColor : Colors.transparent,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          padding: toolBarStyle.spacing.regular,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[

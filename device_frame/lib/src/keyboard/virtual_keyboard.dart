@@ -110,13 +110,13 @@ class _VirtualKeyboard extends StatelessWidget {
           (x) => Expanded(
             child: Padding(
               padding: EdgeInsets.only(
-                right: 12.0,
+                right: 12,
               ),
               child: VirtualKeyboardButton(
                 child: Text(
                   x,
                   style: TextStyle(
-                    fontSize: 14.0,
+                    fontSize: 14,
                     color: foregroundColor,
                   ),
                 ),
@@ -154,7 +154,7 @@ class _VirtualKeyboard extends StatelessWidget {
           _row([
             Padding(
               padding: EdgeInsets.only(
-                right: 12.0,
+                right: 12,
               ),
               child: VirtualKeyboardButton(
                 child: Icon(
@@ -172,7 +172,7 @@ class _VirtualKeyboard extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(
-                right: 12.0,
+                right: 12,
               ),
               child: VirtualKeyboardButton(
                 child: Icon(
@@ -187,13 +187,13 @@ class _VirtualKeyboard extends StatelessWidget {
           _row([
             Padding(
               padding: EdgeInsets.only(
-                right: 12.0,
+                right: 12,
               ),
               child: VirtualKeyboardButton(
                 child: Text(
                   '123',
                   style: TextStyle(
-                    fontSize: 14.0,
+                    fontSize: 14,
                     color: theme.button2ForegroundColor,
                   ),
                 ),
@@ -202,7 +202,7 @@ class _VirtualKeyboard extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(
-                right: 12.0,
+                right: 12,
               ),
               child: VirtualKeyboardButton(
                 child: Icon(
@@ -216,13 +216,13 @@ class _VirtualKeyboard extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: EdgeInsets.only(
-                  right: 12.0,
+                  right: 12,
                 ),
                 child: VirtualKeyboardButton(
                   child: Text(
                     'space',
                     style: TextStyle(
-                        fontSize: 14.0, color: theme.button2ForegroundColor),
+                        fontSize: 14, color: theme.button2ForegroundColor),
                   ),
                   backgroundColor: theme.button2BackgroundColor,
                 ),
@@ -230,13 +230,13 @@ class _VirtualKeyboard extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(
-                right: 12.0,
+                right: 12,
               ),
               child: VirtualKeyboardButton(
                 child: Text(
                   'return',
                   style: TextStyle(
-                      fontSize: 14.0, color: theme.button2ForegroundColor),
+                      fontSize: 14, color: theme.button2ForegroundColor),
                 ),
                 backgroundColor: theme.button2BackgroundColor,
               ),

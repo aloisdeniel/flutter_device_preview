@@ -1,5 +1,6 @@
 import 'package:device_preview/src/utilities/media_query_observer.dart';
 import 'package:device_preview/src/views/device_preview_style.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../../utilities/position.dart';
@@ -41,7 +42,7 @@ class Popover extends StatefulWidget {
 
 class _PopoverState extends State<Popover> {
   final _key = GlobalKey();
-  List<OverlayEntry> _overlayEntries = [];
+  final List<OverlayEntry> _overlayEntries = [];
   bool _isOpen = false;
 
   void open() {
@@ -65,7 +66,8 @@ class _PopoverState extends State<Popover> {
             icon: widget.icon,
             child: widget.builder(context, close),
             size: widget.size ?? Size(280, 420),
-            startPosition: startPosition & _key.absolutePosition.size,
+            startPosition:
+                startPosition & (_key.absolutePosition?.size ?? Size.zero),
             parentBounds: widget.parentBounds,
           ),
         ),
@@ -151,7 +153,8 @@ class __PopOverContainerState extends State<_PopOverContainer>
   @override
   Widget build(BuildContext context) {
     final duration = const Duration(milliseconds: 80);
-    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
+    final previewTheme = DevicePreviewTheme.of(context);
+    final toolBarStyle = previewTheme.toolBar;
     final media = MediaQuery.of(context);
 
     var bounds = widget.startPosition;
@@ -217,8 +220,7 @@ class __PopOverContainerState extends State<_PopOverContainer>
       bounds = Offset(bounds.left, media.padding.top) & bounds.size;
     }
 
-    return AnimatedPositioned(
-      duration: duration,
+    return Positioned(
       left: bounds.left + _translate.dx,
       top: bounds.top - media.viewInsets.bottom + _translate.dy,
       width: bounds.width,
@@ -226,31 +228,52 @@ class __PopOverContainerState extends State<_PopOverContainer>
       child: AnimatedOpacity(
         duration: duration,
         opacity: _isStarted ? 1.0 : 0.0,
-        child: AnimatedContainer(
-          duration: duration,
-          curve: Curves.easeOut,
-          transform: (_isStarted
-              ? (Matrix4.identity())
-              : (Matrix4.translationValues(0, 6, 0)..scale(0.8))),
-          decoration: BoxDecoration(
-            color: toolBarStyle.buttonBackgroundColor.withOpacity(0.95),
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: Column(
-            children: <Widget>[
-              GestureDetector(
-                onPanUpdate: (u) {
-                  setState(() => _translate += u.delta);
-                },
-                child: _PopOverHeader(
-                  title: widget.title,
-                  icon: widget.icon,
+        child: MediaQuery.removePadding(
+          context: context,
+          removeLeft: true,
+          removeTop: true,
+          removeRight: true,
+          removeBottom: true,
+          child: Theme(
+            data: ThemeData.dark().copyWith(
+              accentColor: previewTheme.toolBar.buttonHoverBackgroundColor,
+            ),
+            child: AnimatedContainer(
+              duration: duration,
+              curve: Curves.easeOut,
+              transform: (_isStarted
+                  ? (Matrix4.identity())
+                  : (Matrix4.translationValues(0, 6, 0))),
+              decoration: BoxDecoration(
+                color: toolBarStyle.buttonBackgroundColor.withOpacity(0.95),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Material(
+                color: Colors.transparent,
+                child: Column(
+                  children: <Widget>[
+                    GestureDetector(
+                      onPanUpdate: (u) {
+                        setState(() => _translate += u.delta);
+                      },
+                      child: _PopOverHeader(
+                        title: widget.title,
+                        icon: widget.icon,
+                      ),
+                    ),
+                    Expanded(
+                      child: Navigator(
+                        onGenerateInitialRoutes: (e, _) => [
+                          MaterialPageRoute(
+                            builder: (context) => widget.child,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Expanded(
-                child: widget.child,
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -290,11 +313,11 @@ class _PopOverHeader extends StatelessWidget {
       decoration: BoxDecoration(
         color: toolBarStyle.backgroundColor,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(6.0),
-          topRight: Radius.circular(6.0),
+          topLeft: Radius.circular(6),
+          topRight: Radius.circular(6),
         ),
       ),
-      padding: EdgeInsets.all(10.0),
+      padding: toolBarStyle.spacing.regular,
       child: Row(
         children: <Widget>[
           Icon(

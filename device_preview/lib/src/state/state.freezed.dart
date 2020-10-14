@@ -381,10 +381,16 @@ class _$_InitializedDevicePreviewState
         assert(data != null);
 
   @override
+
+  /// The list of all available devices.
   final List<DeviceInfo> devices;
   @override
+
+  /// The list of all available locales.
   final List<NamedLocale> locales;
   @override
+
+  /// The user settings of the preview.
   final DevicePreviewData data;
 
   @override
@@ -494,8 +500,13 @@ abstract class _InitializedDevicePreviewState implements DevicePreviewState {
       @required List<NamedLocale> locales,
       @required DevicePreviewData data}) = _$_InitializedDevicePreviewState;
 
+  /// The list of all available devices.
   List<DeviceInfo> get devices;
+
+  /// The list of all available locales.
   List<NamedLocale> get locales;
+
+  /// The user settings of the preview.
   DevicePreviewData get data;
   _$InitializedDevicePreviewStateCopyWith<_InitializedDevicePreviewState>
       get copyWith;
@@ -524,6 +535,8 @@ class _$DevicePreviewDataTearOff {
       bool highContrast = false,
       bool accessibleNavigation = false,
       bool invertColors = false,
+      Map<String, Map<String, dynamic>> pluginData =
+          const <String, Map<String, dynamic>>{},
       double textScaleFactor = 1.0,
       @nullable DevicePreviewSettingsData settings,
       @nullable CustomDeviceInfoData customDevice}) {
@@ -541,6 +554,7 @@ class _$DevicePreviewDataTearOff {
       highContrast: highContrast,
       accessibleNavigation: accessibleNavigation,
       invertColors: invertColors,
+      pluginData: pluginData,
       textScaleFactor: textScaleFactor,
       settings: settings,
       customDevice: customDevice,
@@ -599,6 +613,9 @@ mixin _$DevicePreviewData {
   /// Indicate whether image colors are inverted.
   bool get invertColors;
 
+  /// Indicate whether image colors are inverted.
+  Map<String, Map<String, dynamic>> get pluginData;
+
   /// The current text scaling factor.
   double get textScaleFactor;
   @nullable
@@ -631,6 +648,7 @@ abstract class $DevicePreviewDataCopyWith<$Res> {
       bool highContrast,
       bool accessibleNavigation,
       bool invertColors,
+      Map<String, Map<String, dynamic>> pluginData,
       double textScaleFactor,
       @nullable DevicePreviewSettingsData settings,
       @nullable CustomDeviceInfoData customDevice});
@@ -663,6 +681,7 @@ class _$DevicePreviewDataCopyWithImpl<$Res>
     Object highContrast = freezed,
     Object accessibleNavigation = freezed,
     Object invertColors = freezed,
+    Object pluginData = freezed,
     Object textScaleFactor = freezed,
     Object settings = freezed,
     Object customDevice = freezed,
@@ -698,6 +717,9 @@ class _$DevicePreviewDataCopyWithImpl<$Res>
           : accessibleNavigation as bool,
       invertColors:
           invertColors == freezed ? _value.invertColors : invertColors as bool,
+      pluginData: pluginData == freezed
+          ? _value.pluginData
+          : pluginData as Map<String, Map<String, dynamic>>,
       textScaleFactor: textScaleFactor == freezed
           ? _value.textScaleFactor
           : textScaleFactor as double,
@@ -752,6 +774,7 @@ abstract class _$DevicePreviewDataCopyWith<$Res>
       bool highContrast,
       bool accessibleNavigation,
       bool invertColors,
+      Map<String, Map<String, dynamic>> pluginData,
       double textScaleFactor,
       @nullable DevicePreviewSettingsData settings,
       @nullable CustomDeviceInfoData customDevice});
@@ -788,6 +811,7 @@ class __$DevicePreviewDataCopyWithImpl<$Res>
     Object highContrast = freezed,
     Object accessibleNavigation = freezed,
     Object invertColors = freezed,
+    Object pluginData = freezed,
     Object textScaleFactor = freezed,
     Object settings = freezed,
     Object customDevice = freezed,
@@ -823,6 +847,9 @@ class __$DevicePreviewDataCopyWithImpl<$Res>
           : accessibleNavigation as bool,
       invertColors:
           invertColors == freezed ? _value.invertColors : invertColors as bool,
+      pluginData: pluginData == freezed
+          ? _value.pluginData
+          : pluginData as Map<String, Map<String, dynamic>>,
       textScaleFactor: textScaleFactor == freezed
           ? _value.textScaleFactor
           : textScaleFactor as double,
@@ -856,6 +883,7 @@ class _$_DevicePreviewData
       this.highContrast = false,
       this.accessibleNavigation = false,
       this.invertColors = false,
+      this.pluginData = const <String, Map<String, dynamic>>{},
       this.textScaleFactor = 1.0,
       @nullable this.settings,
       @nullable this.customDevice})
@@ -871,6 +899,7 @@ class _$_DevicePreviewData
         assert(highContrast != null),
         assert(accessibleNavigation != null),
         assert(invertColors != null),
+        assert(pluginData != null),
         assert(textScaleFactor != null);
 
   factory _$_DevicePreviewData.fromJson(Map<String, dynamic> json) =>
@@ -941,6 +970,11 @@ class _$_DevicePreviewData
 
   /// Indicate whether image colors are inverted.
   final bool invertColors;
+  @JsonKey(defaultValue: const <String, Map<String, dynamic>>{})
+  @override
+
+  /// Indicate whether image colors are inverted.
+  final Map<String, Map<String, dynamic>> pluginData;
   @JsonKey(defaultValue: 1.0)
   @override
 
@@ -957,7 +991,7 @@ class _$_DevicePreviewData
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DevicePreviewData(isToolbarVisible: $isToolbarVisible, isEnabled: $isEnabled, orientation: $orientation, deviceIdentifier: $deviceIdentifier, locale: $locale, isFrameVisible: $isFrameVisible, isDarkMode: $isDarkMode, boldText: $boldText, isVirtualKeyboardVisible: $isVirtualKeyboardVisible, disableAnimations: $disableAnimations, highContrast: $highContrast, accessibleNavigation: $accessibleNavigation, invertColors: $invertColors, textScaleFactor: $textScaleFactor, settings: $settings, customDevice: $customDevice)';
+    return 'DevicePreviewData(isToolbarVisible: $isToolbarVisible, isEnabled: $isEnabled, orientation: $orientation, deviceIdentifier: $deviceIdentifier, locale: $locale, isFrameVisible: $isFrameVisible, isDarkMode: $isDarkMode, boldText: $boldText, isVirtualKeyboardVisible: $isVirtualKeyboardVisible, disableAnimations: $disableAnimations, highContrast: $highContrast, accessibleNavigation: $accessibleNavigation, invertColors: $invertColors, pluginData: $pluginData, textScaleFactor: $textScaleFactor, settings: $settings, customDevice: $customDevice)';
   }
 
   @override
@@ -979,6 +1013,7 @@ class _$_DevicePreviewData
       ..add(DiagnosticsProperty('highContrast', highContrast))
       ..add(DiagnosticsProperty('accessibleNavigation', accessibleNavigation))
       ..add(DiagnosticsProperty('invertColors', invertColors))
+      ..add(DiagnosticsProperty('pluginData', pluginData))
       ..add(DiagnosticsProperty('textScaleFactor', textScaleFactor))
       ..add(DiagnosticsProperty('settings', settings))
       ..add(DiagnosticsProperty('customDevice', customDevice));
@@ -1028,6 +1063,9 @@ class _$_DevicePreviewData
             (identical(other.invertColors, invertColors) ||
                 const DeepCollectionEquality()
                     .equals(other.invertColors, invertColors)) &&
+            (identical(other.pluginData, pluginData) ||
+                const DeepCollectionEquality()
+                    .equals(other.pluginData, pluginData)) &&
             (identical(other.textScaleFactor, textScaleFactor) ||
                 const DeepCollectionEquality()
                     .equals(other.textScaleFactor, textScaleFactor)) &&
@@ -1055,6 +1093,7 @@ class _$_DevicePreviewData
       const DeepCollectionEquality().hash(highContrast) ^
       const DeepCollectionEquality().hash(accessibleNavigation) ^
       const DeepCollectionEquality().hash(invertColors) ^
+      const DeepCollectionEquality().hash(pluginData) ^
       const DeepCollectionEquality().hash(textScaleFactor) ^
       const DeepCollectionEquality().hash(settings) ^
       const DeepCollectionEquality().hash(customDevice);
@@ -1084,6 +1123,7 @@ abstract class _DevicePreviewData implements DevicePreviewData {
       bool highContrast,
       bool accessibleNavigation,
       bool invertColors,
+      Map<String, Map<String, dynamic>> pluginData,
       double textScaleFactor,
       @nullable DevicePreviewSettingsData settings,
       @nullable CustomDeviceInfoData customDevice}) = _$_DevicePreviewData;
@@ -1144,6 +1184,10 @@ abstract class _DevicePreviewData implements DevicePreviewData {
 
   /// Indicate whether image colors are inverted.
   bool get invertColors;
+  @override
+
+  /// Indicate whether image colors are inverted.
+  Map<String, Map<String, dynamic>> get pluginData;
   @override
 
   /// The current text scaling factor.

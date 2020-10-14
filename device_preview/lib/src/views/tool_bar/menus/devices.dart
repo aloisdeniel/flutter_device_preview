@@ -5,9 +5,9 @@ import 'package:device_preview/src/views/tool_bar/button.dart';
 import 'package:device_frame/device_frame.dart';
 import 'package:device_preview/src/views/tool_bar/menus/accessibility.dart';
 import 'package:device_preview/src/views/tool_bar/menus/style.dart';
+import 'package:device_preview/src/views/widgets/popover.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../../utilities/spacing.dart';
@@ -20,24 +20,8 @@ class DevicesPopOver extends StatefulWidget {
 
 class _DevicesPopOverState extends State<DevicesPopOver> {
   List<TargetPlatform> selected;
-
-  final TextEditingController _searchTEC = TextEditingController();
-  String _searchedText = '';
   bool _isCustomDevice;
-
-  @override
-  void initState() {
-    _searchTECListener();
-    super.initState();
-  }
-
-  void _searchTECListener() {
-    _searchTEC.addListener(() {
-      setState(() {
-        _searchedText = _searchTEC.text.replaceAll(' ', '').toLowerCase();
-      });
-    });
-  }
+  String _searchedText = '';
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +55,8 @@ class _DevicesPopOverState extends State<DevicesPopOver> {
             }),
     );
 
+    final theme = DevicePreviewTheme.of(context);
+
     return GestureDetector(
       onPanDown: (_) {
         FocusScope.of(context).requestFocus(FocusNode()); //remove search focus
@@ -82,7 +68,7 @@ class _DevicesPopOverState extends State<DevicesPopOver> {
             selected: isCustomDevice ? [] : selected,
             onChanged: (v) {
               setState(() {
-                _clearSearchTEC();
+                _searchedText = '';
                 _isCustomDevice = false;
                 this.selected = v;
               });
@@ -91,15 +77,16 @@ class _DevicesPopOverState extends State<DevicesPopOver> {
               setState(() => _isCustomDevice = true);
             },
           ),
-          DeviceSearchField(
-            _searchTEC,
-            onClear: _clearSearchTEC,
+          PopoverSearchField(
+            hintText: 'Search by device name',
+            text: _searchedText,
+            onTextChanged: (value) => setState(() => _searchedText = value),
           ),
           Expanded(
             child: isCustomDevice
                 ? CustomDevicePanel()
                 : ListView(
-                    padding: EdgeInsets.all(10),
+                    padding: theme.toolBar.spacing.regular,
                     children: devices
                         .map(
                           (e) => DeviceTile(
@@ -116,10 +103,6 @@ class _DevicesPopOverState extends State<DevicesPopOver> {
         ],
       ),
     );
-  }
-
-  void _clearSearchTEC() {
-    WidgetsBinding.instance.addPostFrameCallback((_) => _searchTEC.clear());
   }
 }
 
@@ -401,9 +384,9 @@ class DeviceTile extends StatelessWidget {
         duration: const Duration(milliseconds: 100),
         color: isSelected ? Theme.of(context).primaryColor : Colors.transparent,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 12,
-            vertical: 10,
+          padding: EdgeInsets.symmetric(
+            horizontal: toolBarStyle.spacing.big.top,
+            vertical: toolBarStyle.spacing.regular.top,
           ),
           child: Row(
             children: <Widget>[
@@ -446,62 +429,6 @@ class DeviceTile extends StatelessWidget {
   }
 }
 
-class DeviceSearchField extends StatelessWidget {
-  final TextEditingController searchTEC;
-  final VoidCallback onClear;
-  const DeviceSearchField(this.searchTEC, {Key key, @required this.onClear})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
-    return Container(
-      child: Material(
-        child: Container(
-          color: toolBarStyle.backgroundColor,
-          height: 48,
-          padding: const EdgeInsets.fromLTRB(10, 4, 10, 10),
-          child: TextField(
-            style: TextStyle(
-              color: toolBarStyle.foregroundColor,
-              fontSize: 12,
-            ),
-            controller: searchTEC,
-            decoration: InputDecoration(
-              hintStyle: TextStyle(
-                color: toolBarStyle.foregroundColor.withOpacity(0.5),
-                fontSize: 12,
-              ),
-              hintText: 'Search by device name...',
-              contentPadding: const EdgeInsets.symmetric(
-                horizontal: 10,
-              ),
-              filled: true,
-              fillColor: toolBarStyle.foregroundColor.withOpacity(0.12),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-              ),
-              prefixIcon: Icon(
-                FontAwesomeIcons.search,
-                color: toolBarStyle.foregroundColor.withOpacity(0.5),
-                size: 12,
-              ),
-              suffix: InkWell(
-                child: Icon(
-                  FontAwesomeIcons.times,
-                  size: 12,
-                  color: Theme.of(context).primaryColor,
-                ),
-                onTap: onClear,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class DeviceTypeSelectBox extends StatelessWidget {
   final DeviceType type;
   const DeviceTypeSelectBox({
@@ -512,10 +439,7 @@ class DeviceTypeSelectBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final customDevice = context.select(
-      (DevicePreviewStore store) {
-        final store = context.read<DevicePreviewStore>();
-        store.data.customDevice;
-      },
+      (DevicePreviewStore store) => store.data.customDevice,
     );
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     return SelectBox(
@@ -547,10 +471,7 @@ class PlatformSelectBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final customDevice = context.select(
-      (DevicePreviewStore store) {
-        final store = context.read<DevicePreviewStore>();
-        store.data.customDevice;
-      },
+      (DevicePreviewStore store) => store.data.customDevice,
     );
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     return SelectBox(

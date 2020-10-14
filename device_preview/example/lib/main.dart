@@ -1,4 +1,5 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:device_preview/plugins.dart';
 import 'package:device_preview_example/gallery/l10n/gallery_localizations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -18,6 +19,11 @@ void main() {
       ),*/
       Expanded(
         child: DevicePreview(
+          plugins: [
+            const FileExplorerPlugin(),
+            const ScreenshotPlugin(),
+            const SharedPreferencesExplorerPlugin(),
+          ],
           availableLocales: GalleryLocalizations.supportedLocales,
           builder: (context) => StarterApp(),
         ),

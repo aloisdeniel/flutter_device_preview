@@ -12,6 +12,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   provider: ^4.3.2
+  path_provider: ^1.6.18
   device_frame: ^0.3.0-prerelease9
   font_awesome_flutter: ^8.9.0
   http: ^0.12.2 

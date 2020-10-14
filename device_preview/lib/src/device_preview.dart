@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:device_frame/device_frame.dart';
 import 'package:device_preview/src/state/state.dart';
 import 'package:device_preview/src/state/store.dart';
-import 'package:device_preview/src/storage.dart';
+import 'package:device_preview/src/storage/storage.dart';
 import 'package:device_preview/src/utilities/media_query_observer.dart';
 import 'package:device_preview/src/views/tool_bar/toolbar.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +13,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'dart:ui' as ui;
 
+import 'locales/default_locales.dart';
+import 'plugins/plugin.dart';
 import 'screenshots/screenshot.dart';
 import 'screenshots/upload_service.dart';
 import 'utilities/position.dart';
@@ -49,6 +51,9 @@ class DevicePreview extends StatefulWidget {
 
   /// The available devices used for previewing.
   final List<DeviceInfo> devices;
+
+  /// The list of plugins.
+  final List<DevicePreviewPlugin> plugins;
 
   /// Customizing the tool bar and background aspect.
   ///
@@ -87,6 +92,7 @@ class DevicePreview extends StatefulWidget {
     this.style,
     this.isToolbarVisible = true,
     this.availableLocales,
+    this.plugins = const <DevicePreviewPlugin>[],
     DevicePreviewStorage storage,
     this.onScreenshot,
     this.enabled = true,
@@ -111,11 +117,22 @@ class DevicePreview extends StatefulWidget {
   /// Currently defined locale.
   static Locale locale(BuildContext context) {
     final store = Provider.of<DevicePreviewStore>(context);
-    final splits = store.data.locale.split('_');
-    return Locale(
-      splits[0],
-      splits.length > 1 ? splits[1] : null,
+    return store.state.maybeMap(
+      initialized: (state) {
+        final splits = state.data.locale.split('_');
+        return Locale(
+          splits[0],
+          splits.length > 1 ? splits[1] : null,
+        );
+      },
+      orElse: () => WidgetsBinding.instance.window.locale,
     );
+  }
+
+  /// The list of declared plugins.
+  static List<DevicePreviewPlugin> pluginsOf(BuildContext context) {
+    final state = context.findAncestorStateOfType<_DevicePreviewState>();
+    return state.widget.plugins;
   }
 
   /// Make the toolbar visible to the user.
@@ -151,13 +168,20 @@ class DevicePreview extends StatefulWidget {
   /// All available locales in the tool.
   static List<Locale> allLocales(BuildContext context) {
     final store = Provider.of<DevicePreviewStore>(context);
-    return store.locales.map((e) => Locale(e.code)).toList();
+    return store.state
+        .maybeMap(
+          initialized: (state) => state.locales,
+          orElse: () => defaultAvailableLocales,
+        )
+        .map((e) => Locale(e.code))
+        .toList();
   }
 
   /// Take a screenshot.
   static Future<DeviceScreenshot> screenshot(BuildContext context) {
     final state = context.findAncestorStateOfType<_DevicePreviewState>();
-    return state.screenshot();
+    final store = context.read<DevicePreviewStore>();
+    return state.screenshot(store);
   }
 
   /// Process a screenshot.
@@ -174,10 +198,13 @@ class DevicePreview extends StatefulWidget {
     Widget widget,
   ) {
     final isEnabled = context.select(
-      (DevicePreviewStore store) => store.data.isEnabled,
+      (DevicePreviewStore store) => store.state.maybeMap(
+        initialized: (state) => state.data.isEnabled,
+        orElse: () => false,
+      ),
     );
 
-    if (isEnabled) return widget;
+    if (!isEnabled) return widget;
 
     final identifier = context.select(
       (DevicePreviewStore store) => store.deviceInfo.identifier,
@@ -273,24 +300,20 @@ class _DevicePreviewState extends State<DevicePreview> {
       widget.onScreenshot ?? (const FileioScreenshotUploader().upload);
 
   /// Takes a screenshot with the current configuration.
-  Future<DeviceScreenshot> screenshot() async {
+  Future<DeviceScreenshot> screenshot(DevicePreviewStore store) async {
     RenderRepaintBoundary boundary =
         _repaintKey.currentContext.findRenderObject();
     final format = ui.ImageByteFormat.png;
 
-    final device = context.select(
-      (DevicePreviewStore store) => store.deviceInfo,
-    );
-
     final image = await boundary.toImage(
-      pixelRatio: device.pixelRatio,
+      pixelRatio: store.deviceInfo.pixelRatio,
     );
     final byteData = await image.toByteData(
       format: format,
     );
     final bytes = byteData.buffer.asUint8List();
     final screenshot = DeviceScreenshot(
-      device: device,
+      device: store.deviceInfo,
       bytes: bytes,
       format: format,
     );
@@ -384,7 +407,10 @@ class _DevicePreviewState extends State<DevicePreview> {
         );
 
         if (!isInitialized) {
-          return _DevicePreviewLoader();
+          return Builder(
+            key: _appKey,
+            builder: widget.builder,
+          );
         }
 
         final isEnabled = context.select(
@@ -470,81 +496,6 @@ class _DevicePreviewState extends State<DevicePreview> {
 
   /// The current application key.
   final GlobalKey _appKey = GlobalKey();
-}
-
-class _DevicePreviewLoader extends StatefulWidget {
-  const _DevicePreviewLoader({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  __DevicePreviewLoaderState createState() => __DevicePreviewLoaderState();
-}
-
-class __DevicePreviewLoaderState extends State<_DevicePreviewLoader>
-    with SingleTickerProviderStateMixin {
-  static final _opacityTween = Tween<double>(begin: 1, end: 0);
-  Animation<double> animation;
-  AnimationController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller = AnimationController(
-      duration: const Duration(milliseconds: 500),
-      vsync: this,
-    );
-    animation = CurvedAnimation(
-      parent: controller,
-      curve: Curves.easeInOut,
-    );
-    controller.repeat(reverse: true);
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: Container(
-        color: Colors.black,
-        child: Opacity(
-          opacity: _opacityTween.evaluate(animation),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.perm_device_information,
-                color: Colors.white,
-                size: 48,
-              ),
-              SizedBox(height: 6),
-              Text(
-                'Device Preview',
-                style: Theme.of(context).textTheme.bodyText1.copyWith(
-                      color: Colors.white,
-                      fontSize: 10,
-                    ),
-              ),
-              SizedBox(height: 4),
-              Text(
-                'Loading',
-                style: Theme.of(context).textTheme.bodyText1.copyWith(
-                      color: Colors.white30,
-                      fontSize: 9,
-                    ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 }
 
 class _ToolsOverlay extends StatefulWidget {

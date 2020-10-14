@@ -1,8 +1,6 @@
 import 'package:device_preview/src/views/device_preview_style.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../device_preview.dart';
-
 class ToolBarButton extends StatefulWidget {
   final bool isRoundedTopLeft;
   final bool isRoundedTopRight;
@@ -87,7 +85,7 @@ class _ToolBarButtonState extends State<ToolBarButton> {
   }
 
   TextStyle textStyle(DevicePreviewToolBarStyle style) => TextStyle(
-        fontSize: 11.0,
+        fontSize: 11,
         color: widget.foregroundColor ?? style.foregroundColor,
       );
 
@@ -105,7 +103,7 @@ class _ToolBarButtonState extends State<ToolBarButton> {
           widget.icon,
         ),
         SizedBox(
-          width: 5.0,
+          width: 5,
         ),
         expanded
             ? Expanded(
@@ -123,8 +121,8 @@ class _ToolBarButtonState extends State<ToolBarButton> {
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
 
     var padding = EdgeInsets.symmetric(
-      vertical: 10.0,
-      horizontal: 14.0,
+      vertical: toolBarStyle.spacing.regular.top,
+      horizontal: toolBarStyle.spacing.big.top,
     );
 
     // If direct child is an icon, we use same padding everywhere to

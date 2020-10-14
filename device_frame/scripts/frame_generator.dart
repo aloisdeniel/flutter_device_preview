@@ -171,7 +171,7 @@ String _parseInsets(String text) {
 
   final splits = text.split(',').map((e) => double.parse(e.trim())).toList();
 
-  final left = splits.length > 0 ? splits[0] : 0;
+  final left = splits.isNotEmpty ? splits[0] : 0;
   final top = splits.length > 1 ? splits[1] : left;
   final right = splits.length > 2 ? splits[2] : left;
   final bottom = splits.length > 3 ? splits[3] : top;

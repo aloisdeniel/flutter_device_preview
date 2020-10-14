@@ -3,7 +3,6 @@ import 'package:device_frame/device_frame.dart';
 import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/views/device_preview_style.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import '../../device_preview.dart';
@@ -15,7 +14,6 @@ import 'menus/accessibility.dart';
 import 'menus/devices.dart';
 import 'menus/locales.dart';
 import 'menus/popover.dart';
-import 'menus/screenshot.dart';
 import 'menus/style.dart';
 
 class DevicePreviewToolBar extends StatefulWidget {
@@ -217,37 +215,6 @@ class _DevicePreviewToolBarState extends State<DevicePreviewToolBar> {
                   ),
                 ),
                 Popover(
-                  title: 'Screenshot',
-                  parentBounds: widget.overlayPosition,
-                  size: Size(300, 300),
-                  icon: Icons.photo_camera,
-                  builder: (context, _) =>
-                      ScreenshotPopOver(screenShotmessage ?? ''),
-                  child: Builder(
-                    builder: (context) => ToolBarButton(
-                      title: 'Screenshot',
-                      icon: Icons.photo_camera,
-                      onTap: () async {
-                        try {
-                          final screenshot =
-                              await DevicePreview.screenshot(context);
-                          var link = await DevicePreview.processScreenshot(
-                              context, screenshot);
-                          screenShotmessage =
-                              'Your screenshot is available here: $link and in your clipboard!';
-                          await Clipboard.setData(ClipboardData(text: link));
-                        } catch (e) {
-                          screenShotmessage =
-                              'Error while processing screenshot : $e';
-                          print(
-                              '[DevicePreview] Error while processing screenshot : $e');
-                        }
-                        Popover.open(context);
-                      },
-                    ),
-                  ),
-                ),
-                Popover(
                   title: 'Accessibility',
                   parentBounds: widget.overlayPosition,
                   size: Size(280, 300),
@@ -258,6 +225,23 @@ class _DevicePreviewToolBarState extends State<DevicePreviewToolBar> {
                       title: 'Accessibility',
                       icon: Icons.accessibility_new,
                       onTap: () => Popover.open(context),
+                    ),
+                  ),
+                ),
+                ...DevicePreview.pluginsOf(context).map(
+                  (plugin) => Popover(
+                    key: Key(plugin.identifier),
+                    title: plugin.name,
+                    parentBounds: widget.overlayPosition,
+                    size: plugin.windowSize ?? Size(280, 300),
+                    icon: plugin.icon,
+                    builder: (context, _) => plugin.build(context),
+                    child: Builder(
+                      builder: (context) => ToolBarButton(
+                        title: plugin.name,
+                        icon: plugin.icon,
+                        onTap: () => Popover.open(context),
+                      ),
                     ),
                   ),
                 ),

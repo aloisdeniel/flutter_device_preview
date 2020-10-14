@@ -147,6 +147,8 @@ abstract class DevicePreviewToolBarStyle with _$DevicePreviewToolBarStyle {
     @required Color buttonBackgroundColor,
     @required Color buttonHoverBackgroundColor,
     @required DevicePreviewToolBarPosition position,
+    @required DevicePreviewToolBarSpacingData spacing,
+    @required DevicePreviewToolBarTextStyleData fontStyles,
   }) = _DevicePreviewToolBarStyle;
 
   factory DevicePreviewToolBarStyle.dark({
@@ -158,6 +160,29 @@ abstract class DevicePreviewToolBarStyle with _$DevicePreviewToolBarStyle {
         buttonBackgroundColor: const Color(0xFF2F2F2F),
         buttonHoverBackgroundColor: const Color(0xFF555555),
         foregroundColor: const Color(0xFFFEFEFE),
+        spacing: DevicePreviewToolBarSpacingData(
+          small: const EdgeInsets.all(4),
+          regular: const EdgeInsets.all(10),
+          big: const EdgeInsets.all(14),
+        ),
+        fontStyles: DevicePreviewToolBarTextStyleData(
+          smallBody: const TextStyle(
+            fontFamily: 'Roboto',
+            fontSize: 9,
+          ),
+          body: const TextStyle(
+            fontFamily: 'Roboto',
+            fontSize: 11,
+          ),
+          title: const TextStyle(
+            fontFamily: 'Roboto',
+            fontSize: 12,
+          ),
+          fieldLabel: const TextStyle(
+            fontFamily: 'Roboto',
+            fontSize: 11,
+          ),
+        ),
       );
 
   factory DevicePreviewToolBarStyle.light({
@@ -169,5 +194,49 @@ abstract class DevicePreviewToolBarStyle with _$DevicePreviewToolBarStyle {
         buttonBackgroundColor: const Color(0xFFF0F0F0),
         buttonHoverBackgroundColor: const Color(0xFFFAFAFA),
         foregroundColor: const Color(0xFF333333),
+        spacing: DevicePreviewToolBarSpacingData(
+          small: const EdgeInsets.all(4),
+          regular: const EdgeInsets.all(10),
+          big: const EdgeInsets.all(14),
+        ),
+        fontStyles: DevicePreviewToolBarTextStyleData(
+          smallBody: const TextStyle(
+            fontFamily: 'Roboto',
+            fontSize: 9,
+          ),
+          body: const TextStyle(
+            fontFamily: 'Roboto',
+            fontSize: 11,
+          ),
+          title: const TextStyle(
+            fontFamily: 'Roboto',
+            fontSize: 12,
+          ),
+          fieldLabel: const TextStyle(
+            fontFamily: 'Roboto',
+            fontSize: 11,
+          ),
+        ),
       );
+}
+
+@freezed
+abstract class DevicePreviewToolBarSpacingData
+    with _$DevicePreviewToolBarSpacingData {
+  const factory DevicePreviewToolBarSpacingData({
+    @required EdgeInsets small,
+    @required EdgeInsets regular,
+    @required EdgeInsets big,
+  }) = _DevicePreviewToolBarSpacingData;
+}
+
+@freezed
+abstract class DevicePreviewToolBarTextStyleData
+    with _$DevicePreviewToolBarTextStyleData {
+  const factory DevicePreviewToolBarTextStyleData({
+    @required TextStyle smallBody,
+    @required TextStyle body,
+    @required TextStyle title,
+    @required TextStyle fieldLabel,
+  }) = _DevicePreviewToolBarTextStyleData;
 }

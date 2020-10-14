@@ -119,7 +119,7 @@ class _ExampleAppState extends State<ExampleApp> {
             ),
             body: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(10),
                 child: Builder(
                   builder: (context) => !isEnabled
                       ? FakeScreen(key: screenKey)

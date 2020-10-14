@@ -11,7 +11,7 @@ class ScreenshotPopOver extends StatelessWidget {
   Widget build(BuildContext context) {
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: toolBarStyle.spacing.regular,
       child: Text(
         message,
         style: TextStyle(

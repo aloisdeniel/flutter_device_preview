@@ -7,8 +7,9 @@ import 'package:provider/provider.dart';
 class AccessibilityPopOver extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final theme = DevicePreviewTheme.of(context);
     return ListView(
-      padding: EdgeInsets.all(10),
+      padding: theme.toolBar.spacing.regular,
       children: [
         Selector(
           selector: (context, DevicePreviewStore store) =>
@@ -104,7 +105,7 @@ class AccessibilityCheckTile extends StatelessWidget {
         duration: const Duration(milliseconds: 100),
         color: Colors.transparent,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          padding: toolBarStyle.spacing.regular,
           child: Row(
             children: <Widget>[
               Expanded(
@@ -115,7 +116,7 @@ class AccessibilityCheckTile extends StatelessWidget {
                     Text(
                       title,
                       style: TextStyle(
-                        fontSize: 12.0,
+                        fontSize: 12,
                         color: toolBarStyle.foregroundColor,
                       ),
                     ),
@@ -215,7 +216,7 @@ class SliderTile extends StatelessWidget {
           duration: const Duration(milliseconds: 100),
           color: Colors.transparent,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            padding: toolBarStyle.spacing.regular,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               mainAxisSize: MainAxisSize.min,

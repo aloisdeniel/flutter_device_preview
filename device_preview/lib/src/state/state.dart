@@ -8,17 +8,26 @@ import 'package:flutter/foundation.dart';
 part 'state.freezed.dart';
 part 'state.g.dart';
 
+/// Represents the current state of the device preview.
 @freezed
 abstract class DevicePreviewState with _$DevicePreviewState {
+  /// The device preview has not been initialized yet.
   const factory DevicePreviewState.notInitialized() =
       _NotInitializedDevicePreviewState;
 
+  /// The device preview is currently being initialized.
   const factory DevicePreviewState.initializing() =
       _InitializingDevicePreviewState;
 
+  /// The device preview is available.
   const factory DevicePreviewState.initialized({
+    /// The list of all available devices.
     @required List<DeviceInfo> devices,
+
+    /// The list of all available locales.
     @required List<NamedLocale> locales,
+
+    /// The user settings of the preview.
     @required DevicePreviewData data,
   }) = _InitializedDevicePreviewState;
 }
@@ -68,6 +77,10 @@ abstract class DevicePreviewData with _$DevicePreviewData {
 
     /// Indicate whether image colors are inverted.
     @Default(false) bool invertColors,
+
+    /// Indicate whether image colors are inverted.
+    @Default(<String, Map<String, dynamic>>{})
+        Map<String, Map<String, dynamic>> pluginData,
 
     /// The current text scaling factor.
     @Default(1.0) double textScaleFactor,

@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 import 'state.dart';
 
 /// A device info that can be customized at runtime to update
-/// the current preview.
+/// its current preview.
 ///
 /// See also:
 ///
