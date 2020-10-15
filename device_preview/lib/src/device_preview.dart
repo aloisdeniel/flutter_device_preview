@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:device_frame/device_frame.dart';
 import 'package:device_preview/src/state/state.dart';
@@ -15,16 +16,25 @@ import 'dart:ui' as ui;
 
 import 'locales/default_locales.dart';
 import 'plugins/plugin.dart';
-import 'screenshots/screenshot.dart';
-import 'screenshots/upload_service.dart';
 import 'utilities/position.dart';
 import 'views/device_preview_style.dart';
 
-/// Simulates how a [child] would render on different
-/// devices than the current one.
+/// Simulates how the result of [builder] would render on different
+/// devices.
 ///
-/// This previews also allows children to interact from the
-/// [DevicePreviewStore.of] methods.
+/// {@tool snippet}
+///
+/// This sample shows how to define an app with a plugin.
+///
+/// ```dart
+/// DevicePreview(
+///   builder: (context) => MyApp(),
+///   plugins: [
+///     const ScreenshotPlugin(),
+///   ],
+/// )
+/// ```
+/// {@end-tool}
 ///
 /// See also :
 /// * [Devices] has a set of predefined common devices.
@@ -43,11 +53,6 @@ class DevicePreview extends StatefulWidget {
   ///
   /// It is common to give the root application widget.
   final WidgetBuilder builder;
-
-  /// When the user takes a screenshot, this processor is invoked.
-  ///
-  /// Defaults to [FileioScreenshotUploader.upload].
-  final ScreenshotProcessor onScreenshot;
 
   /// The available devices used for previewing.
   final List<DeviceInfo> devices;
@@ -94,7 +99,6 @@ class DevicePreview extends StatefulWidget {
     this.availableLocales,
     this.plugins = const <DevicePreviewPlugin>[],
     DevicePreviewStorage storage,
-    this.onScreenshot,
     this.enabled = true,
   })  : assert(devices == null || devices.isNotEmpty),
         assert(isToolbarVisible != null),
@@ -182,13 +186,6 @@ class DevicePreview extends StatefulWidget {
     final state = context.findAncestorStateOfType<_DevicePreviewState>();
     final store = context.read<DevicePreviewStore>();
     return state.screenshot(store);
-  }
-
-  /// Process a screenshot.
-  static Future<String> processScreenshot(
-      BuildContext context, DeviceScreenshot screenshot) {
-    final state = context.findAncestorStateOfType<_DevicePreviewState>();
-    return state.processScreenshot(screenshot);
   }
 
   /// A global builder that should be inserted into [WidgetApp]'s builder
@@ -294,10 +291,6 @@ class _DevicePreviewState extends State<DevicePreview> {
   /// Whenever the [screenshot] is called, a new value is pushed to
   /// this stream.
   Stream<DeviceScreenshot> get onScreenshot => _onScreenshot.stream;
-
-  /// The processor used whenever the user take a new screenshot.
-  ScreenshotProcessor get processScreenshot =>
-      widget.onScreenshot ?? (const FileioScreenshotUploader().upload);
 
   /// Takes a screenshot with the current configuration.
   Future<DeviceScreenshot> screenshot(DevicePreviewStore store) async {
@@ -590,4 +583,22 @@ class _ToolsOverlayState extends State<_ToolsOverlay> {
       ),
     );
   }
+}
+
+/// A screenshot from a [device].
+class DeviceScreenshot {
+  /// The device from which the screenshot was taken from.
+  final DeviceInfo device;
+
+  /// The binary content of the resulting image file.
+  final Uint8List bytes;
+
+  /// The format in which image bytes should be returned when using.
+  final ui.ImageByteFormat format;
+
+  DeviceScreenshot({
+    @required this.device,
+    @required this.bytes,
+    @required this.format,
+  });
 }

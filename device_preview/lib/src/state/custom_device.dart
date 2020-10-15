@@ -15,8 +15,6 @@ import 'state.dart';
 ///
 /// * [DeviceInfo] which describes a simulated device.
 class CustomDeviceInfo implements DeviceInfo {
-  final CustomDeviceInfoData data;
-
   const CustomDeviceInfo._({
     @required this.identifier,
     @required this.data,
@@ -25,6 +23,7 @@ class CustomDeviceInfo implements DeviceInfo {
     @required this.frameSize,
   });
 
+  /// Create a new custom device from stored [data].
   factory CustomDeviceInfo(CustomDeviceInfoData data) {
     const _insets = EdgeInsets.only(
       left: 20,
@@ -71,6 +70,8 @@ class CustomDeviceInfo implements DeviceInfo {
       frameSize: frameSize,
     );
   }
+
+  final CustomDeviceInfoData data;
 
   @override
   $DeviceInfoCopyWith<DeviceInfo> get copyWith =>

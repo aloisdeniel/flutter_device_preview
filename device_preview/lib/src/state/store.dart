@@ -14,6 +14,7 @@ import 'state.dart';
 ///
 /// Whenever the state changes, it notifies its listener so that they can update themselves.
 class DevicePreviewStore extends ChangeNotifier {
+  /// Create a new store with the given [locales], [device] and [storage].
   DevicePreviewStore({
     List<Locale> locales,
     List<DeviceInfo> devices,

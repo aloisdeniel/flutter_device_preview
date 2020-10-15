@@ -23,16 +23,23 @@
 * Freeform device with adjustable resolution and safe areas
 * Keep the application state
 * Take screenshots
+* Customizable plugins
 
 ## Quickstart
 
 Wrap your app's root widget in a `DevicePreview` and inject the dedicated `builder` and `locale` into your app.
 
 ```dart
+import 'package:device_preview/device_preview.dart';
+import 'package:device_preview/plugins.dart';
+
 void main() => runApp(
   DevicePreview(
     enabled: !kReleaseMode,
     builder: (context) => MyApp(),
+    plugins: [
+      const ScreenshotPlugin(),
+    ]
   ),
 );
 
@@ -43,6 +50,51 @@ class MyApp extends StatelessWidget {
       locale: DevicePreview.of(context).locale, // <--- /!\ Add the locale
       builder: DevicePreview.appBuilder, // <--- /!\ Add the builder
       home: HomePage(),
+    );
+  }
+}
+```
+
+## Plugins
+
+Each provided plugin adds a button in the toolbar.
+
+### ScreenshotPlugin
+
+Takes a screenshot of the device preview as an image.
+
+### FileExplorerPlugin
+
+Allow to inspect the local storage of the application.
+
+### SharedPreferencesExplorerPlugin
+
+Allow to inspect shared preferences.
+
+### Custom
+
+You can provide a custom `DevicePreviewPlugin` to add your own debugging tools.
+
+```dart
+class MyAwesomePlugin extends DevicePreviewPlugin {
+  const FileExplorerPlugin()
+      : super(
+          identifier: 'my_awesome_plugin',
+          name: 'My awesome plugin',
+          icon: Icons.star,
+          windowSize: const Size(320, 480),
+        );
+
+  @override
+  Widget buildData(
+      BuildContext context, Map<String, dynamic> data, updateData) {
+     return PopoverScaffold(
+      title: PopoverBar(
+        title: Text('Awesome'),
+      ),
+      body: Center(
+        Text('This is my own window'),
+      ),
     );
   }
 }
@@ -63,28 +115,32 @@ DevicePreview(
 )
 ```
 
-### `usePreferences`
+### `storage`
 
-Indicates whether the configuration should be persisted between sessions.
+Indicates how the configuration should be persisted between sessions. Defaults to `PreferencesDevicePreviewStorage` which save all preferences as a JSON document in the shared preferences.
+
+To deactivate persistence, use `NoDevicePreviewStorage`.
+
+If you use a lot of plugins, the `FileDevicePreviewStorage` may be a better option too.
 
 ##### Example
 
 ```dart
 DevicePreview(
-  usePreferences: false,
+  storage: const NoDevicePreviewStorage(),
   builder: (context) => MyApp(),
 )
 ```
 
-### `areSettingsEnabled`
+### `isToolbarVisible`
 
-Indicates whether the settings menu should be available.
+Indicates whether the settings menu should be visible.
 
 ##### Example
 
 ```dart
 DevicePreview(
-  areSettingsEnabled: false,
+  isToolbarVisible: false,
   builder: (context) => MyApp(),
 )
 ```

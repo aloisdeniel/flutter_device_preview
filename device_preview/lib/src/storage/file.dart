@@ -7,12 +7,13 @@ import 'package:meta/meta.dart';
 import 'storage.dart';
 
 /// A storage that saves device preview user preferences into
-/// a single [file].
+/// a single [file] as a json content.
 class FileDevicePreviewStorage extends DevicePreviewStorage {
   FileDevicePreviewStorage({
     @required this.file,
   }) : assert(file != null);
 
+  /// The file the json content is saved to.
   final File file;
 
   /// Save the current preferences.
@@ -24,6 +25,7 @@ class FileDevicePreviewStorage extends DevicePreviewStorage {
   }
 
   Future _saveTask;
+
   DevicePreviewData _saveData;
 
   Future _save() async {

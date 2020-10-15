@@ -248,7 +248,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewToolBar> {
                 Popover(
                   title: 'Settings',
                   parentBounds: widget.overlayPosition,
-                  size: Size(280, 320),
+                  size: Size(280, 260),
                   icon: Icons.tune,
                   builder: (context, close) => StylePopOver(close),
                   child: Builder(

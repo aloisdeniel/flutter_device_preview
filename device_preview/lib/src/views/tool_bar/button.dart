@@ -89,9 +89,10 @@ class _ToolBarButtonState extends State<ToolBarButton> {
         color: widget.foregroundColor ?? style.foregroundColor,
       );
 
-  Widget _content(bool expanded) {
+  Widget _content(BuildContext context, bool expanded) {
     if (widget.icon == null && widget.title != null) return Text(widget.title);
     if (widget.icon != null && widget.title == null) return Icon(widget.icon);
+    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     final title = Text(
       widget.title,
       maxLines: 1,
@@ -103,7 +104,7 @@ class _ToolBarButtonState extends State<ToolBarButton> {
           widget.icon,
         ),
         SizedBox(
-          width: 5,
+          width: toolBarStyle.spacing.regular.top,
         ),
         expanded
             ? Expanded(
@@ -163,7 +164,7 @@ class _ToolBarButtonState extends State<ToolBarButton> {
                 child: AnimatedDefaultTextStyle(
                   child: IconTheme(
                     data: iconTheme(toolBarStyle),
-                    child: _content(!isHorizontal),
+                    child: _content(context, !isHorizontal),
                   ),
                   style: textStyle(toolBarStyle),
                   duration: duration,

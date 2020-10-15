@@ -1,11 +1,21 @@
 import 'dart:collection';
 import 'dart:ui';
 
+/// A locale that has a display name.
 class NamedLocale {
-  final String code;
-  final String name;
-  const NamedLocale(this.code, this.name);
+  /// Create a new named locale from a [code] and a [name].
+  const NamedLocale(
+    this.code,
+    this.name,
+  );
 
+  /// The locale code in the form of `<countryCode>_`
+  final String code;
+
+  /// A display name for the locale.
+  final String name;
+
+  /// A locale that can be used with widgets.
   Locale get locale {
     final splits = code.split('_');
 
@@ -13,7 +23,7 @@ class NamedLocale {
     String countryCode, scriptCode;
     if (splits.length > 2) {
       scriptCode = splits[1];
-      countryCode = splits[1];
+      countryCode = splits[2];
     } else if (splits.length > 1) {
       countryCode = splits[1];
     }

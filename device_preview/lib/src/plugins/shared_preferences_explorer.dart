@@ -5,13 +5,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'plugin.dart';
 
+/// A plugin for device preview that allows to explore the local shared preferences
+/// of the application.
+///
+/// An instance should be provided the the [plugins] constructor property of
+/// a [DevicePreview].
 class SharedPreferencesExplorerPlugin extends DevicePreviewPlugin {
   const SharedPreferencesExplorerPlugin()
       : super(
           identifier: 'shared_preferences_explorer',
           name: 'Shared preferences',
           icon: Icons.storage_rounded,
-          windowSize: const Size(320, 500),
+          windowSize: const Size(320, 480),
         );
 
   @override
@@ -47,7 +52,6 @@ class _AllPreferencesView extends StatefulWidget {
 }
 
 class _AllPreferencesViewState extends State<_AllPreferencesView> {
-  List<String> keys;
   SharedPreferences preferences;
 
   @override
@@ -60,9 +64,8 @@ class _AllPreferencesViewState extends State<_AllPreferencesView> {
 
   Future<void> _update() async {
     preferences = await SharedPreferences.getInstance();
-    setState(() {
-      keys = preferences.getKeys().toList()..sort((x, y) => x.compareTo(y));
-    });
+    setState(() {});
+
     if (widget.selected != null) {
       await Navigator.push(
         context,
@@ -78,9 +81,15 @@ class _AllPreferencesViewState extends State<_AllPreferencesView> {
 
   @override
   Widget build(BuildContext context) {
-    if (keys == null) {
+    if (preferences == null) {
       return SizedBox();
     }
+    final keys = preferences.getKeys().toList()..sort((x, y) => x.compareTo(y));
+
+    if (keys.isEmpty) {
+      return _Empty();
+    }
+
     return _PreferencesListBody(
       onKeySelected: (key) async {
         widget.onKeySelected(key);
@@ -95,16 +104,32 @@ class _AllPreferencesViewState extends State<_AllPreferencesView> {
         );
         widget.onKeySelected(null);
       },
-      preferenceKeys: keys,
+      preferenceKeys:
+          keys.map((k) => MapEntry(k, preferences.get(k).toString())).toList(),
+    );
+  }
+}
+
+class _Empty extends StatelessWidget {
+  const _Empty({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('No shared preference'),
     );
   }
 }
 
 class _PreferenceTile extends StatelessWidget {
   final String preferenceKey;
+  final String value;
   final VoidCallback onTap;
   const _PreferenceTile({
     Key key,
+    @required this.value,
     @required this.preferenceKey,
     @required this.onTap,
   }) : super(key: key);
@@ -113,16 +138,22 @@ class _PreferenceTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopoverTile(
       onTap: onTap,
-      leading: Icon(Icons.storage_rounded),
+      leading: Icon(Icons.note),
       title: Text(
         preferenceKey,
+        maxLines: 1,
+      ),
+      subtitle: Text(
+        value,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }
 }
 
 class _PreferencesListBody extends StatelessWidget {
-  final List<String> preferenceKeys;
+  final List<MapEntry<String, String>> preferenceKeys;
   final ValueChanged<String> onKeySelected;
   const _PreferencesListBody({
     Key key,
@@ -140,9 +171,10 @@ class _PreferencesListBody extends StatelessWidget {
         children: [
           ...preferenceKeys.map(
             (x) => _PreferenceTile(
-              key: Key(x),
-              preferenceKey: x,
-              onTap: () => onKeySelected(x),
+              key: Key(x.key),
+              value: x.value,
+              preferenceKey: x.key,
+              onTap: () => onKeySelected(x.key),
             ),
           ),
         ],

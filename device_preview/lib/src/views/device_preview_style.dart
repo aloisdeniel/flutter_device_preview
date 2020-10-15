@@ -206,7 +206,7 @@ abstract class DevicePreviewToolBarStyle with _$DevicePreviewToolBarStyle {
           ),
           body: const TextStyle(
             fontFamily: 'Roboto',
-            fontSize: 11,
+            fontSize: 12,
           ),
           title: const TextStyle(
             fontFamily: 'Roboto',

@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:device_preview/src/utilities/media_query_observer.dart';
 import 'package:device_preview/src/views/device_preview_style.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -220,6 +223,32 @@ class __PopOverContainerState extends State<_PopOverContainer>
       bounds = Offset(bounds.left, media.padding.top) & bounds.size;
     }
 
+    final content = Material(
+      color: Colors.transparent,
+      child: Column(
+        children: <Widget>[
+          GestureDetector(
+            onPanUpdate: (u) {
+              setState(() => _translate += u.delta);
+            },
+            child: _PopOverHeader(
+              title: widget.title,
+              icon: widget.icon,
+            ),
+          ),
+          Expanded(
+            child: Navigator(
+              onGenerateInitialRoutes: (e, _) => [
+                MaterialPageRoute(
+                  builder: (context) => widget.child,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+
     return Positioned(
       left: bounds.left + _translate.dx,
       top: bounds.top - media.viewInsets.bottom + _translate.dy,
@@ -248,30 +277,17 @@ class __PopOverContainerState extends State<_PopOverContainer>
                 color: toolBarStyle.buttonBackgroundColor.withOpacity(0.95),
                 borderRadius: BorderRadius.circular(6),
               ),
-              child: Material(
-                color: Colors.transparent,
-                child: Column(
-                  children: <Widget>[
-                    GestureDetector(
-                      onPanUpdate: (u) {
-                        setState(() => _translate += u.delta);
-                      },
-                      child: _PopOverHeader(
-                        title: widget.title,
-                        icon: widget.icon,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: kIsWeb
+                    ? content
+                    : BackdropFilter(
+                        filter: ImageFilter.blur(
+                          sigmaX: 2,
+                          sigmaY: 2,
+                        ),
+                        child: content,
                       ),
-                    ),
-                    Expanded(
-                      child: Navigator(
-                        onGenerateInitialRoutes: (e, _) => [
-                          MaterialPageRoute(
-                            builder: (context) => widget.child,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
               ),
             ),
           ),

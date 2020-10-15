@@ -14,16 +14,28 @@ class PopoverScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Container(
-          child: title,
+    final theme = DevicePreviewTheme.of(context);
+    return IconTheme(
+      data: IconThemeData(
+        color: theme.toolBar.foregroundColor,
+        size: theme.toolBar.fontStyles.body.fontSize * 1.8,
+      ),
+      child: DefaultTextStyle(
+        style: theme.toolBar.fontStyles.title.copyWith(
+          color: theme.toolBar.foregroundColor,
         ),
-        Expanded(
-          child: body,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              child: title,
+            ),
+            Expanded(
+              child: body,
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
@@ -47,6 +59,7 @@ class PopoverBar extends StatelessWidget {
         color: toolBarStyle.backgroundColor,
       ),
       padding: toolBarStyle.spacing.regular,
+      height: toolBarStyle.fontStyles.body.fontSize * 4,
       child: Row(
         children: <Widget>[
           if (leading != null) ...[
@@ -61,11 +74,16 @@ class PopoverBar extends StatelessWidget {
               onTap: () => Navigator.pop(context),
             ),
             SizedBox(
-              width: 6,
+              width: toolBarStyle.spacing.regular.top,
             ),
           ],
           Expanded(
-            child: title,
+            child: DefaultTextStyle(
+              style: toolBarStyle.fontStyles.body.copyWith(
+                color: toolBarStyle.foregroundColor.withOpacity(0.75),
+              ),
+              child: title,
+            ),
           ),
           if (trailing != null) ...[
             trailing,
@@ -81,12 +99,14 @@ class PopoverBar extends StatelessWidget {
 
 class PopoverTile extends StatelessWidget {
   final Widget title;
+  final Widget subtitle;
   final Widget leading;
   final Widget trailing;
   final VoidCallback onTap;
 
   const PopoverTile({
     @required this.title,
+    this.subtitle,
     this.leading,
     this.trailing,
     this.onTap,
@@ -103,19 +123,44 @@ class PopoverTile extends StatelessWidget {
           child: Row(
             children: <Widget>[
               if (leading != null) ...[
-                leading,
+                IconTheme(
+                  data: IconThemeData(
+                    color: theme.toolBar.foregroundColor,
+                    size: theme.toolBar.fontStyles.body.fontSize * 1.8,
+                  ),
+                  child: leading,
+                ),
                 SizedBox(
-                  width: theme.toolBar.spacing.small.top,
+                  width: theme.toolBar.spacing.regular.top,
                 ),
               ],
               Expanded(
-                child: title,
+                child: subtitle == null
+                    ? title
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          DefaultTextStyle(
+                            style: theme.toolBar.fontStyles.title.copyWith(
+                              color: theme.toolBar.foregroundColor,
+                            ),
+                            child: title,
+                          ),
+                          DefaultTextStyle(
+                            style: theme.toolBar.fontStyles.body.copyWith(
+                              color: theme.toolBar.foregroundColor
+                                  .withOpacity(0.5),
+                            ),
+                            child: subtitle,
+                          ),
+                        ],
+                      ),
               ),
               if (trailing != null) ...[
-                trailing,
                 SizedBox(
-                  width: theme.toolBar.spacing.small.top,
+                  width: theme.toolBar.spacing.regular.top,
                 ),
+                trailing,
               ],
             ],
           ),
@@ -138,13 +183,14 @@ class PopoverIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = DevicePreviewTheme.of(context);
     return Container(
+      height: theme.toolBar.fontStyles.body.fontSize * 4,
       child: InkWell(
         onTap: onTap,
         child: Padding(
-          padding: theme.toolBar.spacing.regular,
+          padding: theme.toolBar.spacing.small,
           child: Icon(
             icon,
-            size: 20,
+            size: theme.toolBar.fontStyles.body.fontSize * 1.5,
           ),
         ),
       ),
@@ -309,6 +355,36 @@ class _PopoverSearchFieldState extends State<PopoverSearchField> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class PopoverSlider extends StatelessWidget {
+  final int divisions;
+  final double value;
+  final double min;
+  final double max;
+  final ValueChanged<double> onChanged;
+  const PopoverSlider({
+    Key key,
+    @required this.value,
+    @required this.divisions,
+    @required this.min,
+    @required this.max,
+    @required this.onChanged,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = DevicePreviewTheme.of(context);
+    return Slider(
+      divisions: divisions,
+      value: value,
+      onChanged: onChanged,
+      min: min,
+      max: max,
+      activeColor: theme.toolBar.foregroundColor,
+      inactiveColor: theme.toolBar.buttonHoverBackgroundColor,
     );
   }
 }

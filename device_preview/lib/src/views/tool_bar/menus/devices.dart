@@ -567,7 +567,7 @@ class SliderRowTile extends StatelessWidget {
                 ),
                 SizedBox(width: 12),
                 Expanded(
-                  child: Slider(
+                  child: PopoverSlider(
                     divisions: divisions, // 11,
                     value: value,
                     onChanged: onValueChanged,

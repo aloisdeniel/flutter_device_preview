@@ -1,5 +1,6 @@
 import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/views/device_preview_style.dart';
+import 'package:device_preview/src/views/widgets/popover.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -243,13 +244,13 @@ class SliderTile extends StatelessWidget {
                   ],
                 ),
                 SizedBox(width: 12),
-                Slider(
+                PopoverSlider(
                   divisions: divisions, // 11,
                   value: value,
                   onChanged: onValueChanged,
                   min: min, //0.25,
                   max: max, // 3.0,
-                )
+                ),
               ],
             ),
           ),
