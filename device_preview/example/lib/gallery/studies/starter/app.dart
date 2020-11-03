@@ -16,7 +16,7 @@ class StarterApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = MediaQuery.of(context, nullOk: true)?.platformBrightness ==
+    final isDark = MediaQuery.maybeOf(context)?.platformBrightness ==
         Brightness.dark;
     return MaterialApp(
       title: 'Starter',

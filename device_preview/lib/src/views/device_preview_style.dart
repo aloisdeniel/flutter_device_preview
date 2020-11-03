@@ -83,7 +83,7 @@ class DevicePreviewTheme extends InheritedWidget {
     }
 
     // If toolbar position isn't supported, fallback to bottom.
-    final media = MediaQuery.of(context, nullOk: true) ??
+    final media = MediaQuery.maybeOf(context) ??
         MediaQueryData.fromWindow(WidgetsBinding.instance.window);
     if (!DevicePreviewTheme.isPositionAvailableForWidth(
         result.toolBar.position, media.size.width)) {
