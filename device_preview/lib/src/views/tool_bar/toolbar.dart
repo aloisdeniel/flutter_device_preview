@@ -233,7 +233,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewToolBar> {
                     key: Key(plugin.identifier),
                     title: plugin.name,
                     parentBounds: widget.overlayPosition,
-                    size: plugin.windowSize ?? Size(280, 300),
+                    size: plugin.windowSize,
                     icon: plugin.icon,
                     builder: (context, _) => plugin.build(context),
                     child: Builder(

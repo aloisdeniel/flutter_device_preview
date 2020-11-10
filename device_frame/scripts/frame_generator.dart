@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:path/path.dart' as path;
 import 'package:xml/xml.dart';
 
+import 'parsing.dart';
+
 /// Parses all frame svg files from `assets` folder
 /// and generate a dart class.
 Future<void> main() async {
@@ -34,42 +36,11 @@ String _generateDeviceInfo(
   String name,
   String svgContent,
 ) {
+  final info = parseDevice(name, svgContent);
+
   final document = XmlDocument.parse(svgContent);
-
-  final infoNode = document.descendants.firstWhere(
-    (node) =>
-        node is XmlElement && node.name.toString().toLowerCase() == 'text',
-    orElse: () => throw Exception(
-      'The svg image should have a "text" node that defines device metadata',
-    ),
-  );
-  final infoLines = infoNode.children
-          .whereType<XmlElement>()
-          .where((n) => n.name.toString() == 'tspan')
-          .map((n) => n.text.trim())
-          .toList() ??
-      const <String>[];
-  final info = Map<String, String>.fromEntries(
-    infoLines.map(
-      (x) {
-        final split = x.split(':');
-        return MapEntry(
-          split.first.trim(),
-          split.last.trim(),
-        );
-      },
-    ),
-  );
-
   String screen;
-  var screenNode = document.descendants.firstWhere(
-    (node) {
-      return node is XmlElement &&
-          node.name.toString().toLowerCase() == 'path' &&
-          node.getAttribute('fill')?.toString() == '#FF0000';
-    },
-    orElse: () => null,
-  );
+  var screenNode = findScreenNode(document);
   if (screenNode != null) {
     final data = screenNode.getAttribute('d');
     assert(data != null, 'The screen path should have a "d" property');
@@ -116,82 +87,44 @@ String _generateDeviceInfo(
   }
 
   // Removing the screen and info
+  final infoNode = findInfoNode(document);
   infoNode.parent.children.remove(infoNode);
   screenNode.parent.children.remove(screenNode);
-
-  final width = document.rootElement.getAttribute('width');
-  final height = document.rootElement.getAttribute('height');
-  assert(width != null && height != null);
-
-  final safeAreas = info.containsKey('safe_areas')
-      ? info['safe_areas'].split('|').map(_parseInsets).toList()
-      : const <String>[];
   final frame = document.toXmlString();
 
   return '''DeviceInfo(
-    identifier: ${_parseIdentifier(name)},
-    name: \'${info['name']}\',
-    pixelRatio: ${double.parse(info['density'] ?? '1')},
-    safeAreas: ${safeAreas.isEmpty ? 'EdgeInsets.zero' : safeAreas.first},
-    rotatedSafeAreas: ${safeAreas.length < 2 ? null : safeAreas[1]},
+    identifier: ${_formatIdentifier(info.identifier)},
+    name: \'${info.name}\',
+    pixelRatio: ${info.pixelRatio},
+    safeAreas: ${info.safeAreas.isEmpty ? 'EdgeInsets.zero' : _formatEdgeInsets(info.safeAreas.first)},
+    rotatedSafeAreas: ${info.safeAreas.length < 2 ? null : _formatEdgeInsets(info.safeAreas[1])},
     screenPath: $screen,
     svgFrame: \'\'\'${frame}\'\'\',
-    frameSize: Size(
-      ${double.parse(width)},
-      ${double.parse(height)}
-    ),
-    screenSize: ${_parseScreenSize(info['screen_size'])},
+    frameSize: ${_formatSize(info.frameSize)},
+    screenSize: ${_formatSize(info.screenSize)},
   )''';
 }
 
-String _parseIdentifier(String fileName) {
-  final splits = fileName.split('_');
-  var platform = splits[0];
-  switch (platform) {
-    case 'ios':
-      platform = 'iOS';
-      break;
-    case 'macos':
-      platform = 'macOS';
-      break;
-    default:
-  }
-
-  final type = splits[1];
-  final name = splits[2];
-
+String _formatIdentifier(DeviceIdentifier identifier) {
   return '''
-  const DeviceIdentifier._(TargetPlatform.$platform, DeviceType.$type, \'$name\',)
+  const DeviceIdentifier._(TargetPlatform.${identifier.platform}, DeviceType.${identifier.type}, \'${identifier.name}\',)
   ''';
 }
 
 /// Parse an [EdgeInsets] where [text] is in the form `<left>,<top>,<right>,<bottom>`.
-String _parseInsets(String text) {
-  if (text == null) return 'EdgeInsets.zero';
-
-  final splits = text.split(',').map((e) => double.parse(e.trim())).toList();
-
-  final left = splits.isNotEmpty ? splits[0] : 0;
-  final top = splits.length > 1 ? splits[1] : left;
-  final right = splits.length > 2 ? splits[2] : left;
-  final bottom = splits.length > 3 ? splits[3] : top;
-
+String _formatEdgeInsets(ScreenPadding insets) {
   return '''EdgeInsets.only(
-    left: $left,
-    top: $top,
-    right: $right,
-    bottom: $bottom,
+    left: ${insets.left},
+    top: ${insets.top},
+    right: ${insets.right},
+    bottom: ${insets.bottom},
   )''';
 }
 
 /// Parse a [Size] where [text] is in the form `<width>x<height>`.
-String _parseScreenSize(String text) {
-  if (text == null) return 'Size.zero';
-
-  final splits = text.split('x').map((e) => double.parse(e.trim())).toList();
-  final width = splits.isEmpty ? 0 : splits.first;
+String _formatSize(Size size) {
   return '''Size(
-    $width,
-    ${splits.length > 1 ? splits[1] : width}
+    ${size.width},
+    ${size.height}
   )''';
 }

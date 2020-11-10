@@ -96,7 +96,12 @@ class _ScreenshotState extends State<_Screenshot> {
       return SingleChildScrollView(
         child: Padding(
           padding: theme.toolBar.spacing.regular,
-          child: Text('Error while processing screenshot : $error'),
+          child: Text(
+            'Error while processing screenshot : $error',
+            style: theme.toolBar.fontStyles.body.copyWith(
+              color: theme.toolBar.foregroundColor,
+            ),
+          ),
         ),
       );
     }
@@ -105,12 +110,19 @@ class _ScreenshotState extends State<_Screenshot> {
         child: Padding(
           padding: theme.toolBar.spacing.regular,
           child: Text(
-              'Your screenshot is available here: $link and in your clipboard!'),
+            'Your screenshot is available here: $link and in your clipboard!',
+            style: theme.toolBar.fontStyles.body.copyWith(
+              color: theme.toolBar.foregroundColor,
+            ),
+          ),
         ),
       );
     }
     return Center(
-      child: CircularProgressIndicator(),
+      child: CircularProgressIndicator(
+        valueColor:
+            AlwaysStoppedAnimation<Color>(theme.toolBar.foregroundColor),
+      ),
     );
   }
 }

@@ -72,9 +72,10 @@ class _ToolBarButtonState extends State<ToolBarButton> {
           topRight: Radius.circular(widget.isRoundedTopRight ? 22.0 : 2.0),
         ),
         color: widget.onTap != null && (isActive || isHover)
-            ? (widget.foregroundColor?.withOpacity(0.2) ??
-                style.buttonHoverBackgroundColor)
-            : (widget.backgroundColor ?? style.buttonBackgroundColor));
+            ? (widget.backgroundColor?.withOpacity(0.4) ??
+                (style.foregroundColor.withOpacity(0.4)))
+            : (widget.backgroundColor ??
+                (style.foregroundColor.withOpacity(0.2))));
   }
 
   IconThemeData iconTheme(DevicePreviewToolBarStyle style) {

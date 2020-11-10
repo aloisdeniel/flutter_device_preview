@@ -1,3 +1,24 @@
+## [0.5.0-prerelease.16] - 2020/10/15
+
+* Fix shared preferences plugin navigation restoration issues.
+
+## [0.5.0-prerelease.15] - 2020/10/15
+
+* Fix styling issues.
+
+## [0.5.0-prerelease.14] - 2020/10/15
+
+* Fix issue when not enabled.
+
+## [0.5.0-prerelease.13] - 2020/10/15
+
+* Fixed several styling issues.
+* Fix issue when not enabled.
+
+## [0.5.0-prerelease.12] - 2020/10/15
+
+* Added the plugin system.
+
 ## [0.5.0-prerelease.11] - 2020/10/08
 
 * Fixed device screen clip.

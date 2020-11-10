@@ -27,6 +27,7 @@ void main() {
       ),*/
       Expanded(
         child: DevicePreview(
+          enabled: true,
           plugins: [
             const ScreenshotPlugin(),
             const FileExplorerPlugin(),

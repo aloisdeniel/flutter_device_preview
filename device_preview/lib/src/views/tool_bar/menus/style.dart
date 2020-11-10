@@ -243,7 +243,7 @@ class SelectBox extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(
             color: toolBarStyle.foregroundColor.withOpacity(
-              isSelected ? 0.0 : 0.3,
+              isSelected ? 0.4 : 0.2,
             ),
           ),
           borderRadius: BorderRadius.circular(2),

@@ -153,9 +153,10 @@ class PlatformSelector extends StatelessWidget {
             (x) {
               final isSelected = selected.contains(x);
               return ToolBarButton(
-                backgroundColor: isSelected ? theme.accentColor : null,
-                foregroundColor:
-                    isSelected ? theme.accentTextTheme.button.color : null,
+                backgroundColor: toolBarStyle.foregroundColor
+                    .withOpacity(isSelected ? 0.4 : 0.1),
+                foregroundColor: toolBarStyle.foregroundColor
+                    .withOpacity(isSelected ? 1.0 : 0.8),
                 icon: x.platformIcon(),
                 onTap: () {
                   onChanged([x]);
@@ -172,21 +173,19 @@ class PlatformSelector extends StatelessWidget {
             width: 2,
             height: 2,
           ),
-          Opacity(
-            opacity: selected.isEmpty ? 1 : 0.5,
-            child: ToolBarButton(
-              backgroundColor: isCustomSelected ? theme.accentColor : null,
-              foregroundColor:
-                  isCustomSelected ? theme.accentTextTheme.button.color : null,
-              icon: Icons.phonelink_setup_outlined,
-              onTap: () {
-                if (!isCustomSelected) {
-                  final state = context.read<DevicePreviewStore>();
-                  state.enableCustomDevice();
-                }
-                onCustomDeviceEnabled();
-              },
-            ),
+          ToolBarButton(
+            backgroundColor: toolBarStyle.foregroundColor
+                .withOpacity(isCustomSelected ? 0.4 : 0.1),
+            foregroundColor: toolBarStyle.foregroundColor
+                .withOpacity(isCustomSelected ? 1.0 : 0.8),
+            icon: Icons.phonelink_setup_outlined,
+            onTap: () {
+              if (!isCustomSelected) {
+                final state = context.read<DevicePreviewStore>();
+                state.enableCustomDevice();
+              }
+              onCustomDeviceEnabled();
+            },
           ),
         ],
       ),
@@ -259,7 +258,7 @@ class CustomDevicePanel extends StatelessWidget {
           },
           min: 128,
           max: 2688,
-          divisions: 10,
+          divisions: 20,
         ),
         SliderRowTile(
           title: 'Height',
@@ -277,7 +276,7 @@ class CustomDevicePanel extends StatelessWidget {
           },
           min: 128,
           max: 2688,
-          divisions: 10,
+          divisions: 20,
         ),
         SectionHeader(
           title: 'Safe areas',
@@ -382,7 +381,9 @@ class DeviceTile extends StatelessWidget {
       onTap: !isSelected ? onTap : null,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 100),
-        color: isSelected ? Theme.of(context).primaryColor : Colors.transparent,
+        color: isSelected
+            ? toolBarStyle.foregroundColor.withOpacity(0.18)
+            : Colors.transparent,
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: toolBarStyle.spacing.big.top,
@@ -474,8 +475,9 @@ class PlatformSelectBox extends StatelessWidget {
       (DevicePreviewStore store) => store.data.customDevice,
     );
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
+    final isSelected = customDevice.platform == platform;
     return SelectBox(
-      isSelected: customDevice.platform == platform,
+      isSelected: isSelected,
       onTap: () {
         final store = context.read<DevicePreviewStore>();
         store.updateCustomDevice(
@@ -558,11 +560,14 @@ class SliderRowTile extends StatelessWidget {
             ),
             child: Row(
               children: <Widget>[
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 9,
-                    color: toolBarStyle.foregroundColor.withOpacity(0.7),
+                SizedBox(
+                  width: 30,
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 9,
+                      color: toolBarStyle.foregroundColor.withOpacity(0.7),
+                    ),
                   ),
                 ),
                 SizedBox(width: 12),
@@ -575,12 +580,15 @@ class SliderRowTile extends StatelessWidget {
                     max: max, // 3.0,
                   ),
                 ),
-                Text(
-                  value?.toString() ?? '',
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: toolBarStyle.foregroundColor,
-                    fontWeight: FontWeight.bold,
+                SizedBox(
+                  width: 45,
+                  child: Text(
+                    value?.toString() ?? '',
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: toolBarStyle.foregroundColor,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],

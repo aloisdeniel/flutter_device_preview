@@ -118,8 +118,17 @@ class DevicePreview extends StatefulWidget {
     return platform ?? Theme.of(context).platform;
   }
 
+  static bool _isEnabled(BuildContext context) {
+    final state = context.findAncestorStateOfType<_DevicePreviewState>();
+    return state != null && state.widget.enabled;
+  }
+
   /// Currently defined locale.
   static Locale locale(BuildContext context) {
+    if (!_isEnabled(context)) {
+      return null;
+    }
+
     final store = Provider.of<DevicePreviewStore>(context);
     return store.state.maybeMap(
       initialized: (state) {
@@ -171,6 +180,9 @@ class DevicePreview extends StatefulWidget {
 
   /// All available locales in the tool.
   static List<Locale> allLocales(BuildContext context) {
+    if (!_isEnabled(context)) {
+      return defaultAvailableLocales.map((e) => Locale(e.code)).toList();
+    }
     final store = Provider.of<DevicePreviewStore>(context);
     return store.state
         .maybeMap(
@@ -194,6 +206,9 @@ class DevicePreview extends StatefulWidget {
     BuildContext context,
     Widget widget,
   ) {
+    if (!_isEnabled(context)) {
+      return widget;
+    }
     final isEnabled = context.select(
       (DevicePreviewStore store) => store.state.maybeMap(
         initialized: (state) => state.data.isEnabled,

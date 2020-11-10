@@ -66,7 +66,9 @@ class LocaleTile extends StatelessWidget {
           : null,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 100),
-        color: isSelected ? Theme.of(context).primaryColor : Colors.transparent,
+        color: isSelected
+            ? toolBarStyle.foregroundColor.withOpacity(0.18)
+            : Colors.transparent,
         child: Padding(
           padding: toolBarStyle.spacing.regular,
           child: Column(

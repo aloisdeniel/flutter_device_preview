@@ -76,6 +76,7 @@ class _AllPreferencesViewState extends State<_AllPreferencesView> {
           ),
         ),
       );
+      widget.onKeySelected(null);
     }
   }
 
