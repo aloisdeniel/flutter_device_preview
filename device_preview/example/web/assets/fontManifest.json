@@ -1,0 +1,10 @@
+[
+    {
+        "family": "FontAwesome",
+        "fonts": [
+            {
+                "asset": "fonts/fa-regular-400.ttf"
+            }
+        ]
+    }
+]
