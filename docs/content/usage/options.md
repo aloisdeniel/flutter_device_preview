@@ -80,6 +80,8 @@ See the [plugins section](/context/plugins/screenshots.) for more details.
 ##### Example
 
 ```dart
+import 'package:device_preview/plugins.dart';
+
 DevicePreview(
   plugins: [
     const ScreenshotPlugin(),
