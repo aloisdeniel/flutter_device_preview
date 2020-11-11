@@ -25,7 +25,7 @@ Indicates how the configuration should be persisted between sessions. Defaults t
 
 To deactivate persistence, use `NoDevicePreviewStorage`.
 
-If you use a lot of plugins, the `FileDevicePreviewStorage` may be a better option too.
+?> If you use a lot of device preview plugins, the `FileDevicePreviewStorage` may be a better option too. This is because Device Preview plugins can use the same storage to save local data, and since shared preferences can have a size limit, it may exceed this limit. But `PreferencesDevicePreviewStorage` is completely fine if you only use the built-in device preview plugins.
 
 ##### Example
 

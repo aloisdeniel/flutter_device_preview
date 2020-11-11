@@ -11,7 +11,7 @@ dependencies:
   device_preview: <latest version>
 ```
 
-## Use Device Preview
+## Add DevicePreview
 
 Wrap your app's root widget in a `DevicePreview` and inject the dedicated `builder` and `locale` into your app.
 
@@ -24,7 +24,7 @@ import 'package:device_preview/plugins.dart';
 void main() => runApp(
   DevicePreview(
     enabled: !kReleaseMode,
-    builder: (context) => MyApp(),
+    builder: (context) => MyApp(), // Wrap your app
   ),
 );
 
@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      locale: DevicePreview.locale(context), // <--- /!\ Add the locale
-      builder: DevicePreview.appBuilder, // <--- /!\ Add the builder
+      locale: DevicePreview.locale(context), // Add the locale here
+      builder: DevicePreview.appBuilder, // Add the builder here
       home: HomePage(),
     );
   }
