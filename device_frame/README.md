@@ -64,6 +64,16 @@ DeviceFrame(
 ),
 ```
 
+### Precaching all device frames
+
+```dart
+@override
+void initState() {
+    DeviceFrame.precache(context);
+    super.initState();
+}
+```
+
 ## Contributing
 
 ### Edit device frames
