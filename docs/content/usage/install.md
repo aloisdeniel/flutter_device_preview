@@ -19,7 +19,6 @@ Wrap your app's root widget in a `DevicePreview` and inject the dedicated `build
 
 ```dart
 import 'package:device_preview/device_preview.dart';
-import 'package:device_preview/plugins.dart';
 
 void main() => runApp(
   DevicePreview(

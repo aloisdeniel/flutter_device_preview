@@ -1,6 +1,7 @@
 - Usage
     - [Install](content/usage/install.md)
     - [Options](content/usage/options.md)
+    - [Manual](content/usage/tools.md)
     - [Available devices](content/usage/devices.md)
     - [Only frames](content/usage/device_frame.md)
 
