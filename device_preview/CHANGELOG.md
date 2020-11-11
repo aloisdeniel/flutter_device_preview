@@ -1,50 +1,62 @@
-## [0.5.0-prerelease.16] - 2020/10/15
+## 0.5.2
+
+* Removed Flutter plugin directories.
+
+## 0.5.1
+
+* Fixed linting issues.
+
+## 0.5.0
+
+* Updated documentation
+
+## 0.5.0-prerelease.16
 
 * Fix shared preferences plugin navigation restoration issues.
 
-## [0.5.0-prerelease.15] - 2020/10/15
+## 0.5.0-prerelease.15
 
 * Fix styling issues.
 
-## [0.5.0-prerelease.14] - 2020/10/15
+## 0.5.0-prerelease.14
 
 * Fix issue when not enabled.
 
-## [0.5.0-prerelease.13] - 2020/10/15
+## 0.5.0-prerelease.13
 
 * Fixed several styling issues.
 * Fix issue when not enabled.
 
-## [0.5.0-prerelease.12] - 2020/10/15
+## 0.5.0-prerelease.12
 
 * Added the plugin system.
 
-## [0.5.0-prerelease.11] - 2020/10/08
+## 0.5.0-prerelease.11
 
 * Fixed device screen clip.
 
-## [0.5.0-prerelease.6] - 2020/10/08
+## 0.5.0-prerelease.6
 
 * Fixed hidden popovers when not fullscreen.
 * Fixed overflow errors.
 
-## [0.5.0-prerelease.5] - 2020/10/07
+## 0.5.0-prerelease.5
 
 * Improved loading time.
 
-## [0.5.0-prerelease.4] - 2020/10/07
+## 0.5.0-prerelease.4
 
 * Keeping state of application when enabling/disabling preview.
 
-## [0.5.0-prerelease.3] - 2020/10/07
+## 0.5.0-prerelease.3
 
 * Custom device selector.
 
-## [0.5.0-prerelease.2] - 2020/10/06
+## 0.5.0-prerelease.2
 
 * Added linux devices.
 
-## [0.5.0-prerelease] - 2020/10/05
+## 0.5.0-prerelease
 
 * New redesigned frames.
 * Added enabled switch.

@@ -5,6 +5,7 @@ import 'package:device_preview/src/views/widgets/popover.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
+import 'package:pedantic/pedantic.dart';
 
 import 'plugin.dart';
 
@@ -102,19 +103,20 @@ class _RootState extends State<_Root> {
         final navigator = Navigator.of(
           context,
         );
-        navigator
-            .push(
-              PopoverPageRoute(
-                builder: (context) => _DirectoryView(
-                  directory: baseDir,
-                  onPathSelected: widget.onPathSelected,
+        unawaited(
+          navigator
+              .push(
+                PopoverPageRoute(
+                  builder: (context) => _DirectoryView(
+                    directory: baseDir,
+                    onPathSelected: widget.onPathSelected,
+                  ),
                 ),
+              )
+              .then(
+                (value) => widget.onPathSelected(null),
               ),
-            )
-            .then(
-              (value) => widget.onPathSelected(null),
-            );
-        ;
+        );
 
         // Then navigate to subdirectory
         final splits = path
@@ -126,22 +128,24 @@ class _RootState extends State<_Root> {
           final previousCurrent = current;
           current = path.join(current, item);
           final type = await FileSystemEntity.type(current);
-          navigator
-              .push(
-                PopoverPageRoute(
-                  builder: (context) => type == FileSystemEntityType.directory
-                      ? _DirectoryView(
-                          directory: Directory(current),
-                          onPathSelected: widget.onPathSelected,
-                        )
-                      : _FileView(
-                          file: File(current),
-                        ),
+          unawaited(
+            navigator
+                .push(
+                  PopoverPageRoute(
+                    builder: (context) => type == FileSystemEntityType.directory
+                        ? _DirectoryView(
+                            directory: Directory(current),
+                            onPathSelected: widget.onPathSelected,
+                          )
+                        : _FileView(
+                            file: File(current),
+                          ),
+                  ),
+                )
+                .then(
+                  (value) => widget.onPathSelected(previousCurrent),
                 ),
-              )
-              .then(
-                (value) => widget.onPathSelected(previousCurrent),
-              );
+          );
         }
       }
     }

@@ -1,3 +1,7 @@
+## [0.3.0] - 2020/11/11
+
+* Stable release
+
 ## [0.3.0-prerelease9] - 2020/10/07
 
 * Fixed screen clip when frame not visible.

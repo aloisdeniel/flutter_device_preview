@@ -2,8 +2,6 @@ import 'dart:ui';
 
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/platform.dart';
-import 'package:flutter/src/painting/edge_insets.dart';
 import 'package:meta/meta.dart';
 
 import 'state.dart';
