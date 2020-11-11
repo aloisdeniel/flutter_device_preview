@@ -7,6 +7,8 @@ You can easily add a button to the tool bar that opens a window with your custom
 ## Define your plugin
 
 ```dart
+import 'package:device_preview/plugins.dart';
+
 class CustomPlugin extends DevicePreviewPlugin {
   const CustomPlugin() : super(
           identifier: 'custom', // Unique identifier
