@@ -10,7 +10,7 @@ We're very grateful to have the help of those users :
 
 ## Donate
 
-<p align="center">
+<p>
   <a href="https://www.buymeacoffee.com/aloisdeniel">
     <img src="https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&amp;style=flat">
   </a>
