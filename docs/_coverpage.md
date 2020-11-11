@@ -18,7 +18,3 @@ Approximate how your Flutter app looks and performs on another device.
 <!-- background color -->
 
 ![](images/cover.png)
-
-<!-- background color -->
-
-![color](#ffffff)
