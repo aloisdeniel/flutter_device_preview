@@ -1,5 +1,7 @@
 # Plugin : File explorer
 
+![illustration](images/file_explorer.png ':size=250')
+
 ## Configure
 
 Add a `ScreenshotPlugin` to your `DevicePreview`'s `plugins` property.

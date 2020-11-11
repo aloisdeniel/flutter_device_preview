@@ -1,5 +1,6 @@
 # Plugin : Shared Preferences explorer
 
+![illustration](images/preferences_explorer.png ':size=250')
 
 ## Configure
 

@@ -1,5 +1,7 @@
 # Plugin : Screenshot
 
+![illustration](images/screenshot.png)
+
 ## Configure
 
 Add a `ScreenshotPlugin` to your `DevicePreview`'s `plugins` property.
