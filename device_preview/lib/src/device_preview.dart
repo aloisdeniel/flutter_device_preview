@@ -185,7 +185,7 @@ class DevicePreview extends StatefulWidget {
     BuildContext context,
     DeviceIdentifier deviceIdentifier,
   ) {
-    final store = Provider.of<DevicePreviewStore>(context);
+    final store = Provider.of<DevicePreviewStore>(context,listen: false);
     store.selectDevice(deviceIdentifier);
   }
 
