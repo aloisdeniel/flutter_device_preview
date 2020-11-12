@@ -178,6 +178,17 @@ class DevicePreview extends StatefulWidget {
     );
   }
 
+  /// Select a device from its unique [deviceIdentifier].
+  ///
+  /// All the identifiers are available from [Devices].
+  static void selectDevice(
+    BuildContext context,
+    DeviceIdentifier deviceIdentifier,
+  ) {
+    final store = Provider.of<DevicePreviewStore>(context);
+    store.selectDevice(deviceIdentifier);
+  }
+
   /// All available locales in the tool.
   static List<Locale> allLocales(BuildContext context) {
     if (!_isEnabled(context)) {

@@ -1,3 +1,7 @@
+## 0.5.3
+
+* Added the [DevicePreview.selectDevice] method.
+
 ## 0.5.2
 
 * Removed Flutter plugin directories.
