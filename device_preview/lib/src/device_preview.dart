@@ -441,7 +441,7 @@ class _DevicePreviewState extends State<DevicePreview> {
               (DevicePreviewStore store) => store.data.isToolbarVisible,
             );
 
-        final style = DevicePreviewTheme.of(context);
+        final style = widget.style ?? DevicePreviewTheme.of(context);
 
         return Directionality(
           textDirection: TextDirection.ltr,
