@@ -276,18 +276,18 @@ class _PopoverSearchFieldState extends State<PopoverSearchField> {
 
   void _searchTECListener() {
     _controller.addListener(() {
-      setState(() {
-        widget.onTextChanged(
-          _controller.text.replaceAll(' ', '').toLowerCase(),
-        );
-      });
+      widget.onTextChanged(
+        _controller.text.replaceAll(' ', '').toLowerCase(),
+      );
     });
   }
 
   @override
   void didUpdateWidget(covariant PopoverSearchField oldWidget) {
     if (widget.text != _controller.text) {
-      _controller.text = widget.text;
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        _controller.text = widget.text;
+      });
     }
 
     super.didUpdateWidget(oldWidget);

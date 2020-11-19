@@ -1,3 +1,11 @@
+## 0.5.5
+
+* Fixed an issue with language picker.
+
+## 0.5.4
+
+* Fixed issue with [DevicePreview.selectDevice] method.
+
 ## 0.5.3
 
 * Added the [DevicePreview.selectDevice] method.
