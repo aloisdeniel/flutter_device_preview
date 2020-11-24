@@ -133,9 +133,18 @@ class DevicePreview extends StatefulWidget {
     return store.state.maybeMap(
       initialized: (state) {
         final splits = state.data.locale.split('_');
-        return Locale(
-          splits[0],
-          splits.length > 1 ? splits[1] : null,
+        final languageCode = splits[0];
+        String scriptCode, countryCode;
+        if (splits.length > 2) {
+          scriptCode = splits[1];
+          countryCode = splits[2];
+        } else if (splits.length > 1) {
+          countryCode = splits[1];
+        }
+        return Locale.fromSubtags(
+          languageCode: languageCode,
+          scriptCode: scriptCode,
+          countryCode: countryCode,
         );
       },
       orElse: () => WidgetsBinding.instance.window.locale,
