@@ -16,8 +16,8 @@ dependencies:
   device_frame: ^0.3.0
   font_awesome_flutter: ^8.9.0
   http: ^0.12.2 
-  freezed_annotation: ^0.12.0
-  json_annotation: ^3.1.0 
+  freezed_annotation: ">=0.12.0 <1.0.0"
+  json_annotation: ">=3.1.0 <4.0.0" 
   meta: ^1.1.8 
   shared_preferences: ^0.5.12
   pedantic: ^1.9.0
