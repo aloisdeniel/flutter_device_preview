@@ -1,3 +1,7 @@
+## 0.6.0-beta
+
+* Support for `MediaQuery.maybeOf` Flutter API breaking change.
+
 ## 0.5.5
 
 * Fixed an issue with language picker.
