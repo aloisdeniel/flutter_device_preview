@@ -110,9 +110,14 @@ abstract class DevicePreviewStyle with _$DevicePreviewStyle {
 
   factory DevicePreviewStyle.light({
     DevicePreviewToolBarPosition position,
+    DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
   }) =>
       DevicePreviewStyle(
-        toolBar: DevicePreviewToolBarStyle.dark(position: position),
+        toolBar: DevicePreviewToolBarStyle.dark(
+          position: position,
+          buttonsVisibility:
+              buttonsVisibility ?? DevicePreviewButtonsVisibilityStyleData(),
+        ),
         background: BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -125,9 +130,14 @@ abstract class DevicePreviewStyle with _$DevicePreviewStyle {
 
   factory DevicePreviewStyle.dark({
     DevicePreviewToolBarPosition position,
+    DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
   }) =>
       DevicePreviewStyle(
-        toolBar: DevicePreviewToolBarStyle.light(position: position),
+        toolBar: DevicePreviewToolBarStyle.light(
+          position: position,
+          buttonsVisibility:
+              buttonsVisibility ?? DevicePreviewButtonsVisibilityStyleData(),
+        ),
         background: BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -142,6 +152,7 @@ abstract class DevicePreviewStyle with _$DevicePreviewStyle {
 @freezed
 abstract class DevicePreviewToolBarStyle with _$DevicePreviewToolBarStyle {
   const factory DevicePreviewToolBarStyle({
+    @required DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
     @required Color backgroundColor,
     @required Color foregroundColor,
     @required Color buttonBackgroundColor,
@@ -153,8 +164,11 @@ abstract class DevicePreviewToolBarStyle with _$DevicePreviewToolBarStyle {
 
   factory DevicePreviewToolBarStyle.dark({
     DevicePreviewToolBarPosition position,
+    DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
   }) =>
       DevicePreviewToolBarStyle(
+        buttonsVisibility:
+            buttonsVisibility ?? DevicePreviewButtonsVisibilityStyleData(),
         position: position ?? DevicePreviewToolBarPosition.bottom,
         backgroundColor: const Color(0xFF111111),
         buttonBackgroundColor: const Color(0xFF2F2F2F),
@@ -187,8 +201,11 @@ abstract class DevicePreviewToolBarStyle with _$DevicePreviewToolBarStyle {
 
   factory DevicePreviewToolBarStyle.light({
     DevicePreviewToolBarPosition position,
+    DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
   }) =>
       DevicePreviewToolBarStyle(
+        buttonsVisibility:
+            buttonsVisibility ?? DevicePreviewButtonsVisibilityStyleData(),
         position: position ?? DevicePreviewToolBarPosition.bottom,
         backgroundColor: const Color(0xFFFEFEFE),
         buttonBackgroundColor: const Color(0xFFF0F0F0),
@@ -239,4 +256,20 @@ abstract class DevicePreviewToolBarTextStyleData
     @required TextStyle title,
     @required TextStyle fieldLabel,
   }) = _DevicePreviewToolBarTextStyleData;
+}
+
+@freezed
+abstract class DevicePreviewButtonsVisibilityStyleData
+    with _$DevicePreviewButtonsVisibilityStyleData {
+  const factory DevicePreviewButtonsVisibilityStyleData({
+    @Default(true) bool togglePreview,
+    @Default(true) bool device,
+    @Default(true) bool language,
+    @Default(true) bool rotate,
+    @Default(true) bool toggleFrame,
+    @Default(true) bool toggleKeyboard,
+    @Default(true) bool darkMode,
+    @Default(true) bool accessibility,
+    @Default(true) bool settings,
+  }) = _DevicePreviewButtonsVisibilityStyleData;
 }

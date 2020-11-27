@@ -1,3 +1,12 @@
+## 0.6.2-beta
+
+* Added Directionality to overlay.
+
+## 0.6.1-beta
+
+* Added styling options to hide toolbar buttons.
+* Added a `defaultDevice`.
+
 ## 0.6.0-beta
 
 * Support for `MediaQuery.maybeOf` Flutter API breaking change.

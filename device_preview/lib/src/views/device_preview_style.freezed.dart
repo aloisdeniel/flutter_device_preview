@@ -190,7 +190,8 @@ class _$DevicePreviewToolBarStyleTearOff {
 
 // ignore: unused_element
   _DevicePreviewToolBarStyle call(
-      {@required Color backgroundColor,
+      {@required DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
+      @required Color backgroundColor,
       @required Color foregroundColor,
       @required Color buttonBackgroundColor,
       @required Color buttonHoverBackgroundColor,
@@ -198,6 +199,7 @@ class _$DevicePreviewToolBarStyleTearOff {
       @required DevicePreviewToolBarSpacingData spacing,
       @required DevicePreviewToolBarTextStyleData fontStyles}) {
     return _DevicePreviewToolBarStyle(
+      buttonsVisibility: buttonsVisibility,
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
       buttonBackgroundColor: buttonBackgroundColor,
@@ -215,6 +217,7 @@ const $DevicePreviewToolBarStyle = _$DevicePreviewToolBarStyleTearOff();
 
 /// @nodoc
 mixin _$DevicePreviewToolBarStyle {
+  DevicePreviewButtonsVisibilityStyleData get buttonsVisibility;
   Color get backgroundColor;
   Color get foregroundColor;
   Color get buttonBackgroundColor;
@@ -232,7 +235,8 @@ abstract class $DevicePreviewToolBarStyleCopyWith<$Res> {
           $Res Function(DevicePreviewToolBarStyle) then) =
       _$DevicePreviewToolBarStyleCopyWithImpl<$Res>;
   $Res call(
-      {Color backgroundColor,
+      {DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
+      Color backgroundColor,
       Color foregroundColor,
       Color buttonBackgroundColor,
       Color buttonHoverBackgroundColor,
@@ -240,6 +244,7 @@ abstract class $DevicePreviewToolBarStyleCopyWith<$Res> {
       DevicePreviewToolBarSpacingData spacing,
       DevicePreviewToolBarTextStyleData fontStyles});
 
+  $DevicePreviewButtonsVisibilityStyleDataCopyWith<$Res> get buttonsVisibility;
   $DevicePreviewToolBarSpacingDataCopyWith<$Res> get spacing;
   $DevicePreviewToolBarTextStyleDataCopyWith<$Res> get fontStyles;
 }
@@ -255,6 +260,7 @@ class _$DevicePreviewToolBarStyleCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object buttonsVisibility = freezed,
     Object backgroundColor = freezed,
     Object foregroundColor = freezed,
     Object buttonBackgroundColor = freezed,
@@ -264,6 +270,9 @@ class _$DevicePreviewToolBarStyleCopyWithImpl<$Res>
     Object fontStyles = freezed,
   }) {
     return _then(_value.copyWith(
+      buttonsVisibility: buttonsVisibility == freezed
+          ? _value.buttonsVisibility
+          : buttonsVisibility as DevicePreviewButtonsVisibilityStyleData,
       backgroundColor: backgroundColor == freezed
           ? _value.backgroundColor
           : backgroundColor as Color,
@@ -286,6 +295,17 @@ class _$DevicePreviewToolBarStyleCopyWithImpl<$Res>
           ? _value.fontStyles
           : fontStyles as DevicePreviewToolBarTextStyleData,
     ));
+  }
+
+  @override
+  $DevicePreviewButtonsVisibilityStyleDataCopyWith<$Res> get buttonsVisibility {
+    if (_value.buttonsVisibility == null) {
+      return null;
+    }
+    return $DevicePreviewButtonsVisibilityStyleDataCopyWith<$Res>(
+        _value.buttonsVisibility, (value) {
+      return _then(_value.copyWith(buttonsVisibility: value));
+    });
   }
 
   @override
@@ -319,7 +339,8 @@ abstract class _$DevicePreviewToolBarStyleCopyWith<$Res>
       __$DevicePreviewToolBarStyleCopyWithImpl<$Res>;
   @override
   $Res call(
-      {Color backgroundColor,
+      {DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
+      Color backgroundColor,
       Color foregroundColor,
       Color buttonBackgroundColor,
       Color buttonHoverBackgroundColor,
@@ -327,6 +348,8 @@ abstract class _$DevicePreviewToolBarStyleCopyWith<$Res>
       DevicePreviewToolBarSpacingData spacing,
       DevicePreviewToolBarTextStyleData fontStyles});
 
+  @override
+  $DevicePreviewButtonsVisibilityStyleDataCopyWith<$Res> get buttonsVisibility;
   @override
   $DevicePreviewToolBarSpacingDataCopyWith<$Res> get spacing;
   @override
@@ -347,6 +370,7 @@ class __$DevicePreviewToolBarStyleCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object buttonsVisibility = freezed,
     Object backgroundColor = freezed,
     Object foregroundColor = freezed,
     Object buttonBackgroundColor = freezed,
@@ -356,6 +380,9 @@ class __$DevicePreviewToolBarStyleCopyWithImpl<$Res>
     Object fontStyles = freezed,
   }) {
     return _then(_DevicePreviewToolBarStyle(
+      buttonsVisibility: buttonsVisibility == freezed
+          ? _value.buttonsVisibility
+          : buttonsVisibility as DevicePreviewButtonsVisibilityStyleData,
       backgroundColor: backgroundColor == freezed
           ? _value.backgroundColor
           : backgroundColor as Color,
@@ -386,14 +413,16 @@ class _$_DevicePreviewToolBarStyle
     with DiagnosticableTreeMixin
     implements _DevicePreviewToolBarStyle {
   const _$_DevicePreviewToolBarStyle(
-      {@required this.backgroundColor,
+      {@required this.buttonsVisibility,
+      @required this.backgroundColor,
       @required this.foregroundColor,
       @required this.buttonBackgroundColor,
       @required this.buttonHoverBackgroundColor,
       @required this.position,
       @required this.spacing,
       @required this.fontStyles})
-      : assert(backgroundColor != null),
+      : assert(buttonsVisibility != null),
+        assert(backgroundColor != null),
         assert(foregroundColor != null),
         assert(buttonBackgroundColor != null),
         assert(buttonHoverBackgroundColor != null),
@@ -401,6 +430,8 @@ class _$_DevicePreviewToolBarStyle
         assert(spacing != null),
         assert(fontStyles != null);
 
+  @override
+  final DevicePreviewButtonsVisibilityStyleData buttonsVisibility;
   @override
   final Color backgroundColor;
   @override
@@ -418,7 +449,7 @@ class _$_DevicePreviewToolBarStyle
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DevicePreviewToolBarStyle(backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, buttonBackgroundColor: $buttonBackgroundColor, buttonHoverBackgroundColor: $buttonHoverBackgroundColor, position: $position, spacing: $spacing, fontStyles: $fontStyles)';
+    return 'DevicePreviewToolBarStyle(buttonsVisibility: $buttonsVisibility, backgroundColor: $backgroundColor, foregroundColor: $foregroundColor, buttonBackgroundColor: $buttonBackgroundColor, buttonHoverBackgroundColor: $buttonHoverBackgroundColor, position: $position, spacing: $spacing, fontStyles: $fontStyles)';
   }
 
   @override
@@ -426,6 +457,7 @@ class _$_DevicePreviewToolBarStyle
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'DevicePreviewToolBarStyle'))
+      ..add(DiagnosticsProperty('buttonsVisibility', buttonsVisibility))
       ..add(DiagnosticsProperty('backgroundColor', backgroundColor))
       ..add(DiagnosticsProperty('foregroundColor', foregroundColor))
       ..add(DiagnosticsProperty('buttonBackgroundColor', buttonBackgroundColor))
@@ -440,6 +472,9 @@ class _$_DevicePreviewToolBarStyle
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _DevicePreviewToolBarStyle &&
+            (identical(other.buttonsVisibility, buttonsVisibility) ||
+                const DeepCollectionEquality()
+                    .equals(other.buttonsVisibility, buttonsVisibility)) &&
             (identical(other.backgroundColor, backgroundColor) ||
                 const DeepCollectionEquality()
                     .equals(other.backgroundColor, backgroundColor)) &&
@@ -468,6 +503,7 @@ class _$_DevicePreviewToolBarStyle
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(buttonsVisibility) ^
       const DeepCollectionEquality().hash(backgroundColor) ^
       const DeepCollectionEquality().hash(foregroundColor) ^
       const DeepCollectionEquality().hash(buttonBackgroundColor) ^
@@ -485,7 +521,8 @@ class _$_DevicePreviewToolBarStyle
 
 abstract class _DevicePreviewToolBarStyle implements DevicePreviewToolBarStyle {
   const factory _DevicePreviewToolBarStyle(
-          {@required Color backgroundColor,
+          {@required DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
+          @required Color backgroundColor,
           @required Color foregroundColor,
           @required Color buttonBackgroundColor,
           @required Color buttonHoverBackgroundColor,
@@ -494,6 +531,8 @@ abstract class _DevicePreviewToolBarStyle implements DevicePreviewToolBarStyle {
           @required DevicePreviewToolBarTextStyleData fontStyles}) =
       _$_DevicePreviewToolBarStyle;
 
+  @override
+  DevicePreviewButtonsVisibilityStyleData get buttonsVisibility;
   @override
   Color get backgroundColor;
   @override
@@ -900,4 +939,343 @@ abstract class _DevicePreviewToolBarTextStyleData
   @override
   _$DevicePreviewToolBarTextStyleDataCopyWith<
       _DevicePreviewToolBarTextStyleData> get copyWith;
+}
+
+/// @nodoc
+class _$DevicePreviewButtonsVisibilityStyleDataTearOff {
+  const _$DevicePreviewButtonsVisibilityStyleDataTearOff();
+
+// ignore: unused_element
+  _DevicePreviewButtonsVisibilityStyleData call(
+      {bool togglePreview = true,
+      bool device = true,
+      bool language = true,
+      bool rotate = true,
+      bool toggleFrame = true,
+      bool toggleKeyboard = true,
+      bool darkMode = true,
+      bool accessibility = true,
+      bool settings = true}) {
+    return _DevicePreviewButtonsVisibilityStyleData(
+      togglePreview: togglePreview,
+      device: device,
+      language: language,
+      rotate: rotate,
+      toggleFrame: toggleFrame,
+      toggleKeyboard: toggleKeyboard,
+      darkMode: darkMode,
+      accessibility: accessibility,
+      settings: settings,
+    );
+  }
+}
+
+/// @nodoc
+// ignore: unused_element
+const $DevicePreviewButtonsVisibilityStyleData =
+    _$DevicePreviewButtonsVisibilityStyleDataTearOff();
+
+/// @nodoc
+mixin _$DevicePreviewButtonsVisibilityStyleData {
+  bool get togglePreview;
+  bool get device;
+  bool get language;
+  bool get rotate;
+  bool get toggleFrame;
+  bool get toggleKeyboard;
+  bool get darkMode;
+  bool get accessibility;
+  bool get settings;
+
+  $DevicePreviewButtonsVisibilityStyleDataCopyWith<
+      DevicePreviewButtonsVisibilityStyleData> get copyWith;
+}
+
+/// @nodoc
+abstract class $DevicePreviewButtonsVisibilityStyleDataCopyWith<$Res> {
+  factory $DevicePreviewButtonsVisibilityStyleDataCopyWith(
+          DevicePreviewButtonsVisibilityStyleData value,
+          $Res Function(DevicePreviewButtonsVisibilityStyleData) then) =
+      _$DevicePreviewButtonsVisibilityStyleDataCopyWithImpl<$Res>;
+  $Res call(
+      {bool togglePreview,
+      bool device,
+      bool language,
+      bool rotate,
+      bool toggleFrame,
+      bool toggleKeyboard,
+      bool darkMode,
+      bool accessibility,
+      bool settings});
+}
+
+/// @nodoc
+class _$DevicePreviewButtonsVisibilityStyleDataCopyWithImpl<$Res>
+    implements $DevicePreviewButtonsVisibilityStyleDataCopyWith<$Res> {
+  _$DevicePreviewButtonsVisibilityStyleDataCopyWithImpl(
+      this._value, this._then);
+
+  final DevicePreviewButtonsVisibilityStyleData _value;
+  // ignore: unused_field
+  final $Res Function(DevicePreviewButtonsVisibilityStyleData) _then;
+
+  @override
+  $Res call({
+    Object togglePreview = freezed,
+    Object device = freezed,
+    Object language = freezed,
+    Object rotate = freezed,
+    Object toggleFrame = freezed,
+    Object toggleKeyboard = freezed,
+    Object darkMode = freezed,
+    Object accessibility = freezed,
+    Object settings = freezed,
+  }) {
+    return _then(_value.copyWith(
+      togglePreview: togglePreview == freezed
+          ? _value.togglePreview
+          : togglePreview as bool,
+      device: device == freezed ? _value.device : device as bool,
+      language: language == freezed ? _value.language : language as bool,
+      rotate: rotate == freezed ? _value.rotate : rotate as bool,
+      toggleFrame:
+          toggleFrame == freezed ? _value.toggleFrame : toggleFrame as bool,
+      toggleKeyboard: toggleKeyboard == freezed
+          ? _value.toggleKeyboard
+          : toggleKeyboard as bool,
+      darkMode: darkMode == freezed ? _value.darkMode : darkMode as bool,
+      accessibility: accessibility == freezed
+          ? _value.accessibility
+          : accessibility as bool,
+      settings: settings == freezed ? _value.settings : settings as bool,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$DevicePreviewButtonsVisibilityStyleDataCopyWith<$Res>
+    implements $DevicePreviewButtonsVisibilityStyleDataCopyWith<$Res> {
+  factory _$DevicePreviewButtonsVisibilityStyleDataCopyWith(
+          _DevicePreviewButtonsVisibilityStyleData value,
+          $Res Function(_DevicePreviewButtonsVisibilityStyleData) then) =
+      __$DevicePreviewButtonsVisibilityStyleDataCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {bool togglePreview,
+      bool device,
+      bool language,
+      bool rotate,
+      bool toggleFrame,
+      bool toggleKeyboard,
+      bool darkMode,
+      bool accessibility,
+      bool settings});
+}
+
+/// @nodoc
+class __$DevicePreviewButtonsVisibilityStyleDataCopyWithImpl<$Res>
+    extends _$DevicePreviewButtonsVisibilityStyleDataCopyWithImpl<$Res>
+    implements _$DevicePreviewButtonsVisibilityStyleDataCopyWith<$Res> {
+  __$DevicePreviewButtonsVisibilityStyleDataCopyWithImpl(
+      _DevicePreviewButtonsVisibilityStyleData _value,
+      $Res Function(_DevicePreviewButtonsVisibilityStyleData) _then)
+      : super(_value,
+            (v) => _then(v as _DevicePreviewButtonsVisibilityStyleData));
+
+  @override
+  _DevicePreviewButtonsVisibilityStyleData get _value =>
+      super._value as _DevicePreviewButtonsVisibilityStyleData;
+
+  @override
+  $Res call({
+    Object togglePreview = freezed,
+    Object device = freezed,
+    Object language = freezed,
+    Object rotate = freezed,
+    Object toggleFrame = freezed,
+    Object toggleKeyboard = freezed,
+    Object darkMode = freezed,
+    Object accessibility = freezed,
+    Object settings = freezed,
+  }) {
+    return _then(_DevicePreviewButtonsVisibilityStyleData(
+      togglePreview: togglePreview == freezed
+          ? _value.togglePreview
+          : togglePreview as bool,
+      device: device == freezed ? _value.device : device as bool,
+      language: language == freezed ? _value.language : language as bool,
+      rotate: rotate == freezed ? _value.rotate : rotate as bool,
+      toggleFrame:
+          toggleFrame == freezed ? _value.toggleFrame : toggleFrame as bool,
+      toggleKeyboard: toggleKeyboard == freezed
+          ? _value.toggleKeyboard
+          : toggleKeyboard as bool,
+      darkMode: darkMode == freezed ? _value.darkMode : darkMode as bool,
+      accessibility: accessibility == freezed
+          ? _value.accessibility
+          : accessibility as bool,
+      settings: settings == freezed ? _value.settings : settings as bool,
+    ));
+  }
+}
+
+/// @nodoc
+class _$_DevicePreviewButtonsVisibilityStyleData
+    with DiagnosticableTreeMixin
+    implements _DevicePreviewButtonsVisibilityStyleData {
+  const _$_DevicePreviewButtonsVisibilityStyleData(
+      {this.togglePreview = true,
+      this.device = true,
+      this.language = true,
+      this.rotate = true,
+      this.toggleFrame = true,
+      this.toggleKeyboard = true,
+      this.darkMode = true,
+      this.accessibility = true,
+      this.settings = true})
+      : assert(togglePreview != null),
+        assert(device != null),
+        assert(language != null),
+        assert(rotate != null),
+        assert(toggleFrame != null),
+        assert(toggleKeyboard != null),
+        assert(darkMode != null),
+        assert(accessibility != null),
+        assert(settings != null);
+
+  @JsonKey(defaultValue: true)
+  @override
+  final bool togglePreview;
+  @JsonKey(defaultValue: true)
+  @override
+  final bool device;
+  @JsonKey(defaultValue: true)
+  @override
+  final bool language;
+  @JsonKey(defaultValue: true)
+  @override
+  final bool rotate;
+  @JsonKey(defaultValue: true)
+  @override
+  final bool toggleFrame;
+  @JsonKey(defaultValue: true)
+  @override
+  final bool toggleKeyboard;
+  @JsonKey(defaultValue: true)
+  @override
+  final bool darkMode;
+  @JsonKey(defaultValue: true)
+  @override
+  final bool accessibility;
+  @JsonKey(defaultValue: true)
+  @override
+  final bool settings;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'DevicePreviewButtonsVisibilityStyleData(togglePreview: $togglePreview, device: $device, language: $language, rotate: $rotate, toggleFrame: $toggleFrame, toggleKeyboard: $toggleKeyboard, darkMode: $darkMode, accessibility: $accessibility, settings: $settings)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty(
+          'type', 'DevicePreviewButtonsVisibilityStyleData'))
+      ..add(DiagnosticsProperty('togglePreview', togglePreview))
+      ..add(DiagnosticsProperty('device', device))
+      ..add(DiagnosticsProperty('language', language))
+      ..add(DiagnosticsProperty('rotate', rotate))
+      ..add(DiagnosticsProperty('toggleFrame', toggleFrame))
+      ..add(DiagnosticsProperty('toggleKeyboard', toggleKeyboard))
+      ..add(DiagnosticsProperty('darkMode', darkMode))
+      ..add(DiagnosticsProperty('accessibility', accessibility))
+      ..add(DiagnosticsProperty('settings', settings));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _DevicePreviewButtonsVisibilityStyleData &&
+            (identical(other.togglePreview, togglePreview) ||
+                const DeepCollectionEquality()
+                    .equals(other.togglePreview, togglePreview)) &&
+            (identical(other.device, device) ||
+                const DeepCollectionEquality().equals(other.device, device)) &&
+            (identical(other.language, language) ||
+                const DeepCollectionEquality()
+                    .equals(other.language, language)) &&
+            (identical(other.rotate, rotate) ||
+                const DeepCollectionEquality().equals(other.rotate, rotate)) &&
+            (identical(other.toggleFrame, toggleFrame) ||
+                const DeepCollectionEquality()
+                    .equals(other.toggleFrame, toggleFrame)) &&
+            (identical(other.toggleKeyboard, toggleKeyboard) ||
+                const DeepCollectionEquality()
+                    .equals(other.toggleKeyboard, toggleKeyboard)) &&
+            (identical(other.darkMode, darkMode) ||
+                const DeepCollectionEquality()
+                    .equals(other.darkMode, darkMode)) &&
+            (identical(other.accessibility, accessibility) ||
+                const DeepCollectionEquality()
+                    .equals(other.accessibility, accessibility)) &&
+            (identical(other.settings, settings) ||
+                const DeepCollectionEquality()
+                    .equals(other.settings, settings)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(togglePreview) ^
+      const DeepCollectionEquality().hash(device) ^
+      const DeepCollectionEquality().hash(language) ^
+      const DeepCollectionEquality().hash(rotate) ^
+      const DeepCollectionEquality().hash(toggleFrame) ^
+      const DeepCollectionEquality().hash(toggleKeyboard) ^
+      const DeepCollectionEquality().hash(darkMode) ^
+      const DeepCollectionEquality().hash(accessibility) ^
+      const DeepCollectionEquality().hash(settings);
+
+  @override
+  _$DevicePreviewButtonsVisibilityStyleDataCopyWith<
+          _DevicePreviewButtonsVisibilityStyleData>
+      get copyWith => __$DevicePreviewButtonsVisibilityStyleDataCopyWithImpl<
+          _DevicePreviewButtonsVisibilityStyleData>(this, _$identity);
+}
+
+abstract class _DevicePreviewButtonsVisibilityStyleData
+    implements DevicePreviewButtonsVisibilityStyleData {
+  const factory _DevicePreviewButtonsVisibilityStyleData(
+      {bool togglePreview,
+      bool device,
+      bool language,
+      bool rotate,
+      bool toggleFrame,
+      bool toggleKeyboard,
+      bool darkMode,
+      bool accessibility,
+      bool settings}) = _$_DevicePreviewButtonsVisibilityStyleData;
+
+  @override
+  bool get togglePreview;
+  @override
+  bool get device;
+  @override
+  bool get language;
+  @override
+  bool get rotate;
+  @override
+  bool get toggleFrame;
+  @override
+  bool get toggleKeyboard;
+  @override
+  bool get darkMode;
+  @override
+  bool get accessibility;
+  @override
+  bool get settings;
+  @override
+  _$DevicePreviewButtonsVisibilityStyleDataCopyWith<
+      _DevicePreviewButtonsVisibilityStyleData> get copyWith;
 }

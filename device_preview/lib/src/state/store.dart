@@ -16,6 +16,7 @@ import 'state.dart';
 class DevicePreviewStore extends ChangeNotifier {
   /// Create a new store with the given [locales], [device] and [storage].
   DevicePreviewStore({
+    @required this.defaultDevice,
     List<Locale> locales,
     List<DeviceInfo> devices,
     @required this.storage,
@@ -25,6 +26,8 @@ class DevicePreviewStore extends ChangeNotifier {
       devices: devices,
     );
   }
+
+  final DeviceInfo defaultDevice;
 
   DevicePreviewState _state = DevicePreviewState.notInitialized();
 
@@ -167,7 +170,9 @@ extension DevicePreviewStateHelperExtensions on DevicePreviewStore {
     }
     return state.maybeMap(
       initialized: (state) => state.devices.firstWhere(
-        (x) => x.identifier.toString() == data?.deviceIdentifier,
+        (x) =>
+            x.identifier.toString() == data?.deviceIdentifier ??
+            defaultDevice.identifier.toString(),
         orElse: () => state.devices.first,
       ),
       orElse: () => throw Exception('Not initialized'),

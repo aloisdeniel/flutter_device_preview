@@ -54,6 +54,9 @@ class DevicePreview extends StatefulWidget {
   /// It is common to give the root application widget.
   final WidgetBuilder builder;
 
+  /// The default selected device when opening device preview for the first time.
+  final DeviceInfo defaultDevice;
+
   /// The available devices used for previewing.
   final List<DeviceInfo> devices;
 
@@ -97,6 +100,7 @@ class DevicePreview extends StatefulWidget {
     this.style,
     this.isToolbarVisible = true,
     this.availableLocales,
+    this.defaultDevice,
     this.plugins = const <DevicePreviewPlugin>[],
     DevicePreviewStorage storage,
     this.enabled = true,
@@ -194,7 +198,7 @@ class DevicePreview extends StatefulWidget {
     BuildContext context,
     DeviceIdentifier deviceIdentifier,
   ) {
-    final store = Provider.of<DevicePreviewStore>(context,listen: false);
+    final store = Provider.of<DevicePreviewStore>(context, listen: false);
     store.selectDevice(deviceIdentifier);
   }
 
@@ -422,6 +426,7 @@ class _DevicePreviewState extends State<DevicePreview> {
 
     return ChangeNotifierProvider(
       create: (context) => DevicePreviewStore(
+        defaultDevice: widget.defaultDevice ?? Devices.ios.iPhone11,
         devices: widget.devices,
         locales: widget.availableLocales,
         storage: widget.storage,
@@ -552,69 +557,72 @@ class _ToolsOverlayState extends State<_ToolsOverlay> {
 
   @override
   Widget build(BuildContext context) {
-    return Localizations(
-      locale: Locale('en', 'US'),
-      delegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      child: Overlay(
-        key: _overlayKey,
-        initialEntries: [
-          OverlayEntry(
-            builder: (context) {
-              return Stack(
-                children: [
-                  if (widget.style.toolBar.position ==
-                      DevicePreviewToolBarPosition.bottom)
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      child: DevicePreviewToolBar(
-                        key: Key('Bar'),
-                        overlayPosition: _overlayKey.absolutePosition,
-                      ),
-                    ),
-                  if (widget.style.toolBar.position ==
-                      DevicePreviewToolBarPosition.top)
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      top: 0,
-                      child: DevicePreviewToolBar(
-                        key: Key('Bar'),
-                        overlayPosition: _overlayKey.absolutePosition,
-                      ),
-                    ),
-                  if (widget.style.toolBar.position ==
-                      DevicePreviewToolBarPosition.right)
-                    Positioned(
-                      top: 0,
-                      right: 0,
-                      bottom: 0,
-                      child: DevicePreviewToolBar(
-                        key: Key('Bar'),
-                        overlayPosition: _overlayKey.absolutePosition,
-                      ),
-                    ),
-                  if (widget.style.toolBar.position ==
-                      DevicePreviewToolBarPosition.left)
-                    Positioned(
-                      left: 0,
-                      top: 0,
-                      bottom: 0,
-                      child: DevicePreviewToolBar(
-                        key: Key('Bar'),
-                        overlayPosition: _overlayKey.absolutePosition,
-                      ),
-                    ),
-                ],
-              );
-            },
-          ),
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Localizations(
+        locale: Locale('en', 'US'),
+        delegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
         ],
+        child: Overlay(
+          key: _overlayKey,
+          initialEntries: [
+            OverlayEntry(
+              builder: (context) {
+                return Stack(
+                  children: [
+                    if (widget.style.toolBar.position ==
+                        DevicePreviewToolBarPosition.bottom)
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        child: DevicePreviewToolBar(
+                          key: Key('Bar'),
+                          overlayPosition: _overlayKey.absolutePosition,
+                        ),
+                      ),
+                    if (widget.style.toolBar.position ==
+                        DevicePreviewToolBarPosition.top)
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        top: 0,
+                        child: DevicePreviewToolBar(
+                          key: Key('Bar'),
+                          overlayPosition: _overlayKey.absolutePosition,
+                        ),
+                      ),
+                    if (widget.style.toolBar.position ==
+                        DevicePreviewToolBarPosition.right)
+                      Positioned(
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        child: DevicePreviewToolBar(
+                          key: Key('Bar'),
+                          overlayPosition: _overlayKey.absolutePosition,
+                        ),
+                      ),
+                    if (widget.style.toolBar.position ==
+                        DevicePreviewToolBarPosition.left)
+                      Positioned(
+                        left: 0,
+                        top: 0,
+                        bottom: 0,
+                        child: DevicePreviewToolBar(
+                          key: Key('Bar'),
+                          overlayPosition: _overlayKey.absolutePosition,
+                        ),
+                      ),
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
