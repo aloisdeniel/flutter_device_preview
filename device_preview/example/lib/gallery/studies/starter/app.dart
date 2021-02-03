@@ -4,6 +4,7 @@
 
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+
 import '../../l10n/gallery_localizations.dart';
 import '../../studies/starter/home.dart';
 
@@ -16,8 +17,8 @@ class StarterApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = MediaQuery.maybeOf(context)?.platformBrightness ==
-        Brightness.dark;
+    final isDark =
+        MediaQuery.of(context)?.platformBrightness == Brightness.dark;
     return MaterialApp(
       title: 'Starter',
       debugShowCheckedModeBanner: false,

@@ -1,9 +1,9 @@
 import 'package:device_preview/src/state/state.dart';
 import 'package:device_preview/src/state/store.dart';
-import 'package:flutter/widgets.dart';
-import 'package:meta/meta.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:meta/meta.dart';
 import 'package:provider/provider.dart';
 
 part 'device_preview_style.freezed.dart';
@@ -64,26 +64,16 @@ class DevicePreviewTheme extends InheritedWidget {
             ? DevicePreviewToolBarStyle.dark(position: position)
             : DevicePreviewToolBarStyle.light(position: position),
         background: BoxDecoration(
-          gradient:
+          color:
               settings.backgroundTheme == DevicePreviewBackgroundThemeData.dark
-                  ? LinearGradient(
-                      colors: [
-                        Color(0xFF111111),
-                        Color(0xFF222222),
-                      ],
-                    )
-                  : LinearGradient(
-                      colors: [
-                        Color(0xFFf5f7fa),
-                        Color(0xFFc3cfe2),
-                      ],
-                    ),
+                  ? Color(0xff000000)
+                  : Color(0xFFFFFFFF),
         ),
       );
     }
 
     // If toolbar position isn't supported, fallback to bottom.
-    final media = MediaQuery.maybeOf(context) ??
+    final media = MediaQuery.of(context) ??
         MediaQueryData.fromWindow(WidgetsBinding.instance.window);
     if (!DevicePreviewTheme.isPositionAvailableForWidth(
         result.toolBar.position, media.size.width)) {
@@ -118,14 +108,7 @@ abstract class DevicePreviewStyle with _$DevicePreviewStyle {
           buttonsVisibility:
               buttonsVisibility ?? DevicePreviewButtonsVisibilityStyleData(),
         ),
-        background: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xFFf5f7fa),
-              Color(0xFFc3cfe2),
-            ],
-          ),
-        ),
+        background: BoxDecoration(color: Color(0xFFFFFFFF)),
       );
 
   factory DevicePreviewStyle.dark({
@@ -138,14 +121,7 @@ abstract class DevicePreviewStyle with _$DevicePreviewStyle {
           buttonsVisibility:
               buttonsVisibility ?? DevicePreviewButtonsVisibilityStyleData(),
         ),
-        background: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xFF111111),
-              Color(0xFF222222),
-            ],
-          ),
-        ),
+        background: BoxDecoration(color: Color(0xff000000)),
       );
 }
 
