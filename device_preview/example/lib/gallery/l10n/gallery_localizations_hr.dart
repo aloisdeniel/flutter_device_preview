@@ -1005,6 +1005,247 @@ class GalleryLocalizationsHr extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'Animacija';
+
+  @override
+  String get demoMotionSubtitle => 'Svi unaprijed definirani uzorci prijelaza';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Preobrazba spremnika';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Uzorak za preobrazbu spremnika dizajnira se za prijelaze između elemenata korisničkog sučelja koji sadrže spremnik Uzorak stvara vidljivu vezu između dvaju elemenata korisničkog sučelja';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle =>
+      'Način postupnog pojavljivanja i nestajanja';
+
+  @override
+  String get demoContainerTransformTypeFade =>
+      'POSTUPNO POJAVLJIVANJE I NESTAJANJE';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'POSTUPNI PRIJELAZ';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Naslov';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Sekundarni tekst';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Sekundarno';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Stranica s pojedinostima';
+
+  @override
+  String get demoMotionListTileTitle => 'Stavka popisa';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Uzorak dijeljene osi koristi se za prijelaze između elemenata korisničkog sučelja koji su u međusobnom prostornom ili navigacijskom odnosu. Taj uzorak koristi dijeljenu preobrazbu na osima x, y ili z kako bi se naglasio odnos među elementima.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Dijeljena os x';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'NATRAG';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'DALJE';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle =>
+      'Poboljšajte organizaciju tečajeva';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Kategorije u paketu prikazuju se kao skupine u vašem feedu. Kasnije se možete predomisliti.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Rukotvorine';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Posao';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Ilustracija';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Dizajn';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Kulinarski';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'U paketu';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle =>
+      'Prikazuje se pojedinačno';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Pozdrav, David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Prijavite se pomoću računa';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'E-adresa ili telefonski broj';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'ZABORAVILI STE E-ADRESU?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'IZRADA RAČUNA';
+
+  @override
+  String get demoSharedYAxisTitle => 'Dijeljena os y';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 albuma';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A – Ž';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Nedavno slušano';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Album';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Izvođač';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min';
+
+  @override
+  String get demoSharedZAxisTitle => 'Dijeljena os z';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Postavke';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Hamburger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Recept za hamburger';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Sendvič';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Recept za sendvič';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Desert';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Recept za desert';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Škamp';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Recept za jelo od škampa';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Rak';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Recept za jelo od raka';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Sendvič s govedinom';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Recept za sendvič s govedinom';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Spremljeni recepti';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profil';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Obavijesti';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Privatnost';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Pomoć';
+
+  @override
+  String get demoFadeThroughTitle => 'Postupni prijelaz';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Uzorak postupnog prijelaza koristi se za prijelaze između elemenata korisničkog sučelja koji nemaju snažnu međusobnu vezu.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Albumi';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Fotografije';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Pretraži';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 fotografije';
+
+  @override
+  String get demoFadeScaleTitle => 'Postupno pojavljivanje i nestajanje';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Uzorak postupnog pojavljivanja i nestajanja koristi se za elemente korisničkog sučelja koji se pojavljuju ili nestaju u okvirima zaslona, na primjer dijaloški okvir koji se pojavljuje i nestaje na sredini zaslona.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'MODAL ZA PRIKAZIVANJE';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'FAB ZA PRIKAZIVANJE';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'FAB ZA SAKRIVANJE';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Dijaloški okvir upozorenja';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ODUSTANI';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'ODBACI';
+
+  @override
   String get demoColorsTitle => 'Boje';
 
   @override

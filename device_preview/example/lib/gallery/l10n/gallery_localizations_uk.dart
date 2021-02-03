@@ -1002,6 +1002,247 @@ class GalleryLocalizationsUk extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN-код';
 
   @override
+  String get demoMotionTitle => 'Анімація';
+
+  @override
+  String get demoMotionSubtitle => 'Усі стандартні стилі переходів';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Перетворення контейнера';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Стиль \"Перетворення контейнера\" призначений для переходів між елементами інтерфейсу, які містять контейнер. Такий перехід створює візуальний зв\'язок між двома елементами інтерфейсу.';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle =>
+      'Режим появи та зникнення';
+
+  @override
+  String get demoContainerTransformTypeFade => 'ПОЯВА ТА ЗНИКНЕННЯ';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'ПЕРЕХІД ЗІ ЗНИКНЕННЯМ';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Назва';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Другорядний текст';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Другорядний';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Сторінка з інформацією';
+
+  @override
+  String get demoMotionListTileTitle => 'Пункт списку';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Стиль \"Спільна вісь\" призначений для переходів між елементами інтерфейсу, які знаходяться поруч або між якими виконується навігація. Цей стиль використовує спільне перетворення за осями X, Y і Z, щоб чітко пов\'язати елементи.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Спільна вісь X';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'НАЗАД';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'ДАЛІ';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Оптимізуйте свої курси';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Згруповані категорії показуються у фіді як групи. Це можна будь-коли змінити.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Мистецтво та ремесла';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Бізнес';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Ілюстрація';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Дизайн';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Кулінарія';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'У наборі';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Окремо';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Вітаємо, David Park!';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText =>
+      'Увійдіть, використовуючи дані облікового запису';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'Електронна адреса чи номер телефону';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'ЗАБУЛИ ЕЛЕКТРОННУ АДРЕСУ?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText =>
+      'СТВОРИТИ ОБЛІКОВИЙ ЗАПИС';
+
+  @override
+  String get demoSharedYAxisTitle => 'Спільна вісь Y';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 альбомів';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'А–Я';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Нещодавно відтворене';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Альбом';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Виконавець';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'хв';
+
+  @override
+  String get demoSharedZAxisTitle => 'Спільна вісь Z';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Налаштування';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Бургер';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Рецепт бургера';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Сендвіч';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Рецепт сендвіча';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Десерт';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Рецепт десерту';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Креветка';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Рецепт страви з креветками';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Краб';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Рецепт страви з крабами';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Сендвіч із яловичиною';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Рецепт сендвіча з яловичиною';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Збережені рецепти';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Профіль';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Сповіщення';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Конфіденційність';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Довідка';
+
+  @override
+  String get demoFadeThroughTitle => 'Перехід зі зникненням';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Стиль \"Перехід зі зникненням\" призначений для переходів між елементами інтерфейсу, які безпосередньо не пов\'язані між собою.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Альбоми';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Фото';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Пошук';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 фотографії';
+
+  @override
+  String get demoFadeScaleTitle => 'Поява та зникнення';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Стиль \"Поява та зникнення\" призначений для елементів інтерфейсу, які з\'являються або зникають у межах екрана (наприклад, для діалогового вікна, яке з\'являється в центрі екрана).';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'ПОКАЗАТИ МОДАЛЬНЕ ВІКНО';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'ПОКАЗАТИ ПЛАВАЮЧУ КОМАНДНУ КНОПКУ';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'СХОВАТИ ПЛАВАЮЧУ КОМАНДНУ КНОПКУ';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Діалогове вікно сповіщення';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'СКАСУВАТИ';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'ВІДХИЛИТИ';
+
+  @override
   String get demoColorsTitle => 'Кольори';
 
   @override

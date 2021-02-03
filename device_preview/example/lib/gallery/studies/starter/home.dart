@@ -10,8 +10,22 @@ import '../../layout/adaptive.dart';
 
 const appBarDesktopHeight = 128.0;
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage();
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool loaded = false;
+
+  @override
+  void initState() {
+    Future.delayed(const Duration(seconds: 2))
+        .then((_) => setState(() => loaded = true));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,20 +41,20 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              GalleryLocalizations.of(context).starterAppGenericHeadline,
-              style: textTheme.subhead.copyWith(
+              (loaded ? 'LOADED' : '...'),
+              style: textTheme.subtitle1.copyWith(
                 color: colorScheme.onSecondary,
               ),
             ),
             const SizedBox(height: 10),
             Text(
               GalleryLocalizations.of(context).starterAppGenericSubtitle,
-              style: textTheme.subtitle,
+              style: textTheme.subtitle2,
             ),
             const SizedBox(height: 48),
             Text(
               GalleryLocalizations.of(context).starterAppGenericBody,
-              style: textTheme.body1,
+              style: textTheme.bodyText2,
             ),
           ],
         ),
@@ -120,7 +134,7 @@ class AdaptiveAppBar extends StatelessWidget implements PreferredSizeWidget {
                 margin: const EdgeInsetsDirectional.fromSTEB(72, 0, 0, 22),
                 child: Text(
                   GalleryLocalizations.of(context).starterAppGenericTitle,
-                  style: themeData.textTheme.headline.copyWith(
+                  style: themeData.textTheme.headline5.copyWith(
                     color: themeData.colorScheme.onPrimary,
                   ),
                 ),
@@ -168,11 +182,11 @@ class _ListDrawerState extends State<ListDrawer> {
             ListTile(
               title: Text(
                 GalleryLocalizations.of(context).starterAppTitle,
-                style: textTheme.subtitle,
+                style: textTheme.subtitle2,
               ),
               subtitle: Text(
                 GalleryLocalizations.of(context).starterAppGenericSubtitle,
-                style: textTheme.body2,
+                style: textTheme.bodyText1,
               ),
             ),
             const Divider(),

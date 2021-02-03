@@ -998,6 +998,246 @@ class GalleryLocalizationsHu extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN-kód';
 
   @override
+  String get demoMotionTitle => 'Mozgás';
+
+  @override
+  String get demoMotionSubtitle =>
+      'Az előre meghatározott áttűnési minták mindegyike';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Tároló átalakulása';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'A tároló átalakulása minta a tárolót tartalmazó UI-elemek közötti áttűnések megvalósítására szolgál. Ez a minta látható kapcsolatot hoz létre két UI-elem között';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Halványítás mód';
+
+  @override
+  String get demoContainerTransformTypeFade => 'HALVÁNYÍTÁS';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'ÁTTŰNÉS';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Cím';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Másodlagos szöveg';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Másodlagos';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Részletek oldal';
+
+  @override
+  String get demoMotionListTileTitle => 'Listaelem';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'A megosztott tengely mintát a térbeli vagy navigációs kapcsolattal rendelkező UI-elemek közötti átmenetekhez használja a rendszer. Ez a minta megosztott átalakítást használ az x, az y vagy a z tengelyen az elemek közötti kapcsolat megerősítéséhez.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Megosztott x tengely';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'VISSZA';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'TOVÁBB';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'A kurzusok észszerűsítése';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'A csomagolt kategóriák csoportokként jelennek meg a hírcsatornában. Ezt később bármikor megváltoztathatja.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Kézművesség';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Üzlet';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Illusztráció';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Dizájn';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Konyhaművészet';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Kategorizált';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle =>
+      'Egyénileg megjelenítve';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Üdv, David Park!';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Jelentkezzen be fiókjával';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'E-mail-cím vagy telefonszám';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'ELFELEJTETTE AZ E-MAIL-CÍMÉT?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'FIÓK LÉTREHOZÁSA';
+
+  @override
+  String get demoSharedYAxisTitle => 'Megosztott y tengely';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 album';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A–Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Nemrég lejátszott';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Album';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Előadó';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'p';
+
+  @override
+  String get demoSharedZAxisTitle => 'Megosztott z tengely';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Beállítás';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Hamburger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Hamburgerrecept';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Szendvics';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Szendvicsrecept';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Desszert';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Desszertrecept';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Garnélarák';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Garnélatál receptje';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Rák';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription => 'Ráktál receptje';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Marhahúsos szendvics';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Marhahúsos szendvics receptje';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Mentett receptek';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profil';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Értesítések';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Adatvédelem';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Súgó';
+
+  @override
+  String get demoFadeThroughTitle => 'Áttűnés';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Az áttűnés mintát olyan UI-elemek közötti átmenetekhez használja a rendszer, amelyek között nincs szoros kapcsolat.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Albumok';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Fotók';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Keresés';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 fotó';
+
+  @override
+  String get demoFadeScaleTitle => 'Halványítás';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'A halványítás mintát olyan UI-elemek esetén használja a rendszer, amelyek a képernyő határain belül lépnek be vagy ki (például a képernyő közepén elhalványuló párbeszédablak esetén).';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton =>
+      'MODÁLIS ABLAK MEGJELENÍTÉSE';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'LEBEGŐ MŰVELETGOMB MEGJELENÍTÉSE';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'LEBEGŐ MŰVELETGOMB ELREJTÉSE';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Értesítés párbeszédpanele';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'MÉGSE';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'ELVETÉS';
+
+  @override
   String get demoColorsTitle => 'Színek';
 
   @override

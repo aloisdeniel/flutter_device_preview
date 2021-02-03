@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 
+/// A [VirtualKeyboard] button.
 class VirtualKeyboardButton extends StatelessWidget {
   final Widget child;
   final Color backgroundColor;
@@ -14,11 +15,11 @@ class VirtualKeyboardButton extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.circular(4.0),
+        borderRadius: BorderRadius.circular(4),
       ),
       padding: EdgeInsets.symmetric(
-        vertical: 10.0,
-        horizontal: 6.0,
+        vertical: 10,
+        horizontal: 6,
       ),
       alignment: Alignment.center,
       child: child,

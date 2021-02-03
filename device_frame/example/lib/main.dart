@@ -1,7 +1,7 @@
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
   runApp(ExampleApp());
 }
 
@@ -15,15 +15,42 @@ class _ExampleAppState extends State<ExampleApp> {
   bool isDark = true;
   bool hasShadow = true;
   bool isKeyboard = false;
+  bool isEnabled = true;
+
+  @override
+  void initState() {
+    DeviceFrame.precache(context);
+    super.initState();
+  }
+
+  final GlobalKey screenKey = GlobalKey();
+  List<DeviceInfo> allDevices = [
+    ...Devices.ios.all,
+    ...Devices.android.all,
+    ...Devices.macos.all,
+    ...Devices.windows.all,
+    ...Devices.linux.all,
+  ];
   Orientation orientation = Orientation.portrait;
+  Widget _frame(DeviceInfo device) => Center(
+        child: DeviceFrame(
+          device: device,
+          isFrameVisible: hasShadow,
+          orientation: orientation,
+          screen: Container(
+            color: Colors.blue,
+            child: VirtualKeyboard(
+              isEnabled: isKeyboard,
+              child: FakeScreen(key: screenKey),
+            ),
+          ),
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     var style = isDark ? DeviceFrameStyle.dark() : DeviceFrameStyle.light();
-    if (!hasShadow) {
-      style = style.copyWith(
-        shadowColor: Colors.transparent,
-      );
-    }
+
     return DeviceFrameTheme(
       style: style,
       child: MaterialApp(
@@ -33,7 +60,7 @@ class _ExampleAppState extends State<ExampleApp> {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: DefaultTabController(
-          length: CupertinoDevice.values.length + AndroidDevice.values.length,
+          length: allDevices.length,
           child: Scaffold(
             backgroundColor: isDark ? Colors.white : Colors.black,
             appBar: AppBar(
@@ -73,43 +100,35 @@ class _ExampleAppState extends State<ExampleApp> {
                   },
                   icon: Icon(Icons.keyboard),
                 ),
+                /*IconButton(
+                  onPressed: () {
+                    setState(() {
+                      isEnabled = !isEnabled;
+                    });
+                  },
+                  icon: Icon(Icons.check),
+                ),*/
               ],
               bottom: TabBar(
                 isScrollable: true,
                 tabs: [
-                  ...CupertinoDevice.values.map(
-                    (d) => Tab(
-                      text: d.toString().replaceAll('$CupertinoDevice.', ''),
-                    ),
-                  ),
-                  ...AndroidDevice.values.map(
-                    (d) => Tab(
-                      text: d.toString().replaceAll('$AndroidDevice.', ''),
-                    ),
-                  ),
+                  ...allDevices
+                      .map((x) => Tab(text: '${x.identifier.type} ${x.name}')),
                 ],
               ),
             ),
             body: SafeArea(
-              child: TabBarView(
-                children: <Widget>[
-                  ...CupertinoDevice.values.map(
-                    (device) => CupertinoDeviceFrame(
-                      orientation: orientation,
-                      isKeyboardVisible: isKeyboard,
-                      device: device,
-                      child: FakeScreen(),
-                    ),
-                  ),
-                  ...AndroidDevice.values.map(
-                    (device) => AndroidDeviceFrame(
-                      orientation: orientation,
-                      isKeyboardVisible: isKeyboard,
-                      device: device,
-                      child: FakeScreen(),
-                    ),
-                  ),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Builder(
+                  builder: (context) => !isEnabled
+                      ? FakeScreen(key: screenKey)
+                      : AnimatedBuilder(
+                          animation: DefaultTabController.of(context),
+                          builder: (context, _) => _frame(allDevices[
+                              DefaultTabController.of(context).index]),
+                        ),
+                ),
               ),
             ),
           ),
@@ -119,17 +138,39 @@ class _ExampleAppState extends State<ExampleApp> {
   }
 }
 
-class FakeScreen extends StatelessWidget {
+class FakeScreen extends StatefulWidget {
+  const FakeScreen({Key key}) : super(key: key);
+  @override
+  _FakeScreenState createState() => _FakeScreenState();
+}
+
+class _FakeScreenState extends State<FakeScreen> {
+  bool isDelayEnded = false;
+
+  @override
+  void initState() {
+    Future.delayed(const Duration(seconds: 2)).then(
+      (value) => setState(
+        () => isDelayEnded = true,
+      ),
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final mediaQuery = MediaQuery.of(context);
+    final color =
+        theme.platform == TargetPlatform.iOS ? Colors.cyan : Colors.green;
     return Container(
-      color: theme.platform == TargetPlatform.iOS ? Colors.cyan : Colors.green,
-      child: AnimatedPadding(
-        duration: const Duration(milliseconds: 500),
-        padding: EdgeInsets.only(bottom: mediaQuery.viewInsets.bottom),
-        child: SafeArea(
+      color: color.shade300,
+      padding: mediaQuery.padding,
+      child: Container(
+        color: color,
+        child: AnimatedPadding(
+          duration: const Duration(milliseconds: 500),
+          padding: EdgeInsets.only(bottom: mediaQuery.viewInsets.bottom),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -138,6 +179,8 @@ class FakeScreen extends StatelessWidget {
               Text("PixelRatio: ${mediaQuery.devicePixelRatio}"),
               Text("Padding: ${mediaQuery.padding}"),
               Text("Insets: ${mediaQuery.viewInsets}"),
+              Text("ViewPadding: ${mediaQuery.viewPadding}"),
+              if (isDelayEnded) Text("---"),
             ],
           ),
         ),

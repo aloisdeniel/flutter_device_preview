@@ -92,7 +92,7 @@ class GalleryLocalizationsMl extends GalleryLocalizations {
   String get cardsDemoTravelDestinationDescription3 => 'ക്ഷേത്രങ്ങൾ';
 
   @override
-  String get homeHeaderGallery => 'ഗാലറി';
+  String get homeHeaderGallery => 'Gallery';
 
   @override
   String get homeHeaderCategories => 'വിഭാഗങ്ങൾ';
@@ -988,7 +988,7 @@ class GalleryLocalizationsMl extends GalleryLocalizations {
   String get cupertinoTabBarHomeTab => 'ഹോം';
 
   @override
-  String get cupertinoTabBarChatTab => 'ചാറ്റ്';
+  String get cupertinoTabBarChatTab => 'Chat';
 
   @override
   String get cupertinoTabBarProfileTab => 'പ്രൊഫൈൽ';
@@ -1006,6 +1006,247 @@ class GalleryLocalizationsMl extends GalleryLocalizations {
 
   @override
   String get demoCupertinoTextFieldPIN => 'പിൻ';
+
+  @override
+  String get demoMotionTitle => 'ചലനാത്മകത';
+
+  @override
+  String get demoMotionSubtitle =>
+      'മൂൻകൂട്ടി നിശ്ചയിച്ച എല്ലാ ട്രാൻസിഷൻ പാറ്റേണുകളും';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'കണ്ടെയ്‌നർ ട്രാൻസ്ഫോം';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'കണ്ടെയ്‌നർ ഉൾപ്പെടുന്ന UI ഘടകങ്ങൾ തമ്മിലുള്ള പരിവർത്തനത്തിനായാണ് കണ്ടെയ്‌നർ ട്രാൻസ്ഫോം പാറ്റേൺ രൂപകൽപ്പന ചെയ്‌തിരിക്കുന്നത്. രണ്ട് UI ഘടകങ്ങൾക്കിടയിൽ കാണാനാകുന്ന തരത്തിലുള്ള ഒരു കണക്ഷൻ ഈ പാറ്റേൺ സൃഷ്‌ടിക്കുന്നു';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'ഫേഡ് മോഡ്';
+
+  @override
+  String get demoContainerTransformTypeFade => 'ഫേഡ്';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'ഫേഡ് ത്രൂ';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'പേര്';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'ദ്വിതീയ ടെക്‌സ്‌റ്റ്';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'ദ്വിതീയം';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'വിശദാംശങ്ങൾ പേജ്';
+
+  @override
+  String get demoMotionListTileTitle => 'ലിസ്‌റ്റ് ഇനം';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'സ്ഥല സംബന്ധമായോ നവിഗേഷൻ സംബന്ധമായോ ബന്ധമുള്ള UI ഘടകങ്ങൾ തമ്മിലുള്ള പരിവർത്തനത്തിനായാണ് പങ്കിട്ട ആക്‌സിസ് പാറ്റേൺ ഉപയോഗിക്കുന്നത്. ഘടകങ്ങൾ തമ്മിലുള്ള ബന്ധം പുനഃസ്ഥാപിക്കുന്നതിന് ഈ പാറ്റേൺ, x, y, z അക്ഷത്തിൽ ഒരു പങ്കിടൽ പരിവർത്തന രീതി ഉപയോഗിക്കുന്നു.';
+
+  @override
+  String get demoSharedXAxisTitle => 'പങ്കിട്ട x-അക്ഷം';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'മടങ്ങുക';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'അടുത്തത്';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle =>
+      'നിങ്ങളുടെ മുന്നോട്ട് പോകലിന് രൂപം നൽകൂ';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'ബണ്ടിൽ ചെയ്‌ത വിഭാഗങ്ങൾ നിങ്ങളുടെ ഫീഡിൽ ഗ്രൂപ്പുകളായി ദൃശ്യമാകുന്നു. നിങ്ങൾക്കിത് പിന്നീട് എപ്പോൾ വേണമെങ്കിലും മാറ്റാം.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'കരകൗശല വിദ്യകൾ';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'ബിസിനസ്';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'ചിത്രീകരണം';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'ഡിസൈൻ';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'പാചകസംബന്ധമായത്';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'ബണ്ടിൽ ചെയ്‌തു';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle =>
+      'വ്യക്തിഗതമായി കാണിച്ചിരിക്കുന്നു';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'ഹായ് David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText =>
+      'നിങ്ങളുടെ അക്കൗണ്ട് ഉപയോഗിച്ച് സൈൻ ഇൻ ചെയ്യുക';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'ഇമെയിൽ അല്ലെങ്കിൽ ഫോൺ നമ്പർ';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'ഇമെയിൽ മറന്നോ?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'അക്കൗണ്ട് സൃഷ്‌ടിക്കുക';
+
+  @override
+  String get demoSharedYAxisTitle => 'y-അക്ഷം പങ്കിട്ടു';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 ആൽബങ്ങൾ';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'അടുത്തിടെ പ്ലേ ചെയ്‌തത്';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'ആൽബം';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'ആർട്ടിസ്‌റ്റ്';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'മിനിറ്റ്';
+
+  @override
+  String get demoSharedZAxisTitle => 'z-അക്ഷം പങ്കിട്ടു';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'ക്രമീകരണം';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'ബർഗർ';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'ബർഗർ റെസിപ്പി';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'സാൻഡ്‌വിച്ച്';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription =>
+      'സാൻഡ്‌വിച്ച് റെസിപ്പി';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'ഡെസെർട്ട്';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'ഡെസെർട്ട് റെസിപ്പി';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'ചെമ്മീൻ';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'ചെമ്മീൻ കറി റെസിപ്പി';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'ഞണ്ട്';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription => 'ഞണ്ട് കറി റെസിപ്പി';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'ബീഫ് സാൻഡ്‌വിച്ച്';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'ബീഫ് സാൻഡ്‌വിച്ച് റെസിപ്പി';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'സംരക്ഷിച്ച റെസിപ്പികൾ';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'പ്രൊഫൈൽ';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'അറിയിപ്പുകൾ';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'സ്വകാര്യത';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'സഹായം';
+
+  @override
+  String get demoFadeThroughTitle => 'ഫേഡ് ത്രൂ';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'പരസ്‌പരം ദൃഢമായ ബന്ധമില്ലാത്ത UI ഘടകങ്ങൾ തമ്മിലുള്ള പരിവർത്തനത്തിനായാണ് ഫേഡ് ത്രൂ പാറ്റേൺ ഉപയോഗിക്കുന്നത്.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'ആൽബങ്ങൾ';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'ഫോട്ടോകൾ';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'തിരയുക';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 ഫോട്ടോകൾ';
+
+  @override
+  String get demoFadeScaleTitle => 'ഫേഡ്';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'സ്ക്രീനിന്റെ മധ്യത്തിൽ വന്ന് ക്രമേണ മങ്ങിപ്പോകുന്ന ഡയലോഗ് ബോക്‌സ് പോലെ, സ്ക്രീൻ പരിധിക്കുള്ളിൽ ചേരുകയും പുറത്ത് പോകുകയും ചെയ്യുന്ന UI ഘടകങ്ങൾക്കായാണ് ഫേഡ് പാറ്റേൺ ഉപയോഗിക്കുന്നത്.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'മോഡൽ കാണിക്കുക';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'FAB കാണിക്കുക';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'FAB മറയ്ക്കുക';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'മുന്നറിയിപ്പ് ഡയലോഗ്';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'റദ്ദാക്കുക';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'ഉപേക്ഷിക്കുക';
 
   @override
   String get demoColorsTitle => 'വർണ്ണങ്ങൾ';
@@ -1335,7 +1576,7 @@ class GalleryLocalizationsMl extends GalleryLocalizations {
   String get bottomNavigationCommentsTab => 'കമന്റുകൾ';
 
   @override
-  String get bottomNavigationCalendarTab => 'കലണ്ടർ';
+  String get bottomNavigationCalendarTab => 'Calendar';
 
   @override
   String get bottomNavigationAccountTab => 'അക്കൗണ്ട്';

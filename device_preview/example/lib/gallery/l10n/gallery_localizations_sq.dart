@@ -530,7 +530,7 @@ class GalleryLocalizationsSq extends GalleryLocalizations {
   String get demoCardTitle => 'Kartat';
 
   @override
-  String get demoCardSubtitle => 'Kartat bazë me kënde të rrumbullakasura';
+  String get demoCardSubtitle => 'Kartat bazë me kënde të rrumbullakosura';
 
   @override
   String get demoChipTitle => 'Çipet';
@@ -1004,6 +1004,249 @@ class GalleryLocalizationsSq extends GalleryLocalizations {
 
   @override
   String get demoCupertinoTextFieldPIN => 'PIN';
+
+  @override
+  String get demoMotionTitle => 'Lëvizja';
+
+  @override
+  String get demoMotionSubtitle =>
+      'Të gjitha motivet e paracaktuara të kalimit';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Transformimi i kontejnerit';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Motivi i transformimit të kontejnerit është projektuar për kalime mes elementeve të ndërfaqes së përdoruesit që përfshijnë një kontejner. Ky motiv krijon një lidhje të dukshme mes dy elementeve të ndërfaqes së përdoruesit';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle =>
+      'Modaliteti i zbehjes';
+
+  @override
+  String get demoContainerTransformTypeFade => 'ZBEHJE';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'ZBEHJE GRADUALE';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Titulli';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Teksti dytësor';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Dytësor';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Faqja e detajeve';
+
+  @override
+  String get demoMotionListTileTitle => 'Artikulli i listës';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Motivi i boshtit të ndarë përdoret për kalimet mes elementeve të ndërfaqes së përdoruesit që kanë marrëdhënie hapësinore ose navigacionale. Ky motiv përdor një transformim të ndarë në boshtin x, y ose z për të përforcuar marrëdhënien mes elementeve.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Boshti x i ndarë';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'PRAPA';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'PARA';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Përmirëso kurset e tua';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Kategoritë pjesë e paketës shfaqen si grupe në burimin tënd. Mund ta ndryshosh gjithmonë këtë më vonë.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle =>
+      'Vepra arti dhe artizanati';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Biznes';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Ilustrim';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Dizajnim';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Gatim';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Pjesë e paketës';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle =>
+      'Shfaqet individualisht';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Përshëndetje, David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText =>
+      'Identifikohu me llogarinë tënde';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'Email-i ose numri i telefonit';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'HARROVE ADRESËN E EMAIL-IT?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'KRIJO LLOGARI';
+
+  @override
+  String get demoSharedYAxisTitle => 'Boshti y i ndarë';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 albume';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Të luajtura së fundi';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Albumi';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Artisti';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min.';
+
+  @override
+  String get demoSharedZAxisTitle => 'Boshti z i ndarë';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Cilësimet';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Hamburger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Recetë për hamburger';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Sandviç';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Recetë për sandviç';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Ëmbëlsirë';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Recetë për ëmbëlsirë';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Karkaleca deti';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Recetë për gatim me karkaleca deti';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Gaforre';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Recetë për gatim me gaforre';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Sandviç me mish viçi';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Recetë për sandviç me mish viçi';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Recetat e ruajtura';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profili';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Njoftimet';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Privatësia';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Ndihma';
+
+  @override
+  String get demoFadeThroughTitle => 'Zbehje graduale';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Motivi i zbehjes graduale përdoret për kalimet mes elementeve të ndërfaqes së përdoruesit që nuk kanë marrëdhënie të fortë me njëri-tjetrin.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Albumet';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Fotografitë';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Kërko';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 fotografi';
+
+  @override
+  String get demoFadeScaleTitle => 'Zbehje';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Motivi i zbehjes përdoret për elementet e ndërfaqes së përdoruesit që hyjnë ose dalin brenda kufijve të ekranit, si p.sh. një dialog që zbehet në qendër të ekranit.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'SHFAQ MODAL';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'SHFAQ FAB';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'FSHIH FAB';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Dialogu i alarmit';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ANULO';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'HIQ';
 
   @override
   String get demoColorsTitle => 'Ngjyrat';

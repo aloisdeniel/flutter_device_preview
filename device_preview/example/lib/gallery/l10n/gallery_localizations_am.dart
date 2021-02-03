@@ -979,6 +979,240 @@ class GalleryLocalizationsAm extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'ፒን';
 
   @override
+  String get demoMotionTitle => 'እንቅስቃሴ';
+
+  @override
+  String get demoMotionSubtitle => 'ሁሉም ቅድሚያ የተገለጹ የሽግግር ስርዓተ ጥለቶች';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'መያዣን መቀየር';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'የመያዣው መቀየር ስርዓተ-ጥለት መያዣን በሚያካትቱ ዩአይ አካላት መካከል ላሉት ሽግግሮች የተነደፈ ነው። ይህ ስርዓተ-ጥለት በሁለት ዩአይ አካላት መካከል የሚታይ ግንኙነትን ይፈጥራል';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'የአደብዝዝ ሁነታ';
+
+  @override
+  String get demoContainerTransformTypeFade => 'አደብዝዝ';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'በዚህ በኩል አደብዝዝ፦';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'ርዕስ';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'ሁለተኛ ጽሑፍ';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'ሁለተኛ';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'የዝርዝሮች ገጽ';
+
+  @override
+  String get demoMotionListTileTitle => 'የዝርዝር ንጥል';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'የተጋራ የዘንግ ስርዓተ-ጥለት የቦታ ወይም የዳሰሳ ግንኙነት ባላቸው ዩአይ ክፍለ-አካላት መካከል ላሉት ሽግግሮች ያገለግላል። በክፍለ-አካላት መካከል ያለውን ግንኙነት ለማጠናከር ይህ ስርዓተ-ጥለት በ x፣ y ወይም z ዘንግ ላይ የጋራ ሽግግርን ይጠቀማል።';
+
+  @override
+  String get demoSharedXAxisTitle => 'የተጋራ x-ዘንግ';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'ተመለስ';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'ቀጣይ';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'ትምህርቶችዎን ያሳልጡ';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'የተጠቃለሉ ምድቦች በምግብዎ ላይ እንደ ቡድን ሆነው ይታያሉ። ይህን በኋላ ላይ በማንኛውም ጊዜ መቀየር ይችላሉ።';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'ስነ ጥበባት እና ዕደ ጥበባት';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'ንግድ';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'ስዕላዊ ማብራሪያ';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'ንድፍ';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'የምግብ አሰራር';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'የተጠቃለለ';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'በተናጠል የሚታይ';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'ሰላም David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'በመለያዎ ይግቡ';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel => 'ኢሜይል ወይም ስልክ ቁጥር';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'ኢሜይል ረስተዋል?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'መለያ ፍጠር';
+
+  @override
+  String get demoSharedYAxisTitle => 'የተጋራ y-ዘንግ';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 አልበሞች';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'ሀ-ፐ';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'በቅርቡ የተጫወቱ';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'አልበም';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'አርቲስት';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'ደቂቃ';
+
+  @override
+  String get demoSharedZAxisTitle => 'የተጋራ z-ዘንግ';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'ቅንብሮች';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'በርገር';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'የበርገር አሰራር';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'ሳንድዊች';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'የበርገር አሰራር';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'ጣፋጭ ምግብ';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'የጣፋጭ ምግብ አሰራር';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'ሽሪምፕ';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription => 'የሽሪምፕ ምግብ አሰራር';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'ሸርጣን';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription => 'የሸርጣን ምግብ አሰራር';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'የበሬ ስጋ ሳንድዊች';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'የበሬ ስጋ ሳንድዊች አሰራር';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'የተቀመጡ የምግብ አሰራሮች';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'መገለጫ';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'ማሳወቂያዎች';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'ግላዊነት';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'እገዛ';
+
+  @override
+  String get demoFadeThroughTitle => 'በዚህ በኩል አደብዝዝ፦';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'በስርዓተ-ጥለት በኩል አደብዝዝ እርስ ከራሳቸው ጠንካራ ግንኙነት በሌላቸው የዩአይ ክፍለ-አካላት መካከል ላለ ሽግግር ስራ ላይ ይውላል።';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'አልበሞች';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'ፎቶዎች';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'ፍለጋ';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 ፎቶዎች';
+
+  @override
+  String get demoFadeScaleTitle => 'አደብዝዝ';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'የአደብዝዝ ስርዓተ-ጥለት እንደ ወደ የማያ ገጹ መሃል የሚደበዝዝ መገናኛ ላሉ በማያ ገጹ ወሰን ውስጥ ለሚገቡ ወይም ለሚወጡት ዩአይ ክፍለ-አካላት ያገለግላል።';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'ሞዳል አሳይ';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'FAB አሳይ';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'FAB ደብቅ';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'የማንቂያ ንግግር';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ይቅር';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'ጣለው';
+
+  @override
   String get demoColorsTitle => 'ቀለማት';
 
   @override

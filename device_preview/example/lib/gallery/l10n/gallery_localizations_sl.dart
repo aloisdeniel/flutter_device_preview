@@ -1003,6 +1003,245 @@ class GalleryLocalizationsSl extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'Gibanje';
+
+  @override
+  String get demoMotionSubtitle => 'Vsi vnaprej določeni vzorci prehodov';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Pretvorba vsebnika';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Vzorec pretvorbe vsebnika je zasnovan za prehode med elementi uporabniškega vmesnika, ki vključujejo vsebnik. Ta vzorec ustvari vidno povezavo med dvema elementoma uporabniškega vmesnika.';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Način pojemanja';
+
+  @override
+  String get demoContainerTransformTypeFade => 'POJEMANJE';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'POSTOPNO POJEMANJE';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Naslov';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Sekundarno besedilo';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Sekundarno';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Stran s podrobnostmi';
+
+  @override
+  String get demoMotionListTileTitle => 'Element seznama';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Vzorec skupne osi se uporablja za prehode med elementi uporabniškega vmesnika, ki so v prostorskem ali navigacijskem razmerju. Ta vzorec uporablja skupno spremembo na osi x, y ali z, da okrepi razmerje med elementi.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Skupna os x';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'NAZAJ';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'NAPREJ';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Izboljšajte tečaje';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Združene kategorije so prikazane kot skupine v vašem viru. To lahko pozneje kadar koli spremenite.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Ročna obrt';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Posel';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Ilustracije';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Oblikovanje';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Kulinarika';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Združeno';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Prikazano posamezno';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Pozdravljeni, David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText =>
+      'Prijavite se s svojim računom';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'E-poštni naslov ali telefonska številka';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'STE POZABILI E-POŠTNI NASLOV?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'USTVARI RAČUN';
+
+  @override
+  String get demoSharedYAxisTitle => 'Skupna os y';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 albumov';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A–Ž';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Nedavno predvajano';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Album';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Izvajalec';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min';
+
+  @override
+  String get demoSharedZAxisTitle => 'Skupna os z';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Nastavitve';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Burger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Recept za burger';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Sendvič';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Recept za sendvič';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Sladica';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Recept za sladico';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Morski rakec';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Recept za jed z rakci';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Rak';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Recept za jed z raki';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Sendvič z govedino';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Recept za sendvič z govedino';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Shranjeni recepti';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profil';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Obvestila';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Zasebnost';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Pomoč';
+
+  @override
+  String get demoFadeThroughTitle => 'Postopno pojemanje';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Vzorec postopnega pojemanja se uporablja za prehode med elementi uporabniškega vmesnika, ki niso v močnem medsebojnem razmerju.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Albumi';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Fotografije';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Iskanje';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 fotografij';
+
+  @override
+  String get demoFadeScaleTitle => 'Pojemanje';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Vzorec pojemanja se uporablja za elemente uporabniškega vmesnika, ki se prikazujejo ali izginjajo znotraj meja zaslona, kot je pogovorno okno, ki pojenja na sredini zaslona.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'PRIKAŽI MODALNO OKNO';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'PRIKAŽI PLAVAJOČI GUMB';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'SKRIJ PLAVAJOČI GUMB';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Opozorilno pogovorno okno';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'PREKLIČI';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'ZAVRZI';
+
+  @override
   String get demoColorsTitle => 'Barve';
 
   @override

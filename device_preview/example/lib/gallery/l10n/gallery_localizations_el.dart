@@ -1005,6 +1005,250 @@ class GalleryLocalizationsEl extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'Κίνηση';
+
+  @override
+  String get demoMotionSubtitle => 'Όλα τα προκαθορισμένα μοτίβα μετάβασης';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Μετασχηματισμός κοντέινερ';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Το μοτίβο μετασχηματισμού κοντέινερ έχει σχεδιαστεί για μεταβάσεις μεταξύ στοιχείων διεπαφής χρήστη που περιλαμβάνουν ένα κοντέινερ. Αυτό το μοτίβο δημιουργεί μια ορατή σύνδεση μεταξύ δύο στοιχείων διεπαφής χρήστη.';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle =>
+      'Λειτουργία σταδιακής εξαφάνισης';
+
+  @override
+  String get demoContainerTransformTypeFade => 'ΣΤΑΔΙΑΚΗ ΕΞΑΦΑΝΙΣΗ';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough =>
+      'ΣΤΑΔΙΑΚΗ ΕΞΑΦΑΝΙΣΗ ΔΙΑ ΜΕΣΟΥ';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Τίτλος';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Δευτερεύον κείμενο';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Δευτερεύον';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Σελίδα λεπτομερειών';
+
+  @override
+  String get demoMotionListTileTitle => 'Στοιχείο λίστας';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Το μοτίβο κοινόχρηστου άξονα χρησιμοποιείται για μεταβάσεις μεταξύ στοιχείων διεπαφής χρήστη που συνδέονται με μια χωρική σχέση ή μια σχέση πλοήγησης. Αυτό το μοτίβο χρησιμοποιεί έναν κοινόχρηστο μετασχηματισμό στον άξονα x, y ή z για να ενδυναμώσει τη σχέση μεταξύ των στοιχείων.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Κοινόχρηστος άξονας x';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'ΠΙΣΩ';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'ΕΠΟΜΕΝΟ';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Συντονισμός των μαθημάτων σας';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Οι ομαδοποιημένες κατηγορίες εμφανίζονται ως ομάδες στη ροή σας. Μπορείτε πάντα να αλλάξετε αυτήν την επιλογή αργότερα.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Τέχνη και κατασκευές';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Επιχειρήσεις';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Εικονογράφηση';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Σχέδιο';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Μαγειρική';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Ομαδοποιημένο';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Μεμονωμένο';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Γεια σας David Park,';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText =>
+      'Σύνδεση με τον λογαριασμό σας';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'Διεύθυνση ηλεκτρονικού ταχυδρομείου ή αριθμός τηλεφώνου';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'ΞΕΧΑΣΑΤΕ ΤΗ ΔΙΕΥΘΥΝΣΗ ΗΛΕΚΤΡΟΝΙΚΟΥ ΤΑΧΥΔΡΟΜΕΙΟΥ;';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'ΔΗΜΙΟΥΡΓΙΑ ΛΟΓΑΡΙΑΣΜΟΥ';
+
+  @override
+  String get demoSharedYAxisTitle => 'Κοινόχρηστος άξονας y';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 άλμπουμ';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'Α-Ω';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Ακούσατε πρόσφατα';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Άλμπουμ';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Καλλιτέχνης';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'λ.';
+
+  @override
+  String get demoSharedZAxisTitle => 'Κοινόχρηστος άξονας z';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Ρυθμίσεις';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Μπέργκερ';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Συνταγή μπέργκερ';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Σάντουιτς';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Συνταγή σάντουιτς';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Επιδόρπιο';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Συνταγή επιδορπίου';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Γαρίδες';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Συνταγή για γαρίδες';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Καβούρι';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription => 'Συνταγή για καβούρι';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Σάντουιτς με βοδινό';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Συνταγή για σάντουιτς με βοδινό';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Αποθηκευμένες συνταγές';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Προφίλ';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Ειδοποιήσεις';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Απόρρητο';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Βοήθεια';
+
+  @override
+  String get demoFadeThroughTitle => 'Σταδιακή εξαφάνιση διά μέσου';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Το μοτίβο σταδιακής εξαφάνισης στο κέντρο χρησιμοποιείται για μεταβάσεις μεταξύ στοιχείων διεπαφής χρήστη που δεν έχουν μια ισχυρή σχέση ανάμεσά τους.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Άλμπουμ';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Φωτογραφίες';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Αναζήτηση';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 φωτογραφίες';
+
+  @override
+  String get demoFadeScaleTitle => 'Σταδιακή εξαφάνιση';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Το μοτίβο σταδιακής εξαφάνισης χρησιμοποιείται για στοιχεία διεπαφής χρήστη που μπαίνουν ή βγαίνουν από τα όρια της οθόνης , όπως ένα παράθυρο διαλόγου που εμφανίζεται σταδιακά στο κέντρο της οθόνης.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton =>
+      'ΕΜΦΑΝΙΣΗ ΑΠΟΚΛΕΙΣΤΙΚΗΣ ΕΙΔΟΠΟΙΗΣΗΣ';
+
+  @override
+  String get demoFadeScaleShowFabButton =>
+      'ΕΜΦΑΝΙΣΗ ΚΙΝΟΥΜΕΝΟΥ ΚΟΥΜΠΙΟΥ ΕΝΕΡΓΕΙΑΣ';
+
+  @override
+  String get demoFadeScaleHideFabButton =>
+      'ΑΠΟΚΡΥΨΗ ΚΙΝΟΥΜΕΝΟΥ ΚΟΥΜΠΙΟΥ ΕΝΕΡΓΕΙΑΣ';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader =>
+      'Παράθυρο διαλόγου προειδοποιήσεων';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ΑΚΥΡΩΣΗ';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'ΑΠΟΡΡΙΨΗ';
+
+  @override
   String get demoColorsTitle => 'Χρώματα';
 
   @override

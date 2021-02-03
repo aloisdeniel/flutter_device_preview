@@ -1004,6 +1004,244 @@ class GalleryLocalizationsCs extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'Pohyb';
+
+  @override
+  String get demoMotionSubtitle => 'Všechny předdefinované modely pohybu';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Transformace kontejneru';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Model transformace kontejneru je určen pro přechody mezi prvky uživatelského rozhraní, které obsahují kontejner. Tento model vytváří viditelnou spojitost mezi dvěma prvky uživatelského rozhraní.';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Režim prolínání';
+
+  @override
+  String get demoContainerTransformTypeFade => 'PROLÍNÁNÍ';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'VYBLEDNUTÍ';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Název';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Sekundární text';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Sekundární';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Stránka s podrobnostmi';
+
+  @override
+  String get demoMotionListTileTitle => 'Položka seznamu';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Model sdílené osy slouží k přechodu mezi prvky uživatelského rozhraní, které spolu souvisí prostorově nebo z hlediska navigačních prvků. Tento model zvýrazňuje vztahy mezi prvky prostřednictvím sdílené transformace na ose x, y nebo z.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Sdílená osa x';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'ZPĚT';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'DALŠÍ';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Zjednodušení kurzů';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Seskupené kategorie se v informačním kanále zobrazují jako skupiny. Toto nastavení můžete později kdykoliv změnit.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Umění a řemesla';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Byznys';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Ilustrace';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Design';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Vaření';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Seskupeno';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle =>
+      'Zobrazováno samostatně';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Ahoj, uživateli David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Přihlásit se k účtu';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'E-mail nebo telefonní číslo';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'ZAPOMNĚLI JSTE SVŮJ E-MAIL?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'VYTVOŘIT ÚČET';
+
+  @override
+  String get demoSharedYAxisTitle => 'Sdílená osa y';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 alb';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A–Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Nedávno přehráno';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Album';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Interpret';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min';
+
+  @override
+  String get demoSharedZAxisTitle => 'Sdílená osa z';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Nastavení';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Hamburger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Recepty na hamburger';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Sendvič';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Recepty na sendvič';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Zákusek';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Recepty na zákusek';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Krevety';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Recepty na krevety';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Krab';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription => 'Recepty na kraba';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Hovězí sendvič';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Recepty na hovězí sendvič';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Uložené recepty';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profil';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Oznámení';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Ochrana soukromí';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Nápověda';
+
+  @override
+  String get demoFadeThroughTitle => 'Vyblednutí';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Model vyblednutí slouží k přechodu mezi prvky uživatelského rozhraní, které nemají zásadní vzájemnou souvislost.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Alba';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Fotky';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Vyhledávání';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 fotek';
+
+  @override
+  String get demoFadeScaleTitle => 'Prolínání';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Model prolínání je určen pro prvky uživatelského rozhraní, které se zobrazí v prostoru obrazovky nebo odtud zmizí, jako například dialogové okno, které se prolnutím postupně zobrazí uprostřed obrazovky.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'ZOBRAZIT MODÁLNÍ OKNO';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'ZOBRAZIT FAB';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'SKRÝT FAB';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Dialog výstrahy';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ZRUŠIT';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'ZAHODIT';
+
+  @override
   String get demoColorsTitle => 'Barvy';
 
   @override

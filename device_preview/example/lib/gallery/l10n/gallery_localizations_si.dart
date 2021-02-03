@@ -994,6 +994,241 @@ class GalleryLocalizationsSi extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'චලනය';
+
+  @override
+  String get demoMotionSubtitle => 'සියලු පූර්ව නිර්ණිත සංක්‍රාන්ති රටා';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'බහාලුම් පරිණාමනය';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'බහාලුම් පරිණාමන රටාව නිර්මාණය කර ඇත්තේ බහාලුමක් ඇතුළත් UI මූලාංග අතර සංක්‍රාන්ති සඳහාය. මෙම රටාව UI මූලාංග දෙකක් අතර දෘශ්‍ය සම්බන්ධතාවක් නිර්මාණය කරයි';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'මැකී යන ප්‍රකාරය';
+
+  @override
+  String get demoContainerTransformTypeFade => 'මැකී යාම';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'මැකී යාම';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'මාතෘකාව';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'ද්විතියික පෙළ';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'ද්විතීයික';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'විස්තර පිටුව';
+
+  @override
+  String get demoMotionListTileTitle => 'ලැයිස්තු අයිතමය';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'අවකාශීය හෝ සංචාලන සම්බන්ධතාවයක් ඇති UI මූලාංග අතර සංක්‍රාන්තිය සඳහා බෙදා ගත් අක්ෂ රටාව භාවිත කරයි. මෙම රටාව මූලාංග අතර සම්බන්ධතාවය ශක්තිමත් කිරීම සඳහා x, y, හෝ z අක්ෂයේ බෙදා ගත් පරිණාමනයක් භාවිත කරයි.';
+
+  @override
+  String get demoSharedXAxisTitle => 'බෙදා ගත් x-අක්ෂය';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'ආපසු';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'ඊළඟ';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'ඔබේ පාඨමාලා ක්‍රමවත් කරන්න';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'පොදි කළ ප්‍රවර්ග ඔබේ සංග්‍රහයේ සමූහ ලෙස දිස් වේ. ඔබට මෙය සැම විට පසුව වෙනස් කළ හැකිය.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'කලා ශිල්ප';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'ව්‍යාපාරය';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'රූප සටහන';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'සැලසුම';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'සූපවේදී';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'පොදි කළ';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'තනි තනිව පෙන්වන';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'ආයුබෝවන් David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'ඔබේ ගිණුම සමගින් පුරන්න';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel => 'ඉ-තැපෑල හෝ දුරකථන අංකය';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'ඉ-තැපෑල අමතක වුණාද?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'ගිණුමක් සාදන්න';
+
+  @override
+  String get demoSharedYAxisTitle => 'බෙදා ගත් y-අක්ෂය';
+
+  @override
+  String get demoSharedYAxisAlbumCount => 'ඇල්බම 268';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'මෑතක දී ධාවනය කළ';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'ඇල්බමය';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'කලාකරු';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'මිනි';
+
+  @override
+  String get demoSharedZAxisTitle => 'බෙදා ගත් z-අක්ෂය';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'සැකසීම්';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'බර්ගර්';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'බර්ගර් වට්ටෝරුව';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'සැන්ඩ්විච්';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'සැන්ඩ්විච් වට්ටෝරුව';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'අතුරුපස';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'අතුරුපස වට්ටෝරුව';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'කූනිස්සා';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'කූනිස්සන් වට්ටෝරුව';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'කකුළුවා';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription => 'කකුළුවන් වට්ටෝරුව';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'බීෆ් සැන්ඩ්විච්';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'බීෆ් සැන්ඩ්විච් වට්ටෝරුව';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'සුරැකි වට්ටෝරු';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'පැතිකඩ';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'දැනුම්දීම්';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'රහස්‍යතාව';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'උදවු';
+
+  @override
+  String get demoFadeThroughTitle => 'මැකී යාම';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'එකිනෙක සමඟ ශක්තිමත් සම්බන්ධතාවයක් නොමැති UI මූලාංග අතර සංක්‍රාන්තිය සඳහා මැකී යාමේ රටාව භාවිතා වේ.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'ඇල්බම';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'ඡායාරූප';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'සෙවීම';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => 'ඡායාරූප 123';
+
+  @override
+  String get demoFadeScaleTitle => 'මැකී යාම';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'මැකී යාමේ රටාව භාවිතා කරනුයේ තිරයේ මායිම් තුළට ඇතුළු වන හෝ පිටවන UI මූලාංග සඳහාය, එනම් තිරය මධ්‍යයේ මැකී යන සංවාදයක් වැනි ඒවාය.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'MODAL පෙන්වන්න';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'FAB පෙන්වන්න';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'FAB සඟවන්න';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'ඇඟවීමේ සංවාදය';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'අවලංගු කරන්න';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'ඉවත ලන්න';
+
+  @override
   String get demoColorsTitle => 'වර්ණ';
 
   @override

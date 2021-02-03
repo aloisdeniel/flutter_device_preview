@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:device_info/device_info.dart';
 
@@ -35,6 +36,9 @@ class _MediaQueryInfoState extends State<MediaQueryInfo> {
 
   Future _init() async {
     final deviceInfo = DeviceInfoPlugin();
+    if (kIsWeb) {
+      return;
+    }
     if (Platform.isAndroid) {
       _android = await deviceInfo.androidInfo;
     } else if (Platform.isIOS) {
@@ -44,6 +48,12 @@ class _MediaQueryInfoState extends State<MediaQueryInfo> {
   }
 
   List<Widget> get _device {
+    if (kIsWeb) {
+      return <Widget>[
+        Text('web'),
+      ];
+    }
+
     if (_android != null) {
       return <Widget>[
         Text('os: android'),
@@ -78,16 +88,17 @@ class _MediaQueryInfoState extends State<MediaQueryInfo> {
       body: Padding(
         padding: const EdgeInsets.all(12),
         child: ListView(
-            children: _device
-              ..addAll([
-                Text('devicePixelRatio: ${media.devicePixelRatio}'),
-                Text('padding: ${media.padding}'),
-                Text('size: ${media.size}'),
-                Text('viewInsets: ${media.viewInsets}'),
-                Text('textScaleFactor: ${media.textScaleFactor}'),
-                Text('platformBrightness: ${media.platformBrightness}'),
-                Text('boldText: ${media.boldText}'),
-              ])),
+          children: [
+            ..._device,
+            Text('devicePixelRatio: ${media.devicePixelRatio}'),
+            Text('padding: ${media.padding}'),
+            Text('size: ${media.size}'),
+            Text('viewInsets: ${media.viewInsets}'),
+            Text('textScaleFactor: ${media.textScaleFactor}'),
+            Text('platformBrightness: ${media.platformBrightness}'),
+            Text('boldText: ${media.boldText}'),
+          ],
+        ),
       ),
     );
   }

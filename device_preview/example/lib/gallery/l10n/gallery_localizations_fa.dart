@@ -989,6 +989,243 @@ class GalleryLocalizationsFa extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'پین';
 
   @override
+  String get demoMotionTitle => 'حرکت';
+
+  @override
+  String get demoMotionSubtitle => 'همه الگوهای انتقال از پیش تعریف‌شده';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'تبدیل محتوی';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'الگوی تبدیل محتوی برای انتقال بین عناصر رابط کاربری طراحی شده است که حاوی محتوی است. این الگو اتصالی نمایان بین دو عنصر رابط کاربری ایجاد می‌کند';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'حالت محو کردن';
+
+  @override
+  String get demoContainerTransformTypeFade => 'محو کردن';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'محو کردن گسترده';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'عنوان';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'متن ثانویه';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'ثانویه';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'صفحه جزئیات';
+
+  @override
+  String get demoMotionListTileTitle => 'مورد فهرست';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'الگوی محور مشترک برای انتقال بین عناصر رابط کاربری‌ای استفاده می‌شود که رابطه‌ای فضایی یا پیمایشی دارند. این الگو از تبدیل مشترک در محور x،‏ y، یا z استفاده می‌کند تا رابطه بین عناصر را تقویت کند.';
+
+  @override
+  String get demoSharedXAxisTitle => 'محور x مشترک';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'برگشت';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'بعدی';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'خط جریان دوره‌ها';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'دسته‌های مجموعه‌ای به‌صورت گروه‌هایی در فیدتان نشان داده می‌شوند. هرزمان بخواهید می‌توانید این مورد را در فرصتی دیگر تغییر دهید.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'هنر و صنایع‌دستی';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'کسب‌وکار';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'مصورسازی';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'طراحی';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'دوره آشپزی';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'دسته‌ای';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'نمایش به‌صورت جداگانه';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'سلام دیوید پارک';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'با حساب خود وارد سیستم شوید';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel => 'ایمیل یا شماره تلفن';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'ایمیلتان را فراموش کرده‌اید؟';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'ایجاد حساب';
+
+  @override
+  String get demoSharedYAxisTitle => 'محور y مشترک';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '۲۶۸ آلبوم';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'به‌ترتیب الفبا';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'پخش‌شده‌های اخیر';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'آلبوم';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'هنرمند';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'دقیقه';
+
+  @override
+  String get demoSharedZAxisTitle => 'محور z مشترک';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'تنظیمات';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'همبرگر';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'دستور پخت همبرگر';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'ساندویچ';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'دستور تهیه ساندویچ';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'دسر';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'دستور تهیه دسر';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'میگو';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'دستور پخت بشقاب میگو';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'خرچنگ';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'دستور پخت بشقاب خرچنگ';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'ساندویچ گوشت گاو';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'دستور پخت ساندویچ گوشت گاو';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'دستورهای پخت ذخیره‌شده';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'نمایه';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'اعلان‌ها';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'حریم‌خصوصی';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'راهنما';
+
+  @override
+  String get demoFadeThroughTitle => 'محو کردن گسترده';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'الگوی محو کردن گسترده برای انتقال بین عناصر رابط کاربری‌ای استفاده می‌شود که ارتباطی قوی با یکدیگر ندارند.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'آلبوم‌ها';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'عکس‌ها';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'جستجو';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '۱۲۳ عکس';
+
+  @override
+  String get demoFadeScaleTitle => 'محو کردن';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'الگوی محو کردن برای عناصر رابط کاربری‌ای استفاده می‌شود که در محدوده صفحه‌نمایش وارد یا از آن خارج می‌شوند، مثل کادر گفتگویی که در مرکز صفحه محو می‌شود.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'نمایش مودال';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'نمایش دکمه کنش شناور';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'پنهان کردن دکمه کنش شناور';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'گفتگوی هشدار';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'لغو';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'صرف‌نظر کردن';
+
+  @override
   String get demoColorsTitle => 'رنگ‌ها';
 
   @override

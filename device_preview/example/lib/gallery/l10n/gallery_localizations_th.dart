@@ -995,6 +995,242 @@ class GalleryLocalizationsTh extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'การเคลื่อนไหว';
+
+  @override
+  String get demoMotionSubtitle =>
+      'รูปแบบต่างๆ ของการเปลี่ยนที่กำหนดค่าไว้ล่วงหน้า';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'เปลี่ยนรูปแบบคอนเทนเนอร์';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'รูปแบบ \"เปลี่ยนรูปแบบคอนเทนเนอร์\" ออกแบบมาสำหรับการเปลี่ยนระหว่างองค์ประกอบ UI ที่มีคอนเทนเนอร์ รูปแบบนี้สร้างการเชื่อมต่อที่มองเห็นได้ระหว่างองค์ประกอบ UI 2 รายการ';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'โหมดจาง';
+
+  @override
+  String get demoContainerTransformTypeFade => 'จางลง';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'จางผ่าน';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'ชื่อ';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'ข้อความรอง';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'รอง';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'หน้ารายละเอียด';
+
+  @override
+  String get demoMotionListTileTitle => 'รายการย่อย';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'รูปแบบ \"แกนร่วม\" ใช้ในการเปลี่ยนระหว่างองค์ประกอบ UI ที่มีความสัมพันธ์ในการนำทางหรือเชิงพื้นที่ รูปแบบนี้ใช้การเปลี่ยนรูปแบบร่วมกันบนแกน X, Y, หรือ Z เพื่อเสริมความสัมพันธ์ระหว่างองค์ประกอบต่างๆ';
+
+  @override
+  String get demoSharedXAxisTitle => 'แกน X ที่ใช้ร่วมกัน';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'กลับ';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'ถัดไป';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle =>
+      'ปรับปรุงหลักสูตรของคุณให้มีประสิทธิภาพ';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'หมวดหมู่ตามกลุ่มจะแสดงเป็นกลุ่มในฟีดของคุณ ซึ่งคุณจะเปลี่ยนแปลงได้ในภายหลังเสมอ';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'ศิลปะและหัตถกรรม';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'ธุรกิจ';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'ภาพ';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'การออกแบบ';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'การทำอาหาร';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'แพ็กเกจ';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'แสดงแยกแต่ละรายการ';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'สวัสดี David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'ลงชื่อเข้าใช้บัญชีของคุณ';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel => 'อีเมลหรือหมายเลขโทรศัพท์';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'หากลืมอีเมล';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'สร้างบัญชี';
+
+  @override
+  String get demoSharedYAxisTitle => 'แกน Y ที่ใช้ร่วมกัน';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 อัลบั้ม';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'ฟังล่าสุด';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'อัลบั้ม';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'ศิลปิน';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'นาที';
+
+  @override
+  String get demoSharedZAxisTitle => 'แกน Z ที่ใช้ร่วมกัน';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'การตั้งค่า';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'เบอร์เกอร์';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'สูตรเบอร์เกอร์';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'แซนด์วิช';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'สูตรแซนด์วิช';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'ของหวาน';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'สูตรของหวาน';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'กุ้ง';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription => 'สูตรอาหารจานกุ้ง';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'ปู';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription => 'สูตรอาหารจานปู';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'แซนด์วิชเนื้อ';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'สูตรแซนด์วิชเนื้อ';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'สูตรที่บันทึกไว้';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'โปรไฟล์';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'การแจ้งเตือน';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'ความเป็นส่วนตัว';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'ความช่วยเหลือ';
+
+  @override
+  String get demoFadeThroughTitle => 'จางผ่าน';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'รูปแบบ \"จางผ่าน\" ใช้กับการเปลี่ยนระหว่างองค์ประกอบ UI ที่ไม่มีความสัมพันธ์ที่มีอิทธิพลต่อกัน';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'อัลบั้ม';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'รูปภาพ';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'ค้นหา';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 รูปภาพ';
+
+  @override
+  String get demoFadeScaleTitle => 'จางลง';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'รูปแบบ \"จางลง\" ใช้กับองค์ประกอบ UI ที่เข้าหรือออกภายในขอบเขตหน้าจอ เช่นกล่องโต้ตอบที่จางลงตรงกลางของหน้าจอ';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'แสดงรูปแบบ';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'แสดง FAB';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'ซ่อน FAB';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'กล่องโต้ตอบการแจ้งเตือน';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ยกเลิก';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'ทิ้ง';
+
+  @override
   String get demoColorsTitle => 'สี';
 
   @override

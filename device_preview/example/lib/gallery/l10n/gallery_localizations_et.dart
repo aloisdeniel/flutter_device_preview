@@ -997,6 +997,243 @@ class GalleryLocalizationsEt extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN-kood';
 
   @override
+  String get demoMotionTitle => 'Liikumine';
+
+  @override
+  String get demoMotionSubtitle => 'Kõik eelmääratud üleminekumustrid';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Konteineri üleminek';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Konteineri ülemineku muster on loodud konteinerit sisaldavate kasutajaliidese elementide vaheliste üleminekute jaoks. Muster loob kahe kasutajaliidese elemendi vahel nähtava sideme';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Hajutusrežiim';
+
+  @override
+  String get demoContainerTransformTypeFade => 'HAJUTUS';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'LÄBIHAJUTUS';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Pealkiri';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Teisene tekst';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Teisene';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Üksikasjade leht';
+
+  @override
+  String get demoMotionListTileTitle => 'Loendiüksus';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Jagatud telje mustrit kasutatakse ruumilise või navigeerimissuhtega kasutajaliidese elementide vaheliste üleminekute jaoks. Muster kasutab X-, Y- või Z-teljel jagatud üleminekut, et elementidevahelist suhet esile tõsta.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Jagatud X-telg';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'TAGASI';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'JÄRGMINE';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Muutke kursused sujuvamaks';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Kogumis olevad kategooriad kuvatakse teie voos gruppidena. Seda saab alati hiljem muuta.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Kunst ja käsitöö';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Äri';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Illustratsioon';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Disain';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Kokandus';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Kogumis';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Kuvatakse üksikult';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Tere, David Park!';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Logige oma kontole sisse';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel => 'E-post või telefoninumber';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'KAS UNUSTASITE E-POSTI AADRESSI?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'LOO KONTO';
+
+  @override
+  String get demoSharedYAxisTitle => 'Jagatud Y-telg';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 albumit';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A–Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Hiljuti esitatud';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Album';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Esitaja';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min';
+
+  @override
+  String get demoSharedZAxisTitle => 'Jagatud Z-telg';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Seaded';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Burger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Burgeriretsept';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Võileib';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Võileivaretsept';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Magustoit';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Magustoiduretsept';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Krevetid';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Krevetitaldriku retsept';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Krabi';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Krabitaldriku retsept';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Veiselihavõileib';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Veiselihavõileiva retsept';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Salvestatud retseptid';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profiil';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Märguanded';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Privaatsus';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Abi';
+
+  @override
+  String get demoFadeThroughTitle => 'Läbihajutus';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Läbihajutuse mustrit kasutatakse üleminekuna kasutajaliidese elementide puhul, millel ei ole teineteisega tugevat seost.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Albumid';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Fotod';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Otsi';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 fotot';
+
+  @override
+  String get demoFadeScaleTitle => 'Hajutus';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Hajutusmustrit kasutatakse kasutajaliidese elementide puhul, mis ilmuvad või kaovad ekraanikuva piires, nagu dialoog, mis hajub ekraanikuva keskosas sisse.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'KUVA MODAALNE';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'KUVA FAB';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'PEIDA FAB';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Märguande dialoogiaken';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'TÜHISTA';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'LOOBU';
+
+  @override
   String get demoColorsTitle => 'Värvid';
 
   @override

@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"name": "device_frame",
+			"path": "device_frame"
+		},
+		{
+			"name": "device_preview",
+			"path": "device_preview"
+		},
+		{
+			"name": "tools",
+			"path": "tools"
+		},
+		{
+			"name": "docs",
+			"path": "docs"
+		}
+	],
+	"settings": {
+		"editor.formatOnPaste": true,
+		"editor.formatOnSave": true,
+		"editor.formatOnType": true,
+		"dart.flutterSdkPath": "/Users/alois/Sources/flutter"
+	}
+}

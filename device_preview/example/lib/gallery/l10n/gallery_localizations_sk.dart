@@ -1006,6 +1006,244 @@ class GalleryLocalizationsSk extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'Pohyb';
+
+  @override
+  String get demoMotionSubtitle => 'Všetky preddefinované vzory prechodov';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Transformácia kontajnera';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Vzor transformácie kontajnera je určený pre prechody medzi prvkami používateľského rozhrania, ktoré obsahujú kontajner. Tento vzor vytvára viditeľné spojenie medzi dvoma prvkami používateľského rozhrania';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Režim miznutia';
+
+  @override
+  String get demoContainerTransformTypeFade => 'MIZNUTIE';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'POSTUPNÉ MIZNUTIE';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Názov';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Sekundárny text';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Sekundárne';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Podrobná stránka';
+
+  @override
+  String get demoMotionListTileTitle => 'Položka zoznamu';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Vzor zdieľanej osi sa používa v prípade prechodov medzi prvkami používateľského rozhrania, ktoré sú v priestorovom alebo navigačnom vzájomnom vzťahu. Tento vzor používa zdieľanú transformáciu na osiach x, y alebo z na upevnenie vzťahov medzi prvkami.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Zdieľaná os x';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'SPÄŤ';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'ĎALEJ';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Zjednodušte svoje kurzy';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Kategórie v balíkoch sa v informačnom kanáli zobrazujú ako skupiny. Toto nastavenie môžete neskôr zmeniť.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Umenie a remeslá';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Firma';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Ilustrácia';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Dizajn';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Kulinárstvo';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'V balíku';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Zobrazené samostatne';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Dobrý deň, David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Prihláste sa svojím účtom';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'E‑mail alebo telefónne číslo';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'ZABUDLI STE E‑MAIL?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'VYTVORIŤ ÚČET';
+
+  @override
+  String get demoSharedYAxisTitle => 'Zdieľaná os y';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 albumov';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A – Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Nedávno počúvané';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Album';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Interpret';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min';
+
+  @override
+  String get demoSharedZAxisTitle => 'Zdieľaná os z';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Nastavenia';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Hamburger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Recept na hamburger';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Sendvič';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Recept na sendvič';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Dezert';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Recept na dezert';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Kreveta';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Recept na krevetový tanier';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Krab';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Recept na krabí tanier';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Hovädzí sendvič';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Recept na hovädzí sendvič';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Uložené recepty';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profil';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Upozornenia';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Ochrana súkromia';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Pomocník';
+
+  @override
+  String get demoFadeThroughTitle => 'Postupné miznutie';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Vzor postupného miznutia sa používa v prípade prechodov medzi prvkami používateľského rozhrania, ktoré nie sú v silnom vzájomnom vzťahu.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Albumy';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Fotky';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Hľadať';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 fotiek';
+
+  @override
+  String get demoFadeScaleTitle => 'Miznutie';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Vzor miznutia sa používa v prípade prvkov používateľského rozhrania, ktoré sa zobrazujú alebo miznú niekde na obrazovke. Môže to byť napríklad dialógové okno, ktoré postupne zmizne v strede obrazovky.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton =>
+      'ZOBRAZIŤ MODÁLNE DIALÓGOVÉ OKNO';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'ZOBRAZIŤ PLÁVAJÚCE TLAČIDLO AKCIE';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'SKRYŤ PLÁVAJÚCE TLAČIDLO AKCIE';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Dialógové okno upozornenia';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ZRUŠIŤ';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'ZAHODIŤ';
+
+  @override
   String get demoColorsTitle => 'Farby';
 
   @override

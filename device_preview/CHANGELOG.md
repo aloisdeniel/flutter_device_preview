@@ -1,3 +1,94 @@
+## 0.6.2-beta
+
+* Added Directionality to overlay.
+
+## 0.6.1-beta
+
+* Added styling options to hide toolbar buttons.
+* Added a `defaultDevice`.
+
+## 0.6.0-beta
+
+* Support for `MediaQuery.maybeOf` Flutter API breaking change.
+
+## 0.5.5
+
+* Fixed an issue with language picker.
+
+## 0.5.4
+
+* Fixed issue with [DevicePreview.selectDevice] method.
+
+## 0.5.3
+
+* Added the [DevicePreview.selectDevice] method.
+
+## 0.5.2
+
+* Removed Flutter plugin directories.
+
+## 0.5.1
+
+* Fixed linting issues.
+
+## 0.5.0
+
+* Updated documentation
+
+## 0.5.0-prerelease.16
+
+* Fix shared preferences plugin navigation restoration issues.
+
+## 0.5.0-prerelease.15
+
+* Fix styling issues.
+
+## 0.5.0-prerelease.14
+
+* Fix issue when not enabled.
+
+## 0.5.0-prerelease.13
+
+* Fixed several styling issues.
+* Fix issue when not enabled.
+
+## 0.5.0-prerelease.12
+
+* Added the plugin system.
+
+## 0.5.0-prerelease.11
+
+* Fixed device screen clip.
+
+## 0.5.0-prerelease.6
+
+* Fixed hidden popovers when not fullscreen.
+* Fixed overflow errors.
+
+## 0.5.0-prerelease.5
+
+* Improved loading time.
+
+## 0.5.0-prerelease.4
+
+* Keeping state of application when enabling/disabling preview.
+
+## 0.5.0-prerelease.3
+
+* Custom device selector.
+
+## 0.5.0-prerelease.2
+
+* Added linux devices.
+
+## 0.5.0-prerelease
+
+* New redesigned frames.
+* Added enabled switch.
+* Removed restart button
+* Fixed issues with conflicting global key.
+* Minor UI tweaks.
+
 ## 0.4.8
 
 - Fixed issues with MaterialLocalization.

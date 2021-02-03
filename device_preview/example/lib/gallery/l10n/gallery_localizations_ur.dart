@@ -995,6 +995,243 @@ class GalleryLocalizationsUr extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'موشَن';
+
+  @override
+  String get demoMotionSubtitle => 'پہلے سے متعینہ ٹرانزٹ کے سبھی پیٹرنز';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'کنٹینر ٹرانسفارم';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'کنٹینر ٹرانسفارم پیٹرن UI عناصر کے درمیان ٹرانزٹزیشن کے لیے ڈیزائن کیا گیا ہے جس میں کنٹینر شامل ہے۔ یہ پیٹرن دو UI عناصر کے درمیان نظر آنے والا کنکشن تخلیق کرتا ہے';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'فیڈ موڈ';
+
+  @override
+  String get demoContainerTransformTypeFade => 'فیڈ';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'فیڈ تھرو';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'عنوان';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'ثانوی ٹیکسٹ';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'ثانوی';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'تفصیلات کا صفحہ';
+
+  @override
+  String get demoMotionListTileTitle => 'فہرست آئٹم';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'مشترکہ محور کے پیٹرن کا استعمال UI عناصر کے درمیان ٹرانزیشن کے لیے کیا جاتا ہے جس میں مکانی یا نیویگیشنل رشتہ ہوتا ہے۔ یہ پیٹرن عناصر کے درمیان تعلق کو دوبارہ تقویت دینے کے لیے x، ‫y یا z کے محور پر مشترکہ ٹرانسفارمیشن کا استعمال کرتا ہے۔';
+
+  @override
+  String get demoSharedXAxisTitle => 'مشترکہ x-axis';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'پیچھے';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'آگے';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'اپنے کورسز کو اسٹریم لائن کریں';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'بنڈل شدہ زمرے آپ کی فیڈ میں گروپس کے بطور ظاہر ہوتے ہیں۔ آپ بعد میں کبھی بھی اسے تبدیل کر سکتے ہیں۔';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'آرٹس اور کرافٹس';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'کاروبار';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'خاکہ';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'ڈیزائن';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'فن طباخی';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'بنڈل کردہ';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle =>
+      'انفرادی طور پر دکھائے گئے';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'آداب David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText =>
+      'اپنے اکاؤنٹ کے ساتھ سائن ان کریں';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel => 'ای میل یا فون نمبر';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'ای میل بھول گئے؟';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'اکاؤنٹ بنائیں';
+
+  @override
+  String get demoSharedYAxisTitle => 'مشترکہ y-axis';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 البمز';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'حال ہی میں چلائے گئے';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'البم';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'فنکار';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'منٹ';
+
+  @override
+  String get demoSharedZAxisTitle => 'مشترکہ z-axis';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'ترتیبات';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'برگر';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'برگر کا نسخہ';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'سینڈوچ';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'سینڈوچ کا نسخہ';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'میٹھا';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'میٹھے کا نسخہ';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'جھینگا';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'جھینگا بنانے کا نسخہ';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'کیکڑا';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription => 'کیکڑا بنانے کا نسخہ';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'بیف سینڈوچ';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'بیف سینڈوچ کا نسخہ';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'محفوظ کردہ نسخے';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'پروفائل';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'اطلاعات';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'رازداری';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'مدد';
+
+  @override
+  String get demoFadeThroughTitle => 'فیڈ تھرو';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'فیڈ تھرو پیٹرن کا استعمال UI عناصر کے درمیان ٹرانزیشن کے لیے کیا جاتا ہے جس کا ایک دوسرے کے ساتھ مضبوط تعلق نہیں ہوتا ہے۔';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'البمز';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'تصاویر';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'تلاش';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 تصاویر';
+
+  @override
+  String get demoFadeScaleTitle => 'فیڈ';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'فیڈ پیٹرن کا استعمال UI عناصر کے لیے کیا جاتا ہے جو اسکرین کی حدود کے اندر داخل یا خارج ہوتا ہے جیسے کہ ایک ڈائیلاگ جو اسکرین کے بیچ میں فیڈ ہو جاتا ہے۔';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'ماڈل دکھائیں';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'FAB دکھائیں';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'FAB چھپائیں';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'الرٹ ڈائیلاگ';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'منسوخ کریں';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'مسترد کریں';
+
+  @override
   String get demoColorsTitle => 'رنگ';
 
   @override

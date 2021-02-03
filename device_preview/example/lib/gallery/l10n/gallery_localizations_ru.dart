@@ -1012,6 +1012,246 @@ class GalleryLocalizationsRu extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN-код';
 
   @override
+  String get demoMotionTitle => 'Движение';
+
+  @override
+  String get demoMotionSubtitle => 'Все стандартные переходы';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Преобразование с контейнером';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Преобразование с контейнером предназначено для переходов между элементами пользовательского интерфейса, содержащими контейнер. Этот эффект устанавливает видимую связь между двумя элементами интерфейса.';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle =>
+      'Режим плавного появления или исчезновения';
+
+  @override
+  String get demoContainerTransformTypeFade =>
+      'ПЛАВНОЕ ПОЯВЛЕНИЕ ИЛИ ИСЧЕЗНОВЕНИЕ';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'ПЛАВНОЕ ПЕРЕКЛЮЧЕНИЕ';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Название';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Дополнительный текст';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Дополнительно';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Страница сведений';
+
+  @override
+  String get demoMotionListTileTitle => 'Пункт списка';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Эффект общей оси применяется для переходов между элементами пользовательского интерфейса, которые расположены как бы на одной оси. Для укрепления связи между элементами используется совместное преобразование по оси X, Y или Z.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Общая ось X';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'НАЗАД';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'ДАЛЕЕ';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Упорядочите курсы';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Наборы категорий появляются в фиде как группы. Это можно изменить в любое время.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Искусство и ремесла';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Бизнес';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Иллюстрация';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Дизайн';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Кулинария';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'В наборе';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Показан отдельно';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Здравствуйте, Дэвид Парк!';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Войдите со своим аккаунтом';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'Адрес электронной почты или номер телефона';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'ЗАБЫЛИ ЭЛЕКТРОННУЮ ПОЧТУ?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'СОЗДАТЬ АККАУНТ';
+
+  @override
+  String get demoSharedYAxisTitle => 'Общая ось Y';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 альбомов';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'А–Я';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Прослушано недавно';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Альбом';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Исполнитель';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'мин.';
+
+  @override
+  String get demoSharedZAxisTitle => 'Общая ось Z';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Настройки';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Бургер';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Рецепт бургера';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Бутерброд';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Рецепт бутерброда';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Десерт';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Рецепт десерта';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Креветка';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Рецепт блюда с креветками';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Краб';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Рецепт блюда с крабом';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Бутерброд с говядиной';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Рецепт бутерброда с говядиной';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Сохраненные рецепты';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Профиль';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Уведомления';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Конфиденциальность';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Справка';
+
+  @override
+  String get demoFadeThroughTitle => 'Плавное переключение';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Плавное переключение используется для переходов между элементами пользовательского интерфейса, между которыми нет тесной связи.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Альбомы';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Фотографии';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Поиск';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 фотографии';
+
+  @override
+  String get demoFadeScaleTitle => 'Плавное появление или исчезновение';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Этот эффект используется для элементов пользовательского интерфейса, которые появляются или исчезают в пределах экрана. Пример: диалоговое окно, которое возникает, а затем пропадает в центре экрана.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'ПОКАЗАТЬ МОДАЛЬНОЕ ОКНО';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'ПОКАЗАТЬ ПЛАВАЮЩУЮ КНОПКУ ДЕЙСТВИЯ';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'СКРЫТЬ ПЛАВАЮЩУЮ КНОПКУ ДЕЙСТВИЯ';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Диалоговое окно с оповещением';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ОТМЕНА';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'ОТМЕНИТЬ';
+
+  @override
   String get demoColorsTitle => 'Цвета';
 
   @override

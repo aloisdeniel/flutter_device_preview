@@ -1,5 +1,6 @@
 import 'locales.dart';
 
+/// A set of many named locales.
 const defaultAvailableLocales = <NamedLocale>[
   NamedLocale('af', 'Afrikaans'),
   NamedLocale('af_NA', 'Afrikaans (Namibia)'),

@@ -5,9 +5,13 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'theme.freezed.dart';
 
+/// The theme gives a [style] to all its descentant device frames.
+///
+/// The only customizable visuals are the keyboard style.
 class DeviceFrameTheme extends InheritedWidget {
   final DeviceFrameStyle style;
 
+  /// Give a [style] to all descentant in [child] device frames.
   const DeviceFrameTheme({
     @required this.style,
     @required Widget child,
@@ -26,31 +30,24 @@ class DeviceFrameTheme extends InheritedWidget {
   }
 }
 
+/// The device frame style only allows to update the [keyboardStyle] for now.
+///
+/// See also:
+///
+/// * [DeviceKeyboardStyle] to customize the virtual on screen keyboard.
 @freezed
 abstract class DeviceFrameStyle with _$DeviceFrameStyle {
   const factory DeviceFrameStyle({
-    @required Color bodyColor,
-    @required Color borderColor,
-    @required Color buttonColor,
-    @required Color shadowColor,
     @required DeviceKeyboardStyle keyboardStyle,
   }) = _DeviceFrameStyle;
 
   factory DeviceFrameStyle.dark({DeviceKeyboardStyle keyboardStyle}) =>
       DeviceFrameStyle(
-        bodyColor: const Color(0xFF1A1A1A),
-        buttonColor: const Color(0xFF2A2A2A),
-        borderColor: const Color(0xFF5A5A5A),
-        shadowColor: const Color(0x55000000),
         keyboardStyle: keyboardStyle ?? DeviceKeyboardStyle.dark(),
       );
 
   factory DeviceFrameStyle.light({DeviceKeyboardStyle keyboardStyle}) =>
       DeviceFrameStyle(
-        bodyColor: const Color(0xFFFDFDFD),
-        buttonColor: const Color(0xFF7C7C7C),
-        borderColor: const Color(0xFFA5A5A5),
-        shadowColor: const Color(0x55000000),
         keyboardStyle: keyboardStyle ?? DeviceKeyboardStyle.dark(),
       );
 }

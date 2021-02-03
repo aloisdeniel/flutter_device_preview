@@ -16,24 +16,16 @@ Mockups for common devices.
 
 ## Quickstart
 
-```dart
-CupertinoDeviceFrame(
+```Dart
+DeviceFrame(
+    device: Devices.ios.iPhone11,
+    isFrameVisible: true,
     orientation: Orientation.portrait,
-    device: AndroidDevice.iPhoneXs,
-    child: Container(
-        child: Text('Hello iOS'),
+    screen: Container(
+        color: Colors.blue,
+        child: Text('Hello'),
     ),
-),
-```
-
-```dart
-AndroidDeviceFrame(
-    orientation: Orientation.portrait,
-    device: AndroidDevice.mediumPhone,
-    child: Container(
-        child: Text('Hello Android'),
-    ),
-),
+)
 ```
 
 ## Usage
@@ -41,37 +33,23 @@ AndroidDeviceFrame(
 ### Displaying virtual keyboard
 
 ```dart
-AndroidDeviceFrame(
-    isKeyboardVisible: true,
-    // ...
-),
-```
-
-### Change global theme
-
-```dart
-DeviceFrameTheme(
-    style: DeviceFrameStyle.light(),
-    child: /* any frame child will have this style by default */
+DeviceFrame(
+    device: Devices.ios.iPhone11,
+    orientation: orientation,
+    screen: VirtualKeyboard(
+        isEnabled: true,
+        child: // ...
+    ),
 )
-```
-
-### Change local style
-
-```dart
-AndroidDeviceFrame(
-    style: DeviceFrameStyle.light(),
-    // ...
-),
 ```
 
 ### Maintain device media query and theme in an encapsulated app
 
-
 ```dart
-AndroidDeviceFrame(
-    // ...
-    child: Builder(
+DeviceFrame(
+    device: Devices.ios.iPhone11,
+    orientation: orientation,
+    screen: Builder(
         builder: (deviceContext) => MaterialApp(
             theme: Theme.of(context),
             builder: (context, widget) => MediaQuery(
@@ -85,3 +63,19 @@ AndroidDeviceFrame(
     ),
 ),
 ```
+
+### Precaching all device frames
+
+```dart
+@override
+void initState() {
+    DeviceFrame.precache(context);
+    super.initState();
+}
+```
+
+## Contributing
+
+### Edit device frames
+
+All frames are designed in a [Figma file](https://www.figma.com/file/WIamxcVDlHvxcCjLvJnwmR/DevicePreview-Frames?node-id=0%3A1). They are then all exported to `assets/<name>.svg` files and then merged into a single `lib/devices.g.dart` with the `script/frame_generator.dart`

@@ -16,13 +16,14 @@ class StarterApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = MediaQuery.maybeOf(context)?.platformBrightness ==
+        Brightness.dark;
     return MaterialApp(
       title: 'Starter',
       debugShowCheckedModeBanner: false,
-      locale: DevicePreview.of(context)?.locale, // <--
+      locale: DevicePreview.locale(context), // <--
       builder: DevicePreview.appBuilder, // <--
-      supportedLocales:
-          DevicePreview.of(context)?.availablesLocales?.map((x) => x.locale),
+      supportedLocales: DevicePreview.allLocales(context),
       localizationsDelegates: GalleryLocalizations.localizationsDelegates,
       initialRoute: StarterApp.defaultRoute,
       routes: {
@@ -30,9 +31,7 @@ class StarterApp extends StatelessWidget {
       },
 
       home: const HomePage(),
-      themeMode: MediaQuery.of(context).platformBrightness == Brightness.dark
-          ? ThemeMode.dark
-          : ThemeMode.light,
+      themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
       darkTheme: ThemeData.dark().copyWith(
         primaryColor: _primaryColor,
         highlightColor: Colors.transparent,

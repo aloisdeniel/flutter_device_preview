@@ -1000,6 +1000,244 @@ class GalleryLocalizationsFi extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN-koodi';
 
   @override
+  String get demoMotionTitle => 'Liike';
+
+  @override
+  String get demoMotionSubtitle => 'Kaikki ennalta asetetut siirtymät';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Muuntuva säilö';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Muuntuvaa säilöä käytetään käyttöliittymäelementtien välisessä siirtymässä, kun niihin liittyy säilö. Näin kahden käyttöliittymäelementin välille syntyy näkyvä yhteys.';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'Häivytystapa';
+
+  @override
+  String get demoContainerTransformTypeFade => 'HÄIVYTYS';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'TÄYSI HÄIVYTYS';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Nimi';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Toissijainen teksti';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Toissijainen';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Tietosivu';
+
+  @override
+  String get demoMotionListTileTitle => 'Listan osa';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Jaettua akselia käytetään käyttöliittymäelementtien väliseen siirtymään, kun niillä on tilaan tai navigointiin liittyvä suhde. Silloin yhtäaikainen siirtyminen x-, y- tai z-akselilla vahvistaa elementtien välistä suhdetta.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Jaettu x-akseli';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'TAKAISIN';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'SEURAAVA';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Kurssit selkeämmiksi';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Paketeiksi kootut kategoriat näkyvät fiidissä ryhminä. Voit muuttaa asetusta myöhemmin.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Käsityöt';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Liiketoiminta';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Piirtäminen';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Design';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Ruoanlaitto';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Paketissa';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Näytetään erikseen';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Hei David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Kirjaudu sisään tililläsi';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'Sähköpostiosoite tai puhelinnumero';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'UNOHDITKO SÄHKÖPOSTIOSOITTEEN?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'LUO TILI';
+
+  @override
+  String get demoSharedYAxisTitle => 'Jaettu y-akseli';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 albumia';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A–Ö';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Viimeksi toistetut';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Albumi';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Artisti';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min.';
+
+  @override
+  String get demoSharedZAxisTitle => 'Jaettu z-akseli';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Asetukset';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Hampurilainen';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Hampurilaisresepti';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Voileipä';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Voileipäresepti';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Jälkiruoka';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Jälkiruokaresepti';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Katkarapu';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Katkarapuannoksen resepti';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Rapu';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Rapuannoksen resepti';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Lihavoileipä';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Lihavoileivän resepti';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Tallennetut reseptit';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profiili';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Ilmoitukset';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Tietosuoja';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Ohje';
+
+  @override
+  String get demoFadeThroughTitle => 'Täysi häivytys';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Tätä häivytystä käytetään siirryttäessä sellaisten käyttöliittymäelementtien välillä, jotka eivät liity vahvasti toisiinsa.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Albumit';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Kuvat';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Haku';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 kuvaa';
+
+  @override
+  String get demoFadeScaleTitle => 'Häivytys';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Tätä häivytystä käytetään sellaisten käyttöliittymäelementtien kanssa, jotka tulevat näkyviin tai poistuvat näytön sisällä, esimerkiksi valintaikkunan häivytys näytön keskellä.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'NÄYTÄ MODAALI';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'NÄYTÄ KELLUVA TOIMINTOPAINIKE';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'PIILOTA KELLUVA TOIMINTOPAINIKE';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Ilmoitusikkuna';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'PERUUTA';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'HYLKÄÄ';
+
+  @override
   String get demoColorsTitle => 'Värit';
 
   @override

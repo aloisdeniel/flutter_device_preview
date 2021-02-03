@@ -1004,6 +1004,246 @@ class GalleryLocalizationsIt extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'Movimento';
+
+  @override
+  String get demoMotionSubtitle => 'Tutti i pattern di transizione predefiniti';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Trasformazione del contenitore';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Il pattern di trasformazione del contenitore è progettato per le transizioni tra elementi UI che includono un contenitore. Questo pattern crea un collegamento visibile tra due elementi UI';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle =>
+      'Modalità Dissolvenza';
+
+  @override
+  String get demoContainerTransformTypeFade => 'DISSOLVENZA';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'DISSOLVENZA TRAMITE';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Titolo';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Testo secondario';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Secondario';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Pagina dei dettagli';
+
+  @override
+  String get demoMotionListTileTitle => 'Voce elenco';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Il pattern di assi condivisi per le transizioni tra gli elementi UI che hanno una relazione di spazio o di navigazione. Questo pattern utilizza una trasformazione condivisa sugli assi x, y o z per rafforzare la relazione tra gli elementi.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Asse x condiviso';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'INDIETRO';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'AVANTI';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Ottimizza i corsi';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Le categorie raggruppate vengono visualizzate come gruppi nel tuo feed. Potrai sempre modificare questa scelta in un secondo momento.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Arti e artigianato';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Aziende';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Illustrazione';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Design';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Arte culinaria';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Integrato';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle =>
+      'Mostrato singolarmente';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Ciao, David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Accedi all\'account';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'Indirizzo email o numero di telefono';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'NON RICORDI L\'INDIRIZZO EMAIL?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'CREA ACCOUNT';
+
+  @override
+  String get demoSharedYAxisTitle => 'Asse y condiviso';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 album';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Ascoltati di recente';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Album';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Artista';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min';
+
+  @override
+  String get demoSharedZAxisTitle => 'Asse z condiviso';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Impostazioni';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Hamburger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Ricetta hamburger';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Panino';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Ricetta panino';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Dessert';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Ricetta dessert';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Gambero';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Ricetta a base di gamberi';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Granchio';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Ricetta a base di granchio';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Panino con la carne';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Ricetta panino con la carne';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Ricette salvate';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profilo';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Notifiche';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Privacy';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Guida';
+
+  @override
+  String get demoFadeThroughTitle => 'Dissolvenza tramite';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Il pattern di dissolvenza tramite viene utilizzato per le transizioni tra elementi UI che non hanno una forte correlazione.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Album';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Foto';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Cerca';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 foto';
+
+  @override
+  String get demoFadeScaleTitle => 'Dissolvenza';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Il pattern di dissolvenza viene utilizzato per gli elementi UI che entrano o escono dalle estremità della schermata, ad esempio una finestra di dialogo che si dissolve nel centro dello schermo.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'MOSTRA MODALITÀ';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'MOSTRA FAB';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'NASCONDI FAB';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Finestra di avviso';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ANNULLA';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'IGNORA';
+
+  @override
   String get demoColorsTitle => 'Colori';
 
   @override

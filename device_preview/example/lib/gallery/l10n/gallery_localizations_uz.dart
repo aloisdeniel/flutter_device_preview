@@ -1007,6 +1007,248 @@ class GalleryLocalizationsUz extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN kod';
 
   @override
+  String get demoMotionTitle => 'Harakat';
+
+  @override
+  String get demoMotionSubtitle => 'Barcha standart oʻtishlar';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Konteyner bilan oʻzgartirish';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Konteyner bilan oʻzgartirish konteynerdan iborat foydalanuvchi interfeysi elementlari orasidagi oʻtishlarga moʻljallangan. Bu effekt interfeysning ikki elementi orasiga koʻrinarli aloqa oʻrnatadi.';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle =>
+      'Shaffoflashuv rejimi';
+
+  @override
+  String get demoContainerTransformTypeFade => 'SHAFFOFLASHUV';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'SHAFFOF ALMASHINUV';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Nomi';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Qoʻshimcha matn';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Qoʻshimcha';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Tafsilotlar sahifasi';
+
+  @override
+  String get demoMotionListTileTitle => 'Roʻyxat bandi';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Umumiy oʻqlar effekti bitta oʻqda joylashgan foydalanuvchi interfeysi elementlari orasidagi oʻtishlarga moʻljallangan. Elementlar orasidagi aloqani mustahkamlash uchun X, Y yoki Z oʻqlari boʻyicha oʻzaro oʻzgartirish qoʻllaniladi.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Umumiy X oʻqi';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'ORQAGA';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'KEYINGISI';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Kurslarni tartiblang';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Turkumlar majmuasi tasmada guruh sifatida chiqadi. Buni istalgan vaqt oʻzgartirish mumkin.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle =>
+      'Sanʼat va hunarmandchilik';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Biznes';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Tasvir';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Dizayn';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Kulinariya';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Majmuada';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Alohida koʻrsatilgan';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Salom, David Park!';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Hisobingiz bilan kiring';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'Email manzili yoki telefon raqami';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'EMAIL MANZILINGIZNI UNUTDINGIZMI?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'HISOB YARATISH';
+
+  @override
+  String get demoSharedYAxisTitle => 'Umumiy Y oʻqi';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 ta albom';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A–Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Yaqinda tinglangan';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Albom';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Ijrochi';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'daqiqa';
+
+  @override
+  String get demoSharedZAxisTitle => 'Umumiy Z oʻqi';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Sozlamalar';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Burger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Burger retsepti';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Sendvich';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Sendvich retsepti';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Desert';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Desert retsepti';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Krevetka';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Krevetkali taom retsepti';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Qisqichbaqa';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Qisqichbaqali taom retsepti';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Mol goʻshtli sendvich';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Mol goʻshtli sendvich retsepti';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Saqlangan retseptlar';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profil';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Bildirishnomalar';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Maxfiylik';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Yordam';
+
+  @override
+  String get demoFadeThroughTitle => 'Shaffof almashinuv';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Silliq oʻzgarish bir-biriga kuchli aloqasi boʻlmagan foydalanuvchi interfeysi elementlari orasidagi oʻtishlarga moʻljallangan.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Albomlar';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Suratlar';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Qidiruv';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 ta surat';
+
+  @override
+  String get demoFadeScaleTitle => 'Shaffoflashuv';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Bu effekt ekran chetlarida paydo boʻladigan yoki yoʻqoladigan foydalanuvchi interfeysi elementlari uchun ishlatiladi.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'MODAL OYNANI CHIQARISH';
+
+  @override
+  String get demoFadeScaleShowFabButton =>
+      'SUZUVCHI HARAKAT TUGMASINI CHIQARISH';
+
+  @override
+  String get demoFadeScaleHideFabButton =>
+      'SUZUVCHI HARAKAT TUGMASINI BERKITISH';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Ogohlantiruvchi muloqot oynasi';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'BEKOR QILISH';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'RAD ETISH';
+
+  @override
   String get demoColorsTitle => 'Ranglar';
 
   @override
@@ -1471,13 +1713,13 @@ class GalleryLocalizationsUz extends GalleryLocalizations {
   String get colorsPink => 'PUSHTI';
 
   @override
-  String get colorsPurple => 'BINAFSHARANG';
+  String get colorsPurple => 'SIYOHRANG';
 
   @override
   String get colorsDeepPurple => 'TOʻQ SIYOHRANG';
 
   @override
-  String get colorsIndigo => 'TOʻQ KOʻK';
+  String get colorsIndigo => 'INDIGO';
 
   @override
   String get colorsBlue => 'KOʻK';

@@ -1003,6 +1003,248 @@ class GalleryLocalizationsGl extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'Movemento';
+
+  @override
+  String get demoMotionSubtitle =>
+      'Todos os padróns de transición predefinidos';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Transformación de contedores';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'O padrón de transformación de contedores está deseñado para transicións entre elementos da IU que inclúen un contedor. Este padrón crea unha conexión visible entre dous elementos da IU';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle =>
+      'Modo de esvaecemento';
+
+  @override
+  String get demoContainerTransformTypeFade => 'ATENUAR';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'ESVAECER';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Título';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Texto secundario';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Secundario';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Páxina de detalles';
+
+  @override
+  String get demoMotionListTileTitle => 'Elemento de lista';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'O padrón do eixe compartido utilízase para transicións entre os elementos da IU que teñen unha relación espacial ou de navegación. Este padrón utiliza unha transformación compartida no eixe x, y ou z para reforzar a relación entre os elementos.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Eixe x compartido';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'ATRÁS';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'SEGUINTE';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Optimiza as túas accións';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'As categorías integradas aparecen como grupos no teu feed. Sempre podes cambiar esta opción máis tarde.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Artesanía';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Empresa';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Ilustración';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Deseño';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Cociña';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Agrupado';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle =>
+      'Mostrado individualmente';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Ola, David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Inicia sesión coa túa conta';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel =>
+      'Correo electrónico ou número de teléfono';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'ESQUECICHES O CORREO ELECTRÓNICO?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'CREAR CONTA';
+
+  @override
+  String get demoSharedYAxisTitle => 'Eixe y compartido';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 álbums';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Reproducións recentes';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Álbum';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Artista';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min';
+
+  @override
+  String get demoSharedZAxisTitle => 'Eixe z compartido';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Configuración';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Hamburguesa';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Receita de hamburguesa';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Sándwich';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Receita de sándwich';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Sobremesa';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Receita de sobremesa';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Camarón';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Receita de prato de camarón';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Cangrexo';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Receita de prato de cangrexo';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle =>
+      'Sándwich de carne de vaca';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Receita de sándwich de carne de vaca';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Receitas gardadas';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Perfil';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Notificacións';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Privacidade';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Axuda';
+
+  @override
+  String get demoFadeThroughTitle => 'Esvaecer';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'O padrón de esvaecemento utilízase para transicións entre os elementos da IU que non teñen unha relación forte entre si.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Álbums';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Fotos';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Buscar';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 fotos';
+
+  @override
+  String get demoFadeScaleTitle => 'Atenuar';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'O padrón de atenuación utilízase para elementos da IU que entran ou saen do límite da pantalla, como un cadro de diálogo que se atenúa no centro da pantalla.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'MOSTRAR MODAL';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'MOSTRAR BOTÓN DE ACCIÓN FLOTANTE';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'OCULTAR BOTÓN DE ACCIÓN FLOTANTE';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Diálogo da alerta';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'CANCELAR';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'DESCARTAR';
+
+  @override
   String get demoColorsTitle => 'Cores';
 
   @override

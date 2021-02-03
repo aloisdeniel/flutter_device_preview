@@ -1,6 +1,7 @@
 library device_frame;
 
-export 'src/cupertino/cupertino.dart';
-export 'src/android/android.dart';
-export 'src/generic/mobile_frame.dart';
+export 'src/devices.dart';
+export 'src/frame.dart';
+export 'src/info/info.dart';
+export 'src/keyboard/virtual_keyboard.dart';
 export 'src/theme.dart';

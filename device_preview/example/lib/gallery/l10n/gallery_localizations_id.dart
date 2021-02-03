@@ -26,7 +26,7 @@ class GalleryLocalizationsId extends GalleryLocalizations {
       'Sandi Anda diperbarui di perangkat lain. Harap login lagi.';
 
   @override
-  String get bannerDemoResetText => 'Setel ulang banner';
+  String get bannerDemoResetText => 'Reset banner';
 
   @override
   String get bannerDemoMultipleText => 'Beberapa tindakan';
@@ -993,6 +993,245 @@ class GalleryLocalizationsId extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'Gerakan';
+
+  @override
+  String get demoMotionSubtitle => 'Semua pola transisi yang sudah ditentukan';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Transformasi Container';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Pola transformasi container didesain untuk transisi antara elemen UI yang mencakup sebuah container. Pola ini menghasilkan hubungan yang terlihat di antara dua elemen UI';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle =>
+      'Mode memudar dan memperjelas';
+
+  @override
+  String get demoContainerTransformTypeFade => 'MEMPERJELAS';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'MEMUDAR';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Judul';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Teks sekunder';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Sekunder';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Halaman Detail';
+
+  @override
+  String get demoMotionListTileTitle => 'Item daftar';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Pola sumbu merata digunakan untuk transisi antara elemen UI yang memiliki hubungan spasial atau navigasi. Pola ini menggunakan transformasi yang sama pada sumbu x, y, atau z untuk memperkuat hubungan antar-elemen.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Sumbu x merata';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'KEMBALI';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'BERIKUTNYA';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Mempersingkat kursus Anda';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Kategori gabungan muncul sebagai grup di feed Anda. Anda dapat mengubahnya kapan saja.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Seni & Kerajinan';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Bisnis';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Ilustrasi';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Desain';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Kuliner';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Gabungan';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle =>
+      'Ditampilkan secara Individual';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Halo David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Login dengan akun Anda';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel => 'Email atau nomor telepon';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'LUPA EMAIL?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'BUAT AKUN';
+
+  @override
+  String get demoSharedYAxisTitle => 'Sumbu y merata';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 album';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Z';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Baru diputar';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Album';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Artis';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'mnt';
+
+  @override
+  String get demoSharedZAxisTitle => 'Sumbu z merata';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Setelan';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Burger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Resep burger';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Sandwich';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Resep sandwich';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Hidangan penutup';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription =>
+      'Resep hidangan penutup';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Udang';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Resep hidangan berbahan udang';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Kepiting';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Resep hidangan berbahan kepiting';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Sandwich daging sapi';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Resep Sandwich daging sapi';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Resep yang Tersimpan';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profil';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Notifikasi';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Privasi';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Bantuan';
+
+  @override
+  String get demoFadeThroughTitle => 'Memudar';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Pola memudar digunakan untuk transisi antara elemen UI yang tidak memiliki hubungan kuat satu sama lain.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Album';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Foto';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Telusuri';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 foto';
+
+  @override
+  String get demoFadeScaleTitle => 'Memperjelas';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Pola memperjelas digunakan untuk elemen UI yang masuk atau keluar dan masih dalam garis batas layar, misalnya dialog yang memperjelas di tengah layar.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'TAMPILKAN MODAL';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'TAMPILKAN FAB';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'SEMBUNYIKAN FAB';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Dialog Notifikasi';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'BATAL';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'HAPUS';
+
+  @override
   String get demoColorsTitle => 'Warna';
 
   @override
@@ -1020,10 +1259,10 @@ class GalleryLocalizationsId extends GalleryLocalizations {
 
   @override
   String get demo2dTransformationsDescription =>
-      'Ketuk untuk mengedit potongan foto, dan gunakan gestur untuk berpindah antar-adegan. Tarik untuk menggeser, cubit untuk zoom, putar dengan dua jari. Tekan tombol setel ulang untuk kembali ke orientasi awal.';
+      'Ketuk untuk mengedit potongan foto, dan gunakan gestur untuk berpindah antar-adegan. Tarik untuk menggeser, cubit untuk zoom, putar dengan dua jari. Tekan tombol reset untuk kembali ke orientasi awal.';
 
   @override
-  String get demo2dTransformationsResetTooltip => 'Setel ulang transformasi';
+  String get demo2dTransformationsResetTooltip => 'Reset transformasi';
 
   @override
   String get demo2dTransformationsEditTooltip => 'Edit potongan foto';

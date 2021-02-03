@@ -997,6 +997,244 @@ class GalleryLocalizationsDa extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'Pinkode';
 
   @override
+  String get demoMotionTitle => 'Bevægelse';
+
+  @override
+  String get demoMotionSubtitle => 'Alle de foruddefinerede overgangsmønstre';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'Containeromdannelse';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'Mønsteret til containeromdannelse er udviklet til overgange mellem brugerfladeelementer, der indeholder en container. Dette mønster opretter en synlig forbindelse mellem to brugerfladeelementer';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle =>
+      'Fortoningstilstand';
+
+  @override
+  String get demoContainerTransformTypeFade => 'FORTONING';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'FORTONING';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'Titel';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'Sekundær tekst';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'Sekundær';
+
+  @override
+  String get demoMotionDetailsPageTitle => 'Infoside';
+
+  @override
+  String get demoMotionListTileTitle => 'Listepunkt';
+
+  @override
+  String get demoSharedAxisDescription =>
+      'Mønsteret for delt akse anvendes til overgange mellem brugerfladeelementer, der har et rumligt eller navigationsrelateret forhold. Dette mønster anvender en delt omdannelse på x-, y- eller z-aksen for at forstærke forholdet mellem elementer.';
+
+  @override
+  String get demoSharedXAxisTitle => 'Delt x-akse';
+
+  @override
+  String get demoSharedXAxisBackButtonText => 'TILBAGE';
+
+  @override
+  String get demoSharedXAxisNextButtonText => 'NÆSTE';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'Strømlining af dine kurser';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'Grupperede kategorier vises som grupper i dit feed. Du kan altid ændre dette senere.';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => 'Kunsthåndværk';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'Erhverv';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'Illustration';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'Design';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => 'Madlavning';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => 'Grupperet';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => 'Vist enkeltvist';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'Hej David Park';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'Log ind med din konto';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel => 'Mail eller telefonnummer';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText =>
+      'HAR DU GLEMT MAILADRESSEN?';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'OPRET KONTO';
+
+  @override
+  String get demoSharedYAxisTitle => 'Delt y-akse';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 album';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'A-Å';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => 'Hørt for nylig';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'Album';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'Kunstner';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => 'min.';
+
+  @override
+  String get demoSharedZAxisTitle => 'Delt z-akse';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => 'Indstillinger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'Burger';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'Opskrift på burger';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'Sandwich';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'Opskrift på sandwich';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'Dessert';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'Opskrift på dessert';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'Rejer';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription =>
+      'Opskrift på ret med rejer';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'Krabbe';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription =>
+      'Opskrift på ret med krabbe';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'Oksekødssandwich';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription =>
+      'Opskrift på oksekødssandwich';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => 'Gemte opskrifter';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'Profil';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => 'Notifikationer';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'Privatliv';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'Hjælp';
+
+  @override
+  String get demoFadeThroughTitle => 'Fortoning';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'Mønsteret for fortoning anvendes til overgange mellem brugerfladeelementer, der ikke har et stærkt forhold til hinanden.';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'Album';
+
+  @override
+  String get demoFadeThroughPhotosDestination => 'Billeder';
+
+  @override
+  String get demoFadeThroughSearchDestination => 'Søg';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 billeder';
+
+  @override
+  String get demoFadeScaleTitle => 'Fortoning';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'Mønsteret for fortoning anvendes til brugerfladeelementer, der åbner eller lukker inden for skærmen, f.eks. en dialogboks der fortones midt på skærmen.';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'VIS MODAL';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'VIS FAB';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'SKJUL FAB';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'Underretningsdialogboks';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'ANNULLER';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => 'KASSÉR';
+
+  @override
   String get demoColorsTitle => 'Farver';
 
   @override

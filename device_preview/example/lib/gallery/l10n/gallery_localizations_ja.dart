@@ -978,6 +978,239 @@ class GalleryLocalizationsJa extends GalleryLocalizations {
   String get demoCupertinoTextFieldPIN => 'PIN';
 
   @override
+  String get demoMotionTitle => 'モーション';
+
+  @override
+  String get demoMotionSubtitle => '事前定義のすべての移行パターン';
+
+  @override
+  String get demoContainerTransformDemoInstructions => 'Cards, Lists & FAB';
+
+  @override
+  String get demoSharedXAxisDemoInstructions => 'Next and Back Buttons';
+
+  @override
+  String get demoSharedYAxisDemoInstructions => 'Sort by \"Recently Played\"';
+
+  @override
+  String get demoSharedZAxisDemoInstructions => 'Settings icon button';
+
+  @override
+  String get demoFadeThroughDemoInstructions => 'Bottom navigation';
+
+  @override
+  String get demoFadeScaleDemoInstructions => 'Modal and FAB';
+
+  @override
+  String get demoContainerTransformTitle => 'コンテナ変換';
+
+  @override
+  String get demoContainerTransformDescription =>
+      'コンテナ変換パターンは、コンテナを含む UI 要素間の移行に使用することを目的としています。このパターンでは、2 つの UI 要素間に表示可能な接続が作成されます。';
+
+  @override
+  String get demoContainerTransformModalBottomSheetTitle => 'フェードモード';
+
+  @override
+  String get demoContainerTransformTypeFade => 'フェード';
+
+  @override
+  String get demoContainerTransformTypeFadeThrough => 'フェードスルー';
+
+  @override
+  String get demoMotionPlaceholderTitle => 'タイトル';
+
+  @override
+  String get demoMotionPlaceholderSubtitle => 'サブテキスト';
+
+  @override
+  String get demoMotionSmallPlaceholderSubtitle => 'サブ';
+
+  @override
+  String get demoMotionDetailsPageTitle => '詳細ページ';
+
+  @override
+  String get demoMotionListTileTitle => 'リストアイテム';
+
+  @override
+  String get demoSharedAxisDescription =>
+      '軸共有パターンは、空間関係またはナビゲーション関係がある UI 要素間の変換に使用します。このパターンは、x 軸、y 軸、z 軸で共有変換を使用して要素間の関係を強化します。';
+
+  @override
+  String get demoSharedXAxisTitle => 'x 軸共有';
+
+  @override
+  String get demoSharedXAxisBackButtonText => '戻る';
+
+  @override
+  String get demoSharedXAxisNextButtonText => '次へ';
+
+  @override
+  String get demoSharedXAxisCoursePageTitle => 'コースの合理化';
+
+  @override
+  String get demoSharedXAxisCoursePageSubtitle =>
+      'カテゴリがまとめられて、フィードにグループとして表示されます。この設定は後からいつでも変更できます。';
+
+  @override
+  String get demoSharedXAxisArtsAndCraftsCourseTitle => '美術工芸';
+
+  @override
+  String get demoSharedXAxisBusinessCourseTitle => 'ビジネス';
+
+  @override
+  String get demoSharedXAxisIllustrationCourseTitle => 'イラスト';
+
+  @override
+  String get demoSharedXAxisDesignCourseTitle => 'デザイン';
+
+  @override
+  String get demoSharedXAxisCulinaryCourseTitle => '料理';
+
+  @override
+  String get demoSharedXAxisBundledCourseSubtitle => '一括';
+
+  @override
+  String get demoSharedXAxisIndividualCourseSubtitle => '単独で表示';
+
+  @override
+  String get demoSharedXAxisSignInWelcomeText => 'David Park 様';
+
+  @override
+  String get demoSharedXAxisSignInSubtitleText => 'アカウントにログイン';
+
+  @override
+  String get demoSharedXAxisSignInTextFieldLabel => 'メールアドレスまたは電話番号';
+
+  @override
+  String get demoSharedXAxisForgotEmailButtonText => 'メールアドレスをお忘れの場合';
+
+  @override
+  String get demoSharedXAxisCreateAccountButtonText => 'アカウントを作成';
+
+  @override
+  String get demoSharedYAxisTitle => 'y 軸共有';
+
+  @override
+  String get demoSharedYAxisAlbumCount => '268 冊のアルバム';
+
+  @override
+  String get demoSharedYAxisAlphabeticalSortTitle => 'アルファベット順';
+
+  @override
+  String get demoSharedYAxisRecentSortTitle => '最近再生したもの';
+
+  @override
+  String get demoSharedYAxisAlbumTileTitle => 'アルバム';
+
+  @override
+  String get demoSharedYAxisAlbumTileSubtitle => 'アーティスト';
+
+  @override
+  String get demoSharedYAxisAlbumTileDurationUnit => '分';
+
+  @override
+  String get demoSharedZAxisTitle => 'z 軸共有';
+
+  @override
+  String get demoSharedZAxisSettingsPageTitle => '設定';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeTitle => 'ハンバーガー';
+
+  @override
+  String get demoSharedZAxisBurgerRecipeDescription => 'ハンバーガーのレシピ';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeTitle => 'サンドイッチ';
+
+  @override
+  String get demoSharedZAxisSandwichRecipeDescription => 'サンドイッチのレシピ';
+
+  @override
+  String get demoSharedZAxisDessertRecipeTitle => 'デザート';
+
+  @override
+  String get demoSharedZAxisDessertRecipeDescription => 'デザートのレシピ';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeTitle => 'エビ';
+
+  @override
+  String get demoSharedZAxisShrimpPlateRecipeDescription => 'エビ料理のレシピ';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeTitle => 'カニ';
+
+  @override
+  String get demoSharedZAxisCrabPlateRecipeDescription => 'カニ料理のレシピ';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeTitle => 'ビーフ サンドイッチ';
+
+  @override
+  String get demoSharedZAxisBeefSandwichRecipeDescription => 'ビーフ サンドイッチのレシピ';
+
+  @override
+  String get demoSharedZAxisSavedRecipesListTitle => '保存済みのレシピ';
+
+  @override
+  String get demoSharedZAxisProfileSettingLabel => 'プロフィール';
+
+  @override
+  String get demoSharedZAxisNotificationSettingLabel => '通知';
+
+  @override
+  String get demoSharedZAxisPrivacySettingLabel => 'プライバシー';
+
+  @override
+  String get demoSharedZAxisHelpSettingLabel => 'ヘルプ';
+
+  @override
+  String get demoFadeThroughTitle => 'フェードスルー';
+
+  @override
+  String get demoFadeThroughDescription =>
+      'フェードスルー パターンは、相互に強力な関係がない UI 要素間の移行に使用します。';
+
+  @override
+  String get demoFadeThroughAlbumsDestination => 'アルバム';
+
+  @override
+  String get demoFadeThroughPhotosDestination => '写真';
+
+  @override
+  String get demoFadeThroughSearchDestination => '検索';
+
+  @override
+  String get demoFadeThroughTextPlaceholder => '123 枚の写真';
+
+  @override
+  String get demoFadeScaleTitle => 'フェード';
+
+  @override
+  String get demoFadeScaleDescription =>
+      'フェード パターンは、画面の中央でフェードするダイアログなど、画面の境界内で出入りする UI 要素に使用します。';
+
+  @override
+  String get demoFadeScaleShowAlertDialogButton => 'モーダルを表示';
+
+  @override
+  String get demoFadeScaleShowFabButton => 'FAB を表示';
+
+  @override
+  String get demoFadeScaleHideFabButton => 'FAB を非表示';
+
+  @override
+  String get demoFadeScaleAlertDialogHeader => 'アラート ダイアログ';
+
+  @override
+  String get demoFadeScaleAlertDialogCancelButton => 'キャンセル';
+
+  @override
+  String get demoFadeScaleAlertDialogDiscardButton => '破棄';
+
+  @override
   String get demoColorsTitle => 'カラー';
 
   @override
