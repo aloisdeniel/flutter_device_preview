@@ -124,9 +124,9 @@ class _ExampleAppState extends State<ExampleApp> {
                   builder: (context) => !isEnabled
                       ? FakeScreen(key: screenKey)
                       : AnimatedBuilder(
-                          animation: DefaultTabController.of(context),
+                          animation: DefaultTabController.of(context)!,
                           builder: (context, _) => _frame(allDevices[
-                              DefaultTabController.of(context).index]),
+                              DefaultTabController.of(context)!.index]),
                         ),
                 ),
               ),
