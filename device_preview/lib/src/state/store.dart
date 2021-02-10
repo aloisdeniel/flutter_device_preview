@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:collection/collection.dart';
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -16,10 +17,10 @@ import 'state.dart';
 class DevicePreviewStore extends ChangeNotifier {
   /// Create a new store with the given [locales], [device] and [storage].
   DevicePreviewStore({
-    @required this.defaultDevice,
-    List<Locale> locales,
-    List<DeviceInfo> devices,
-    @required this.storage,
+    required this.defaultDevice,
+    List<Locale>? locales,
+    List<DeviceInfo>? devices,
+    required this.storage,
   }) : assert(storage != null) {
     initialize(
       locales: locales,
@@ -58,29 +59,28 @@ class DevicePreviewStore extends ChangeNotifier {
 
   /// Initializes the state by loading data from storage (if [useStorage])
   Future<void> initialize(
-      {List<Locale> locales, List<DeviceInfo> devices}) async {
+      {List<Locale>? locales, List<DeviceInfo>? devices}) async {
     await state.maybeWhen(
       notInitialized: () async {
         state = DevicePreviewState.initializing();
 
-        final availaiableLocales = locales != null
+        final availableLocales = locales != null
             ? locales
                 .map(
-                  (available) => defaultAvailableLocales.firstWhere(
+                  (available) => defaultAvailableLocales.firstWhereOrNull(
                     (all) => all.code == available.toString(),
-                    orElse: () => null,
                   ),
                 )
-                .where((x) => x != null)
+                .whereNotNull()
                 .toList()
             : defaultAvailableLocales;
         final defaultLocale = basicLocaleListResolution(
-          WidgetsBinding.instance.window.locales,
-          availaiableLocales.map((x) => x.locale).toList(),
-        )?.toString();
+          WidgetsBinding.instance!.window.locales,
+          availableLocales.map((x) => x.locale).toList(),
+        ).toString();
 
         devices = devices ?? Devices.all;
-        DevicePreviewData data;
+        DevicePreviewData? data;
         try {
           data = await storage.load();
         } catch (e) {
@@ -92,17 +92,9 @@ class DevicePreviewStore extends ChangeNotifier {
           customDevice: _defaultCustomDevice,
         );
 
-        if (data.locale == null) {
-          data = data.copyWith(locale: defaultLocale);
-        }
-        if (data.customDevice == null) {
-          data = data.copyWith(
-            customDevice: _defaultCustomDevice,
-          );
-        }
         state = DevicePreviewState.initialized(
-          locales: availaiableLocales,
-          devices: devices,
+          locales: availableLocales,
+          devices: devices ?? const [],
           data: data,
         );
       },
@@ -165,14 +157,14 @@ extension DevicePreviewStateHelperExtensions on DevicePreviewStore {
   ///
   /// Throws an exception if not initialized.
   DeviceInfo get deviceInfo {
-    if (data?.deviceIdentifier == CustomDeviceIdentifier.identifier) {
-      return CustomDeviceInfo(data?.customDevice);
+    if (data.deviceIdentifier == CustomDeviceIdentifier.identifier) {
+      return CustomDeviceInfo(data.customDevice);
     }
     return state.maybeMap(
       initialized: (state) => state.devices.firstWhere(
         (x) =>
-            x.identifier.toString() == data?.deviceIdentifier ??
-            defaultDevice.identifier.toString(),
+            x.identifier.toString() ==
+            (data.deviceIdentifier ?? defaultDevice.identifier.toString()),
         orElse: () => state.devices.first,
       ),
       orElse: () => throw Exception('Not initialized'),
@@ -237,7 +229,7 @@ extension DevicePreviewStateHelperExtensions on DevicePreviewStore {
 
   /// Indicate whether the current device is a custom one.
   bool get isCustomDevice =>
-      deviceInfo?.identifier?.toString() == CustomDeviceIdentifier.identifier;
+      deviceInfo.identifier.toString() == CustomDeviceIdentifier.identifier;
 
   /// Updates the custom device configuration.
   void updateCustomDevice(CustomDeviceInfoData data) =>

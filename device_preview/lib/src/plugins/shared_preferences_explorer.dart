@@ -39,12 +39,13 @@ class SharedPreferencesExplorerPlugin extends DevicePreviewPlugin {
 }
 
 class _AllPreferencesView extends StatefulWidget {
-  final String selected;
-  final ValueChanged<String> onKeySelected;
+  final String? selected;
+  final ValueChanged<String?> onKeySelected;
+
   const _AllPreferencesView({
-    Key key,
-    @required this.selected,
-    @required this.onKeySelected,
+    Key? key,
+    required this.selected,
+    required this.onKeySelected,
   }) : super(key: key);
 
   @override
@@ -52,11 +53,11 @@ class _AllPreferencesView extends StatefulWidget {
 }
 
 class _AllPreferencesViewState extends State<_AllPreferencesView> {
-  SharedPreferences preferences;
+  SharedPreferences? preferences;
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       _update();
     });
     super.initState();
@@ -71,8 +72,9 @@ class _AllPreferencesViewState extends State<_AllPreferencesView> {
         context,
         PopoverPageRoute(
           builder: (context) => _PreferencesDetailBody(
-            preferenceKey: widget.selected,
-            content: preferences.get(widget.selected.toString()),
+            preferenceKey: widget.selected!,
+            // TODO Handle non-string content.
+            content: preferences!.getString(widget.selected.toString())!,
           ),
         ),
       );
@@ -85,7 +87,8 @@ class _AllPreferencesViewState extends State<_AllPreferencesView> {
     if (preferences == null) {
       return SizedBox();
     }
-    final keys = preferences.getKeys().toList()..sort((x, y) => x.compareTo(y));
+    final keys = preferences!.getKeys().toList()
+      ..sort((x, y) => x.compareTo(y));
 
     if (keys.isEmpty) {
       return _Empty();
@@ -99,21 +102,22 @@ class _AllPreferencesViewState extends State<_AllPreferencesView> {
           PopoverPageRoute(
             builder: (context) => _PreferencesDetailBody(
               preferenceKey: key,
-              content: preferences.get(key.toString()),
+              // TODO Handle non-string content.
+              content: preferences!.getString(key.toString())!,
             ),
           ),
         );
         widget.onKeySelected(null);
       },
       preferenceKeys:
-          keys.map((k) => MapEntry(k, preferences.get(k).toString())).toList(),
+          keys.map((k) => MapEntry(k, preferences!.get(k).toString())).toList(),
     );
   }
 }
 
 class _Empty extends StatelessWidget {
   const _Empty({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -129,10 +133,10 @@ class _PreferenceTile extends StatelessWidget {
   final String value;
   final VoidCallback onTap;
   const _PreferenceTile({
-    Key key,
-    @required this.value,
-    @required this.preferenceKey,
-    @required this.onTap,
+    Key? key,
+    required this.value,
+    required this.preferenceKey,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -157,9 +161,9 @@ class _PreferencesListBody extends StatelessWidget {
   final List<MapEntry<String, String>> preferenceKeys;
   final ValueChanged<String> onKeySelected;
   const _PreferencesListBody({
-    Key key,
-    @required this.onKeySelected,
-    @required this.preferenceKeys,
+    Key? key,
+    required this.onKeySelected,
+    required this.preferenceKeys,
   }) : super(key: key);
 
   @override
@@ -187,10 +191,11 @@ class _PreferencesListBody extends StatelessWidget {
 class _PreferencesDetailBody extends StatelessWidget {
   final String preferenceKey;
   final String content;
+
   const _PreferencesDetailBody({
-    Key key,
-    @required this.preferenceKey,
-    @required this.content,
+    Key? key,
+    required this.preferenceKey,
+    required this.content,
   }) : super(key: key);
 
   @override

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:device_preview/src/views/widgets/popover.dart';
 import 'package:flutter/material.dart';
@@ -44,12 +45,12 @@ class FileExplorerPlugin extends DevicePreviewPlugin {
 }
 
 class _Root extends StatefulWidget {
-  final String selected;
-  final ValueChanged<String> onPathSelected;
+  final String? selected;
+  final ValueChanged<String?> onPathSelected;
   const _Root({
-    Key key,
-    @required this.onPathSelected,
-    @required this.selected,
+    Key? key,
+    required this.onPathSelected,
+    required this.selected,
   }) : super(key: key);
 
   @override
@@ -58,10 +59,11 @@ class _Root extends StatefulWidget {
 
 class _RootState extends State<_Root> {
   List<FileSystemEntity> directories = [];
-  FileSystemEntityType type;
+  FileSystemEntityType? type;
+
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       _update();
     });
     super.initState();
@@ -69,33 +71,28 @@ class _RootState extends State<_Root> {
 
   Future<void> _update() async {
     directories.clear();
-    try {
-      directories.add(await getApplicationDocumentsDirectory());
-      // ignore: empty_catches
-    } catch (e) {}
-    try {
-      directories.add(await getApplicationSupportDirectory());
-      // ignore: empty_catches
-    } catch (e) {}
-    try {
-      directories.add(await getTemporaryDirectory());
-      // ignore: empty_catches
-    } catch (e) {}
-    try {
-      directories.add(await getLibraryDirectory());
-      // ignore: empty_catches
-    } catch (e) {}
-    try {
-      directories.add(await getDownloadsDirectory());
-      // ignore: empty_catches
-    } catch (e) {}
+
+    Future<void> addDir(Future<Directory?> Function() f) async {
+      try {
+        final dir = await f();
+        if (dir != null) {
+          directories.add(dir);
+        }
+        // ignore: empty_catches
+      } catch (e) {}
+    }
+
+    await addDir(getApplicationDocumentsDirectory);
+    await addDir(getApplicationSupportDirectory);
+    await addDir(getTemporaryDirectory);
+    await addDir(getLibraryDirectory);
+    await addDir(getDownloadsDirectory);
     setState(() {});
 
     if (widget.selected != null) {
-      var selected = widget.selected;
-      var baseDir = directories.firstWhere(
+      var selected = widget.selected!;
+      var baseDir = directories.firstWhereOrNull(
         (x) => selected.startsWith(x.path),
-        orElse: () => null,
       );
 
       if (baseDir != null) {
@@ -108,7 +105,7 @@ class _RootState extends State<_Root> {
               .push(
                 PopoverPageRoute(
                   builder: (context) => _DirectoryView(
-                    directory: baseDir,
+                    directory: baseDir as Directory,
                     onPathSelected: widget.onPathSelected,
                   ),
                 ),
@@ -169,9 +166,9 @@ class _DirectoryView extends StatefulWidget {
   final Directory directory;
   final ValueChanged<String> onPathSelected;
   const _DirectoryView({
-    Key key,
-    @required this.directory,
-    @required this.onPathSelected,
+    Key? key,
+    required this.directory,
+    required this.onPathSelected,
   }) : super(key: key);
 
   @override
@@ -179,10 +176,10 @@ class _DirectoryView extends StatefulWidget {
 }
 
 class _DirectoryViewState extends State<_DirectoryView> {
-  List<FileSystemEntity> children;
+  List<FileSystemEntity>? children;
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       _update();
     });
     super.initState();
@@ -203,10 +200,10 @@ class _DirectoryViewState extends State<_DirectoryView> {
       ),
       body: (children == null)
           ? SizedBox()
-          : ((children.isEmpty)
+          : ((children!.isEmpty)
               ? _Empty()
               : _FileList(
-                  children: children,
+                  children: children!,
                   onPathSelected: widget.onPathSelected,
                 )),
     );
@@ -217,9 +214,9 @@ class _FileList extends StatelessWidget {
   final List<FileSystemEntity> children;
   final ValueChanged<String> onPathSelected;
   const _FileList({
-    Key key,
-    @required this.children,
-    @required this.onPathSelected,
+    Key? key,
+    required this.children,
+    required this.onPathSelected,
   }) : super(key: key);
 
   @override
@@ -247,7 +244,7 @@ class _FileList extends StatelessWidget {
                     },
                   )
                 : _FileTile(
-                    file: child,
+                    file: child as File,
                     onTap: () async {
                       onPathSelected(child.path);
                       await Navigator.push(
@@ -267,7 +264,7 @@ class _FileList extends StatelessWidget {
 
 class _Empty extends StatelessWidget {
   const _Empty({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -282,9 +279,9 @@ class _DirectoryTile extends StatelessWidget {
   final Directory directory;
   final VoidCallback onTap;
   const _DirectoryTile({
-    Key key,
-    @required this.directory,
-    @required this.onTap,
+    Key? key,
+    required this.directory,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -304,9 +301,9 @@ class _FileTile extends StatelessWidget {
   final File file;
   final VoidCallback onTap;
   const _FileTile({
-    Key key,
-    @required this.file,
-    @required this.onTap,
+    Key? key,
+    required this.file,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -325,8 +322,8 @@ class _FileTile extends StatelessWidget {
 class _FileView extends StatefulWidget {
   final File file;
   const _FileView({
-    Key key,
-    @required this.file,
+    Key? key,
+    required this.file,
   }) : super(key: key);
 
   @override
@@ -334,11 +331,11 @@ class _FileView extends StatefulWidget {
 }
 
 class _FileViewState extends State<_FileView> {
-  String content;
+  String? content;
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       _update();
     });
     super.initState();

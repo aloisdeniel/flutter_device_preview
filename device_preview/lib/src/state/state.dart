@@ -22,13 +22,13 @@ abstract class DevicePreviewState with _$DevicePreviewState {
   /// The device preview is available.
   const factory DevicePreviewState.initialized({
     /// The list of all available devices.
-    @required List<DeviceInfo> devices,
+    required List<DeviceInfo> devices,
 
     /// The list of all available locales.
-    @required List<NamedLocale> locales,
+    required List<NamedLocale> locales,
 
     /// The user settings of the preview.
-    @required DevicePreviewData data,
+    required DevicePreviewData data,
   }) = _InitializedDevicePreviewState;
 }
 
@@ -49,7 +49,7 @@ abstract class DevicePreviewData with _$DevicePreviewData {
     @Default(Orientation.portrait) Orientation orientation,
 
     /// The currently selected device.
-    @nullable String deviceIdentifier,
+    String? deviceIdentifier,
 
     /// The currently selected device locale.
     @Default('en-US') String locale,
@@ -84,10 +84,10 @@ abstract class DevicePreviewData with _$DevicePreviewData {
 
     /// The current text scaling factor.
     @Default(1.0) double textScaleFactor,
-    @nullable DevicePreviewSettingsData settings,
+    DevicePreviewSettingsData? settings,
 
     /// The custom device configuration
-    @nullable CustomDeviceInfoData customDevice,
+    required CustomDeviceInfoData customDevice,
   }) = _DevicePreviewData;
 
   factory DevicePreviewData.fromJson(Map<String, dynamic> json) =>
@@ -100,31 +100,28 @@ abstract class CustomDeviceInfoData with _$CustomDeviceInfoData {
   /// Create a new device info.
   const factory CustomDeviceInfoData({
     /// Identifier of the device.
-    @required String id,
+    required String id,
 
     /// The device type.
-    @required DeviceType type,
+    required DeviceType type,
 
     /// The device operating system.
-    @required TargetPlatform platform,
+    required TargetPlatform platform,
 
     /// The display name of the device.
-    @required String name,
+    required String name,
 
     /// The safe areas when the device is in landscape orientation.
-    @Default(null)
-    @nullable
-    @EdgeInsetsJsonConverter()
-        EdgeInsets rotatedSafeAreas,
+    @Default(null) @EdgeInsetsJsonConverter() EdgeInsets? rotatedSafeAreas,
 
     /// The safe areas when the device is in portrait orientation.
-    @required @EdgeInsetsJsonConverter() EdgeInsets safeAreas,
+    @EdgeInsetsJsonConverter() required EdgeInsets safeAreas,
 
     /// The screen pixel density of the device.
-    @required double pixelRatio,
+    required double pixelRatio,
 
     /// The size in points of the screen content.
-    @required @SizeJsonConverter() Size screenSize,
+    @SizeJsonConverter() required Size screenSize,
   }) = _CustomDeviceInfoData;
 
   factory CustomDeviceInfoData.fromJson(Map<String, dynamic> json) =>

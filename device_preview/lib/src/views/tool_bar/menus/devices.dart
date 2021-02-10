@@ -19,8 +19,8 @@ class DevicesPopOver extends StatefulWidget {
 }
 
 class _DevicesPopOverState extends State<DevicesPopOver> {
-  List<TargetPlatform> selected;
-  bool _isCustomDevice;
+  List<TargetPlatform>? selected;
+  bool? _isCustomDevice;
   String _searchedText = '';
 
   @override
@@ -39,7 +39,7 @@ class _DevicesPopOverState extends State<DevicesPopOver> {
     );
     isCustomDevice = _isCustomDevice ?? isCustomDevice;
 
-    final selected = this.selected ?? [platform ?? all.first];
+    final selected = this.selected ?? [platform];
 
     final devices = context.select(
       (DevicePreviewStore store) => store.devices
@@ -113,10 +113,10 @@ class PlatformSelector extends StatelessWidget {
   final VoidCallback onCustomDeviceEnabled;
 
   const PlatformSelector({
-    @required this.all,
-    @required this.selected,
-    @required this.onChanged,
-    @required this.onCustomDeviceEnabled,
+    required this.all,
+    required this.selected,
+    required this.onChanged,
+    required this.onCustomDeviceEnabled,
   });
 
   List<TargetPlatform> _orderPlatforms() {
@@ -167,7 +167,7 @@ class PlatformSelector extends StatelessWidget {
           Container(
             margin: EdgeInsets.symmetric(horizontal: 6),
             decoration: BoxDecoration(
-              color: theme.accentTextTheme.button.color.withOpacity(0.4),
+              color: theme.accentTextTheme.button!.color!.withOpacity(0.4),
               borderRadius: BorderRadius.circular(3),
             ),
             width: 2,
@@ -195,7 +195,7 @@ class PlatformSelector extends StatelessWidget {
 
 class CustomDevicePanel extends StatelessWidget {
   const CustomDevicePanel({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -433,8 +433,8 @@ class DeviceTile extends StatelessWidget {
 class DeviceTypeSelectBox extends StatelessWidget {
   final DeviceType type;
   const DeviceTypeSelectBox({
-    Key key,
-    @required this.type,
+    Key? key,
+    required this.type,
   }) : super(key: key);
 
   @override
@@ -465,8 +465,8 @@ class DeviceTypeSelectBox extends StatelessWidget {
 class PlatformSelectBox extends StatelessWidget {
   final TargetPlatform platform;
   const PlatformSelectBox({
-    Key key,
-    @required this.platform,
+    Key? key,
+    required this.platform,
   }) : super(key: key);
 
   @override
@@ -499,7 +499,7 @@ class SectionHeader extends StatelessWidget {
   final String title;
 
   const SectionHeader({
-    @required this.title,
+    required this.title,
   });
 
   @override
@@ -531,12 +531,12 @@ class SliderRowTile extends StatelessWidget {
   final ValueChanged<double> onValueChanged;
 
   const SliderRowTile({
-    @required this.title,
-    @required this.min,
-    @required this.max,
-    @required this.divisions,
-    @required this.value,
-    @required this.onValueChanged,
+    required this.title,
+    required this.min,
+    required this.max,
+    required this.divisions,
+    required this.value,
+    required this.onValueChanged,
   });
 
   @override
@@ -583,7 +583,7 @@ class SliderRowTile extends StatelessWidget {
                 SizedBox(
                   width: 45,
                   child: Text(
-                    value?.toString() ?? '',
+                    value.toString(),
                     style: TextStyle(
                       fontSize: 10,
                       color: toolBarStyle.foregroundColor,

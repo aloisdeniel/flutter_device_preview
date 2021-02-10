@@ -12,7 +12,7 @@ class AccessibilityPopOver extends StatelessWidget {
     return ListView(
       padding: theme.toolBar.spacing.regular,
       children: [
-        Selector(
+        Selector<DevicePreviewStore, double>(
           selector: (context, DevicePreviewStore store) =>
               store.data.textScaleFactor,
           builder: (context, textScaleFactor, _) => SliderTile(
@@ -27,7 +27,7 @@ class AccessibilityPopOver extends StatelessWidget {
             divisions: 11,
           ),
         ),
-        Selector(
+        Selector<DevicePreviewStore, bool>(
           selector: (context, DevicePreviewStore store) =>
               store.data.invertColors,
           builder: (context, invertColors, _) => AccessibilityCheckTile(
@@ -40,7 +40,7 @@ class AccessibilityPopOver extends StatelessWidget {
             },
           ),
         ),
-        Selector(
+        Selector<DevicePreviewStore, bool>(
           selector: (context, DevicePreviewStore store) =>
               store.data.accessibleNavigation,
           builder: (context, accessibleNavigation, _) => AccessibilityCheckTile(
@@ -53,7 +53,7 @@ class AccessibilityPopOver extends StatelessWidget {
             },
           ),
         ),
-        Selector(
+        Selector<DevicePreviewStore, bool>(
           selector: (context, DevicePreviewStore store) =>
               store.data.disableAnimations,
           builder: (context, disableAnimations, _) => AccessibilityCheckTile(
@@ -66,7 +66,7 @@ class AccessibilityPopOver extends StatelessWidget {
             },
           ),
         ),
-        Selector(
+        Selector<DevicePreviewStore, bool>(
           selector: (context, DevicePreviewStore store) => store.data.boldText,
           builder: (context, boldText, _) => AccessibilityCheckTile(
             title: 'Bold text',
@@ -90,10 +90,10 @@ class AccessibilityCheckTile extends StatelessWidget {
   final ValueChanged<bool> onValueChanged;
 
   AccessibilityCheckTile({
-    @required this.title,
-    @required this.icon,
-    @required this.value,
-    @required this.onValueChanged,
+    required this.title,
+    required this.icon,
+    required this.value,
+    required this.onValueChanged,
   });
 
   @override
@@ -144,9 +144,9 @@ class _SelectBox extends StatelessWidget {
   final ValueChanged<bool> onValueChanged;
 
   const _SelectBox({
-    @required this.icon,
-    @required this.value,
-    @required this.onValueChanged,
+    required this.icon,
+    required this.value,
+    required this.onValueChanged,
   });
 
   @override
@@ -193,12 +193,12 @@ class SliderTile extends StatelessWidget {
   final ValueChanged<double> onValueChanged;
 
   const SliderTile({
-    @required this.title,
-    @required this.min,
-    @required this.max,
-    @required this.divisions,
-    @required this.value,
-    @required this.onValueChanged,
+    required this.title,
+    required this.min,
+    required this.max,
+    required this.divisions,
+    required this.value,
+    required this.onValueChanged,
   });
 
   @override
@@ -234,7 +234,7 @@ class SliderTile extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      value?.toString() ?? '',
+                      value.toString(),
                       style: TextStyle(
                         fontSize: 12,
                         color: toolBarStyle.foregroundColor,

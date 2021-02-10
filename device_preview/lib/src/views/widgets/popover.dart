@@ -7,9 +7,9 @@ class PopoverScaffold extends StatelessWidget {
   final Widget title;
   final Widget body;
   const PopoverScaffold({
-    Key key,
-    @required this.body,
-    @required this.title,
+    Key? key,
+    required this.body,
+    required this.title,
   }) : super(key: key);
 
   @override
@@ -18,7 +18,7 @@ class PopoverScaffold extends StatelessWidget {
     return IconTheme(
       data: IconThemeData(
         color: theme.toolBar.foregroundColor,
-        size: theme.toolBar.fontStyles.body.fontSize * 1.8,
+        size: theme.toolBar.fontStyles.body.fontSize! * 1.8,
       ),
       child: DefaultTextStyle(
         style: theme.toolBar.fontStyles.title.copyWith(
@@ -42,11 +42,11 @@ class PopoverScaffold extends StatelessWidget {
 
 class PopoverBar extends StatelessWidget {
   final Widget title;
-  final Widget leading;
-  final Widget trailing;
+  final Widget? leading;
+  final Widget? trailing;
 
   const PopoverBar({
-    @required this.title,
+    required this.title,
     this.leading,
     this.trailing,
   });
@@ -59,11 +59,11 @@ class PopoverBar extends StatelessWidget {
         color: toolBarStyle.backgroundColor,
       ),
       padding: toolBarStyle.spacing.regular,
-      height: toolBarStyle.fontStyles.body.fontSize * 4,
+      height: toolBarStyle.fontStyles.body.fontSize! * 4,
       child: Row(
         children: <Widget>[
           if (leading != null) ...[
-            leading,
+            leading!,
             SizedBox(
               width: 6,
             ),
@@ -86,7 +86,7 @@ class PopoverBar extends StatelessWidget {
             ),
           ),
           if (trailing != null) ...[
-            trailing,
+            trailing!,
             SizedBox(
               width: 6,
             ),
@@ -99,13 +99,13 @@ class PopoverBar extends StatelessWidget {
 
 class PopoverTile extends StatelessWidget {
   final Widget title;
-  final Widget subtitle;
-  final Widget leading;
-  final Widget trailing;
-  final VoidCallback onTap;
+  final Widget? subtitle;
+  final Widget? leading;
+  final Widget? trailing;
+  final VoidCallback? onTap;
 
   const PopoverTile({
-    @required this.title,
+    required this.title,
     this.subtitle,
     this.leading,
     this.trailing,
@@ -126,9 +126,9 @@ class PopoverTile extends StatelessWidget {
                 IconTheme(
                   data: IconThemeData(
                     color: theme.toolBar.foregroundColor,
-                    size: theme.toolBar.fontStyles.body.fontSize * 1.8,
+                    size: theme.toolBar.fontStyles.body.fontSize! * 1.8,
                   ),
-                  child: leading,
+                  child: leading!,
                 ),
                 SizedBox(
                   width: theme.toolBar.spacing.regular.top,
@@ -151,7 +151,7 @@ class PopoverTile extends StatelessWidget {
                               color: theme.toolBar.foregroundColor
                                   .withOpacity(0.5),
                             ),
-                            child: subtitle,
+                            child: subtitle!,
                           ),
                         ],
                       ),
@@ -160,7 +160,7 @@ class PopoverTile extends StatelessWidget {
                 SizedBox(
                   width: theme.toolBar.spacing.regular.top,
                 ),
-                trailing,
+                trailing!,
               ],
             ],
           ),
@@ -175,22 +175,22 @@ class PopoverIconButton extends StatelessWidget {
   final VoidCallback onTap;
 
   const PopoverIconButton({
-    @required this.icon,
-    @required this.onTap,
+    required this.icon,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = DevicePreviewTheme.of(context);
     return Container(
-      height: theme.toolBar.fontStyles.body.fontSize * 4,
+      height: theme.toolBar.fontStyles.body.fontSize! * 4,
       child: InkWell(
         onTap: onTap,
         child: Padding(
           padding: theme.toolBar.spacing.small,
           child: Icon(
             icon,
-            size: theme.toolBar.fontStyles.body.fontSize * 1.5,
+            size: theme.toolBar.fontStyles.body.fontSize! * 1.5,
           ),
         ),
       ),
@@ -200,8 +200,8 @@ class PopoverIconButton extends StatelessWidget {
 
 class PopoverPageRoute<T> extends PageRoute<T> {
   PopoverPageRoute({
-    RouteSettings settings,
-    @required this.builder,
+    RouteSettings? settings,
+    required this.builder,
     this.transitionDuration = const Duration(milliseconds: 0),
     this.reverseTransitionDuration = const Duration(milliseconds: 0),
   })  : assert(builder != null),
@@ -252,9 +252,9 @@ class PopoverSearchField extends StatefulWidget {
   final ValueChanged<String> onTextChanged;
 
   const PopoverSearchField({
-    Key key,
-    @required this.hintText,
-    @required this.onTextChanged,
+    Key? key,
+    required this.hintText,
+    required this.onTextChanged,
     this.text = '',
   }) : super(key: key);
 
@@ -263,13 +263,12 @@ class PopoverSearchField extends StatefulWidget {
 }
 
 class _PopoverSearchFieldState extends State<PopoverSearchField> {
-  TextEditingController _controller;
+  late final TextEditingController _controller = TextEditingController(
+    text: widget.text,
+  );
 
   @override
   void initState() {
-    _controller = TextEditingController(
-      text: widget.text,
-    );
     _searchTECListener();
     super.initState();
   }
@@ -285,7 +284,7 @@ class _PopoverSearchFieldState extends State<PopoverSearchField> {
   @override
   void didUpdateWidget(covariant PopoverSearchField oldWidget) {
     if (widget.text != _controller.text) {
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
         _controller.text = widget.text;
       });
     }
@@ -294,7 +293,7 @@ class _PopoverSearchFieldState extends State<PopoverSearchField> {
   }
 
   void _clear() {
-    WidgetsBinding.instance.addPostFrameCallback((_) => _controller.clear());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => _controller.clear());
   }
 
   @override
@@ -366,12 +365,12 @@ class PopoverSlider extends StatelessWidget {
   final double max;
   final ValueChanged<double> onChanged;
   const PopoverSlider({
-    Key key,
-    @required this.value,
-    @required this.divisions,
-    @required this.min,
-    @required this.max,
-    @required this.onChanged,
+    Key? key,
+    required this.value,
+    required this.divisions,
+    required this.min,
+    required this.max,
+    required this.onChanged,
   }) : super(key: key);
 
   @override

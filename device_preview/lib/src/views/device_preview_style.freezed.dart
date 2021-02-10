@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
 
 part of 'device_preview_style.dart';
 
@@ -13,10 +13,9 @@ T _$identity<T>(T value) => value;
 class _$DevicePreviewStyleTearOff {
   const _$DevicePreviewStyleTearOff();
 
-// ignore: unused_element
   _DevicePreviewStyle call(
-      {@required BoxDecoration background,
-      @required DevicePreviewToolBarStyle toolBar}) {
+      {required BoxDecoration background,
+      required DevicePreviewToolBarStyle toolBar}) {
     return _DevicePreviewStyle(
       background: background,
       toolBar: toolBar,
@@ -25,7 +24,6 @@ class _$DevicePreviewStyleTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $DevicePreviewStyle = _$DevicePreviewStyleTearOff();
 
 /// @nodoc
@@ -33,6 +31,7 @@ mixin _$DevicePreviewStyle {
   BoxDecoration get background;
   DevicePreviewToolBarStyle get toolBar;
 
+  @JsonKey(ignore: true)
   $DevicePreviewStyleCopyWith<DevicePreviewStyle> get copyWith;
 }
 
@@ -57,8 +56,8 @@ class _$DevicePreviewStyleCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object background = freezed,
-    Object toolBar = freezed,
+    Object? background = freezed,
+    Object? toolBar = freezed,
   }) {
     return _then(_value.copyWith(
       background: background == freezed
@@ -72,9 +71,6 @@ class _$DevicePreviewStyleCopyWithImpl<$Res>
 
   @override
   $DevicePreviewToolBarStyleCopyWith<$Res> get toolBar {
-    if (_value.toolBar == null) {
-      return null;
-    }
     return $DevicePreviewToolBarStyleCopyWith<$Res>(_value.toolBar, (value) {
       return _then(_value.copyWith(toolBar: value));
     });
@@ -107,8 +103,8 @@ class __$DevicePreviewStyleCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object background = freezed,
-    Object toolBar = freezed,
+    Object? background = freezed,
+    Object? toolBar = freezed,
   }) {
     return _then(_DevicePreviewStyle(
       background: background == freezed
@@ -126,9 +122,7 @@ class _$_DevicePreviewStyle
     with DiagnosticableTreeMixin
     implements _DevicePreviewStyle {
   const _$_DevicePreviewStyle(
-      {@required this.background, @required this.toolBar})
-      : assert(background != null),
-        assert(toolBar != null);
+      {required this.background, required this.toolBar});
 
   @override
   final BoxDecoration background;
@@ -166,6 +160,7 @@ class _$_DevicePreviewStyle
       const DeepCollectionEquality().hash(background) ^
       const DeepCollectionEquality().hash(toolBar);
 
+  @JsonKey(ignore: true)
   @override
   _$DevicePreviewStyleCopyWith<_DevicePreviewStyle> get copyWith =>
       __$DevicePreviewStyleCopyWithImpl<_DevicePreviewStyle>(this, _$identity);
@@ -173,14 +168,15 @@ class _$_DevicePreviewStyle
 
 abstract class _DevicePreviewStyle implements DevicePreviewStyle {
   const factory _DevicePreviewStyle(
-      {@required BoxDecoration background,
-      @required DevicePreviewToolBarStyle toolBar}) = _$_DevicePreviewStyle;
+      {required BoxDecoration background,
+      required DevicePreviewToolBarStyle toolBar}) = _$_DevicePreviewStyle;
 
   @override
   BoxDecoration get background;
   @override
   DevicePreviewToolBarStyle get toolBar;
   @override
+  @JsonKey(ignore: true)
   _$DevicePreviewStyleCopyWith<_DevicePreviewStyle> get copyWith;
 }
 
@@ -188,16 +184,15 @@ abstract class _DevicePreviewStyle implements DevicePreviewStyle {
 class _$DevicePreviewToolBarStyleTearOff {
   const _$DevicePreviewToolBarStyleTearOff();
 
-// ignore: unused_element
   _DevicePreviewToolBarStyle call(
-      {@required DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
-      @required Color backgroundColor,
-      @required Color foregroundColor,
-      @required Color buttonBackgroundColor,
-      @required Color buttonHoverBackgroundColor,
-      @required DevicePreviewToolBarPosition position,
-      @required DevicePreviewToolBarSpacingData spacing,
-      @required DevicePreviewToolBarTextStyleData fontStyles}) {
+      {required DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
+      required Color backgroundColor,
+      required Color foregroundColor,
+      required Color buttonBackgroundColor,
+      required Color buttonHoverBackgroundColor,
+      required DevicePreviewToolBarPosition position,
+      required DevicePreviewToolBarSpacingData spacing,
+      required DevicePreviewToolBarTextStyleData fontStyles}) {
     return _DevicePreviewToolBarStyle(
       buttonsVisibility: buttonsVisibility,
       backgroundColor: backgroundColor,
@@ -212,7 +207,6 @@ class _$DevicePreviewToolBarStyleTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $DevicePreviewToolBarStyle = _$DevicePreviewToolBarStyleTearOff();
 
 /// @nodoc
@@ -226,6 +220,7 @@ mixin _$DevicePreviewToolBarStyle {
   DevicePreviewToolBarSpacingData get spacing;
   DevicePreviewToolBarTextStyleData get fontStyles;
 
+  @JsonKey(ignore: true)
   $DevicePreviewToolBarStyleCopyWith<DevicePreviewToolBarStyle> get copyWith;
 }
 
@@ -260,14 +255,14 @@ class _$DevicePreviewToolBarStyleCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object buttonsVisibility = freezed,
-    Object backgroundColor = freezed,
-    Object foregroundColor = freezed,
-    Object buttonBackgroundColor = freezed,
-    Object buttonHoverBackgroundColor = freezed,
-    Object position = freezed,
-    Object spacing = freezed,
-    Object fontStyles = freezed,
+    Object? buttonsVisibility = freezed,
+    Object? backgroundColor = freezed,
+    Object? foregroundColor = freezed,
+    Object? buttonBackgroundColor = freezed,
+    Object? buttonHoverBackgroundColor = freezed,
+    Object? position = freezed,
+    Object? spacing = freezed,
+    Object? fontStyles = freezed,
   }) {
     return _then(_value.copyWith(
       buttonsVisibility: buttonsVisibility == freezed
@@ -299,9 +294,6 @@ class _$DevicePreviewToolBarStyleCopyWithImpl<$Res>
 
   @override
   $DevicePreviewButtonsVisibilityStyleDataCopyWith<$Res> get buttonsVisibility {
-    if (_value.buttonsVisibility == null) {
-      return null;
-    }
     return $DevicePreviewButtonsVisibilityStyleDataCopyWith<$Res>(
         _value.buttonsVisibility, (value) {
       return _then(_value.copyWith(buttonsVisibility: value));
@@ -310,9 +302,6 @@ class _$DevicePreviewToolBarStyleCopyWithImpl<$Res>
 
   @override
   $DevicePreviewToolBarSpacingDataCopyWith<$Res> get spacing {
-    if (_value.spacing == null) {
-      return null;
-    }
     return $DevicePreviewToolBarSpacingDataCopyWith<$Res>(_value.spacing,
         (value) {
       return _then(_value.copyWith(spacing: value));
@@ -321,9 +310,6 @@ class _$DevicePreviewToolBarStyleCopyWithImpl<$Res>
 
   @override
   $DevicePreviewToolBarTextStyleDataCopyWith<$Res> get fontStyles {
-    if (_value.fontStyles == null) {
-      return null;
-    }
     return $DevicePreviewToolBarTextStyleDataCopyWith<$Res>(_value.fontStyles,
         (value) {
       return _then(_value.copyWith(fontStyles: value));
@@ -370,14 +356,14 @@ class __$DevicePreviewToolBarStyleCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object buttonsVisibility = freezed,
-    Object backgroundColor = freezed,
-    Object foregroundColor = freezed,
-    Object buttonBackgroundColor = freezed,
-    Object buttonHoverBackgroundColor = freezed,
-    Object position = freezed,
-    Object spacing = freezed,
-    Object fontStyles = freezed,
+    Object? buttonsVisibility = freezed,
+    Object? backgroundColor = freezed,
+    Object? foregroundColor = freezed,
+    Object? buttonBackgroundColor = freezed,
+    Object? buttonHoverBackgroundColor = freezed,
+    Object? position = freezed,
+    Object? spacing = freezed,
+    Object? fontStyles = freezed,
   }) {
     return _then(_DevicePreviewToolBarStyle(
       buttonsVisibility: buttonsVisibility == freezed
@@ -413,22 +399,14 @@ class _$_DevicePreviewToolBarStyle
     with DiagnosticableTreeMixin
     implements _DevicePreviewToolBarStyle {
   const _$_DevicePreviewToolBarStyle(
-      {@required this.buttonsVisibility,
-      @required this.backgroundColor,
-      @required this.foregroundColor,
-      @required this.buttonBackgroundColor,
-      @required this.buttonHoverBackgroundColor,
-      @required this.position,
-      @required this.spacing,
-      @required this.fontStyles})
-      : assert(buttonsVisibility != null),
-        assert(backgroundColor != null),
-        assert(foregroundColor != null),
-        assert(buttonBackgroundColor != null),
-        assert(buttonHoverBackgroundColor != null),
-        assert(position != null),
-        assert(spacing != null),
-        assert(fontStyles != null);
+      {required this.buttonsVisibility,
+      required this.backgroundColor,
+      required this.foregroundColor,
+      required this.buttonBackgroundColor,
+      required this.buttonHoverBackgroundColor,
+      required this.position,
+      required this.spacing,
+      required this.fontStyles});
 
   @override
   final DevicePreviewButtonsVisibilityStyleData buttonsVisibility;
@@ -512,6 +490,7 @@ class _$_DevicePreviewToolBarStyle
       const DeepCollectionEquality().hash(spacing) ^
       const DeepCollectionEquality().hash(fontStyles);
 
+  @JsonKey(ignore: true)
   @override
   _$DevicePreviewToolBarStyleCopyWith<_DevicePreviewToolBarStyle>
       get copyWith =>
@@ -521,14 +500,14 @@ class _$_DevicePreviewToolBarStyle
 
 abstract class _DevicePreviewToolBarStyle implements DevicePreviewToolBarStyle {
   const factory _DevicePreviewToolBarStyle(
-          {@required DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
-          @required Color backgroundColor,
-          @required Color foregroundColor,
-          @required Color buttonBackgroundColor,
-          @required Color buttonHoverBackgroundColor,
-          @required DevicePreviewToolBarPosition position,
-          @required DevicePreviewToolBarSpacingData spacing,
-          @required DevicePreviewToolBarTextStyleData fontStyles}) =
+          {required DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
+          required Color backgroundColor,
+          required Color foregroundColor,
+          required Color buttonBackgroundColor,
+          required Color buttonHoverBackgroundColor,
+          required DevicePreviewToolBarPosition position,
+          required DevicePreviewToolBarSpacingData spacing,
+          required DevicePreviewToolBarTextStyleData fontStyles}) =
       _$_DevicePreviewToolBarStyle;
 
   @override
@@ -548,6 +527,7 @@ abstract class _DevicePreviewToolBarStyle implements DevicePreviewToolBarStyle {
   @override
   DevicePreviewToolBarTextStyleData get fontStyles;
   @override
+  @JsonKey(ignore: true)
   _$DevicePreviewToolBarStyleCopyWith<_DevicePreviewToolBarStyle> get copyWith;
 }
 
@@ -555,11 +535,10 @@ abstract class _DevicePreviewToolBarStyle implements DevicePreviewToolBarStyle {
 class _$DevicePreviewToolBarSpacingDataTearOff {
   const _$DevicePreviewToolBarSpacingDataTearOff();
 
-// ignore: unused_element
   _DevicePreviewToolBarSpacingData call(
-      {@required EdgeInsets small,
-      @required EdgeInsets regular,
-      @required EdgeInsets big}) {
+      {required EdgeInsets small,
+      required EdgeInsets regular,
+      required EdgeInsets big}) {
     return _DevicePreviewToolBarSpacingData(
       small: small,
       regular: regular,
@@ -569,7 +548,6 @@ class _$DevicePreviewToolBarSpacingDataTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $DevicePreviewToolBarSpacingData =
     _$DevicePreviewToolBarSpacingDataTearOff();
 
@@ -579,6 +557,7 @@ mixin _$DevicePreviewToolBarSpacingData {
   EdgeInsets get regular;
   EdgeInsets get big;
 
+  @JsonKey(ignore: true)
   $DevicePreviewToolBarSpacingDataCopyWith<DevicePreviewToolBarSpacingData>
       get copyWith;
 }
@@ -603,9 +582,9 @@ class _$DevicePreviewToolBarSpacingDataCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object small = freezed,
-    Object regular = freezed,
-    Object big = freezed,
+    Object? small = freezed,
+    Object? regular = freezed,
+    Object? big = freezed,
   }) {
     return _then(_value.copyWith(
       small: small == freezed ? _value.small : small as EdgeInsets,
@@ -641,9 +620,9 @@ class __$DevicePreviewToolBarSpacingDataCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object small = freezed,
-    Object regular = freezed,
-    Object big = freezed,
+    Object? small = freezed,
+    Object? regular = freezed,
+    Object? big = freezed,
   }) {
     return _then(_DevicePreviewToolBarSpacingData(
       small: small == freezed ? _value.small : small as EdgeInsets,
@@ -658,10 +637,7 @@ class _$_DevicePreviewToolBarSpacingData
     with DiagnosticableTreeMixin
     implements _DevicePreviewToolBarSpacingData {
   const _$_DevicePreviewToolBarSpacingData(
-      {@required this.small, @required this.regular, @required this.big})
-      : assert(small != null),
-        assert(regular != null),
-        assert(big != null);
+      {required this.small, required this.regular, required this.big});
 
   @override
   final EdgeInsets small;
@@ -705,6 +681,7 @@ class _$_DevicePreviewToolBarSpacingData
       const DeepCollectionEquality().hash(regular) ^
       const DeepCollectionEquality().hash(big);
 
+  @JsonKey(ignore: true)
   @override
   _$DevicePreviewToolBarSpacingDataCopyWith<_DevicePreviewToolBarSpacingData>
       get copyWith => __$DevicePreviewToolBarSpacingDataCopyWithImpl<
@@ -714,9 +691,9 @@ class _$_DevicePreviewToolBarSpacingData
 abstract class _DevicePreviewToolBarSpacingData
     implements DevicePreviewToolBarSpacingData {
   const factory _DevicePreviewToolBarSpacingData(
-      {@required EdgeInsets small,
-      @required EdgeInsets regular,
-      @required EdgeInsets big}) = _$_DevicePreviewToolBarSpacingData;
+      {required EdgeInsets small,
+      required EdgeInsets regular,
+      required EdgeInsets big}) = _$_DevicePreviewToolBarSpacingData;
 
   @override
   EdgeInsets get small;
@@ -725,6 +702,7 @@ abstract class _DevicePreviewToolBarSpacingData
   @override
   EdgeInsets get big;
   @override
+  @JsonKey(ignore: true)
   _$DevicePreviewToolBarSpacingDataCopyWith<_DevicePreviewToolBarSpacingData>
       get copyWith;
 }
@@ -733,12 +711,11 @@ abstract class _DevicePreviewToolBarSpacingData
 class _$DevicePreviewToolBarTextStyleDataTearOff {
   const _$DevicePreviewToolBarTextStyleDataTearOff();
 
-// ignore: unused_element
   _DevicePreviewToolBarTextStyleData call(
-      {@required TextStyle smallBody,
-      @required TextStyle body,
-      @required TextStyle title,
-      @required TextStyle fieldLabel}) {
+      {required TextStyle smallBody,
+      required TextStyle body,
+      required TextStyle title,
+      required TextStyle fieldLabel}) {
     return _DevicePreviewToolBarTextStyleData(
       smallBody: smallBody,
       body: body,
@@ -749,7 +726,6 @@ class _$DevicePreviewToolBarTextStyleDataTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $DevicePreviewToolBarTextStyleData =
     _$DevicePreviewToolBarTextStyleDataTearOff();
 
@@ -760,6 +736,7 @@ mixin _$DevicePreviewToolBarTextStyleData {
   TextStyle get title;
   TextStyle get fieldLabel;
 
+  @JsonKey(ignore: true)
   $DevicePreviewToolBarTextStyleDataCopyWith<DevicePreviewToolBarTextStyleData>
       get copyWith;
 }
@@ -788,10 +765,10 @@ class _$DevicePreviewToolBarTextStyleDataCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object smallBody = freezed,
-    Object body = freezed,
-    Object title = freezed,
-    Object fieldLabel = freezed,
+    Object? smallBody = freezed,
+    Object? body = freezed,
+    Object? title = freezed,
+    Object? fieldLabel = freezed,
   }) {
     return _then(_value.copyWith(
       smallBody:
@@ -834,10 +811,10 @@ class __$DevicePreviewToolBarTextStyleDataCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object smallBody = freezed,
-    Object body = freezed,
-    Object title = freezed,
-    Object fieldLabel = freezed,
+    Object? smallBody = freezed,
+    Object? body = freezed,
+    Object? title = freezed,
+    Object? fieldLabel = freezed,
   }) {
     return _then(_DevicePreviewToolBarTextStyleData(
       smallBody:
@@ -855,14 +832,10 @@ class _$_DevicePreviewToolBarTextStyleData
     with DiagnosticableTreeMixin
     implements _DevicePreviewToolBarTextStyleData {
   const _$_DevicePreviewToolBarTextStyleData(
-      {@required this.smallBody,
-      @required this.body,
-      @required this.title,
-      @required this.fieldLabel})
-      : assert(smallBody != null),
-        assert(body != null),
-        assert(title != null),
-        assert(fieldLabel != null);
+      {required this.smallBody,
+      required this.body,
+      required this.title,
+      required this.fieldLabel});
 
   @override
   final TextStyle smallBody;
@@ -913,6 +886,7 @@ class _$_DevicePreviewToolBarTextStyleData
       const DeepCollectionEquality().hash(title) ^
       const DeepCollectionEquality().hash(fieldLabel);
 
+  @JsonKey(ignore: true)
   @override
   _$DevicePreviewToolBarTextStyleDataCopyWith<
           _DevicePreviewToolBarTextStyleData>
@@ -923,10 +897,10 @@ class _$_DevicePreviewToolBarTextStyleData
 abstract class _DevicePreviewToolBarTextStyleData
     implements DevicePreviewToolBarTextStyleData {
   const factory _DevicePreviewToolBarTextStyleData(
-      {@required TextStyle smallBody,
-      @required TextStyle body,
-      @required TextStyle title,
-      @required TextStyle fieldLabel}) = _$_DevicePreviewToolBarTextStyleData;
+      {required TextStyle smallBody,
+      required TextStyle body,
+      required TextStyle title,
+      required TextStyle fieldLabel}) = _$_DevicePreviewToolBarTextStyleData;
 
   @override
   TextStyle get smallBody;
@@ -937,6 +911,7 @@ abstract class _DevicePreviewToolBarTextStyleData
   @override
   TextStyle get fieldLabel;
   @override
+  @JsonKey(ignore: true)
   _$DevicePreviewToolBarTextStyleDataCopyWith<
       _DevicePreviewToolBarTextStyleData> get copyWith;
 }
@@ -945,7 +920,6 @@ abstract class _DevicePreviewToolBarTextStyleData
 class _$DevicePreviewButtonsVisibilityStyleDataTearOff {
   const _$DevicePreviewButtonsVisibilityStyleDataTearOff();
 
-// ignore: unused_element
   _DevicePreviewButtonsVisibilityStyleData call(
       {bool togglePreview = true,
       bool device = true,
@@ -971,7 +945,6 @@ class _$DevicePreviewButtonsVisibilityStyleDataTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $DevicePreviewButtonsVisibilityStyleData =
     _$DevicePreviewButtonsVisibilityStyleDataTearOff();
 
@@ -987,6 +960,7 @@ mixin _$DevicePreviewButtonsVisibilityStyleData {
   bool get accessibility;
   bool get settings;
 
+  @JsonKey(ignore: true)
   $DevicePreviewButtonsVisibilityStyleDataCopyWith<
       DevicePreviewButtonsVisibilityStyleData> get copyWith;
 }
@@ -1021,15 +995,15 @@ class _$DevicePreviewButtonsVisibilityStyleDataCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object togglePreview = freezed,
-    Object device = freezed,
-    Object language = freezed,
-    Object rotate = freezed,
-    Object toggleFrame = freezed,
-    Object toggleKeyboard = freezed,
-    Object darkMode = freezed,
-    Object accessibility = freezed,
-    Object settings = freezed,
+    Object? togglePreview = freezed,
+    Object? device = freezed,
+    Object? language = freezed,
+    Object? rotate = freezed,
+    Object? toggleFrame = freezed,
+    Object? toggleKeyboard = freezed,
+    Object? darkMode = freezed,
+    Object? accessibility = freezed,
+    Object? settings = freezed,
   }) {
     return _then(_value.copyWith(
       togglePreview: togglePreview == freezed
@@ -1088,15 +1062,15 @@ class __$DevicePreviewButtonsVisibilityStyleDataCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object togglePreview = freezed,
-    Object device = freezed,
-    Object language = freezed,
-    Object rotate = freezed,
-    Object toggleFrame = freezed,
-    Object toggleKeyboard = freezed,
-    Object darkMode = freezed,
-    Object accessibility = freezed,
-    Object settings = freezed,
+    Object? togglePreview = freezed,
+    Object? device = freezed,
+    Object? language = freezed,
+    Object? rotate = freezed,
+    Object? toggleFrame = freezed,
+    Object? toggleKeyboard = freezed,
+    Object? darkMode = freezed,
+    Object? accessibility = freezed,
+    Object? settings = freezed,
   }) {
     return _then(_DevicePreviewButtonsVisibilityStyleData(
       togglePreview: togglePreview == freezed
@@ -1132,16 +1106,7 @@ class _$_DevicePreviewButtonsVisibilityStyleData
       this.toggleKeyboard = true,
       this.darkMode = true,
       this.accessibility = true,
-      this.settings = true})
-      : assert(togglePreview != null),
-        assert(device != null),
-        assert(language != null),
-        assert(rotate != null),
-        assert(toggleFrame != null),
-        assert(toggleKeyboard != null),
-        assert(darkMode != null),
-        assert(accessibility != null),
-        assert(settings != null);
+      this.settings = true});
 
   @JsonKey(defaultValue: true)
   @override
@@ -1237,6 +1202,7 @@ class _$_DevicePreviewButtonsVisibilityStyleData
       const DeepCollectionEquality().hash(accessibility) ^
       const DeepCollectionEquality().hash(settings);
 
+  @JsonKey(ignore: true)
   @override
   _$DevicePreviewButtonsVisibilityStyleDataCopyWith<
           _DevicePreviewButtonsVisibilityStyleData>
@@ -1276,6 +1242,7 @@ abstract class _DevicePreviewButtonsVisibilityStyleData
   @override
   bool get settings;
   @override
+  @JsonKey(ignore: true)
   _$DevicePreviewButtonsVisibilityStyleDataCopyWith<
       _DevicePreviewButtonsVisibilityStyleData> get copyWith;
 }

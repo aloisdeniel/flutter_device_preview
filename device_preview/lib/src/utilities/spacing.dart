@@ -4,8 +4,8 @@ extension WidgetIterableExtensions on Iterable<Widget> {
   /// Insert a [SizedBox] with given [horizontal] and [vertical]
   /// between each one of the items.
   List<Widget> spaced({
-    double horizontal,
-    double vertical,
+    double? horizontal,
+    double? vertical,
   }) {
     if (isEmpty) return toList();
     return [

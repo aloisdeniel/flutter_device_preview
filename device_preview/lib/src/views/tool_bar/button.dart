@@ -6,22 +6,22 @@ class ToolBarButton extends StatefulWidget {
   final bool isRoundedTopRight;
   final bool isRoundedBottomLeft;
   final bool isRoundedBottomRight;
-  final IconData icon;
-  final String title;
-  final Color backgroundColor;
-  final Color foregroundColor;
+  final IconData? icon;
+  final String? title;
+  final Color? backgroundColor;
+  final Color? foregroundColor;
 
   /// Called when the user taps this button.
-  final GestureTapCallback onTap;
+  final GestureTapCallback? onTap;
 
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool autofocus;
 
   /// {@macro flutter.widgets.Focus.focusNode}
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
 
   const ToolBarButton({
-    Key key,
+    Key? key,
     this.title,
     this.icon,
     this.backgroundColor,
@@ -51,6 +51,8 @@ class ToolBarButton extends StatefulWidget {
             isRoundedBottom ||
             isRoundedBottomRight,
         assert(autofocus != null),
+        assert(title != null || icon != null,
+            'At least one of icon and title must be set.'),
         super(key: key);
 
   @override
@@ -91,11 +93,12 @@ class _ToolBarButtonState extends State<ToolBarButton> {
       );
 
   Widget _content(BuildContext context, bool expanded) {
-    if (widget.icon == null && widget.title != null) return Text(widget.title);
+    if (widget.icon == null && widget.title != null) return Text(widget.title!);
     if (widget.icon != null && widget.title == null) return Icon(widget.icon);
+    assert(widget.title != null && widget.icon != null);
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     final title = Text(
-      widget.title,
+      widget.title!,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
     );

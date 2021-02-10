@@ -16,7 +16,7 @@ import 'plugin.dart';
 /// a [DevicePreview].
 class ScreenshotPlugin extends DevicePreviewPlugin {
   const ScreenshotPlugin({
-    this.processor,
+    required this.processor,
   }) : super(
           identifier: 'screenshot',
           name: 'Screenshot',
@@ -49,22 +49,23 @@ typedef ScreenshotProcessor = Future<String> Function(
 
 class _Screenshot extends StatefulWidget {
   const _Screenshot({
-    Key key,
-    @required this.processor,
+    Key? key,
+    this.processor,
   }) : super(key: key);
 
-  final ScreenshotProcessor processor;
+  final ScreenshotProcessor? processor;
 
   @override
   _ScreenshotState createState() => _ScreenshotState();
 }
 
 class _ScreenshotState extends State<_Screenshot> {
-  String link;
+  String? link;
   dynamic error;
+
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       _take();
     });
     super.initState();

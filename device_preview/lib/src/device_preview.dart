@@ -47,7 +47,7 @@ class DevicePreview extends StatefulWidget {
   final bool isToolbarVisible;
 
   /// The configuration. If not precised, it is loaded from preferences.
-  final DevicePreviewData data;
+  final DevicePreviewData? data;
 
   /// The previewed widget.
   ///
@@ -55,10 +55,10 @@ class DevicePreview extends StatefulWidget {
   final WidgetBuilder builder;
 
   /// The default selected device when opening device preview for the first time.
-  final DeviceInfo defaultDevice;
+  final DeviceInfo? defaultDevice;
 
   /// The available devices used for previewing.
-  final List<DeviceInfo> devices;
+  final List<DeviceInfo>? devices;
 
   /// The list of plugins.
   final List<DevicePreviewPlugin> plugins;
@@ -79,10 +79,10 @@ class DevicePreview extends StatefulWidget {
   /// )
   /// ```
   /// {@end-tool}
-  final DevicePreviewStyle style;
+  final DevicePreviewStyle? style;
 
   /// The available locales.
-  final List<Locale> availableLocales;
+  final List<Locale>? availableLocales;
 
   /// The storage used to persist preferences.
   ///
@@ -93,8 +93,8 @@ class DevicePreview extends StatefulWidget {
 
   /// Create a new [DevicePreview].
   DevicePreview({
-    Key key,
-    @required this.builder,
+    Key? key,
+    required this.builder,
     this.devices,
     this.data,
     this.style,
@@ -102,7 +102,7 @@ class DevicePreview extends StatefulWidget {
     this.availableLocales,
     this.defaultDevice,
     this.plugins = const <DevicePreviewPlugin>[],
-    DevicePreviewStorage storage,
+    DevicePreviewStorage? storage,
     this.enabled = true,
   })  : assert(devices == null || devices.isNotEmpty),
         assert(isToolbarVisible != null),
@@ -119,7 +119,7 @@ class DevicePreview extends StatefulWidget {
     final platform = context.select(
       (DevicePreviewStore store) => store.deviceInfo.identifier.platform,
     );
-    return platform ?? Theme.of(context).platform;
+    return platform;
   }
 
   static bool _isEnabled(BuildContext context) {
@@ -128,7 +128,7 @@ class DevicePreview extends StatefulWidget {
   }
 
   /// Currently defined locale.
-  static Locale locale(BuildContext context) {
+  static Locale? locale(BuildContext context) {
     if (!_isEnabled(context)) {
       return null;
     }
@@ -138,7 +138,7 @@ class DevicePreview extends StatefulWidget {
       initialized: (state) {
         final splits = state.data.locale.split('_');
         final languageCode = splits[0];
-        String scriptCode, countryCode;
+        String? scriptCode, countryCode;
         if (splits.length > 2) {
           scriptCode = splits[1];
           countryCode = splits[2];
@@ -151,14 +151,14 @@ class DevicePreview extends StatefulWidget {
           countryCode: countryCode,
         );
       },
-      orElse: () => WidgetsBinding.instance.window.locale,
+      orElse: () => WidgetsBinding.instance!.window.locale,
     );
   }
 
   /// The list of declared plugins.
   static List<DevicePreviewPlugin> pluginsOf(BuildContext context) {
     final state = context.findAncestorStateOfType<_DevicePreviewState>();
-    return state.widget.plugins;
+    return state!.widget.plugins;
   }
 
   /// Make the toolbar visible to the user.
@@ -221,7 +221,7 @@ class DevicePreview extends StatefulWidget {
   static Future<DeviceScreenshot> screenshot(BuildContext context) {
     final state = context.findAncestorStateOfType<_DevicePreviewState>();
     final store = context.read<DevicePreviewStore>();
-    return state.screenshot(store);
+    return state!.screenshot(store);
   }
 
   /// A global builder that should be inserted into [WidgetApp]'s builder
@@ -333,8 +333,8 @@ class _DevicePreviewState extends State<DevicePreview> {
 
   /// Takes a screenshot with the current configuration.
   Future<DeviceScreenshot> screenshot(DevicePreviewStore store) async {
-    RenderRepaintBoundary boundary =
-        _repaintKey.currentContext.findRenderObject();
+    final boundary =
+        _repaintKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
     final format = ui.ImageByteFormat.png;
 
     final image = await boundary.toImage(
@@ -343,7 +343,7 @@ class _DevicePreviewState extends State<DevicePreview> {
     final byteData = await image.toByteData(
       format: format,
     );
-    final bytes = byteData.buffer.asUint8List();
+    final bytes = byteData!.buffer.asUint8List();
     final screenshot = DeviceScreenshot(
       device: store.deviceInfo,
       bytes: bytes,
@@ -356,7 +356,6 @@ class _DevicePreviewState extends State<DevicePreview> {
   @override
   void initState() {
     DeviceFrame.precache(context);
-    _onScreenshot = StreamController<DeviceScreenshot>.broadcast();
     super.initState();
   }
 
@@ -525,7 +524,8 @@ class _DevicePreviewState extends State<DevicePreview> {
 
   /// A stream that sends a new value each time the user takes
   /// a new screenshot.
-  StreamController<DeviceScreenshot> _onScreenshot;
+  late final StreamController<DeviceScreenshot> _onScreenshot =
+      StreamController<DeviceScreenshot>.broadcast();
 
   /// The current application key.
   final GlobalKey _appKey = GlobalKey();
@@ -534,8 +534,8 @@ class _DevicePreviewState extends State<DevicePreview> {
 class _ToolsOverlay extends StatefulWidget {
   final DevicePreviewStyle style;
   const _ToolsOverlay({
-    Key key,
-    @required this.style,
+    Key? key,
+    required this.style,
   }) : super(key: key);
 
   @override
@@ -549,7 +549,7 @@ class _ToolsOverlayState extends State<_ToolsOverlay> {
   @override
   void initState() {
     // Forcing rebuild to update absolute postion in `_overlayKey`
-    WidgetsBinding.instance.addPostFrameCallback(
+    WidgetsBinding.instance!.addPostFrameCallback(
       (timeStamp) => setState(() {}),
     );
     super.initState();
@@ -640,8 +640,8 @@ class DeviceScreenshot {
   final ui.ImageByteFormat format;
 
   DeviceScreenshot({
-    @required this.device,
-    @required this.bytes,
-    @required this.format,
+    required this.device,
+    required this.bytes,
+    required this.format,
   });
 }

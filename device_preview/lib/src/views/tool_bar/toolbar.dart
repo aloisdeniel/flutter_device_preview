@@ -17,10 +17,11 @@ import 'menus/popover.dart';
 import 'menus/style.dart';
 
 class DevicePreviewToolBar extends StatefulWidget {
-  final Rect overlayPosition;
+  final Rect? overlayPosition;
+
   const DevicePreviewToolBar({
-    Key key,
-    @required this.overlayPosition,
+    Key? key,
+    required this.overlayPosition,
   }) : super(key: key);
 
   static double height(BuildContext context) {
@@ -28,8 +29,8 @@ class DevicePreviewToolBar extends StatefulWidget {
     return 60 +
         12 +
         (toolBarStyle.position == DevicePreviewToolBarPosition.bottom
-            ? WidgetsBinding.instance.window.padding.bottom
-            : WidgetsBinding.instance.window.padding.top);
+            ? WidgetsBinding.instance!.window.padding.bottom
+            : WidgetsBinding.instance!.window.padding.top);
   }
 
   static double width(BuildContext context) {
@@ -37,8 +38,8 @@ class DevicePreviewToolBar extends StatefulWidget {
     return 180 +
         12 +
         (toolBarStyle.position == DevicePreviewToolBarPosition.left
-            ? WidgetsBinding.instance.window.padding.left
-            : WidgetsBinding.instance.window.padding.right);
+            ? WidgetsBinding.instance!.window.padding.left
+            : WidgetsBinding.instance!.window.padding.right);
   }
 
   @override
@@ -46,7 +47,7 @@ class DevicePreviewToolBar extends StatefulWidget {
 }
 
 class _DevicePreviewToolBarState extends State<DevicePreviewToolBar> {
-  String screenShotmessage;
+  String? screenShotmessage;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +67,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewToolBar> {
       icon: Icons.devices,
       builder: (context, _) => DevicesPopOver(),
       child: Builder(
-        builder: (context) => Selector(
+        builder: (context) => Selector<DevicePreviewStore, String>(
           selector: (context, DevicePreviewStore store) =>
               store.deviceInfo.name,
           builder: (context, name, _) => Selector(
@@ -120,7 +121,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewToolBar> {
                 color: Colors.transparent,
                 child: Center(
                   child: Switch(
-                    value: isEnabled ?? true,
+                    value: isEnabled,
                     onChanged: (v) {
                       final state = context.read<DevicePreviewStore>();
                       state.data = state.data.copyWith(isEnabled: v);
@@ -149,7 +150,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewToolBar> {
                 ),
                 if (toolBarStyle.buttonsVisibility.device) deviceButton,
                 if (toolBarStyle.buttonsVisibility.language)
-                  Selector(
+                  Selector<DevicePreviewStore, String>(
                     selector: (context, DevicePreviewStore store) =>
                         store.data.locale,
                     builder: (context, locale, _) => Popover(
@@ -177,7 +178,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewToolBar> {
                     },
                   ),
                 if (toolBarStyle.buttonsVisibility.toggleFrame)
-                  Selector(
+                  Selector<DevicePreviewStore, bool>(
                     selector: (context, DevicePreviewStore store) =>
                         store.data.isFrameVisible,
                     builder: (context, isFrameVisible, _) => ToolBarButton(
@@ -190,7 +191,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewToolBar> {
                     ),
                   ),
                 if (toolBarStyle.buttonsVisibility.toggleKeyboard)
-                  Selector(
+                  Selector<DevicePreviewStore, bool>(
                     selector: (context, DevicePreviewStore store) =>
                         store.data.isVirtualKeyboardVisible,
                     builder: (context, isVirtualKeyboardVisible, _) =>
@@ -208,7 +209,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewToolBar> {
                     ),
                   ),
                 if (toolBarStyle.buttonsVisibility.darkMode)
-                  Selector(
+                  Selector<DevicePreviewStore, bool>(
                     selector: (context, DevicePreviewStore store) =>
                         store.data.isDarkMode,
                     builder: (context, isDarkMode, _) => ToolBarButton(
@@ -285,7 +286,7 @@ class _ToolBarClipper extends CustomClipper<Path> {
   final DevicePreviewToolBarPosition position;
 
   const _ToolBarClipper({
-    @required this.position,
+    required this.position,
     this.radius = 12.0,
   });
 
@@ -339,6 +340,6 @@ class _ToolBarClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(covariant _ToolBarClipper oldClipper) {
-    return radius != oldClipper?.radius || position != oldClipper?.position;
+    return radius != oldClipper.radius || position != oldClipper.position;
   }
 }

@@ -15,28 +15,28 @@ class Popover extends StatefulWidget {
   final Widget child;
   final String title;
   final IconData icon;
-  final Size size;
-  final Rect parentBounds;
+  final Size? size;
+  final Rect? parentBounds;
   final PopoverContentBuilder builder;
 
   const Popover({
-    Key key,
+    Key? key,
     this.size,
-    @required this.parentBounds,
-    @required this.title,
-    @required this.icon,
-    @required this.child,
-    @required this.builder,
+    required this.parentBounds,
+    required this.title,
+    required this.icon,
+    required this.child,
+    required this.builder,
   }) : super(key: key);
 
   static void open(BuildContext context) {
     final state = context.findAncestorStateOfType<_PopoverState>();
-    state.open();
+    state!.open();
   }
 
   static void close(BuildContext context) {
     final state = context.findAncestorStateOfType<_PopoverState>();
-    state.close();
+    state!.close();
   }
 
   @override
@@ -58,8 +58,8 @@ class _PopoverState extends State<Popover> {
       );
 
       final startPosition = Offset(
-        _key.absolutePosition.left - (widget.parentBounds?.left ?? 0),
-        _key.absolutePosition.top - (widget.parentBounds?.top ?? 0),
+        _key.absolutePosition!.left - (widget.parentBounds?.left ?? 0),
+        _key.absolutePosition!.top - (widget.parentBounds?.top ?? 0),
       );
       final popover = OverlayEntry(
         opaque: false,
@@ -78,7 +78,7 @@ class _PopoverState extends State<Popover> {
 
       _overlayEntries.add(barrier);
       _overlayEntries.add(popover);
-      Overlay.of(context).insertAll(_overlayEntries);
+      Overlay.of(context)!.insertAll(_overlayEntries);
       _isOpen = true;
     }
   }
@@ -108,15 +108,15 @@ class _PopOverContainer extends StatefulWidget {
   final Widget child;
   final String title;
   final IconData icon;
-  final Rect parentBounds;
+  final Rect? parentBounds;
 
   _PopOverContainer({
-    @required this.title,
-    @required this.icon,
-    @required this.child,
-    @required this.startPosition,
-    @required this.size,
-    @required this.parentBounds,
+    required this.title,
+    required this.icon,
+    required this.child,
+    required this.startPosition,
+    required this.size,
+    required this.parentBounds,
   });
 
   @override
@@ -125,8 +125,8 @@ class _PopOverContainer extends StatefulWidget {
 
 class __PopOverContainerState extends State<_PopOverContainer>
     with WidgetsBindingObserver {
-  bool _isStarted;
-  Offset _translate;
+  bool _isStarted = false;
+  Offset _translate = Offset.zero;
 
   @override
   void didChangeMetrics() {
@@ -138,18 +138,18 @@ class __PopOverContainerState extends State<_PopOverContainer>
     // Centered bottom
     _translate = Offset.zero;
     _isStarted = false;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       setState(() {
         _isStarted = true;
       });
     });
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 
@@ -318,8 +318,8 @@ class _PopOverHeader extends StatelessWidget {
   final IconData icon;
 
   _PopOverHeader({
-    @required this.title,
-    @required this.icon,
+    required this.title,
+    required this.icon,
   });
 
   @override

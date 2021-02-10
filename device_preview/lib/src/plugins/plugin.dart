@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 /// A plugin definition for device preview.
 ///
-/// It allows to add a dedicate button in the tool bar (with the [icon] and [name]). When the
+/// It allows to add a dedicated button in the tool bar (with the [icon] and [name]). When the
 /// user taps the icon, a window of [windowSize] is opened and its content is built with the
 /// [builder].
 ///
@@ -23,9 +23,9 @@ import 'package:provider/provider.dart';
 class DevicePreviewPlugin {
   /// Create a new plugin definition.
   const DevicePreviewPlugin({
-    @required this.identifier,
-    @required this.name,
-    @required this.icon,
+    required this.identifier,
+    required this.name,
+    required this.icon,
     this.windowSize = const Size(280, 300),
     this.builder,
   })  : assert(name != null),
@@ -47,7 +47,7 @@ class DevicePreviewPlugin {
   final Size windowSize;
 
   /// The window content builder.
-  final DevicePreviewPluginWidgetBuilder builder;
+  final DevicePreviewPluginWidgetBuilder? builder;
 
   /// Build the window content by observing the plugin's data in storage and
   /// calling [buildData].
@@ -55,7 +55,7 @@ class DevicePreviewPlugin {
     final data = context.select<DevicePreviewStore, Map<String, dynamic>>(
       (state) {
         final plugins = state.data.pluginData;
-        return plugins.containsKey(identifier) ? plugins[identifier] : {};
+        return plugins.containsKey(identifier) ? plugins[identifier]! : {};
       },
     );
     return buildData(context, data, (data) {
@@ -75,7 +75,7 @@ class DevicePreviewPlugin {
     DevicePreviewPluginDataUpdater updateData,
   ) {
     assert(builder != null);
-    return builder(context, data, updateData);
+    return builder!(context, data, updateData);
   }
 }
 
