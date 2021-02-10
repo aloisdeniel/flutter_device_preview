@@ -14,8 +14,8 @@ final platformLabels = {
 /// Parses all frame svg files from `assets` folder
 /// and generate a dart class.
 Future<void> main() async {
-  final scriptDirectory = path.dirname(
-      path.dirname(Platform.script.toString().replaceAll('file://', '')));
+  final scriptDirectory =
+      path.dirname(path.dirname(Platform.script.toFilePath()));
   final assetsDirectory = Directory(path.join(scriptDirectory, 'assets'));
   final docDirectory =
       Directory(path.join(scriptDirectory, '..', 'docs', 'content', 'usage'));

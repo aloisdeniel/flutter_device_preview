@@ -9,8 +9,8 @@ import 'parsing.dart';
 /// Parses all frame svg files from `assets` folder
 /// and generate a dart class.
 Future<void> main() async {
-  final scriptDirectory = path.dirname(
-      path.dirname(Platform.script.toString().replaceAll('file://', '')));
+  final scriptDirectory =
+      path.dirname(path.dirname(Platform.script.toFilePath()));
   final assetsDirectory = Directory(path.join(scriptDirectory, 'assets'));
   final files = await assetsDirectory.list().toList();
   final deviceInfos = <String>[];
@@ -21,7 +21,8 @@ Future<void> main() async {
     deviceInfos.add(deviceInfo);
   }
 
-  final outputFile = File(path.join(scriptDirectory, 'lib/src/devices.g.dart'));
+  final outputFile =
+      File(path.join(scriptDirectory, 'lib', 'src', 'devices.g.dart'));
   await outputFile.writeAsString('''
 part of 'devices.dart';
 
