@@ -1,6 +1,6 @@
 name: device_frame
 description: Mockups for common devices.
-version: 0.3.0
+version: 0.4.0-nullsafety.0
 homepage: https://github.com/aloisdeniel/flutter_device_preview
 
 environment:
