@@ -56,9 +56,9 @@ class DeviceFrame extends StatelessWidget {
   /// If [isFrameVisible] is `true`, only the [screen] is displayed, but clipped with
   /// the device screen shape.
   DeviceFrame({
-    Key key,
-    @required this.device,
-    @required this.screen,
+    Key? key,
+    required this.device,
+    required this.screen,
     this.orientation = Orientation.portrait,
     this.isFrameVisible = true,
   })  : identifier = device.identifier,

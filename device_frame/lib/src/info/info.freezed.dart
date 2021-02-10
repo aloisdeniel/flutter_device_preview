@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
 
 part of 'info.dart';
 
@@ -13,17 +13,16 @@ T _$identity<T>(T value) => value;
 class _$DeviceInfoTearOff {
   const _$DeviceInfoTearOff();
 
-// ignore: unused_element
   _DeviceInfo call(
-      {@required DeviceIdentifier identifier,
-      @required String name,
-      @nullable EdgeInsets rotatedSafeAreas = null,
-      @required EdgeInsets safeAreas,
-      @required Path screenPath,
-      @required double pixelRatio,
-      @required String svgFrame,
-      @required Size frameSize,
-      @required Size screenSize}) {
+      {required DeviceIdentifier identifier,
+      required String name,
+      EdgeInsets? rotatedSafeAreas = null,
+      required EdgeInsets safeAreas,
+      required Path screenPath,
+      required double pixelRatio,
+      required String svgFrame,
+      required Size frameSize,
+      required Size screenSize}) {
     return _DeviceInfo(
       identifier: identifier,
       name: name,
@@ -39,7 +38,6 @@ class _$DeviceInfoTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $DeviceInfo = _$DeviceInfoTearOff();
 
 /// @nodoc
@@ -51,8 +49,7 @@ mixin _$DeviceInfo {
   String get name;
 
   /// The safe areas when the device is in landscape orientation.
-  @nullable
-  EdgeInsets get rotatedSafeAreas;
+  EdgeInsets? get rotatedSafeAreas;
 
   /// The safe areas when the device is in portrait orientation.
   EdgeInsets get safeAreas;
@@ -72,6 +69,7 @@ mixin _$DeviceInfo {
   /// The size in points of the screen content.
   Size get screenSize;
 
+  @JsonKey(ignore: true)
   $DeviceInfoCopyWith<DeviceInfo> get copyWith;
 }
 
@@ -83,7 +81,7 @@ abstract class $DeviceInfoCopyWith<$Res> {
   $Res call(
       {DeviceIdentifier identifier,
       String name,
-      @nullable EdgeInsets rotatedSafeAreas,
+      EdgeInsets? rotatedSafeAreas,
       EdgeInsets safeAreas,
       Path screenPath,
       double pixelRatio,
@@ -102,15 +100,15 @@ class _$DeviceInfoCopyWithImpl<$Res> implements $DeviceInfoCopyWith<$Res> {
 
   @override
   $Res call({
-    Object identifier = freezed,
-    Object name = freezed,
-    Object rotatedSafeAreas = freezed,
-    Object safeAreas = freezed,
-    Object screenPath = freezed,
-    Object pixelRatio = freezed,
-    Object svgFrame = freezed,
-    Object frameSize = freezed,
-    Object screenSize = freezed,
+    Object? identifier = freezed,
+    Object? name = freezed,
+    Object? rotatedSafeAreas = freezed,
+    Object? safeAreas = freezed,
+    Object? screenPath = freezed,
+    Object? pixelRatio = freezed,
+    Object? svgFrame = freezed,
+    Object? frameSize = freezed,
+    Object? screenSize = freezed,
   }) {
     return _then(_value.copyWith(
       identifier: identifier == freezed
@@ -119,7 +117,7 @@ class _$DeviceInfoCopyWithImpl<$Res> implements $DeviceInfoCopyWith<$Res> {
       name: name == freezed ? _value.name : name as String,
       rotatedSafeAreas: rotatedSafeAreas == freezed
           ? _value.rotatedSafeAreas
-          : rotatedSafeAreas as EdgeInsets,
+          : rotatedSafeAreas as EdgeInsets?,
       safeAreas:
           safeAreas == freezed ? _value.safeAreas : safeAreas as EdgeInsets,
       screenPath:
@@ -143,7 +141,7 @@ abstract class _$DeviceInfoCopyWith<$Res> implements $DeviceInfoCopyWith<$Res> {
   $Res call(
       {DeviceIdentifier identifier,
       String name,
-      @nullable EdgeInsets rotatedSafeAreas,
+      EdgeInsets? rotatedSafeAreas,
       EdgeInsets safeAreas,
       Path screenPath,
       double pixelRatio,
@@ -164,15 +162,15 @@ class __$DeviceInfoCopyWithImpl<$Res> extends _$DeviceInfoCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object identifier = freezed,
-    Object name = freezed,
-    Object rotatedSafeAreas = freezed,
-    Object safeAreas = freezed,
-    Object screenPath = freezed,
-    Object pixelRatio = freezed,
-    Object svgFrame = freezed,
-    Object frameSize = freezed,
-    Object screenSize = freezed,
+    Object? identifier = freezed,
+    Object? name = freezed,
+    Object? rotatedSafeAreas = freezed,
+    Object? safeAreas = freezed,
+    Object? screenPath = freezed,
+    Object? pixelRatio = freezed,
+    Object? svgFrame = freezed,
+    Object? frameSize = freezed,
+    Object? screenSize = freezed,
   }) {
     return _then(_DeviceInfo(
       identifier: identifier == freezed
@@ -181,7 +179,7 @@ class __$DeviceInfoCopyWithImpl<$Res> extends _$DeviceInfoCopyWithImpl<$Res>
       name: name == freezed ? _value.name : name as String,
       rotatedSafeAreas: rotatedSafeAreas == freezed
           ? _value.rotatedSafeAreas
-          : rotatedSafeAreas as EdgeInsets,
+          : rotatedSafeAreas as EdgeInsets?,
       safeAreas:
           safeAreas == freezed ? _value.safeAreas : safeAreas as EdgeInsets,
       screenPath:
@@ -199,23 +197,15 @@ class __$DeviceInfoCopyWithImpl<$Res> extends _$DeviceInfoCopyWithImpl<$Res>
 /// @nodoc
 class _$_DeviceInfo with DiagnosticableTreeMixin implements _DeviceInfo {
   const _$_DeviceInfo(
-      {@required this.identifier,
-      @required this.name,
-      @nullable this.rotatedSafeAreas = null,
-      @required this.safeAreas,
-      @required this.screenPath,
-      @required this.pixelRatio,
-      @required this.svgFrame,
-      @required this.frameSize,
-      @required this.screenSize})
-      : assert(identifier != null),
-        assert(name != null),
-        assert(safeAreas != null),
-        assert(screenPath != null),
-        assert(pixelRatio != null),
-        assert(svgFrame != null),
-        assert(frameSize != null),
-        assert(screenSize != null);
+      {required this.identifier,
+      required this.name,
+      this.rotatedSafeAreas = null,
+      required this.safeAreas,
+      required this.screenPath,
+      required this.pixelRatio,
+      required this.svgFrame,
+      required this.frameSize,
+      required this.screenSize});
 
   @override
 
@@ -229,8 +219,7 @@ class _$_DeviceInfo with DiagnosticableTreeMixin implements _DeviceInfo {
   @override
 
   /// The safe areas when the device is in landscape orientation.
-  @nullable
-  final EdgeInsets rotatedSafeAreas;
+  final EdgeInsets? rotatedSafeAreas;
   @override
 
   /// The safe areas when the device is in portrait orientation.
@@ -322,6 +311,7 @@ class _$_DeviceInfo with DiagnosticableTreeMixin implements _DeviceInfo {
       const DeepCollectionEquality().hash(frameSize) ^
       const DeepCollectionEquality().hash(screenSize);
 
+  @JsonKey(ignore: true)
   @override
   _$DeviceInfoCopyWith<_DeviceInfo> get copyWith =>
       __$DeviceInfoCopyWithImpl<_DeviceInfo>(this, _$identity);
@@ -329,15 +319,15 @@ class _$_DeviceInfo with DiagnosticableTreeMixin implements _DeviceInfo {
 
 abstract class _DeviceInfo implements DeviceInfo {
   const factory _DeviceInfo(
-      {@required DeviceIdentifier identifier,
-      @required String name,
-      @nullable EdgeInsets rotatedSafeAreas,
-      @required EdgeInsets safeAreas,
-      @required Path screenPath,
-      @required double pixelRatio,
-      @required String svgFrame,
-      @required Size frameSize,
-      @required Size screenSize}) = _$_DeviceInfo;
+      {required DeviceIdentifier identifier,
+      required String name,
+      EdgeInsets? rotatedSafeAreas,
+      required EdgeInsets safeAreas,
+      required Path screenPath,
+      required double pixelRatio,
+      required String svgFrame,
+      required Size frameSize,
+      required Size screenSize}) = _$_DeviceInfo;
 
   @override
 
@@ -350,8 +340,7 @@ abstract class _DeviceInfo implements DeviceInfo {
   @override
 
   /// The safe areas when the device is in landscape orientation.
-  @nullable
-  EdgeInsets get rotatedSafeAreas;
+  EdgeInsets? get rotatedSafeAreas;
   @override
 
   /// The safe areas when the device is in portrait orientation.
@@ -377,5 +366,6 @@ abstract class _DeviceInfo implements DeviceInfo {
   /// The size in points of the screen content.
   Size get screenSize;
   @override
+  @JsonKey(ignore: true)
   _$DeviceInfoCopyWith<_DeviceInfo> get copyWith;
 }

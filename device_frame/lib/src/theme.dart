@@ -13,8 +13,8 @@ class DeviceFrameTheme extends InheritedWidget {
 
   /// Give a [style] to all descentant in [child] device frames.
   const DeviceFrameTheme({
-    @required this.style,
-    @required Widget child,
+    required this.style,
+    required Widget child,
   }) : super(child: child);
 
   static DeviceFrameStyle of(BuildContext context) {
@@ -38,15 +38,15 @@ class DeviceFrameTheme extends InheritedWidget {
 @freezed
 abstract class DeviceFrameStyle with _$DeviceFrameStyle {
   const factory DeviceFrameStyle({
-    @required DeviceKeyboardStyle keyboardStyle,
+    required DeviceKeyboardStyle keyboardStyle,
   }) = _DeviceFrameStyle;
 
-  factory DeviceFrameStyle.dark({DeviceKeyboardStyle keyboardStyle}) =>
+  factory DeviceFrameStyle.dark({DeviceKeyboardStyle? keyboardStyle}) =>
       DeviceFrameStyle(
         keyboardStyle: keyboardStyle ?? DeviceKeyboardStyle.dark(),
       );
 
-  factory DeviceFrameStyle.light({DeviceKeyboardStyle keyboardStyle}) =>
+  factory DeviceFrameStyle.light({DeviceKeyboardStyle? keyboardStyle}) =>
       DeviceFrameStyle(
         keyboardStyle: keyboardStyle ?? DeviceKeyboardStyle.dark(),
       );
@@ -55,11 +55,11 @@ abstract class DeviceFrameStyle with _$DeviceFrameStyle {
 @freezed
 abstract class DeviceKeyboardStyle with _$DeviceKeyboardStyle {
   const factory DeviceKeyboardStyle({
-    @required Color backgroundColor,
-    @required Color button1BackgroundColor,
-    @required Color button1ForegroundColor,
-    @required Color button2BackgroundColor,
-    @required Color button2ForegroundColor,
+    required Color backgroundColor,
+    required Color button1BackgroundColor,
+    required Color button1ForegroundColor,
+    required Color button2BackgroundColor,
+    required Color button2ForegroundColor,
   }) = _DeviceKeyboardStyle;
 
   factory DeviceKeyboardStyle.dark() => const DeviceKeyboardStyle(

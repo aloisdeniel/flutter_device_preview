@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:path/path.dart' as path;
 import 'package:xml/xml.dart';
 
@@ -55,7 +56,7 @@ String _generateDeviceInfo(
       orElse: () => throw Exception(
         'The svg image should have a path or rect filled with #FF0000 to represent the device\'s screen',
       ),
-    );
+    ) as XmlElement;
 
     final width = screenNode.getAttribute('width');
     final height = screenNode.getAttribute('height');
@@ -65,31 +66,30 @@ String _generateDeviceInfo(
     screen = '''Path()
       ..addRect(
         Rect.fromLTWH(
-          ${double.tryParse(screenNode.getAttribute('x')) ?? 0},
-          ${double.tryParse(screenNode.getAttribute('y')) ?? 0},
-          ${double.parse(width)},
-          ${double.parse(height)},
+          ${double.tryParse(screenNode.getAttribute('x')!) ?? 0},
+          ${double.tryParse(screenNode.getAttribute('y')!) ?? 0},
+          ${double.parse(width!)},
+          ${double.parse(height!)},
         ),
       )''';
   }
 
   // Moving defs at first position
-  final defs = document.descendants.firstWhere(
+  final defs = document.descendants.firstWhereOrNull(
     (node) {
       return node is XmlElement && node.name.toString() == 'defs';
     },
-    orElse: () => null,
   );
   if (defs != null) {
-    final parent = defs.parent;
+    final parent = defs.parent!;
     parent.children.remove(defs);
     parent.children.insert(0, defs);
   }
 
   // Removing the screen and info
   final infoNode = findInfoNode(document);
-  infoNode.parent.children.remove(infoNode);
-  screenNode.parent.children.remove(screenNode);
+  infoNode.parent!.children.remove(infoNode);
+  screenNode.parent!.children.remove(screenNode);
   final frame = document.toXmlString();
 
   return '''DeviceInfo(
