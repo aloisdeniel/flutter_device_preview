@@ -112,7 +112,7 @@ abstract class CustomDeviceInfoData with _$CustomDeviceInfoData {
     required String name,
 
     /// The safe areas when the device is in landscape orientation.
-    @Default(null) @EdgeInsetsJsonConverter() EdgeInsets? rotatedSafeAreas,
+    @EdgeInsetsJsonConverter() EdgeInsets? rotatedSafeAreas,
 
     /// The safe areas when the device is in portrait orientation.
     @EdgeInsetsJsonConverter() required EdgeInsets safeAreas,

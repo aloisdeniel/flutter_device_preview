@@ -1172,7 +1172,7 @@ class _$CustomDeviceInfoDataTearOff {
       required DeviceType type,
       required TargetPlatform platform,
       required String name,
-      @EdgeInsetsJsonConverter() EdgeInsets? rotatedSafeAreas = null,
+      @EdgeInsetsJsonConverter() EdgeInsets? rotatedSafeAreas,
       @EdgeInsetsJsonConverter() required EdgeInsets safeAreas,
       required double pixelRatio,
       @SizeJsonConverter() required Size screenSize}) {
@@ -1355,7 +1355,7 @@ class _$_CustomDeviceInfoData
       required this.type,
       required this.platform,
       required this.name,
-      @EdgeInsetsJsonConverter() this.rotatedSafeAreas = null,
+      @EdgeInsetsJsonConverter() this.rotatedSafeAreas,
       @EdgeInsetsJsonConverter() required this.safeAreas,
       required this.pixelRatio,
       @SizeJsonConverter() required this.screenSize});
@@ -1379,7 +1379,6 @@ class _$_CustomDeviceInfoData
 
   /// The display name of the device.
   final String name;
-  @JsonKey(defaultValue: null)
   @override
 
   /// The safe areas when the device is in landscape orientation.

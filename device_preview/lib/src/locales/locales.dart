@@ -65,8 +65,9 @@ Locale basicLocaleListResolution(
     languageAndCountryLocales[
         '${locale.languageCode}_${locale.countryCode}'] ??= locale;
     languageLocales[locale.languageCode] ??= locale;
-    // TODO validate countryCode not null
-    countryLocales[locale.countryCode!] ??= locale;
+    if (locale.countryCode != null) {
+      countryLocales[locale.countryCode!] ??= locale;
+    }
   }
 
   // Since languageCode-only matches are possibly low quality, we don't return

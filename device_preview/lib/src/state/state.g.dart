@@ -113,7 +113,8 @@ _$_CustomDeviceInfoData _$_$_CustomDeviceInfoDataFromJson(
         const EdgeInsetsJsonConverter().fromJson(json['rotatedSafeAreas']),
     safeAreas: const EdgeInsetsJsonConverter().fromJson(json['safeAreas']),
     pixelRatio: (json['pixelRatio'] as num).toDouble(),
-    screenSize: const SizeJsonConverter().fromJson(json['screenSize']),
+    screenSize:
+        const SizeJsonConverter().fromJson(json['screenSize'] as Object),
   );
 }
 
