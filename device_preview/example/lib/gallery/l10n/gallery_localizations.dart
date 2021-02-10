@@ -144,7 +144,7 @@ abstract class GalleryLocalizations {
 
   static GalleryLocalizations of(BuildContext context) {
     return Localizations.of<GalleryLocalizations>(
-        context, GalleryLocalizations);
+        context, GalleryLocalizations)!;
   }
 
   static const LocalizationsDelegate<GalleryLocalizations> delegate =
@@ -3012,7 +3012,6 @@ Future<GalleryLocalizations> _lookupGalleryLocalizations(Locale locale) {
           (dynamic _) => gallery_localizations_zu.GalleryLocalizationsZu());
   }
 
-  assert(false,
+  throw Exception(
       'GalleryLocalizations.delegate failed to load unsupported locale "$locale"');
-  return null;
 }

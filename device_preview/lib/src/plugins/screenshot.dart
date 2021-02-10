@@ -16,7 +16,7 @@ import 'plugin.dart';
 /// a [DevicePreview].
 class ScreenshotPlugin extends DevicePreviewPlugin {
   const ScreenshotPlugin({
-    required this.processor,
+    this.processor,
   }) : super(
           identifier: 'screenshot',
           name: 'Screenshot',
@@ -25,7 +25,7 @@ class ScreenshotPlugin extends DevicePreviewPlugin {
         );
 
   /// A screenshot that processes a screenshot and returns the result as a display message.
-  final ScreenshotProcessor processor;
+  final ScreenshotProcessor? processor;
 
   @override
   Widget buildData(

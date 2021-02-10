@@ -42,7 +42,7 @@ void main() {
 }
 
 Future<void> _createFakeData() async {
-  final directory = (await getApplicationDocumentsDirectory()).path;
+  final directory = (await getApplicationDocumentsDirectory())!.path;
 
   final file1 = File(path.join(directory, 'example.json'));
   await file1.writeAsString('{ "example": true}');

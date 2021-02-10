@@ -228,8 +228,10 @@ class DevicePreview extends StatefulWidget {
   /// to simulated the simulated device screen and platform properties.
   static Widget appBuilder(
     BuildContext context,
-    Widget widget,
+    Widget? widget,
   ) {
+    widget!;
+
     if (!_isEnabled(context)) {
       return widget;
     }

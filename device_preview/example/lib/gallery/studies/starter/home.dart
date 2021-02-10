@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             Text(
               (loaded ? 'LOADED' : '...'),
-              style: textTheme.subtitle1.copyWith(
+              style: textTheme.subtitle1!.copyWith(
                 color: colorScheme.onSecondary,
               ),
             ),
@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> {
 
 class AdaptiveAppBar extends StatelessWidget implements PreferredSizeWidget {
   const AdaptiveAppBar({
-    Key key,
+    Key? key,
     this.isDesktop = false,
   }) : super(key: key);
 
@@ -134,7 +134,7 @@ class AdaptiveAppBar extends StatelessWidget implements PreferredSizeWidget {
                 margin: const EdgeInsetsDirectional.fromSTEB(72, 0, 0, 22),
                 child: Text(
                   GalleryLocalizations.of(context).starterAppGenericTitle,
-                  style: themeData.textTheme.headline5.copyWith(
+                  style: themeData.textTheme.headline5!.copyWith(
                     color: themeData.colorScheme.onPrimary,
                   ),
                 ),
