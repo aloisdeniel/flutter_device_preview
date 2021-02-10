@@ -65,9 +65,7 @@ class DeviceFrame extends StatelessWidget {
         super(key: key);
 
   static bool isRotated(DeviceInfo info, Orientation orientation) {
-    return info != null &&
-        info.canRotate &&
-        orientation == Orientation.landscape;
+    return info.canRotate && orientation == Orientation.landscape;
   }
 
   static Future<void> precache(BuildContext context) async {
@@ -83,11 +81,9 @@ class DeviceFrame extends StatelessWidget {
       BuildContext context, DeviceInfo info, Orientation orientation) {
     final mediaQuery = MediaQuery.of(context);
     final isRotated = DeviceFrame.isRotated(info, orientation);
-    final padding = isRotated
-        ? info.rotatedSafeAreas
-        : (info?.safeAreas ?? mediaQuery.padding);
+    final padding = isRotated ? info.rotatedSafeAreas : info.safeAreas;
 
-    final screenSize = info != null ? info.screenSize : mediaQuery.size;
+    final screenSize = info.screenSize;
     final width = isRotated ? screenSize.height : screenSize.width;
     final height = isRotated ? screenSize.width : screenSize.height;
 
@@ -96,7 +92,7 @@ class DeviceFrame extends StatelessWidget {
       padding: padding,
       viewInsets: EdgeInsets.zero,
       viewPadding: padding,
-      devicePixelRatio: info?.pixelRatio ?? mediaQuery.devicePixelRatio,
+      devicePixelRatio: info.pixelRatio,
     );
   }
 
@@ -114,9 +110,8 @@ class DeviceFrame extends StatelessWidget {
   }
 
   Widget _screen(BuildContext context, DeviceInfo info) {
-    final mediaQuery = MediaQuery.of(context);
     final isRotated = DeviceFrame.isRotated(info, orientation);
-    final screenSize = info != null ? info.screenSize : mediaQuery.size;
+    final screenSize = info.screenSize;
     final width = isRotated ? screenSize.height : screenSize.width;
     final height = isRotated ? screenSize.width : screenSize.height;
 
@@ -190,7 +185,6 @@ class _ScreenClipper extends CustomClipper<Path> {
 
   @override
   Path getClip(Size size) {
-    final path = (this.path ?? (Path()..addRect(Offset.zero & size)));
     final bounds = path.getBounds();
     var transform = Matrix4.translationValues(-bounds.left, -bounds.top, 0);
 

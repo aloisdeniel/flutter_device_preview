@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:meta/meta.dart';
 import 'package:xml/xml.dart';
 
 DeviceInfo parseDevice(String fileName, String svgContent) {
