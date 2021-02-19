@@ -1,6 +1,7 @@
 name: device_preview
 version: 0.7.0-nullsafety.0
 description: Approximate how your Flutter app looks and performs on another device.
+publish_to: "none"
 homepage: https://github.com/aloisdeniel/flutter_device_preview
 
 environment:
@@ -13,7 +14,8 @@ dependencies:
     sdk: flutter
   provider: ^5.0.0-nullsafety.3
   path_provider: ^2.0.0-nullsafety
-  device_frame: ^0.4.0-nullsafety.0
+  device_frame:
+    path: ../device_frame
   font_awesome_flutter: ^9.0.0-nullsafety
   http: ^0.13.0-nullsafety.0
   freezed_annotation: ">=0.13.0-nullsafety.0 <1.0.0"
