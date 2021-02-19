@@ -2,7 +2,7 @@
 
 Working fork for flutter beta channel (with null safety breaking changes). 
 
-Probably obsolote after 3. March 2021
+Probably obsolete after 3. March 2021
 
 This branch can be used per direct git dependency:
 
