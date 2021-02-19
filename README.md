@@ -1,6 +1,6 @@
 ## Important
 
-Working fork for flutter beta channel (with null safety braking changes). 
+Working fork for flutter beta channel (with null safety breaking changes). 
 
 Probably obsolote after 3. March 2021
 
