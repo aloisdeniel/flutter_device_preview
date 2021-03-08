@@ -12,21 +12,21 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   provider: ^4.3.2
-  path_provider: ^1.6.18
+  path_provider: ^2.0.1
   device_frame: ^0.3.0
   font_awesome_flutter: ^8.9.0
-  http: ^0.12.2 
+  http: ^0.13.0
   freezed_annotation: ">=0.12.0 <1.0.0"
-  json_annotation: ">=3.1.0 <4.0.0" 
+  json_annotation: ">=4.0.0 <5.0.0" 
   meta: ^1.1.8 
-  shared_preferences: ^0.5.12
+  shared_preferences: ^2.0.0
   pedantic: ^1.9.0
-  path: ^1.7.0
+  path: ^1.8.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter 
-  build_runner: ^1.10.2
-  freezed: ^0.12.1
-  json_serializable: ^3.5.0
-  analyzer: ^0.39.17
+  build_runner: ^1.11.5
+  freezed: ^0.14.0+1
+  json_serializable: ^4.0.2
+  analyzer: ^1.1.0
