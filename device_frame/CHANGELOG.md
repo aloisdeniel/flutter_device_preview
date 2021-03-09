@@ -1,3 +1,7 @@
+## [0.4.0] - 2020/11/11
+
+* Migration to null-safety.
+
 ## [0.3.0] - 2020/11/11
 
 * Stable release

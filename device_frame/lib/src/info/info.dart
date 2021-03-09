@@ -13,31 +13,31 @@ abstract class DeviceInfo with _$DeviceInfo {
   /// Create a new device info.
   const factory DeviceInfo({
     /// Identifier of the device.
-    @required DeviceIdentifier identifier,
+    required DeviceIdentifier identifier,
 
     /// The display name of the device.
-    @required String name,
+    required String name,
 
     /// The safe areas when the device is in landscape orientation.
-    @Default(null) @nullable EdgeInsets rotatedSafeAreas,
+    @Default(null) EdgeInsets? rotatedSafeAreas,
 
     /// The safe areas when the device is in portrait orientation.
-    @required EdgeInsets safeAreas,
+    required EdgeInsets safeAreas,
 
     /// A shape representing the screen.
-    @required Path screenPath,
+    required Path screenPath,
 
     /// The screen pixel density of the device.
-    @required double pixelRatio,
+    required double pixelRatio,
 
     /// The safe areas when the device is in portrait orientation.
-    @required String svgFrame,
+    required String svgFrame,
 
     /// The frame size in pixels.
-    @required Size frameSize,
+    required Size frameSize,
 
     /// The size in points of the screen content.
-    @required Size screenSize,
+    required Size screenSize,
   }) = _DeviceInfo;
 }
 

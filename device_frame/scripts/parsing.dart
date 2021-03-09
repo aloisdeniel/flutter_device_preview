@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:xml/xml.dart';
 
 DeviceInfo parseDevice(String fileName, String svgContent) {
@@ -8,23 +7,26 @@ DeviceInfo parseDevice(String fileName, String svgContent) {
   final info = extractPropertiesFromSvg(infoNode);
 
   // Removing the screen and info
-  infoNode.parent.children.remove(infoNode);
+  final parent = infoNode?.parent;
+  if (parent != null) {
+    parent.children.remove(infoNode);
+  }
 
   final width = document.rootElement.getAttribute('width');
   final height = document.rootElement.getAttribute('height');
   assert(width != null && height != null);
 
   final safeAreas = info.containsKey('safe_areas')
-      ? info['safe_areas'].split('|').map(parseInsets).toList()
+      ? info['safe_areas']!.split('|').map(parseInsets).toList()
       : const <ScreenPadding>[];
 
   return DeviceInfo(
     identifier: parseIdentifier(fileName),
-    name: info['name'],
+    name: info['name']!,
     fileName: fileName,
     frameSize: Size(
-      width: double.parse(width),
-      height: double.parse(height),
+      width: double.parse(width ?? '0'),
+      height: double.parse(height ?? '0'),
     ),
     pixelRatio: double.parse(info['density'] ?? '1'),
     svgContent: document.toXmlString(),
@@ -33,18 +35,18 @@ DeviceInfo parseDevice(String fileName, String svgContent) {
   );
 }
 
-XmlElement findInfoNode(XmlDocument document) {
-  return document.descendants.firstWhere(
-    (node) =>
-        node is XmlElement && node.name.toString().toLowerCase() == 'text',
-    orElse: () => throw Exception(
-      'The svg image should have a "text" node that defines device metadata',
-    ),
-  );
+XmlElement? findInfoNode(XmlDocument document) {
+  return document.descendants.whereType<XmlElement?>().firstWhere(
+        (node) =>
+            node is XmlElement && node.name.toString().toLowerCase() == 'text',
+        orElse: () => throw Exception(
+          'The svg image should have a "text" node that defines device metadata',
+        ),
+      );
 }
 
-XmlElement findScreenNode(XmlDocument document) {
-  return document.descendants.firstWhere(
+XmlElement? findScreenNode(XmlDocument document) {
+  return document.descendants.whereType<XmlElement?>().firstWhere(
     (node) {
       return node is XmlElement &&
           node.name.toString().toLowerCase() == 'path' &&
@@ -54,8 +56,8 @@ XmlElement findScreenNode(XmlDocument document) {
   );
 }
 
-Map<String, String> extractPropertiesFromSvg(XmlElement infoNode) {
-  final infoLines = infoNode.children
+Map<String, String> extractPropertiesFromSvg(XmlElement? infoNode) {
+  final infoLines = infoNode?.children
           .whereType<XmlElement>()
           .where((n) => n.name.toString() == 'tspan')
           .map((n) => n.text.trim())
@@ -98,7 +100,7 @@ DeviceIdentifier parseIdentifier(String fileName) {
 }
 
 /// Parse an [ScreenPadding] where [text] is in the form `<left>,<top>,<right>,<bottom>`.
-ScreenPadding parseInsets(String text) {
+ScreenPadding parseInsets(String? text) {
   if (text == null) return ScreenPadding(left: 0, top: 0, bottom: 0, right: 0);
 
   final splits = text.split(',').map((e) => double.parse(e.trim())).toList();
@@ -108,17 +110,22 @@ ScreenPadding parseInsets(String text) {
   final right = splits.length > 2 ? splits[2] : left;
   final bottom = splits.length > 3 ? splits[3] : top;
 
-  return ScreenPadding(left: left, right: right, top: top, bottom: bottom);
+  return ScreenPadding(
+    left: left.toDouble(),
+    right: right.toDouble(),
+    top: top.toDouble(),
+    bottom: bottom.toDouble(),
+  );
 }
 
 /// Parse a [ScreenSize] where [text] is in the form `<width>x<height>`.
-Size parseScreenSize(String text) {
+Size parseScreenSize(String? text) {
   if (text == null) return Size(width: 0, height: 0);
   final splits = text.split('x').map((e) => double.parse(e.trim())).toList();
   final width = splits.isEmpty ? 0 : splits.first;
   return Size(
-    width: width,
-    height: splits.length > 1 ? splits[1] : width,
+    width: width.toDouble(),
+    height: (splits.length > 1 ? splits[1] : width).toDouble(),
   );
 }
 
@@ -126,8 +133,8 @@ class Size {
   final double width;
   final double height;
   const Size({
-    @required this.width,
-    @required this.height,
+    required this.width,
+    required this.height,
   });
 }
 
@@ -137,10 +144,10 @@ class ScreenPadding {
   final double right;
   final double bottom;
   const ScreenPadding({
-    @required this.top,
-    @required this.left,
-    @required this.right,
-    @required this.bottom,
+    required this.top,
+    required this.left,
+    required this.right,
+    required this.bottom,
   });
 }
 
@@ -154,14 +161,14 @@ class DeviceInfo {
   final Size frameSize;
   final List<ScreenPadding> safeAreas;
   const DeviceInfo({
-    @required this.identifier,
-    @required this.name,
-    @required this.fileName,
-    @required this.pixelRatio,
-    @required this.svgContent,
-    @required this.screenSize,
-    @required this.frameSize,
-    @required this.safeAreas,
+    required this.identifier,
+    required this.name,
+    required this.fileName,
+    required this.pixelRatio,
+    required this.svgContent,
+    required this.screenSize,
+    required this.frameSize,
+    required this.safeAreas,
   });
 }
 
@@ -170,8 +177,8 @@ class DeviceIdentifier {
   final String type;
   final String name;
   const DeviceIdentifier({
-    @required this.platform,
-    @required this.type,
-    @required this.name,
+    required this.platform,
+    required this.type,
+    required this.name,
   });
 }

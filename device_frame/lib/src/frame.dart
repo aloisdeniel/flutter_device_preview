@@ -56,15 +56,15 @@ class DeviceFrame extends StatelessWidget {
   /// If [isFrameVisible] is `true`, only the [screen] is displayed, but clipped with
   /// the device screen shape.
   DeviceFrame({
-    Key key,
-    @required this.device,
-    @required this.screen,
+    Key? key,
+    required this.device,
+    required this.screen,
     this.orientation = Orientation.portrait,
     this.isFrameVisible = true,
   })  : identifier = device.identifier,
         super(key: key);
 
-  static bool isRotated(DeviceInfo info, Orientation orientation) {
+  static bool isRotated(DeviceInfo? info, Orientation orientation) {
     return info != null &&
         info.canRotate &&
         orientation == Orientation.landscape;
@@ -80,11 +80,11 @@ class DeviceFrame extends StatelessWidget {
   }
 
   static MediaQueryData mediaQuery(
-      BuildContext context, DeviceInfo info, Orientation orientation) {
+      BuildContext context, DeviceInfo? info, Orientation orientation) {
     final mediaQuery = MediaQuery.of(context);
     final isRotated = DeviceFrame.isRotated(info, orientation);
     final padding = isRotated
-        ? info.rotatedSafeAreas
+        ? (info?.rotatedSafeAreas ?? info?.safeAreas)
         : (info?.safeAreas ?? mediaQuery.padding);
 
     final screenSize = info != null ? info.screenSize : mediaQuery.size;
@@ -113,7 +113,7 @@ class DeviceFrame extends StatelessWidget {
     );
   }
 
-  Widget _screen(BuildContext context, DeviceInfo info) {
+  Widget _screen(BuildContext context, DeviceInfo? info) {
     final mediaQuery = MediaQuery.of(context);
     final isRotated = DeviceFrame.isRotated(info, orientation);
     final screenSize = info != null ? info.screenSize : mediaQuery.size;
@@ -160,11 +160,11 @@ class DeviceFrame extends StatelessWidget {
             width: bounds.width,
             height: bounds.height,
             child: ClipPath(
-              child: FittedBox(
-                child: _screen(context, device),
-              ),
               clipper: _ScreenClipper(
                 device.screenPath,
+              ),
+              child: FittedBox(
+                child: _screen(context, device),
               ),
             ),
           ),
@@ -184,7 +184,7 @@ class DeviceFrame extends StatelessWidget {
 }
 
 class _ScreenClipper extends CustomClipper<Path> {
-  final Path path;
+  final Path? path;
 
   const _ScreenClipper(this.path);
 

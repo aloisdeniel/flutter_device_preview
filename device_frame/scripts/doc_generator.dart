@@ -31,14 +31,13 @@ Future<void> main() async {
     deviceInfos.add(deviceInfo);
   }
 
-  deviceInfos
-    ..sort((x, y) {
-      final compared = x.screenSize.width.compareTo(y.screenSize.width);
-      if (compared == 0) {
-        return x.screenSize.height.compareTo(y.screenSize.height);
-      }
-      return compared;
-    });
+  deviceInfos.sort((x, y) {
+    final compared = x.screenSize.width.compareTo(y.screenSize.width);
+    if (compared == 0) {
+      return x.screenSize.height.compareTo(y.screenSize.height);
+    }
+    return compared;
+  });
 
   // Markdown section
   final markdown = StringBuffer();

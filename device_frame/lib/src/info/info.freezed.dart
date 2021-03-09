@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'info.dart';
 
@@ -9,21 +9,23 @@ part of 'info.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$DeviceInfoTearOff {
   const _$DeviceInfoTearOff();
 
-// ignore: unused_element
   _DeviceInfo call(
-      {@required DeviceIdentifier identifier,
-      @required String name,
-      @nullable EdgeInsets rotatedSafeAreas = null,
-      @required EdgeInsets safeAreas,
-      @required Path screenPath,
-      @required double pixelRatio,
-      @required String svgFrame,
-      @required Size frameSize,
-      @required Size screenSize}) {
+      {required DeviceIdentifier identifier,
+      required String name,
+      EdgeInsets? rotatedSafeAreas = null,
+      required EdgeInsets safeAreas,
+      required Path screenPath,
+      required double pixelRatio,
+      required String svgFrame,
+      required Size frameSize,
+      required Size screenSize}) {
     return _DeviceInfo(
       identifier: identifier,
       name: name,
@@ -39,40 +41,40 @@ class _$DeviceInfoTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $DeviceInfo = _$DeviceInfoTearOff();
 
 /// @nodoc
 mixin _$DeviceInfo {
   /// Identifier of the device.
-  DeviceIdentifier get identifier;
+  DeviceIdentifier get identifier => throw _privateConstructorUsedError;
 
   /// The display name of the device.
-  String get name;
+  String get name => throw _privateConstructorUsedError;
 
   /// The safe areas when the device is in landscape orientation.
-  @nullable
-  EdgeInsets get rotatedSafeAreas;
+  EdgeInsets? get rotatedSafeAreas => throw _privateConstructorUsedError;
 
   /// The safe areas when the device is in portrait orientation.
-  EdgeInsets get safeAreas;
+  EdgeInsets get safeAreas => throw _privateConstructorUsedError;
 
   /// A shape representing the screen.
-  Path get screenPath;
+  Path get screenPath => throw _privateConstructorUsedError;
 
   /// The screen pixel density of the device.
-  double get pixelRatio;
+  double get pixelRatio => throw _privateConstructorUsedError;
 
   /// The safe areas when the device is in portrait orientation.
-  String get svgFrame;
+  String get svgFrame => throw _privateConstructorUsedError;
 
   /// The frame size in pixels.
-  Size get frameSize;
+  Size get frameSize => throw _privateConstructorUsedError;
 
   /// The size in points of the screen content.
-  Size get screenSize;
+  Size get screenSize => throw _privateConstructorUsedError;
 
-  $DeviceInfoCopyWith<DeviceInfo> get copyWith;
+  @JsonKey(ignore: true)
+  $DeviceInfoCopyWith<DeviceInfo> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -83,7 +85,7 @@ abstract class $DeviceInfoCopyWith<$Res> {
   $Res call(
       {DeviceIdentifier identifier,
       String name,
-      @nullable EdgeInsets rotatedSafeAreas,
+      EdgeInsets? rotatedSafeAreas,
       EdgeInsets safeAreas,
       Path screenPath,
       double pixelRatio,
@@ -102,34 +104,53 @@ class _$DeviceInfoCopyWithImpl<$Res> implements $DeviceInfoCopyWith<$Res> {
 
   @override
   $Res call({
-    Object identifier = freezed,
-    Object name = freezed,
-    Object rotatedSafeAreas = freezed,
-    Object safeAreas = freezed,
-    Object screenPath = freezed,
-    Object pixelRatio = freezed,
-    Object svgFrame = freezed,
-    Object frameSize = freezed,
-    Object screenSize = freezed,
+    Object? identifier = freezed,
+    Object? name = freezed,
+    Object? rotatedSafeAreas = freezed,
+    Object? safeAreas = freezed,
+    Object? screenPath = freezed,
+    Object? pixelRatio = freezed,
+    Object? svgFrame = freezed,
+    Object? frameSize = freezed,
+    Object? screenSize = freezed,
   }) {
     return _then(_value.copyWith(
       identifier: identifier == freezed
           ? _value.identifier
-          : identifier as DeviceIdentifier,
-      name: name == freezed ? _value.name : name as String,
+          : identifier // ignore: cast_nullable_to_non_nullable
+              as DeviceIdentifier,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
       rotatedSafeAreas: rotatedSafeAreas == freezed
           ? _value.rotatedSafeAreas
-          : rotatedSafeAreas as EdgeInsets,
-      safeAreas:
-          safeAreas == freezed ? _value.safeAreas : safeAreas as EdgeInsets,
-      screenPath:
-          screenPath == freezed ? _value.screenPath : screenPath as Path,
-      pixelRatio:
-          pixelRatio == freezed ? _value.pixelRatio : pixelRatio as double,
-      svgFrame: svgFrame == freezed ? _value.svgFrame : svgFrame as String,
-      frameSize: frameSize == freezed ? _value.frameSize : frameSize as Size,
-      screenSize:
-          screenSize == freezed ? _value.screenSize : screenSize as Size,
+          : rotatedSafeAreas // ignore: cast_nullable_to_non_nullable
+              as EdgeInsets?,
+      safeAreas: safeAreas == freezed
+          ? _value.safeAreas
+          : safeAreas // ignore: cast_nullable_to_non_nullable
+              as EdgeInsets,
+      screenPath: screenPath == freezed
+          ? _value.screenPath
+          : screenPath // ignore: cast_nullable_to_non_nullable
+              as Path,
+      pixelRatio: pixelRatio == freezed
+          ? _value.pixelRatio
+          : pixelRatio // ignore: cast_nullable_to_non_nullable
+              as double,
+      svgFrame: svgFrame == freezed
+          ? _value.svgFrame
+          : svgFrame // ignore: cast_nullable_to_non_nullable
+              as String,
+      frameSize: frameSize == freezed
+          ? _value.frameSize
+          : frameSize // ignore: cast_nullable_to_non_nullable
+              as Size,
+      screenSize: screenSize == freezed
+          ? _value.screenSize
+          : screenSize // ignore: cast_nullable_to_non_nullable
+              as Size,
     ));
   }
 }
@@ -143,7 +164,7 @@ abstract class _$DeviceInfoCopyWith<$Res> implements $DeviceInfoCopyWith<$Res> {
   $Res call(
       {DeviceIdentifier identifier,
       String name,
-      @nullable EdgeInsets rotatedSafeAreas,
+      EdgeInsets? rotatedSafeAreas,
       EdgeInsets safeAreas,
       Path screenPath,
       double pixelRatio,
@@ -164,34 +185,53 @@ class __$DeviceInfoCopyWithImpl<$Res> extends _$DeviceInfoCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object identifier = freezed,
-    Object name = freezed,
-    Object rotatedSafeAreas = freezed,
-    Object safeAreas = freezed,
-    Object screenPath = freezed,
-    Object pixelRatio = freezed,
-    Object svgFrame = freezed,
-    Object frameSize = freezed,
-    Object screenSize = freezed,
+    Object? identifier = freezed,
+    Object? name = freezed,
+    Object? rotatedSafeAreas = freezed,
+    Object? safeAreas = freezed,
+    Object? screenPath = freezed,
+    Object? pixelRatio = freezed,
+    Object? svgFrame = freezed,
+    Object? frameSize = freezed,
+    Object? screenSize = freezed,
   }) {
     return _then(_DeviceInfo(
       identifier: identifier == freezed
           ? _value.identifier
-          : identifier as DeviceIdentifier,
-      name: name == freezed ? _value.name : name as String,
+          : identifier // ignore: cast_nullable_to_non_nullable
+              as DeviceIdentifier,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
       rotatedSafeAreas: rotatedSafeAreas == freezed
           ? _value.rotatedSafeAreas
-          : rotatedSafeAreas as EdgeInsets,
-      safeAreas:
-          safeAreas == freezed ? _value.safeAreas : safeAreas as EdgeInsets,
-      screenPath:
-          screenPath == freezed ? _value.screenPath : screenPath as Path,
-      pixelRatio:
-          pixelRatio == freezed ? _value.pixelRatio : pixelRatio as double,
-      svgFrame: svgFrame == freezed ? _value.svgFrame : svgFrame as String,
-      frameSize: frameSize == freezed ? _value.frameSize : frameSize as Size,
-      screenSize:
-          screenSize == freezed ? _value.screenSize : screenSize as Size,
+          : rotatedSafeAreas // ignore: cast_nullable_to_non_nullable
+              as EdgeInsets?,
+      safeAreas: safeAreas == freezed
+          ? _value.safeAreas
+          : safeAreas // ignore: cast_nullable_to_non_nullable
+              as EdgeInsets,
+      screenPath: screenPath == freezed
+          ? _value.screenPath
+          : screenPath // ignore: cast_nullable_to_non_nullable
+              as Path,
+      pixelRatio: pixelRatio == freezed
+          ? _value.pixelRatio
+          : pixelRatio // ignore: cast_nullable_to_non_nullable
+              as double,
+      svgFrame: svgFrame == freezed
+          ? _value.svgFrame
+          : svgFrame // ignore: cast_nullable_to_non_nullable
+              as String,
+      frameSize: frameSize == freezed
+          ? _value.frameSize
+          : frameSize // ignore: cast_nullable_to_non_nullable
+              as Size,
+      screenSize: screenSize == freezed
+          ? _value.screenSize
+          : screenSize // ignore: cast_nullable_to_non_nullable
+              as Size,
     ));
   }
 }
@@ -199,23 +239,15 @@ class __$DeviceInfoCopyWithImpl<$Res> extends _$DeviceInfoCopyWithImpl<$Res>
 /// @nodoc
 class _$_DeviceInfo with DiagnosticableTreeMixin implements _DeviceInfo {
   const _$_DeviceInfo(
-      {@required this.identifier,
-      @required this.name,
-      @nullable this.rotatedSafeAreas = null,
-      @required this.safeAreas,
-      @required this.screenPath,
-      @required this.pixelRatio,
-      @required this.svgFrame,
-      @required this.frameSize,
-      @required this.screenSize})
-      : assert(identifier != null),
-        assert(name != null),
-        assert(safeAreas != null),
-        assert(screenPath != null),
-        assert(pixelRatio != null),
-        assert(svgFrame != null),
-        assert(frameSize != null),
-        assert(screenSize != null);
+      {required this.identifier,
+      required this.name,
+      this.rotatedSafeAreas = null,
+      required this.safeAreas,
+      required this.screenPath,
+      required this.pixelRatio,
+      required this.svgFrame,
+      required this.frameSize,
+      required this.screenSize});
 
   @override
 
@@ -229,8 +261,7 @@ class _$_DeviceInfo with DiagnosticableTreeMixin implements _DeviceInfo {
   @override
 
   /// The safe areas when the device is in landscape orientation.
-  @nullable
-  final EdgeInsets rotatedSafeAreas;
+  final EdgeInsets? rotatedSafeAreas;
   @override
 
   /// The safe areas when the device is in portrait orientation.
@@ -322,6 +353,7 @@ class _$_DeviceInfo with DiagnosticableTreeMixin implements _DeviceInfo {
       const DeepCollectionEquality().hash(frameSize) ^
       const DeepCollectionEquality().hash(screenSize);
 
+  @JsonKey(ignore: true)
   @override
   _$DeviceInfoCopyWith<_DeviceInfo> get copyWith =>
       __$DeviceInfoCopyWithImpl<_DeviceInfo>(this, _$identity);
@@ -329,53 +361,54 @@ class _$_DeviceInfo with DiagnosticableTreeMixin implements _DeviceInfo {
 
 abstract class _DeviceInfo implements DeviceInfo {
   const factory _DeviceInfo(
-      {@required DeviceIdentifier identifier,
-      @required String name,
-      @nullable EdgeInsets rotatedSafeAreas,
-      @required EdgeInsets safeAreas,
-      @required Path screenPath,
-      @required double pixelRatio,
-      @required String svgFrame,
-      @required Size frameSize,
-      @required Size screenSize}) = _$_DeviceInfo;
+      {required DeviceIdentifier identifier,
+      required String name,
+      EdgeInsets? rotatedSafeAreas,
+      required EdgeInsets safeAreas,
+      required Path screenPath,
+      required double pixelRatio,
+      required String svgFrame,
+      required Size frameSize,
+      required Size screenSize}) = _$_DeviceInfo;
 
   @override
 
   /// Identifier of the device.
-  DeviceIdentifier get identifier;
+  DeviceIdentifier get identifier => throw _privateConstructorUsedError;
   @override
 
   /// The display name of the device.
-  String get name;
+  String get name => throw _privateConstructorUsedError;
   @override
 
   /// The safe areas when the device is in landscape orientation.
-  @nullable
-  EdgeInsets get rotatedSafeAreas;
+  EdgeInsets? get rotatedSafeAreas => throw _privateConstructorUsedError;
   @override
 
   /// The safe areas when the device is in portrait orientation.
-  EdgeInsets get safeAreas;
+  EdgeInsets get safeAreas => throw _privateConstructorUsedError;
   @override
 
   /// A shape representing the screen.
-  Path get screenPath;
+  Path get screenPath => throw _privateConstructorUsedError;
   @override
 
   /// The screen pixel density of the device.
-  double get pixelRatio;
+  double get pixelRatio => throw _privateConstructorUsedError;
   @override
 
   /// The safe areas when the device is in portrait orientation.
-  String get svgFrame;
+  String get svgFrame => throw _privateConstructorUsedError;
   @override
 
   /// The frame size in pixels.
-  Size get frameSize;
+  Size get frameSize => throw _privateConstructorUsedError;
   @override
 
   /// The size in points of the screen content.
-  Size get screenSize;
+  Size get screenSize => throw _privateConstructorUsedError;
   @override
-  _$DeviceInfoCopyWith<_DeviceInfo> get copyWith;
+  @JsonKey(ignore: true)
+  _$DeviceInfoCopyWith<_DeviceInfo> get copyWith =>
+      throw _privateConstructorUsedError;
 }

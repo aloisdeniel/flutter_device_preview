@@ -46,10 +46,9 @@ String _generateDeviceInfo(
     assert(data != null, 'The screen path should have a "d" property');
     screen = 'parseSvgPathData(\'$data\')..fillType = PathFillType.evenOdd';
   } else {
-    screenNode = document.descendants.firstWhere(
+    screenNode = document.descendants.whereType<XmlElement>().firstWhere(
       (node) {
-        return node is XmlElement &&
-            node.name.toString().toLowerCase() == 'rect' &&
+        return node.name.toString().toLowerCase() == 'rect' &&
             node.getAttribute('fill')?.toString() == '#FF0000';
       },
       orElse: () => throw Exception(
@@ -65,16 +64,16 @@ String _generateDeviceInfo(
     screen = '''Path()
       ..addRect(
         Rect.fromLTWH(
-          ${double.tryParse(screenNode.getAttribute('x')) ?? 0},
-          ${double.tryParse(screenNode.getAttribute('y')) ?? 0},
-          ${double.parse(width)},
-          ${double.parse(height)},
+          ${double.tryParse(screenNode.getAttribute('x') ?? '0')},
+          ${double.tryParse(screenNode.getAttribute('y') ?? '0')},
+          ${double.parse(width!)},
+          ${double.parse(height!)},
         ),
       )''';
   }
 
   // Moving defs at first position
-  final defs = document.descendants.firstWhere(
+  final defs = document.descendants.cast<XmlNode?>().firstWhere(
     (node) {
       return node is XmlElement && node.name.toString() == 'defs';
     },
@@ -82,14 +81,16 @@ String _generateDeviceInfo(
   );
   if (defs != null) {
     final parent = defs.parent;
-    parent.children.remove(defs);
-    parent.children.insert(0, defs);
+    if (parent != null) {
+      parent.children.remove(defs);
+      parent.children.insert(0, defs);
+    }
   }
 
   // Removing the screen and info
   final infoNode = findInfoNode(document);
-  infoNode.parent.children.remove(infoNode);
-  screenNode.parent.children.remove(screenNode);
+  infoNode?.parent?.children.remove(infoNode);
+  screenNode.parent?.children.remove(screenNode);
   final frame = document.toXmlString();
 
   return '''DeviceInfo(
@@ -99,7 +100,7 @@ String _generateDeviceInfo(
     safeAreas: ${info.safeAreas.isEmpty ? 'EdgeInsets.zero' : _formatEdgeInsets(info.safeAreas.first)},
     rotatedSafeAreas: ${info.safeAreas.length < 2 ? null : _formatEdgeInsets(info.safeAreas[1])},
     screenPath: $screen,
-    svgFrame: \'\'\'${frame}\'\'\',
+    svgFrame: \'\'\'$frame\'\'\',
     frameSize: ${_formatSize(info.frameSize)},
     screenSize: ${_formatSize(info.screenSize)},
   )''';

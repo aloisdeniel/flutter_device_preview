@@ -31,8 +31,8 @@ class VirtualKeyboard extends StatelessWidget {
   /// No interraction is available, its only purpose is to display
   /// the visual and update media query's `viewInsets` for [child].
   const VirtualKeyboard({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.isEnabled = false,
     this.transitionDuration = const Duration(milliseconds: 400),
   }) : super(key: key);
@@ -88,7 +88,7 @@ class _VirtualKeyboard extends StatelessWidget {
   final double height;
 
   const _VirtualKeyboard({
-    double height,
+    double? height,
   }) : height = height ?? minHeight;
 
   Widget _row(List<Widget> children) {
