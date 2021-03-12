@@ -1,32 +1,29 @@
 name: device_preview
-version: 0.6.2-beta
+version: 0.7.0
 description: Approximate how your Flutter app looks and performs on another device.
 homepage: https://github.com/aloisdeniel/flutter_device_preview
 
 environment:
-  sdk: '>=2.7.0 <3.0.0' 
+  sdk: '>=2.12.0 <3.0.0' 
 
 dependencies:
   flutter: 
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  provider: ^4.3.2
-  path_provider: ^1.6.18
-  device_frame: ^0.3.0
-  font_awesome_flutter: ^8.9.0
-  http: ^0.12.2 
-  freezed_annotation: ">=0.12.0 <1.0.0"
-  json_annotation: ">=3.1.0 <4.0.0" 
-  meta: ^1.1.8 
-  shared_preferences: ^0.5.12
-  pedantic: ^1.9.0
-  path: ^1.7.0
+  window_size:
+    git:
+      url: git://github.com/google/flutter-desktop-embedding.git
+      path: plugins/window_size
+  menubar:
+    git:
+      url: git://github.com/google/flutter-desktop-embedding.git
+      path: plugins/menubar
 
 dev_dependencies:
   flutter_test:
     sdk: flutter 
-  build_runner: ^1.10.2
-  freezed: ^0.12.1
-  json_serializable: ^3.5.0
-  analyzer: ^0.39.17
+  build_runner: ^1.11.5
+  json_serializable: ^4.0.2
+  freezed: ^0.14.0+1
+  analyzer: ^0.41.0

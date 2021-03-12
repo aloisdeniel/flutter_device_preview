@@ -1,10 +1,6 @@
 {
 	"folders": [
 		{
-			"name": "device_frame",
-			"path": "device_frame"
-		},
-		{
 			"name": "device_preview",
 			"path": "device_preview"
 		},
