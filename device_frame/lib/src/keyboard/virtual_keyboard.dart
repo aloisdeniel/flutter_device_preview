@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -43,11 +41,11 @@ class VirtualKeyboard extends StatelessWidget {
     );
     return mediaQuery.copyWith(
       viewInsets: insets,
-      viewPadding: EdgeInsets.only(
-        top: max(insets.top, mediaQuery.padding.top),
-        left: max(insets.left, mediaQuery.padding.left),
-        right: max(insets.right, mediaQuery.padding.right),
-        bottom: max(insets.bottom, mediaQuery.padding.bottom),
+      padding: EdgeInsets.only(
+        top: mediaQuery.padding.top,
+        left: mediaQuery.padding.left,
+        right: mediaQuery.padding.right,
+        bottom: 0,
       ),
     );
   }
