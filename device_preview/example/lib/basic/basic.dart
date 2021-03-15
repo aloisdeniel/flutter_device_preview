@@ -33,6 +33,7 @@ class Home extends StatelessWidget {
             100,
             (i) => ListTile(
               title: Text('Tile $i'),
+              onTap: () {},
             ),
           )
         ],

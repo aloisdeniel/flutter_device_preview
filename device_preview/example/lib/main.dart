@@ -6,6 +6,5 @@ import 'basic/basic.dart';
 
 void main() {
   DevicePreview().initialize();
-
   runApp(BasicApp());
 }

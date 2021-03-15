@@ -1,55 +1,7 @@
-import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-
-/// A concrete binding for applications based on the Widgets framework.
-///
-/// This is the glue that binds the framework to the Flutter engine.
-class PreviewWidgetsFlutterBinding extends PreviewBindingBase
-    with
-        GestureBinding,
-        SchedulerBinding,
-        ServicesBinding,
-        PaintingBinding,
-        SemanticsBinding,
-        RendererBinding,
-        WidgetsBinding {
-  static PreviewWindow get previewWindow {
-    final binding = WidgetsBinding.instance as PreviewWidgetsFlutterBinding;
-    return binding.window as PreviewWindow;
-    MediaQuery d;
-  }
-
-  /// Returns an instance of the [WidgetsBinding], creating and
-  /// initializing it if necessary. If one is created, it will be a
-  /// [WidgetsFlutterBinding]. If one was previously initialized, then
-  /// it will at least implement [WidgetsBinding].
-  ///
-  /// You only need to call this method if you need the binding to be
-  /// initialized before calling [runApp].
-  ///
-  /// In the `flutter_test` framework, [testWidgets] initializes the
-  /// binding instance to a [TestWidgetsFlutterBinding], not a
-  /// [WidgetsFlutterBinding].
-  static WidgetsBinding ensureInitialized() {
-    if (WidgetsBinding.instance == null) PreviewWidgetsFlutterBinding();
-    return WidgetsBinding.instance!;
-  }
-}
-
-class PreviewBindingBase extends BindingBase {
-  ui.SingletonFlutterWindow? _window;
-
-  @override
-  ui.SingletonFlutterWindow get window =>
-      _window ??= PreviewWindow(super.window);
-}
 
 class PreviewWindow implements ui.SingletonFlutterWindow {
   PreviewWindow(this.parent);
@@ -195,7 +147,7 @@ class PreviewWindow implements ui.SingletonFlutterWindow {
   @override
   ui.Locale get locale => _previewLocale ?? parent.locale;
 
-  set locale(ui.Locale value) {
+  set locale(ui.Locale? value) {
     _previewLocale = value;
     if (onLocaleChanged != null) {
       onLocaleChanged!();
@@ -293,8 +245,18 @@ class PreviewWindow implements ui.SingletonFlutterWindow {
   @override
   ui.WindowPadding get systemGestureInsets => parent.systemGestureInsets;
 
+  double? _previewTextScaleFactor;
+
   @override
-  double get textScaleFactor => parent.textScaleFactor;
+  double get textScaleFactor =>
+      _previewTextScaleFactor ?? parent.textScaleFactor;
+
+  set textScaleFactor(double? value) {
+    _previewTextScaleFactor = value;
+    if (onMetricsChanged != null) {
+      onMetricsChanged!();
+    }
+  }
 
   @override
   void updateSemantics(ui.SemanticsUpdate update) =>
@@ -318,25 +280,77 @@ class PreviewWindowPadding implements ui.WindowPadding {
       required this.bottom});
 
   const PreviewWindowPadding.all(double value)
-      : this.left = value,
-        this.right = value,
-        this.top = value,
-        this.bottom = value;
+      : left = value,
+        right = value,
+        top = value,
+        bottom = value;
 
   /// The distance from the left edge to the first unpadded pixel, in physical pixels.
+  @override
   final double left;
 
   /// The distance from the top edge to the first unpadded pixel, in physical pixels.
+  @override
   final double top;
 
   /// The distance from the right edge to the first unpadded pixel, in physical pixels.
+  @override
   final double right;
 
   /// The distance from the bottom edge to the first unpadded pixel, in physical pixels.
+  @override
   final double bottom;
 
   @override
   String toString() {
     return 'WindowPadding(left: $left, top: $top, right: $right, bottom: $bottom)';
   }
+}
+
+class PreviewAccessibilityFeatures implements AccessibilityFeatures {
+  PreviewAccessibilityFeatures({
+    required this.accessibleNavigation,
+    required this.boldText,
+    required this.disableAnimations,
+    required this.highContrast,
+    required this.invertColors,
+    required this.reduceMotion,
+  });
+
+  factory PreviewAccessibilityFeatures.merge(
+    AccessibilityFeatures other, {
+    bool? accessibleNavigation,
+    bool? boldText,
+    bool? disableAnimations,
+    bool? highContrast,
+    bool? invertColors,
+    bool? reduceMotion,
+  }) =>
+      PreviewAccessibilityFeatures(
+        accessibleNavigation:
+            accessibleNavigation ?? other.accessibleNavigation,
+        boldText: boldText ?? other.boldText,
+        disableAnimations: disableAnimations ?? other.disableAnimations,
+        highContrast: highContrast ?? other.highContrast,
+        invertColors: invertColors ?? other.invertColors,
+        reduceMotion: reduceMotion ?? other.reduceMotion,
+      );
+
+  @override
+  final bool accessibleNavigation;
+
+  @override
+  final bool boldText;
+
+  @override
+  final bool disableAnimations;
+
+  @override
+  final bool highContrast;
+
+  @override
+  final bool invertColors;
+
+  @override
+  final bool reduceMotion;
 }
