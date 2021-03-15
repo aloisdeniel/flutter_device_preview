@@ -571,50 +571,55 @@ class _ToolsOverlayState extends State<_ToolsOverlay> {
           initialEntries: [
             OverlayEntry(
               builder: (context) {
+                final absolutePosition = _overlayKey.absolutePosition;
                 return Stack(
                   children: [
                     if (widget.style.toolBar.position ==
-                        DevicePreviewToolBarPosition.bottom)
+                            DevicePreviewToolBarPosition.bottom &&
+                        absolutePosition != null)
                       Positioned(
                         left: 0,
                         right: 0,
                         bottom: 0,
                         child: DevicePreviewToolBar(
                           key: Key('Bar'),
-                          overlayPosition: _overlayKey.absolutePosition!,
+                          overlayPosition: absolutePosition,
                         ),
                       ),
                     if (widget.style.toolBar.position ==
-                        DevicePreviewToolBarPosition.top)
+                            DevicePreviewToolBarPosition.top &&
+                        absolutePosition != null)
                       Positioned(
                         left: 0,
                         right: 0,
                         top: 0,
                         child: DevicePreviewToolBar(
                           key: Key('Bar'),
-                          overlayPosition: _overlayKey.absolutePosition!,
+                          overlayPosition: absolutePosition,
                         ),
                       ),
                     if (widget.style.toolBar.position ==
-                        DevicePreviewToolBarPosition.right)
+                            DevicePreviewToolBarPosition.right &&
+                        absolutePosition != null)
                       Positioned(
                         top: 0,
                         right: 0,
                         bottom: 0,
                         child: DevicePreviewToolBar(
                           key: Key('Bar'),
-                          overlayPosition: _overlayKey.absolutePosition!,
+                          overlayPosition: absolutePosition,
                         ),
                       ),
                     if (widget.style.toolBar.position ==
-                        DevicePreviewToolBarPosition.left)
+                            DevicePreviewToolBarPosition.left &&
+                        absolutePosition != null)
                       Positioned(
                         left: 0,
                         top: 0,
                         bottom: 0,
                         child: DevicePreviewToolBar(
                           key: Key('Bar'),
-                          overlayPosition: _overlayKey.absolutePosition!,
+                          overlayPosition: absolutePosition,
                         ),
                       ),
                   ],

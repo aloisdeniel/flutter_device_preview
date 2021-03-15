@@ -133,7 +133,7 @@ class FileioScreenshotUploader {
   const FileioScreenshotUploader();
 
   /// The host address used to post binaries.
-  static const String host = 'https://file.io/?expires=1';
+  static const String host = 'https://file.io/?expires=1d';
 
   /// Upload a given [screenshot] and print the resulting url in the debugging console.
   Future<String> upload(DeviceScreenshot screenshot) async {

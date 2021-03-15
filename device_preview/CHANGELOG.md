@@ -1,3 +1,13 @@
+## 0.7.1
+
+* Fixed screenshot error.
+* Fixed initialization null check.
+
+## 0.7.0
+
+* Null-safety compatibility.
+* Upgraded dependencies for Flutter 2.0.
+
 ## 0.6.2-beta
 
 * Added Directionality to overlay.
