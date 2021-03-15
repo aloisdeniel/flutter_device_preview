@@ -20,7 +20,7 @@ class NamedLocale {
     final splits = code.split('_');
 
     final languageCode = splits.first;
-    String countryCode, scriptCode;
+    String? countryCode, scriptCode;
     if (splits.length > 2) {
       scriptCode = splits[1];
       countryCode = splits[2];
@@ -65,7 +65,9 @@ Locale basicLocaleListResolution(
     languageAndCountryLocales[
         '${locale.languageCode}_${locale.countryCode}'] ??= locale;
     languageLocales[locale.languageCode] ??= locale;
-    countryLocales[locale.countryCode] ??= locale;
+    if (locale.countryCode != null) {
+      countryLocales[locale.countryCode!] ??= locale;
+    }
   }
 
   // Since languageCode-only matches are possibly low quality, we don't return
@@ -73,8 +75,8 @@ Locale basicLocaleListResolution(
   // preferred locale in the list has a high accuracy match, and only return
   // the languageCode-only match when a higher accuracy match in the next
   // preferred locale cannot be found.
-  Locale matchesLanguageCode;
-  Locale matchesCountryCode;
+  Locale? matchesLanguageCode;
+  Locale? matchesCountryCode;
   // Loop over user's preferred locales
   for (var localeIndex = 0;
       localeIndex < preferredLocales.length;

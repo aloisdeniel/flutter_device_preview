@@ -113,6 +113,7 @@ class _VirtualKeyboard extends StatelessWidget {
                 right: 12,
               ),
               child: VirtualKeyboardButton(
+                backgroundColor: backgroundColor,
                 child: Text(
                   x,
                   style: TextStyle(
@@ -120,7 +121,6 @@ class _VirtualKeyboard extends StatelessWidget {
                     color: foregroundColor,
                   ),
                 ),
-                backgroundColor: backgroundColor,
               ),
             ),
           ),

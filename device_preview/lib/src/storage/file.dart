@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:device_preview/src/state/state.dart';
-import 'package:meta/meta.dart';
 
 import 'storage.dart';
 
@@ -10,8 +9,8 @@ import 'storage.dart';
 /// a single [file] as a json content.
 class FileDevicePreviewStorage extends DevicePreviewStorage {
   FileDevicePreviewStorage({
-    @required this.file,
-  }) : assert(file != null);
+    required this.file,
+  });
 
   /// The file the json content is saved to.
   final File file;
@@ -24,23 +23,23 @@ class FileDevicePreviewStorage extends DevicePreviewStorage {
     await _saveTask;
   }
 
-  Future _saveTask;
+  Future? _saveTask;
 
-  DevicePreviewData _saveData;
+  DevicePreviewData? _saveData;
 
   Future _save() async {
     await Future.delayed(const Duration(milliseconds: 500));
     if (_saveData != null) {
-      await file.writeAsString(jsonEncode(_saveData.toJson()));
+      await file.writeAsString(jsonEncode(_saveData!.toJson()));
     }
     _saveTask = null;
   }
 
   /// Load the last saved preferences.
   @override
-  Future<DevicePreviewData> load() async {
+  Future<DevicePreviewData?> load() async {
     final json = await file.readAsString();
-    if (json == null || json.isEmpty) return null;
+    if (json.isEmpty) return null;
     return DevicePreviewData.fromJson(jsonDecode(json));
   }
 }

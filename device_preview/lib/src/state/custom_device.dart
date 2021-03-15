@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 
 import 'state.dart';
 
@@ -14,11 +13,11 @@ import 'state.dart';
 /// * [DeviceInfo] which describes a simulated device.
 class CustomDeviceInfo implements DeviceInfo {
   const CustomDeviceInfo._({
-    @required this.identifier,
-    @required this.data,
-    @required this.screenPath,
-    @required this.svgFrame,
-    @required this.frameSize,
+    required this.identifier,
+    required this.data,
+    required this.screenPath,
+    required this.svgFrame,
+    required this.frameSize,
   });
 
   /// Create a new custom device from stored [data].
@@ -85,7 +84,7 @@ class CustomDeviceInfo implements DeviceInfo {
   double get pixelRatio => data.pixelRatio;
 
   @override
-  EdgeInsets get rotatedSafeAreas => null;
+  EdgeInsets? get rotatedSafeAreas => null;
 
   @override
   EdgeInsets get safeAreas => data.safeAreas;
@@ -118,4 +117,17 @@ class CustomDeviceIdentifier implements DeviceIdentifier {
 
   @override
   DeviceType get type => data.type;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is DeviceIdentifier &&
+            other.name == name &&
+            other.type == type &&
+            other.platform == platform);
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ name.hashCode ^ type.hashCode ^ platform.hashCode;
 }

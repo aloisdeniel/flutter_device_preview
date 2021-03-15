@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'device_preview_style.dart';
 
@@ -9,14 +9,16 @@ part of 'device_preview_style.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$DevicePreviewStyleTearOff {
   const _$DevicePreviewStyleTearOff();
 
-// ignore: unused_element
   _DevicePreviewStyle call(
-      {@required BoxDecoration background,
-      @required DevicePreviewToolBarStyle toolBar}) {
+      {required BoxDecoration background,
+      required DevicePreviewToolBarStyle toolBar}) {
     return _DevicePreviewStyle(
       background: background,
       toolBar: toolBar,
@@ -25,15 +27,16 @@ class _$DevicePreviewStyleTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $DevicePreviewStyle = _$DevicePreviewStyleTearOff();
 
 /// @nodoc
 mixin _$DevicePreviewStyle {
-  BoxDecoration get background;
-  DevicePreviewToolBarStyle get toolBar;
+  BoxDecoration get background => throw _privateConstructorUsedError;
+  DevicePreviewToolBarStyle get toolBar => throw _privateConstructorUsedError;
 
-  $DevicePreviewStyleCopyWith<DevicePreviewStyle> get copyWith;
+  @JsonKey(ignore: true)
+  $DevicePreviewStyleCopyWith<DevicePreviewStyle> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -57,24 +60,23 @@ class _$DevicePreviewStyleCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object background = freezed,
-    Object toolBar = freezed,
+    Object? background = freezed,
+    Object? toolBar = freezed,
   }) {
     return _then(_value.copyWith(
       background: background == freezed
           ? _value.background
-          : background as BoxDecoration,
+          : background // ignore: cast_nullable_to_non_nullable
+              as BoxDecoration,
       toolBar: toolBar == freezed
           ? _value.toolBar
-          : toolBar as DevicePreviewToolBarStyle,
+          : toolBar // ignore: cast_nullable_to_non_nullable
+              as DevicePreviewToolBarStyle,
     ));
   }
 
   @override
   $DevicePreviewToolBarStyleCopyWith<$Res> get toolBar {
-    if (_value.toolBar == null) {
-      return null;
-    }
     return $DevicePreviewToolBarStyleCopyWith<$Res>(_value.toolBar, (value) {
       return _then(_value.copyWith(toolBar: value));
     });
@@ -107,16 +109,18 @@ class __$DevicePreviewStyleCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object background = freezed,
-    Object toolBar = freezed,
+    Object? background = freezed,
+    Object? toolBar = freezed,
   }) {
     return _then(_DevicePreviewStyle(
       background: background == freezed
           ? _value.background
-          : background as BoxDecoration,
+          : background // ignore: cast_nullable_to_non_nullable
+              as BoxDecoration,
       toolBar: toolBar == freezed
           ? _value.toolBar
-          : toolBar as DevicePreviewToolBarStyle,
+          : toolBar // ignore: cast_nullable_to_non_nullable
+              as DevicePreviewToolBarStyle,
     ));
   }
 }
@@ -126,9 +130,7 @@ class _$_DevicePreviewStyle
     with DiagnosticableTreeMixin
     implements _DevicePreviewStyle {
   const _$_DevicePreviewStyle(
-      {@required this.background, @required this.toolBar})
-      : assert(background != null),
-        assert(toolBar != null);
+      {required this.background, required this.toolBar});
 
   @override
   final BoxDecoration background;
@@ -166,6 +168,7 @@ class _$_DevicePreviewStyle
       const DeepCollectionEquality().hash(background) ^
       const DeepCollectionEquality().hash(toolBar);
 
+  @JsonKey(ignore: true)
   @override
   _$DevicePreviewStyleCopyWith<_DevicePreviewStyle> get copyWith =>
       __$DevicePreviewStyleCopyWithImpl<_DevicePreviewStyle>(this, _$identity);
@@ -173,31 +176,32 @@ class _$_DevicePreviewStyle
 
 abstract class _DevicePreviewStyle implements DevicePreviewStyle {
   const factory _DevicePreviewStyle(
-      {@required BoxDecoration background,
-      @required DevicePreviewToolBarStyle toolBar}) = _$_DevicePreviewStyle;
+      {required BoxDecoration background,
+      required DevicePreviewToolBarStyle toolBar}) = _$_DevicePreviewStyle;
 
   @override
-  BoxDecoration get background;
+  BoxDecoration get background => throw _privateConstructorUsedError;
   @override
-  DevicePreviewToolBarStyle get toolBar;
+  DevicePreviewToolBarStyle get toolBar => throw _privateConstructorUsedError;
   @override
-  _$DevicePreviewStyleCopyWith<_DevicePreviewStyle> get copyWith;
+  @JsonKey(ignore: true)
+  _$DevicePreviewStyleCopyWith<_DevicePreviewStyle> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 class _$DevicePreviewToolBarStyleTearOff {
   const _$DevicePreviewToolBarStyleTearOff();
 
-// ignore: unused_element
   _DevicePreviewToolBarStyle call(
-      {@required DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
-      @required Color backgroundColor,
-      @required Color foregroundColor,
-      @required Color buttonBackgroundColor,
-      @required Color buttonHoverBackgroundColor,
-      @required DevicePreviewToolBarPosition position,
-      @required DevicePreviewToolBarSpacingData spacing,
-      @required DevicePreviewToolBarTextStyleData fontStyles}) {
+      {required DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
+      required Color backgroundColor,
+      required Color foregroundColor,
+      required Color buttonBackgroundColor,
+      required Color buttonHoverBackgroundColor,
+      required DevicePreviewToolBarPosition position,
+      required DevicePreviewToolBarSpacingData spacing,
+      required DevicePreviewToolBarTextStyleData fontStyles}) {
     return _DevicePreviewToolBarStyle(
       buttonsVisibility: buttonsVisibility,
       backgroundColor: backgroundColor,
@@ -212,21 +216,26 @@ class _$DevicePreviewToolBarStyleTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $DevicePreviewToolBarStyle = _$DevicePreviewToolBarStyleTearOff();
 
 /// @nodoc
 mixin _$DevicePreviewToolBarStyle {
-  DevicePreviewButtonsVisibilityStyleData get buttonsVisibility;
-  Color get backgroundColor;
-  Color get foregroundColor;
-  Color get buttonBackgroundColor;
-  Color get buttonHoverBackgroundColor;
-  DevicePreviewToolBarPosition get position;
-  DevicePreviewToolBarSpacingData get spacing;
-  DevicePreviewToolBarTextStyleData get fontStyles;
+  DevicePreviewButtonsVisibilityStyleData get buttonsVisibility =>
+      throw _privateConstructorUsedError;
+  Color get backgroundColor => throw _privateConstructorUsedError;
+  Color get foregroundColor => throw _privateConstructorUsedError;
+  Color get buttonBackgroundColor => throw _privateConstructorUsedError;
+  Color get buttonHoverBackgroundColor => throw _privateConstructorUsedError;
+  DevicePreviewToolBarPosition get position =>
+      throw _privateConstructorUsedError;
+  DevicePreviewToolBarSpacingData get spacing =>
+      throw _privateConstructorUsedError;
+  DevicePreviewToolBarTextStyleData get fontStyles =>
+      throw _privateConstructorUsedError;
 
-  $DevicePreviewToolBarStyleCopyWith<DevicePreviewToolBarStyle> get copyWith;
+  @JsonKey(ignore: true)
+  $DevicePreviewToolBarStyleCopyWith<DevicePreviewToolBarStyle> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -260,48 +269,53 @@ class _$DevicePreviewToolBarStyleCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object buttonsVisibility = freezed,
-    Object backgroundColor = freezed,
-    Object foregroundColor = freezed,
-    Object buttonBackgroundColor = freezed,
-    Object buttonHoverBackgroundColor = freezed,
-    Object position = freezed,
-    Object spacing = freezed,
-    Object fontStyles = freezed,
+    Object? buttonsVisibility = freezed,
+    Object? backgroundColor = freezed,
+    Object? foregroundColor = freezed,
+    Object? buttonBackgroundColor = freezed,
+    Object? buttonHoverBackgroundColor = freezed,
+    Object? position = freezed,
+    Object? spacing = freezed,
+    Object? fontStyles = freezed,
   }) {
     return _then(_value.copyWith(
       buttonsVisibility: buttonsVisibility == freezed
           ? _value.buttonsVisibility
-          : buttonsVisibility as DevicePreviewButtonsVisibilityStyleData,
+          : buttonsVisibility // ignore: cast_nullable_to_non_nullable
+              as DevicePreviewButtonsVisibilityStyleData,
       backgroundColor: backgroundColor == freezed
           ? _value.backgroundColor
-          : backgroundColor as Color,
+          : backgroundColor // ignore: cast_nullable_to_non_nullable
+              as Color,
       foregroundColor: foregroundColor == freezed
           ? _value.foregroundColor
-          : foregroundColor as Color,
+          : foregroundColor // ignore: cast_nullable_to_non_nullable
+              as Color,
       buttonBackgroundColor: buttonBackgroundColor == freezed
           ? _value.buttonBackgroundColor
-          : buttonBackgroundColor as Color,
+          : buttonBackgroundColor // ignore: cast_nullable_to_non_nullable
+              as Color,
       buttonHoverBackgroundColor: buttonHoverBackgroundColor == freezed
           ? _value.buttonHoverBackgroundColor
-          : buttonHoverBackgroundColor as Color,
+          : buttonHoverBackgroundColor // ignore: cast_nullable_to_non_nullable
+              as Color,
       position: position == freezed
           ? _value.position
-          : position as DevicePreviewToolBarPosition,
+          : position // ignore: cast_nullable_to_non_nullable
+              as DevicePreviewToolBarPosition,
       spacing: spacing == freezed
           ? _value.spacing
-          : spacing as DevicePreviewToolBarSpacingData,
+          : spacing // ignore: cast_nullable_to_non_nullable
+              as DevicePreviewToolBarSpacingData,
       fontStyles: fontStyles == freezed
           ? _value.fontStyles
-          : fontStyles as DevicePreviewToolBarTextStyleData,
+          : fontStyles // ignore: cast_nullable_to_non_nullable
+              as DevicePreviewToolBarTextStyleData,
     ));
   }
 
   @override
   $DevicePreviewButtonsVisibilityStyleDataCopyWith<$Res> get buttonsVisibility {
-    if (_value.buttonsVisibility == null) {
-      return null;
-    }
     return $DevicePreviewButtonsVisibilityStyleDataCopyWith<$Res>(
         _value.buttonsVisibility, (value) {
       return _then(_value.copyWith(buttonsVisibility: value));
@@ -310,9 +324,6 @@ class _$DevicePreviewToolBarStyleCopyWithImpl<$Res>
 
   @override
   $DevicePreviewToolBarSpacingDataCopyWith<$Res> get spacing {
-    if (_value.spacing == null) {
-      return null;
-    }
     return $DevicePreviewToolBarSpacingDataCopyWith<$Res>(_value.spacing,
         (value) {
       return _then(_value.copyWith(spacing: value));
@@ -321,9 +332,6 @@ class _$DevicePreviewToolBarStyleCopyWithImpl<$Res>
 
   @override
   $DevicePreviewToolBarTextStyleDataCopyWith<$Res> get fontStyles {
-    if (_value.fontStyles == null) {
-      return null;
-    }
     return $DevicePreviewToolBarTextStyleDataCopyWith<$Res>(_value.fontStyles,
         (value) {
       return _then(_value.copyWith(fontStyles: value));
@@ -370,40 +378,48 @@ class __$DevicePreviewToolBarStyleCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object buttonsVisibility = freezed,
-    Object backgroundColor = freezed,
-    Object foregroundColor = freezed,
-    Object buttonBackgroundColor = freezed,
-    Object buttonHoverBackgroundColor = freezed,
-    Object position = freezed,
-    Object spacing = freezed,
-    Object fontStyles = freezed,
+    Object? buttonsVisibility = freezed,
+    Object? backgroundColor = freezed,
+    Object? foregroundColor = freezed,
+    Object? buttonBackgroundColor = freezed,
+    Object? buttonHoverBackgroundColor = freezed,
+    Object? position = freezed,
+    Object? spacing = freezed,
+    Object? fontStyles = freezed,
   }) {
     return _then(_DevicePreviewToolBarStyle(
       buttonsVisibility: buttonsVisibility == freezed
           ? _value.buttonsVisibility
-          : buttonsVisibility as DevicePreviewButtonsVisibilityStyleData,
+          : buttonsVisibility // ignore: cast_nullable_to_non_nullable
+              as DevicePreviewButtonsVisibilityStyleData,
       backgroundColor: backgroundColor == freezed
           ? _value.backgroundColor
-          : backgroundColor as Color,
+          : backgroundColor // ignore: cast_nullable_to_non_nullable
+              as Color,
       foregroundColor: foregroundColor == freezed
           ? _value.foregroundColor
-          : foregroundColor as Color,
+          : foregroundColor // ignore: cast_nullable_to_non_nullable
+              as Color,
       buttonBackgroundColor: buttonBackgroundColor == freezed
           ? _value.buttonBackgroundColor
-          : buttonBackgroundColor as Color,
+          : buttonBackgroundColor // ignore: cast_nullable_to_non_nullable
+              as Color,
       buttonHoverBackgroundColor: buttonHoverBackgroundColor == freezed
           ? _value.buttonHoverBackgroundColor
-          : buttonHoverBackgroundColor as Color,
+          : buttonHoverBackgroundColor // ignore: cast_nullable_to_non_nullable
+              as Color,
       position: position == freezed
           ? _value.position
-          : position as DevicePreviewToolBarPosition,
+          : position // ignore: cast_nullable_to_non_nullable
+              as DevicePreviewToolBarPosition,
       spacing: spacing == freezed
           ? _value.spacing
-          : spacing as DevicePreviewToolBarSpacingData,
+          : spacing // ignore: cast_nullable_to_non_nullable
+              as DevicePreviewToolBarSpacingData,
       fontStyles: fontStyles == freezed
           ? _value.fontStyles
-          : fontStyles as DevicePreviewToolBarTextStyleData,
+          : fontStyles // ignore: cast_nullable_to_non_nullable
+              as DevicePreviewToolBarTextStyleData,
     ));
   }
 }
@@ -413,22 +429,14 @@ class _$_DevicePreviewToolBarStyle
     with DiagnosticableTreeMixin
     implements _DevicePreviewToolBarStyle {
   const _$_DevicePreviewToolBarStyle(
-      {@required this.buttonsVisibility,
-      @required this.backgroundColor,
-      @required this.foregroundColor,
-      @required this.buttonBackgroundColor,
-      @required this.buttonHoverBackgroundColor,
-      @required this.position,
-      @required this.spacing,
-      @required this.fontStyles})
-      : assert(buttonsVisibility != null),
-        assert(backgroundColor != null),
-        assert(foregroundColor != null),
-        assert(buttonBackgroundColor != null),
-        assert(buttonHoverBackgroundColor != null),
-        assert(position != null),
-        assert(spacing != null),
-        assert(fontStyles != null);
+      {required this.buttonsVisibility,
+      required this.backgroundColor,
+      required this.foregroundColor,
+      required this.buttonBackgroundColor,
+      required this.buttonHoverBackgroundColor,
+      required this.position,
+      required this.spacing,
+      required this.fontStyles});
 
   @override
   final DevicePreviewButtonsVisibilityStyleData buttonsVisibility;
@@ -512,6 +520,7 @@ class _$_DevicePreviewToolBarStyle
       const DeepCollectionEquality().hash(spacing) ^
       const DeepCollectionEquality().hash(fontStyles);
 
+  @JsonKey(ignore: true)
   @override
   _$DevicePreviewToolBarStyleCopyWith<_DevicePreviewToolBarStyle>
       get copyWith =>
@@ -521,45 +530,50 @@ class _$_DevicePreviewToolBarStyle
 
 abstract class _DevicePreviewToolBarStyle implements DevicePreviewToolBarStyle {
   const factory _DevicePreviewToolBarStyle(
-          {@required DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
-          @required Color backgroundColor,
-          @required Color foregroundColor,
-          @required Color buttonBackgroundColor,
-          @required Color buttonHoverBackgroundColor,
-          @required DevicePreviewToolBarPosition position,
-          @required DevicePreviewToolBarSpacingData spacing,
-          @required DevicePreviewToolBarTextStyleData fontStyles}) =
+          {required DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
+          required Color backgroundColor,
+          required Color foregroundColor,
+          required Color buttonBackgroundColor,
+          required Color buttonHoverBackgroundColor,
+          required DevicePreviewToolBarPosition position,
+          required DevicePreviewToolBarSpacingData spacing,
+          required DevicePreviewToolBarTextStyleData fontStyles}) =
       _$_DevicePreviewToolBarStyle;
 
   @override
-  DevicePreviewButtonsVisibilityStyleData get buttonsVisibility;
+  DevicePreviewButtonsVisibilityStyleData get buttonsVisibility =>
+      throw _privateConstructorUsedError;
   @override
-  Color get backgroundColor;
+  Color get backgroundColor => throw _privateConstructorUsedError;
   @override
-  Color get foregroundColor;
+  Color get foregroundColor => throw _privateConstructorUsedError;
   @override
-  Color get buttonBackgroundColor;
+  Color get buttonBackgroundColor => throw _privateConstructorUsedError;
   @override
-  Color get buttonHoverBackgroundColor;
+  Color get buttonHoverBackgroundColor => throw _privateConstructorUsedError;
   @override
-  DevicePreviewToolBarPosition get position;
+  DevicePreviewToolBarPosition get position =>
+      throw _privateConstructorUsedError;
   @override
-  DevicePreviewToolBarSpacingData get spacing;
+  DevicePreviewToolBarSpacingData get spacing =>
+      throw _privateConstructorUsedError;
   @override
-  DevicePreviewToolBarTextStyleData get fontStyles;
+  DevicePreviewToolBarTextStyleData get fontStyles =>
+      throw _privateConstructorUsedError;
   @override
-  _$DevicePreviewToolBarStyleCopyWith<_DevicePreviewToolBarStyle> get copyWith;
+  @JsonKey(ignore: true)
+  _$DevicePreviewToolBarStyleCopyWith<_DevicePreviewToolBarStyle>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 class _$DevicePreviewToolBarSpacingDataTearOff {
   const _$DevicePreviewToolBarSpacingDataTearOff();
 
-// ignore: unused_element
   _DevicePreviewToolBarSpacingData call(
-      {@required EdgeInsets small,
-      @required EdgeInsets regular,
-      @required EdgeInsets big}) {
+      {required EdgeInsets small,
+      required EdgeInsets regular,
+      required EdgeInsets big}) {
     return _DevicePreviewToolBarSpacingData(
       small: small,
       regular: regular,
@@ -569,18 +583,18 @@ class _$DevicePreviewToolBarSpacingDataTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $DevicePreviewToolBarSpacingData =
     _$DevicePreviewToolBarSpacingDataTearOff();
 
 /// @nodoc
 mixin _$DevicePreviewToolBarSpacingData {
-  EdgeInsets get small;
-  EdgeInsets get regular;
-  EdgeInsets get big;
+  EdgeInsets get small => throw _privateConstructorUsedError;
+  EdgeInsets get regular => throw _privateConstructorUsedError;
+  EdgeInsets get big => throw _privateConstructorUsedError;
 
+  @JsonKey(ignore: true)
   $DevicePreviewToolBarSpacingDataCopyWith<DevicePreviewToolBarSpacingData>
-      get copyWith;
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -603,14 +617,23 @@ class _$DevicePreviewToolBarSpacingDataCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object small = freezed,
-    Object regular = freezed,
-    Object big = freezed,
+    Object? small = freezed,
+    Object? regular = freezed,
+    Object? big = freezed,
   }) {
     return _then(_value.copyWith(
-      small: small == freezed ? _value.small : small as EdgeInsets,
-      regular: regular == freezed ? _value.regular : regular as EdgeInsets,
-      big: big == freezed ? _value.big : big as EdgeInsets,
+      small: small == freezed
+          ? _value.small
+          : small // ignore: cast_nullable_to_non_nullable
+              as EdgeInsets,
+      regular: regular == freezed
+          ? _value.regular
+          : regular // ignore: cast_nullable_to_non_nullable
+              as EdgeInsets,
+      big: big == freezed
+          ? _value.big
+          : big // ignore: cast_nullable_to_non_nullable
+              as EdgeInsets,
     ));
   }
 }
@@ -641,14 +664,23 @@ class __$DevicePreviewToolBarSpacingDataCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object small = freezed,
-    Object regular = freezed,
-    Object big = freezed,
+    Object? small = freezed,
+    Object? regular = freezed,
+    Object? big = freezed,
   }) {
     return _then(_DevicePreviewToolBarSpacingData(
-      small: small == freezed ? _value.small : small as EdgeInsets,
-      regular: regular == freezed ? _value.regular : regular as EdgeInsets,
-      big: big == freezed ? _value.big : big as EdgeInsets,
+      small: small == freezed
+          ? _value.small
+          : small // ignore: cast_nullable_to_non_nullable
+              as EdgeInsets,
+      regular: regular == freezed
+          ? _value.regular
+          : regular // ignore: cast_nullable_to_non_nullable
+              as EdgeInsets,
+      big: big == freezed
+          ? _value.big
+          : big // ignore: cast_nullable_to_non_nullable
+              as EdgeInsets,
     ));
   }
 }
@@ -658,10 +690,7 @@ class _$_DevicePreviewToolBarSpacingData
     with DiagnosticableTreeMixin
     implements _DevicePreviewToolBarSpacingData {
   const _$_DevicePreviewToolBarSpacingData(
-      {@required this.small, @required this.regular, @required this.big})
-      : assert(small != null),
-        assert(regular != null),
-        assert(big != null);
+      {required this.small, required this.regular, required this.big});
 
   @override
   final EdgeInsets small;
@@ -705,6 +734,7 @@ class _$_DevicePreviewToolBarSpacingData
       const DeepCollectionEquality().hash(regular) ^
       const DeepCollectionEquality().hash(big);
 
+  @JsonKey(ignore: true)
   @override
   _$DevicePreviewToolBarSpacingDataCopyWith<_DevicePreviewToolBarSpacingData>
       get copyWith => __$DevicePreviewToolBarSpacingDataCopyWithImpl<
@@ -714,31 +744,31 @@ class _$_DevicePreviewToolBarSpacingData
 abstract class _DevicePreviewToolBarSpacingData
     implements DevicePreviewToolBarSpacingData {
   const factory _DevicePreviewToolBarSpacingData(
-      {@required EdgeInsets small,
-      @required EdgeInsets regular,
-      @required EdgeInsets big}) = _$_DevicePreviewToolBarSpacingData;
+      {required EdgeInsets small,
+      required EdgeInsets regular,
+      required EdgeInsets big}) = _$_DevicePreviewToolBarSpacingData;
 
   @override
-  EdgeInsets get small;
+  EdgeInsets get small => throw _privateConstructorUsedError;
   @override
-  EdgeInsets get regular;
+  EdgeInsets get regular => throw _privateConstructorUsedError;
   @override
-  EdgeInsets get big;
+  EdgeInsets get big => throw _privateConstructorUsedError;
   @override
+  @JsonKey(ignore: true)
   _$DevicePreviewToolBarSpacingDataCopyWith<_DevicePreviewToolBarSpacingData>
-      get copyWith;
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 class _$DevicePreviewToolBarTextStyleDataTearOff {
   const _$DevicePreviewToolBarTextStyleDataTearOff();
 
-// ignore: unused_element
   _DevicePreviewToolBarTextStyleData call(
-      {@required TextStyle smallBody,
-      @required TextStyle body,
-      @required TextStyle title,
-      @required TextStyle fieldLabel}) {
+      {required TextStyle smallBody,
+      required TextStyle body,
+      required TextStyle title,
+      required TextStyle fieldLabel}) {
     return _DevicePreviewToolBarTextStyleData(
       smallBody: smallBody,
       body: body,
@@ -749,19 +779,19 @@ class _$DevicePreviewToolBarTextStyleDataTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $DevicePreviewToolBarTextStyleData =
     _$DevicePreviewToolBarTextStyleDataTearOff();
 
 /// @nodoc
 mixin _$DevicePreviewToolBarTextStyleData {
-  TextStyle get smallBody;
-  TextStyle get body;
-  TextStyle get title;
-  TextStyle get fieldLabel;
+  TextStyle get smallBody => throw _privateConstructorUsedError;
+  TextStyle get body => throw _privateConstructorUsedError;
+  TextStyle get title => throw _privateConstructorUsedError;
+  TextStyle get fieldLabel => throw _privateConstructorUsedError;
 
+  @JsonKey(ignore: true)
   $DevicePreviewToolBarTextStyleDataCopyWith<DevicePreviewToolBarTextStyleData>
-      get copyWith;
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -788,18 +818,28 @@ class _$DevicePreviewToolBarTextStyleDataCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object smallBody = freezed,
-    Object body = freezed,
-    Object title = freezed,
-    Object fieldLabel = freezed,
+    Object? smallBody = freezed,
+    Object? body = freezed,
+    Object? title = freezed,
+    Object? fieldLabel = freezed,
   }) {
     return _then(_value.copyWith(
-      smallBody:
-          smallBody == freezed ? _value.smallBody : smallBody as TextStyle,
-      body: body == freezed ? _value.body : body as TextStyle,
-      title: title == freezed ? _value.title : title as TextStyle,
-      fieldLabel:
-          fieldLabel == freezed ? _value.fieldLabel : fieldLabel as TextStyle,
+      smallBody: smallBody == freezed
+          ? _value.smallBody
+          : smallBody // ignore: cast_nullable_to_non_nullable
+              as TextStyle,
+      body: body == freezed
+          ? _value.body
+          : body // ignore: cast_nullable_to_non_nullable
+              as TextStyle,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as TextStyle,
+      fieldLabel: fieldLabel == freezed
+          ? _value.fieldLabel
+          : fieldLabel // ignore: cast_nullable_to_non_nullable
+              as TextStyle,
     ));
   }
 }
@@ -834,18 +874,28 @@ class __$DevicePreviewToolBarTextStyleDataCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object smallBody = freezed,
-    Object body = freezed,
-    Object title = freezed,
-    Object fieldLabel = freezed,
+    Object? smallBody = freezed,
+    Object? body = freezed,
+    Object? title = freezed,
+    Object? fieldLabel = freezed,
   }) {
     return _then(_DevicePreviewToolBarTextStyleData(
-      smallBody:
-          smallBody == freezed ? _value.smallBody : smallBody as TextStyle,
-      body: body == freezed ? _value.body : body as TextStyle,
-      title: title == freezed ? _value.title : title as TextStyle,
-      fieldLabel:
-          fieldLabel == freezed ? _value.fieldLabel : fieldLabel as TextStyle,
+      smallBody: smallBody == freezed
+          ? _value.smallBody
+          : smallBody // ignore: cast_nullable_to_non_nullable
+              as TextStyle,
+      body: body == freezed
+          ? _value.body
+          : body // ignore: cast_nullable_to_non_nullable
+              as TextStyle,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as TextStyle,
+      fieldLabel: fieldLabel == freezed
+          ? _value.fieldLabel
+          : fieldLabel // ignore: cast_nullable_to_non_nullable
+              as TextStyle,
     ));
   }
 }
@@ -855,14 +905,10 @@ class _$_DevicePreviewToolBarTextStyleData
     with DiagnosticableTreeMixin
     implements _DevicePreviewToolBarTextStyleData {
   const _$_DevicePreviewToolBarTextStyleData(
-      {@required this.smallBody,
-      @required this.body,
-      @required this.title,
-      @required this.fieldLabel})
-      : assert(smallBody != null),
-        assert(body != null),
-        assert(title != null),
-        assert(fieldLabel != null);
+      {required this.smallBody,
+      required this.body,
+      required this.title,
+      required this.fieldLabel});
 
   @override
   final TextStyle smallBody;
@@ -913,6 +959,7 @@ class _$_DevicePreviewToolBarTextStyleData
       const DeepCollectionEquality().hash(title) ^
       const DeepCollectionEquality().hash(fieldLabel);
 
+  @JsonKey(ignore: true)
   @override
   _$DevicePreviewToolBarTextStyleDataCopyWith<
           _DevicePreviewToolBarTextStyleData>
@@ -923,29 +970,30 @@ class _$_DevicePreviewToolBarTextStyleData
 abstract class _DevicePreviewToolBarTextStyleData
     implements DevicePreviewToolBarTextStyleData {
   const factory _DevicePreviewToolBarTextStyleData(
-      {@required TextStyle smallBody,
-      @required TextStyle body,
-      @required TextStyle title,
-      @required TextStyle fieldLabel}) = _$_DevicePreviewToolBarTextStyleData;
+      {required TextStyle smallBody,
+      required TextStyle body,
+      required TextStyle title,
+      required TextStyle fieldLabel}) = _$_DevicePreviewToolBarTextStyleData;
 
   @override
-  TextStyle get smallBody;
+  TextStyle get smallBody => throw _privateConstructorUsedError;
   @override
-  TextStyle get body;
+  TextStyle get body => throw _privateConstructorUsedError;
   @override
-  TextStyle get title;
+  TextStyle get title => throw _privateConstructorUsedError;
   @override
-  TextStyle get fieldLabel;
+  TextStyle get fieldLabel => throw _privateConstructorUsedError;
   @override
+  @JsonKey(ignore: true)
   _$DevicePreviewToolBarTextStyleDataCopyWith<
-      _DevicePreviewToolBarTextStyleData> get copyWith;
+          _DevicePreviewToolBarTextStyleData>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 class _$DevicePreviewButtonsVisibilityStyleDataTearOff {
   const _$DevicePreviewButtonsVisibilityStyleDataTearOff();
 
-// ignore: unused_element
   _DevicePreviewButtonsVisibilityStyleData call(
       {bool togglePreview = true,
       bool device = true,
@@ -971,24 +1019,25 @@ class _$DevicePreviewButtonsVisibilityStyleDataTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $DevicePreviewButtonsVisibilityStyleData =
     _$DevicePreviewButtonsVisibilityStyleDataTearOff();
 
 /// @nodoc
 mixin _$DevicePreviewButtonsVisibilityStyleData {
-  bool get togglePreview;
-  bool get device;
-  bool get language;
-  bool get rotate;
-  bool get toggleFrame;
-  bool get toggleKeyboard;
-  bool get darkMode;
-  bool get accessibility;
-  bool get settings;
+  bool get togglePreview => throw _privateConstructorUsedError;
+  bool get device => throw _privateConstructorUsedError;
+  bool get language => throw _privateConstructorUsedError;
+  bool get rotate => throw _privateConstructorUsedError;
+  bool get toggleFrame => throw _privateConstructorUsedError;
+  bool get toggleKeyboard => throw _privateConstructorUsedError;
+  bool get darkMode => throw _privateConstructorUsedError;
+  bool get accessibility => throw _privateConstructorUsedError;
+  bool get settings => throw _privateConstructorUsedError;
 
+  @JsonKey(ignore: true)
   $DevicePreviewButtonsVisibilityStyleDataCopyWith<
-      DevicePreviewButtonsVisibilityStyleData> get copyWith;
+          DevicePreviewButtonsVisibilityStyleData>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1021,33 +1070,53 @@ class _$DevicePreviewButtonsVisibilityStyleDataCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object togglePreview = freezed,
-    Object device = freezed,
-    Object language = freezed,
-    Object rotate = freezed,
-    Object toggleFrame = freezed,
-    Object toggleKeyboard = freezed,
-    Object darkMode = freezed,
-    Object accessibility = freezed,
-    Object settings = freezed,
+    Object? togglePreview = freezed,
+    Object? device = freezed,
+    Object? language = freezed,
+    Object? rotate = freezed,
+    Object? toggleFrame = freezed,
+    Object? toggleKeyboard = freezed,
+    Object? darkMode = freezed,
+    Object? accessibility = freezed,
+    Object? settings = freezed,
   }) {
     return _then(_value.copyWith(
       togglePreview: togglePreview == freezed
           ? _value.togglePreview
-          : togglePreview as bool,
-      device: device == freezed ? _value.device : device as bool,
-      language: language == freezed ? _value.language : language as bool,
-      rotate: rotate == freezed ? _value.rotate : rotate as bool,
-      toggleFrame:
-          toggleFrame == freezed ? _value.toggleFrame : toggleFrame as bool,
+          : togglePreview // ignore: cast_nullable_to_non_nullable
+              as bool,
+      device: device == freezed
+          ? _value.device
+          : device // ignore: cast_nullable_to_non_nullable
+              as bool,
+      language: language == freezed
+          ? _value.language
+          : language // ignore: cast_nullable_to_non_nullable
+              as bool,
+      rotate: rotate == freezed
+          ? _value.rotate
+          : rotate // ignore: cast_nullable_to_non_nullable
+              as bool,
+      toggleFrame: toggleFrame == freezed
+          ? _value.toggleFrame
+          : toggleFrame // ignore: cast_nullable_to_non_nullable
+              as bool,
       toggleKeyboard: toggleKeyboard == freezed
           ? _value.toggleKeyboard
-          : toggleKeyboard as bool,
-      darkMode: darkMode == freezed ? _value.darkMode : darkMode as bool,
+          : toggleKeyboard // ignore: cast_nullable_to_non_nullable
+              as bool,
+      darkMode: darkMode == freezed
+          ? _value.darkMode
+          : darkMode // ignore: cast_nullable_to_non_nullable
+              as bool,
       accessibility: accessibility == freezed
           ? _value.accessibility
-          : accessibility as bool,
-      settings: settings == freezed ? _value.settings : settings as bool,
+          : accessibility // ignore: cast_nullable_to_non_nullable
+              as bool,
+      settings: settings == freezed
+          ? _value.settings
+          : settings // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -1088,33 +1157,53 @@ class __$DevicePreviewButtonsVisibilityStyleDataCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object togglePreview = freezed,
-    Object device = freezed,
-    Object language = freezed,
-    Object rotate = freezed,
-    Object toggleFrame = freezed,
-    Object toggleKeyboard = freezed,
-    Object darkMode = freezed,
-    Object accessibility = freezed,
-    Object settings = freezed,
+    Object? togglePreview = freezed,
+    Object? device = freezed,
+    Object? language = freezed,
+    Object? rotate = freezed,
+    Object? toggleFrame = freezed,
+    Object? toggleKeyboard = freezed,
+    Object? darkMode = freezed,
+    Object? accessibility = freezed,
+    Object? settings = freezed,
   }) {
     return _then(_DevicePreviewButtonsVisibilityStyleData(
       togglePreview: togglePreview == freezed
           ? _value.togglePreview
-          : togglePreview as bool,
-      device: device == freezed ? _value.device : device as bool,
-      language: language == freezed ? _value.language : language as bool,
-      rotate: rotate == freezed ? _value.rotate : rotate as bool,
-      toggleFrame:
-          toggleFrame == freezed ? _value.toggleFrame : toggleFrame as bool,
+          : togglePreview // ignore: cast_nullable_to_non_nullable
+              as bool,
+      device: device == freezed
+          ? _value.device
+          : device // ignore: cast_nullable_to_non_nullable
+              as bool,
+      language: language == freezed
+          ? _value.language
+          : language // ignore: cast_nullable_to_non_nullable
+              as bool,
+      rotate: rotate == freezed
+          ? _value.rotate
+          : rotate // ignore: cast_nullable_to_non_nullable
+              as bool,
+      toggleFrame: toggleFrame == freezed
+          ? _value.toggleFrame
+          : toggleFrame // ignore: cast_nullable_to_non_nullable
+              as bool,
       toggleKeyboard: toggleKeyboard == freezed
           ? _value.toggleKeyboard
-          : toggleKeyboard as bool,
-      darkMode: darkMode == freezed ? _value.darkMode : darkMode as bool,
+          : toggleKeyboard // ignore: cast_nullable_to_non_nullable
+              as bool,
+      darkMode: darkMode == freezed
+          ? _value.darkMode
+          : darkMode // ignore: cast_nullable_to_non_nullable
+              as bool,
       accessibility: accessibility == freezed
           ? _value.accessibility
-          : accessibility as bool,
-      settings: settings == freezed ? _value.settings : settings as bool,
+          : accessibility // ignore: cast_nullable_to_non_nullable
+              as bool,
+      settings: settings == freezed
+          ? _value.settings
+          : settings // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -1132,16 +1221,7 @@ class _$_DevicePreviewButtonsVisibilityStyleData
       this.toggleKeyboard = true,
       this.darkMode = true,
       this.accessibility = true,
-      this.settings = true})
-      : assert(togglePreview != null),
-        assert(device != null),
-        assert(language != null),
-        assert(rotate != null),
-        assert(toggleFrame != null),
-        assert(toggleKeyboard != null),
-        assert(darkMode != null),
-        assert(accessibility != null),
-        assert(settings != null);
+      this.settings = true});
 
   @JsonKey(defaultValue: true)
   @override
@@ -1237,6 +1317,7 @@ class _$_DevicePreviewButtonsVisibilityStyleData
       const DeepCollectionEquality().hash(accessibility) ^
       const DeepCollectionEquality().hash(settings);
 
+  @JsonKey(ignore: true)
   @override
   _$DevicePreviewButtonsVisibilityStyleDataCopyWith<
           _DevicePreviewButtonsVisibilityStyleData>
@@ -1258,24 +1339,26 @@ abstract class _DevicePreviewButtonsVisibilityStyleData
       bool settings}) = _$_DevicePreviewButtonsVisibilityStyleData;
 
   @override
-  bool get togglePreview;
+  bool get togglePreview => throw _privateConstructorUsedError;
   @override
-  bool get device;
+  bool get device => throw _privateConstructorUsedError;
   @override
-  bool get language;
+  bool get language => throw _privateConstructorUsedError;
   @override
-  bool get rotate;
+  bool get rotate => throw _privateConstructorUsedError;
   @override
-  bool get toggleFrame;
+  bool get toggleFrame => throw _privateConstructorUsedError;
   @override
-  bool get toggleKeyboard;
+  bool get toggleKeyboard => throw _privateConstructorUsedError;
   @override
-  bool get darkMode;
+  bool get darkMode => throw _privateConstructorUsedError;
   @override
-  bool get accessibility;
+  bool get accessibility => throw _privateConstructorUsedError;
   @override
-  bool get settings;
+  bool get settings => throw _privateConstructorUsedError;
   @override
+  @JsonKey(ignore: true)
   _$DevicePreviewButtonsVisibilityStyleDataCopyWith<
-      _DevicePreviewButtonsVisibilityStyleData> get copyWith;
+          _DevicePreviewButtonsVisibilityStyleData>
+      get copyWith => throw _privateConstructorUsedError;
 }

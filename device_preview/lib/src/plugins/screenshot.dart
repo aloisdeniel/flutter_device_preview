@@ -25,7 +25,7 @@ class ScreenshotPlugin extends DevicePreviewPlugin {
         );
 
   /// A screenshot that processes a screenshot and returns the result as a display message.
-  final ScreenshotProcessor processor;
+  final ScreenshotProcessor? processor;
 
   @override
   Widget buildData(
@@ -49,22 +49,22 @@ typedef ScreenshotProcessor = Future<String> Function(
 
 class _Screenshot extends StatefulWidget {
   const _Screenshot({
-    Key key,
-    @required this.processor,
+    Key? key,
+    required this.processor,
   }) : super(key: key);
 
-  final ScreenshotProcessor processor;
+  final ScreenshotProcessor? processor;
 
   @override
   _ScreenshotState createState() => _ScreenshotState();
 }
 
 class _ScreenshotState extends State<_Screenshot> {
-  String link;
+  String? link;
   dynamic error;
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       _take();
     });
     super.initState();

@@ -8,26 +8,27 @@ part of 'state.dart';
 
 _$_DevicePreviewData _$_$_DevicePreviewDataFromJson(Map<String, dynamic> json) {
   return _$_DevicePreviewData(
-    isToolbarVisible: json['isToolbarVisible'] as bool ?? true,
-    isEnabled: json['isEnabled'] as bool ?? true,
+    isToolbarVisible: json['isToolbarVisible'] as bool? ?? true,
+    isEnabled: json['isEnabled'] as bool? ?? true,
     orientation:
         _$enumDecodeNullable(_$OrientationEnumMap, json['orientation']) ??
             Orientation.portrait,
-    deviceIdentifier: json['deviceIdentifier'] as String,
-    locale: json['locale'] as String ?? 'en-US',
-    isFrameVisible: json['isFrameVisible'] as bool ?? true,
-    isDarkMode: json['isDarkMode'] as bool ?? false,
-    boldText: json['boldText'] as bool ?? false,
-    isVirtualKeyboardVisible: json['isVirtualKeyboardVisible'] as bool ?? false,
-    disableAnimations: json['disableAnimations'] as bool ?? false,
-    highContrast: json['highContrast'] as bool ?? false,
-    accessibleNavigation: json['accessibleNavigation'] as bool ?? false,
-    invertColors: json['invertColors'] as bool ?? false,
-    pluginData: (json['pluginData'] as Map<String, dynamic>)?.map(
+    deviceIdentifier: json['deviceIdentifier'] as String?,
+    locale: json['locale'] as String? ?? 'en-US',
+    isFrameVisible: json['isFrameVisible'] as bool? ?? true,
+    isDarkMode: json['isDarkMode'] as bool? ?? false,
+    boldText: json['boldText'] as bool? ?? false,
+    isVirtualKeyboardVisible:
+        json['isVirtualKeyboardVisible'] as bool? ?? false,
+    disableAnimations: json['disableAnimations'] as bool? ?? false,
+    highContrast: json['highContrast'] as bool? ?? false,
+    accessibleNavigation: json['accessibleNavigation'] as bool? ?? false,
+    invertColors: json['invertColors'] as bool? ?? false,
+    pluginData: (json['pluginData'] as Map<String, dynamic>?)?.map(
           (k, e) => MapEntry(k, e as Map<String, dynamic>),
         ) ??
         {},
-    textScaleFactor: (json['textScaleFactor'] as num)?.toDouble() ?? 1.0,
+    textScaleFactor: (json['textScaleFactor'] as num?)?.toDouble() ?? 1.0,
     settings: json['settings'] == null
         ? null
         : DevicePreviewSettingsData.fromJson(
@@ -61,36 +62,41 @@ Map<String, dynamic> _$_$_DevicePreviewDataToJson(
       'customDevice': instance.customDevice,
     };
 
-T _$enumDecode<T>(
-  Map<T, dynamic> enumValues,
-  dynamic source, {
-  T unknownValue,
+K _$enumDecode<K, V>(
+  Map<K, V> enumValues,
+  Object? source, {
+  K? unknownValue,
 }) {
   if (source == null) {
-    throw ArgumentError('A value must be provided. Supported values: '
-        '${enumValues.values.join(', ')}');
+    throw ArgumentError(
+      'A value must be provided. Supported values: '
+      '${enumValues.values.join(', ')}',
+    );
   }
 
-  final value = enumValues.entries
-      .singleWhere((e) => e.value == source, orElse: () => null)
-      ?.key;
-
-  if (value == null && unknownValue == null) {
-    throw ArgumentError('`$source` is not one of the supported values: '
-        '${enumValues.values.join(', ')}');
-  }
-  return value ?? unknownValue;
+  return enumValues.entries.singleWhere(
+    (e) => e.value == source,
+    orElse: () {
+      if (unknownValue == null) {
+        throw ArgumentError(
+          '`$source` is not one of the supported values: '
+          '${enumValues.values.join(', ')}',
+        );
+      }
+      return MapEntry(unknownValue, enumValues.values.first);
+    },
+  ).key;
 }
 
-T _$enumDecodeNullable<T>(
-  Map<T, dynamic> enumValues,
+K? _$enumDecodeNullable<K, V>(
+  Map<K, V> enumValues,
   dynamic source, {
-  T unknownValue,
+  K? unknownValue,
 }) {
   if (source == null) {
     return null;
   }
-  return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
+  return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
 }
 
 const _$OrientationEnumMap = {
@@ -102,13 +108,13 @@ _$_CustomDeviceInfoData _$_$_CustomDeviceInfoDataFromJson(
     Map<String, dynamic> json) {
   return _$_CustomDeviceInfoData(
     id: json['id'] as String,
-    type: _$enumDecodeNullable(_$DeviceTypeEnumMap, json['type']),
-    platform: _$enumDecodeNullable(_$TargetPlatformEnumMap, json['platform']),
+    type: _$enumDecode(_$DeviceTypeEnumMap, json['type']),
+    platform: _$enumDecode(_$TargetPlatformEnumMap, json['platform']),
     name: json['name'] as String,
-    rotatedSafeAreas:
-        const EdgeInsetsJsonConverter().fromJson(json['rotatedSafeAreas']),
+    rotatedSafeAreas: const NullableEdgeInsetsJsonConverter()
+        .fromJson(json['rotatedSafeAreas']),
     safeAreas: const EdgeInsetsJsonConverter().fromJson(json['safeAreas']),
-    pixelRatio: (json['pixelRatio'] as num)?.toDouble(),
+    pixelRatio: (json['pixelRatio'] as num).toDouble(),
     screenSize: const SizeJsonConverter().fromJson(json['screenSize']),
   );
 }
@@ -120,8 +126,8 @@ Map<String, dynamic> _$_$_CustomDeviceInfoDataToJson(
       'type': _$DeviceTypeEnumMap[instance.type],
       'platform': _$TargetPlatformEnumMap[instance.platform],
       'name': instance.name,
-      'rotatedSafeAreas':
-          const EdgeInsetsJsonConverter().toJson(instance.rotatedSafeAreas),
+      'rotatedSafeAreas': const NullableEdgeInsetsJsonConverter()
+          .toJson(instance.rotatedSafeAreas),
       'safeAreas': const EdgeInsetsJsonConverter().toJson(instance.safeAreas),
       'pixelRatio': instance.pixelRatio,
       'screenSize': const SizeJsonConverter().toJson(instance.screenSize),

@@ -23,15 +23,12 @@ import 'package:provider/provider.dart';
 class DevicePreviewPlugin {
   /// Create a new plugin definition.
   const DevicePreviewPlugin({
-    @required this.identifier,
-    @required this.name,
-    @required this.icon,
+    required this.identifier,
+    required this.name,
+    required this.icon,
     this.windowSize = const Size(280, 300),
     this.builder,
-  })  : assert(name != null),
-        assert(identifier != null),
-        assert(icon != null),
-        assert(windowSize != null);
+  });
 
   /// The unique identifier of the plugin.
   final String identifier;
@@ -47,7 +44,7 @@ class DevicePreviewPlugin {
   final Size windowSize;
 
   /// The window content builder.
-  final DevicePreviewPluginWidgetBuilder builder;
+  final DevicePreviewPluginWidgetBuilder? builder;
 
   /// Build the window content by observing the plugin's data in storage and
   /// calling [buildData].
@@ -55,7 +52,7 @@ class DevicePreviewPlugin {
     final data = context.select<DevicePreviewStore, Map<String, dynamic>>(
       (state) {
         final plugins = state.data.pluginData;
-        return plugins.containsKey(identifier) ? plugins[identifier] : {};
+        return plugins.containsKey(identifier) ? plugins[identifier] ?? {} : {};
       },
     );
     return buildData(context, data, (data) {
@@ -75,7 +72,7 @@ class DevicePreviewPlugin {
     DevicePreviewPluginDataUpdater updateData,
   ) {
     assert(builder != null);
-    return builder(context, data, updateData);
+    return builder!(context, data, updateData);
   }
 }
 

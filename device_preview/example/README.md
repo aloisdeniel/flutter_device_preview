@@ -1,11 +1,16 @@
-# device_preview_example
+# example
 
-A simple example of an application that uses `device_preview` for testing on different device configurations.
+A new Flutter project.
 
-## Web
+## Getting Started
 
-To launch on web, dont forget to active Skia rendering 
+This project is a starting point for a Flutter application.
 
-```
-flutter run -d chrome --release --dart-define=FLUTTER_WEB_USE_SKIA=true
-```
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+
+For help getting started with Flutter, view our
+[online documentation](https://flutter.dev/docs), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.

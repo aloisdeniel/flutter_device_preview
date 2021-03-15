@@ -188,8 +188,8 @@ class WrapOptionsTile extends StatelessWidget {
   final List<Widget> options;
 
   WrapOptionsTile({
-    @required this.title,
-    @required this.options,
+    required this.title,
+    required this.options,
   });
 
   @override
@@ -227,9 +227,9 @@ class SelectBox extends StatelessWidget {
   final Widget child;
 
   const SelectBox({
-    @required this.isSelected,
-    @required this.onTap,
-    @required this.child,
+    required this.isSelected,
+    required this.onTap,
+    required this.child,
   });
 
   @override

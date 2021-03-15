@@ -27,7 +27,7 @@ abstract class DevicePreviewStorage {
 
   /// Load data from the storage that has been saved previously with
   /// the [save] method.
-  Future<DevicePreviewData> load();
+  Future<DevicePreviewData?> load();
 }
 
 /// A storage that keep preferences only in memory : they are reset on each
@@ -36,7 +36,7 @@ class NoDevicePreviewStorage extends DevicePreviewStorage {
   const NoDevicePreviewStorage();
 
   @override
-  Future<DevicePreviewData> load() => Future<DevicePreviewData>.value(null);
+  Future<DevicePreviewData?> load() => Future<DevicePreviewData?>.value(null);
 
   @override
   Future<void> save(DevicePreviewData data) => Future.value();

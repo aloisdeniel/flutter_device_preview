@@ -2,14 +2,13 @@ import 'dart:io';
 
 import 'package:device_preview/device_preview.dart';
 import 'package:device_preview/plugins.dart';
-import 'package:device_preview_example/gallery/l10n/gallery_localizations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
 
-import 'gallery/studies/starter/app.dart';
+import 'basic.dart';
 
 void main() {
   debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
@@ -33,8 +32,7 @@ void main() {
             const FileExplorerPlugin(),
             const SharedPreferencesExplorerPlugin(),
           ],
-          availableLocales: GalleryLocalizations.supportedLocales,
-          builder: (context) => StarterApp(),
+          builder: (context) => BasicApp(),
         ),
       ),
     ],

@@ -2,13 +2,13 @@ import 'package:flutter/widgets.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 /// A json converter for [Size].
-class SizeJsonConverter implements JsonConverter<Size, Object> {
+class SizeJsonConverter implements JsonConverter<Size, Object?> {
   const SizeJsonConverter();
 
   @override
-  Size fromJson(Object json) {
+  Size fromJson(Object? json) {
     if (json == null) {
-      return null;
+      return Size.zero;
     }
 
     if (json is Iterable) {
@@ -27,19 +27,35 @@ class SizeJsonConverter implements JsonConverter<Size, Object> {
   }
 
   @override
-  Object toJson(Size object) {
-    if (object == null) return null;
+  Object? toJson(Size object) {
     return [object.width, object.height];
   }
 }
 
-class EdgeInsetsJsonConverter implements JsonConverter<EdgeInsets, Object> {
+class NullableEdgeInsetsJsonConverter
+    implements JsonConverter<EdgeInsets?, Object?> {
+  const NullableEdgeInsetsJsonConverter();
+
+  @override
+  EdgeInsets? fromJson(Object? json) {
+    if (json == null) return null;
+    return const EdgeInsetsJsonConverter().fromJson(json);
+  }
+
+  @override
+  Object? toJson(EdgeInsets? object) {
+    if (object == null) return null;
+    return const EdgeInsetsJsonConverter().toJson(object);
+  }
+}
+
+class EdgeInsetsJsonConverter implements JsonConverter<EdgeInsets, Object?> {
   const EdgeInsetsJsonConverter();
 
   @override
-  EdgeInsets fromJson(Object json) {
+  EdgeInsets fromJson(Object? json) {
     if (json == null) {
-      return null;
+      return EdgeInsets.zero;
     }
 
     if (json is Iterable) {
@@ -68,8 +84,7 @@ class EdgeInsetsJsonConverter implements JsonConverter<EdgeInsets, Object> {
   }
 
   @override
-  Object toJson(EdgeInsets object) {
-    if (object == null) return null;
+  Object? toJson(EdgeInsets object) {
     return [
       object.left,
       object.top,

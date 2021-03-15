@@ -12,7 +12,7 @@ import 'storage.dart';
 class PreferencesDevicePreviewStorage extends DevicePreviewStorage {
   PreferencesDevicePreviewStorage({
     this.preferenceKey = defaultPreferencesKey,
-  }) : assert(preferenceKey != null);
+  });
 
   final String preferenceKey;
 
@@ -25,21 +25,21 @@ class PreferencesDevicePreviewStorage extends DevicePreviewStorage {
   }
 
   static const String defaultPreferencesKey = 'device_preview.settings';
-  Future _saveTask;
-  DevicePreviewData _saveData;
+  Future<void>? _saveTask;
+  DevicePreviewData? _saveData;
 
   Future _save() async {
     await Future.delayed(const Duration(milliseconds: 500));
     if (_saveData != null) {
       final shared = await SharedPreferences.getInstance();
-      await shared.setString(preferenceKey, jsonEncode(_saveData.toJson()));
+      await shared.setString(preferenceKey, jsonEncode(_saveData!.toJson()));
     }
     _saveTask = null;
   }
 
   /// Load the last saved preferences (until [ignore] is `true`).
   @override
-  Future<DevicePreviewData> load() async {
+  Future<DevicePreviewData?> load() async {
     final shared = await SharedPreferences.getInstance();
     final json = shared.getString(preferenceKey);
     if (json == null || json.isEmpty) return null;

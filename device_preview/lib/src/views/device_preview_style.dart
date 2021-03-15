@@ -1,7 +1,6 @@
 import 'package:device_preview/src/state/state.dart';
 import 'package:device_preview/src/state/store.dart';
 import 'package:flutter/widgets.dart';
-import 'package:meta/meta.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
@@ -29,8 +28,8 @@ class DevicePreviewTheme extends InheritedWidget {
   }
 
   const DevicePreviewTheme({
-    @required this.style,
-    @required Widget child,
+    required this.style,
+    required Widget child,
   }) : super(child: child);
 
   static DevicePreviewStyle of(BuildContext context) {
@@ -84,7 +83,7 @@ class DevicePreviewTheme extends InheritedWidget {
 
     // If toolbar position isn't supported, fallback to bottom.
     final media = MediaQuery.maybeOf(context) ??
-        MediaQueryData.fromWindow(WidgetsBinding.instance.window);
+        MediaQueryData.fromWindow(WidgetsBinding.instance!.window);
     if (!DevicePreviewTheme.isPositionAvailableForWidth(
         result.toolBar.position, media.size.width)) {
       result = result.copyWith(
@@ -102,19 +101,19 @@ class DevicePreviewTheme extends InheritedWidget {
 }
 
 @freezed
-abstract class DevicePreviewStyle with _$DevicePreviewStyle {
+class DevicePreviewStyle with _$DevicePreviewStyle {
   const factory DevicePreviewStyle({
-    @required BoxDecoration background,
-    @required DevicePreviewToolBarStyle toolBar,
+    required BoxDecoration background,
+    required DevicePreviewToolBarStyle toolBar,
   }) = _DevicePreviewStyle;
 
   factory DevicePreviewStyle.light({
-    DevicePreviewToolBarPosition position,
-    DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
+    DevicePreviewToolBarPosition? position,
+    DevicePreviewButtonsVisibilityStyleData? buttonsVisibility,
   }) =>
       DevicePreviewStyle(
         toolBar: DevicePreviewToolBarStyle.dark(
-          position: position,
+          position: position ?? DevicePreviewToolBarPosition.bottom,
           buttonsVisibility:
               buttonsVisibility ?? DevicePreviewButtonsVisibilityStyleData(),
         ),
@@ -129,12 +128,12 @@ abstract class DevicePreviewStyle with _$DevicePreviewStyle {
       );
 
   factory DevicePreviewStyle.dark({
-    DevicePreviewToolBarPosition position,
-    DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
+    DevicePreviewToolBarPosition? position,
+    DevicePreviewButtonsVisibilityStyleData? buttonsVisibility,
   }) =>
       DevicePreviewStyle(
         toolBar: DevicePreviewToolBarStyle.light(
-          position: position,
+          position: position ?? DevicePreviewToolBarPosition.bottom,
           buttonsVisibility:
               buttonsVisibility ?? DevicePreviewButtonsVisibilityStyleData(),
         ),
@@ -150,21 +149,21 @@ abstract class DevicePreviewStyle with _$DevicePreviewStyle {
 }
 
 @freezed
-abstract class DevicePreviewToolBarStyle with _$DevicePreviewToolBarStyle {
+class DevicePreviewToolBarStyle with _$DevicePreviewToolBarStyle {
   const factory DevicePreviewToolBarStyle({
-    @required DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
-    @required Color backgroundColor,
-    @required Color foregroundColor,
-    @required Color buttonBackgroundColor,
-    @required Color buttonHoverBackgroundColor,
-    @required DevicePreviewToolBarPosition position,
-    @required DevicePreviewToolBarSpacingData spacing,
-    @required DevicePreviewToolBarTextStyleData fontStyles,
+    required DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
+    required Color backgroundColor,
+    required Color foregroundColor,
+    required Color buttonBackgroundColor,
+    required Color buttonHoverBackgroundColor,
+    required DevicePreviewToolBarPosition position,
+    required DevicePreviewToolBarSpacingData spacing,
+    required DevicePreviewToolBarTextStyleData fontStyles,
   }) = _DevicePreviewToolBarStyle;
 
   factory DevicePreviewToolBarStyle.dark({
-    DevicePreviewToolBarPosition position,
-    DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
+    DevicePreviewToolBarPosition? position,
+    DevicePreviewButtonsVisibilityStyleData? buttonsVisibility,
   }) =>
       DevicePreviewToolBarStyle(
         buttonsVisibility:
@@ -200,8 +199,8 @@ abstract class DevicePreviewToolBarStyle with _$DevicePreviewToolBarStyle {
       );
 
   factory DevicePreviewToolBarStyle.light({
-    DevicePreviewToolBarPosition position,
-    DevicePreviewButtonsVisibilityStyleData buttonsVisibility,
+    DevicePreviewToolBarPosition? position,
+    DevicePreviewButtonsVisibilityStyleData? buttonsVisibility,
   }) =>
       DevicePreviewToolBarStyle(
         buttonsVisibility:
@@ -238,28 +237,27 @@ abstract class DevicePreviewToolBarStyle with _$DevicePreviewToolBarStyle {
 }
 
 @freezed
-abstract class DevicePreviewToolBarSpacingData
-    with _$DevicePreviewToolBarSpacingData {
+class DevicePreviewToolBarSpacingData with _$DevicePreviewToolBarSpacingData {
   const factory DevicePreviewToolBarSpacingData({
-    @required EdgeInsets small,
-    @required EdgeInsets regular,
-    @required EdgeInsets big,
+    required EdgeInsets small,
+    required EdgeInsets regular,
+    required EdgeInsets big,
   }) = _DevicePreviewToolBarSpacingData;
 }
 
 @freezed
-abstract class DevicePreviewToolBarTextStyleData
+class DevicePreviewToolBarTextStyleData
     with _$DevicePreviewToolBarTextStyleData {
   const factory DevicePreviewToolBarTextStyleData({
-    @required TextStyle smallBody,
-    @required TextStyle body,
-    @required TextStyle title,
-    @required TextStyle fieldLabel,
+    required TextStyle smallBody,
+    required TextStyle body,
+    required TextStyle title,
+    required TextStyle fieldLabel,
   }) = _DevicePreviewToolBarTextStyleData;
 }
 
 @freezed
-abstract class DevicePreviewButtonsVisibilityStyleData
+class DevicePreviewButtonsVisibilityStyleData
     with _$DevicePreviewButtonsVisibilityStyleData {
   const factory DevicePreviewButtonsVisibilityStyleData({
     @Default(true) bool togglePreview,
