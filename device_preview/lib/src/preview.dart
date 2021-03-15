@@ -256,6 +256,8 @@ class DevicePreview {
     _device = device;
     setWindowTitle(device.name);
 
+    PreviewWidgetsFlutterBinding.previewRenderView.device = device;
+
     // Overriding platform
     debugDefaultTargetPlatformOverride = device.platform;
 

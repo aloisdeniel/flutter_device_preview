@@ -8,7 +8,10 @@
             "name": "Example",
             "program": "device_preview/example/lib/main.dart",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "args": [
+                "--no-sound-null-safety"
+            ]
         }
     ]
 }

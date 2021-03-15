@@ -23,8 +23,15 @@ class PreviewWidgetsFlutterBinding extends PreviewBindingBase
         RendererBinding,
         WidgetsBinding {
   static PreviewWindow get previewWindow {
-    final binding = WidgetsBinding.instance as PreviewWidgetsFlutterBinding;
-    return binding.window as PreviewWindow;
+    return previewBinding.window as PreviewWindow;
+  }
+
+  static PreviewWidgetsFlutterBinding get previewBinding {
+    return WidgetsBinding.instance as PreviewWidgetsFlutterBinding;
+  }
+
+  static PreviewRenderView get previewRenderView {
+    return previewBinding.renderView as PreviewRenderView;
   }
 
   /// Returns an instance of the [WidgetsBinding], creating and

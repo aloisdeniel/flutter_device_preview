@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  path_drawing:
+  flutter_svg:
   window_size:
     git:
       url: git://github.com/google/flutter-desktop-embedding.git

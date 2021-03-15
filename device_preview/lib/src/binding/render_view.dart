@@ -1,5 +1,7 @@
 import 'dart:ui' as ui;
 
+import 'package:device_preview/device_preview.dart';
+import 'package:device_preview/src/devices/mockup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -14,23 +16,32 @@ class PreviewRenderView extends RenderView {
           window: window,
         );
 
+  DeviceMockupRenderer? _mockupRenderer;
+
+  Device? _device;
+  Device? get device => _device;
+  set device(Device? value) {
+    if (_device?.id != value?.id) {
+      _device = value;
+      markNeedsPaint();
+      value?.createRenderer(value.id).then((value) {
+        _mockupRenderer = value;
+        markNeedsPaint();
+      });
+    }
+  }
+
   @override
   void paint(PaintingContext context, Offset offset) {
     context.canvas.drawColor(Colors.white, BlendMode.color);
 
-    context.pushTransform(
-      needsCompositing,
-      offset,
-      Matrix4.translationValues(100, 100, 0),
-      (context, offset) {
-        context.pushClipRect(
-            needsCompositing, offset, Rect.fromLTWH(0, 0, 1000, 1000),
-            (context, offset) {
-          super.paint(context, offset);
-        });
-      },
-    );
-
-    context.canvas.drawCircle(Offset(50, 50), 50, Paint()..color = Colors.red);
+    if (_mockupRenderer != null) {
+      _mockupRenderer!.paintFrame(
+        context: context,
+        offset: offset,
+        needsCompositing: needsCompositing,
+        paintApp: super.paint,
+      );
+    }
   }
 }
