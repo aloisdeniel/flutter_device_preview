@@ -1,5 +1,4 @@
 import 'package:device_preview/src/devices/device.dart';
-import 'package:device_preview/src/devices/mockup.dart';
 import 'package:path_drawing/path_drawing.dart';
 import 'package:flutter/widgets.dart';
 
@@ -11,6 +10,7 @@ final iphone11 = Device(
   physicalSize: Size(414, 896),
   mockup: DeviceMockup(
     screenOffset: Offset(72, 68),
+    frameSize: Size(934, 1860),
     frame: _frame,
     screenShape: parseSvgPathData(_screen)..fillType = PathFillType.evenOdd,
   ),

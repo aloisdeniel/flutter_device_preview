@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'mockup.dart';
+import 'renderer.dart';
 
 class Device {
-  const Device({
+  Device({
     required this.id,
     required this.name,
     required this.pixelRatio,
@@ -26,12 +26,23 @@ class Device {
   /// The shape of the screen based on its rectangular [physicalSize].
   final DeviceMockup? mockup;
 
-  Future<DeviceMockupRenderer?> createRenderer(String key) async {
+  DeviceRenderer? _renderer;
+
+  double get totalWidth =>
+      _renderer?.drawable.viewport.width ??
+      mockup?.screenShape.getBounds().width ??
+      (physicalSize?.width ?? 0.0 * pixelRatio);
+
+  Future<DeviceRenderer?> createRenderer(String key) async {
     if (mockup == null) {
       return null;
     }
-    final svgRoot = await svg.fromSvgString(mockup!.frame, key);
-    return DeviceMockupRenderer(this, svgRoot);
+
+    if (_renderer == null) {
+      final svgRoot = await svg.fromSvgString(mockup!.frame, key);
+      _renderer = DeviceRenderer(this, svgRoot);
+    }
+    return _renderer;
   }
 }
 
@@ -42,4 +53,18 @@ class DeviceCategory {
   });
   final String name;
   final List<List<Device>> devices;
+}
+
+class DeviceMockup {
+  const DeviceMockup({
+    required this.frame,
+    required this.frameSize,
+    required this.screenShape,
+    required this.screenOffset,
+  });
+
+  final String frame;
+  final Size frameSize;
+  final Path screenShape;
+  final Offset screenOffset;
 }

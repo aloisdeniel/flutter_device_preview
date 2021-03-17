@@ -1,4 +1,4 @@
-import 'package:device_preview/src/devices/devices/android/pixel_4.dart';
+import 'package:device_preview/src/devices/devices/android/medium.dart';
 import 'package:device_preview/src/devices/devices/ios/iphone_11.dart';
 import 'package:device_preview/src/devices/devices/macos/default.dart';
 
@@ -17,7 +17,7 @@ final defaultDevices = [
     name: 'Android',
     devices: [
       [
-        pixel4,
+        medium,
       ]
     ],
   ),

@@ -256,11 +256,15 @@ class DevicePreview {
     _device = device;
     setWindowTitle(device.name);
 
+    // Render view (frame)
     PreviewWidgetsFlutterBinding.previewRenderView.device = device;
 
     // Overriding platform
     debugDefaultTargetPlatformOverride = device.platform;
 
+    // Window
+    PreviewWidgetsFlutterBinding.previewWindow.devicePixelRatio =
+        device.pixelRatio;
     _updatePadding();
     _updateSize();
 
@@ -271,12 +275,13 @@ class DevicePreview {
 
   void _updatePadding() {
     if (_device != null) {
+      final ratio = _device!.pixelRatio;
       final padding = _device!.padding[_orientation]!;
       PreviewWidgetsFlutterBinding.previewWindow.padding = PreviewWindowPadding(
-        bottom: padding.bottom,
-        top: padding.top,
-        right: padding.right,
-        left: padding.left,
+        bottom: padding.bottom * ratio,
+        top: padding.top * ratio,
+        right: padding.right * ratio,
+        left: padding.left * ratio,
       );
 
       _updateSize();
@@ -287,10 +292,6 @@ class DevicePreview {
     if (_device != null) {
       final size = _device!.physicalSize;
       if (size != null) {
-        //final info = await getWindowInfo();
-        //setWindowFrame(info.frame.topLeft & size);
-        //setWindowMinSize(size);
-        //setWindowMaxSize(size);
         final width =
             _orientation == Orientation.portrait ? size.width : size.height;
         final height =
@@ -308,5 +309,7 @@ class DevicePreview {
     } else {
       PreviewWidgetsFlutterBinding.previewWindow.physicalSize = null;
     }
+
+    PreviewWidgetsFlutterBinding.previewBinding.updatePreviewWindowSize();
   }
 }
