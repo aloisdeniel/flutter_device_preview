@@ -354,10 +354,10 @@ class _DevicePreviewState extends State<DevicePreview> {
   }
 
   @override
-  void initState() {
+  void didChangeDependencies() {
     DeviceFrame.precache(context);
     _onScreenshot = StreamController<DeviceScreenshot>.broadcast();
-    super.initState();
+    super.didChangeDependencies();
   }
 
   Widget _buildPreview(BuildContext context) {
