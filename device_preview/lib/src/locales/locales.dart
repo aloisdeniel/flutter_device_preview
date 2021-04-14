@@ -40,7 +40,7 @@ class NamedLocale {
 }
 
 Locale basicLocaleListResolution(
-    List<Locale> preferredLocales, Iterable<Locale> supportedLocales) {
+    List<Locale>? preferredLocales, Iterable<Locale> supportedLocales) {
   // preferredLocales can be null when called before the platform has had a chance to
   // initialize the locales. Platforms without locale passing support will provide an empty list.
   // We default to the first supported locale in these cases.
