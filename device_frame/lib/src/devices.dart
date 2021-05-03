@@ -142,6 +142,24 @@ class IosDevices {
     'ipad',
   );
 
+  final iPhone5_5Inch = _find(
+    TargetPlatform.iOS,
+    DeviceType.phone,
+    'iphone-5-5-inch',
+  );
+
+  final iPhone6_5Inch = _find(
+    TargetPlatform.iOS,
+    DeviceType.phone,
+    'iphone-6-5-inch',
+  );
+
+  final iPad12_9Inch = _find(
+    TargetPlatform.iOS,
+    DeviceType.tablet,
+    'ipad-12-9-inch',
+  );
+
   List<DeviceInfo> get all => [
         iPadMini,
         iPadPro129,
@@ -150,6 +168,9 @@ class IosDevices {
         iPhone11,
         iPhone11Pro,
         iPhone11ProMax,
+        iPhone5_5Inch,
+        iPhone6_5Inch,
+        iPad12_9Inch
       ];
 }
 
@@ -205,6 +226,24 @@ class AndroidDevices {
     'nexus9',
   );
 
+  final android16_9AspectRatio = _find(
+    TargetPlatform.android,
+    DeviceType.phone,
+    'android-16-9-aspect-ratio',
+  );
+
+  final android7Inch = _find(
+    TargetPlatform.android,
+    DeviceType.tablet,
+    'android-7-inch',
+  );
+
+  final android10Inch = _find(
+    TargetPlatform.android,
+    DeviceType.tablet,
+    'android-10-inch',
+  );
+
   List<DeviceInfo> get all => [
         small,
         medium,
@@ -214,6 +253,9 @@ class AndroidDevices {
         samsungS20,
         samsungNote10Plus,
         nexus9,
+        android16_9AspectRatio,
+        android7Inch,
+        android10Inch
       ];
 }
 

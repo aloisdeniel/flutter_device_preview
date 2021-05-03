@@ -2836,6 +2836,46 @@ final _allDevices = [
   DeviceInfo(
     identifier: const DeviceIdentifier._(
       TargetPlatform.android,
+      DeviceType.tablet,
+      'android-10-inch',
+    ),
+    name: 'Android Tablet 10"',
+    pixelRatio: 3.0,
+    safeAreas: EdgeInsets.only(
+      left: 0.0,
+      top: 0.0,
+      right: 0.0,
+      bottom: 0.0,
+    ),
+    rotatedSafeAreas: EdgeInsets.only(
+      left: 0.0,
+      top: 0.0,
+      right: 0.0,
+      bottom: 0.0,
+    ),
+    screenPath: Path()
+      ..addRect(
+        Rect.fromLTWH(
+          0.0,
+          0.0,
+          720.0,
+          1280.0,
+        ),
+      ),
+    svgFrame:
+        '''<svg width="720" height="1280" viewBox="0 0 720 1280" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<!-- SCREEN SHAPE -->
+	
+	<!-- DEVICE PROPERTIES -->
+	
+</svg>
+''',
+    frameSize: Size(720.0, 1280.0),
+    screenSize: Size(720.0, 1280.0),
+  ),
+  DeviceInfo(
+    identifier: const DeviceIdentifier._(
+      TargetPlatform.android,
       DeviceType.phone,
       'pixel3',
     ),
@@ -3713,6 +3753,126 @@ final _allDevices = [
 ''',
     frameSize: Size(1854.0, 2722.0),
     screenSize: Size(768.0, 1024.0),
+  ),
+  DeviceInfo(
+    identifier: const DeviceIdentifier._(
+      TargetPlatform.android,
+      DeviceType.phone,
+      'android-16-9-aspect-ratio',
+    ),
+    name: 'Android Phone 16_9',
+    pixelRatio: 3.0,
+    safeAreas: EdgeInsets.only(
+      left: 0.0,
+      top: 0.0,
+      right: 0.0,
+      bottom: 0.0,
+    ),
+    rotatedSafeAreas: EdgeInsets.only(
+      left: 0.0,
+      top: 0.0,
+      right: 0.0,
+      bottom: 0.0,
+    ),
+    screenPath: Path()
+      ..addRect(
+        Rect.fromLTWH(
+          0.0,
+          0.0,
+          414.0,
+          736.0,
+        ),
+      ),
+    svgFrame:
+        '''<svg width="414" height="736" viewBox="0 0 414 736" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<!-- SCREEN SHAPE -->
+	
+	<!-- DEVICE PROPERTIES -->
+	
+</svg>
+''',
+    frameSize: Size(414.0, 736.0),
+    screenSize: Size(414.0, 736.0),
+  ),
+  DeviceInfo(
+    identifier: const DeviceIdentifier._(
+      TargetPlatform.android,
+      DeviceType.tablet,
+      'android-7-inch',
+    ),
+    name: 'Android Tablet 7"',
+    pixelRatio: 3.0,
+    safeAreas: EdgeInsets.only(
+      left: 0.0,
+      top: 0.0,
+      right: 0.0,
+      bottom: 0.0,
+    ),
+    rotatedSafeAreas: EdgeInsets.only(
+      left: 0.0,
+      top: 0.0,
+      right: 0.0,
+      bottom: 0.0,
+    ),
+    screenPath: Path()
+      ..addRect(
+        Rect.fromLTWH(
+          0.0,
+          0.0,
+          576.0,
+          1024.0,
+        ),
+      ),
+    svgFrame:
+        '''<svg width="576" height="1024" viewBox="0 0 576 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<!-- SCREEN SHAPE -->
+	
+	<!-- DEVICE PROPERTIES -->
+	
+</svg>
+''',
+    frameSize: Size(576.0, 1024.0),
+    screenSize: Size(576.0, 1024.0),
+  ),
+  DeviceInfo(
+    identifier: const DeviceIdentifier._(
+      TargetPlatform.iOS,
+      DeviceType.phone,
+      'iphone-5-5-inch',
+    ),
+    name: 'iPhone 5.5"',
+    pixelRatio: 3.0,
+    safeAreas: EdgeInsets.only(
+      left: 0.0,
+      top: 0.0,
+      right: 0.0,
+      bottom: 0.0,
+    ),
+    rotatedSafeAreas: EdgeInsets.only(
+      left: 0.0,
+      top: 0.0,
+      right: 0.0,
+      bottom: 0.0,
+    ),
+    screenPath: Path()
+      ..addRect(
+        Rect.fromLTWH(
+          0.0,
+          0.0,
+          414.0,
+          736.0,
+        ),
+      ),
+    svgFrame:
+        '''<svg width="414" height="736" viewBox="0 0 414 736" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<!-- SCREEN SHAPE -->
+	
+	<!-- DEVICE PROPERTIES -->
+	
+</svg>
+''',
+    frameSize: Size(414.0, 736.0),
+    screenSize: Size(414.0, 736.0),
   ),
   DeviceInfo(
     identifier: const DeviceIdentifier._(
@@ -6047,6 +6207,46 @@ final _allDevices = [
   DeviceInfo(
     identifier: const DeviceIdentifier._(
       TargetPlatform.iOS,
+      DeviceType.phone,
+      'iphone-6-5-inch',
+    ),
+    name: 'iPhone 6.5"',
+    pixelRatio: 3.0,
+    safeAreas: EdgeInsets.only(
+      left: 0.0,
+      top: 0.0,
+      right: 0.0,
+      bottom: 0.0,
+    ),
+    rotatedSafeAreas: EdgeInsets.only(
+      left: 0.0,
+      top: 0.0,
+      right: 0.0,
+      bottom: 0.0,
+    ),
+    screenPath: Path()
+      ..addRect(
+        Rect.fromLTWH(
+          0.0,
+          0.0,
+          414.0,
+          896.0,
+        ),
+      ),
+    svgFrame:
+        '''<svg width="414" height="896" viewBox="0 0 414 896" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<!-- SCREEN SHAPE -->
+	
+	<!-- DEVICE PROPERTIES -->
+	
+</svg>
+''',
+    frameSize: Size(414.0, 896.0),
+    screenSize: Size(414.0, 896.0),
+  ),
+  DeviceInfo(
+    identifier: const DeviceIdentifier._(
+      TargetPlatform.iOS,
       DeviceType.tablet,
       'ipad-pro12-9',
     ),
@@ -6643,6 +6843,46 @@ final _allDevices = [
 ''',
     frameSize: Size(918.0, 1848.0),
     screenSize: Size(414.0, 896.0),
+  ),
+  DeviceInfo(
+    identifier: const DeviceIdentifier._(
+      TargetPlatform.iOS,
+      DeviceType.tablet,
+      'ipad-12-9-inch',
+    ),
+    name: 'iPad 12.9"',
+    pixelRatio: 2.0,
+    safeAreas: EdgeInsets.only(
+      left: 0.0,
+      top: 0.0,
+      right: 0.0,
+      bottom: 0.0,
+    ),
+    rotatedSafeAreas: EdgeInsets.only(
+      left: 0.0,
+      top: 0.0,
+      right: 0.0,
+      bottom: 0.0,
+    ),
+    screenPath: Path()
+      ..addRect(
+        Rect.fromLTWH(
+          0.0,
+          0.0,
+          1024.0,
+          1366.0,
+        ),
+      ),
+    svgFrame:
+        '''<svg width="1024" height="1366" viewBox="0 0 1024 1366" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<!-- SCREEN SHAPE -->
+	
+	<!-- DEVICE PROPERTIES -->
+	
+</svg>
+''',
+    frameSize: Size(1024.0, 1366.0),
+    screenSize: Size(1024.0, 1366.0),
   ),
   DeviceInfo(
     identifier: const DeviceIdentifier._(
