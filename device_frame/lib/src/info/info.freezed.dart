@@ -237,6 +237,7 @@ class __$DeviceInfoCopyWithImpl<$Res> extends _$DeviceInfoCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_DeviceInfo with DiagnosticableTreeMixin implements _DeviceInfo {
   const _$_DeviceInfo(
       {required this.identifier,

@@ -112,6 +112,7 @@ class __$DeviceFrameStyleCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_DeviceFrameStyle
     with DiagnosticableTreeMixin
     implements _DeviceFrameStyle {
@@ -315,6 +316,7 @@ class __$DeviceKeyboardStyleCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_DeviceKeyboardStyle
     with DiagnosticableTreeMixin
     implements _DeviceKeyboardStyle {

@@ -119,6 +119,7 @@ class __$NotInitializedDevicePreviewStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_NotInitializedDevicePreviewState
     with DiagnosticableTreeMixin
     implements _NotInitializedDevicePreviewState {
@@ -228,6 +229,7 @@ class __$InitializingDevicePreviewStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_InitializingDevicePreviewState
     with DiagnosticableTreeMixin
     implements _InitializingDevicePreviewState {
@@ -371,6 +373,7 @@ class __$InitializedDevicePreviewStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_InitializedDevicePreviewState
     with DiagnosticableTreeMixin
     implements _InitializedDevicePreviewState {
@@ -908,9 +911,8 @@ class __$DevicePreviewDataCopyWithImpl<$Res>
   }
 }
 
-@JsonSerializable()
-
 /// @nodoc
+@JsonSerializable()
 class _$_DevicePreviewData
     with DiagnosticableTreeMixin
     implements _DevicePreviewData {
@@ -1456,9 +1458,8 @@ class __$CustomDeviceInfoDataCopyWithImpl<$Res>
   }
 }
 
-@JsonSerializable()
-
 /// @nodoc
+@JsonSerializable()
 class _$_CustomDeviceInfoData
     with DiagnosticableTreeMixin
     implements _CustomDeviceInfoData {
@@ -1780,9 +1781,8 @@ class __$DevicePreviewSettingsDataCopyWithImpl<$Res>
   }
 }
 
-@JsonSerializable()
-
 /// @nodoc
+@JsonSerializable()
 class _$_DevicePreviewSettingsData
     with DiagnosticableTreeMixin
     implements _DevicePreviewSettingsData {

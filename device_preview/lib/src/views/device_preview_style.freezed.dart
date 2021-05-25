@@ -126,6 +126,7 @@ class __$DevicePreviewStyleCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_DevicePreviewStyle
     with DiagnosticableTreeMixin
     implements _DevicePreviewStyle {
@@ -425,6 +426,7 @@ class __$DevicePreviewToolBarStyleCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_DevicePreviewToolBarStyle
     with DiagnosticableTreeMixin
     implements _DevicePreviewToolBarStyle {
@@ -686,6 +688,7 @@ class __$DevicePreviewToolBarSpacingDataCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_DevicePreviewToolBarSpacingData
     with DiagnosticableTreeMixin
     implements _DevicePreviewToolBarSpacingData {
@@ -901,6 +904,7 @@ class __$DevicePreviewToolBarTextStyleDataCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_DevicePreviewToolBarTextStyleData
     with DiagnosticableTreeMixin
     implements _DevicePreviewToolBarTextStyleData {
@@ -1209,6 +1213,7 @@ class __$DevicePreviewButtonsVisibilityStyleDataCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_DevicePreviewButtonsVisibilityStyleData
     with DiagnosticableTreeMixin
     implements _DevicePreviewButtonsVisibilityStyleData {

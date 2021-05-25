@@ -1,3 +1,7 @@
+## [0.4.1] - 2021/05/25
+
+* Upgraded dependencies.
+
 ## [0.4.0] - 2020/11/11
 
 * Migration to null-safety.

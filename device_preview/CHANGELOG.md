@@ -1,3 +1,8 @@
+## 0.7.2
+
+* Upgraded dependencies.
+* Fixed issue on web with null empty locale list.
+
 ## 0.7.1
 
 * Fixed screenshot error.
