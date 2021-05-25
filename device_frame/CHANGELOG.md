@@ -1,3 +1,7 @@
+## [0.4.2] - 2021/05/25
+
+* Fixing missing part file.
+
 ## [0.4.1] - 2021/05/25
 
 * Upgraded dependencies.
