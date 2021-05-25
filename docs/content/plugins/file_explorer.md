@@ -4,7 +4,7 @@
 
 ## Configure
 
-Add a `ScreenshotPlugin` to your `DevicePreview`'s `plugins` property.
+Add a `FileExplorerPlugin` to your `DevicePreview`'s `plugins` property.
 
 ```dart
 import 'package:device_preview/plugins.dart';
