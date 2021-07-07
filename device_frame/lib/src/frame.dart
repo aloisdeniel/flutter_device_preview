@@ -145,29 +145,29 @@ class DeviceFrame extends StatelessWidget {
       height: isFrameVisible ? frameSize.height : bounds.height,
       child: Stack(
         children: [
-          if (isFrameVisible)
-            Positioned.fill(
-              key: Key('frame'),
-              child: SvgPicture.string(
-                device.svgFrame,
-                key: ValueKey(identifier),
-              ),
-            ),
           Positioned(
             key: Key('Screen'),
             left: isFrameVisible ? bounds.left : 0,
             top: isFrameVisible ? bounds.top : 0,
             width: bounds.width,
             height: bounds.height,
-            child: ClipPath(
-              clipper: _ScreenClipper(
-                device.screenPath,
-              ),
-              child: FittedBox(
-                child: _screen(context, device),
-              ),
+            child: FittedBox(
+              child: _screen(context, device),
             ),
           ),
+          if (isFrameVisible)
+            Positioned.fill(
+              key: Key('frame'),
+              child: ClipPath(
+                clipper: _ScreenClipper(
+                  device.screenPath,
+                ),
+                child: SvgPicture.string(
+                  device.svgFrame,
+                  key: ValueKey(identifier),
+                ),
+              ),
+            ),
         ],
       ),
     );
@@ -190,7 +190,10 @@ class _ScreenClipper extends CustomClipper<Path> {
 
   @override
   Path getClip(Size size) {
-    final path = (this.path ?? (Path()..addRect(Offset.zero & size)));
+    final rect = Path()..addRect(Offset.zero & size);
+    final path = this.path == null
+        ? rect
+        : Path.combine(PathOperation.difference, rect, this.path!);
     final bounds = path.getBounds();
     var transform = Matrix4.translationValues(-bounds.left, -bounds.top, 0);
 
