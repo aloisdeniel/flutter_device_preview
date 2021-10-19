@@ -73,7 +73,7 @@ class DeviceFrame extends StatelessWidget {
   static Future<void> precache(BuildContext context) async {
     for (var device in Devices.all) {
       await precachePicture(
-        StringPicture(SvgPicture.svgStringDecoder, device.svgFrame),
+        StringPicture(SvgPicture.svgStringDecoderBuilder, device.svgFrame),
         context,
       );
     }

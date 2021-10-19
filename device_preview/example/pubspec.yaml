@@ -20,7 +20,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter 
-  pedantic: 1.10.0
+  pedantic: ^1.11.1
 
 flutter:
   uses-material-design: true 

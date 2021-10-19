@@ -1,5 +1,5 @@
 name: device_preview
-version: 0.7.3
+version: 0.7.4
 description: Approximate how your Flutter app looks and performs on another device.
 homepage: https://github.com/aloisdeniel/flutter_device_preview
 
@@ -11,21 +11,24 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  provider: ^5.0.0
-  path_provider: ^2.0.1
-  device_frame: ^0.4.2
-  font_awesome_flutter: ^9.0.0
-  http: ^0.13.0 
-  freezed_annotation: ^0.14.2
-  json_annotation: ^4.0.1
-  shared_preferences: ^2.0.4
-  pedantic: ^1.10.0
+  provider: ^6.0.1
+  path_provider: ^2.0.5
+  device_frame:
+    git:
+      url: https://github.com/omarhuss/flutter_device_preview # <- Change the import to be back to device_frame before the PR is approved.
+      ref: update_dependencies
+  font_awesome_flutter: ^9.1.0
+  http: ^0.13.4
+  freezed_annotation: ^0.15.0
+  json_annotation: ^4.3.0
+  shared_preferences: ^2.0.8
+  pedantic: ^1.11.1
   path: ^1.8.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter 
-  build_runner: ^2.0.4
-  freezed: ^0.14.2
-  json_serializable: ^4.1.2
-  analyzer: ^1.1.0
+  build_runner: ^2.1.4
+  freezed: ^0.15.0+1
+  json_serializable: ^6.0.0
+  analyzer: ^2.6.0
