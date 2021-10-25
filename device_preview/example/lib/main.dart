@@ -28,12 +28,12 @@ void main() {
         Expanded(
           child: DevicePreview(
             enabled: true,
-            plugins: [
-              const ScreenshotPlugin(),
-              const FileExplorerPlugin(),
-              const SharedPreferencesExplorerPlugin(),
+            plugins: const [
+              ScreenshotPlugin(),
+              FileExplorerPlugin(),
+              SharedPreferencesExplorerPlugin(),
             ],
-            builder: (context) => BasicApp(),
+            builder: (context) => const BasicApp(),
           ),
         ),
       ],

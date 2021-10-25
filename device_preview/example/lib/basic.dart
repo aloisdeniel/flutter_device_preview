@@ -10,11 +10,11 @@ class BasicApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      builder: DevicePreview.appBuilder,
+      useInheritedMediaQuery: true,
       locale: DevicePreview.locale(context),
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      home: Home(),
+      home: const Home(),
     );
   }
 }

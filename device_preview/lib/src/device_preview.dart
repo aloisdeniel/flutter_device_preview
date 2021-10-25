@@ -224,50 +224,6 @@ class DevicePreview extends StatefulWidget {
     return state!.screenshot(store);
   }
 
-  /// A global builder that should be inserted into [WidgetApp]'s builder
-  /// to simulated the simulated device screen and platform properties.
-  static Widget appBuilder(
-    BuildContext context,
-    Widget? widget,
-  ) {
-    if (!_isEnabled(context)) {
-      return widget!;
-    }
-    final isEnabled = context.select(
-      (DevicePreviewStore store) => store.state.maybeMap(
-        initialized: (state) => state.data.isEnabled,
-        orElse: () => false,
-      ),
-    );
-
-    if (!isEnabled) return widget!;
-
-    final identifier = context.select(
-      (DevicePreviewStore store) => store.deviceInfo.identifier,
-    );
-
-    final isDarkMode = context.select(
-      (DevicePreviewStore store) => store.data.isDarkMode,
-    );
-
-    return MediaQuery(
-      data: _mediaQuery(context),
-      child: Theme(
-        data: Theme.of(context).copyWith(
-          platform: identifier.platform,
-          visualDensity: [
-            DeviceType.desktop,
-            DeviceType.laptop,
-          ].contains(identifier.type)
-              ? VisualDensity.compact
-              : VisualDensity.comfortable,
-          brightness: isDarkMode ? Brightness.dark : Brightness.light,
-        ),
-        child: widget!,
-      ),
-    );
-  }
-
   static MediaQueryData _mediaQuery(BuildContext context) {
     final device = context.select(
       (DevicePreviewStore store) => store.deviceInfo,
@@ -366,6 +322,15 @@ class _DevicePreviewState extends State<DevicePreview> {
   }
 
   Widget _buildPreview(BuildContext context) {
+    final isEnabled = context.select(
+      (DevicePreviewStore store) => store.state.maybeMap(
+        initialized: (state) => state.data.isEnabled,
+        orElse: () => false,
+      ),
+    );
+
+    if (!isEnabled) return widget.builder(context);
+
     final mediaQuery = MediaQuery.of(context);
     final device = context.select(
       (DevicePreviewStore store) => store.deviceInfo,

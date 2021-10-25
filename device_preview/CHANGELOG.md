@@ -1,3 +1,7 @@
+## 0.8.0
+
+* Removed `DevicePreview.appBuilder` to switch to newer `useInheritedMediaQuery` property instead.
+
 ## 0.7.5
 
 * Upgraded dependencies
