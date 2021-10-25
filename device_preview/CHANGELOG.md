@@ -1,3 +1,13 @@
+## 0.7.5
+
+* Upgraded dependencies
+* Migrated to flutter_lints
+* Removed dependency to awesome_fonts
+
+## 0.7.4
+
+* Fixing `basicLocaleListResolution` throwing `imported from multiple packages` conflict error.
+
 ## 0.7.3
 
 * Fixing missing part file.

@@ -44,4 +44,11 @@ abstract class DeviceInfo with _$DeviceInfo {
 extension DeviceInfoExtension on DeviceInfo {
   /// Indicates whether the device can rotate.
   bool get canRotate => rotatedSafeAreas != null;
+
+  /// Indicates whether the current device info should be in landscape.
+  ///
+  /// This is true only if the device can rotate.
+  bool isLandscape(Orientation orientation) {
+    return canRotate && orientation == Orientation.landscape;
+  }
 }

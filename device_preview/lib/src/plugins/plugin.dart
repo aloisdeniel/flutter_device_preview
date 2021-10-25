@@ -55,13 +55,19 @@ class DevicePreviewPlugin {
         return plugins.containsKey(identifier) ? plugins[identifier] ?? {} : {};
       },
     );
-    return buildData(context, data, (data) {
-      final store = context.read<DevicePreviewStore>();
-      store.data = store.data.copyWith(pluginData: {
-        ...store.data.pluginData,
-        identifier: data,
-      });
-    });
+    return buildData(
+      context,
+      data,
+      (data) {
+        final store = context.read<DevicePreviewStore>();
+        store.data = store.data.copyWith(
+          pluginData: {
+            ...store.data.pluginData,
+            identifier: data,
+          },
+        );
+      },
+    );
   }
 
   /// Build the window content with the given plugin's [data] and the [updateData]

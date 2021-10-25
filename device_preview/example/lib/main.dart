@@ -17,26 +17,28 @@ void main() {
 
   _createFakeData();
 
-  runApp(Row(
-    textDirection: TextDirection.ltr,
-    crossAxisAlignment: CrossAxisAlignment.stretch,
-    children: [
-      /*Expanded(
+  runApp(
+    Row(
+      textDirection: TextDirection.ltr,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        /*Expanded(
         child: Container(color: Colors.red),
       ),*/
-      Expanded(
-        child: DevicePreview(
-          enabled: true,
-          plugins: [
-            const ScreenshotPlugin(),
-            const FileExplorerPlugin(),
-            const SharedPreferencesExplorerPlugin(),
-          ],
-          builder: (context) => BasicApp(),
+        Expanded(
+          child: DevicePreview(
+            enabled: true,
+            plugins: [
+              const ScreenshotPlugin(),
+              const FileExplorerPlugin(),
+              const SharedPreferencesExplorerPlugin(),
+            ],
+            builder: (context) => BasicApp(),
+          ),
         ),
-      ),
-    ],
-  ));
+      ],
+    ),
+  );
 }
 
 Future<void> _createFakeData() async {

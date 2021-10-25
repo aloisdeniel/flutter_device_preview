@@ -7,6 +7,7 @@ class ToolBarButton extends StatefulWidget {
   final bool isRoundedBottomLeft;
   final bool isRoundedBottomRight;
   final IconData? icon;
+  final Widget? child;
   final String? title;
   final Color? backgroundColor;
   final Color? foregroundColor;
@@ -24,6 +25,7 @@ class ToolBarButton extends StatefulWidget {
     Key? key,
     this.title,
     this.icon,
+    this.child,
     this.backgroundColor,
     this.foregroundColor,
     bool isRounded = false,
@@ -50,7 +52,6 @@ class ToolBarButton extends StatefulWidget {
             isRoundedRight ||
             isRoundedBottom ||
             isRoundedBottomRight,
-        assert(autofocus != null),
         super(key: key);
 
   @override
@@ -64,18 +65,18 @@ class _ToolBarButtonState extends State<ToolBarButton> {
 
   BoxDecoration decoration(DevicePreviewToolBarStyle style) {
     return BoxDecoration(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(widget.isRoundedBottomLeft ? 22.0 : 2.0),
-          topLeft: Radius.circular(widget.isRoundedTopLeft ? 22.0 : 2.0),
-          bottomRight:
-              Radius.circular(widget.isRoundedBottomRight ? 22.0 : 2.0),
-          topRight: Radius.circular(widget.isRoundedTopRight ? 22.0 : 2.0),
-        ),
-        color: widget.onTap != null && (isActive || isHover)
-            ? (widget.backgroundColor?.withOpacity(0.4) ??
-                (style.foregroundColor.withOpacity(0.4)))
-            : (widget.backgroundColor ??
-                (style.foregroundColor.withOpacity(0.2))));
+      borderRadius: BorderRadius.only(
+        bottomLeft: Radius.circular(widget.isRoundedBottomLeft ? 22.0 : 2.0),
+        topLeft: Radius.circular(widget.isRoundedTopLeft ? 22.0 : 2.0),
+        bottomRight: Radius.circular(widget.isRoundedBottomRight ? 22.0 : 2.0),
+        topRight: Radius.circular(widget.isRoundedTopRight ? 22.0 : 2.0),
+      ),
+      color: widget.onTap != null && (isActive || isHover)
+          ? (widget.backgroundColor?.withOpacity(0.4) ??
+              (style.foregroundColor.withOpacity(0.4)))
+          : (widget.backgroundColor ??
+              (style.foregroundColor.withOpacity(0.2))),
+    );
   }
 
   IconThemeData iconTheme(DevicePreviewToolBarStyle style) {
@@ -91,6 +92,7 @@ class _ToolBarButtonState extends State<ToolBarButton> {
       );
 
   Widget _content(BuildContext context, bool expanded) {
+    if (widget.child != null) return widget.child!;
     if (widget.icon == null && widget.title != null) return Text(widget.title!);
     if (widget.icon != null && widget.title == null) return Icon(widget.icon);
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;

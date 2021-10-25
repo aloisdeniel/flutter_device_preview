@@ -6,6 +6,7 @@ import 'package:device_frame/device_frame.dart';
 import 'package:device_preview/src/views/tool_bar/menus/accessibility.dart';
 import 'package:device_preview/src/views/tool_bar/menus/style.dart';
 import 'package:device_preview/src/views/widgets/popover.dart';
+import 'package:device_preview/src/views/widgets/target_platform_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,10 @@ import '../../../utilities/spacing.dart';
 import '../format.dart';
 
 class DevicesPopOver extends StatefulWidget {
+  const DevicesPopOver({
+    Key? key,
+  }) : super(key: key);
+
   @override
   _DevicesPopOverState createState() => _DevicesPopOverState();
 }
@@ -43,16 +48,20 @@ class _DevicesPopOverState extends State<DevicesPopOver> {
 
     final devices = context.select(
       (DevicePreviewStore store) => store.devices
-          .where((x) =>
-              selected.contains(x.identifier.platform) &&
-              x.name.replaceAll(' ', '').toLowerCase().contains(_searchedText))
+          .where(
+            (x) =>
+                selected.contains(x.identifier.platform) &&
+                x.name.replaceAll(' ', '').toLowerCase().contains(
+                      _searchedText,
+                    ),
+          )
           .toList()
-            ..sort((x, y) {
-              final result = x.screenSize.width.compareTo(y.screenSize.width);
-              return result == 0
-                  ? x.screenSize.height.compareTo(y.screenSize.height)
-                  : result;
-            }),
+        ..sort((x, y) {
+          final result = x.screenSize.width.compareTo(y.screenSize.width);
+          return result == 0
+              ? x.screenSize.height.compareTo(y.screenSize.height)
+              : result;
+        }),
     );
 
     final theme = DevicePreviewTheme.of(context);
@@ -84,7 +93,7 @@ class _DevicesPopOverState extends State<DevicesPopOver> {
           ),
           Expanded(
             child: isCustomDevice
-                ? CustomDevicePanel()
+                ? const CustomDevicePanel()
                 : ListView(
                     padding: theme.toolBar.spacing.regular,
                     children: devices
@@ -113,11 +122,12 @@ class PlatformSelector extends StatelessWidget {
   final VoidCallback onCustomDeviceEnabled;
 
   const PlatformSelector({
+    Key? key,
     required this.all,
     required this.selected,
     required this.onChanged,
     required this.onCustomDeviceEnabled,
-  });
+  }) : super(key: key);
 
   List<TargetPlatform> _orderPlatforms() {
     int getIndex(TargetPlatform d) {
@@ -131,7 +141,6 @@ class PlatformSelector extends StatelessWidget {
       return index == -1 ? 1000 : index;
     }
 
-    ;
     return all.toList()..sort((x, y) => getIndex(x).compareTo(getIndex(y)));
   }
 
@@ -147,47 +156,51 @@ class PlatformSelector extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10),
       color: toolBarStyle.backgroundColor,
-      child: Row(
-        children: [
-          ..._orderPlatforms().map<Widget>(
-            (x) {
-              final isSelected = selected.contains(x);
-              return ToolBarButton(
-                backgroundColor: toolBarStyle.foregroundColor
-                    .withOpacity(isSelected ? 0.4 : 0.1),
-                foregroundColor: toolBarStyle.foregroundColor
-                    .withOpacity(isSelected ? 1.0 : 0.8),
-                icon: x.platformIcon(),
-                onTap: () {
-                  onChanged([x]);
-                },
-              );
-            },
-          ).spaced(horizontal: 8),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 6),
-            decoration: BoxDecoration(
-              color: theme.accentTextTheme.button!.color!.withOpacity(0.4),
-              borderRadius: BorderRadius.circular(3),
+      child: SizedBox(
+        height: 36,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: [
+            ..._orderPlatforms().map<Widget>(
+              (x) {
+                final isSelected = selected.contains(x);
+                return ToolBarButton(
+                  backgroundColor: toolBarStyle.foregroundColor
+                      .withOpacity(isSelected ? 0.4 : 0.1),
+                  foregroundColor: toolBarStyle.foregroundColor
+                      .withOpacity(isSelected ? 1.0 : 0.8),
+                  child: TargetPlatformIcon(platform: x),
+                  onTap: () {
+                    onChanged([x]);
+                  },
+                );
+              },
+            ).spaced(horizontal: 8),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 6),
+              decoration: BoxDecoration(
+                color: theme.textTheme.button!.color!.withOpacity(0.4),
+                borderRadius: BorderRadius.circular(3),
+              ),
+              width: 2,
+              height: 2,
             ),
-            width: 2,
-            height: 2,
-          ),
-          ToolBarButton(
-            backgroundColor: toolBarStyle.foregroundColor
-                .withOpacity(isCustomSelected ? 0.4 : 0.1),
-            foregroundColor: toolBarStyle.foregroundColor
-                .withOpacity(isCustomSelected ? 1.0 : 0.8),
-            icon: Icons.phonelink_setup_outlined,
-            onTap: () {
-              if (!isCustomSelected) {
-                final state = context.read<DevicePreviewStore>();
-                state.enableCustomDevice();
-              }
-              onCustomDeviceEnabled();
-            },
-          ),
-        ],
+            ToolBarButton(
+              backgroundColor: toolBarStyle.foregroundColor
+                  .withOpacity(isCustomSelected ? 0.4 : 0.1),
+              foregroundColor: toolBarStyle.foregroundColor
+                  .withOpacity(isCustomSelected ? 1.0 : 0.8),
+              icon: Icons.phonelink_setup_outlined,
+              onTap: () {
+                if (!isCustomSelected) {
+                  final state = context.read<DevicePreviewStore>();
+                  state.enableCustomDevice();
+                }
+                onCustomDeviceEnabled();
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -207,7 +220,7 @@ class CustomDevicePanel extends StatelessWidget {
     return ListView(
       padding: EdgeInsets.zero,
       children: [
-        WrapOptionsTile(
+        const WrapOptionsTile(
           title: 'Target platform',
           options: <Widget>[
             PlatformSelectBox(
@@ -227,7 +240,7 @@ class CustomDevicePanel extends StatelessWidget {
             ),
           ],
         ),
-        WrapOptionsTile(
+        const WrapOptionsTile(
           title: 'Device type',
           options: <Widget>[
             DeviceTypeSelectBox(
@@ -244,7 +257,7 @@ class CustomDevicePanel extends StatelessWidget {
             ),
           ],
         ),
-        SectionHeader(
+        const SectionHeader(
           title: 'Screen size',
         ),
         if (customDevice != null)
@@ -253,9 +266,11 @@ class CustomDevicePanel extends StatelessWidget {
             value: customDevice.screenSize.width,
             onValueChanged: (v) {
               final store = context.read<DevicePreviewStore>();
-              store.updateCustomDevice(customDevice.copyWith(
-                screenSize: Size(v, customDevice.screenSize.height),
-              ));
+              store.updateCustomDevice(
+                customDevice.copyWith(
+                  screenSize: Size(v, customDevice.screenSize.height),
+                ),
+              );
             },
             min: 128,
             max: 2688,
@@ -280,7 +295,7 @@ class CustomDevicePanel extends StatelessWidget {
             max: 2688,
             divisions: 20,
           ),
-        SectionHeader(
+        const SectionHeader(
           title: 'Safe areas',
         ),
         if (customDevice != null)
@@ -372,8 +387,9 @@ class DeviceTile extends StatelessWidget {
 
   const DeviceTile(
     this.device,
-    this.onTap,
-  );
+    this.onTap, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -398,7 +414,7 @@ class DeviceTile extends StatelessWidget {
           ),
           child: Row(
             children: <Widget>[
-              Container(
+              SizedBox(
                 width: 12,
                 child: Icon(
                   device.identifier.typeIcon(),
@@ -406,7 +422,7 @@ class DeviceTile extends StatelessWidget {
                   color: toolBarStyle.foregroundColor,
                 ),
               ),
-              SizedBox(width: 12),
+              const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -493,10 +509,13 @@ class PlatformSelectBox extends StatelessWidget {
           ),
         );
       },
-      child: Icon(
-        platform.platformIcon(),
-        color: toolBarStyle.foregroundColor,
-        size: 11,
+      child: SizedBox(
+        width: 11,
+        height: 11,
+        child: TargetPlatformIcon(
+          platform: platform,
+          color: toolBarStyle.foregroundColor,
+        ),
       ),
     );
   }
@@ -506,8 +525,9 @@ class SectionHeader extends StatelessWidget {
   final String title;
 
   const SectionHeader({
+    Key? key,
     required this.title,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -538,13 +558,14 @@ class SliderRowTile extends StatelessWidget {
   final ValueChanged<double> onValueChanged;
 
   const SliderRowTile({
+    Key? key,
     required this.title,
     required this.min,
     required this.max,
     required this.divisions,
     required this.value,
     required this.onValueChanged,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -577,7 +598,7 @@ class SliderRowTile extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
                 Expanded(
                   child: PopoverSlider(
                     divisions: divisions, // 11,

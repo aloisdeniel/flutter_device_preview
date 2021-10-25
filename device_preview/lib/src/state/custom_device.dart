@@ -38,7 +38,7 @@ class CustomDeviceInfo implements DeviceInfo {
             data.screenSize.width,
             data.screenSize.height,
           ),
-          Radius.circular(10),
+          const Radius.circular(10),
         ),
       );
 

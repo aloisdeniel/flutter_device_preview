@@ -1,13 +1,15 @@
-include: package:pedantic/analysis_options.yaml
+include: package:flutter_lints/flutter.yaml
 
 analyzer:
   errors:
     missing_required_param: error
     missing_return: error
+    always_declare_return_types: error
+
   exclude:
-    - "**/*.g.dart"
-    - "**/*.freezed.dart"
+    - lib/**/*.g.dart
+    - lib/**/*.freezed.dart
 
 linter:
   rules:
-   - prefer_int_literals
+    - require_trailing_commas

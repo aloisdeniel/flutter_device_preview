@@ -8,7 +8,10 @@ import 'package:provider/provider.dart';
 class StylePopOver extends StatelessWidget {
   final GestureTapCallback close;
 
-  StylePopOver(this.close);
+  const StylePopOver(
+    this.close, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,8 @@ class StylePopOver extends StatelessWidget {
                 onTap: () {
                   final store = context.read<DevicePreviewStore>();
                   store.settings = store.settings.copyWith(
-                      backgroundTheme: DevicePreviewBackgroundThemeData.light);
+                    backgroundTheme: DevicePreviewBackgroundThemeData.light,
+                  );
                 },
                 child: Container(
                   decoration: lightBackground.background,
@@ -47,7 +51,8 @@ class StylePopOver extends StatelessWidget {
                 onTap: () {
                   final store = context.read<DevicePreviewStore>();
                   store.settings = store.settings.copyWith(
-                      backgroundTheme: DevicePreviewBackgroundThemeData.dark);
+                    backgroundTheme: DevicePreviewBackgroundThemeData.dark,
+                  );
                 },
                 child: Container(
                   decoration: darkBackground.background,
@@ -67,7 +72,8 @@ class StylePopOver extends StatelessWidget {
                 onTap: () {
                   final store = context.read<DevicePreviewStore>();
                   store.settings = store.settings.copyWith(
-                      toolbarTheme: DevicePreviewToolBarThemeData.light);
+                    toolbarTheme: DevicePreviewToolBarThemeData.light,
+                  );
                 },
                 child: Container(
                   decoration: lightBackground.background,
@@ -82,7 +88,8 @@ class StylePopOver extends StatelessWidget {
                 onTap: () {
                   final store = context.read<DevicePreviewStore>();
                   store.settings = store.settings.copyWith(
-                      toolbarTheme: DevicePreviewToolBarThemeData.dark);
+                    toolbarTheme: DevicePreviewToolBarThemeData.dark,
+                  );
                 },
                 child: Container(
                   decoration: darkBackground.background,
@@ -95,7 +102,9 @@ class StylePopOver extends StatelessWidget {
           title: 'Toolbar position',
           options: <Widget>[
             if (DevicePreviewTheme.isPositionAvailableForWidth(
-                DevicePreviewToolBarPosition.left, media.size.width))
+              DevicePreviewToolBarPosition.left,
+              media.size.width,
+            ))
               Selector(
                 selector: (context, DevicePreviewStore store) =>
                     store.settings.toolbarPosition,
@@ -105,7 +114,8 @@ class StylePopOver extends StatelessWidget {
                   onTap: () {
                     final store = context.read<DevicePreviewStore>();
                     store.settings = store.settings.copyWith(
-                        toolbarPosition: DevicePreviewToolBarPositionData.left);
+                      toolbarPosition: DevicePreviewToolBarPositionData.left,
+                    );
                   },
                   child: Icon(
                     Icons.border_left,
@@ -115,7 +125,9 @@ class StylePopOver extends StatelessWidget {
                 ),
               ),
             if (DevicePreviewTheme.isPositionAvailableForWidth(
-                DevicePreviewToolBarPosition.top, media.size.width))
+              DevicePreviewToolBarPosition.top,
+              media.size.width,
+            ))
               Selector(
                 selector: (context, DevicePreviewStore store) =>
                     store.settings.toolbarPosition,
@@ -125,7 +137,8 @@ class StylePopOver extends StatelessWidget {
                   onTap: () {
                     final store = context.read<DevicePreviewStore>();
                     store.settings = store.settings.copyWith(
-                        toolbarPosition: DevicePreviewToolBarPositionData.top);
+                      toolbarPosition: DevicePreviewToolBarPositionData.top,
+                    );
                   },
                   child: Icon(
                     Icons.border_top,
@@ -135,7 +148,9 @@ class StylePopOver extends StatelessWidget {
                 ),
               ),
             if (DevicePreviewTheme.isPositionAvailableForWidth(
-                DevicePreviewToolBarPosition.right, media.size.width))
+              DevicePreviewToolBarPosition.right,
+              media.size.width,
+            ))
               Selector(
                 selector: (context, DevicePreviewStore store) =>
                     store.settings.toolbarPosition,
@@ -145,8 +160,8 @@ class StylePopOver extends StatelessWidget {
                   onTap: () {
                     final store = context.read<DevicePreviewStore>();
                     store.settings = store.settings.copyWith(
-                        toolbarPosition:
-                            DevicePreviewToolBarPositionData.right);
+                      toolbarPosition: DevicePreviewToolBarPositionData.right,
+                    );
                   },
                   child: Icon(
                     Icons.border_right,
@@ -156,7 +171,9 @@ class StylePopOver extends StatelessWidget {
                 ),
               ),
             if (DevicePreviewTheme.isPositionAvailableForWidth(
-                DevicePreviewToolBarPosition.bottom, media.size.width))
+              DevicePreviewToolBarPosition.bottom,
+              media.size.width,
+            ))
               Selector(
                 selector: (context, DevicePreviewStore store) =>
                     store.settings.toolbarPosition,
@@ -166,8 +183,8 @@ class StylePopOver extends StatelessWidget {
                   onTap: () {
                     final store = context.read<DevicePreviewStore>();
                     store.settings = store.settings.copyWith(
-                        toolbarPosition:
-                            DevicePreviewToolBarPositionData.bottom);
+                      toolbarPosition: DevicePreviewToolBarPositionData.bottom,
+                    );
                   },
                   child: Icon(
                     Icons.border_bottom,
@@ -187,10 +204,11 @@ class WrapOptionsTile extends StatelessWidget {
   final String title;
   final List<Widget> options;
 
-  WrapOptionsTile({
+  const WrapOptionsTile({
+    Key? key,
     required this.title,
     required this.options,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -209,7 +227,7 @@ class WrapOptionsTile extends StatelessWidget {
               color: toolBarStyle.foregroundColor,
             ),
           ),
-          SizedBox(height: 6),
+          const SizedBox(height: 6),
           Wrap(
             spacing: toolBarStyle.spacing.regular.top,
             runSpacing: toolBarStyle.spacing.regular.top,
@@ -227,10 +245,11 @@ class SelectBox extends StatelessWidget {
   final Widget child;
 
   const SelectBox({
+    Key? key,
     required this.isSelected,
     required this.onTap,
     required this.child,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -239,7 +258,7 @@ class SelectBox extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 100),
-        padding: EdgeInsets.all(2),
+        padding: const EdgeInsets.all(2),
         decoration: BoxDecoration(
           border: Border.all(
             color: toolBarStyle.foregroundColor.withOpacity(
@@ -247,7 +266,7 @@ class SelectBox extends StatelessWidget {
             ),
           ),
           borderRadius: BorderRadius.circular(2),
-          color: Theme.of(context).accentColor.withOpacity(
+          color: Theme.of(context).primaryColor.withOpacity(
                 isSelected ? 1 : 0.0,
               ),
         ),

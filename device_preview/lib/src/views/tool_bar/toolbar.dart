@@ -64,7 +64,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewToolBar> {
       title: 'Devices',
       parentBounds: widget.overlayPosition,
       icon: Icons.devices,
-      builder: (context, _) => DevicesPopOver(),
+      builder: (context, _) => const DevicesPopOver(),
       child: Builder(
         builder: (context) => Selector(
           selector: (context, DevicePreviewStore store) =>
@@ -144,7 +144,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewToolBar> {
             ],
             if (isEnabled)
               ...[
-                SizedBox(
+                const SizedBox(
                   width: 4,
                 ),
                 if (toolBarStyle.buttonsVisibility.device) deviceButton,
@@ -155,7 +155,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewToolBar> {
                     builder: (context, locale, _) => Popover(
                       title: 'Locales',
                       icon: Icons.language,
-                      builder: (context, _) => LocalesPopOver(),
+                      builder: (context, _) => const LocalesPopOver(),
                       parentBounds: widget.overlayPosition,
                       child: Builder(
                         builder: (context) => ToolBarButton(
@@ -226,9 +226,9 @@ class _DevicePreviewToolBarState extends State<DevicePreviewToolBar> {
                   Popover(
                     title: 'Accessibility',
                     parentBounds: widget.overlayPosition,
-                    size: Size(280, 300),
+                    size: const Size(280, 300),
                     icon: Icons.accessibility_new,
-                    builder: (context, _) => AccessibilityPopOver(),
+                    builder: (context, _) => const AccessibilityPopOver(),
                     child: Builder(
                       builder: (context) => ToolBarButton(
                         title: 'Accessibility',
@@ -258,7 +258,7 @@ class _DevicePreviewToolBarState extends State<DevicePreviewToolBar> {
                   Popover(
                     title: 'Settings',
                     parentBounds: widget.overlayPosition,
-                    size: Size(280, 260),
+                    size: const Size(280, 260),
                     icon: Icons.tune,
                     builder: (context, close) => StylePopOver(close),
                     child: Builder(

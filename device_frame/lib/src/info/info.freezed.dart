@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'info.dart';
 
@@ -312,47 +313,39 @@ class _$_DeviceInfo with DiagnosticableTreeMixin implements _DeviceInfo {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _DeviceInfo &&
+        (other.runtimeType == runtimeType &&
+            other is _DeviceInfo &&
             (identical(other.identifier, identifier) ||
-                const DeepCollectionEquality()
-                    .equals(other.identifier, identifier)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
+                other.identifier == identifier) &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.rotatedSafeAreas, rotatedSafeAreas) ||
-                const DeepCollectionEquality()
-                    .equals(other.rotatedSafeAreas, rotatedSafeAreas)) &&
+                other.rotatedSafeAreas == rotatedSafeAreas) &&
             (identical(other.safeAreas, safeAreas) ||
-                const DeepCollectionEquality()
-                    .equals(other.safeAreas, safeAreas)) &&
+                other.safeAreas == safeAreas) &&
             (identical(other.screenPath, screenPath) ||
-                const DeepCollectionEquality()
-                    .equals(other.screenPath, screenPath)) &&
+                other.screenPath == screenPath) &&
             (identical(other.pixelRatio, pixelRatio) ||
-                const DeepCollectionEquality()
-                    .equals(other.pixelRatio, pixelRatio)) &&
+                other.pixelRatio == pixelRatio) &&
             (identical(other.svgFrame, svgFrame) ||
-                const DeepCollectionEquality()
-                    .equals(other.svgFrame, svgFrame)) &&
+                other.svgFrame == svgFrame) &&
             (identical(other.frameSize, frameSize) ||
-                const DeepCollectionEquality()
-                    .equals(other.frameSize, frameSize)) &&
+                other.frameSize == frameSize) &&
             (identical(other.screenSize, screenSize) ||
-                const DeepCollectionEquality()
-                    .equals(other.screenSize, screenSize)));
+                other.screenSize == screenSize));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(identifier) ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(rotatedSafeAreas) ^
-      const DeepCollectionEquality().hash(safeAreas) ^
-      const DeepCollectionEquality().hash(screenPath) ^
-      const DeepCollectionEquality().hash(pixelRatio) ^
-      const DeepCollectionEquality().hash(svgFrame) ^
-      const DeepCollectionEquality().hash(frameSize) ^
-      const DeepCollectionEquality().hash(screenSize);
+  int get hashCode => Object.hash(
+      runtimeType,
+      identifier,
+      name,
+      rotatedSafeAreas,
+      safeAreas,
+      screenPath,
+      pixelRatio,
+      svgFrame,
+      frameSize,
+      screenSize);
 
   @JsonKey(ignore: true)
   @override
@@ -375,39 +368,39 @@ abstract class _DeviceInfo implements DeviceInfo {
   @override
 
   /// Identifier of the device.
-  DeviceIdentifier get identifier => throw _privateConstructorUsedError;
+  DeviceIdentifier get identifier;
   @override
 
   /// The display name of the device.
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
 
   /// The safe areas when the device is in landscape orientation.
-  EdgeInsets? get rotatedSafeAreas => throw _privateConstructorUsedError;
+  EdgeInsets? get rotatedSafeAreas;
   @override
 
   /// The safe areas when the device is in portrait orientation.
-  EdgeInsets get safeAreas => throw _privateConstructorUsedError;
+  EdgeInsets get safeAreas;
   @override
 
   /// A shape representing the screen.
-  Path get screenPath => throw _privateConstructorUsedError;
+  Path get screenPath;
   @override
 
   /// The screen pixel density of the device.
-  double get pixelRatio => throw _privateConstructorUsedError;
+  double get pixelRatio;
   @override
 
   /// The safe areas when the device is in portrait orientation.
-  String get svgFrame => throw _privateConstructorUsedError;
+  String get svgFrame;
   @override
 
   /// The frame size in pixels.
-  Size get frameSize => throw _privateConstructorUsedError;
+  Size get frameSize;
   @override
 
   /// The size in points of the screen content.
-  Size get screenSize => throw _privateConstructorUsedError;
+  Size get screenSize;
   @override
   @JsonKey(ignore: true)
   _$DeviceInfoCopyWith<_DeviceInfo> get copyWith =>

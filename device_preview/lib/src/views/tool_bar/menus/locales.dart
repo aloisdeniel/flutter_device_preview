@@ -7,6 +7,8 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class LocalesPopOver extends StatefulWidget {
+  const LocalesPopOver({Key? key}) : super(key: key);
+
   @override
   _LocalesPopOverState createState() => _LocalesPopOverState();
 }
@@ -48,7 +50,10 @@ class _LocalesPopOverState extends State<LocalesPopOver> {
 class LocaleTile extends StatelessWidget {
   final NamedLocale locale;
 
-  const LocaleTile(this.locale);
+  const LocaleTile(
+    this.locale, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +82,9 @@ class LocaleTile extends StatelessWidget {
               Text(
                 locale.name,
                 style: TextStyle(
-                    fontSize: 12, color: toolBarStyle.foregroundColor),
+                  fontSize: 12,
+                  color: toolBarStyle.foregroundColor,
+                ),
               ),
               Text(
                 locale.code,

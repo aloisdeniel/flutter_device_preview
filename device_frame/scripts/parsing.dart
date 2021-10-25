@@ -101,7 +101,14 @@ DeviceIdentifier parseIdentifier(String fileName) {
 
 /// Parse an [ScreenPadding] where [text] is in the form `<left>,<top>,<right>,<bottom>`.
 ScreenPadding parseInsets(String? text) {
-  if (text == null) return ScreenPadding(left: 0, top: 0, bottom: 0, right: 0);
+  if (text == null) {
+    return const ScreenPadding(
+      left: 0,
+      top: 0,
+      bottom: 0,
+      right: 0,
+    );
+  }
 
   final splits = text.split(',').map((e) => double.parse(e.trim())).toList();
 
@@ -120,7 +127,7 @@ ScreenPadding parseInsets(String? text) {
 
 /// Parse a [ScreenSize] where [text] is in the form `<width>x<height>`.
 Size parseScreenSize(String? text) {
-  if (text == null) return Size(width: 0, height: 0);
+  if (text == null) return const Size(width: 0, height: 0);
   final splits = text.split('x').map((e) => double.parse(e.trim())).toList();
   final width = splits.isEmpty ? 0 : splits.first;
   return Size(

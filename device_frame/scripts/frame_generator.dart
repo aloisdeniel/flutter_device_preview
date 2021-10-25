@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 
 import 'package:path/path.dart' as path;
@@ -9,23 +11,44 @@ import 'parsing.dart';
 /// and generate a dart class.
 Future<void> main() async {
   final scriptDirectory = path.dirname(
-      path.dirname(Platform.script.toString().replaceAll('file://', '')));
-  final assetsDirectory = Directory(path.join(scriptDirectory, 'assets'));
+    path.dirname(
+      Platform.script.toString().replaceAll(
+            'file://',
+            '',
+          ),
+    ),
+  );
+  final assetsDirectory = Directory(
+    path.join(
+      scriptDirectory,
+      'assets',
+    ),
+  );
+  print('Analyzing SVG files in $assetsDirectory directory ...');
   final files = await assetsDirectory.list().toList();
   final deviceInfos = <String>[];
-  for (var file in files.where((x) => path.extension(x.path) == '.svg')) {
+  for (var file in files.where(
+    (x) => path.extension(x.path) == '.svg',
+  )) {
     final content = await File(file.path).readAsString();
     final name = path.basenameWithoutExtension(file.path);
     final deviceInfo = _generateDeviceInfo(name, content);
     deviceInfos.add(deviceInfo);
   }
 
-  final outputFile = File(path.join(scriptDirectory, 'lib/src/devices.g.dart'));
-  await outputFile.writeAsString('''
+  final outputFile = File(
+    path.join(
+      scriptDirectory,
+      'lib/src/devices.g.dart',
+    ),
+  );
+  await outputFile.writeAsString(
+    '''
 part of 'devices.dart';
 
 final _allDevices = [${deviceInfos.join(',')}];
-  ''');
+  ''',
+  );
 
   await Process.run('flutter', ['dartfmt', outputFile.path]);
 }
@@ -95,7 +118,7 @@ String _generateDeviceInfo(
 
   return '''DeviceInfo(
     identifier: ${_formatIdentifier(info.identifier)},
-    name: \'${info.name}\',
+    name: '${info.name}',
     pixelRatio: ${info.pixelRatio},
     safeAreas: ${info.safeAreas.isEmpty ? 'EdgeInsets.zero' : _formatEdgeInsets(info.safeAreas.first)},
     rotatedSafeAreas: ${info.safeAreas.length < 2 ? null : _formatEdgeInsets(info.safeAreas[1])},
@@ -108,7 +131,7 @@ String _generateDeviceInfo(
 
 String _formatIdentifier(DeviceIdentifier identifier) {
   return '''
-  const DeviceIdentifier._(TargetPlatform.${identifier.platform}, DeviceType.${identifier.type}, \'${identifier.name}\',)
+  const DeviceIdentifier._(TargetPlatform.${identifier.platform}, DeviceType.${identifier.type}, '${identifier.name}',)
   ''';
 }
 

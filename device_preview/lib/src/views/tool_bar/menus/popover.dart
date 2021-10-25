@@ -9,7 +9,9 @@ import 'package:flutter/widgets.dart';
 import '../../../utilities/position.dart';
 
 typedef PopoverContentBuilder = Widget Function(
-    BuildContext context, GestureTapCallback onClose);
+  BuildContext context,
+  GestureTapCallback onClose,
+);
 
 class Popover extends StatefulWidget {
   final Widget child;
@@ -67,7 +69,7 @@ class _PopoverState extends State<Popover> {
           child: _PopOverContainer(
             title: widget.title,
             icon: widget.icon,
-            size: widget.size ?? Size(280, 420),
+            size: widget.size ?? const Size(280, 420),
             startPosition:
                 startPosition & (_key.absolutePosition?.size ?? Size.zero),
             parentBounds: widget.parentBounds,
@@ -110,7 +112,7 @@ class _PopOverContainer extends StatefulWidget {
   final IconData icon;
   final Rect parentBounds;
 
-  _PopOverContainer({
+  const _PopOverContainer({
     required this.title,
     required this.icon,
     required this.child,
@@ -155,7 +157,7 @@ class __PopOverContainerState extends State<_PopOverContainer>
 
   @override
   Widget build(BuildContext context) {
-    final duration = const Duration(milliseconds: 80);
+    const duration = Duration(milliseconds: 80);
     final previewTheme = DevicePreviewTheme.of(context);
     final toolBarStyle = previewTheme.toolBar;
     final media = MediaQuery.of(context);
@@ -215,8 +217,10 @@ class __PopOverContainerState extends State<_PopOverContainer>
     }
 
     if (bounds.bottom > parentBounds.height - media.padding.bottom) {
-      bounds = Offset(bounds.left,
-              parentBounds.height - media.padding.bottom - bounds.size.height) &
+      bounds = Offset(
+            bounds.left,
+            parentBounds.height - media.padding.bottom - bounds.size.height,
+          ) &
           bounds.size;
     }
     if (bounds.top < media.padding.top) {
@@ -230,7 +234,8 @@ class __PopOverContainerState extends State<_PopOverContainer>
           GestureDetector(
             onPanUpdate: (u) {
               setState(
-                  () => _translate = (_translate ?? Offset.zero) + u.delta);
+                () => _translate = (_translate ?? Offset.zero) + u.delta,
+              );
             },
             child: _PopOverHeader(
               title: widget.title,
@@ -267,7 +272,7 @@ class __PopOverContainerState extends State<_PopOverContainer>
           removeBottom: true,
           child: Theme(
             data: ThemeData.dark().copyWith(
-              accentColor: previewTheme.toolBar.buttonHoverBackgroundColor,
+              primaryColor: previewTheme.toolBar.buttonHoverBackgroundColor,
             ),
             child: AnimatedContainer(
               duration: duration,
@@ -302,7 +307,10 @@ class __PopOverContainerState extends State<_PopOverContainer>
 class _PopOverBarrier extends StatelessWidget {
   final GestureTapCallback onTap;
 
-  _PopOverBarrier(this.onTap);
+  const _PopOverBarrier(
+    this.onTap, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -319,10 +327,11 @@ class _PopOverHeader extends StatelessWidget {
   final String title;
   final IconData icon;
 
-  _PopOverHeader({
+  const _PopOverHeader({
+    Key? key,
     required this.title,
     required this.icon,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -330,7 +339,7 @@ class _PopOverHeader extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: toolBarStyle.backgroundColor,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(6),
           topRight: Radius.circular(6),
         ),
@@ -343,7 +352,7 @@ class _PopOverHeader extends StatelessWidget {
             size: 12,
             color: toolBarStyle.foregroundColor,
           ),
-          SizedBox(
+          const SizedBox(
             width: 6,
           ),
           Text(

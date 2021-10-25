@@ -21,7 +21,10 @@ class SharedPreferencesExplorerPlugin extends DevicePreviewPlugin {
 
   @override
   Widget buildData(
-      BuildContext context, Map<String, dynamic> data, updateData) {
+    BuildContext context,
+    Map<String, dynamic> data,
+    updateData,
+  ) {
     const selectedKey = 'selected_key';
     return Material(
       color: Colors.transparent,
@@ -72,7 +75,7 @@ class _AllPreferencesViewState extends State<_AllPreferencesView> {
         await Navigator.push(
           context,
           PopoverPageRoute(
-            settings: RouteSettings(),
+            settings: const RouteSettings(),
             builder: (context) => _PreferencesDetailBody(
               preferenceKey: widget.selected!,
               content: name,
@@ -87,13 +90,13 @@ class _AllPreferencesViewState extends State<_AllPreferencesView> {
   @override
   Widget build(BuildContext context) {
     if (preferences == null) {
-      return SizedBox();
+      return const SizedBox();
     }
     final keys = preferences!.getKeys().toList()
       ..sort((x, y) => x.compareTo(y));
 
     if (keys.isEmpty) {
-      return _Empty();
+      return const _Empty();
     }
 
     return _PreferencesListBody(
@@ -104,7 +107,7 @@ class _AllPreferencesViewState extends State<_AllPreferencesView> {
           await Navigator.push(
             context,
             PopoverPageRoute(
-              settings: RouteSettings(),
+              settings: const RouteSettings(),
               builder: (context) => _PreferencesDetailBody(
                 preferenceKey: key,
                 content: name,
@@ -127,7 +130,7 @@ class _Empty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text('No shared preference'),
     );
   }
@@ -148,7 +151,7 @@ class _PreferenceTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopoverTile(
       onTap: onTap,
-      leading: Icon(Icons.note),
+      leading: const Icon(Icons.note),
       title: Text(
         preferenceKey,
         maxLines: 1,
@@ -174,7 +177,7 @@ class _PreferencesListBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopoverScaffold(
-      title: PopoverBar(
+      title: const PopoverBar(
         title: Text('Keys'),
       ),
       body: ListView(

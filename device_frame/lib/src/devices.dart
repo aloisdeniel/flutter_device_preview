@@ -50,9 +50,7 @@ class DeviceIdentifier {
     this.platform,
     this.type,
     this.name,
-  )   : assert(name != null),
-        assert(type != null),
-        assert(platform != null);
+  );
 
   @override
   bool operator ==(dynamic other) {
@@ -70,10 +68,10 @@ class DeviceIdentifier {
   @override
   String toString() {
     final platformKey =
-        platform.toString().replaceAll('${TargetPlatform}.', '').toLowerCase();
+        platform.toString().replaceAll('$TargetPlatform.', '').toLowerCase();
     final typeKey =
-        type.toString().replaceAll('${DeviceType}.', '').toLowerCase();
-    return '${platformKey}_${typeKey}_${name}';
+        type.toString().replaceAll('$DeviceType.', '').toLowerCase();
+    return '${platformKey}_${typeKey}_$name';
   }
 }
 

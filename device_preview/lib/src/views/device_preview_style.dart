@@ -18,7 +18,9 @@ class DevicePreviewTheme extends InheritedWidget {
   final DevicePreviewStyle style;
 
   static bool isPositionAvailableForWidth(
-      DevicePreviewToolBarPosition position, double width) {
+    DevicePreviewToolBarPosition position,
+    double width,
+  ) {
     if (width < 600 &&
         (position == DevicePreviewToolBarPosition.left ||
             position == DevicePreviewToolBarPosition.right)) {
@@ -28,9 +30,10 @@ class DevicePreviewTheme extends InheritedWidget {
   }
 
   const DevicePreviewTheme({
+    Key? key,
     required this.style,
     required Widget child,
-  }) : super(child: child);
+  }) : super(key: key, child: child);
 
   static DevicePreviewStyle of(BuildContext context) {
     final widget =
@@ -65,13 +68,13 @@ class DevicePreviewTheme extends InheritedWidget {
         background: BoxDecoration(
           gradient:
               settings.backgroundTheme == DevicePreviewBackgroundThemeData.dark
-                  ? LinearGradient(
+                  ? const LinearGradient(
                       colors: [
                         Color(0xFF111111),
                         Color(0xFF222222),
                       ],
                     )
-                  : LinearGradient(
+                  : const LinearGradient(
                       colors: [
                         Color(0xFFf5f7fa),
                         Color(0xFFc3cfe2),
@@ -85,10 +88,14 @@ class DevicePreviewTheme extends InheritedWidget {
     final media = MediaQuery.maybeOf(context) ??
         MediaQueryData.fromWindow(WidgetsBinding.instance!.window);
     if (!DevicePreviewTheme.isPositionAvailableForWidth(
-        result.toolBar.position, media.size.width)) {
+      result.toolBar.position,
+      media.size.width,
+    )) {
       result = result.copyWith(
-          toolBar: result.toolBar
-              .copyWith(position: DevicePreviewToolBarPosition.bottom));
+        toolBar: result.toolBar.copyWith(
+          position: DevicePreviewToolBarPosition.bottom,
+        ),
+      );
     }
 
     return result;
@@ -114,10 +121,10 @@ class DevicePreviewStyle with _$DevicePreviewStyle {
       DevicePreviewStyle(
         toolBar: DevicePreviewToolBarStyle.dark(
           position: position ?? DevicePreviewToolBarPosition.bottom,
-          buttonsVisibility:
-              buttonsVisibility ?? DevicePreviewButtonsVisibilityStyleData(),
+          buttonsVisibility: buttonsVisibility ??
+              const DevicePreviewButtonsVisibilityStyleData(),
         ),
-        background: BoxDecoration(
+        background: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color(0xFFf5f7fa),
@@ -134,10 +141,10 @@ class DevicePreviewStyle with _$DevicePreviewStyle {
       DevicePreviewStyle(
         toolBar: DevicePreviewToolBarStyle.light(
           position: position ?? DevicePreviewToolBarPosition.bottom,
-          buttonsVisibility:
-              buttonsVisibility ?? DevicePreviewButtonsVisibilityStyleData(),
+          buttonsVisibility: buttonsVisibility ??
+              const DevicePreviewButtonsVisibilityStyleData(),
         ),
-        background: BoxDecoration(
+        background: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color(0xFF111111),
@@ -166,32 +173,32 @@ class DevicePreviewToolBarStyle with _$DevicePreviewToolBarStyle {
     DevicePreviewButtonsVisibilityStyleData? buttonsVisibility,
   }) =>
       DevicePreviewToolBarStyle(
-        buttonsVisibility:
-            buttonsVisibility ?? DevicePreviewButtonsVisibilityStyleData(),
+        buttonsVisibility: buttonsVisibility ??
+            const DevicePreviewButtonsVisibilityStyleData(),
         position: position ?? DevicePreviewToolBarPosition.bottom,
         backgroundColor: const Color(0xFF111111),
         buttonBackgroundColor: const Color(0xFF2F2F2F),
         buttonHoverBackgroundColor: const Color(0xFF555555),
         foregroundColor: const Color(0xFFFEFEFE),
-        spacing: DevicePreviewToolBarSpacingData(
-          small: const EdgeInsets.all(4),
-          regular: const EdgeInsets.all(10),
-          big: const EdgeInsets.all(14),
+        spacing: const DevicePreviewToolBarSpacingData(
+          small: EdgeInsets.all(4),
+          regular: EdgeInsets.all(10),
+          big: EdgeInsets.all(14),
         ),
-        fontStyles: DevicePreviewToolBarTextStyleData(
-          smallBody: const TextStyle(
+        fontStyles: const DevicePreviewToolBarTextStyleData(
+          smallBody: TextStyle(
             fontFamily: 'Roboto',
             fontSize: 9,
           ),
-          body: const TextStyle(
+          body: TextStyle(
             fontFamily: 'Roboto',
             fontSize: 11,
           ),
-          title: const TextStyle(
+          title: TextStyle(
             fontFamily: 'Roboto',
             fontSize: 12,
           ),
-          fieldLabel: const TextStyle(
+          fieldLabel: TextStyle(
             fontFamily: 'Roboto',
             fontSize: 11,
           ),
@@ -203,32 +210,32 @@ class DevicePreviewToolBarStyle with _$DevicePreviewToolBarStyle {
     DevicePreviewButtonsVisibilityStyleData? buttonsVisibility,
   }) =>
       DevicePreviewToolBarStyle(
-        buttonsVisibility:
-            buttonsVisibility ?? DevicePreviewButtonsVisibilityStyleData(),
+        buttonsVisibility: buttonsVisibility ??
+            const DevicePreviewButtonsVisibilityStyleData(),
         position: position ?? DevicePreviewToolBarPosition.bottom,
         backgroundColor: const Color(0xFFFEFEFE),
         buttonBackgroundColor: const Color(0xFFF0F0F0),
         buttonHoverBackgroundColor: const Color(0xFFFAFAFA),
         foregroundColor: const Color(0xFF333333),
-        spacing: DevicePreviewToolBarSpacingData(
-          small: const EdgeInsets.all(4),
-          regular: const EdgeInsets.all(10),
-          big: const EdgeInsets.all(14),
+        spacing: const DevicePreviewToolBarSpacingData(
+          small: EdgeInsets.all(4),
+          regular: EdgeInsets.all(10),
+          big: EdgeInsets.all(14),
         ),
-        fontStyles: DevicePreviewToolBarTextStyleData(
-          smallBody: const TextStyle(
+        fontStyles: const DevicePreviewToolBarTextStyleData(
+          smallBody: TextStyle(
             fontFamily: 'Roboto',
             fontSize: 9,
           ),
-          body: const TextStyle(
+          body: TextStyle(
             fontFamily: 'Roboto',
             fontSize: 12,
           ),
-          title: const TextStyle(
+          title: TextStyle(
             fontFamily: 'Roboto',
             fontSize: 12,
           ),
-          fieldLabel: const TextStyle(
+          fieldLabel: TextStyle(
             fontFamily: 'Roboto',
             fontSize: 11,
           ),

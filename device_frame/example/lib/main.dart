@@ -2,11 +2,12 @@ import 'package:device_frame/device_frame.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
-  runApp(ExampleApp());
+  runApp(const ExampleApp());
 }
 
 class ExampleApp extends StatefulWidget {
-  // This widget is the root of your application.
+  const ExampleApp({Key? key}) : super(key: key);
+
   @override
   _ExampleAppState createState() => _ExampleAppState();
 }
@@ -64,7 +65,7 @@ class _ExampleAppState extends State<ExampleApp> {
           child: Scaffold(
             backgroundColor: isDark ? Colors.white : Colors.black,
             appBar: AppBar(
-              title: Text('Device Frames'),
+              title: const Text('Device Frames'),
               actions: <Widget>[
                 IconButton(
                   onPressed: () {
@@ -72,7 +73,7 @@ class _ExampleAppState extends State<ExampleApp> {
                       hasShadow = !hasShadow;
                     });
                   },
-                  icon: Icon(Icons.settings_brightness),
+                  icon: const Icon(Icons.settings_brightness),
                 ),
                 IconButton(
                   onPressed: () {
@@ -80,25 +81,29 @@ class _ExampleAppState extends State<ExampleApp> {
                       isDark = !isDark;
                     });
                   },
-                  icon: Icon(Icons.brightness_medium),
+                  icon: const Icon(Icons.brightness_medium),
                 ),
                 IconButton(
                   onPressed: () {
-                    setState(() {
-                      orientation = orientation == Orientation.landscape
-                          ? Orientation.portrait
-                          : Orientation.landscape;
-                    });
+                    setState(
+                      () {
+                        orientation = orientation == Orientation.landscape
+                            ? Orientation.portrait
+                            : Orientation.landscape;
+                      },
+                    );
                   },
-                  icon: Icon(Icons.rotate_90_degrees_ccw),
+                  icon: const Icon(Icons.rotate_90_degrees_ccw),
                 ),
                 IconButton(
                   onPressed: () {
-                    setState(() {
-                      isKeyboard = !isKeyboard;
-                    });
+                    setState(
+                      () {
+                        isKeyboard = !isKeyboard;
+                      },
+                    );
                   },
-                  icon: Icon(Icons.keyboard),
+                  icon: const Icon(Icons.keyboard),
                 ),
                 /*IconButton(
                   onPressed: () {
@@ -112,8 +117,11 @@ class _ExampleAppState extends State<ExampleApp> {
               bottom: TabBar(
                 isScrollable: true,
                 tabs: [
-                  ...allDevices
-                      .map((x) => Tab(text: '${x.identifier.type} ${x.name}')),
+                  ...allDevices.map(
+                    (x) => Tab(
+                      text: '${x.identifier.type} ${x.name}',
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -124,9 +132,10 @@ class _ExampleAppState extends State<ExampleApp> {
                   builder: (context) => !isEnabled
                       ? FakeScreen(key: screenKey)
                       : AnimatedBuilder(
-                          animation: DefaultTabController.of(context),
-                          builder: (context, _) => _frame(allDevices[
-                              DefaultTabController.of(context).index]),
+                          animation: DefaultTabController.of(context)!,
+                          builder: (context, _) => _frame(
+                            allDevices[DefaultTabController.of(context)!.index],
+                          ),
                         ),
                 ),
               ),
@@ -139,7 +148,9 @@ class _ExampleAppState extends State<ExampleApp> {
 }
 
 class FakeScreen extends StatefulWidget {
-  const FakeScreen({Key key}) : super(key: key);
+  const FakeScreen({
+    Key? key,
+  }) : super(key: key);
   @override
   _FakeScreenState createState() => _FakeScreenState();
 }
@@ -180,7 +191,7 @@ class _FakeScreenState extends State<FakeScreen> {
               Text("Padding: ${mediaQuery.padding}"),
               Text("Insets: ${mediaQuery.viewInsets}"),
               Text("ViewPadding: ${mediaQuery.viewPadding}"),
-              if (isDelayEnded) Text("---"),
+              if (isDelayEnded) const Text("---"),
             ],
           ),
         ),

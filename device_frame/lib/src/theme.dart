@@ -13,9 +13,13 @@ class DeviceFrameTheme extends InheritedWidget {
 
   /// Give a [style] to all descentant in [child] device frames.
   const DeviceFrameTheme({
+    Key? key,
     required this.style,
     required Widget child,
-  }) : super(child: child);
+  }) : super(
+          key: key,
+          child: child,
+        );
 
   static DeviceFrameStyle of(BuildContext context) {
     final widget =

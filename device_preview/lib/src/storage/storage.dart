@@ -7,7 +7,7 @@ abstract class DevicePreviewStorage {
 
   /// A storage that keep preferences only in memory : they are reset on each
   /// fresh start of the app.
-  factory DevicePreviewStorage.none() => NoDevicePreviewStorage();
+  factory DevicePreviewStorage.none() => const NoDevicePreviewStorage();
 
   /// A storage that keeps all preferences stored as json in a single
   /// preferences entry with the [preferenceKey] key.

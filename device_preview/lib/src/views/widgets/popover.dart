@@ -46,10 +46,11 @@ class PopoverBar extends StatelessWidget {
   final Widget? trailing;
 
   const PopoverBar({
+    Key? key,
     required this.title,
     this.leading,
     this.trailing,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +65,7 @@ class PopoverBar extends StatelessWidget {
         children: <Widget>[
           if (leading != null) ...[
             leading!,
-            SizedBox(
+            const SizedBox(
               width: 6,
             ),
           ],
@@ -87,7 +88,7 @@ class PopoverBar extends StatelessWidget {
           ),
           if (trailing != null) ...[
             trailing!,
-            SizedBox(
+            const SizedBox(
               width: 6,
             ),
           ],
@@ -105,65 +106,64 @@ class PopoverTile extends StatelessWidget {
   final VoidCallback? onTap;
 
   const PopoverTile({
+    Key? key,
     required this.title,
     this.subtitle,
     this.leading,
     this.trailing,
     this.onTap,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final theme = DevicePreviewTheme.of(context);
-    return Container(
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: theme.toolBar.spacing.regular,
-          child: Row(
-            children: <Widget>[
-              if (leading != null) ...[
-                IconTheme(
-                  data: IconThemeData(
-                    color: theme.toolBar.foregroundColor,
-                    size: theme.toolBar.fontStyles.body.fontSize! * 1.8,
-                  ),
-                  child: leading!,
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: theme.toolBar.spacing.regular,
+        child: Row(
+          children: <Widget>[
+            if (leading != null) ...[
+              IconTheme(
+                data: IconThemeData(
+                  color: theme.toolBar.foregroundColor,
+                  size: theme.toolBar.fontStyles.body.fontSize! * 1.8,
                 ),
-                SizedBox(
-                  width: theme.toolBar.spacing.regular.top,
-                ),
-              ],
-              Expanded(
-                child: subtitle == null
-                    ? title
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          DefaultTextStyle(
-                            style: theme.toolBar.fontStyles.title.copyWith(
-                              color: theme.toolBar.foregroundColor,
-                            ),
-                            child: title,
-                          ),
-                          DefaultTextStyle(
-                            style: theme.toolBar.fontStyles.body.copyWith(
-                              color: theme.toolBar.foregroundColor
-                                  .withOpacity(0.5),
-                            ),
-                            child: subtitle!,
-                          ),
-                        ],
-                      ),
+                child: leading!,
               ),
-              if (trailing != null) ...[
-                SizedBox(
-                  width: theme.toolBar.spacing.regular.top,
-                ),
-                trailing!,
-              ],
+              SizedBox(
+                width: theme.toolBar.spacing.regular.top,
+              ),
             ],
-          ),
+            Expanded(
+              child: subtitle == null
+                  ? title
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        DefaultTextStyle(
+                          style: theme.toolBar.fontStyles.title.copyWith(
+                            color: theme.toolBar.foregroundColor,
+                          ),
+                          child: title,
+                        ),
+                        DefaultTextStyle(
+                          style: theme.toolBar.fontStyles.body.copyWith(
+                            color:
+                                theme.toolBar.foregroundColor.withOpacity(0.5),
+                          ),
+                          child: subtitle!,
+                        ),
+                      ],
+                    ),
+            ),
+            if (trailing != null) ...[
+              SizedBox(
+                width: theme.toolBar.spacing.regular.top,
+              ),
+              trailing!,
+            ],
+          ],
         ),
       ),
     );
@@ -175,14 +175,15 @@ class PopoverIconButton extends StatelessWidget {
   final VoidCallback onTap;
 
   const PopoverIconButton({
+    Key? key,
     required this.icon,
     required this.onTap,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final theme = DevicePreviewTheme.of(context);
-    return Container(
+    return SizedBox(
       height: theme.toolBar.fontStyles.body.fontSize! * 4,
       child: InkWell(
         onTap: onTap,
@@ -204,8 +205,7 @@ class PopoverPageRoute<T> extends PageRoute<T> {
     required this.builder,
     this.transitionDuration = const Duration(milliseconds: 0),
     this.reverseTransitionDuration = const Duration(milliseconds: 0),
-  })  : assert(builder != null),
-        super(
+  }) : super(
           settings: settings,
           fullscreenDialog: true,
         );
@@ -234,14 +234,21 @@ class PopoverPageRoute<T> extends PageRoute<T> {
   final bool maintainState = false;
 
   @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
+  Widget buildPage(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+  ) {
     return builder(context);
   }
 
   @override
-  Widget buildTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
     return child;
   }
 }
@@ -300,57 +307,55 @@ class _PopoverSearchFieldState extends State<PopoverSearchField> {
   @override
   Widget build(BuildContext context) {
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
-    return Container(
-      child: Material(
-        child: Container(
-          color: toolBarStyle.backgroundColor,
-          height: 48,
-          padding: EdgeInsets.only(
-            left: toolBarStyle.spacing.regular.top,
-            top: toolBarStyle.spacing.small.top,
-            right: toolBarStyle.spacing.regular.top,
-            bottom: toolBarStyle.spacing.regular.top,
+    return Material(
+      child: Container(
+        color: toolBarStyle.backgroundColor,
+        height: 48,
+        padding: EdgeInsets.only(
+          left: toolBarStyle.spacing.regular.top,
+          top: toolBarStyle.spacing.small.top,
+          right: toolBarStyle.spacing.regular.top,
+          bottom: toolBarStyle.spacing.regular.top,
+        ),
+        child: TextField(
+          style: TextStyle(
+            color: toolBarStyle.foregroundColor,
+            fontSize: 12,
           ),
-          child: TextField(
-            style: TextStyle(
-              color: toolBarStyle.foregroundColor,
+          controller: _controller,
+          decoration: InputDecoration(
+            hintStyle: TextStyle(
+              color: toolBarStyle.foregroundColor.withOpacity(0.5),
               fontSize: 12,
             ),
-            controller: _controller,
-            decoration: InputDecoration(
-              hintStyle: TextStyle(
-                color: toolBarStyle.foregroundColor.withOpacity(0.5),
-                fontSize: 12,
-              ),
-              hintText: widget.hintText, // 'Search by device name...',
-              contentPadding: EdgeInsets.only(
-                left: toolBarStyle.spacing.regular.top,
-                right: toolBarStyle.spacing.regular.top,
-                bottom: toolBarStyle.spacing.big.top,
-              ),
-              filled: true,
-              fillColor: toolBarStyle.foregroundColor.withOpacity(0.12),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(4),
-              ),
-              prefixIcon: Icon(
-                Icons.search,
-                color: toolBarStyle.foregroundColor.withOpacity(0.5),
-                size: 14,
-              ),
-              suffix: InkWell(
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    top: toolBarStyle.spacing.small.top,
-                  ),
-                  child: Icon(
-                    Icons.close,
-                    size: 14,
-                    color: toolBarStyle.foregroundColor.withOpacity(0.5),
-                  ),
+            hintText: widget.hintText, // 'Search by device name...',
+            contentPadding: EdgeInsets.only(
+              left: toolBarStyle.spacing.regular.top,
+              right: toolBarStyle.spacing.regular.top,
+              bottom: toolBarStyle.spacing.big.top,
+            ),
+            filled: true,
+            fillColor: toolBarStyle.foregroundColor.withOpacity(0.12),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(4),
+            ),
+            prefixIcon: Icon(
+              Icons.search,
+              color: toolBarStyle.foregroundColor.withOpacity(0.5),
+              size: 14,
+            ),
+            suffix: InkWell(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: toolBarStyle.spacing.small.top,
                 ),
-                onTap: _clear,
+                child: Icon(
+                  Icons.close,
+                  size: 14,
+                  color: toolBarStyle.foregroundColor.withOpacity(0.5),
+                ),
               ),
+              onTap: _clear,
             ),
           ),
         ),

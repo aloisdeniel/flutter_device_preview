@@ -25,9 +25,6 @@ import 'info/info.dart';
 /// * [Devices] to get all available devices.
 ///
 class DeviceFrame extends StatelessWidget {
-  /// The unique identifier of the simulated device.
-  final DeviceIdentifier identifier;
-
   /// The screen that should be inserted into the simulated
   /// device.
   ///
@@ -55,34 +52,34 @@ class DeviceFrame extends StatelessWidget {
   ///
   /// If [isFrameVisible] is `true`, only the [screen] is displayed, but clipped with
   /// the device screen shape.
-  DeviceFrame({
+  const DeviceFrame({
     Key? key,
     required this.device,
     required this.screen,
     this.orientation = Orientation.portrait,
     this.isFrameVisible = true,
-  })  : identifier = device.identifier,
-        super(key: key);
+  }) : super(key: key);
 
-  static bool isRotated(DeviceInfo? info, Orientation orientation) {
-    return info != null &&
-        info.canRotate &&
-        orientation == Orientation.landscape;
-  }
-
+  // Precaches all SVG files.
   static Future<void> precache(BuildContext context) async {
     for (var device in Devices.all) {
       await precachePicture(
-        StringPicture(SvgPicture.svgStringDecoder, device.svgFrame),
+        StringPicture(SvgPicture.svgStringDecoderBuilder, device.svgFrame),
         context,
       );
     }
   }
 
-  static MediaQueryData mediaQuery(
-      BuildContext context, DeviceInfo? info, Orientation orientation) {
+  /// Creates a [MediaQuery] from the given device [info], and for the current device [orientation].
+  ///
+  /// All properties that are not simulated are inherited from the current [context]'s inherited [MediaQuery].
+  static MediaQueryData mediaQuery({
+    required BuildContext context,
+    required DeviceInfo? info,
+    required Orientation orientation,
+  }) {
     final mediaQuery = MediaQuery.of(context);
-    final isRotated = DeviceFrame.isRotated(info, orientation);
+    final isRotated = info?.isLandscape(orientation) ?? false;
     final padding = isRotated
         ? (info?.rotatedSafeAreas ?? info?.safeAreas)
         : (info?.safeAreas ?? mediaQuery.padding);
@@ -104,18 +101,18 @@ class DeviceFrame extends StatelessWidget {
     final density = [
       DeviceType.desktop,
       DeviceType.laptop,
-    ].contains(identifier.type)
+    ].contains(device.identifier.type)
         ? VisualDensity.compact
         : null;
     return Theme.of(context).copyWith(
-      platform: identifier.platform,
+      platform: device.identifier.platform,
       visualDensity: density,
     );
   }
 
   Widget _screen(BuildContext context, DeviceInfo? info) {
     final mediaQuery = MediaQuery.of(context);
-    final isRotated = DeviceFrame.isRotated(info, orientation);
+    final isRotated = info?.isLandscape(orientation) ?? false;
     final screenSize = info != null ? info.screenSize : mediaQuery.size;
     final width = isRotated ? screenSize.height : screenSize.width;
     final height = isRotated ? screenSize.width : screenSize.height;
@@ -126,7 +123,11 @@ class DeviceFrame extends StatelessWidget {
         width: width,
         height: height,
         child: MediaQuery(
-          data: DeviceFrame.mediaQuery(context, info, orientation),
+          data: DeviceFrame.mediaQuery(
+            info: info,
+            orientation: orientation,
+            context: context,
+          ),
           child: Theme(
             data: _theme(context),
             child: screen,
@@ -147,14 +148,14 @@ class DeviceFrame extends StatelessWidget {
         children: [
           if (isFrameVisible)
             Positioned.fill(
-              key: Key('frame'),
+              key: const Key('frame'),
               child: SvgPicture.string(
                 device.svgFrame,
-                key: ValueKey(identifier),
+                key: ValueKey(device.identifier),
               ),
             ),
           Positioned(
-            key: Key('Screen'),
+            key: const Key('Screen'),
             left: isFrameVisible ? bounds.left : 0,
             top: isFrameVisible ? bounds.top : 0,
             width: bounds.width,
@@ -172,7 +173,7 @@ class DeviceFrame extends StatelessWidget {
       ),
     );
 
-    final isRotated = DeviceFrame.isRotated(device, orientation);
+    final isRotated = device.isLandscape(orientation);
 
     return FittedBox(
       child: RotatedBox(

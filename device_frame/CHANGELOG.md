@@ -1,3 +1,8 @@
+## [0.5.0] - 2021/10/25
+
+* Migrated to flutter_lints
+* Upgraded dependencies
+
 ## [0.4.2] - 2021/05/25
 
 * Fixing missing part file.

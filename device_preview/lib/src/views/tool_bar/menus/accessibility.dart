@@ -6,6 +6,10 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 class AccessibilityPopOver extends StatelessWidget {
+  const AccessibilityPopOver({
+    Key? key,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final theme = DevicePreviewTheme.of(context);
@@ -91,12 +95,13 @@ class AccessibilityCheckTile extends StatelessWidget {
   final bool value;
   final ValueChanged<bool> onValueChanged;
 
-  AccessibilityCheckTile({
+  const AccessibilityCheckTile({
+    Key? key,
     required this.title,
     required this.icon,
     required this.value,
     required this.onValueChanged,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +131,7 @@ class AccessibilityCheckTile extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(width: 12),
+              const SizedBox(width: 12),
               _SelectBox(
                 icon: icon,
                 value: value,
@@ -156,7 +161,7 @@ class _SelectBox extends StatelessWidget {
     final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
     return AnimatedContainer(
       duration: const Duration(milliseconds: 100),
-      padding: EdgeInsets.all(2),
+      padding: const EdgeInsets.all(2),
       decoration: BoxDecoration(
         border: Border.all(
           color: toolBarStyle.foregroundColor.withOpacity(
@@ -164,7 +169,7 @@ class _SelectBox extends StatelessWidget {
           ),
         ),
         borderRadius: BorderRadius.circular(2),
-        color: Theme.of(context).accentColor.withOpacity(
+        color: Theme.of(context).primaryColor.withOpacity(
               value ? 1 : 0.0,
             ),
       ),
@@ -195,13 +200,14 @@ class SliderTile extends StatelessWidget {
   final ValueChanged<double> onValueChanged;
 
   const SliderTile({
+    Key? key,
     required this.title,
     required this.min,
     required this.max,
     required this.divisions,
     required this.value,
     required this.onValueChanged,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -245,7 +251,7 @@ class SliderTile extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
                 PopoverSlider(
                   divisions: divisions, // 11,
                   value: value,

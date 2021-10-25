@@ -5,6 +5,7 @@ import 'package:device_frame/device_frame.dart';
 import 'package:device_preview/src/state/state.dart';
 import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/storage/storage.dart';
+import 'package:device_preview/src/utilities/assert_inherited_media_query.dart';
 import 'package:device_preview/src/utilities/media_query_observer.dart';
 import 'package:device_preview/src/views/tool_bar/toolbar.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,23 @@ import 'views/device_preview_style.dart';
 /// * [Devices] has a set of predefined common devices.
 /// * [DevicePreviewStyle] to update the aspect.
 class DevicePreview extends StatefulWidget {
+  /// Create a new [DevicePreview].
+  DevicePreview({
+    Key? key,
+    required this.builder,
+    this.devices,
+    this.data,
+    this.style,
+    this.isToolbarVisible = true,
+    this.availableLocales,
+    this.defaultDevice,
+    this.plugins = const <DevicePreviewPlugin>[],
+    DevicePreviewStorage? storage,
+    this.enabled = true,
+  })  : assert(devices == null || devices.isNotEmpty),
+        storage = storage ?? DevicePreviewStorage.preferences(),
+        super(key: key);
+
   /// If not [enabled], the [child] is used directly.
   final bool enabled;
 
@@ -90,24 +108,6 @@ class DevicePreview extends StatefulWidget {
   ///
   /// To disable settings persistence use `DevicePreviewStorage.none()`.
   final DevicePreviewStorage storage;
-
-  /// Create a new [DevicePreview].
-  DevicePreview({
-    Key? key,
-    required this.builder,
-    this.devices,
-    this.data,
-    this.style,
-    this.isToolbarVisible = true,
-    this.availableLocales,
-    this.defaultDevice,
-    this.plugins = const <DevicePreviewPlugin>[],
-    DevicePreviewStorage? storage,
-    this.enabled = true,
-  })  : assert(devices == null || devices.isNotEmpty),
-        assert(isToolbarVisible != null),
-        storage = storage ?? DevicePreviewStorage.preferences(),
-        super(key: key);
 
   static final List<DeviceInfo> defaultDevices = Devices.all;
 
@@ -306,9 +306,9 @@ class DevicePreview extends StatefulWidget {
     );
 
     var mediaQuery = DeviceFrame.mediaQuery(
-      context,
-      device,
-      orientation,
+      context: context,
+      info: device,
+      orientation: orientation,
     );
 
     if (isVirtualKeyboardVisible) {
@@ -335,7 +335,7 @@ class _DevicePreviewState extends State<DevicePreview> {
   Future<DeviceScreenshot> screenshot(DevicePreviewStore store) async {
     final boundary =
         _repaintKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
-    final format = ui.ImageByteFormat.png;
+    const format = ui.ImageByteFormat.png;
 
     final image = await boundary.toImage(
       pixelRatio: store.deviceInfo.pixelRatio,
@@ -409,7 +409,14 @@ class _DevicePreviewState extends State<DevicePreview> {
                   data: DevicePreview._mediaQuery(context),
                   child: Builder(
                     key: _appKey,
-                    builder: widget.builder,
+                    builder: (context) {
+                      final app = widget.builder(context);
+                      assert(
+                        isWidgetsAppUsingInheritedMediaQuery(app),
+                        'Your widgets app should have its `useInheritedMediaQuery`property set to `true` in order to use DevicePreview.',
+                      );
+                      return app;
+                    },
                   ),
                 ),
               ),
@@ -494,7 +501,7 @@ class _DevicePreviewState extends State<DevicePreview> {
                                     DevicePreviewToolBarPosition.bottom
                             ? DevicePreviewToolBar.height(context) - 12
                             : 0,
-                        key: Key('Preview'),
+                        key: const Key('Preview'),
                         child: isEnabled
                             ? Builder(
                                 builder: _buildPreview,
@@ -506,7 +513,7 @@ class _DevicePreviewState extends State<DevicePreview> {
                       ),
                       if (isToolbarVisible)
                         Positioned.fill(
-                          key: Key('Toolbar'),
+                          key: const Key('Toolbar'),
                           child: DevicePreviewTheme(
                             style: style,
                             child: _ToolsOverlay(
@@ -565,8 +572,8 @@ class _ToolsOverlayState extends State<_ToolsOverlay> {
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Localizations(
-        locale: Locale('en', 'US'),
-        delegates: [
+        locale: const Locale('en', 'US'),
+        delegates: const [
           GlobalMaterialLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
@@ -587,7 +594,7 @@ class _ToolsOverlayState extends State<_ToolsOverlay> {
                         right: 0,
                         bottom: 0,
                         child: DevicePreviewToolBar(
-                          key: Key('Bar'),
+                          key: const Key('Bar'),
                           overlayPosition: absolutePosition,
                         ),
                       ),
@@ -599,7 +606,7 @@ class _ToolsOverlayState extends State<_ToolsOverlay> {
                         right: 0,
                         top: 0,
                         child: DevicePreviewToolBar(
-                          key: Key('Bar'),
+                          key: const Key('Bar'),
                           overlayPosition: absolutePosition,
                         ),
                       ),
@@ -611,7 +618,7 @@ class _ToolsOverlayState extends State<_ToolsOverlay> {
                         right: 0,
                         bottom: 0,
                         child: DevicePreviewToolBar(
-                          key: Key('Bar'),
+                          key: const Key('Bar'),
                           overlayPosition: absolutePosition,
                         ),
                       ),
@@ -623,7 +630,7 @@ class _ToolsOverlayState extends State<_ToolsOverlay> {
                         top: 0,
                         bottom: 0,
                         child: DevicePreviewToolBar(
-                          key: Key('Bar'),
+                          key: const Key('Bar'),
                           overlayPosition: absolutePosition,
                         ),
                       ),

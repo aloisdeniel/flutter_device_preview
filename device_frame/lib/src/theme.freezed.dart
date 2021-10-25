@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'theme.dart';
 
@@ -137,15 +138,14 @@ class _$_DeviceFrameStyle
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _DeviceFrameStyle &&
+        (other.runtimeType == runtimeType &&
+            other is _DeviceFrameStyle &&
             (identical(other.keyboardStyle, keyboardStyle) ||
-                const DeepCollectionEquality()
-                    .equals(other.keyboardStyle, keyboardStyle)));
+                other.keyboardStyle == keyboardStyle));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(keyboardStyle);
+  int get hashCode => Object.hash(runtimeType, keyboardStyle);
 
   @JsonKey(ignore: true)
   @override
@@ -158,7 +158,7 @@ abstract class _DeviceFrameStyle implements DeviceFrameStyle {
       {required DeviceKeyboardStyle keyboardStyle}) = _$_DeviceFrameStyle;
 
   @override
-  DeviceKeyboardStyle get keyboardStyle => throw _privateConstructorUsedError;
+  DeviceKeyboardStyle get keyboardStyle;
   @override
   @JsonKey(ignore: true)
   _$DeviceFrameStyleCopyWith<_DeviceFrameStyle> get copyWith =>
@@ -362,32 +362,28 @@ class _$_DeviceKeyboardStyle
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _DeviceKeyboardStyle &&
+        (other.runtimeType == runtimeType &&
+            other is _DeviceKeyboardStyle &&
             (identical(other.backgroundColor, backgroundColor) ||
-                const DeepCollectionEquality()
-                    .equals(other.backgroundColor, backgroundColor)) &&
+                other.backgroundColor == backgroundColor) &&
             (identical(other.button1BackgroundColor, button1BackgroundColor) ||
-                const DeepCollectionEquality().equals(
-                    other.button1BackgroundColor, button1BackgroundColor)) &&
+                other.button1BackgroundColor == button1BackgroundColor) &&
             (identical(other.button1ForegroundColor, button1ForegroundColor) ||
-                const DeepCollectionEquality().equals(
-                    other.button1ForegroundColor, button1ForegroundColor)) &&
+                other.button1ForegroundColor == button1ForegroundColor) &&
             (identical(other.button2BackgroundColor, button2BackgroundColor) ||
-                const DeepCollectionEquality().equals(
-                    other.button2BackgroundColor, button2BackgroundColor)) &&
+                other.button2BackgroundColor == button2BackgroundColor) &&
             (identical(other.button2ForegroundColor, button2ForegroundColor) ||
-                const DeepCollectionEquality().equals(
-                    other.button2ForegroundColor, button2ForegroundColor)));
+                other.button2ForegroundColor == button2ForegroundColor));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(backgroundColor) ^
-      const DeepCollectionEquality().hash(button1BackgroundColor) ^
-      const DeepCollectionEquality().hash(button1ForegroundColor) ^
-      const DeepCollectionEquality().hash(button2BackgroundColor) ^
-      const DeepCollectionEquality().hash(button2ForegroundColor);
+  int get hashCode => Object.hash(
+      runtimeType,
+      backgroundColor,
+      button1BackgroundColor,
+      button1ForegroundColor,
+      button2BackgroundColor,
+      button2ForegroundColor);
 
   @JsonKey(ignore: true)
   @override
@@ -405,15 +401,15 @@ abstract class _DeviceKeyboardStyle implements DeviceKeyboardStyle {
       required Color button2ForegroundColor}) = _$_DeviceKeyboardStyle;
 
   @override
-  Color get backgroundColor => throw _privateConstructorUsedError;
+  Color get backgroundColor;
   @override
-  Color get button1BackgroundColor => throw _privateConstructorUsedError;
+  Color get button1BackgroundColor;
   @override
-  Color get button1ForegroundColor => throw _privateConstructorUsedError;
+  Color get button1ForegroundColor;
   @override
-  Color get button2BackgroundColor => throw _privateConstructorUsedError;
+  Color get button2BackgroundColor;
   @override
-  Color get button2ForegroundColor => throw _privateConstructorUsedError;
+  Color get button2ForegroundColor;
   @override
   @JsonKey(ignore: true)
   _$DeviceKeyboardStyleCopyWith<_DeviceKeyboardStyle> get copyWith =>

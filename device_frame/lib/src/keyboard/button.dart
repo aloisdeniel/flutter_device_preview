@@ -6,9 +6,10 @@ class VirtualKeyboardButton extends StatelessWidget {
   final Color backgroundColor;
 
   const VirtualKeyboardButton({
+    Key? key,
     required this.backgroundColor,
     required this.child,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class VirtualKeyboardButton extends StatelessWidget {
         color: backgroundColor,
         borderRadius: BorderRadius.circular(4),
       ),
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         vertical: 10,
         horizontal: 6,
       ),

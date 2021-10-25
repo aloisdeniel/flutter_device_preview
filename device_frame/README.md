@@ -51,14 +51,8 @@ DeviceFrame(
     orientation: orientation,
     screen: Builder(
         builder: (deviceContext) => MaterialApp(
+            useInheritedMediaQuery: true,
             theme: Theme.of(context),
-            builder: (context, widget) => MediaQuery(
-                data: MediaQuery.of(deviceContext),
-                child: Theme(
-                    data: Theme.of(deviceContext),
-                    child: widget,
-                ),
-            ),
         ),
     ),
 ),

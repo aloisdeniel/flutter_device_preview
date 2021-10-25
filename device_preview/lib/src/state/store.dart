@@ -1,9 +1,9 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:device_frame/device_frame.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:pedantic/pedantic.dart';
 
 import '../../device_preview.dart';
 import '../storage/storage.dart';
@@ -30,7 +30,7 @@ class DevicePreviewStore extends ChangeNotifier {
 
   final DeviceInfo defaultDevice;
 
-  DevicePreviewState _state = DevicePreviewState.notInitialized();
+  DevicePreviewState _state = const DevicePreviewState.notInitialized();
 
   /// The storage used to persist the states's data.
   final DevicePreviewStorage storage;
@@ -46,7 +46,7 @@ class DevicePreviewStore extends ChangeNotifier {
   }
 
   /// The default custom device when never edited.
-  static final _defaultCustomDevice = CustomDeviceInfoData(
+  static const _defaultCustomDevice = CustomDeviceInfoData(
     id: CustomDeviceIdentifier.identifier,
     name: 'Custom',
     pixelRatio: 2,
@@ -58,11 +58,13 @@ class DevicePreviewStore extends ChangeNotifier {
   );
 
   /// Initializes the state by loading data from storage (if [useStorage])
-  Future<void> initialize(
-      {List<Locale>? locales, List<DeviceInfo>? devices}) async {
+  Future<void> initialize({
+    List<Locale>? locales,
+    List<DeviceInfo>? devices,
+  }) async {
     await state.maybeWhen(
       notInitialized: () async {
-        state = DevicePreviewState.initializing();
+        state = const DevicePreviewState.initializing();
 
         final availaiableLocales = locales != null
             ? locales
@@ -77,16 +79,19 @@ class DevicePreviewStore extends ChangeNotifier {
                 .toList()
             : defaultAvailableLocales;
 
-        final defaultLocale = device_preview.basicLocaleListResolution(
-          WidgetsBinding.instance!.window.locales,
-          availaiableLocales.map((x) => x!.locale).toList(),
-        ).toString();
+        final defaultLocale = device_preview
+            .basicLocaleListResolution(
+              WidgetsBinding.instance!.window.locales,
+              availaiableLocales.map((x) => x!.locale).toList(),
+            )
+            .toString();
 
         devices = devices ?? Devices.all;
         DevicePreviewData? data;
         try {
           data = await storage.load();
         } catch (e) {
+          // ignore: avoid_print
           print('[device_preview] Error while restoring data: $e');
         }
 
@@ -155,7 +160,7 @@ extension DevicePreviewStateHelperExtensions on DevicePreviewStore {
   ///
   /// Throws an exception if not initialized.
   DevicePreviewSettingsData get settings =>
-      data.settings ?? DevicePreviewSettingsData();
+      data.settings ?? const DevicePreviewSettingsData();
 
   set settings(DevicePreviewSettingsData value) {
     data = data.copyWith(settings: value);

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:device_preview/device_preview.dart';
@@ -5,7 +6,6 @@ import 'package:device_preview/src/views/widgets/popover.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
-import 'package:pedantic/pedantic.dart';
 
 import 'plugin.dart';
 
@@ -26,7 +26,10 @@ class FileExplorerPlugin extends DevicePreviewPlugin {
 
   @override
   Widget buildData(
-      BuildContext context, Map<String, dynamic> data, updateData) {
+    BuildContext context,
+    Map<String, dynamic> data,
+    updateData,
+  ) {
     const selectedKey = 'selected_path';
     return Material(
       color: Colors.transparent,
@@ -107,7 +110,7 @@ class _RootState extends State<_Root> {
           navigator
               .push(
                 PopoverPageRoute(
-                  settings: RouteSettings(),
+                  settings: const RouteSettings(),
                   builder: (context) => _DirectoryView(
                     directory: baseDir as Directory,
                     onPathSelected: widget.onPathSelected,
@@ -133,7 +136,7 @@ class _RootState extends State<_Root> {
             navigator
                 .push(
                   PopoverPageRoute(
-                    settings: RouteSettings(),
+                    settings: const RouteSettings(),
                     builder: (context) => type == FileSystemEntityType.directory
                         ? _DirectoryView(
                             directory: Directory(current),
@@ -156,7 +159,7 @@ class _RootState extends State<_Root> {
   @override
   Widget build(BuildContext context) {
     return PopoverScaffold(
-      title: PopoverBar(
+      title: const PopoverBar(
         title: Text('Application directories'),
       ),
       body: _FileList(
@@ -204,9 +207,9 @@ class _DirectoryViewState extends State<_DirectoryView> {
         title: Text(path.basename(widget.directory.path)),
       ),
       body: (children == null)
-          ? SizedBox()
+          ? const SizedBox()
           : ((children!.isEmpty)
-              ? _Empty()
+              ? const _Empty()
               : _FileList(
                   children: children!,
                   onPathSelected: widget.onPathSelected,
@@ -232,38 +235,40 @@ class _FileList extends StatelessWidget {
             .where(
               (x) => x is File || x is Directory,
             )
-            .map((child) => child is Directory
-                ? _DirectoryTile(
-                    directory: child,
-                    onTap: () async {
-                      onPathSelected(child.path);
-                      await Navigator.push(
-                        context,
-                        PopoverPageRoute(
-                          settings: RouteSettings(),
-                          builder: (context) => _DirectoryView(
-                            directory: child,
-                            onPathSelected: onPathSelected,
+            .map(
+              (child) => child is Directory
+                  ? _DirectoryTile(
+                      directory: child,
+                      onTap: () async {
+                        onPathSelected(child.path);
+                        await Navigator.push(
+                          context,
+                          PopoverPageRoute(
+                            settings: const RouteSettings(),
+                            builder: (context) => _DirectoryView(
+                              directory: child,
+                              onPathSelected: onPathSelected,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  )
-                : _FileTile(
-                    file: child as File,
-                    onTap: () async {
-                      onPathSelected(child.path);
-                      await Navigator.push(
-                        context,
-                        PopoverPageRoute(
-                          settings: RouteSettings(),
-                          builder: (context) => _FileView(
-                            file: child,
+                        );
+                      },
+                    )
+                  : _FileTile(
+                      file: child as File,
+                      onTap: () async {
+                        onPathSelected(child.path);
+                        await Navigator.push(
+                          context,
+                          PopoverPageRoute(
+                            settings: const RouteSettings(),
+                            builder: (context) => _FileView(
+                              file: child,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  )),
+                        );
+                      },
+                    ),
+            ),
       ],
     );
   }
@@ -276,7 +281,7 @@ class _Empty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text('No file '),
     );
   }
@@ -295,7 +300,7 @@ class _DirectoryTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopoverTile(
       onTap: onTap,
-      leading: Icon(Icons.folder),
+      leading: const Icon(Icons.folder),
       title: Text(
         path.basename(directory.path),
         maxLines: 1,
@@ -317,7 +322,7 @@ class _FileTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopoverTile(
       onTap: onTap,
-      leading: Icon(Icons.file_copy),
+      leading: const Icon(Icons.file_copy),
       title: Text(
         path.basename(file.path),
         maxLines: 1,

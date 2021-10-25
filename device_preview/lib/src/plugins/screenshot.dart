@@ -159,6 +159,7 @@ class FileioScreenshotUploader {
     }
 
     final link = body['link'];
+    // ignore: avoid_print
     print('[DevicePreview] Screenshot available here: $link');
 
     return link;
