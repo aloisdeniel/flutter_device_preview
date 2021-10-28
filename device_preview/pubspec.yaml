@@ -12,14 +12,11 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   provider: ^5.0.0
-  path_provider: ^2.0.1
   device_frame: ^0.5.0
   path_drawing: ^0.5.1
-  http: ^0.13.0 
   freezed_annotation: ^0.15.0 
   json_annotation: ^4.3.0
   shared_preferences: ^2.0.8
-  path: ^1.8.0
 
 dev_dependencies:
   flutter_test:

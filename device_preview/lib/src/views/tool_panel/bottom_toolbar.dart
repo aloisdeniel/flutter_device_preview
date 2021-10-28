@@ -16,7 +16,6 @@ class BottomToolbar extends StatelessWidget {
     final isEnabled = context.select(
       (DevicePreviewStore store) => store.data.isEnabled,
     );
-    final theme = Theme.of(context);
     return Material(
       child: ListTile(
         title: const Text('Device Preview'),

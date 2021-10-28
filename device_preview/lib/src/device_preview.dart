@@ -7,7 +7,6 @@ import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/storage/storage.dart';
 import 'package:device_preview/src/utilities/assert_inherited_media_query.dart';
 import 'package:device_preview/src/utilities/media_query_observer.dart';
-import 'package:device_preview/src/views/tool_panel/bottom_toolbar.dart';
 import 'package:device_preview/src/views/tool_panel/tool_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';

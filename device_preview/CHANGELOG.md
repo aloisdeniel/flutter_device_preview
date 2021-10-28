@@ -1,3 +1,10 @@
+## 1.0.0-alpha.1
+
+* Adaptative layout to make the tool easier to use on mobile.
+* Big refactor to make the package more maintainable :
+    * Switched all UI components to Material design
+    * Removed all include plugins *(available soon as separated packages)*
+
 ## 0.8.0
 
 * Removed `DevicePreview.appBuilder` to switch to newer `useInheritedMediaQuery` property instead.

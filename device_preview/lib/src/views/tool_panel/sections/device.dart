@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:device_preview/src/state/custom_device.dart';
 import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/views/tool_panel/format.dart';
