@@ -1,3 +1,7 @@
+## 1.0.0-alpha.2
+
+* Upgraded provider dependency.
+
 ## 1.0.0-alpha.1
 
 * Adaptative layout to make the tool easier to use on mobile.
