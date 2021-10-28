@@ -241,8 +241,9 @@ extension DevicePreviewStateHelperExtensions on DevicePreviewStore {
   }
 
   /// Indicate whether the current device is a custom one.
-  bool get isCustomDevice =>
-      deviceInfo.identifier.toString() == CustomDeviceIdentifier.identifier;
+  bool get isCustomDevice {
+    return deviceInfo.identifier is CustomDeviceIdentifier;
+  }
 
   /// Updates the custom device configuration.
   void updateCustomDevice(CustomDeviceInfoData data) =>

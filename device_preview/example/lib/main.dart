@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:device_preview/device_preview.dart';
-import 'package:device_preview/plugins.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -28,11 +27,6 @@ void main() {
         Expanded(
           child: DevicePreview(
             enabled: true,
-            plugins: const [
-              ScreenshotPlugin(),
-              FileExplorerPlugin(),
-              SharedPreferencesExplorerPlugin(),
-            ],
             builder: (context) => const BasicApp(),
           ),
         ),

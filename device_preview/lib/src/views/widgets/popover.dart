@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../device_preview_style.dart';
-
 class PopoverScaffold extends StatelessWidget {
   final Widget title;
   final Widget body;
@@ -14,16 +12,14 @@ class PopoverScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = DevicePreviewTheme.of(context);
+    final theme = Theme.of(context);
     return IconTheme(
       data: IconThemeData(
-        color: theme.toolBar.foregroundColor,
-        size: theme.toolBar.fontStyles.body.fontSize! * 1.8,
+        color: theme.appBarTheme.foregroundColor,
+        size: theme.appBarTheme.toolbarTextStyle!.fontSize! * 1.4,
       ),
       child: DefaultTextStyle(
-        style: theme.toolBar.fontStyles.title.copyWith(
-          color: theme.toolBar.foregroundColor,
-        ),
+        style: theme.appBarTheme.toolbarTextStyle!,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -54,13 +50,12 @@ class PopoverBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
+    final theme = Theme.of(context);
     return Container(
       decoration: BoxDecoration(
-        color: toolBarStyle.backgroundColor,
+        color: theme.appBarTheme.backgroundColor,
       ),
-      padding: toolBarStyle.spacing.regular,
-      height: toolBarStyle.fontStyles.body.fontSize! * 4,
+      height: theme.appBarTheme.toolbarHeight,
       child: Row(
         children: <Widget>[
           if (leading != null) ...[
@@ -70,21 +65,13 @@ class PopoverBar extends StatelessWidget {
             ),
           ],
           if (leading == null && Navigator.of(context).canPop()) ...[
-            PopoverIconButton(
-              icon: Icons.arrow_back,
-              onTap: () => Navigator.pop(context),
-            ),
-            SizedBox(
-              width: toolBarStyle.spacing.regular.top,
+            IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () => Navigator.pop(context),
             ),
           ],
           Expanded(
-            child: DefaultTextStyle(
-              style: toolBarStyle.fontStyles.body.copyWith(
-                color: toolBarStyle.foregroundColor.withOpacity(0.75),
-              ),
-              child: title,
-            ),
+            child: title,
           ),
           if (trailing != null) ...[
             trailing!,
@@ -93,107 +80,6 @@ class PopoverBar extends StatelessWidget {
             ),
           ],
         ],
-      ),
-    );
-  }
-}
-
-class PopoverTile extends StatelessWidget {
-  final Widget title;
-  final Widget? subtitle;
-  final Widget? leading;
-  final Widget? trailing;
-  final VoidCallback? onTap;
-
-  const PopoverTile({
-    Key? key,
-    required this.title,
-    this.subtitle,
-    this.leading,
-    this.trailing,
-    this.onTap,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = DevicePreviewTheme.of(context);
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: theme.toolBar.spacing.regular,
-        child: Row(
-          children: <Widget>[
-            if (leading != null) ...[
-              IconTheme(
-                data: IconThemeData(
-                  color: theme.toolBar.foregroundColor,
-                  size: theme.toolBar.fontStyles.body.fontSize! * 1.8,
-                ),
-                child: leading!,
-              ),
-              SizedBox(
-                width: theme.toolBar.spacing.regular.top,
-              ),
-            ],
-            Expanded(
-              child: subtitle == null
-                  ? title
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        DefaultTextStyle(
-                          style: theme.toolBar.fontStyles.title.copyWith(
-                            color: theme.toolBar.foregroundColor,
-                          ),
-                          child: title,
-                        ),
-                        DefaultTextStyle(
-                          style: theme.toolBar.fontStyles.body.copyWith(
-                            color:
-                                theme.toolBar.foregroundColor.withOpacity(0.5),
-                          ),
-                          child: subtitle!,
-                        ),
-                      ],
-                    ),
-            ),
-            if (trailing != null) ...[
-              SizedBox(
-                width: theme.toolBar.spacing.regular.top,
-              ),
-              trailing!,
-            ],
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class PopoverIconButton extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback onTap;
-
-  const PopoverIconButton({
-    Key? key,
-    required this.icon,
-    required this.onTap,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = DevicePreviewTheme.of(context);
-    return SizedBox(
-      height: theme.toolBar.fontStyles.body.fontSize! * 4,
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: theme.toolBar.spacing.small,
-          child: Icon(
-            icon,
-            size: theme.toolBar.fontStyles.body.fontSize! * 1.5,
-          ),
-        ),
       ),
     );
   }
@@ -306,90 +192,31 @@ class _PopoverSearchFieldState extends State<PopoverSearchField> {
 
   @override
   Widget build(BuildContext context) {
-    final toolBarStyle = DevicePreviewTheme.of(context).toolBar;
+    final theme = Theme.of(context);
     return Material(
       child: Container(
-        color: toolBarStyle.backgroundColor,
+        color: theme.appBarTheme.backgroundColor,
         height: 48,
-        padding: EdgeInsets.only(
-          left: toolBarStyle.spacing.regular.top,
-          top: toolBarStyle.spacing.small.top,
-          right: toolBarStyle.spacing.regular.top,
-          bottom: toolBarStyle.spacing.regular.top,
-        ),
         child: TextField(
           style: TextStyle(
-            color: toolBarStyle.foregroundColor,
+            color: theme.appBarTheme.foregroundColor,
             fontSize: 12,
           ),
           controller: _controller,
           decoration: InputDecoration(
-            hintStyle: TextStyle(
-              color: toolBarStyle.foregroundColor.withOpacity(0.5),
-              fontSize: 12,
-            ),
             hintText: widget.hintText, // 'Search by device name...',
-            contentPadding: EdgeInsets.only(
-              left: toolBarStyle.spacing.regular.top,
-              right: toolBarStyle.spacing.regular.top,
-              bottom: toolBarStyle.spacing.big.top,
-            ),
             filled: true,
-            fillColor: toolBarStyle.foregroundColor.withOpacity(0.12),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(4),
             ),
-            prefixIcon: Icon(
-              Icons.search,
-              color: toolBarStyle.foregroundColor.withOpacity(0.5),
-              size: 14,
-            ),
+            prefixIcon: const Icon(Icons.search),
             suffix: InkWell(
-              child: Padding(
-                padding: EdgeInsets.only(
-                  top: toolBarStyle.spacing.small.top,
-                ),
-                child: Icon(
-                  Icons.close,
-                  size: 14,
-                  color: toolBarStyle.foregroundColor.withOpacity(0.5),
-                ),
-              ),
+              child: const Icon(Icons.close),
               onTap: _clear,
             ),
           ),
         ),
       ),
-    );
-  }
-}
-
-class PopoverSlider extends StatelessWidget {
-  final int divisions;
-  final double value;
-  final double min;
-  final double max;
-  final ValueChanged<double> onChanged;
-  const PopoverSlider({
-    Key? key,
-    required this.value,
-    required this.divisions,
-    required this.min,
-    required this.max,
-    required this.onChanged,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = DevicePreviewTheme.of(context);
-    return Slider(
-      divisions: divisions,
-      value: value,
-      onChanged: onChanged,
-      min: min,
-      max: max,
-      activeColor: theme.toolBar.foregroundColor,
-      inactiveColor: theme.toolBar.buttonHoverBackgroundColor,
     );
   }
 }

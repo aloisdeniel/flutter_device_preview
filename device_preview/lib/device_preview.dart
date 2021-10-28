@@ -6,6 +6,5 @@ export 'src/storage/file.dart';
 export 'src/storage/preferences.dart';
 export 'src/storage/storage.dart';
 export 'src/storage/file.dart';
-export 'src/views/device_preview_style.dart';
 export 'src/locales/locales.dart';
 export 'src/locales/default_locales.dart';

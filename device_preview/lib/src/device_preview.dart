@@ -7,7 +7,8 @@ import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/storage/storage.dart';
 import 'package:device_preview/src/utilities/assert_inherited_media_query.dart';
 import 'package:device_preview/src/utilities/media_query_observer.dart';
-import 'package:device_preview/src/views/tool_bar/toolbar.dart';
+import 'package:device_preview/src/views/tool_panel/bottom_toolbar.dart';
+import 'package:device_preview/src/views/tool_panel/tool_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -17,8 +18,8 @@ import 'dart:ui' as ui;
 
 import 'locales/default_locales.dart';
 import 'plugins/plugin.dart';
-import 'utilities/position.dart';
-import 'views/device_preview_style.dart';
+import 'views/large.dart';
+import 'views/small.dart';
 
 /// Simulates how the result of [builder] would render on different
 /// devices.
@@ -47,7 +48,6 @@ class DevicePreview extends StatefulWidget {
     required this.builder,
     this.devices,
     this.data,
-    this.style,
     this.isToolbarVisible = true,
     this.availableLocales,
     this.defaultDevice,
@@ -81,24 +81,6 @@ class DevicePreview extends StatefulWidget {
   /// The list of plugins.
   final List<DevicePreviewPlugin> plugins;
 
-  /// Customizing the tool bar and background aspect.
-  ///
-  /// {@tool snippet}
-  ///
-  /// This sample shows how to apply a light theme for the toolbar and a custom background.
-  ///
-  /// ```dart
-  /// DevicePreview(
-  ///   style: DevicePreviewStyle(
-  ///      background: BoxDecoration(color: const Color(0xFFFF0000)),
-  ///      toolbar: DevicePreviewToolBarStyle.light(),
-  ///   ),
-  ///   builder: (context) => MyApp(),
-  /// )
-  /// ```
-  /// {@end-tool}
-  final DevicePreviewStyle? style;
-
   /// The available locales.
   final List<Locale>? availableLocales;
 
@@ -114,12 +96,46 @@ class DevicePreview extends StatefulWidget {
   @override
   _DevicePreviewState createState() => _DevicePreviewState();
 
-  /// The current target platform for the currently selected device.
+  /// The simulated target platform for the currently selected device.
   static TargetPlatform platform(BuildContext context) {
     final platform = context.select(
       (DevicePreviewStore store) => store.deviceInfo.identifier.platform,
     );
     return platform;
+  }
+
+  /// The simulated visual density for the currently selected device.
+  static VisualDensity visualDensity(BuildContext context) {
+    final deviceType = context.select(
+      (DevicePreviewStore store) => store.deviceInfo.identifier.type,
+    );
+    if (deviceType == DeviceType.desktop || deviceType == DeviceType.laptop) {
+      return VisualDensity.compact;
+    }
+    return VisualDensity.standard;
+  }
+
+  /// Create a new [ThemData] from the given [data], but with updated properties from
+  /// the currently simulated device.
+  static Widget appBuilder(BuildContext context, Widget? child) {
+    final theme = Theme.of(context);
+    final isInitialized = context.select(
+      (DevicePreviewStore store) => store.state.maybeMap(
+        initialized: (_) => true,
+        orElse: () => false,
+      ),
+    );
+    if (!isInitialized || !_isEnabled(context)) {
+      return child!;
+    }
+
+    return Theme(
+      data: theme.copyWith(
+        platform: platform(context),
+        visualDensity: visualDensity(context),
+      ),
+      child: child!,
+    );
   }
 
   static bool _isEnabled(BuildContext context) {
@@ -283,6 +299,9 @@ class DevicePreview extends StatefulWidget {
 }
 
 class _DevicePreviewState extends State<DevicePreview> {
+  bool _isToolPanelPopOverOpen = false;
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   /// Whenever the [screenshot] is called, a new value is pushed to
   /// this stream.
   Stream<DeviceScreenshot> get onScreenshot => _onScreenshot!.stream;
@@ -378,7 +397,7 @@ class _DevicePreviewState extends State<DevicePreview> {
                       final app = widget.builder(context);
                       assert(
                         isWidgetsAppUsingInheritedMediaQuery(app),
-                        'Your widgets app should have its `useInheritedMediaQuery`property set to `true` in order to use DevicePreview.',
+                        'Your widgets app should have its `useInheritedMediaQuery` property set to `true` in order to use DevicePreview.',
                       );
                       return app;
                     },
@@ -427,13 +446,18 @@ class _DevicePreviewState extends State<DevicePreview> {
           (DevicePreviewStore store) => store.data.isEnabled,
         );
 
+        final isDark = context.select(
+          (DevicePreviewStore store) =>
+              store.settings.backgroundTheme ==
+              DevicePreviewBackgroundThemeData.dark,
+        );
+
         final isToolbarVisible = widget.isToolbarVisible &&
             context.select(
               (DevicePreviewStore store) => store.data.isToolbarVisible,
             );
 
-        final style = widget.style ?? DevicePreviewTheme.of(context);
-
+        final theme = isDark ? ThemeData.dark() : ThemeData.light();
         return Directionality(
           textDirection: TextDirection.ltr,
           child: AnimatedSwitcher(
@@ -441,53 +465,109 @@ class _DevicePreviewState extends State<DevicePreview> {
             child: MediaQueryObserver(
               //mediaQuery: DevicePreview._mediaQuery(context),
               child: DecoratedBox(
-                decoration: style.background,
-                child: Builder(
-                  builder: (context) => Stack(
-                    children: <Widget>[
-                      Positioned.fill(
-                        left: isToolbarVisible &&
-                                style.toolBar.position ==
-                                    DevicePreviewToolBarPosition.left
-                            ? DevicePreviewToolBar.width(context) - 12
-                            : 0,
-                        right: isToolbarVisible &&
-                                style.toolBar.position ==
-                                    DevicePreviewToolBarPosition.right
-                            ? DevicePreviewToolBar.width(context) - 12
-                            : 0,
-                        top: isToolbarVisible &&
-                                style.toolBar.position ==
-                                    DevicePreviewToolBarPosition.top
-                            ? DevicePreviewToolBar.height(context) - 12
-                            : 0,
-                        bottom: isToolbarVisible &&
-                                style.toolBar.position ==
-                                    DevicePreviewToolBarPosition.bottom
-                            ? DevicePreviewToolBar.height(context) - 12
-                            : 0,
-                        key: const Key('Preview'),
-                        child: isEnabled
-                            ? Builder(
-                                builder: _buildPreview,
-                              )
-                            : Builder(
-                                key: _appKey,
-                                builder: widget.builder,
-                              ),
-                      ),
-                      if (isToolbarVisible)
-                        Positioned.fill(
-                          key: const Key('Toolbar'),
-                          child: DevicePreviewTheme(
-                            style: style,
-                            child: _ToolsOverlay(
-                              style: style,
+                decoration: BoxDecoration(
+                  color: theme.scaffoldBackgroundColor,
+                ),
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final mediaQuery = MediaQuery.of(context);
+                    final isSmall = constraints.maxWidth < 700;
+
+                    final borderRadius = BorderRadius.only(
+                      topRight:
+                          isSmall ? Radius.zero : const Radius.circular(16),
+                      bottomRight: const Radius.circular(16),
+                      bottomLeft:
+                          isSmall ? const Radius.circular(16) : Radius.zero,
+                    );
+                    return Stack(
+                      children: <Widget>[
+                        if (isToolbarVisible && isSmall)
+                          Positioned(
+                            key: const Key('Small'),
+                            bottom: 0,
+                            right: 0,
+                            left: 0,
+                            child: DevicePreviewSmallLayout(
+                              currentTheme: theme,
+                              maxMenuHeight: constraints.maxHeight * 0.5,
+                              scaffoldKey: scaffoldKey,
+                              onMenuVisibleChanged: (isVisible) => setState(() {
+                                _isToolPanelPopOverOpen = isVisible;
+                              }),
+                            ),
+                          ),
+                        if (isToolbarVisible && !isSmall)
+                          Positioned.fill(
+                            key: const Key('Large'),
+                            child: Theme(
+                              data: theme,
+                              child: const DervicePreviewLargeLayout(),
+                            ),
+                          ),
+                        AnimatedPositioned(
+                          key: const Key('preview'),
+                          duration: const Duration(milliseconds: 200),
+                          left: 0,
+                          right: !isSmall
+                              ? (isEnabled
+                                  ? ToolPanel.panelWidth - 10
+                                  : (64 + mediaQuery.padding.right))
+                              : 0,
+                          top: 0,
+                          bottom: isSmall ? mediaQuery.padding.bottom + 52 : 0,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              boxShadow: const [
+                                BoxShadow(
+                                  blurRadius: 20,
+                                  color: Color(0xAA000000),
+                                ),
+                              ],
+                              borderRadius: borderRadius,
+                              color: theme.scaffoldBackgroundColor,
+                            ),
+                            child: ClipRRect(
+                              borderRadius: borderRadius,
+                              child: isEnabled
+                                  ? Builder(
+                                      builder: _buildPreview,
+                                    )
+                                  : Builder(
+                                      key: _appKey,
+                                      builder: widget.builder,
+                                    ),
                             ),
                           ),
                         ),
-                    ],
-                  ),
+                        Positioned.fill(
+                          child: IgnorePointer(
+                            ignoring: !_isToolPanelPopOverOpen,
+                            child: Localizations(
+                              locale: const Locale('en', 'US'),
+                              delegates: const [
+                                GlobalMaterialLocalizations.delegate,
+                                GlobalCupertinoLocalizations.delegate,
+                                GlobalWidgetsLocalizations.delegate,
+                              ],
+                              child: Navigator(
+                                onGenerateInitialRoutes: (navigator, name) {
+                                  return [
+                                    MaterialPageRoute(
+                                      builder: (context) => Scaffold(
+                                        key: scaffoldKey,
+                                        backgroundColor: Colors.transparent,
+                                      ),
+                                    ),
+                                  ];
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
             ),
@@ -506,108 +586,6 @@ class _DevicePreviewState extends State<DevicePreview> {
 
   /// The current application key.
   final GlobalKey _appKey = GlobalKey();
-}
-
-class _ToolsOverlay extends StatefulWidget {
-  final DevicePreviewStyle style;
-  const _ToolsOverlay({
-    Key? key,
-    required this.style,
-  }) : super(key: key);
-
-  @override
-  _ToolsOverlayState createState() => _ToolsOverlayState();
-}
-
-class _ToolsOverlayState extends State<_ToolsOverlay> {
-  /// To get the global overlay position on screen.
-  final GlobalKey _overlayKey = GlobalKey();
-
-  @override
-  void initState() {
-    // Forcing rebuild to update absolute postion in `_overlayKey`
-    WidgetsBinding.instance!.addPostFrameCallback(
-      (timeStamp) => setState(() {}),
-    );
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: Localizations(
-        locale: const Locale('en', 'US'),
-        delegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-        ],
-        child: Overlay(
-          key: _overlayKey,
-          initialEntries: [
-            OverlayEntry(
-              builder: (context) {
-                final absolutePosition = _overlayKey.absolutePosition;
-                return Stack(
-                  children: [
-                    if (widget.style.toolBar.position ==
-                            DevicePreviewToolBarPosition.bottom &&
-                        absolutePosition != null)
-                      Positioned(
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        child: DevicePreviewToolBar(
-                          key: const Key('Bar'),
-                          overlayPosition: absolutePosition,
-                        ),
-                      ),
-                    if (widget.style.toolBar.position ==
-                            DevicePreviewToolBarPosition.top &&
-                        absolutePosition != null)
-                      Positioned(
-                        left: 0,
-                        right: 0,
-                        top: 0,
-                        child: DevicePreviewToolBar(
-                          key: const Key('Bar'),
-                          overlayPosition: absolutePosition,
-                        ),
-                      ),
-                    if (widget.style.toolBar.position ==
-                            DevicePreviewToolBarPosition.right &&
-                        absolutePosition != null)
-                      Positioned(
-                        top: 0,
-                        right: 0,
-                        bottom: 0,
-                        child: DevicePreviewToolBar(
-                          key: const Key('Bar'),
-                          overlayPosition: absolutePosition,
-                        ),
-                      ),
-                    if (widget.style.toolBar.position ==
-                            DevicePreviewToolBarPosition.left &&
-                        absolutePosition != null)
-                      Positioned(
-                        left: 0,
-                        top: 0,
-                        bottom: 0,
-                        child: DevicePreviewToolBar(
-                          key: const Key('Bar'),
-                          overlayPosition: absolutePosition,
-                        ),
-                      ),
-                  ],
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
 
 /// A screenshot from a [device].
