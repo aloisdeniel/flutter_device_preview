@@ -519,16 +519,28 @@ class _DevicePreviewState extends State<DevicePreview> {
                           bottom: isSmall ? mediaQuery.padding.bottom + 52 : 0,
                           child: Theme(
                             data: background,
-                            child: ClipRRect(
-                              borderRadius: borderRadius,
-                              child: isEnabled
-                                  ? Builder(
-                                      builder: _buildPreview,
-                                    )
-                                  : Builder(
-                                      key: _appKey,
-                                      builder: widget.builder,
-                                    ),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                boxShadow: const [
+                                  BoxShadow(
+                                    blurRadius: 20,
+                                    color: Color(0xAA000000),
+                                  ),
+                                ],
+                                borderRadius: borderRadius,
+                                color: background.scaffoldBackgroundColor,
+                              ),
+                              child: ClipRRect(
+                                borderRadius: borderRadius,
+                                child: isEnabled
+                                    ? Builder(
+                                        builder: _buildPreview,
+                                      )
+                                    : Builder(
+                                        key: _appKey,
+                                        builder: widget.builder,
+                                      ),
+                              ),
                             ),
                           ),
                         ),
