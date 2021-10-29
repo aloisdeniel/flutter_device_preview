@@ -7,6 +7,7 @@ import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/storage/storage.dart';
 import 'package:device_preview/src/utilities/assert_inherited_media_query.dart';
 import 'package:device_preview/src/utilities/media_query_observer.dart';
+import 'package:device_preview/src/views/theme.dart';
 import 'package:device_preview/src/views/tool_panel/tool_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -340,6 +341,7 @@ class _DevicePreviewState extends State<DevicePreview> {
   }
 
   Widget _buildPreview(BuildContext context) {
+    final theme = Theme.of(context);
     final isEnabled = context.select(
       (DevicePreviewStore store) => store.state.maybeMap(
         initialized: (state) => state.data.isEnabled,
@@ -366,7 +368,8 @@ class _DevicePreviewState extends State<DevicePreview> {
       (DevicePreviewStore store) => store.data.isDarkMode,
     );
 
-    return Padding(
+    return Container(
+      color: theme.canvasColor,
       padding: EdgeInsets.only(
         top: 20 + mediaQuery.viewPadding.top,
         right: 20 + mediaQuery.viewPadding.right,
@@ -445,10 +448,12 @@ class _DevicePreviewState extends State<DevicePreview> {
           (DevicePreviewStore store) => store.data.isEnabled,
         );
 
-        final isDark = context.select(
-          (DevicePreviewStore store) =>
-              store.settings.backgroundTheme ==
-              DevicePreviewBackgroundThemeData.dark,
+        final toolbarTheme = context.select(
+          (DevicePreviewStore store) => store.settings.toolbarTheme,
+        );
+
+        final backgroundTheme = context.select(
+          (DevicePreviewStore store) => store.settings.backgroundTheme,
         );
 
         final isToolbarVisible = widget.isToolbarVisible &&
@@ -456,7 +461,8 @@ class _DevicePreviewState extends State<DevicePreview> {
               (DevicePreviewStore store) => store.data.isToolbarVisible,
             );
 
-        final theme = isDark ? ThemeData.dark() : ThemeData.light();
+        final toolbar = toolbarTheme.asThemeData();
+        final background = backgroundTheme.asThemeData();
         return Directionality(
           textDirection: TextDirection.ltr,
           child: AnimatedSwitcher(
@@ -465,7 +471,7 @@ class _DevicePreviewState extends State<DevicePreview> {
               //mediaQuery: DevicePreview._mediaQuery(context),
               child: DecoratedBox(
                 decoration: BoxDecoration(
-                  color: theme.scaffoldBackgroundColor,
+                  color: toolbar.scaffoldBackgroundColor,
                 ),
                 child: LayoutBuilder(
                   builder: (context, constraints) {
@@ -488,7 +494,6 @@ class _DevicePreviewState extends State<DevicePreview> {
                             right: 0,
                             left: 0,
                             child: DevicePreviewSmallLayout(
-                              currentTheme: theme,
                               maxMenuHeight: constraints.maxHeight * 0.5,
                               scaffoldKey: scaffoldKey,
                               onMenuVisibleChanged: (isVisible) => setState(() {
@@ -497,12 +502,9 @@ class _DevicePreviewState extends State<DevicePreview> {
                             ),
                           ),
                         if (isToolbarVisible && !isSmall)
-                          Positioned.fill(
-                            key: const Key('Large'),
-                            child: Theme(
-                              data: theme,
-                              child: const DervicePreviewLargeLayout(),
-                            ),
+                          const Positioned.fill(
+                            key: Key('Large'),
+                            child: DervicePreviewLargeLayout(),
                           ),
                         AnimatedPositioned(
                           key: const Key('preview'),
@@ -515,17 +517,8 @@ class _DevicePreviewState extends State<DevicePreview> {
                               : 0,
                           top: 0,
                           bottom: isSmall ? mediaQuery.padding.bottom + 52 : 0,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              boxShadow: const [
-                                BoxShadow(
-                                  blurRadius: 20,
-                                  color: Color(0xAA000000),
-                                ),
-                              ],
-                              borderRadius: borderRadius,
-                              color: theme.scaffoldBackgroundColor,
-                            ),
+                          child: Theme(
+                            data: background,
                             child: ClipRRect(
                               borderRadius: borderRadius,
                               child: isEnabled

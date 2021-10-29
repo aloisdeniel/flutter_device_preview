@@ -1,5 +1,6 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:device_preview/src/state/store.dart';
+import 'package:device_preview/src/views/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -13,13 +14,14 @@ class SettingsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isBackgroundThemeDark = context.select(
-          (DevicePreviewStore store) => store.settings.backgroundTheme,
-        ) ==
-        DevicePreviewBackgroundThemeData.dark;
-    final theme = Theme.of(context);
-    final currentTheme =
-        isBackgroundThemeDark ? ThemeData.dark() : ThemeData.light();
+    final backgroundTheme = context.select(
+      (DevicePreviewStore store) => store.settings.backgroundTheme,
+    );
+    final toolbarTheme = context.select(
+      (DevicePreviewStore store) => store.settings.toolbarTheme,
+    );
+    final background = backgroundTheme.asThemeData();
+    final toolbar = toolbarTheme.asThemeData();
     return ToolPanelSection(
       title: 'Preview settings',
       icon: Icons.device_hub_rounded,
@@ -27,16 +29,18 @@ class SettingsSection extends StatelessWidget {
         ListTile(
           title: const Text('Background color'),
           subtitle: Text(
-            isBackgroundThemeDark ? 'Dark' : 'Light',
+            backgroundTheme == DevicePreviewBackgroundThemeData.dark
+                ? 'Dark'
+                : 'Light',
           ),
           trailing: Container(
             width: 24,
             height: 24,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: currentTheme.scaffoldBackgroundColor,
+              color: background.scaffoldBackgroundColor,
               border: Border.all(
-                color: theme.backgroundColor,
+                color: toolbar.backgroundColor,
                 width: 1,
               ),
             ),
@@ -44,9 +48,38 @@ class SettingsSection extends StatelessWidget {
           onTap: () {
             final state = context.read<DevicePreviewStore>();
             state.settings = state.settings.copyWith(
-              backgroundTheme: isBackgroundThemeDark
-                  ? DevicePreviewBackgroundThemeData.light
-                  : DevicePreviewBackgroundThemeData.dark,
+              backgroundTheme:
+                  backgroundTheme == DevicePreviewBackgroundThemeData.dark
+                      ? DevicePreviewBackgroundThemeData.light
+                      : DevicePreviewBackgroundThemeData.dark,
+            );
+          },
+        ),
+        ListTile(
+          title: const Text('Tools theme'),
+          subtitle: Text(
+            toolbarTheme == DevicePreviewToolBarThemeData.dark
+                ? 'Dark'
+                : 'Light',
+          ),
+          trailing: Container(
+            width: 24,
+            height: 24,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: toolbar.scaffoldBackgroundColor,
+              border: Border.all(
+                color: toolbar.backgroundColor,
+                width: 1,
+              ),
+            ),
+          ),
+          onTap: () {
+            final state = context.read<DevicePreviewStore>();
+            state.settings = state.settings.copyWith(
+              toolbarTheme: toolbarTheme == DevicePreviewToolBarThemeData.dark
+                  ? DevicePreviewToolBarThemeData.light
+                  : DevicePreviewToolBarThemeData.dark,
             );
           },
         ),

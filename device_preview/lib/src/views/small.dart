@@ -1,5 +1,8 @@
+import 'package:device_preview/src/state/store.dart';
+import 'package:device_preview/src/views/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/src/provider.dart';
 
 import 'tool_panel/bottom_toolbar.dart';
 import 'tool_panel/tool_panel.dart';
@@ -8,20 +11,21 @@ class DevicePreviewSmallLayout extends StatelessWidget {
   const DevicePreviewSmallLayout({
     Key? key,
     required this.maxMenuHeight,
-    required this.currentTheme,
     required this.scaffoldKey,
     required this.onMenuVisibleChanged,
   }) : super(key: key);
 
   final double maxMenuHeight;
-  final ThemeData currentTheme;
   final GlobalKey<ScaffoldState> scaffoldKey;
   final ValueChanged<bool> onMenuVisibleChanged;
 
   @override
   Widget build(BuildContext context) {
+    final toolbarTheme = context.select(
+      (DevicePreviewStore store) => store.settings.toolbarTheme,
+    );
     return Theme(
-      data: currentTheme,
+      data: toolbarTheme.asThemeData(),
       child: SafeArea(
         top: false,
         child: BottomToolbar(

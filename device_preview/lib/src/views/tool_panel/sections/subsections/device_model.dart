@@ -1,7 +1,7 @@
 import 'package:device_frame/device_frame.dart';
 import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/views/tool_panel/format.dart';
-import 'package:device_preview/src/views/widgets/target_platform_icon.dart';
+import 'package:device_preview/src/views/tool_panel/widgets/target_platform_icon.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

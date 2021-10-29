@@ -1,4 +1,5 @@
 import 'package:device_preview/src/state/store.dart';
+import 'package:device_preview/src/views/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -24,12 +25,20 @@ class ToolPanel extends StatelessWidget {
       onGenerateInitialRoutes: (nav, name) {
         return [
           MaterialPageRoute(
-            builder: (context) => _ToolPanel(
-              isModal: isModal,
-              onClose: () {
-                Navigator.maybePop(rootContext);
-              },
-            ),
+            builder: (context) {
+              final toolbarTheme = context.select(
+                (DevicePreviewStore store) => store.settings.toolbarTheme,
+              );
+              return Theme(
+                data: toolbarTheme.asThemeData(),
+                child: _ToolPanel(
+                  isModal: isModal,
+                  onClose: () {
+                    Navigator.maybePop(rootContext);
+                  },
+                ),
+              );
+            },
           ),
         ];
       },

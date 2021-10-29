@@ -1,6 +1,6 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:device_preview/src/state/store.dart';
-import 'package:device_preview/src/views/widgets/popover.dart';
+import 'package:device_preview/src/views/tool_panel/widgets/search_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -28,19 +28,21 @@ class _LocalePickerState extends State<LocalePicker> {
       ),
       body: Column(
         children: [
-          PopoverSearchField(
+          ToolbarSearchField(
             hintText: 'Search by locale name or code',
             text: filter,
             onTextChanged: (value) => setState(() => filter = value),
           ),
           Expanded(
             child: ListView(
-              children: locales.where((locale) {
-                final filter = this.filter.trim().toLowerCase();
-                return filter.isEmpty ||
-                    locale.name.toLowerCase().contains(filter) ||
-                    locale.code.toLowerCase().contains(filter);
-              }).map(
+              children: locales.where(
+                (locale) {
+                  final filter = this.filter.trim().toLowerCase();
+                  return filter.isEmpty ||
+                      locale.name.toLowerCase().contains(filter) ||
+                      locale.code.toLowerCase().contains(filter);
+                },
+              ).map(
                 (locale) {
                   final isSelected = locale.code == selectedLocale;
                   return ListTile(
