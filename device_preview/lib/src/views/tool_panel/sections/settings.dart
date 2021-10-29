@@ -24,7 +24,6 @@ class SettingsSection extends StatelessWidget {
     final toolbar = toolbarTheme.asThemeData();
     return ToolPanelSection(
       title: 'Preview settings',
-      icon: Icons.device_hub_rounded,
       children: [
         ListTile(
           title: const Text('Background color'),

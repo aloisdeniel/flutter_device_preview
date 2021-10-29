@@ -4,18 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-import 'sections/accesibility.dart';
-import 'sections/device.dart';
-import 'sections/settings.dart';
-import 'sections/system.dart';
+import 'sections/section.dart';
 
 class ToolPanel extends StatelessWidget {
   const ToolPanel({
     Key? key,
+    required this.sections,
     this.isModal = false,
   }) : super(key: key);
 
   final bool isModal;
+  final List<Widget> sections;
 
   static const double panelWidth = 320;
   @override
@@ -32,6 +31,7 @@ class ToolPanel extends StatelessWidget {
               return Theme(
                 data: toolbarTheme.asThemeData(),
                 child: _ToolPanel(
+                  sections: sections,
                   isModal: isModal,
                   onClose: () {
                     Navigator.maybePop(rootContext);
@@ -47,11 +47,16 @@ class ToolPanel extends StatelessWidget {
 }
 
 class _ToolPanel extends StatelessWidget {
-  const _ToolPanel({Key? key, required this.isModal, required this.onClose})
-      : super(key: key);
+  const _ToolPanel({
+    Key? key,
+    required this.isModal,
+    required this.onClose,
+    required this.sections,
+  }) : super(key: key);
 
   final bool isModal;
   final VoidCallback onClose;
+  final List<Widget> sections;
 
   @override
   Widget build(BuildContext context) {
@@ -92,13 +97,8 @@ class _ToolPanel extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          const CustomScrollView(
-            slivers: [
-              DeviceSection(),
-              SystemSection(),
-              AccessibilitySection(),
-              SettingsSection(),
-            ],
+          CustomScrollView(
+            slivers: sections,
           ),
           IgnorePointer(
             ignoring: isEnabled,

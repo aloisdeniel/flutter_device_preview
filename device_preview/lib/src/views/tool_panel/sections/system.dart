@@ -32,7 +32,6 @@ class SystemSection extends StatelessWidget {
 
     return ToolPanelSection(
       title: 'System',
-      icon: Icons.device_hub_rounded,
       children: [
         ListTile(
           title: const Text('Locale'),

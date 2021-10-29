@@ -1,4 +1,3 @@
-import 'package:device_preview/src/state/custom_device.dart';
 import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/views/tool_panel/format.dart';
 import 'package:device_preview/src/views/tool_panel/sections/subsections/device_model.dart';
@@ -22,11 +21,6 @@ class DeviceSection extends StatelessWidget {
     final deviceIdentifier = context.select(
       (DevicePreviewStore store) => store.deviceInfo.identifier,
     );
-    final isCustomSelected = context.select(
-      (DevicePreviewStore store) =>
-          store.deviceInfo.identifier.toString() ==
-          CustomDeviceIdentifier.identifier,
-    );
 
     final canRotate = context.select(
       (DevicePreviewStore store) => store.deviceInfo.rotatedSafeAreas != null,
@@ -46,7 +40,6 @@ class DeviceSection extends StatelessWidget {
 
     return ToolPanelSection(
       title: 'Device',
-      icon: Icons.device_hub_rounded,
       children: [
         ListTile(
           title: const Text('Model'),

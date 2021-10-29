@@ -7,7 +7,6 @@ List<Widget> buildCustomDeviceTiles(BuildContext context) {
   return [
     ToolPanelSection(
       title: 'Screen',
-      icon: Icons.palette,
       children: [
         if (customDevice != null) ...[
           ListTile(
@@ -69,7 +68,6 @@ List<Widget> buildCustomDeviceTiles(BuildContext context) {
     ),
     ToolPanelSection(
       title: 'Safe areas',
-      icon: Icons.palette,
       children: [
         if (customDevice != null) ...[
           ListTile(
@@ -149,7 +147,6 @@ List<Widget> buildCustomDeviceTiles(BuildContext context) {
     ),
     ToolPanelSection(
       title: 'System',
-      icon: Icons.palette,
       children: [
         ..._allPlatforms.map(
           (p) => ListTile(
@@ -173,7 +170,6 @@ List<Widget> buildCustomDeviceTiles(BuildContext context) {
     ),
     ToolPanelSection(
       title: 'Form factor',
-      icon: Icons.palette,
       children: [
         ..._allDeviceTypes.map(
           (p) => ListTile(

@@ -8,6 +8,10 @@ import 'package:device_preview/src/storage/storage.dart';
 import 'package:device_preview/src/utilities/assert_inherited_media_query.dart';
 import 'package:device_preview/src/utilities/media_query_observer.dart';
 import 'package:device_preview/src/views/theme.dart';
+import 'package:device_preview/src/views/tool_panel/sections/accesibility.dart';
+import 'package:device_preview/src/views/tool_panel/sections/device.dart';
+import 'package:device_preview/src/views/tool_panel/sections/settings.dart';
+import 'package:device_preview/src/views/tool_panel/sections/system.dart';
 import 'package:device_preview/src/views/tool_panel/tool_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -17,7 +21,6 @@ import 'package:provider/provider.dart';
 import 'dart:ui' as ui;
 
 import 'locales/default_locales.dart';
-import 'plugins/plugin.dart';
 import 'views/large.dart';
 import 'views/small.dart';
 
@@ -51,7 +54,7 @@ class DevicePreview extends StatefulWidget {
     this.isToolbarVisible = true,
     this.availableLocales,
     this.defaultDevice,
-    this.plugins = const <DevicePreviewPlugin>[],
+    this.plugins = defaultPlugins,
     DevicePreviewStorage? storage,
     this.enabled = true,
   })  : assert(devices == null || devices.isNotEmpty),
@@ -79,7 +82,7 @@ class DevicePreview extends StatefulWidget {
   final List<DeviceInfo>? devices;
 
   /// The list of plugins.
-  final List<DevicePreviewPlugin> plugins;
+  final List<Widget> plugins;
 
   /// The available locales.
   final List<Locale>? availableLocales;
@@ -92,6 +95,13 @@ class DevicePreview extends StatefulWidget {
   final DevicePreviewStorage storage;
 
   static final List<DeviceInfo> defaultDevices = Devices.all;
+
+  static const List<Widget> defaultPlugins = <Widget>[
+    DeviceSection(),
+    SystemSection(),
+    AccessibilitySection(),
+    SettingsSection(),
+  ];
 
   @override
   _DevicePreviewState createState() => _DevicePreviewState();
@@ -169,12 +179,6 @@ class DevicePreview extends StatefulWidget {
       },
       orElse: () => WidgetsBinding.instance!.window.locale,
     );
-  }
-
-  /// The list of declared plugins.
-  static List<DevicePreviewPlugin> pluginsOf(BuildContext context) {
-    final state = context.findAncestorStateOfType<_DevicePreviewState>();
-    return state!.widget.plugins;
   }
 
   /// Make the toolbar visible to the user.
@@ -494,6 +498,7 @@ class _DevicePreviewState extends State<DevicePreview> {
                             right: 0,
                             left: 0,
                             child: DevicePreviewSmallLayout(
+                              sections: widget.plugins,
                               maxMenuHeight: constraints.maxHeight * 0.5,
                               scaffoldKey: scaffoldKey,
                               onMenuVisibleChanged: (isVisible) => setState(() {
@@ -502,9 +507,11 @@ class _DevicePreviewState extends State<DevicePreview> {
                             ),
                           ),
                         if (isToolbarVisible && !isSmall)
-                          const Positioned.fill(
-                            key: Key('Large'),
-                            child: DervicePreviewLargeLayout(),
+                          Positioned.fill(
+                            key: const Key('Large'),
+                            child: DervicePreviewLargeLayout(
+                              sections: widget.plugins,
+                            ),
                           ),
                         AnimatedPositioned(
                           key: const Key('preview'),

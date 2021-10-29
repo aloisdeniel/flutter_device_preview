@@ -8,3 +8,5 @@ export 'src/storage/storage.dart';
 export 'src/storage/file.dart';
 export 'src/locales/locales.dart';
 export 'src/locales/default_locales.dart';
+
+export 'src/views/tool_panel/sections/section.dart';

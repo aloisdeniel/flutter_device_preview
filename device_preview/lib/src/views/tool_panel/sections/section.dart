@@ -4,13 +4,11 @@ class ToolPanelSection extends StatelessWidget {
   const ToolPanelSection({
     Key? key,
     required this.title,
-    required this.icon,
     required this.children,
   }) : super(key: key);
 
   final List<Widget> children;
   final String title;
-  final IconData icon;
 
   @override
   Widget build(BuildContext context) {

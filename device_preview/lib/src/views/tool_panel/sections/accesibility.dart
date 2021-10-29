@@ -23,7 +23,6 @@ class AccessibilitySection extends StatelessWidget {
     );
     return ToolPanelSection(
       title: 'Accessibility',
-      icon: Icons.device_hub_rounded,
       children: [
         ListTile(
           title: const Text('Accessible navigation'),

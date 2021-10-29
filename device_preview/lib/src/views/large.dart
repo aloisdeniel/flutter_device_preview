@@ -4,12 +4,15 @@ import 'package:device_preview/src/views/tool_panel/tool_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:provider/src/provider.dart';
+import 'package:provider/provider.dart';
 
 class DervicePreviewLargeLayout extends StatefulWidget {
   const DervicePreviewLargeLayout({
     Key? key,
+    required this.sections,
   }) : super(key: key);
+
+  final List<Widget> sections;
 
   @override
   _DervicePreviewLargeLayoutState createState() =>
@@ -59,7 +62,9 @@ class _DervicePreviewLargeLayoutState extends State<DervicePreviewLargeLayout> {
                     onGenerateInitialRoutes: (navigator, initialRoute) {
                       return [
                         MaterialPageRoute(
-                          builder: (context) => const ToolPanel(),
+                          builder: (context) => ToolPanel(
+                            sections: widget.sections,
+                          ),
                         ),
                       ];
                     },
