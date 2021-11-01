@@ -27,9 +27,24 @@
 
 ## Quickstart
 
-Wrap your app's root widget in a `DevicePreview` and set  your app's `useInheritedMediaQuery` to `true`.
+### Add dependency to your pubspec file
 
-> Make sure to provide `locale` and `useInheritedMediaQuery` to your `WidgetsApp`. If not defined, `MediaQuery` won't be simulated for the selected device and selected locale won't be applied.
+Since Device Preview is a simple Dart package, you have to declare it as any other dependency in your `pubspec.yaml` file.
+
+```yaml
+dependencies:
+  device_preview: <latest version>
+```
+
+### Add DevicePreview
+
+Wrap your app's root widget in a `DevicePreview` and make sure to :
+
+* Set your app's `useInheritedMediaQuery` to `true`.
+* Set your app's `builder` to `DevicePreview.appBuilder`.
+* Set your app's `locale` to `DevicePreview.locale(context)`.
+
+> Make sure to override the previous properties as described. If not defined, `MediaQuery` won't be simulated for the selected device.
 
 ```dart
 import 'package:device_preview/device_preview.dart';
@@ -45,9 +60,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      useInheritedMediaQuery: true,// Set to true
-      locale: DevicePreview.locale(context), // Add the locale here
-      home: HomePage(),
+      useInheritedMediaQuery: true,
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      home: const HomePage(),
     );
   }
 }
@@ -65,4 +83,4 @@ class MyApp extends StatelessWidget {
 
 Think of Device Preview as a first-order approximation of how your app looks and feels on a mobile device. With Device Mode you don't actually run your code on a mobile device. You simulate the mobile user experience from your laptop, desktop or tablet.
 
-!> There are some aspects of mobile devices that Device Preview will never be able to simulate. When in doubt, your best bet is to actually run your app on a real device.
+> There are some aspects of mobile devices that Device Preview will never be able to simulate. When in doubt, your best bet is to actually run your app on a real device.

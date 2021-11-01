@@ -6,7 +6,7 @@
 
 **Defaults to :** `true`
 
-If not `enabled`, the `child` is used directly.
+If not `enabled`, the `builder`'s result is used directly and the preview is ignored.
 
 ##### Example
 
@@ -19,19 +19,17 @@ DevicePreview(
 
 ## **storage** 
 
-**Defaults to :** `const PreferencesDevicePreviewStorage()`
+**Defaults to :** `DevicePreviewStorage.preferences()`
 
-Indicates how the configuration should be persisted between sessions. Defaults to `PreferencesDevicePreviewStorage` which save all preferences as a JSON document in the shared preferences.
+Indicates how the device preview settings should be persisted between sessions. Defaults to `DevicePreviewStorage.preferences()` which save all preferences as a JSON document in the shared preferences.
 
-To deactivate persistence, use `NoDevicePreviewStorage`.
-
-?> If you use a lot of device preview plugins, the `FileDevicePreviewStorage` may be a better option too. This is because Device Preview plugins can use the same storage to save local data, and since shared preferences can have a size limit, it may exceed this limit. But `PreferencesDevicePreviewStorage` is completely fine if you only use the built-in device preview plugins.
+To disable persistence between sessions, use `DevicePreviewStorage.none()`.
 
 ##### Example
 
 ```dart
 DevicePreview(
-  storage: const NoDevicePreviewStorage(), // No persistence
+  storage: const DevicePreviewStorage.none(), // No persistence
   builder: (context) => MyApp(),
 )
 ```
@@ -46,36 +44,25 @@ Indicates whether the settings toolbar should be visible.
 
 ```dart
 DevicePreview(
-  isToolbarVisible: false, // Hides toolbar
+  isToolbarVisible: false, // Hides toolbar but keep preview active
   builder: (context) => MyApp(),
 )
 ```
 
-## **style**
+## **tools**
 
-**Defaults to :** `DevicePreviewStyle.fallback(context)`
+**Defaults to :** `DevicePreview.defaultTools`
 
-Set the visual aspect of the device preview.
+All of the tools available from the Device Preview menu.
 
-##### Example
+By default, the available sections are : 
 
-```dart
-DevicePreview(
-  style: DevicePreviewStyle(
-    background: BoxDecoration(color: const Color(0xFFFF0000)),
-    toolbar: DevicePreviewToolBarStyle.light(),
-  ),
-  builder: (context) => MyApp(),
-)
-```
+*  `DeviceSection()` : a device model, the screen orientation, the frame visibility, the keyboard visibility
+*  `SystemSection()` : the current device locale, the theme (light or dark)
+*  `AccessibilitySection()` : text scaling factory, color and navigation accessibility options
+*  `SettingsSection()` : the Device Preview theme (light or dark).
 
-## **plugins**
-
-**Defaults to :** `const <DevicePreviewPlugin>[]`
-
-Add plugin buttons to the toolbar.
-
-See the [plugins section](/context/plugins/screenshots.) for more details.
+See the [plugins section](/context/plugins/screenshots.) to learn more on how to add additionnal sections like ScreenshotSection or a custom one.
 
 ##### Example
 
@@ -83,11 +70,11 @@ See the [plugins section](/context/plugins/screenshots.) for more details.
 import 'package:device_preview/plugins.dart';
 
 DevicePreview(
-  plugins: [
-    const ScreenshotPlugin(),
-    const FileExplorerPlugin(),
-  ]
-  builder: (context) => MyApp(),
+  builder: (context) => const MyApp(),
+  tools: [
+    ...DevicePreview.defaultTools,
+    const DevicePreviewScreenshot(),
+  ],
 )
 ```
 
@@ -95,7 +82,7 @@ DevicePreview(
 
 **Defaults to :** `defaultAvailableLocales (see lib/src/locales/default_locales.dart)`
 
-The locales that are available on the simulated device.
+The locales that are available from the locale menu.
 
 ```dart
 DevicePreview(
@@ -105,4 +92,21 @@ DevicePreview(
   ]
   builder: (context) => MyApp(),
 )
+```
+
+## **data**
+
+**Defaults to :** `null`
+
+Allow to override the tool configuration (selected device and other options).
+
+```dart
+DevicePreview(
+  builder: (context) => const MyApp(),
+  data: DevicePreviewData(
+    deviceIdentifier: Devices.ios.iPhone11.toString(),
+    isFrameVisible: false,
+    locale: 'fr_FR',
+  ),
+),
 ```

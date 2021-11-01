@@ -4,15 +4,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'basic.dart';
+import 'custom_plugin.dart';
 
 void main() {
-  debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
-
-  WidgetsFlutterBinding.ensureInitialized();
-
   runApp(
     DevicePreview(
       enabled: true,
+      tools: [
+        ...DevicePreview.defaultTools,
+        const CustomPlugin(),
+      ],
       builder: (context) => const BasicApp(),
     ),
   );

@@ -1,39 +1,38 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# [Device Preview](https://pub.dev/packages/device_preview) : Screenshot
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
+Plugin for [Device Preview](https://pub.dev/packages/device_preview) that adds a menu to take a screenshot of the current preview.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
+## Install
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Declare it as any other dependency in your `pubspec.yaml` file.
 
-## Features
+```yaml
+dependencies:
+  device_preview_screenshot: <latest version>
+```
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+Then, add a `DevicePreviewScreenshot` to your `DevicePreview`'s `tools` property.
 
-## Getting started
+```dart
+import 'package:device_preview_screenshot/device_preview_screenshot.dart';
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+DevicePreview(
+    // ...
+    tools: [
+        ...DevicePreview.defaultTools,
+        const DevicePreviewScreenshot(),
+    ],
+),
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+Click on the dedicated button from the toolbar to create a capture of your preview.
 
-```dart
-const like = 'sample';
-```
+### Screenshot storage
 
-## Additional information
+You can customize the way your screenshots are saved by updating the `onScreenshot` property of the plugin.
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+By default, the screenshots are displayed as base64 image data in the console *(and saved in your Clipboard)*.
+
+You can also choose to save the screenshot in the local storage of your device by using `screenshotAsFiles(Directory directory)` , or to implement a custom `ScreenshotProcessor`.

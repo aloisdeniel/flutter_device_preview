@@ -1,31 +1,34 @@
 # Writing your own plugin
 
-Making custom plugins can be really useful to add your own debugging tools.
-
-You can easily add a button to the tool bar that opens a window with your custom content.
+Making custom plugins can be really useful to add your own debugging tools to the device preview menu.
 
 ## Define your plugin
 
-```dart
-import 'package:device_preview/plugins.dart';
+A plugin is nothing more than a regular [Sliver] that is added to the main Device Preview menu.
 
-class CustomPlugin extends DevicePreviewPlugin {
-  const CustomPlugin() : super(
-          identifier: 'custom', // Unique identifier
-          name: 'Custom', // Window's title
-          icon: Icons.battery_unknown, // Button's icon
-          windowSize: const Size(220, 220), // Window's size
-        );
+To make things more aligned with built-in sections, you can add the `ToolPanelSection` widget and the `package:flutter/material.dart` widgets.
+
+```dart
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/material.dart';
+
+class CustomPlugin extends StatelessWidget {
+  const CustomPlugin({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  Widget buildData(
-    BuildContext context,
-    Map<String, dynamic> data, // You plugin preferences (saved with other device preview's preferences)
-    DevicePreviewPluginDataUpdater updateData,  // update your plugin's data and triggers a rebuild.
-  ) {
-    // Build the window's content here.
-    return Center(
-        child: Text('Hello !'), 
+  Widget build(BuildContext context) {
+    return ToolPanelSection(
+      title: 'Screenshot',
+      children: [
+        ListTile(
+          title: const Text('Print in console'),
+          onTap: () {
+            print('Hey, this is a custom plugin!');
+          },
+        )
+      ],
     );
   }
 }
@@ -33,13 +36,24 @@ class CustomPlugin extends DevicePreviewPlugin {
 
 ## Configure
 
-Add your plugin instance to your `DevicePreview`'s `plugins` property.
+![illustration](images/custom.png ':size=150')
+
+Add your plugin instance to your `DevicePreview`'s `tools` property.
 
 ```dart
 DevicePreview(
     // ...
-    plugins: [
+    tools: [
+        ...DevicePreview.defaultTools,
         const CustomPlugin(),
     ],
 ),
 ```
+
+## Observing Device Preview's state
+
+If you need to check the current `DevicePreview` state, you can use one of the available methods :
+
+* `DevicePreview.isEnabled(BuildContext context)` : indicate whether the preview is currently enabled or not
+* `DevicePreview.selectedDevice(BuildContext context)` : get the currently selected device
+* `DevicePreview.locale(BuildContext context)` : get the currently selected locale

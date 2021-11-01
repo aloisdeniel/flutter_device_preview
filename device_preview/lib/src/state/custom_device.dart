@@ -49,13 +49,13 @@ class CustomDeviceInfo implements DeviceInfo {
 
     final svgFrame = '''
     <svg width="${frameSize.width}" height="${frameSize.height}" viewBox="0 0 ${frameSize.width} ${frameSize.height}" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="0" y="0" width="${frameSize.width}" height="${frameSize.height}" rx="20" fill="#0A0A0A" stroke="url(#paint0_linear)" stroke-width="6"/>
       <defs>
       <linearGradient id="paint0_linear" x1="${frameSize.width}" y1="0" x2="${frameSize.width}" y2="${frameSize.height}" gradientUnits="userSpaceOnUse">
         <stop stop-color="#D2D2D2"/>
         <stop offset="1" stop-color="#525252"/>
         </linearGradient>
       </defs>
+      <rect x="0" y="0" width="${frameSize.width}" height="${frameSize.height}" rx="20" fill="#0A0A0A" stroke="url(#paint0_linear)" stroke-width="6"/>
     </svg>
     ''';
 

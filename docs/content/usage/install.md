@@ -13,9 +13,13 @@ dependencies:
 
 ## Add DevicePreview
 
-Wrap your app's root widget in a `DevicePreview` and set  your app's `useInheritedMediaQuery` to `true`.
+Wrap your app's root widget in a `DevicePreview` and make sure to :
 
-!> Make sure to provide `locale` and `useInheritedMediaQuery` to your `WidgetsApp`. If not defined, `MediaQuery` won't be simulated for the selected device and selected locale won't be applied.
+* Set your app's `useInheritedMediaQuery` to `true`.
+* Set your app's `builder` to `DevicePreview.appBuilder`.
+* Set your app's `locale` to `DevicePreview.locale(context)`.
+
+!> Make sure to override the previous properties as described. If not defined, `MediaQuery` won't be simulated for the selected device.
 
 ```dart
 import 'package:device_preview/device_preview.dart';
@@ -31,9 +35,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      locale: DevicePreview.locale(context), // Add the locale here
-      useInheritedMediaQuery: true, // Set to true
-      home: HomePage(),
+      useInheritedMediaQuery: true,
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      home: const HomePage(),
     );
   }
 }

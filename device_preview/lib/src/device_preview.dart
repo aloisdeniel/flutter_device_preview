@@ -141,14 +141,19 @@ class DevicePreview extends StatefulWidget {
   /// Create a new [ThemData] from the given [data], but with updated properties from
   /// the currently simulated device.
   static Widget appBuilder(BuildContext context, Widget? child) {
+    if (!_isEnabled(context)) {
+      return child!;
+    }
+
     final theme = Theme.of(context);
-    final isInitialized = context.select(
+    final isInitializedAndEnabled = context.select(
       (DevicePreviewStore store) => store.state.maybeMap(
-        initialized: (_) => true,
+        initialized: (initialized) => initialized.data.isEnabled,
         orElse: () => false,
       ),
     );
-    if (!isInitialized || !_isEnabled(context)) {
+
+    if (!isInitializedAndEnabled) {
       return child!;
     }
 
@@ -159,6 +164,19 @@ class DevicePreview extends StatefulWidget {
       ),
       child: child!,
     );
+  }
+
+  /// Indicates whether the device preview is currently enabled.
+  static bool isEnabled(BuildContext context) {
+    if (_isEnabled(context)) {
+      return context.select(
+        (DevicePreviewStore store) => store.state.maybeMap(
+          initialized: (initialized) => initialized.data.isEnabled,
+          orElse: () => false,
+        ),
+      );
+    }
+    return false;
   }
 
   static bool _isEnabled(BuildContext context) {

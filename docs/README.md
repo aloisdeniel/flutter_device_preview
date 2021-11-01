@@ -5,8 +5,7 @@
 * Dynamic system configuration (*language, dark mode, text scaling factor, ...)*
 * Freeform device with adjustable resolution and safe areas
 * Keep the application state
-* Plugin system (*Screenshot, File explorer, ...*)
-* Customizable plugins
+* Plugin system (*Screenshot, custom...* )
 
 # Demo
 

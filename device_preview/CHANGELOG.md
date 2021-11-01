@@ -1,4 +1,9 @@
-## 1.0.0-alpha.5
+## 1.0.0-alpha.7
+
+* Fixed `enabled` issue.
+* Fixed SVG issue with custom device.
+
+## 1.0.0-alpha.6
 
 * Upgraded `device_frame` dependency.
 * Fixed theming issues in small layout.
