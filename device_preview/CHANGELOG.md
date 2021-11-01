@@ -1,3 +1,7 @@
+## 1.0.0-alpha.8
+
+* Removed generated files from example.
+
 ## 1.0.0-alpha.7
 
 * Fixed `enabled` issue.

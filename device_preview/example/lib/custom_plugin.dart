@@ -14,6 +14,7 @@ class CustomPlugin extends StatelessWidget {
         ListTile(
           title: const Text('Print in console'),
           onTap: () {
+            // ignore: avoid_print
             print('Hey, this is a custom plugin!');
           },
         )
