@@ -21,7 +21,7 @@
   height: 52px;
   padding: 0px;
   margin: 0px;
-  background: #58B5F0;
+  background: #4E7FFF;
   border-radius: 26px;
   margin: 6px;
 }
@@ -35,7 +35,7 @@
 }
 
 .cover-buttons a:hover {
-  background: #3290CC;
+  background: #6891FE;
 }
 
 .scroll-indicator-container {

@@ -7,8 +7,6 @@
 
 - Plugins
     - [Screenshot](content/plugins/screenshot.md)
-    - [File explorer](content/plugins/file_explorer.md)
-    - [Shared preferences explorer](content/plugins/preferences_explorer.md)
     - [Build your own](content/plugins/custom.md)
 
 - Contributing
