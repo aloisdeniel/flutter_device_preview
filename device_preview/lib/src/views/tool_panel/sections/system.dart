@@ -44,10 +44,14 @@ class SystemSection extends StatelessWidget {
             ],
           ),
           onTap: () {
+            final theme = Theme.of(context);
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const LocalePicker(),
+                builder: (context) => Theme(
+                  data: theme,
+                  child: const LocalePicker(),
+                ),
               ),
             );
           },

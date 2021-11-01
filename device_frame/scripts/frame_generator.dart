@@ -96,17 +96,16 @@ String _generateDeviceInfo(
   }
 
   // Moving defs at first position
-  final defs = document.descendants.cast<XmlNode?>().firstWhere(
+  final defs = document.descendants.whereType<XmlElement>().where(
     (node) {
-      return node is XmlElement && node.name.toString() == 'defs';
+      return node.name.toString() == 'defs';
     },
-    orElse: () => null,
   );
-  if (defs != null) {
-    final parent = defs.parent;
+  for (var def in defs) {
+    final parent = def.parent;
     if (parent != null) {
-      parent.children.remove(defs);
-      parent.children.insert(0, defs);
+      parent.children.remove(def);
+      parent.children.insert(0, def);
     }
   }
 

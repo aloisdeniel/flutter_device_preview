@@ -63,8 +63,12 @@ class DeviceFrame extends StatelessWidget {
   // Precaches all SVG files.
   static Future<void> precache(BuildContext context) async {
     for (var device in Devices.all) {
+      final picture = StringPicture(
+        SvgPicture.svgStringDecoderBuilder,
+        device.svgFrame,
+      );
       await precachePicture(
-        StringPicture(SvgPicture.svgStringDecoderBuilder, device.svgFrame),
+        picture,
         context,
       );
     }

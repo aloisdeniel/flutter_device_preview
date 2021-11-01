@@ -1,3 +1,20 @@
+## 1.0.0-alpha.5
+
+* Upgraded `device_frame` dependency.
+* Fixed theming issues in small layout.
+
+## 1.0.0-alpha.5
+
+* Added `DevicePreview.selectedDevice` method. 
+
+## 1.0.0-alpha.4
+
+* Added `DevicePreview.availableDeviceIdentifiers` method. 
+
+## 1.0.0-alpha.3
+
+* Upgraded device_frame dependency.
+
 ## 1.0.0-alpha.2
 
 * Upgraded provider dependency.

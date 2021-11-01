@@ -9,8 +9,8 @@
 			"path": "device_preview"
 		},
 		{
-			"name": "tools",
-			"path": "tools"
+			"name": "plugins/device_preview_screenshot",
+			"path": "plugins/device_preview_screenshot"
 		},
 		{
 			"name": "docs",

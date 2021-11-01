@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-import 'sections/section.dart';
-
 class ToolPanel extends StatelessWidget {
   const ToolPanel({
     Key? key,

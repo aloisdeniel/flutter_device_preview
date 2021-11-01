@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
+/// The tool layout when the screen is large.
 class DervicePreviewLargeLayout extends StatefulWidget {
   const DervicePreviewLargeLayout({
     Key? key,

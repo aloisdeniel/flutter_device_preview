@@ -8,7 +8,7 @@ import 'package:device_preview/src/storage/storage.dart';
 import 'package:device_preview/src/utilities/assert_inherited_media_query.dart';
 import 'package:device_preview/src/utilities/media_query_observer.dart';
 import 'package:device_preview/src/views/theme.dart';
-import 'package:device_preview/src/views/tool_panel/sections/accesibility.dart';
+import 'package:device_preview/src/views/tool_panel/sections/accessibility.dart';
 import 'package:device_preview/src/views/tool_panel/sections/device.dart';
 import 'package:device_preview/src/views/tool_panel/sections/settings.dart';
 import 'package:device_preview/src/views/tool_panel/sections/system.dart';
@@ -33,20 +33,23 @@ import 'views/small.dart';
 ///
 /// ```dart
 /// DevicePreview(
-///   builder: (context) => MyApp(),
-///   plugins: [
-///     const ScreenshotPlugin(),
-///   ],
+///   builder: (context) => MaterialApp(
+///      useInheritedMediaQuery: true,
+///      locale: DevicePreview.locale(context),
+///      builder: DevicePreview.appBuilder,
+///      theme: ThemeData.light(),
+///      darkTheme: ThemeData.dark(),
+///      home: const Home(),
+///    ),
 /// )
 /// ```
 /// {@end-tool}
 ///
 /// See also :
 /// * [Devices] has a set of predefined common devices.
-/// * [DevicePreviewStyle] to update the aspect.
 class DevicePreview extends StatefulWidget {
   /// Create a new [DevicePreview].
-  DevicePreview({
+  const DevicePreview({
     Key? key,
     required this.builder,
     this.devices,
@@ -54,12 +57,10 @@ class DevicePreview extends StatefulWidget {
     this.isToolbarVisible = true,
     this.availableLocales,
     this.defaultDevice,
-    this.plugins = defaultPlugins,
-    DevicePreviewStorage? storage,
+    this.tools = defaultTools,
+    this.storage,
     this.enabled = true,
-  })  : assert(devices == null || devices.isNotEmpty),
-        storage = storage ?? DevicePreviewStorage.preferences(),
-        super(key: key);
+  }) : super(key: key);
 
   /// If not [enabled], the [child] is used directly.
   final bool enabled;
@@ -81,8 +82,10 @@ class DevicePreview extends StatefulWidget {
   /// The available devices used for previewing.
   final List<DeviceInfo>? devices;
 
-  /// The list of plugins.
-  final List<Widget> plugins;
+  /// The list of available tools.
+  ///
+  /// All the tools must be [Sliver]s and will be added to the menu.
+  final List<Widget> tools;
 
   /// The available locales.
   final List<Locale>? availableLocales;
@@ -92,11 +95,14 @@ class DevicePreview extends StatefulWidget {
   /// By default, it saves preferences to the local device preferences.
   ///
   /// To disable settings persistence use `DevicePreviewStorage.none()`.
-  final DevicePreviewStorage storage;
+  final DevicePreviewStorage? storage;
 
+  /// All the default available devices.
   static final List<DeviceInfo> defaultDevices = Devices.all;
 
-  static const List<Widget> defaultPlugins = <Widget>[
+  /// All the default tools included in the menu : [DeviceSection], [SystemSection],
+  /// [AccessibilitySection] and [SettingsSection].
+  static const List<Widget> defaultTools = <Widget>[
     DeviceSection(),
     SystemSection(),
     AccessibilitySection(),
@@ -105,6 +111,13 @@ class DevicePreview extends StatefulWidget {
 
   @override
   _DevicePreviewState createState() => _DevicePreviewState();
+
+  /// The currently selected device.
+  static DeviceInfo selectedDevice(BuildContext context) {
+    return context.select(
+      (DevicePreviewStore store) => store.deviceInfo,
+    );
+  }
 
   /// The simulated target platform for the currently selected device.
   static TargetPlatform platform(BuildContext context) {
@@ -222,6 +235,14 @@ class DevicePreview extends StatefulWidget {
     store.selectDevice(deviceIdentifier);
   }
 
+  /// The list of all available device identifiers.
+  static List<DeviceIdentifier> availableDeviceIdentifiers(
+    BuildContext context,
+  ) {
+    final store = Provider.of<DevicePreviewStore>(context, listen: false);
+    return store.devices.map((info) => info.identifier).toList();
+  }
+
   /// All available locales in the tool.
   static List<Locale> allLocales(BuildContext context) {
     if (!_isEnabled(context)) {
@@ -304,6 +325,10 @@ class DevicePreview extends StatefulWidget {
 
 class _DevicePreviewState extends State<DevicePreview> {
   bool _isToolPanelPopOverOpen = false;
+
+  late DevicePreviewStorage storage =
+      widget.storage ?? DevicePreviewStorage.preferences();
+
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   /// Whenever the [screenshot] is called, a new value is pushed to
@@ -336,6 +361,14 @@ class _DevicePreviewState extends State<DevicePreview> {
   void initState() {
     _onScreenshot = StreamController<DeviceScreenshot>.broadcast();
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant DevicePreview oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.storage != widget.storage && widget.storage != null) {
+      storage = widget.storage!;
+    }
   }
 
   @override
@@ -431,7 +464,7 @@ class _DevicePreviewState extends State<DevicePreview> {
         defaultDevice: widget.defaultDevice ?? Devices.ios.iPhone11,
         devices: widget.devices,
         locales: widget.availableLocales,
-        storage: widget.storage,
+        storage: storage,
       ),
       builder: (context, child) {
         final isInitialized = context.select(
@@ -498,7 +531,7 @@ class _DevicePreviewState extends State<DevicePreview> {
                             right: 0,
                             left: 0,
                             child: DevicePreviewSmallLayout(
-                              sections: widget.plugins,
+                              sections: widget.tools,
                               maxMenuHeight: constraints.maxHeight * 0.5,
                               scaffoldKey: scaffoldKey,
                               onMenuVisibleChanged: (isVisible) => setState(() {
@@ -510,7 +543,7 @@ class _DevicePreviewState extends State<DevicePreview> {
                           Positioned.fill(
                             key: const Key('Large'),
                             child: DervicePreviewLargeLayout(
-                              sections: widget.plugins,
+                              sections: widget.tools,
                             ),
                           ),
                         AnimatedPositioned(
@@ -599,8 +632,16 @@ class _DevicePreviewState extends State<DevicePreview> {
   final GlobalKey _appKey = GlobalKey();
 }
 
-/// A screenshot from a [device].
+/// A screenshot from a preview.
 class DeviceScreenshot {
+  /// Creates a new preview screenshot with its associated [bytes] data, encoded with
+  /// the given image [format] for the current [device] preview.
+  const DeviceScreenshot({
+    required this.device,
+    required this.bytes,
+    required this.format,
+  });
+
   /// The device from which the screenshot was taken from.
   final DeviceInfo device;
 
@@ -609,10 +650,4 @@ class DeviceScreenshot {
 
   /// The format in which image bytes should be returned when using.
   final ui.ImageByteFormat format;
-
-  DeviceScreenshot({
-    required this.device,
-    required this.bytes,
-    required this.format,
-  });
 }

@@ -18,30 +18,31 @@ class ToolbarSearchField extends StatefulWidget {
 }
 
 class _ToolbarSearchFieldState extends State<ToolbarSearchField> {
-  TextEditingController? _controller;
+  late final TextEditingController _controller = TextEditingController(
+    text: widget.text,
+  );
 
   @override
   void initState() {
-    _controller = TextEditingController(
-      text: widget.text,
-    );
-    _searchTECListener();
+    _controller.addListener(() {
+      widget.onTextChanged(
+        _controller.text.replaceAll(' ', '').toLowerCase(),
+      );
+    });
     super.initState();
   }
 
-  void _searchTECListener() {
-    _controller!.addListener(() {
-      widget.onTextChanged(
-        _controller!.text.replaceAll(' ', '').toLowerCase(),
-      );
-    });
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
 
   @override
   void didUpdateWidget(covariant ToolbarSearchField oldWidget) {
-    if (widget.text != _controller!.text) {
+    if (widget.text != _controller.text) {
       WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-        _controller!.text = widget.text;
+        _controller.text = widget.text;
       });
     }
 
@@ -49,7 +50,9 @@ class _ToolbarSearchFieldState extends State<ToolbarSearchField> {
   }
 
   void _clear() {
-    WidgetsBinding.instance!.addPostFrameCallback((_) => _controller!.clear());
+    WidgetsBinding.instance!.addPostFrameCallback(
+      (_) => _controller.clear(),
+    );
   }
 
   @override

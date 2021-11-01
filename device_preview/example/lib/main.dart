@@ -11,20 +11,9 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(
-    Row(
-      textDirection: TextDirection.ltr,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        /*Expanded(
-        child: Container(color: Colors.red),
-      ),*/
-        Expanded(
-          child: DevicePreview(
-            enabled: true,
-            builder: (context) => const BasicApp(),
-          ),
-        ),
-      ],
+    DevicePreview(
+      enabled: true,
+      builder: (context) => const BasicApp(),
     ),
   );
 }

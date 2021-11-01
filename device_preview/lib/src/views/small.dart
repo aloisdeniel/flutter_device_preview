@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'tool_panel/bottom_toolbar.dart';
 import 'tool_panel/tool_panel.dart';
 
+/// The tool layout when the screen is small.
 class DevicePreviewSmallLayout extends StatelessWidget {
   const DevicePreviewSmallLayout({
     Key? key,
@@ -47,6 +48,7 @@ class DevicePreviewSmallLayout extends StatelessWidget {
               constraints: BoxConstraints(
                 maxHeight: maxMenuHeight,
               ),
+              backgroundColor: Colors.transparent,
             );
             await sheet?.closed;
             onMenuVisibleChanged(false);

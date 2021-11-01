@@ -172,17 +172,19 @@ List<Widget> buildCustomDeviceTiles(BuildContext context) {
       title: 'Form factor',
       children: [
         ..._allDeviceTypes.map(
-          (p) => ListTile(
-            leading: Icon(p.typeIcon()),
+          (type) => ListTile(
+            leading: DeviceTypeIcon(
+              type: type,
+            ),
             title: Text(
-              describeEnum(p),
+              describeEnum(type),
             ),
             onTap: () {
               final store = context.read<DevicePreviewStore>();
               if (customDevice != null) {
                 store.updateCustomDevice(
                   customDevice.copyWith(
-                    type: p,
+                    type: type,
                   ),
                 );
               }

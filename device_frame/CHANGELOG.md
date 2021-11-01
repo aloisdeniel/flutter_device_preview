@@ -1,3 +1,11 @@
+## [0.5.2] - 2021/10/25
+
+* Fixed SVG parsing errors (definitions as first).
+
+## [0.5.1] - 2021/10/25
+
+* Fixed SVG parsing errors (removed effects).
+
 ## [0.5.0] - 2021/10/25
 
 * Migrated to flutter_lints

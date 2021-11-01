@@ -1,6 +1,6 @@
 import 'package:device_preview/src/state/store.dart';
-import 'package:device_preview/src/views/tool_panel/format.dart';
 import 'package:device_preview/src/views/tool_panel/sections/subsections/device_model.dart';
+import 'package:device_preview/src/views/tool_panel/widgets/device_type_icon.dart';
 import 'package:device_preview/src/views/tool_panel/widgets/target_platform_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -53,15 +53,21 @@ class DeviceSection extends StatelessWidget {
               const SizedBox(
                 width: 8,
               ),
-              Icon(deviceIdentifier.typeIcon()),
+              DeviceTypeIcon(
+                type: deviceIdentifier.type,
+              ),
               const Icon(Icons.chevron_right_rounded),
             ],
           ),
           onTap: () {
+            final theme = Theme.of(context);
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const DeviceModelPicker(),
+                builder: (context) => Theme(
+                  data: theme,
+                  child: const DeviceModelPicker(),
+                ),
               ),
             );
           },
