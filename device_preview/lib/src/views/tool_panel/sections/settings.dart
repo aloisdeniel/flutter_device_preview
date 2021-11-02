@@ -7,7 +7,9 @@ import 'package:provider/provider.dart';
 
 import 'section.dart';
 
+/// All the settings for customizing the preview.
 class SettingsSection extends StatelessWidget {
+  /// Create a new menu section with settings for customizing the preview.
   const SettingsSection({
     Key? key,
   }) : super(key: key);

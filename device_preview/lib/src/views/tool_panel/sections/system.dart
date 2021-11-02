@@ -6,7 +6,9 @@ import 'package:provider/provider.dart';
 
 import 'section.dart';
 
+/// All the simulated system settings.
 class SystemSection extends StatelessWidget {
+  /// Create a new menu section with simulated systel properties.
   const SystemSection({
     Key? key,
   }) : super(key: key);

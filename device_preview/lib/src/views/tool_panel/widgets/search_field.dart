@@ -1,17 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+/// A search field for the tool menu.
 class ToolbarSearchField extends StatefulWidget {
-  final String text;
-  final String hintText;
-  final ValueChanged<String> onTextChanged;
-
+  /// Create a new search field with the given [text].
+  ///
+  /// An [hintText] which indicates what is the awaited content.
+  ///
+  /// The [onTextChanged] is invoked each time the [text] is changed by the user.
   const ToolbarSearchField({
     Key? key,
     required this.hintText,
     required this.onTextChanged,
     this.text = '',
   }) : super(key: key);
+
+  /// The current field content.
+  final String text;
+
+  /// Indicates what is the awaited content.
+  final String hintText;
+
+  /// Invoked each time the [text] is changed by the user.
+  final ValueChanged<String> onTextChanged;
 
   @override
   _ToolbarSearchFieldState createState() => _ToolbarSearchFieldState();

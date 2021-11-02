@@ -12,6 +12,7 @@ import 'state.dart';
 ///
 /// * [DeviceInfo] which describes a simulated device.
 class CustomDeviceInfo implements DeviceInfo {
+  /// Creates a new custom device.
   const CustomDeviceInfo._({
     required this.identifier,
     required this.data,
@@ -68,6 +69,7 @@ class CustomDeviceInfo implements DeviceInfo {
     );
   }
 
+  /// The data that contains all of the custom device properties.
   final CustomDeviceInfoData data;
 
   @override
@@ -102,11 +104,15 @@ class CustomDeviceInfo implements DeviceInfo {
   final Size frameSize;
 }
 
+/// The device identifier for a [CustomDeviceInfo].
 class CustomDeviceIdentifier implements DeviceIdentifier {
-  final CustomDeviceInfoData data;
-
+  /// Create a new custom device identifier from the given [data].
   const CustomDeviceIdentifier(this.data);
 
+  /// The custom device data that this identifier represents.
+  final CustomDeviceInfoData data;
+
+  /// The predefined key associated to the custom device.
   static const identifier = 'custom_device';
 
   @override

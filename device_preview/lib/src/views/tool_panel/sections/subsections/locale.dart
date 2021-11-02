@@ -5,8 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
+/// A page for picking a simulated locale.
 class LocalePicker extends StatefulWidget {
-  const LocalePicker({Key? key}) : super(key: key);
+  /// Create a new page for picking a simulated locale.
+  const LocalePicker({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _LocalePickerState createState() => _LocalePickerState();

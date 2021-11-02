@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 
 import 'section.dart';
 
+/// All the simulated accessibility settings.
 class AccessibilitySection extends StatelessWidget {
+  /// Create a new menu section with simulated accessibility settings.
   const AccessibilitySection({
     Key? key,
   }) : super(key: key);

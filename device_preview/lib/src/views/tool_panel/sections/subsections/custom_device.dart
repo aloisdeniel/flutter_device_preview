@@ -1,5 +1,6 @@
 part of 'device_model.dart';
 
+/// Create a set of tiles to fine tune a custom device.
 List<Widget> buildCustomDeviceTiles(BuildContext context) {
   final customDevice = context.select(
     (DevicePreviewStore store) => store.data.customDevice,

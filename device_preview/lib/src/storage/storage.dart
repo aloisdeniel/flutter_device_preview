@@ -5,14 +5,12 @@ import 'package:device_preview/src/storage/preferences.dart';
 abstract class DevicePreviewStorage {
   const DevicePreviewStorage();
 
-  /// A storage that keep preferences only in memory : they are reset on each
+  /// A storage that keep preferences only in memory : all preferences are reset on each
   /// fresh start of the app.
   factory DevicePreviewStorage.none() => const NoDevicePreviewStorage();
 
-  /// A storage that keeps all preferences stored as json in a single
+  /// A storage that keeps all preferences stored as json in the
   /// preferences entry with the [preferenceKey] key.
-  ///
-  /// If you're using many plugins, it may be better to use the [FileDevicePreviewStorage].
   factory DevicePreviewStorage.preferences({
     String preferenceKey =
         PreferencesDevicePreviewStorage.defaultPreferencesKey,

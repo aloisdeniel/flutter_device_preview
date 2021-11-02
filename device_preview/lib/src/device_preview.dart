@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:typed_data';
 
 import 'package:device_frame/device_frame.dart';
 import 'package:device_preview/src/state/state.dart';
@@ -21,6 +20,7 @@ import 'package:provider/provider.dart';
 import 'dart:ui' as ui;
 
 import 'locales/default_locales.dart';
+import 'utilities/screenshot.dart';
 import 'views/large.dart';
 import 'views/small.dart';
 
@@ -549,7 +549,7 @@ class _DevicePreviewState extends State<DevicePreview> {
                             right: 0,
                             left: 0,
                             child: DevicePreviewSmallLayout(
-                              sections: widget.tools,
+                              slivers: widget.tools,
                               maxMenuHeight: constraints.maxHeight * 0.5,
                               scaffoldKey: scaffoldKey,
                               onMenuVisibleChanged: (isVisible) => setState(() {
@@ -561,7 +561,7 @@ class _DevicePreviewState extends State<DevicePreview> {
                           Positioned.fill(
                             key: const Key('Large'),
                             child: DervicePreviewLargeLayout(
-                              sections: widget.tools,
+                              slivers: widget.tools,
                             ),
                           ),
                         AnimatedPositioned(
@@ -648,24 +648,4 @@ class _DevicePreviewState extends State<DevicePreview> {
 
   /// The current application key.
   final GlobalKey _appKey = GlobalKey();
-}
-
-/// A screenshot from a preview.
-class DeviceScreenshot {
-  /// Creates a new preview screenshot with its associated [bytes] data, encoded with
-  /// the given image [format] for the current [device] preview.
-  const DeviceScreenshot({
-    required this.device,
-    required this.bytes,
-    required this.format,
-  });
-
-  /// The device from which the screenshot was taken from.
-  final DeviceInfo device;
-
-  /// The binary content of the resulting image file.
-  final Uint8List bytes;
-
-  /// The format in which image bytes should be returned when using.
-  final ui.ImageByteFormat format;
 }

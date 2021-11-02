@@ -8,7 +8,9 @@ import 'package:provider/provider.dart';
 
 import 'section.dart';
 
+/// All the simulated properties for the device.
 class DeviceSection extends StatelessWidget {
+  /// Create a new menu section with simulated device properties.
   const DeviceSection({
     Key? key,
   }) : super(key: key);

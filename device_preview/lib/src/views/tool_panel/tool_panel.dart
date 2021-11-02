@@ -4,17 +4,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
+/// The panel which contains all the tools.
 class ToolPanel extends StatelessWidget {
+  /// Create a new panel from the given tools grouped as [slivers].
+  ///
+  /// The [isModal] indicates whether the panel is shown modally as a new page, or if it
+  /// stays visible on one side of the parent layout.
   const ToolPanel({
     Key? key,
-    required this.sections,
+    required this.slivers,
     this.isModal = false,
   }) : super(key: key);
 
+  /// Indicates whether the panel is shown modally as a new page, or if it
+  /// stays visible on one side of the parent layout.
   final bool isModal;
-  final List<Widget> sections;
 
+  /// The sections containing the tools.
+  ///
+  /// They must be [Sliver]s.
+  final List<Widget> slivers;
+
+  /// The panel width when not modal.
   static const double panelWidth = 320;
+
   @override
   Widget build(BuildContext context) {
     final rootContext = context;
@@ -29,7 +42,7 @@ class ToolPanel extends StatelessWidget {
               return Theme(
                 data: toolbarTheme.asThemeData(),
                 child: _ToolPanel(
-                  sections: sections,
+                  sections: slivers,
                   isModal: isModal,
                   onClose: () {
                     Navigator.maybePop(rootContext);

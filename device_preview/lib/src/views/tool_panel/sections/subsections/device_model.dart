@@ -10,22 +10,9 @@ import '../section.dart';
 
 part 'custom_device.dart';
 
-const _allPlatforms = <TargetPlatform>[
-  TargetPlatform.iOS,
-  TargetPlatform.android,
-  TargetPlatform.macOS,
-  TargetPlatform.windows,
-  TargetPlatform.linux,
-];
-
-const _allDeviceTypes = <DeviceType>[
-  DeviceType.phone,
-  DeviceType.tablet,
-  DeviceType.desktop,
-  DeviceType.laptop,
-];
-
+/// A page for picking a simulated device model.
 class DeviceModelPicker extends StatefulWidget {
+  /// Create a new page for picking a simulated device model.
   const DeviceModelPicker({
     Key? key,
   }) : super(key: key);
@@ -169,3 +156,18 @@ class DeviceTile extends StatelessWidget {
     );
   }
 }
+
+const _allPlatforms = <TargetPlatform>[
+  TargetPlatform.iOS,
+  TargetPlatform.android,
+  TargetPlatform.macOS,
+  TargetPlatform.windows,
+  TargetPlatform.linux,
+];
+
+const _allDeviceTypes = <DeviceType>[
+  DeviceType.phone,
+  DeviceType.tablet,
+  DeviceType.desktop,
+  DeviceType.laptop,
+];

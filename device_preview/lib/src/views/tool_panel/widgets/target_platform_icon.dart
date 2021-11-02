@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:path_drawing/path_drawing.dart';
 
+/// An icon for a [TargetPlatform].
 class TargetPlatformIcon extends StatelessWidget {
+  /// Creates an icon for the given [platform].
+  ///
+  /// A [color] can be given to customize the icon color.
   const TargetPlatformIcon({
     Key? key,
     required this.platform,
@@ -21,7 +25,7 @@ class TargetPlatformIcon extends StatelessWidget {
         height: 24,
         child: CustomPaint(
           size: const Size(24, 24),
-          painter: PathPainter(
+          painter: _PathPainter(
             platform,
             color,
           ),
@@ -31,8 +35,8 @@ class TargetPlatformIcon extends StatelessWidget {
   }
 }
 
-class PathPainter extends CustomPainter {
-  const PathPainter(this.target, this.color);
+class _PathPainter extends CustomPainter {
+  const _PathPainter(this.target, this.color);
 
   final TargetPlatform target;
   final Color color;
@@ -45,7 +49,7 @@ class PathPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(PathPainter oldDelegate) =>
+  bool shouldRepaint(_PathPainter oldDelegate) =>
       target != oldDelegate.target || color != oldDelegate.color;
 }
 

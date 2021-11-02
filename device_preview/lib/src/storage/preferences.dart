@@ -5,16 +5,27 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'storage.dart';
 
-/// A storage that keeps all preferences stored as json in a single
+/// A storage that keeps all preferences stored as json in the
 /// preference entry with the [preferenceKey] key.
-///
-/// If you're using many plugins, it may be better to use the [FileDevicePreviewStorage].
 class PreferencesDevicePreviewStorage extends DevicePreviewStorage {
   PreferencesDevicePreviewStorage({
     this.preferenceKey = defaultPreferencesKey,
   });
 
+  /// The preferences key used to save the user configuration.
   final String preferenceKey;
+
+  /// The default preferences key used to save the user configuration.
+  static const String defaultPreferencesKey = 'device_preview.settings';
+
+  /// Load the last saved preferences (until [ignore] is `true`).
+  @override
+  Future<DevicePreviewData?> load() async {
+    final shared = await SharedPreferences.getInstance();
+    final json = shared.getString(preferenceKey);
+    if (json == null || json.isEmpty) return null;
+    return DevicePreviewData.fromJson(jsonDecode(json));
+  }
 
   /// Save the current preferences (until [ignore] is `true`).
   @override
@@ -24,7 +35,6 @@ class PreferencesDevicePreviewStorage extends DevicePreviewStorage {
     await _saveTask;
   }
 
-  static const String defaultPreferencesKey = 'device_preview.settings';
   Future<void>? _saveTask;
   DevicePreviewData? _saveData;
 
@@ -35,14 +45,5 @@ class PreferencesDevicePreviewStorage extends DevicePreviewStorage {
       await shared.setString(preferenceKey, jsonEncode(_saveData!.toJson()));
     }
     _saveTask = null;
-  }
-
-  /// Load the last saved preferences (until [ignore] is `true`).
-  @override
-  Future<DevicePreviewData?> load() async {
-    final shared = await SharedPreferences.getInstance();
-    final json = shared.getString(preferenceKey);
-    if (json == null || json.isEmpty) return null;
-    return DevicePreviewData.fromJson(jsonDecode(json));
   }
 }
