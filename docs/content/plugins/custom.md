@@ -36,7 +36,7 @@ class CustomPlugin extends StatelessWidget {
 
 ## Configure
 
-![illustration](images/custom.png ':size=150')
+![illustration](images/custom.png ':size=700')
 
 Add your plugin instance to your `DevicePreview`'s `tools` property.
 

@@ -1,6 +1,6 @@
 # Plugin : Screenshot
 
-![illustration](images/screenshot.png ':size=150')
+![illustration](images/screenshot.png ':size=500')
 
 ## Install
 
