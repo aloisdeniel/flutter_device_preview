@@ -9,9 +9,19 @@ import 'section.dart';
 /// All the simulated system settings.
 class SystemSection extends StatelessWidget {
   /// Create a new menu section with simulated systel properties.
+  ///
+  /// The items can be hidden with [locale], [theme] parameters.
   const SystemSection({
     Key? key,
+    this.locale = true,
+    this.theme = true,
   }) : super(key: key);
+
+  /// Allow to select the current device locale.
+  final bool locale;
+
+  /// Allow to override the current system theme (dark/light)
+  final bool theme;
 
   @override
   Widget build(BuildContext context) {
@@ -35,40 +45,42 @@ class SystemSection extends StatelessWidget {
     return ToolPanelSection(
       title: 'System',
       children: [
-        ListTile(
-          title: const Text('Locale'),
-          subtitle: Text(selectedLocale.name),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: const [
-              Icon(Icons.language),
-              Icon(Icons.chevron_right_rounded),
-            ],
-          ),
-          onTap: () {
-            final theme = Theme.of(context);
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Theme(
-                  data: theme,
-                  child: const LocalePicker(),
+        if (locale)
+          ListTile(
+            title: const Text('Locale'),
+            subtitle: Text(selectedLocale.name),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Icon(Icons.language),
+                Icon(Icons.chevron_right_rounded),
+              ],
+            ),
+            onTap: () {
+              final theme = Theme.of(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Theme(
+                    data: theme,
+                    child: const LocalePicker(),
+                  ),
                 ),
-              ),
-            );
-          },
-        ),
-        ListTile(
-          title: const Text('Theme'),
-          subtitle: Text(isDarkMode ? 'Dark' : 'Light'),
-          trailing: Icon(
-            isDarkMode ? Icons.brightness_3 : Icons.brightness_high,
+              );
+            },
           ),
-          onTap: () {
-            final state = context.read<DevicePreviewStore>();
-            state.toggleDarkMode();
-          },
-        ),
+        if (theme)
+          ListTile(
+            title: const Text('Theme'),
+            subtitle: Text(isDarkMode ? 'Dark' : 'Light'),
+            trailing: Icon(
+              isDarkMode ? Icons.brightness_3 : Icons.brightness_high,
+            ),
+            onTap: () {
+              final state = context.read<DevicePreviewStore>();
+              state.toggleDarkMode();
+            },
+          ),
       ],
     );
   }

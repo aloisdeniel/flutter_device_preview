@@ -11,9 +11,28 @@ import 'section.dart';
 /// All the simulated properties for the device.
 class DeviceSection extends StatelessWidget {
   /// Create a new menu section with simulated device properties.
+  ///
+  /// The items can be hidden with [model], [orientation], [frameVisibility],
+  /// [virtualKeyboard] parameters.
   const DeviceSection({
     Key? key,
+    this.model = true,
+    this.orientation = true,
+    this.frameVisibility = true,
+    this.virtualKeyboard = true,
   }) : super(key: key);
+
+  /// Allow to edit the current simulated model.
+  final bool model;
+
+  /// Allow to edit the current simulated device orientation.
+  final bool orientation;
+
+  /// Allow to hide or show the device frame.
+  final bool frameVisibility;
+
+  /// Allow to show or hide a software keyboard mockup.
+  final bool virtualKeyboard;
 
   @override
   Widget build(BuildContext context) {
@@ -43,38 +62,39 @@ class DeviceSection extends StatelessWidget {
     return ToolPanelSection(
       title: 'Device',
       children: [
-        ListTile(
-          title: const Text('Model'),
-          subtitle: Text(deviceName),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TargetPlatformIcon(
-                platform: deviceIdentifier.platform,
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-              DeviceTypeIcon(
-                type: deviceIdentifier.type,
-              ),
-              const Icon(Icons.chevron_right_rounded),
-            ],
-          ),
-          onTap: () {
-            final theme = Theme.of(context);
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Theme(
-                  data: theme,
-                  child: const DeviceModelPicker(),
+        if (model)
+          ListTile(
+            title: const Text('Model'),
+            subtitle: Text(deviceName),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TargetPlatformIcon(
+                  platform: deviceIdentifier.platform,
                 ),
-              ),
-            );
-          },
-        ),
-        if (canRotate)
+                const SizedBox(
+                  width: 8,
+                ),
+                DeviceTypeIcon(
+                  type: deviceIdentifier.type,
+                ),
+                const Icon(Icons.chevron_right_rounded),
+              ],
+            ),
+            onTap: () {
+              final theme = Theme.of(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Theme(
+                    data: theme,
+                    child: const DeviceModelPicker(),
+                  ),
+                ),
+              );
+            },
+          ),
+        if (this.orientation && canRotate)
           ListTile(
             title: const Text('Orientation'),
             subtitle: Text(
@@ -100,30 +120,34 @@ class DeviceSection extends StatelessWidget {
               state.rotate();
             },
           ),
-        ListTile(
-          title: const Text('Frame visibility'),
-          subtitle: Text(isFrameVisible ? 'Visible' : 'Hidden'),
-          trailing: Icon(
-            isFrameVisible
-                ? Icons.border_outer_rounded
-                : Icons.border_clear_rounded,
+        if (frameVisibility)
+          ListTile(
+            title: const Text('Frame visibility'),
+            subtitle: Text(isFrameVisible ? 'Visible' : 'Hidden'),
+            trailing: Icon(
+              isFrameVisible
+                  ? Icons.border_outer_rounded
+                  : Icons.border_clear_rounded,
+            ),
+            onTap: () {
+              final state = context.read<DevicePreviewStore>();
+              state.toggleFrame();
+            },
           ),
-          onTap: () {
-            final state = context.read<DevicePreviewStore>();
-            state.toggleFrame();
-          },
-        ),
-        ListTile(
-          title: const Text('Virtual keyboard preview'),
-          subtitle: Text(isVirtualKeyboardVisible ? 'Visible' : 'Hidden'),
-          trailing: Icon(
-            isVirtualKeyboardVisible ? Icons.keyboard : Icons.keyboard_outlined,
+        if (virtualKeyboard)
+          ListTile(
+            title: const Text('Virtual keyboard preview'),
+            subtitle: Text(isVirtualKeyboardVisible ? 'Visible' : 'Hidden'),
+            trailing: Icon(
+              isVirtualKeyboardVisible
+                  ? Icons.keyboard
+                  : Icons.keyboard_outlined,
+            ),
+            onTap: () {
+              final state = context.read<DevicePreviewStore>();
+              state.toggleVirtualKeyboard();
+            },
           ),
-          onTap: () {
-            final state = context.read<DevicePreviewStore>();
-            state.toggleVirtualKeyboard();
-          },
-        ),
       ],
     );
   }

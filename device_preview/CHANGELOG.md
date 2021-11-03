@@ -1,3 +1,7 @@
+## 1.0.0-alpha.11
+
+* Added section visibility parameters to hide items.
+
 ## 1.0.0-alpha.10
 
 * Added conditional import for web, to improve the pub.dev score.
