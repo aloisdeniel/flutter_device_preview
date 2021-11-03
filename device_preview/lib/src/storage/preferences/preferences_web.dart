@@ -1,9 +1,11 @@
-import 'dart:convert';
+// ignore_for_file: avoid_web_libraries_in_flutter
 
+import 'dart:async';
+import 'dart:convert' show jsonDecode, jsonEncode;
+import 'dart:html' as html;
 import 'package:device_preview/src/state/state.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import 'storage.dart';
+import '../storage.dart';
 
 /// A storage that keeps all preferences stored as json in the
 /// preference entry with the [preferenceKey] key.
@@ -21,8 +23,7 @@ class PreferencesDevicePreviewStorage extends DevicePreviewStorage {
   /// Load the last saved preferences (until [ignore] is `true`).
   @override
   Future<DevicePreviewData?> load() async {
-    final shared = await SharedPreferences.getInstance();
-    final json = shared.getString(preferenceKey);
+    final json = html.window.localStorage['flutter.$defaultPreferencesKey'];
     if (json == null || json.isEmpty) return null;
     return DevicePreviewData.fromJson(jsonDecode(json));
   }
@@ -41,8 +42,8 @@ class PreferencesDevicePreviewStorage extends DevicePreviewStorage {
   Future _save() async {
     await Future.delayed(const Duration(milliseconds: 500));
     if (_saveData != null) {
-      final shared = await SharedPreferences.getInstance();
-      await shared.setString(preferenceKey, jsonEncode(_saveData!.toJson()));
+      html.window.localStorage['flutter.$defaultPreferencesKey'] =
+          jsonEncode(_saveData!.toJson());
     }
     _saveTask = null;
   }

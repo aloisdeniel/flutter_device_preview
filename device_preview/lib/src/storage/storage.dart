@@ -1,5 +1,6 @@
 import 'package:device_preview/src/state/state.dart';
-import 'package:device_preview/src/storage/preferences.dart';
+
+import 'preferences/preferences.dart';
 
 /// A storage for device preview user's preferences.
 abstract class DevicePreviewStorage {
