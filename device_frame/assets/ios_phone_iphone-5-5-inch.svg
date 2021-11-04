@@ -1,0 +1,19 @@
+<svg width="414" height="736" viewBox="0 0 414 736" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<!-- SCREEN SHAPE -->
+	<rect x="0" y="0" width="414" height="736" rx="0" fill="#FF0000" />
+	<!-- DEVICE PROPERTIES -->
+	<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="14" letter-spacing="0em">
+		<tspan x="0" y="10">
+			name: iPhone 5.5&quot;&#10;
+		</tspan>
+		<tspan x="0" y="30">
+			density: 3&#10;
+		</tspan>
+		<tspan x="0" y="50">
+			screen_size: 414x736&#10;
+		</tspan>
+		<tspan x="0" y="70">
+			safe_areas: 0,0,0,0|0,0,0,0
+		</tspan>
+	</text>
+</svg>

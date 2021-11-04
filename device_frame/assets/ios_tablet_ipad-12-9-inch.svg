@@ -1,0 +1,19 @@
+<svg width="1024" height="1366" viewBox="0 0 1024 1366" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<!-- SCREEN SHAPE -->
+	<rect x="0" y="0" width="1024" height="1366" rx="0" fill="#FF0000" />
+	<!-- DEVICE PROPERTIES -->
+	<text fill="black" xml:space="preserve" style="white-space: pre" font-family="Roboto" font-size="14" letter-spacing="0em">
+		<tspan x="0" y="10">
+			name: iPad 12.9&quot;&#10;
+		</tspan>
+		<tspan x="0" y="30">
+			density: 2&#10;
+		</tspan>
+		<tspan x="0" y="50">
+			screen_size: 1024x1366&#10;
+		</tspan>
+		<tspan x="0" y="70">
+			safe_areas: 0,0,0,0|0,0,0,0
+		</tspan>
+	</text>
+</svg>

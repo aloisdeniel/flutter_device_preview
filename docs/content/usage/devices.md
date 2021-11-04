@@ -34,6 +34,21 @@ This section lists all simulated devices included with Device Preview.
 <tr><th>Safe Area (Landscape)</th><td>left: 44.0, top: 0.0, right: 44.0, bottom: 21.0</td></tr>
 </table>
 
+#### iPhone 5.5"
+
+
+<table>
+<tr><td colspan="2">
+<img class="device-illustration" title="iPhone 5.5" illustration" src="content/usage/devices/ios_phone_iphone-5-5-inch.svg" style="width:200px;" />
+</td></tr>
+<tr><th>Platform</th><td>iOS</td></tr>
+<tr><th>Type</th><td>phone</td></tr>
+<tr><th>Pixel Ratio</th><td>3.0</td></tr>
+<tr><th>Screen size</th><td>414.0 x 736.0</td></tr>
+<tr><th>Safe Area (portrait)</th><td>left: 0.0, top: 0.0, right: 0.0, bottom: 0.0</td></tr>
+<tr><th>Safe Area (Landscape)</th><td>left: 0.0, top: 0.0, right: 0.0, bottom: 0.0</td></tr>
+</table>
+
 #### iPhone 11
 
 
@@ -47,6 +62,21 @@ This section lists all simulated devices included with Device Preview.
 <tr><th>Screen size</th><td>414.0 x 896.0</td></tr>
 <tr><th>Safe Area (portrait)</th><td>left: 0.0, top: 44.0, right: 0.0, bottom: 34.0</td></tr>
 <tr><th>Safe Area (Landscape)</th><td>left: 44.0, top: 0.0, right: 44.0, bottom: 21.0</td></tr>
+</table>
+
+#### iPhone 6.5"
+
+
+<table>
+<tr><td colspan="2">
+<img class="device-illustration" title="iPhone 6.5" illustration" src="content/usage/devices/ios_phone_iphone-6-5-inch.svg" style="width:200px;" />
+</td></tr>
+<tr><th>Platform</th><td>iOS</td></tr>
+<tr><th>Type</th><td>phone</td></tr>
+<tr><th>Pixel Ratio</th><td>3.0</td></tr>
+<tr><th>Screen size</th><td>414.0 x 896.0</td></tr>
+<tr><th>Safe Area (portrait)</th><td>left: 0.0, top: 0.0, right: 0.0, bottom: 0.0</td></tr>
+<tr><th>Safe Area (Landscape)</th><td>left: 0.0, top: 0.0, right: 0.0, bottom: 0.0</td></tr>
 </table>
 
 #### iPhone 11 Pro Max
@@ -107,6 +137,21 @@ This section lists all simulated devices included with Device Preview.
 <tr><th>Screen size</th><td>1024.0 x 1366.0</td></tr>
 <tr><th>Safe Area (portrait)</th><td>left: 0.0, top: 24.0, right: 0.0, bottom: 20.0</td></tr>
 <tr><th>Safe Area (Landscape)</th><td>left: 0.0, top: 24.0, right: 0.0, bottom: 20.0</td></tr>
+</table>
+
+#### iPad 12.9"
+
+
+<table>
+<tr><td colspan="2">
+<img class="device-illustration" title="iPad 12.9" illustration" src="content/usage/devices/ios_tablet_ipad-12-9-inch.svg" style="width:200px;" />
+</td></tr>
+<tr><th>Platform</th><td>iOS</td></tr>
+<tr><th>Type</th><td>tablet</td></tr>
+<tr><th>Pixel Ratio</th><td>2.0</td></tr>
+<tr><th>Screen size</th><td>1024.0 x 1366.0</td></tr>
+<tr><th>Safe Area (portrait)</th><td>left: 0.0, top: 0.0, right: 0.0, bottom: 0.0</td></tr>
+<tr><th>Safe Area (Landscape)</th><td>left: 0.0, top: 0.0, right: 0.0, bottom: 0.0</td></tr>
 </table>
 
 ## Android
@@ -171,6 +216,21 @@ This section lists all simulated devices included with Device Preview.
 <tr><th>Safe Area (Landscape)</th><td>left: 0.0, top: 24.0, right: 0.0, bottom: 0.0</td></tr>
 </table>
 
+#### Android Phone 16_9
+
+
+<table>
+<tr><td colspan="2">
+<img class="device-illustration" title="Android Phone 16_9 illustration" src="content/usage/devices/android_phone_android-16-9-aspect-ratio.svg" style="width:200px;" />
+</td></tr>
+<tr><th>Platform</th><td>android</td></tr>
+<tr><th>Type</th><td>phone</td></tr>
+<tr><th>Pixel Ratio</th><td>3.0</td></tr>
+<tr><th>Screen size</th><td>414.0 x 736.0</td></tr>
+<tr><th>Safe Area (portrait)</th><td>left: 0.0, top: 0.0, right: 0.0, bottom: 0.0</td></tr>
+<tr><th>Safe Area (Landscape)</th><td>left: 0.0, top: 0.0, right: 0.0, bottom: 0.0</td></tr>
+</table>
+
 #### Samsung Galaxy Note 10 Plus
 
 
@@ -199,6 +259,36 @@ This section lists all simulated devices included with Device Preview.
 <tr><th>Screen size</th><td>540.0 x 1080.0</td></tr>
 <tr><th>Safe Area (portrait)</th><td>left: 0.0, top: 24.0, right: 0.0, bottom: 0.0</td></tr>
 <tr><th>Safe Area (Landscape)</th><td>left: 0.0, top: 24.0, right: 0.0, bottom: 0.0</td></tr>
+</table>
+
+#### Android Tablet 7"
+
+
+<table>
+<tr><td colspan="2">
+<img class="device-illustration" title="Android Tablet 7" illustration" src="content/usage/devices/android_tablet_android-7-inch.svg" style="width:200px;" />
+</td></tr>
+<tr><th>Platform</th><td>android</td></tr>
+<tr><th>Type</th><td>tablet</td></tr>
+<tr><th>Pixel Ratio</th><td>3.0</td></tr>
+<tr><th>Screen size</th><td>576.0 x 1024.0</td></tr>
+<tr><th>Safe Area (portrait)</th><td>left: 0.0, top: 0.0, right: 0.0, bottom: 0.0</td></tr>
+<tr><th>Safe Area (Landscape)</th><td>left: 0.0, top: 0.0, right: 0.0, bottom: 0.0</td></tr>
+</table>
+
+#### Android Tablet 10"
+
+
+<table>
+<tr><td colspan="2">
+<img class="device-illustration" title="Android Tablet 10" illustration" src="content/usage/devices/android_tablet_android-10-inch.svg" style="width:200px;" />
+</td></tr>
+<tr><th>Platform</th><td>android</td></tr>
+<tr><th>Type</th><td>tablet</td></tr>
+<tr><th>Pixel Ratio</th><td>3.0</td></tr>
+<tr><th>Screen size</th><td>720.0 x 1280.0</td></tr>
+<tr><th>Safe Area (portrait)</th><td>left: 0.0, top: 0.0, right: 0.0, bottom: 0.0</td></tr>
+<tr><th>Safe Area (Landscape)</th><td>left: 0.0, top: 0.0, right: 0.0, bottom: 0.0</td></tr>
 </table>
 
 #### Nexus 9
