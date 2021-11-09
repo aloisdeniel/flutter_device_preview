@@ -18,17 +18,11 @@ class _ExampleAppState extends State<ExampleApp> {
   bool isKeyboard = false;
   bool isEnabled = true;
 
-  @override
-  void initState() {
-    DeviceFrame.precache(context);
-    super.initState();
-  }
-
   final GlobalKey screenKey = GlobalKey();
   List<DeviceInfo> allDevices = [
     ...Devices.ios.all,
     ...Devices.android.all,
-    ...Devices.macos.all,
+    ...Devices.macOS.all,
     ...Devices.windows.all,
     ...Devices.linux.all,
   ];

@@ -24,8 +24,9 @@ class _$DeviceInfoTearOff {
       required EdgeInsets safeAreas,
       required Path screenPath,
       required double pixelRatio,
-      required String svgFrame,
+      required CustomPainter framePainter,
       required Size frameSize,
+      required int year,
       required Size screenSize}) {
     return _DeviceInfo(
       identifier: identifier,
@@ -34,8 +35,9 @@ class _$DeviceInfoTearOff {
       safeAreas: safeAreas,
       screenPath: screenPath,
       pixelRatio: pixelRatio,
-      svgFrame: svgFrame,
+      framePainter: framePainter,
       frameSize: frameSize,
+      year: year,
       screenSize: screenSize,
     );
   }
@@ -65,10 +67,13 @@ mixin _$DeviceInfo {
   double get pixelRatio => throw _privateConstructorUsedError;
 
   /// The safe areas when the device is in portrait orientation.
-  String get svgFrame => throw _privateConstructorUsedError;
+  CustomPainter get framePainter => throw _privateConstructorUsedError;
 
   /// The frame size in pixels.
   Size get frameSize => throw _privateConstructorUsedError;
+
+  /// The year the device has been first released.
+  int get year => throw _privateConstructorUsedError;
 
   /// The size in points of the screen content.
   Size get screenSize => throw _privateConstructorUsedError;
@@ -90,8 +95,9 @@ abstract class $DeviceInfoCopyWith<$Res> {
       EdgeInsets safeAreas,
       Path screenPath,
       double pixelRatio,
-      String svgFrame,
+      CustomPainter framePainter,
       Size frameSize,
+      int year,
       Size screenSize});
 }
 
@@ -111,8 +117,9 @@ class _$DeviceInfoCopyWithImpl<$Res> implements $DeviceInfoCopyWith<$Res> {
     Object? safeAreas = freezed,
     Object? screenPath = freezed,
     Object? pixelRatio = freezed,
-    Object? svgFrame = freezed,
+    Object? framePainter = freezed,
     Object? frameSize = freezed,
+    Object? year = freezed,
     Object? screenSize = freezed,
   }) {
     return _then(_value.copyWith(
@@ -140,14 +147,18 @@ class _$DeviceInfoCopyWithImpl<$Res> implements $DeviceInfoCopyWith<$Res> {
           ? _value.pixelRatio
           : pixelRatio // ignore: cast_nullable_to_non_nullable
               as double,
-      svgFrame: svgFrame == freezed
-          ? _value.svgFrame
-          : svgFrame // ignore: cast_nullable_to_non_nullable
-              as String,
+      framePainter: framePainter == freezed
+          ? _value.framePainter
+          : framePainter // ignore: cast_nullable_to_non_nullable
+              as CustomPainter,
       frameSize: frameSize == freezed
           ? _value.frameSize
           : frameSize // ignore: cast_nullable_to_non_nullable
               as Size,
+      year: year == freezed
+          ? _value.year
+          : year // ignore: cast_nullable_to_non_nullable
+              as int,
       screenSize: screenSize == freezed
           ? _value.screenSize
           : screenSize // ignore: cast_nullable_to_non_nullable
@@ -169,8 +180,9 @@ abstract class _$DeviceInfoCopyWith<$Res> implements $DeviceInfoCopyWith<$Res> {
       EdgeInsets safeAreas,
       Path screenPath,
       double pixelRatio,
-      String svgFrame,
+      CustomPainter framePainter,
       Size frameSize,
+      int year,
       Size screenSize});
 }
 
@@ -192,8 +204,9 @@ class __$DeviceInfoCopyWithImpl<$Res> extends _$DeviceInfoCopyWithImpl<$Res>
     Object? safeAreas = freezed,
     Object? screenPath = freezed,
     Object? pixelRatio = freezed,
-    Object? svgFrame = freezed,
+    Object? framePainter = freezed,
     Object? frameSize = freezed,
+    Object? year = freezed,
     Object? screenSize = freezed,
   }) {
     return _then(_DeviceInfo(
@@ -221,14 +234,18 @@ class __$DeviceInfoCopyWithImpl<$Res> extends _$DeviceInfoCopyWithImpl<$Res>
           ? _value.pixelRatio
           : pixelRatio // ignore: cast_nullable_to_non_nullable
               as double,
-      svgFrame: svgFrame == freezed
-          ? _value.svgFrame
-          : svgFrame // ignore: cast_nullable_to_non_nullable
-              as String,
+      framePainter: framePainter == freezed
+          ? _value.framePainter
+          : framePainter // ignore: cast_nullable_to_non_nullable
+              as CustomPainter,
       frameSize: frameSize == freezed
           ? _value.frameSize
           : frameSize // ignore: cast_nullable_to_non_nullable
               as Size,
+      year: year == freezed
+          ? _value.year
+          : year // ignore: cast_nullable_to_non_nullable
+              as int,
       screenSize: screenSize == freezed
           ? _value.screenSize
           : screenSize // ignore: cast_nullable_to_non_nullable
@@ -247,8 +264,9 @@ class _$_DeviceInfo with DiagnosticableTreeMixin implements _DeviceInfo {
       required this.safeAreas,
       required this.screenPath,
       required this.pixelRatio,
-      required this.svgFrame,
+      required this.framePainter,
       required this.frameSize,
+      required this.year,
       required this.screenSize});
 
   @override
@@ -279,11 +297,15 @@ class _$_DeviceInfo with DiagnosticableTreeMixin implements _DeviceInfo {
   @override
 
   /// The safe areas when the device is in portrait orientation.
-  final String svgFrame;
+  final CustomPainter framePainter;
   @override
 
   /// The frame size in pixels.
   final Size frameSize;
+  @override
+
+  /// The year the device has been first released.
+  final int year;
   @override
 
   /// The size in points of the screen content.
@@ -291,7 +313,7 @@ class _$_DeviceInfo with DiagnosticableTreeMixin implements _DeviceInfo {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DeviceInfo(identifier: $identifier, name: $name, rotatedSafeAreas: $rotatedSafeAreas, safeAreas: $safeAreas, screenPath: $screenPath, pixelRatio: $pixelRatio, svgFrame: $svgFrame, frameSize: $frameSize, screenSize: $screenSize)';
+    return 'DeviceInfo(identifier: $identifier, name: $name, rotatedSafeAreas: $rotatedSafeAreas, safeAreas: $safeAreas, screenPath: $screenPath, pixelRatio: $pixelRatio, framePainter: $framePainter, frameSize: $frameSize, year: $year, screenSize: $screenSize)';
   }
 
   @override
@@ -305,8 +327,9 @@ class _$_DeviceInfo with DiagnosticableTreeMixin implements _DeviceInfo {
       ..add(DiagnosticsProperty('safeAreas', safeAreas))
       ..add(DiagnosticsProperty('screenPath', screenPath))
       ..add(DiagnosticsProperty('pixelRatio', pixelRatio))
-      ..add(DiagnosticsProperty('svgFrame', svgFrame))
+      ..add(DiagnosticsProperty('framePainter', framePainter))
       ..add(DiagnosticsProperty('frameSize', frameSize))
+      ..add(DiagnosticsProperty('year', year))
       ..add(DiagnosticsProperty('screenSize', screenSize));
   }
 
@@ -326,10 +349,11 @@ class _$_DeviceInfo with DiagnosticableTreeMixin implements _DeviceInfo {
                 other.screenPath == screenPath) &&
             (identical(other.pixelRatio, pixelRatio) ||
                 other.pixelRatio == pixelRatio) &&
-            (identical(other.svgFrame, svgFrame) ||
-                other.svgFrame == svgFrame) &&
+            (identical(other.framePainter, framePainter) ||
+                other.framePainter == framePainter) &&
             (identical(other.frameSize, frameSize) ||
                 other.frameSize == frameSize) &&
+            (identical(other.year, year) || other.year == year) &&
             (identical(other.screenSize, screenSize) ||
                 other.screenSize == screenSize));
   }
@@ -343,8 +367,9 @@ class _$_DeviceInfo with DiagnosticableTreeMixin implements _DeviceInfo {
       safeAreas,
       screenPath,
       pixelRatio,
-      svgFrame,
+      framePainter,
       frameSize,
+      year,
       screenSize);
 
   @JsonKey(ignore: true)
@@ -361,8 +386,9 @@ abstract class _DeviceInfo implements DeviceInfo {
       required EdgeInsets safeAreas,
       required Path screenPath,
       required double pixelRatio,
-      required String svgFrame,
+      required CustomPainter framePainter,
       required Size frameSize,
+      required int year,
       required Size screenSize}) = _$_DeviceInfo;
 
   @override
@@ -392,11 +418,15 @@ abstract class _DeviceInfo implements DeviceInfo {
   @override
 
   /// The safe areas when the device is in portrait orientation.
-  String get svgFrame;
+  CustomPainter get framePainter;
   @override
 
   /// The frame size in pixels.
   Size get frameSize;
+  @override
+
+  /// The year the device has been first released.
+  int get year;
   @override
 
   /// The size in points of the screen content.

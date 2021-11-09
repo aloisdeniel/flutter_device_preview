@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-import 'devices.dart';
+import 'info/identifier.dart';
 import 'info/info.dart';
 
 /// Simulate a physical device and embedding a virtual
@@ -59,20 +58,6 @@ class DeviceFrame extends StatelessWidget {
     this.orientation = Orientation.portrait,
     this.isFrameVisible = true,
   }) : super(key: key);
-
-  // Precaches all SVG files.
-  static Future<void> precache(BuildContext context) async {
-    for (var device in Devices.all) {
-      final picture = StringPicture(
-        SvgPicture.svgStringDecoderBuilder,
-        device.svgFrame,
-      );
-      await precachePicture(
-        picture,
-        context,
-      );
-    }
-  }
 
   /// Creates a [MediaQuery] from the given device [info], and for the current device [orientation].
   ///
@@ -153,9 +138,9 @@ class DeviceFrame extends StatelessWidget {
           if (isFrameVisible)
             Positioned.fill(
               key: const Key('frame'),
-              child: SvgPicture.string(
-                device.svgFrame,
+              child: CustomPaint(
                 key: ValueKey(device.identifier),
+                painter: device.framePainter,
               ),
             ),
           Positioned(
