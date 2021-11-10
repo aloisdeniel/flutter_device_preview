@@ -7,26 +7,26 @@ part 'screen.g.dart';
 
 final info = DeviceInfo(
   identifier: const DeviceIdentifier(
-    TargetPlatform.iOS,
+    TargetPlatform.android,
     DeviceType.phone,
-    'iphone-12-mini',
+    'oneplus-8-pro',
   ),
-  name: 'iPhone 12 Mini',
-  pixelRatio: 2.0,
-  frameSize: const Size(871.0, 1768.0),
-  screenSize: const Size(375.0, 812.0),
+  name: 'OnePlus 8 Pro',
+  pixelRatio: 4.0,
   safeAreas: const EdgeInsets.only(
     left: 0.0,
-    top: 44.0,
+    top: 40.0,
     right: 0.0,
-    bottom: 34.0,
+    bottom: 20.0,
   ),
   rotatedSafeAreas: const EdgeInsets.only(
-    left: 44.0,
+    left: 40.0,
     top: 0.0,
-    right: 44.0,
-    bottom: 21.0,
+    right: 40.0,
+    bottom: 0.0,
   ),
   framePainter: const _FramePainter(),
   screenPath: _screenPath,
+  frameSize: const Size(852, 1865.0),
+  screenSize: const Size(360.0, 800.0),
 );

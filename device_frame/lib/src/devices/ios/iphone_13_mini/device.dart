@@ -9,9 +9,9 @@ final info = DeviceInfo(
   identifier: const DeviceIdentifier(
     TargetPlatform.iOS,
     DeviceType.phone,
-    'iphone-12-mini',
+    'iphone-13-mini',
   ),
-  name: 'iPhone 12 Mini',
+  name: 'iPhone 13 Mini',
   pixelRatio: 2.0,
   frameSize: const Size(871.0, 1768.0),
   screenSize: const Size(375.0, 812.0),

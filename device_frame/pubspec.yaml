@@ -1,6 +1,6 @@
 name: device_frame
 description: Mockups for common devices.
-version: 0.6.0
+version: 0.6.1
 homepage: https://github.com/aloisdeniel/flutter_device_preview/device_frame
 
 environment:
@@ -10,7 +10,6 @@ dependencies:
   freezed_annotation: ^0.15.0 
   flutter:
     sdk: flutter
-  path_drawing: ^0.5.1+1
 
 dev_dependencies:
   build_runner: ^2.1.4

@@ -23,7 +23,6 @@ DeviceInfo buildGenericPhoneDevice({
       id,
     ),
     name: name,
-    year: DateTime.now().year,
     pixelRatio: pixelRatio,
     frameSize: framePainter.calculateFrameSize(screenSize),
     screenSize: screenSize,

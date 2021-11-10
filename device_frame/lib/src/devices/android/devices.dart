@@ -2,15 +2,19 @@ import 'dart:ui';
 
 import 'package:device_frame/src/info/info.dart';
 
-import 'package:device_frame/src/devices/android/samsung_s8/device.dart'
-    as i_samsung_s8;
+import 'package:device_frame/src/devices/android/samsung_s20/device.dart'
+    as i_samsung_s20;
+import 'package:device_frame/src/devices/android/oneplus_8_pro/device.dart'
+    as i_oneplus_8_pro;
 import 'package:flutter/material.dart';
 
 /// A set of iOS devices.
 class AndroidDevices {
   const AndroidDevices();
 
-  DeviceInfo get samsungS8 => i_samsung_s8.info;
+  DeviceInfo get samsungS20 => i_samsung_s20.info;
+
+  DeviceInfo get onePlus8Pro => i_oneplus_8_pro.info;
 
   DeviceInfo get smallPhone => _smallPhone;
   static final _smallPhone = DeviceInfo.genericPhone(
@@ -133,12 +137,15 @@ class AndroidDevices {
   );
 
   List<DeviceInfo> get all => [
+        //Phones
+        samsungS20,
+        onePlus8Pro,
         smallPhone,
         mediumPhone,
         bigPhone,
+        // Tablets
         smallTablet,
         mediumTablet,
         largeTablet,
-        samsungS8,
       ];
 }

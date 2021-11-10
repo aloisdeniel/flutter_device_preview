@@ -1,14 +1,10 @@
 import 'package:device_frame/src/info/info.dart';
 
-import 'package:device_frame/src/devices/windows/surface3/device.dart'
-    as i_surface3;
 import 'package:flutter/widgets.dart';
 
 /// A set of iOS devices.
 class WindowsDevices {
   const WindowsDevices();
-
-  DeviceInfo get surface3 => i_surface3.info;
 
   DeviceInfo get wideMonitor => _wideMonitor;
   static final _wideMonitor = DeviceInfo.genericDesktopMonitor(
@@ -43,7 +39,6 @@ class WindowsDevices {
   );
 
   List<DeviceInfo> get all => [
-        surface3,
         wideMonitor,
         laptop,
       ];

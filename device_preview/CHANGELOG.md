@@ -1,3 +1,7 @@
+## 1.0.0-alpha.12
+
+* Updated device_frame which added a new list of devices.
+
 ## 1.0.0-alpha.11
 
 * Added section visibility parameters to hide items.

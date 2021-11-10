@@ -1,3 +1,17 @@
+## [0.6.1] - 2021/11/10
+
+* Exposing more classes.
+
+## [0.6.0] - 2021/11/10
+
+* Removed SVG dependencies.
+* Updated device : 
+    * **iOS**: iPhone 12 mini, iPhone 12 Pro Max, iPhone 12, iPhone 13 mini, iPhone 13 Pro Max, iPhone 13, iPhone SE, iPad Air 4, iPad Pro
+    * **Android**: Samsung S20, OnePlus 8 Pro, Generic phones and tablets
+    * **Windows**: Generic desktop and laptop
+    * **macOS**: MacBook Pro, Generic desktop
+    * **Linux**: Generic desktop and laptop
+
 ## [0.5.2] - 2021/10/25
 
 * Fixed SVG parsing errors (definitions as first).

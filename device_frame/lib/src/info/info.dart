@@ -40,9 +40,6 @@ abstract class DeviceInfo with _$DeviceInfo {
     /// The frame size in pixels.
     required Size frameSize,
 
-    /// The year the device has been first released.
-    required int year,
-
     /// The size in points of the screen content.
     required Size screenSize,
   }) = _DeviceInfo;

@@ -1,10 +1,13 @@
 import 'package:device_frame/src/info/info.dart';
 import 'package:flutter/widgets.dart';
+import 'package:device_frame/src/devices/macos/macbook_pro/device.dart'
+    as i_macbook_pro;
 
 /// A set of macOS devices.
 class MacOSDevices {
   const MacOSDevices();
 
+  DeviceInfo get macBookPro => i_macbook_pro.info;
   DeviceInfo get wideMonitor => _wideMonitor;
   static final _wideMonitor = DeviceInfo.genericDesktopMonitor(
     platform: TargetPlatform.macOS,
@@ -22,6 +25,7 @@ class MacOSDevices {
   );
 
   List<DeviceInfo> get all => [
+        macBookPro,
         wideMonitor,
       ];
 }

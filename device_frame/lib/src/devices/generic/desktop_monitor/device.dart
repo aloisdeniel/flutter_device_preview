@@ -29,7 +29,6 @@ DeviceInfo buildGenericDesktopMonitorDevice({
       id,
     ),
     name: name,
-    year: DateTime.now().year,
     pixelRatio: pixelRatio,
     frameSize: effectivePainter.calculateFrameSize(screenSize),
     screenSize: effectivePainter.effectiveWindowSize,

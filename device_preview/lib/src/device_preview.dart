@@ -389,12 +389,6 @@ class _DevicePreviewState extends State<DevicePreview> {
     }
   }
 
-  @override
-  void didChangeDependencies() {
-    DeviceFrame.precache(context);
-    super.didChangeDependencies();
-  }
-
   Widget _buildPreview(BuildContext context) {
     final theme = Theme.of(context);
     final isEnabled = context.select(
@@ -479,7 +473,7 @@ class _DevicePreviewState extends State<DevicePreview> {
 
     return ChangeNotifierProvider(
       create: (context) => DevicePreviewStore(
-        defaultDevice: widget.defaultDevice ?? Devices.ios.iPhone11,
+        defaultDevice: widget.defaultDevice ?? Devices.ios.iPhone13,
         devices: widget.devices,
         locales: widget.availableLocales,
         storage: storage,

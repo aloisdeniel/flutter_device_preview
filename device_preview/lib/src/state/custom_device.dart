@@ -16,58 +16,17 @@ class CustomDeviceInfo implements DeviceInfo {
   const CustomDeviceInfo._({
     required this.identifier,
     required this.data,
-    required this.screenPath,
-    required this.svgFrame,
-    required this.frameSize,
   });
 
   /// Create a new custom device from stored [data].
   factory CustomDeviceInfo(CustomDeviceInfoData data) {
-    const _insets = EdgeInsets.only(
-      left: 20,
-      right: 20,
-      top: 40,
-      bottom: 24,
-    );
-
-    final screenPath = Path()
-      ..addRRect(
-        RRect.fromRectAndRadius(
-          Rect.fromLTWH(
-            _insets.left,
-            _insets.top,
-            data.screenSize.width,
-            data.screenSize.height,
-          ),
-          const Radius.circular(10),
-        ),
-      );
-
-    final frameSize = Size(
-      data.screenSize.width + _insets.horizontal,
-      data.screenSize.height + _insets.vertical,
-    );
-
-    final svgFrame = '''
-    <svg width="${frameSize.width}" height="${frameSize.height}" viewBox="0 0 ${frameSize.width} ${frameSize.height}" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-      <linearGradient id="paint0_linear" x1="${frameSize.width}" y1="0" x2="${frameSize.width}" y2="${frameSize.height}" gradientUnits="userSpaceOnUse">
-        <stop stop-color="#D2D2D2"/>
-        <stop offset="1" stop-color="#525252"/>
-        </linearGradient>
-      </defs>
-      <rect x="0" y="0" width="${frameSize.width}" height="${frameSize.height}" rx="20" fill="#0A0A0A" stroke="url(#paint0_linear)" stroke-width="6"/>
-    </svg>
-    ''';
-
     return CustomDeviceInfo._(
       data: data,
       identifier: CustomDeviceIdentifier(data),
-      screenPath: screenPath,
-      svgFrame: svgFrame,
-      frameSize: frameSize,
     );
   }
+
+  static const _painter = GenericTabletFramePainter();
 
   /// The data that contains all of the custom device properties.
   final CustomDeviceInfoData data;
@@ -95,13 +54,13 @@ class CustomDeviceInfo implements DeviceInfo {
   Size get screenSize => data.screenSize;
 
   @override
-  final Path screenPath;
+  Path get screenPath => _painter.createScreenPath(screenSize);
 
   @override
-  final String svgFrame;
+  Size get frameSize => _painter.calculateFrameSize(screenSize);
 
   @override
-  final Size frameSize;
+  CustomPainter get framePainter => _painter;
 }
 
 /// The device identifier for a [CustomDeviceInfo].
