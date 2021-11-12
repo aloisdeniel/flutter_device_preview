@@ -47,6 +47,7 @@ class SystemSection extends StatelessWidget {
       children: [
         if (locale)
           ListTile(
+            key: const Key('locale'),
             title: const Text('Locale'),
             subtitle: Text(selectedLocale.name),
             trailing: Row(
@@ -71,6 +72,7 @@ class SystemSection extends StatelessWidget {
           ),
         if (theme)
           ListTile(
+            key: const Key('theme'),
             title: const Text('Theme'),
             subtitle: Text(isDarkMode ? 'Dark' : 'Light'),
             trailing: Icon(

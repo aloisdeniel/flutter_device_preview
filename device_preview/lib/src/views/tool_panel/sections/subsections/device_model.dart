@@ -4,6 +4,7 @@ import 'package:device_preview/src/views/tool_panel/widgets/device_type_icon.dar
 import 'package:device_preview/src/views/tool_panel/widgets/target_platform_icon.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:provider/provider.dart';
 
 import '../section.dart';
@@ -119,14 +120,61 @@ class _PlatformModelPicker extends StatelessWidget {
               : result;
         }),
     );
+    final byDeviceType =
+        groupBy<DeviceInfo, DeviceType>(devices, (d) => d.identifier.type);
     return ListView(
       children: [
-        ...devices.map(
-          (e) => DeviceTile(
-            info: e,
-          ),
-        ),
+        ...byDeviceType.entries
+            .map(
+              (e) => [
+                _TypeSectionHeader(
+                  type: e.key,
+                ),
+                ...e.value.map(
+                  (d) => DeviceTile(
+                    info: d,
+                  ),
+                ),
+              ],
+            )
+            .expand((x) => x),
       ],
+    );
+  }
+}
+
+class _TypeSectionHeader extends StatelessWidget {
+  _TypeSectionHeader({
+    required this.type,
+  }) : super(key: ValueKey(type));
+
+  final DeviceType type;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.only(left: 40, right: 30, top: 30, bottom: 16),
+      child: Text(
+        () {
+          switch (type) {
+            case DeviceType.tablet:
+              return 'Tablet';
+            case DeviceType.desktop:
+              return 'Desktop';
+            case DeviceType.tv:
+              return 'TV';
+            case DeviceType.laptop:
+              return 'Laptop';
+            default:
+              return 'Phone';
+          }
+        }()
+            .toUpperCase(),
+        style: theme.textTheme.subtitle2?.copyWith(
+          color: theme.hintColor,
+        ),
+      ),
     );
   }
 }
@@ -143,6 +191,7 @@ class DeviceTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(info.name),
+      leading: DeviceTypeIcon(type: info.identifier.type),
       subtitle: Text(
         '${info.screenSize.width}x${info.screenSize.height} @${info.pixelRatio}',
         style: const TextStyle(

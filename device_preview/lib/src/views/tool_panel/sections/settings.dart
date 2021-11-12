@@ -39,6 +39,7 @@ class SettingsSection extends StatelessWidget {
       children: [
         if (this.backgroundTheme)
           ListTile(
+            key: const Key('background-theme'),
             title: const Text('Background color'),
             subtitle: Text(
               backgroundTheme == DevicePreviewBackgroundThemeData.dark
@@ -69,6 +70,7 @@ class SettingsSection extends StatelessWidget {
           ),
         if (toolsTheme)
           ListTile(
+            key: const Key('toolbar-theme'),
             title: const Text('Tools theme'),
             subtitle: Text(
               toolbarTheme == DevicePreviewToolBarThemeData.dark

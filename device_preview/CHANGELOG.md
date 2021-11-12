@@ -1,3 +1,10 @@
+## 1.0.0-alpha.13
+
+* Added device type section headers
+* Improved disabled item icon visibility changes.
+* Fixed accesible navigation, invert colors and bold text not available.
+* Removed path_drawing dependency.
+
 ## 1.0.0-alpha.12
 
 * Updated device_frame which added a new list of devices.

@@ -9,7 +9,7 @@ class CustomPlugin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ToolPanelSection(
-      title: 'Screenshot',
+      title: 'Custom',
       children: [
         ListTile(
           title: const Text('Print in console'),

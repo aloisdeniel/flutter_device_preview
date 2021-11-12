@@ -64,6 +64,7 @@ class DeviceSection extends StatelessWidget {
       children: [
         if (model)
           ListTile(
+            key: const Key('model'),
             title: const Text('Model'),
             subtitle: Text(deviceName),
             trailing: Row(
@@ -96,6 +97,7 @@ class DeviceSection extends StatelessWidget {
           ),
         if (this.orientation && canRotate)
           ListTile(
+            key: const Key('orientation'),
             title: const Text('Orientation'),
             subtitle: Text(
               () {
@@ -122,12 +124,16 @@ class DeviceSection extends StatelessWidget {
           ),
         if (frameVisibility)
           ListTile(
+            key: const Key('frame'),
             title: const Text('Frame visibility'),
             subtitle: Text(isFrameVisible ? 'Visible' : 'Hidden'),
-            trailing: Icon(
-              isFrameVisible
-                  ? Icons.border_outer_rounded
-                  : Icons.border_clear_rounded,
+            trailing: Opacity(
+              opacity: isFrameVisible ? 1.0 : 0.3,
+              child: Icon(
+                isFrameVisible
+                    ? Icons.border_outer_rounded
+                    : Icons.border_clear_rounded,
+              ),
             ),
             onTap: () {
               final state = context.read<DevicePreviewStore>();
@@ -136,12 +142,16 @@ class DeviceSection extends StatelessWidget {
           ),
         if (virtualKeyboard)
           ListTile(
+            key: const Key('keyboard'),
             title: const Text('Virtual keyboard preview'),
             subtitle: Text(isVirtualKeyboardVisible ? 'Visible' : 'Hidden'),
-            trailing: Icon(
-              isVirtualKeyboardVisible
-                  ? Icons.keyboard
-                  : Icons.keyboard_outlined,
+            trailing: Opacity(
+              opacity: isVirtualKeyboardVisible ? 1.0 : 0.3,
+              child: Icon(
+                isVirtualKeyboardVisible
+                    ? Icons.keyboard
+                    : Icons.keyboard_outlined,
+              ),
             ),
             onTap: () {
               final state = context.read<DevicePreviewStore>();

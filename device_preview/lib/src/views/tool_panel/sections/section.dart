@@ -36,7 +36,9 @@ class ToolPanelSection extends StatelessWidget {
               ),
               child: Text(
                 title.toUpperCase(),
-                style: theme.textTheme.subtitle2,
+                style: theme.textTheme.subtitle2?.copyWith(
+                  color: theme.hintColor,
+                ),
               ),
             ),
             ...children,

@@ -16,6 +16,7 @@ class AccessibilitySection extends StatelessWidget {
     this.accessibleNavigation = true,
     this.invertColors = true,
     this.textScalingFactor = true,
+    this.boldText = true,
   }) : super(key: key);
 
   /// Allow to enable accessible navigation mode.
@@ -27,10 +28,16 @@ class AccessibilitySection extends StatelessWidget {
   /// Allow to edit the current text scaling factor.
   final bool textScalingFactor;
 
+  /// Allow to edit the current text weight.
+  final bool boldText;
+
   @override
   Widget build(BuildContext context) {
-    final textScaleFactor = context.select(
+    final textScalingFactor = context.select(
       (DevicePreviewStore store) => store.data.textScaleFactor,
+    );
+    final boldText = context.select(
+      (DevicePreviewStore store) => store.data.boldText,
     );
     final accessibleNavigation = context.select(
       (DevicePreviewStore store) => store.data.accessibleNavigation,
@@ -41,14 +48,18 @@ class AccessibilitySection extends StatelessWidget {
     return ToolPanelSection(
       title: 'Accessibility',
       children: [
-        if (accessibleNavigation)
+        if (this.accessibleNavigation)
           ListTile(
+            key: const Key('accessible-navigation'),
             title: const Text('Accessible navigation'),
             subtitle: Text(accessibleNavigation ? 'Enabled' : 'Disabled'),
-            trailing: Icon(
-              accessibleNavigation
-                  ? Icons.accessible_forward
-                  : Icons.accessible_rounded,
+            trailing: Opacity(
+              opacity: accessibleNavigation ? 1.0 : 0.3,
+              child: Icon(
+                accessibleNavigation
+                    ? Icons.accessible_forward
+                    : Icons.accessible_rounded,
+              ),
             ),
             onTap: () {
               final state = context.read<DevicePreviewStore>();
@@ -57,14 +68,18 @@ class AccessibilitySection extends StatelessWidget {
               );
             },
           ),
-        if (invertColors)
+        if (this.invertColors)
           ListTile(
+            key: const Key('invert-colors'),
             title: const Text('Invert colors'),
             subtitle: Text(invertColors ? 'Enabled' : 'Disabled'),
-            trailing: Icon(
-              invertColors
-                  ? Icons.format_color_reset_rounded
-                  : Icons.format_color_reset_outlined,
+            trailing: Opacity(
+              opacity: invertColors ? 1.0 : 0.3,
+              child: Icon(
+                invertColors
+                    ? Icons.format_color_reset_rounded
+                    : Icons.format_color_reset_outlined,
+              ),
             ),
             onTap: () {
               final state = context.read<DevicePreviewStore>();
@@ -73,17 +88,36 @@ class AccessibilitySection extends StatelessWidget {
               );
             },
           ),
-        if (textScalingFactor) ...[
+        if (this.boldText)
           ListTile(
+            key: const Key('bold-text'),
+            title: const Text('Bold text'),
+            subtitle: Text(boldText ? 'Enabled' : 'Disabled'),
+            trailing: Opacity(
+              opacity: boldText ? 1.0 : 0.3,
+              child: const Icon(
+                Icons.format_bold,
+              ),
+            ),
+            onTap: () {
+              final state = context.read<DevicePreviewStore>();
+              state.data = state.data.copyWith(
+                boldText: !boldText,
+              );
+            },
+          ),
+        if (this.textScalingFactor) ...[
+          ListTile(
+            key: const Key('text-scaling-factor'),
             title: const Text('Text scaling factor'),
-            subtitle: Text(textScaleFactor.toString()),
+            subtitle: Text(textScalingFactor.toString()),
             trailing: Transform(
               alignment: Alignment.center,
               transform: (Matrix4.identity()
                 ..scale(
-                  textScaleFactor >= 2
+                  textScalingFactor >= 2
                       ? 1.0
-                      : (textScaleFactor < 1 ? 0.25 : 0.6),
+                      : (textScalingFactor < 1 ? 0.25 : 0.6),
                 )),
               child: const Icon(Icons.text_format),
             ),
@@ -91,7 +125,7 @@ class AccessibilitySection extends StatelessWidget {
           ListTile(
             key: const Key('text-scaling-slider'),
             title: Slider(
-              value: textScaleFactor,
+              value: textScalingFactor,
               onChanged: (v) {
                 final state = context.read<DevicePreviewStore>();
                 state.data = state.data.copyWith(textScaleFactor: v);
