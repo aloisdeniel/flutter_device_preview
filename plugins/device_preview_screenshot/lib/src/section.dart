@@ -32,9 +32,17 @@ class DevicePreviewScreenshot extends StatefulWidget {
   const DevicePreviewScreenshot({
     Key? key,
     this.onScreenshot = screenshotAsBase64,
+    this.multipleScreenshots = false,
   }) : super(key: key);
 
   final ScreenshotProcessor onScreenshot;
+
+  /// If enabled, a new item is added to the menu which allwo screenshots to be
+  /// taken for all available device.
+  ///
+  /// Make sure to have an adapted [onScreenshot] processor for this ([screenshotAsBase64] won't
+  /// be really useful in this case).
+  final bool multipleScreenshots;
 
   @override
   State<DevicePreviewScreenshot> createState() =>
@@ -50,6 +58,7 @@ class _DevicePreviewScreenshotState extends State<DevicePreviewScreenshot> {
       title: 'Screenshot',
       children: [
         ListTile(
+          key: const Key('single-screenshot'),
           title: const Text('Take a screenshot'),
           subtitle: const Text('Currently selected device'),
           trailing: _isLoading ? const CircularProgressIndicator() : null,
@@ -72,39 +81,43 @@ class _DevicePreviewScreenshotState extends State<DevicePreviewScreenshot> {
                   }
                 },
         ),
-        ListTile(
-          title: const Text('Take multiple screenshots'),
-          subtitle: const Text('All available devices'),
-          trailing: _isLoading ? const CircularProgressIndicator() : null,
-          onTap: _isLoading
-              ? null
-              : () async {
-                  setState(() {
-                    _isLoading = true;
-                  });
-                  try {
-                    final initialDevice = DevicePreview.selectedDevice(context);
-                    for (var device
-                        in DevicePreview.availableDeviceIdentifiers(context)) {
+        if (widget.multipleScreenshots)
+          ListTile(
+            key: const Key('muliple-screenshot'),
+            title: const Text('Take multiple screenshots'),
+            subtitle: const Text('All available devices'),
+            trailing: _isLoading ? const CircularProgressIndicator() : null,
+            onTap: _isLoading
+                ? null
+                : () async {
+                    setState(() {
+                      _isLoading = true;
+                    });
+                    try {
+                      final initialDevice =
+                          DevicePreview.selectedDevice(context);
+                      for (var device
+                          in DevicePreview.availableDeviceIdentifiers(
+                              context)) {
+                        DevicePreview.selectDevice(
+                          context,
+                          device,
+                        );
+                        await Future.delayed(const Duration(milliseconds: 500));
+                        final result = await DevicePreview.screenshot(context);
+                        await widget.onScreenshot(this.context, result);
+                      }
                       DevicePreview.selectDevice(
                         context,
-                        device,
+                        initialDevice.identifier,
                       );
-                      await Future.delayed(const Duration(milliseconds: 500));
-                      final result = await DevicePreview.screenshot(context);
-                      await widget.onScreenshot(this.context, result);
+                    } finally {
+                      setState(() {
+                        _isLoading = false;
+                      });
                     }
-                    DevicePreview.selectDevice(
-                      context,
-                      initialDevice.identifier,
-                    );
-                  } finally {
-                    setState(() {
-                      _isLoading = false;
-                    });
-                  }
-                },
-        ),
+                  },
+          ),
       ],
     );
   }

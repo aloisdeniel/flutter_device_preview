@@ -1,3 +1,7 @@
+## 1.0.0-alpha.14
+
+* Missing export of `DeviceScreenshot`.
+
 ## 1.0.0-alpha.13
 
 * Added device type section headers
