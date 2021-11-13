@@ -16,6 +16,8 @@ Mockups for common devices.
 
 ## Quickstart
 
+Wrap any widget in a `DeviceFrame` widget and give it a `device` (*multiple devices are available from the `Device` accessors*).
+
 ```Dart
 DeviceFrame(
     device: Devices.ios.iPhone11,
@@ -30,7 +32,9 @@ DeviceFrame(
 
 ## Usage
 
-### Displaying virtual keyboard
+### Displaying a virtual keyboard
+
+To display a generic simulated virtual keyboard, simply wrap any widget in a `VirtualKeyboard`.
 
 ```dart
 DeviceFrame(
@@ -44,6 +48,8 @@ DeviceFrame(
 ```
 
 ### Maintain device media query and theme in an encapsulated app
+
+To make sure that a `WidgetsApp` uses the simulated `MediaQuery` from the simulated devices, set its `useInheritedMediaQuery` property to `true`.
 
 ```dart
 DeviceFrame(
@@ -59,6 +65,8 @@ DeviceFrame(
 ```
 
 ### Creating a custom generic device
+
+Various generic devices are available as `DeviceInfo` factories to make it easy to create custom device instances.
 
 #### Phone
 
@@ -152,4 +160,4 @@ Screenshots for all available devices are [available in the `test/devices` direc
 
 ### Edit device frames
 
-All frames are designed in a [Figma file](https://www.figma.com/file/WIamxcVDlHvxcCjLvJnwmR/DevicePreview-Frames?node-id=0%3A1). They are then all exported to `assets/<name>.svg` files and then merged into a single `lib/devices.g.dart` with the `script/frame_generator.dart`
+All frames are designed in a [Figma file](https://www.figma.com/file/WIamxcVDlHvxcCjLvJnwmR/DevicePreview-Frames?node-id=0%3A1).

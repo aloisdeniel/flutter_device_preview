@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'info/identifier.dart';
+import 'info/device_type.dart';
 import 'info/info.dart';
 
 /// Simulate a physical device and embedding a virtual
@@ -174,9 +174,9 @@ class DeviceFrame extends StatelessWidget {
 }
 
 class _ScreenClipper extends CustomClipper<Path> {
-  final Path? path;
-
   const _ScreenClipper(this.path);
+
+  final Path? path;
 
   @override
   Path getClip(Size size) {
