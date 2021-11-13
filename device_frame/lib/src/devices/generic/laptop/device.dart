@@ -1,4 +1,4 @@
-import 'package:device_frame/src/devices/generic/common.dart';
+import 'package:device_frame/src/devices/generic/base/draw_extensions.dart';
 import 'package:device_frame/src/info/identifier.dart';
 import 'package:device_frame/src/info/info.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +13,8 @@ DeviceInfo buildGenericLaptopDevice({
   required Size screenSize,
   required Rect windowPosition,
   EdgeInsets safeAreas = EdgeInsets.zero,
-  EdgeInsets rotatedSafeAreas = EdgeInsets.zero,
   double pixelRatio = 2.0,
+  EdgeInsets? rotatedSafeAreas,
   GenericLaptopFramePainter? framePainter,
 }) {
   final effectivePainter = framePainter ??

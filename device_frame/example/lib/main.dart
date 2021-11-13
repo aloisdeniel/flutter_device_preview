@@ -19,13 +19,7 @@ class _ExampleAppState extends State<ExampleApp> {
   bool isEnabled = true;
 
   final GlobalKey screenKey = GlobalKey();
-  List<DeviceInfo> allDevices = [
-    ...Devices.ios.all,
-    ...Devices.android.all,
-    ...Devices.macOS.all,
-    ...Devices.windows.all,
-    ...Devices.linux.all,
-  ];
+
   Orientation orientation = Orientation.portrait;
   Widget _frame(DeviceInfo device) => Center(
         child: DeviceFrame(
@@ -55,7 +49,7 @@ class _ExampleAppState extends State<ExampleApp> {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: DefaultTabController(
-          length: allDevices.length,
+          length: Devices.all.length,
           child: Scaffold(
             backgroundColor: isDark ? Colors.white : Colors.black,
             appBar: AppBar(
@@ -111,7 +105,7 @@ class _ExampleAppState extends State<ExampleApp> {
               bottom: TabBar(
                 isScrollable: true,
                 tabs: [
-                  ...allDevices.map(
+                  ...Devices.all.map(
                     (x) => Tab(
                       text: '${x.identifier.type} ${x.name}',
                     ),
@@ -128,7 +122,8 @@ class _ExampleAppState extends State<ExampleApp> {
                       : AnimatedBuilder(
                           animation: DefaultTabController.of(context)!,
                           builder: (context, _) => _frame(
-                            allDevices[DefaultTabController.of(context)!.index],
+                            Devices
+                                .all[DefaultTabController.of(context)!.index],
                           ),
                         ),
                 ),

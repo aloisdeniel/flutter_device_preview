@@ -38,6 +38,7 @@ class WindowsDevices {
     ),
   );
 
+  /// All available devices.
   List<DeviceInfo> get all => [
         wideMonitor,
         laptop,

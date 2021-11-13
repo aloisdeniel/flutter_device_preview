@@ -1,11 +1,13 @@
-import 'package:device_frame/src/devices/generic/common.dart';
+import 'package:device_frame/src/devices/generic/base/draw_extensions.dart';
 import 'package:device_frame/src/info/identifier.dart';
 import 'package:device_frame/src/info/info.dart';
 import 'package:flutter/material.dart';
 
 part 'frame.dart';
 
-/// Creates a generic desktop monitor device definition.
+/// Creates a generic desktop monitor device definition for the given [name], target
+/// [platform] and [screenSize]. The [windowPosition] defines the position of a virtual
+/// window with a window frame adapted for the given platform.
 DeviceInfo buildGenericDesktopMonitorDevice({
   required TargetPlatform platform,
   required String id,
@@ -13,8 +15,8 @@ DeviceInfo buildGenericDesktopMonitorDevice({
   required Size screenSize,
   required Rect windowPosition,
   EdgeInsets safeAreas = EdgeInsets.zero,
-  EdgeInsets rotatedSafeAreas = EdgeInsets.zero,
   double pixelRatio = 2.0,
+  EdgeInsets? rotatedSafeAreas,
   GenericDesktopMonitorFramePainter? framePainter,
 }) {
   final effectivePainter = framePainter ??

@@ -8,9 +8,9 @@ import 'info/info.dart';
 /// [screen] into it.
 ///
 /// The [screen] media query's `padding`, `devicePixelRatio`, `size` are also
-/// simulated from the device's info
+/// simulated from the device's info by overriding the default values.
 ///
-/// The [screen] theme will also have the `platform` of the simulated device.
+/// The [screen]'s [Theme] will also have the `platform` of the simulated device.
 ///
 /// Using the [DeviceFrame.identifier] constructor will load an
 /// svg file from assets first to get device frame visuals, but also
@@ -69,7 +69,7 @@ class DeviceFrame extends StatelessWidget {
   }) {
     final mediaQuery = MediaQuery.of(context);
     final isRotated = info?.isLandscape(orientation) ?? false;
-    final padding = isRotated
+    final viewPadding = isRotated
         ? (info?.rotatedSafeAreas ?? info?.safeAreas)
         : (info?.safeAreas ?? mediaQuery.padding);
 
@@ -79,9 +79,9 @@ class DeviceFrame extends StatelessWidget {
 
     return mediaQuery.copyWith(
       size: Size(width, height),
-      padding: padding,
+      padding: viewPadding,
       viewInsets: EdgeInsets.zero,
-      viewPadding: padding,
+      viewPadding: viewPadding,
       devicePixelRatio: info?.pixelRatio ?? mediaQuery.devicePixelRatio,
     );
   }

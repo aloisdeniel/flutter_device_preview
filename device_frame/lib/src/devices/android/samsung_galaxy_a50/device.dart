@@ -9,10 +9,10 @@ final info = DeviceInfo(
   identifier: const DeviceIdentifier(
     TargetPlatform.android,
     DeviceType.phone,
-    'samsung-s20',
+    'samsung-galaxy-a50',
   ),
-  name: 'Samsung Galaxy S20',
-  pixelRatio: 4.0,
+  name: 'Samsung Galaxy A50',
+  pixelRatio: 2.625,
   safeAreas: const EdgeInsets.only(
     left: 0.0,
     top: 32.0,
@@ -21,12 +21,12 @@ final info = DeviceInfo(
   ),
   rotatedSafeAreas: const EdgeInsets.only(
     left: 32.0,
-    top: 0.0,
+    top: 24.0,
     right: 32.0,
     bottom: 0.0,
   ),
   framePainter: const _FramePainter(),
   screenPath: _screenPath,
-  frameSize: const Size(856.54, 1899.0),
-  screenSize: const Size(360.0, 800.0),
+  frameSize: const Size(868, 1829.84),
+  screenSize: const Size(412.0, 892.0),
 );

@@ -36,6 +36,7 @@ class IosDevices {
   DeviceInfo get iPad => i_ipad.info;
   DeviceInfo get iPadPro11Inches => i_ipad_pro_11inches.info;
 
+  /// All devices.
   List<DeviceInfo> get all => [
         // Phones
         iPhone12Mini,

@@ -24,6 +24,7 @@ class MacOSDevices {
     ),
   );
 
+  /// All available devices.
   List<DeviceInfo> get all => [
         macBookPro,
         wideMonitor,

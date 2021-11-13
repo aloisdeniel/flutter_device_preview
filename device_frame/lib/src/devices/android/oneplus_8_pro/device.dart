@@ -21,7 +21,7 @@ final info = DeviceInfo(
   ),
   rotatedSafeAreas: const EdgeInsets.only(
     left: 40.0,
-    top: 0.0,
+    top: 24.0,
     right: 40.0,
     bottom: 0.0,
   ),

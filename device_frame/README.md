@@ -58,15 +58,95 @@ DeviceFrame(
 ),
 ```
 
-### Precaching all device frames
+### Creating a custom generic device
+
+#### Phone
 
 ```dart
-@override
-void initState() {
-    DeviceFrame.precache(context);
-    super.initState();
-}
+DeviceInfo.genericPhone(
+    platform: TargetPlatform.android,
+    name: 'Medium',
+    id: 'medium',
+    screenSize: const Size(412, 732),
+    safeAreas: const EdgeInsets.only(
+      left: 0.0,
+      top: 24.0,
+      right: 0.0,
+      bottom: 0.0,
+    ),
+    rotatedSafeAreas: const EdgeInsets.only(
+      left: 0.0,
+      top: 24.0,
+      right: 0.0,
+      bottom: 0.0,
+    ),
+)
 ```
+
+#### Tablet
+
+```dart
+DeviceInfo.genericTablet(
+    platform: TargetPlatform.android,
+    name: 'Medium',
+    id: 'medium',
+    screenSize: const Size(1024, 1350),
+    safeAreas: const EdgeInsets.only(
+      left: 0.0,
+      top: 24.0,
+      right: 0.0,
+      bottom: 0.0,
+    ),
+    rotatedSafeAreas: const EdgeInsets.only(
+      left: 0.0,
+      top: 24.0,
+      right: 0.0,
+      bottom: 0.0,
+    ),
+)
+```
+
+#### Desktop monitor
+
+```dart
+DeviceInfo.genericDesktopMonitor(
+    platform: TargetPlatform.windows,
+    name: 'Wide',
+    id: 'wide',
+    screenSize: const Size(1920, 1080),
+    windowPosition: Rect.fromCenter(
+      center: const Offset(
+        1920 * 0.5,
+        1080 * 0.5,
+      ),
+      width: 1620,
+      height: 780,
+    ),
+)
+```
+
+#### Latptop
+
+```dart
+DeviceInfo.genericLaptop(
+    platform: TargetPlatform.windows,
+    name: 'Laptop',
+    id: 'laptop',
+    screenSize: const Size(1920, 1080),
+    windowPosition: Rect.fromCenter(
+      center: const Offset(
+        1920 * 0.5,
+        1080 * 0.5,
+      ),
+      width: 1620,
+      height: 780,
+    ),
+)
+```
+
+## Available devices
+
+Screenshots for all available devices are [available in the `test/devices` directory](https://github.com/aloisdeniel/flutter_device_preview/tree/master/device_frame/test/devices)
 
 ## Contributing
 

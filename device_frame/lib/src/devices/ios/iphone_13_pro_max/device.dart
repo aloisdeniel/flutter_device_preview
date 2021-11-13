@@ -17,14 +17,14 @@ final info = DeviceInfo(
   screenSize: const Size(428.0, 926.0),
   safeAreas: const EdgeInsets.only(
     left: 0.0,
-    top: 44.0,
+    top: 47.0,
     right: 0.0,
     bottom: 34.0,
   ),
   rotatedSafeAreas: const EdgeInsets.only(
-    left: 44.0,
+    left: 47.0,
     top: 0.0,
-    right: 44.0,
+    right: 47.0,
     bottom: 21.0,
   ),
   framePainter: const _FramePainter(),

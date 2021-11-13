@@ -43,11 +43,9 @@ class VirtualKeyboard extends StatelessWidget {
     );
     return mediaQuery.copyWith(
       viewInsets: insets,
-      viewPadding: EdgeInsets.only(
-        top: max(insets.top, mediaQuery.padding.top),
-        left: max(insets.left, mediaQuery.padding.left),
-        right: max(insets.right, mediaQuery.padding.right),
-        bottom: max(insets.bottom, mediaQuery.padding.bottom),
+      viewPadding: mediaQuery.viewPadding,
+      padding: mediaQuery.padding.copyWith(
+        bottom: 0,
       ),
     );
   }
@@ -55,30 +53,32 @@ class VirtualKeyboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    return MediaQuery(
-      data: !isEnabled ? mediaQuery : VirtualKeyboard.mediaQuery(mediaQuery),
-      child: Stack(
-        children: <Widget>[
-          Positioned.fill(
+    return Stack(
+      children: <Widget>[
+        Positioned.fill(
+          child: MediaQuery(
+            data: !isEnabled
+                ? mediaQuery
+                : VirtualKeyboard.mediaQuery(mediaQuery),
             child: child,
           ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: AnimatedCrossFade(
-              firstChild: const SizedBox(),
-              secondChild: const _VirtualKeyboard(
-                height: _VirtualKeyboard.minHeight,
-              ),
-              crossFadeState: isEnabled
-                  ? CrossFadeState.showSecond
-                  : CrossFadeState.showFirst,
-              duration: transitionDuration,
+        ),
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: AnimatedCrossFade(
+            firstChild: const SizedBox(),
+            secondChild: const _VirtualKeyboard(
+              height: _VirtualKeyboard.minHeight,
             ),
+            crossFadeState: isEnabled
+                ? CrossFadeState.showSecond
+                : CrossFadeState.showFirst,
+            duration: transitionDuration,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

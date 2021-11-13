@@ -93,7 +93,6 @@ abstract class DeviceInfo with _$DeviceInfo {
     required Size screenSize,
     required Rect windowPosition,
     EdgeInsets safeAreas = EdgeInsets.zero,
-    EdgeInsets rotatedSafeAreas = EdgeInsets.zero,
     double pixelRatio = 2.0,
     GenericDesktopMonitorFramePainter? framePainter,
   }) =>
@@ -104,7 +103,6 @@ abstract class DeviceInfo with _$DeviceInfo {
         screenSize: screenSize,
         windowPosition: windowPosition,
         safeAreas: safeAreas,
-        rotatedSafeAreas: rotatedSafeAreas,
         pixelRatio: pixelRatio,
         framePainter: framePainter,
       );
@@ -116,7 +114,6 @@ abstract class DeviceInfo with _$DeviceInfo {
     required Size screenSize,
     required Rect windowPosition,
     EdgeInsets safeAreas = EdgeInsets.zero,
-    EdgeInsets rotatedSafeAreas = EdgeInsets.zero,
     double pixelRatio = 2.0,
     GenericLaptopFramePainter? framePainter,
   }) =>
@@ -127,7 +124,6 @@ abstract class DeviceInfo with _$DeviceInfo {
         screenSize: screenSize,
         windowPosition: windowPosition,
         safeAreas: safeAreas,
-        rotatedSafeAreas: rotatedSafeAreas,
         pixelRatio: pixelRatio,
         framePainter: framePainter,
       );

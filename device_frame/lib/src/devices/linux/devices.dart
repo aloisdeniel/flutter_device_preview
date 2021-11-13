@@ -37,6 +37,7 @@ class LinuxDevices {
     ),
   );
 
+  /// All devices.
   List<DeviceInfo> get all => [
         wideMonitor,
         laptop,

@@ -2,7 +2,7 @@ import 'dart:ui' as ui;
 
 import 'package:device_frame/src/info/identifier.dart';
 import 'package:device_frame/src/info/info.dart';
-import 'package:device_frame/src/devices/generic/common.dart';
+import 'package:device_frame/src/devices/generic/base/draw_extensions.dart';
 import 'package:flutter/material.dart';
 
 part 'frame.dart';
