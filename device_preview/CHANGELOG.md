@@ -1,6 +1,6 @@
 ## 1.0.0-alpha.15
 
-* Updated device_frame which added new android devices and fixed padding issues.
+* Updated device_frame which added new android devices and fixed padding.
 
 ## 1.0.0-alpha.14
 

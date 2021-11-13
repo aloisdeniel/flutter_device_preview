@@ -63,9 +63,9 @@ class VirtualKeyboard extends StatelessWidget {
           ),
         ),
         Positioned(
-          bottom: 0,
-          left: 0,
-          right: 0,
+          bottom: -1,
+          left: -1,
+          right: -1,
           child: AnimatedCrossFade(
             firstChild: const SizedBox(),
             secondChild: const _VirtualKeyboard(
@@ -139,8 +139,8 @@ class _VirtualKeyboard extends StatelessWidget {
     return Container(
       height: height + mediaQuery.padding.bottom,
       padding: EdgeInsets.only(
-        left: mediaQuery.padding.left,
-        right: mediaQuery.padding.right,
+        left: mediaQuery.padding.left + 1,
+        right: mediaQuery.padding.right + 1,
       ),
       color: theme.backgroundColor,
       child: Column(

@@ -1,3 +1,7 @@
+## 1.0.0-alpha.2
+
+* Added extra padding for virtual keyboard.
+
 ## 1.0.0-alpha.1
 
 * Added more Android devices (Galaxy A50, Galaxy Note20, Galaxy Note20 Ultra, Xperia 1 II).
