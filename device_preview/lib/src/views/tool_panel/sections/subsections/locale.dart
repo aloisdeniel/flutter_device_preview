@@ -30,46 +30,49 @@ class _LocalePickerState extends State<LocalePicker> {
       appBar: AppBar(
         title: const Text('Locale'),
       ),
-      body: Column(
-        children: [
-          ToolbarSearchField(
-            hintText: 'Search by locale name or code',
-            text: filter,
-            onTextChanged: (value) => setState(() => filter = value),
-          ),
-          Expanded(
-            child: ListView(
-              children: locales.where(
-                (locale) {
-                  final filter = this.filter.trim().toLowerCase();
-                  return filter.isEmpty ||
-                      locale.name.toLowerCase().contains(filter) ||
-                      locale.code.toLowerCase().contains(filter);
-                },
-              ).map(
-                (locale) {
-                  final isSelected = locale.code == selectedLocale;
-                  return ListTile(
-                    onTap: !isSelected
-                        ? () {
-                            final store = context.read<DevicePreviewStore>();
-                            store.data =
-                                store.data.copyWith(locale: locale.code);
-                            Navigator.pop(context);
-                          }
-                        : null,
-                    title: Text(
-                      locale.name,
-                    ),
-                    subtitle: Text(
-                      locale.code,
-                    ),
-                  );
-                },
-              ).toList(),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 10.0),
+        child: Column(
+          children: [
+            ToolbarSearchField(
+              hintText: 'Search by locale name or code',
+              text: filter,
+              onTextChanged: (value) => setState(() => filter = value),
             ),
-          ),
-        ],
+            Expanded(
+              child: ListView(
+                children: locales.where(
+                  (locale) {
+                    final filter = this.filter.trim().toLowerCase();
+                    return filter.isEmpty ||
+                        locale.name.toLowerCase().contains(filter) ||
+                        locale.code.toLowerCase().contains(filter);
+                  },
+                ).map(
+                  (locale) {
+                    final isSelected = locale.code == selectedLocale;
+                    return ListTile(
+                      onTap: !isSelected
+                          ? () {
+                              final store = context.read<DevicePreviewStore>();
+                              store.data =
+                                  store.data.copyWith(locale: locale.code);
+                              Navigator.pop(context);
+                            }
+                          : null,
+                      title: Text(
+                        locale.name,
+                      ),
+                      subtitle: Text(
+                        locale.code,
+                      ),
+                    );
+                  },
+                ).toList(),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

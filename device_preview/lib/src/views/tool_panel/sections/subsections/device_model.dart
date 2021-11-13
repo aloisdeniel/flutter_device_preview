@@ -80,6 +80,7 @@ class _DeviceModelPickerState extends State<DeviceModelPicker>
       ),
       body: TabBarView(
         controller: controller,
+        physics: const NeverScrollableScrollPhysics(),
         children: [
           ..._allPlatforms.map(
             (e) => _PlatformModelPicker(
