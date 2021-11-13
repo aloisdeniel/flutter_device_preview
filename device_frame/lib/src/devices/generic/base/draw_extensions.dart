@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 extension GenericDeviceFramePainterExtensions on Canvas {
   void drawDeviceBody({
-    required Paint paint,
+    required final paint,
     required Rect bounds,
     required Color outerBodyColor,
     required Radius outerBodyRadius,
@@ -27,7 +27,7 @@ extension GenericDeviceFramePainterExtensions on Canvas {
   }
 
   void drawCamera({
-    required Paint paint,
+    required final paint,
     required Offset center,
     required double radius,
     required double borderWidth,
@@ -53,7 +53,7 @@ extension GenericDeviceFramePainterExtensions on Canvas {
   }
 
   void drawSideButtons({
-    required Paint paint,
+    required final paint,
     required Rect bounds,
     required Color color,
     required double buttonWidth,
@@ -379,7 +379,7 @@ extension GenericDeviceFramePainterExtensions on Canvas {
   }
 
   void drawMonitorFoot({
-    required Paint paint,
+    required final paint,
     required Rect bounds,
     required Color outerBodyColor,
     required Radius outerBodyRadius,

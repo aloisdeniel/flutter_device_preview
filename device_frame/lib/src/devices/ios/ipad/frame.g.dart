@@ -8,7 +8,7 @@ class _FramePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Path path_0 = Path();
+    final path_0 = Path();
     path_0.moveTo(0, 93.6833);
     path_0.cubicTo(0, 41.9435, 41.9435, 0, 93.6833, 0);
     path_0.lineTo(1579.23, 0);
@@ -20,11 +20,11 @@ class _FramePainter extends CustomPainter {
     path_0.lineTo(0, 93.6833);
     path_0.close();
 
-    Paint paint_0_fill = Paint()..style = PaintingStyle.fill;
-    paint_0_fill.color = Color(0xff3A4245).withOpacity(1.0);
+    final paint_0_fill = Paint()..style = PaintingStyle.fill;
+    paint_0_fill.color = const Color(0xff3A4245);
     canvas.drawPath(path_0, paint_0_fill);
 
-    Path path_1 = Path();
+    final path_1 = Path();
     path_1.moveTo(10.707, 96.36);
     path_1.cubicTo(10.707, 49.055, 49.0553, 10.7067, 96.3604, 10.7067);
     path_1.lineTo(1576.56, 10.7067);
@@ -36,11 +36,11 @@ class _FramePainter extends CustomPainter {
     path_1.lineTo(10.707, 96.36);
     path_1.close();
 
-    Paint paint_1_fill = Paint()..style = PaintingStyle.fill;
-    paint_1_fill.color = Color(0xff121515).withOpacity(1.0);
+    final paint_1_fill = Paint()..style = PaintingStyle.fill;
+    paint_1_fill.color = const Color(0xff121515);
     canvas.drawPath(path_1, paint_1_fill);
 
-    Path path_2 = Path();
+    final path_2 = Path();
     path_2.moveTo(781.587, 2316.66);
     path_2.cubicTo(781.587, 2346.96, 806.154, 2371.53, 836.459, 2371.53);
     path_2.cubicTo(866.763, 2371.53, 891.33, 2346.96, 891.33, 2316.66);
@@ -54,11 +54,11 @@ class _FramePainter extends CustomPainter {
     path_2.cubicTo(862.916, 2268.75, 884.363, 2290.2, 884.363, 2316.66);
     path_2.close();
 
-    Paint paint_2_fill = Paint()..style = PaintingStyle.fill;
-    paint_2_fill.color = Color(0xff262C2D).withOpacity(1.0);
+    final paint_2_fill = Paint()..style = PaintingStyle.fill;
+    paint_2_fill.color = const Color(0xff262C2D);
     canvas.drawPath(path_2, paint_2_fill);
 
-    Path path_3 = Path();
+    final path_3 = Path();
     path_3.moveTo(61.5635, 176.66);
     path_3.cubicTo(61.5635, 173.703, 63.9602, 171.307, 66.9168, 171.307);
     path_3.lineTo(1606, 171.307);
@@ -70,11 +70,11 @@ class _FramePainter extends CustomPainter {
     path_3.lineTo(61.5635, 176.66);
     path_3.close();
 
-    Paint paint_3_fill = Paint()..style = PaintingStyle.fill;
-    paint_3_fill.color = Color(0xff262C2D).withOpacity(1.0);
+    final paint_3_fill = Paint()..style = PaintingStyle.fill;
+    paint_3_fill.color = const Color(0xff262C2D);
     canvas.drawPath(path_3, paint_3_fill);
 
-    Path path_4 = Path();
+    final path_4 = Path();
     path_4.moveTo(836.458, 101.713);
     path_4.cubicTo(843.11, 101.713, 848.503, 96.3206, 848.503, 89.6683);
     path_4.cubicTo(848.503, 83.016, 843.11, 77.6233, 836.458, 77.6233);
@@ -82,11 +82,11 @@ class _FramePainter extends CustomPainter {
     path_4.cubicTo(824.413, 96.3206, 829.806, 101.713, 836.458, 101.713);
     path_4.close();
 
-    Paint paint_4_fill = Paint()..style = PaintingStyle.fill;
-    paint_4_fill.color = Color(0xff262C2D).withOpacity(1.0);
+    final paint_4_fill = Paint()..style = PaintingStyle.fill;
+    paint_4_fill.color = const Color(0xff262C2D);
     canvas.drawPath(path_4, paint_4_fill);
 
-    Path path_5 = Path();
+    final path_5 = Path();
     path_5.moveTo(836.458, 97.1964);
     path_5.cubicTo(840.615, 97.1964, 843.986, 93.8259, 843.986, 89.6683);
     path_5.cubicTo(843.986, 85.5106, 840.615, 82.1401, 836.458, 82.1401);
@@ -94,11 +94,11 @@ class _FramePainter extends CustomPainter {
     path_5.cubicTo(828.93, 93.8259, 832.3, 97.1964, 836.458, 97.1964);
     path_5.close();
 
-    Paint paint_5_fill = Paint()..style = PaintingStyle.fill;
-    paint_5_fill.color = Color(0xff121515).withOpacity(1.0);
+    final paint_5_fill = Paint()..style = PaintingStyle.fill;
+    paint_5_fill.color = const Color(0xff121515);
     canvas.drawPath(path_5, paint_5_fill);
 
-    Path path_6 = Path();
+    final path_6 = Path();
     path_6.moveTo(836.458, 88.1626);
     path_6.cubicTo(837.289, 88.1626, 837.963, 87.4885, 837.963, 86.657);
     path_6.cubicTo(837.963, 85.8255, 837.289, 85.1514, 836.458, 85.1514);
@@ -106,8 +106,8 @@ class _FramePainter extends CustomPainter {
     path_6.cubicTo(834.952, 87.4885, 835.626, 88.1626, 836.458, 88.1626);
     path_6.close();
 
-    Paint paint_6_fill = Paint()..style = PaintingStyle.fill;
-    paint_6_fill.color = Color(0xff636F73).withOpacity(1.0);
+    final paint_6_fill = Paint()..style = PaintingStyle.fill;
+    paint_6_fill.color = const Color(0xff636F73);
     canvas.drawPath(path_6, paint_6_fill);
   }
 

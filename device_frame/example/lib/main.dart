@@ -14,7 +14,7 @@ class ExampleApp extends StatefulWidget {
 
 class _ExampleAppState extends State<ExampleApp> {
   bool isDark = true;
-  bool hasShadow = true;
+  bool isFrameVisible = true;
   bool isKeyboard = false;
   bool isEnabled = true;
 
@@ -24,7 +24,7 @@ class _ExampleAppState extends State<ExampleApp> {
   Widget _frame(DeviceInfo device) => Center(
         child: DeviceFrame(
           device: device,
-          isFrameVisible: hasShadow,
+          isFrameVisible: isFrameVisible,
           orientation: orientation,
           screen: Container(
             color: Colors.blue,
@@ -38,10 +38,8 @@ class _ExampleAppState extends State<ExampleApp> {
 
   @override
   Widget build(BuildContext context) {
-    var style = isDark ? DeviceFrameStyle.dark() : DeviceFrameStyle.light();
-
     return DeviceFrameTheme(
-      style: style,
+      style: DeviceFrameStyle.dark(),
       child: MaterialApp(
         title: 'Device Frames',
         theme: ThemeData(
@@ -58,7 +56,7 @@ class _ExampleAppState extends State<ExampleApp> {
                 IconButton(
                   onPressed: () {
                     setState(() {
-                      hasShadow = !hasShadow;
+                      isFrameVisible = !isFrameVisible;
                     });
                   },
                   icon: const Icon(Icons.settings_brightness),
