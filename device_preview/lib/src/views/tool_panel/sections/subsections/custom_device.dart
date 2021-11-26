@@ -81,6 +81,7 @@ List<Widget> buildCustomDeviceTiles(BuildContext context) {
                   initialValue: customDevice.screenSize.width,
                   title: 'Change Width',
                 ).then((value) {
+                  if (value == null) return;
                   final store = context.read<DevicePreviewStore>();
                   store.updateCustomDevice(
                     customDevice.copyWith(
@@ -113,9 +114,10 @@ List<Widget> buildCustomDeviceTiles(BuildContext context) {
               onTap: () {
                 _openDeviceSizeAdjustDialog(
                   context: context,
-                  initialValue: customDevice.screenSize.width,
+                  initialValue: customDevice.screenSize.height,
                   title: 'Change Height',
                 ).then((value) {
+                  if (value == null) return;
                   final store = context.read<DevicePreviewStore>();
                   store.updateCustomDevice(
                     customDevice.copyWith(
