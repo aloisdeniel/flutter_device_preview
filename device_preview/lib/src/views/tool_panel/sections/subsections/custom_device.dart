@@ -1,5 +1,67 @@
 part of 'device_model.dart';
 
+Future<dynamic> _openDeviceSizeAdjustDialog({
+  required BuildContext context,
+  required double initialValue,
+  double min = 128,
+  double max = 2688,
+  String? title,
+}) {
+  var formKey = GlobalKey<FormState>();
+  return showDialog(
+    context: context,
+    builder: (context) {
+      var navigator = Navigator.of(context);
+      var textEditingController =
+          TextEditingController(text: initialValue.toString());
+      textEditingController.selection = TextSelection(
+        baseOffset: 0,
+        extentOffset: textEditingController.text.length,
+      );
+
+      return AlertDialog(
+        title: Text(title ?? 'Input Value'),
+        content: Form(
+          key: formKey,
+          child: TextFormField(
+            autofocus: true,
+            onSaved: (String? value) => navigator.pop(double.tryParse(value!)),
+            keyboardType: TextInputType.number,
+            validator: (value) {
+              var parsedDouble = 0.0;
+              try {
+                parsedDouble = double.tryParse(value!)!;
+              } catch (e) {
+                return 'Please input only numbers';
+              }
+              bool inBetweenMinMax = parsedDouble >= min && parsedDouble <= max;
+              if (!inBetweenMinMax) {
+                return 'Invalid range. ($min ~ $max)';
+              }
+              return null;
+            },
+            controller: textEditingController,
+          ),
+        ),
+        actions: [
+          TextButton(
+            child: const Text('Close'),
+            onPressed: navigator.pop,
+          ),
+          TextButton(
+            child: const Text('Confirm'),
+            onPressed: () {
+              if (formKey.currentState!.validate()) {
+                formKey.currentState!.save();
+              }
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
 /// Create a set of tiles to fine tune a custom device.
 List<Widget> buildCustomDeviceTiles(BuildContext context) {
   final customDevice = context.select(
@@ -12,7 +74,24 @@ List<Widget> buildCustomDeviceTiles(BuildContext context) {
         if (customDevice != null) ...[
           ListTile(
             title: const Text('Width'),
-            trailing: Text(customDevice.screenSize.width.toString()),
+            trailing: GestureDetector(
+              onTap: () {
+                _openDeviceSizeAdjustDialog(
+                  context: context,
+                  initialValue: customDevice.screenSize.width,
+                  title: 'Change Width',
+                ).then((value) {
+                  if (value == null) return;
+                  final store = context.read<DevicePreviewStore>();
+                  store.updateCustomDevice(
+                    customDevice.copyWith(
+                      screenSize: Size(value, customDevice.screenSize.height),
+                    ),
+                  );
+                });
+              },
+              child: Text(customDevice.screenSize.width.toString()),
+            ),
             subtitle: Slider(
               value: customDevice.screenSize.width,
               onChanged: (v) {
@@ -30,7 +109,24 @@ List<Widget> buildCustomDeviceTiles(BuildContext context) {
           ),
           ListTile(
             title: const Text('Height'),
-            trailing: Text(customDevice.screenSize.height.toString()),
+            trailing: GestureDetector(
+              child: Text(customDevice.screenSize.height.toString()),
+              onTap: () {
+                _openDeviceSizeAdjustDialog(
+                  context: context,
+                  initialValue: customDevice.screenSize.height,
+                  title: 'Change Height',
+                ).then((value) {
+                  if (value == null) return;
+                  final store = context.read<DevicePreviewStore>();
+                  store.updateCustomDevice(
+                    customDevice.copyWith(
+                      screenSize: Size(customDevice.screenSize.width, value),
+                    ),
+                  );
+                });
+              },
+            ),
             subtitle: Slider(
               value: customDevice.screenSize.height,
               onChanged: (v) {
