@@ -528,9 +528,11 @@ class _DevicePreviewState extends State<DevicePreview> {
                     final isSmall = constraints.maxWidth < 700;
 
                     final borderRadius = BorderRadius.only(
-                      topRight: isSmall ? Radius.zero : const Radius.circular(16),
+                      topRight: 
+                          isSmall ? Radius.zero : const Radius.circular(16),
                       bottomRight: const Radius.circular(16),
-                      bottomLeft: isSmall ? const Radius.circular(16) : Radius.zero,
+                      bottomLeft: 
+                          isSmall ? const Radius.circular(16) : Radius.zero,
                     );
                     final double rightPanelOffset =
                         !isSmall ? (isEnabled ? ToolPanel.panelWidth - 10 : (64 + mediaQuery.padding.right)) : 0;
