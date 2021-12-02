@@ -527,13 +527,16 @@ class _DevicePreviewState extends State<DevicePreview> {
                     final mediaQuery = MediaQuery.of(context);
                     final isSmall = constraints.maxWidth < 700;
 
-                    final borderRadius = BorderRadius.only(
-                      topRight:
-                          isSmall ? Radius.zero : const Radius.circular(16),
-                      bottomRight: const Radius.circular(16),
-                      bottomLeft:
-                          isSmall ? const Radius.circular(16) : Radius.zero,
-                    );
+                    final borderRadius = isToolbarVisible
+                        ? BorderRadius.only(
+                            topRight: isSmall ? Radius.zero : const Radius.circular(16),
+                            bottomRight: const Radius.circular(16),
+                            bottomLeft: isSmall ? const Radius.circular(16) : Radius.zero,
+                          )
+                        : BorderRadius.zero;
+                    final double rightPanelOffset =
+                        !isSmall ? (isEnabled ? ToolPanel.panelWidth - 10 : (64 + mediaQuery.padding.right)) : 0;
+                    final double bottomPanelOffset = isSmall ? mediaQuery.padding.bottom + 52 : 0;
                     return Stack(
                       children: <Widget>[
                         if (isToolbarVisible && isSmall)
@@ -562,13 +565,9 @@ class _DevicePreviewState extends State<DevicePreview> {
                           key: const Key('preview'),
                           duration: const Duration(milliseconds: 200),
                           left: 0,
-                          right: !isSmall
-                              ? (isEnabled
-                                  ? ToolPanel.panelWidth - 10
-                                  : (64 + mediaQuery.padding.right))
-                              : 0,
+                          right: isToolbarVisible ? rightPanelOffset : 0,
                           top: 0,
-                          bottom: isSmall ? mediaQuery.padding.bottom + 52 : 0,
+                          bottom: isToolbarVisible ? bottomPanelOffset : 0,
                           child: Theme(
                             data: background,
                             child: Container(
