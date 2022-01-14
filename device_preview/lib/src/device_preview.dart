@@ -60,6 +60,7 @@ class DevicePreview extends StatefulWidget {
     this.tools = defaultTools,
     this.storage,
     this.enabled = true,
+    this.backgroundColor,
   }) : super(key: key);
 
   /// If not [enabled], the [child] is used directly.
@@ -75,6 +76,11 @@ class DevicePreview extends StatefulWidget {
   ///
   /// It is common to give the root application widget.
   final WidgetBuilder builder;
+
+  /// The background color of the canvas
+  ///
+  /// Overrides `theme.canvasColor`
+  final Color? backgroundColor;
 
   /// The default selected device when opening device preview for the first time.
   final DeviceInfo? defaultDevice;
@@ -418,7 +424,7 @@ class _DevicePreviewState extends State<DevicePreview> {
     );
 
     return Container(
-      color: theme.canvasColor,
+      color: widget.backgroundColor ?? theme.canvasColor,
       padding: EdgeInsets.only(
         top: 20 + mediaQuery.viewPadding.top,
         right: 20 + mediaQuery.viewPadding.right,
