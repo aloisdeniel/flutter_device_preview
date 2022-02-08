@@ -536,7 +536,11 @@ class _DevicePreviewState extends State<DevicePreview> {
                         : BorderRadius.zero;
                     final double rightPanelOffset =
                         !isSmall ? (isEnabled ? ToolPanel.panelWidth - 10 : (64 + mediaQuery.padding.right)) : 0;
-                    final double bottomPanelOffset = isSmall ? mediaQuery.padding.bottom + 52 : 0;
+                    final double bottomPanelOffset = isSmall
+                        ? mediaQuery.viewInsets.bottom > 0
+                            ? 0
+                            : mediaQuery.padding.bottom + 52
+                        : 0;
                     return Stack(
                       children: <Widget>[
                         if (isToolbarVisible && isSmall)
