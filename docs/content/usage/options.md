@@ -62,7 +62,7 @@ By default, the available sections are :
 *  `AccessibilitySection()` : text scaling factory, color and navigation accessibility options
 *  `SettingsSection()` : the Device Preview theme (light or dark).
 
-See the [plugins section](/content/plugins/screenshots.) to learn more on how to add additionnal sections like ScreenshotSection or a custom one.
+See the [plugins section](/content/plugins/screenshot) to learn more on how to add additionnal sections like ScreenshotSection or a custom one.
 
 ##### Example
 
