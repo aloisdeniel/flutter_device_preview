@@ -124,6 +124,7 @@ class _PlatformModelPicker extends StatelessWidget {
     final byDeviceType =
         groupBy<DeviceInfo, DeviceType>(devices, (d) => d.identifier.type);
     return ListView(
+      key: const Key('DeviceListView'),
       children: [
         ...byDeviceType.entries
             .map(
