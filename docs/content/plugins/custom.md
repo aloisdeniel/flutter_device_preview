@@ -9,7 +9,7 @@ A plugin is nothing more than a regular [Sliver] that is added to the main Devic
 To make things more aligned with built-in sections, you can add the `ToolPanelSection` widget and the `package:flutter/material.dart` widgets.
 
 ```dart
-import 'package:device_preview/device_preview.dart';
+import 'package:device_preview_community/device_preview.dart';
 import 'package:flutter/material.dart';
 
 class CustomPlugin extends StatelessWidget {

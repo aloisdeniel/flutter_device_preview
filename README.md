@@ -47,7 +47,7 @@ Wrap your app's root widget in a `DevicePreview` and make sure to :
 > Make sure to override the previous properties as described. If not defined, `MediaQuery` won't be simulated for the selected device.
 
 ```dart
-import 'package:device_preview/device_preview.dart';
+import 'package:device_preview_community/device_preview.dart';
 
 void main() => runApp(
   DevicePreview(

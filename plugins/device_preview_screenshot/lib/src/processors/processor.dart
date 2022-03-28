@@ -1,4 +1,4 @@
-import 'package:device_preview/device_preview.dart';
+import 'package:device_preview_community/device_preview.dart';
 import 'package:flutter/widgets.dart';
 
 typedef ScreenshotProcessor = Future<void> Function(

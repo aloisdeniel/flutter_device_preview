@@ -12,7 +12,7 @@ dependencies:
 ## Usage
 
 ```dart
-import 'package:device_frame/device_frame.dart';
+import 'package:device_frame_community/device_frame_community.dart';
 
 DeviceFrame(
     device: IosDevices.iPhone11,
