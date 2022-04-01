@@ -10,12 +10,12 @@ final info = DeviceInfo(
   identifier: const DeviceIdentifier(
     TargetPlatform.iOS,
     DeviceType.tablet,
-    'ipad',
+    'ipad-pro-12inches-gen2',
   ),
-  name: 'iPad',
+  name: 'iPad Pro (12" gen 2)',
   pixelRatio: 2.0,
-  frameSize: const Size(1673, 2409),
-  screenSize: const Size(810.0, 1080.0),
+  frameSize: const Size(1737.0, 2409.0),
+  screenSize: const Size(1024.0, 1366.0),
   safeAreas: const EdgeInsets.only(
     left: 0.0,
     top: 20.0,

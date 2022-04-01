@@ -11,6 +11,9 @@ class _FramePainter extends CustomPainter {
 
     Paint paint_0_fill = Paint()..style=PaintingStyle.fill;
     paint_0_fill.color = Color(0xff3A4245).withOpacity(1.0);
+    // These lines differ from other frames as they were developed natively in
+    // Figma and the svg was save with a parametric rounded rect instead of a
+    // custom path.
     canvas.drawRRect(RRect.fromRectAndCorners(Rect.fromLTWH(size.width*0.0003710935,size.height*0.007120380,size.width*0.9964216,size.height*0.9926980),bottomRight: Radius.circular(size.width*0.05891892),bottomLeft:  Radius.circular(size.width*0.05891892),topLeft:  Radius.circular(size.width*0.05891892),topRight:  Radius.circular(size.width*0.05891892)),paint_0_fill);
 
     Paint paint_1_fill = Paint()..style=PaintingStyle.fill;
@@ -52,23 +55,6 @@ class _FramePainter extends CustomPainter {
     Paint paint_4_fill = Paint()..style=PaintingStyle.fill;
     paint_4_fill.color = Color(0xff121515).withOpacity(1.0);
     canvas.drawPath(path_4,paint_4_fill);
-
-    Path path_5 = Path();
-    path_5.moveTo(77.873,127.6);
-    path_5.lineTo(77.873,2315.83);
-    path_5.cubicTo(77.873,2333.78,93.4923,2348.33,112.76,2348.33);
-    path_5.lineTo(1732.08,2348.33);
-    path_5.cubicTo(1751.35,2348.33,1766.97,2333.78,1766.97,2315.83);
-    path_5.lineTo(1766.97,127.6);
-    path_5.cubicTo(1766.97,109.652,1751.35,95.1016,1732.08,95.1016);
-    path_5.lineTo(112.76,95.1016);
-    path_5.cubicTo(93.4923,95.1016,77.873,109.652,77.873,127.6);
-    path_5.close();
-
-    Paint paint_5_fill = Paint()..style=PaintingStyle.fill;
-    paint_5_fill.color = Color(0xffFF0000).withOpacity(1.0);
-    canvas.drawPath(path_5,paint_5_fill);
-
   }
 
   @override
