@@ -20,6 +20,8 @@ import 'package:device_frame/src/devices/ios/ipad_air_4/device.dart'
 import 'package:device_frame/src/devices/ios/ipad/device.dart' as i_ipad;
 import 'package:device_frame/src/devices/ios/ipad_pro_11inches/device.dart'
     as i_ipad_pro_11inches;
+import 'package:device_frame/src/devices/ios/ipad_pro_12Inches_4th_gen/device.dart'
+as i_ipad_12inches_4th_gen;
 
 /// A set of iOS devices.
 class IosDevices {
@@ -35,6 +37,7 @@ class IosDevices {
   DeviceInfo get iPadAir4 => i_ipad_air_4.info;
   DeviceInfo get iPad => i_ipad.info;
   DeviceInfo get iPadPro11Inches => i_ipad_pro_11inches.info;
+  DeviceInfo get iPad12Inches4thGen => i_ipad_12inches_4th_gen.info;
 
   /// All devices.
   List<DeviceInfo> get all => [
