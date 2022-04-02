@@ -15,7 +15,7 @@ final info = DeviceInfo(
   ),
   name: 'iPad Pro (12" gen 4)',
   pixelRatio: 2.0,
-  frameSize: const Size(1849.0, 2410.0),
+  frameSize: const Size(1849.0, 2412.0),
   screenSize: const Size(1024, 1366.0),
   safeAreas: const EdgeInsets.only(
     left: 0.0,
