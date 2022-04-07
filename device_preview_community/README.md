@@ -15,7 +15,7 @@
   <img src="https://github.com/the-mac/flutter_device_preview/raw/master/device_preview.gif" alt="Device Preview for Flutter" />
 </p>
 
-Disclaimer: This is a fork of the [Flutter Device Preview Repo](https://github.com/aloisdeniel/flutter_device_preview) that is current not accepting pull requests.
+Disclaimer: This is a fork of the [Flutter Device Preview Repo](https://github.com/aloisdeniel/flutter_device_preview) that is currently not accepting pull requests.
 
 ## Main features
 
