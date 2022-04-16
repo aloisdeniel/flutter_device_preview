@@ -1,0 +1,27 @@
+name: device_preview_community
+version: 1.0.3
+description: Approximate how your Flutter app looks and performs on another device.
+homepage: https://github.com/the-mac/flutter_device_preview
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+
+dependencies:
+  flutter: 
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  provider: ^6.0.1
+  device_frame_community: ^1.0.2
+  freezed_annotation: ^1.0.0
+  json_annotation: ^4.4.0
+  shared_preferences: ^2.0.9
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter 
+  flutter_lints: ^1.0.4
+  build_runner: ^2.1.4
+  freezed: ^1.0.0
+  json_serializable: ^6.1.0
+  analyzer: ^2.8.0

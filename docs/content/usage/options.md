@@ -67,7 +67,7 @@ See the [plugins section](/context/plugins/screenshots.) to learn more on how to
 ##### Example
 
 ```dart
-import 'package:device_preview/plugins.dart';
+import 'package:device_preview_community/plugins.dart';
 
 DevicePreview(
   builder: (context) => const MyApp(),

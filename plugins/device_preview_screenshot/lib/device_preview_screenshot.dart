@@ -1,6 +1,6 @@
 library device_preview_screenshot;
 
-export 'package:device_preview/device_preview.dart';
+export 'package:device_preview_community/device_preview.dart';
 
 export 'src/processors/base64.dart';
 export 'src/processors/file.dart';

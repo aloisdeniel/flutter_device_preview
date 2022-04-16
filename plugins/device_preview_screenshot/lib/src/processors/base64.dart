@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:device_preview/device_preview.dart';
+import 'package:device_preview_community/device_preview.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
