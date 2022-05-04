@@ -138,7 +138,7 @@ class DevicePreview extends StatefulWidget {
     return VisualDensity.standard;
   }
 
-  /// Create a new [ThemData] from the given [data], but with updated properties from
+  /// Create a new [ThemeData] from the given [data], but with updated properties from
   /// the currently simulated device.
   static Widget appBuilder(BuildContext context, Widget? child) {
     if (!_isEnabled(context)) {
