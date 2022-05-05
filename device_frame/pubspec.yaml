@@ -4,7 +4,7 @@ version: 1.1.0
 homepage: https://github.com/aloisdeniel/flutter_device_preview/device_frame
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   freezed_annotation: ^2.0.1
