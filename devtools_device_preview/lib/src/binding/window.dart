@@ -4,6 +4,9 @@ import 'dart:ui' as ui;
 import 'package:flutter/rendering.dart';
 
 class PreviewWindow implements ui.SingletonFlutterWindow {
+  @override
+  List<ui.DisplayFeature> get displayFeatures => parent.displayFeatures;
+
   PreviewWindow(this.parent);
   final ui.SingletonFlutterWindow parent;
 
