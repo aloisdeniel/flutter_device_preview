@@ -52,7 +52,7 @@ class _ToolbarSearchFieldState extends State<ToolbarSearchField> {
   @override
   void didUpdateWidget(covariant ToolbarSearchField oldWidget) {
     if (widget.text != _controller.text) {
-      WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         _controller.text = widget.text;
       });
     }
@@ -61,7 +61,7 @@ class _ToolbarSearchFieldState extends State<ToolbarSearchField> {
   }
 
   void _clear() {
-    WidgetsBinding.instance!.addPostFrameCallback(
+    WidgetsBinding.instance.addPostFrameCallback(
       (_) => _controller.clear(),
     );
   }
