@@ -29,7 +29,7 @@ extension ThemeToolbarExtension on DevicePreviewToolBarThemeData {
           primaryColorDark: accentColor,
           indicatorColor: accentColor,
           toggleableActiveColor: accentColor,
-          highlightColor: accentColor,
+          highlightColor: accentColor.withOpacity(0.1),
           sliderTheme: base.sliderTheme.copyWith(
             thumbColor: accentColor,
             activeTrackColor: accentColor.withOpacity(0.7),
