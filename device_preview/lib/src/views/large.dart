@@ -28,7 +28,7 @@ class _DervicePreviewLargeLayoutState extends State<DervicePreviewLargeLayout> {
   @override
   void initState() {
     // Forcing rebuild to update absolute postion in `_overlayKey`
-    WidgetsBinding.instance!.addPostFrameCallback(
+    WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) => setState(() {}),
     );
     super.initState();
