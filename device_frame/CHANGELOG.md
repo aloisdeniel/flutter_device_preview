@@ -1,3 +1,7 @@
+## 1.1.0
+
+* Updated freezed dependency.
+
 ## 1.0.0-alpha.2
 
 * Added extra padding for virtual keyboard.

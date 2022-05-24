@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'theme.dart';
@@ -11,21 +12,7 @@ part of 'theme.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$DeviceFrameStyleTearOff {
-  const _$DeviceFrameStyleTearOff();
-
-  _DeviceFrameStyle call({required DeviceKeyboardStyle keyboardStyle}) {
-    return _DeviceFrameStyle(
-      keyboardStyle: keyboardStyle,
-    );
-  }
-}
-
-/// @nodoc
-const $DeviceFrameStyle = _$DeviceFrameStyleTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$DeviceFrameStyle {
@@ -76,11 +63,11 @@ class _$DeviceFrameStyleCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$DeviceFrameStyleCopyWith<$Res>
+abstract class _$$_DeviceFrameStyleCopyWith<$Res>
     implements $DeviceFrameStyleCopyWith<$Res> {
-  factory _$DeviceFrameStyleCopyWith(
-          _DeviceFrameStyle value, $Res Function(_DeviceFrameStyle) then) =
-      __$DeviceFrameStyleCopyWithImpl<$Res>;
+  factory _$$_DeviceFrameStyleCopyWith(
+          _$_DeviceFrameStyle value, $Res Function(_$_DeviceFrameStyle) then) =
+      __$$_DeviceFrameStyleCopyWithImpl<$Res>;
   @override
   $Res call({DeviceKeyboardStyle keyboardStyle});
 
@@ -89,21 +76,21 @@ abstract class _$DeviceFrameStyleCopyWith<$Res>
 }
 
 /// @nodoc
-class __$DeviceFrameStyleCopyWithImpl<$Res>
+class __$$_DeviceFrameStyleCopyWithImpl<$Res>
     extends _$DeviceFrameStyleCopyWithImpl<$Res>
-    implements _$DeviceFrameStyleCopyWith<$Res> {
-  __$DeviceFrameStyleCopyWithImpl(
-      _DeviceFrameStyle _value, $Res Function(_DeviceFrameStyle) _then)
-      : super(_value, (v) => _then(v as _DeviceFrameStyle));
+    implements _$$_DeviceFrameStyleCopyWith<$Res> {
+  __$$_DeviceFrameStyleCopyWithImpl(
+      _$_DeviceFrameStyle _value, $Res Function(_$_DeviceFrameStyle) _then)
+      : super(_value, (v) => _then(v as _$_DeviceFrameStyle));
 
   @override
-  _DeviceFrameStyle get _value => super._value as _DeviceFrameStyle;
+  _$_DeviceFrameStyle get _value => super._value as _$_DeviceFrameStyle;
 
   @override
   $Res call({
     Object? keyboardStyle = freezed,
   }) {
-    return _then(_DeviceFrameStyle(
+    return _then(_$_DeviceFrameStyle(
       keyboardStyle: keyboardStyle == freezed
           ? _value.keyboardStyle
           : keyboardStyle // ignore: cast_nullable_to_non_nullable
@@ -139,54 +126,32 @@ class _$_DeviceFrameStyle
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _DeviceFrameStyle &&
-            (identical(other.keyboardStyle, keyboardStyle) ||
-                other.keyboardStyle == keyboardStyle));
+            other is _$_DeviceFrameStyle &&
+            const DeepCollectionEquality()
+                .equals(other.keyboardStyle, keyboardStyle));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, keyboardStyle);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(keyboardStyle));
 
   @JsonKey(ignore: true)
   @override
-  _$DeviceFrameStyleCopyWith<_DeviceFrameStyle> get copyWith =>
-      __$DeviceFrameStyleCopyWithImpl<_DeviceFrameStyle>(this, _$identity);
+  _$$_DeviceFrameStyleCopyWith<_$_DeviceFrameStyle> get copyWith =>
+      __$$_DeviceFrameStyleCopyWithImpl<_$_DeviceFrameStyle>(this, _$identity);
 }
 
 abstract class _DeviceFrameStyle implements DeviceFrameStyle {
   const factory _DeviceFrameStyle(
-      {required DeviceKeyboardStyle keyboardStyle}) = _$_DeviceFrameStyle;
+      {required final DeviceKeyboardStyle keyboardStyle}) = _$_DeviceFrameStyle;
 
   @override
-  DeviceKeyboardStyle get keyboardStyle;
+  DeviceKeyboardStyle get keyboardStyle => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$DeviceFrameStyleCopyWith<_DeviceFrameStyle> get copyWith =>
+  _$$_DeviceFrameStyleCopyWith<_$_DeviceFrameStyle> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$DeviceKeyboardStyleTearOff {
-  const _$DeviceKeyboardStyleTearOff();
-
-  _DeviceKeyboardStyle call(
-      {required Color backgroundColor,
-      required Color button1BackgroundColor,
-      required Color button1ForegroundColor,
-      required Color button2BackgroundColor,
-      required Color button2ForegroundColor}) {
-    return _DeviceKeyboardStyle(
-      backgroundColor: backgroundColor,
-      button1BackgroundColor: button1BackgroundColor,
-      button1ForegroundColor: button1ForegroundColor,
-      button2BackgroundColor: button2BackgroundColor,
-      button2ForegroundColor: button2ForegroundColor,
-    );
-  }
-}
-
-/// @nodoc
-const $DeviceKeyboardStyle = _$DeviceKeyboardStyleTearOff();
 
 /// @nodoc
 mixin _$DeviceKeyboardStyle {
@@ -257,11 +222,11 @@ class _$DeviceKeyboardStyleCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$DeviceKeyboardStyleCopyWith<$Res>
+abstract class _$$_DeviceKeyboardStyleCopyWith<$Res>
     implements $DeviceKeyboardStyleCopyWith<$Res> {
-  factory _$DeviceKeyboardStyleCopyWith(_DeviceKeyboardStyle value,
-          $Res Function(_DeviceKeyboardStyle) then) =
-      __$DeviceKeyboardStyleCopyWithImpl<$Res>;
+  factory _$$_DeviceKeyboardStyleCopyWith(_$_DeviceKeyboardStyle value,
+          $Res Function(_$_DeviceKeyboardStyle) then) =
+      __$$_DeviceKeyboardStyleCopyWithImpl<$Res>;
   @override
   $Res call(
       {Color backgroundColor,
@@ -272,15 +237,15 @@ abstract class _$DeviceKeyboardStyleCopyWith<$Res>
 }
 
 /// @nodoc
-class __$DeviceKeyboardStyleCopyWithImpl<$Res>
+class __$$_DeviceKeyboardStyleCopyWithImpl<$Res>
     extends _$DeviceKeyboardStyleCopyWithImpl<$Res>
-    implements _$DeviceKeyboardStyleCopyWith<$Res> {
-  __$DeviceKeyboardStyleCopyWithImpl(
-      _DeviceKeyboardStyle _value, $Res Function(_DeviceKeyboardStyle) _then)
-      : super(_value, (v) => _then(v as _DeviceKeyboardStyle));
+    implements _$$_DeviceKeyboardStyleCopyWith<$Res> {
+  __$$_DeviceKeyboardStyleCopyWithImpl(_$_DeviceKeyboardStyle _value,
+      $Res Function(_$_DeviceKeyboardStyle) _then)
+      : super(_value, (v) => _then(v as _$_DeviceKeyboardStyle));
 
   @override
-  _DeviceKeyboardStyle get _value => super._value as _DeviceKeyboardStyle;
+  _$_DeviceKeyboardStyle get _value => super._value as _$_DeviceKeyboardStyle;
 
   @override
   $Res call({
@@ -290,7 +255,7 @@ class __$DeviceKeyboardStyleCopyWithImpl<$Res>
     Object? button2BackgroundColor = freezed,
     Object? button2ForegroundColor = freezed,
   }) {
-    return _then(_DeviceKeyboardStyle(
+    return _then(_$_DeviceKeyboardStyle(
       backgroundColor: backgroundColor == freezed
           ? _value.backgroundColor
           : backgroundColor // ignore: cast_nullable_to_non_nullable
@@ -363,55 +328,55 @@ class _$_DeviceKeyboardStyle
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _DeviceKeyboardStyle &&
-            (identical(other.backgroundColor, backgroundColor) ||
-                other.backgroundColor == backgroundColor) &&
-            (identical(other.button1BackgroundColor, button1BackgroundColor) ||
-                other.button1BackgroundColor == button1BackgroundColor) &&
-            (identical(other.button1ForegroundColor, button1ForegroundColor) ||
-                other.button1ForegroundColor == button1ForegroundColor) &&
-            (identical(other.button2BackgroundColor, button2BackgroundColor) ||
-                other.button2BackgroundColor == button2BackgroundColor) &&
-            (identical(other.button2ForegroundColor, button2ForegroundColor) ||
-                other.button2ForegroundColor == button2ForegroundColor));
+            other is _$_DeviceKeyboardStyle &&
+            const DeepCollectionEquality()
+                .equals(other.backgroundColor, backgroundColor) &&
+            const DeepCollectionEquality()
+                .equals(other.button1BackgroundColor, button1BackgroundColor) &&
+            const DeepCollectionEquality()
+                .equals(other.button1ForegroundColor, button1ForegroundColor) &&
+            const DeepCollectionEquality()
+                .equals(other.button2BackgroundColor, button2BackgroundColor) &&
+            const DeepCollectionEquality()
+                .equals(other.button2ForegroundColor, button2ForegroundColor));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      backgroundColor,
-      button1BackgroundColor,
-      button1ForegroundColor,
-      button2BackgroundColor,
-      button2ForegroundColor);
+      const DeepCollectionEquality().hash(backgroundColor),
+      const DeepCollectionEquality().hash(button1BackgroundColor),
+      const DeepCollectionEquality().hash(button1ForegroundColor),
+      const DeepCollectionEquality().hash(button2BackgroundColor),
+      const DeepCollectionEquality().hash(button2ForegroundColor));
 
   @JsonKey(ignore: true)
   @override
-  _$DeviceKeyboardStyleCopyWith<_DeviceKeyboardStyle> get copyWith =>
-      __$DeviceKeyboardStyleCopyWithImpl<_DeviceKeyboardStyle>(
+  _$$_DeviceKeyboardStyleCopyWith<_$_DeviceKeyboardStyle> get copyWith =>
+      __$$_DeviceKeyboardStyleCopyWithImpl<_$_DeviceKeyboardStyle>(
           this, _$identity);
 }
 
 abstract class _DeviceKeyboardStyle implements DeviceKeyboardStyle {
   const factory _DeviceKeyboardStyle(
-      {required Color backgroundColor,
-      required Color button1BackgroundColor,
-      required Color button1ForegroundColor,
-      required Color button2BackgroundColor,
-      required Color button2ForegroundColor}) = _$_DeviceKeyboardStyle;
+      {required final Color backgroundColor,
+      required final Color button1BackgroundColor,
+      required final Color button1ForegroundColor,
+      required final Color button2BackgroundColor,
+      required final Color button2ForegroundColor}) = _$_DeviceKeyboardStyle;
 
   @override
-  Color get backgroundColor;
+  Color get backgroundColor => throw _privateConstructorUsedError;
   @override
-  Color get button1BackgroundColor;
+  Color get button1BackgroundColor => throw _privateConstructorUsedError;
   @override
-  Color get button1ForegroundColor;
+  Color get button1ForegroundColor => throw _privateConstructorUsedError;
   @override
-  Color get button2BackgroundColor;
+  Color get button2BackgroundColor => throw _privateConstructorUsedError;
   @override
-  Color get button2ForegroundColor;
+  Color get button2ForegroundColor => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$DeviceKeyboardStyleCopyWith<_DeviceKeyboardStyle> get copyWith =>
+  _$$_DeviceKeyboardStyleCopyWith<_$_DeviceKeyboardStyle> get copyWith =>
       throw _privateConstructorUsedError;
 }
