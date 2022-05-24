@@ -269,6 +269,15 @@ class PreviewWindow implements ui.SingletonFlutterWindow {
 
   @override
   ui.FrameData get frameData => parent.frameData;
+
+  @override
+  ui.VoidCallback? onSystemFontFamilyChanged;
+
+  @override
+  bool get brieflyShowPassword => parent.brieflyShowPassword;
+
+  @override
+  String? get systemFontFamily => parent.systemFontFamily;
 }
 
 class PreviewWindowPadding implements ui.WindowPadding {
@@ -331,6 +340,7 @@ class PreviewAccessibilityFeatures implements AccessibilityFeatures {
     required this.highContrast,
     required this.invertColors,
     required this.reduceMotion,
+    required this.onOffSwitchLabels,
   });
 
   factory PreviewAccessibilityFeatures.merge(
@@ -341,6 +351,7 @@ class PreviewAccessibilityFeatures implements AccessibilityFeatures {
     bool? highContrast,
     bool? invertColors,
     bool? reduceMotion,
+    bool? onOffSwitchLabels,
   }) =>
       PreviewAccessibilityFeatures(
         accessibleNavigation:
@@ -350,6 +361,7 @@ class PreviewAccessibilityFeatures implements AccessibilityFeatures {
         highContrast: highContrast ?? other.highContrast,
         invertColors: invertColors ?? other.invertColors,
         reduceMotion: reduceMotion ?? other.reduceMotion,
+        onOffSwitchLabels: onOffSwitchLabels ?? other.onOffSwitchLabels,
       );
 
   @override
@@ -369,4 +381,7 @@ class PreviewAccessibilityFeatures implements AccessibilityFeatures {
 
   @override
   final bool reduceMotion;
+
+  @override
+  final bool onOffSwitchLabels;
 }

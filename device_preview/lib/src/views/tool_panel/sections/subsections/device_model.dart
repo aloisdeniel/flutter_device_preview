@@ -4,7 +4,7 @@ import 'package:device_preview/src/views/tool_panel/widgets/device_type_icon.dar
 import 'package:device_preview/src/views/tool_panel/widgets/target_platform_icon.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:collection/collection.dart';
 import 'package:provider/provider.dart';
 
 import '../section.dart';

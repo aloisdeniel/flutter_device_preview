@@ -1,3 +1,7 @@
+## 1.1.0
+
+* Updated dependencies and adding support for Flutter 3.0.
+
 ## 1.0.0-alpha.15
 
 * Updated device_frame which added new android devices and fixed padding.
