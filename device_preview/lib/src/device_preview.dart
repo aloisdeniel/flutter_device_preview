@@ -138,7 +138,7 @@ class DevicePreview extends StatefulWidget {
     return VisualDensity.standard;
   }
 
-  /// Create a new [ThemData] from the given [data], but with updated properties from
+  /// Create a new [ThemeData] from the given [data], but with updated properties from
   /// the currently simulated device.
   static Widget appBuilder(BuildContext context, Widget? child) {
     if (!_isEnabled(context)) {
@@ -208,7 +208,7 @@ class DevicePreview extends StatefulWidget {
           countryCode: countryCode,
         );
       },
-      orElse: () => WidgetsBinding.instance!.window.locale,
+      orElse: () => WidgetsBinding.instance.window.locale,
     );
   }
 
@@ -529,14 +529,22 @@ class _DevicePreviewState extends State<DevicePreview> {
 
                     final borderRadius = isToolbarVisible
                         ? BorderRadius.only(
-                            topRight: isSmall ? Radius.zero : const Radius.circular(16),
+                            topRight: isSmall
+                                ? Radius.zero
+                                : const Radius.circular(16),
                             bottomRight: const Radius.circular(16),
-                            bottomLeft: isSmall ? const Radius.circular(16) : Radius.zero,
+                            bottomLeft: isSmall
+                                ? const Radius.circular(16)
+                                : Radius.zero,
                           )
                         : BorderRadius.zero;
-                    final double rightPanelOffset =
-                        !isSmall ? (isEnabled ? ToolPanel.panelWidth - 10 : (64 + mediaQuery.padding.right)) : 0;
-                    final double bottomPanelOffset = isSmall ? mediaQuery.padding.bottom + 52 : 0;
+                    final double rightPanelOffset = !isSmall
+                        ? (isEnabled
+                            ? ToolPanel.panelWidth - 10
+                            : (64 + mediaQuery.padding.right))
+                        : 0;
+                    final double bottomPanelOffset =
+                        isSmall ? mediaQuery.padding.bottom + 52 : 0;
                     return Stack(
                       children: <Widget>[
                         if (isToolbarVisible && isSmall)
