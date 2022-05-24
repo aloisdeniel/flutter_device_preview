@@ -27,6 +27,7 @@ class _LocalePickerState extends State<LocalePicker> {
       (DevicePreviewStore store) => store.data.locale,
     );
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Locale'),
       ),
