@@ -36,6 +36,7 @@ class AndroidDevices {
     platform: TargetPlatform.android,
     id: 'pixel4',
     name: 'Pixel 4',
+    pixelRatio: 3.5,
     screenSize: const Size(412.0, 869.0),
     safeAreas: const EdgeInsets.only(
       left: 0.0,
