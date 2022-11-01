@@ -20,6 +20,7 @@ class DeviceSection extends StatelessWidget {
     this.orientation = true,
     this.frameVisibility = true,
     this.virtualKeyboard = true,
+    this.zoom = true,
   }) : super(key: key);
 
   /// Allow to edit the current simulated model.
@@ -33,6 +34,9 @@ class DeviceSection extends StatelessWidget {
 
   /// Allow to show or hide a software keyboard mockup.
   final bool virtualKeyboard;
+
+  /// Allow to change preview zoom
+  final bool zoom;
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +62,12 @@ class DeviceSection extends StatelessWidget {
     final isFrameVisible = context.select(
       (DevicePreviewStore store) => store.data.isFrameVisible,
     );
+
+    final zoomLevel = context.select(
+      (DevicePreviewStore store) => store.data.zoomLevel,
+    );
+
+    final zoomEnabled = zoomLevel != null;
 
     return ToolPanelSection(
       title: 'Device',
@@ -158,6 +168,42 @@ class DeviceSection extends StatelessWidget {
               state.toggleVirtualKeyboard();
             },
           ),
+        if (zoom) ...[
+          ListTile(
+            key: const Key('zoom'),
+            title: const Text('Zoom level'),
+            subtitle: Text(zoomEnabled ? '$zoomLevel%' : 'Fit screen'),
+            trailing: Opacity(
+              opacity: zoomEnabled ? 0.3 : 1.0,
+              child: const Icon(Icons.fit_screen_outlined),
+            ),
+            onTap: () {
+              final state = context.read<DevicePreviewStore>();
+              state.toggleZoomLevel();
+            },
+          ),
+          ListTile(
+            key: const Key('zoom-level-slider'),
+            title: Slider(
+              value: zoomLevel?.toDouble() ?? 100,
+              onChanged: zoomEnabled
+                  ? (v) {
+                      final state = context.read<DevicePreviewStore>();
+                      state.data = state.data.copyWith(zoomLevel: v.toInt());
+                    }
+                  : null,
+              min: 25,
+              max: 200,
+              divisions: 7,
+            ),
+            onTap: !zoomEnabled
+                ? () {
+                    final state = context.read<DevicePreviewStore>();
+                    state.toggleZoomLevel();
+                  }
+                : null,
+          ),
+        ],
       ],
     );
   }
