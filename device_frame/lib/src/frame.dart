@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'info/device_type.dart';
 import 'info/info.dart';
@@ -43,6 +42,9 @@ class DeviceFrame extends StatelessWidget {
   /// only the screen is displayed.
   final bool isFrameVisible;
 
+  /// Indicates whether device frame fits to its container
+  final bool fitContainer;
+
   /// Displays the given [screen] into the given [info]
   /// simulated device.
   ///
@@ -57,6 +59,7 @@ class DeviceFrame extends StatelessWidget {
     required this.screen,
     this.orientation = Orientation.portrait,
     this.isFrameVisible = true,
+    this.fitContainer = true,
   }) : super(key: key);
 
   /// Creates a [MediaQuery] from the given device [info], and for the current device [orientation].
@@ -128,16 +131,22 @@ class DeviceFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final frameSize = device.frameSize;
-    final bounds = device.screenPath.getBounds();
+    final frameScale =
+        device.screenSize.width / device.screenPath.getBounds().width;
+    final frameSize = device.frameSize * frameScale;
+    final scaleMatrix = Matrix4.identity()..scale(frameScale);
+    final screenPath = device.screenPath.transform(scaleMatrix.storage);
+    final bounds = screenPath.getBounds();
     final stack = SizedBox(
       width: isFrameVisible ? frameSize.width : bounds.width,
       height: isFrameVisible ? frameSize.height : bounds.height,
       child: Stack(
         children: [
           if (isFrameVisible)
-            Positioned.fill(
+            Transform.scale(
               key: const Key('frame'),
+              scale: frameScale,
+              alignment: Alignment.topLeft,
               child: CustomPaint(
                 key: ValueKey(device.identifier),
                 painter: device.framePainter,
@@ -150,12 +159,8 @@ class DeviceFrame extends StatelessWidget {
             width: bounds.width,
             height: bounds.height,
             child: ClipPath(
-              clipper: _ScreenClipper(
-                device.screenPath,
-              ),
-              child: FittedBox(
-                child: _screen(context, device),
-              ),
+              clipper: _ScreenClipper(screenPath),
+              child: _screen(context, device),
             ),
           ),
         ],
@@ -163,13 +168,18 @@ class DeviceFrame extends StatelessWidget {
     );
 
     final isRotated = device.isLandscape(orientation);
-
-    return FittedBox(
-      child: RotatedBox(
-        quarterTurns: isRotated ? -1 : 0,
-        child: stack,
-      ),
+    final rotated = RotatedBox(
+      quarterTurns: isRotated ? -1 : 0,
+      child: stack,
     );
+
+    if (fitContainer) {
+      return FittedBox(
+        child: rotated,
+      );
+    }
+
+    return rotated;
   }
 }
 

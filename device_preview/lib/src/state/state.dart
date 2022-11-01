@@ -1,9 +1,9 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../utilities/json_converters.dart';
-import 'package:flutter/foundation.dart';
 
 part 'state.freezed.dart';
 part 'state.g.dart';
@@ -65,6 +65,9 @@ class DevicePreviewData with _$DevicePreviewData {
 
     /// Indicate whether the virtual keyboard is visible.
     @Default(false) bool isVirtualKeyboardVisible,
+
+    /// Current zoom level
+    @Default(null) int? zoomLevel,
 
     /// Indicate whether animations are disabled.
     @Default(false) bool disableAnimations,

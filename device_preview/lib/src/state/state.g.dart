@@ -20,6 +20,7 @@ _$_DevicePreviewData _$$_DevicePreviewDataFromJson(Map<String, dynamic> json) =>
       boldText: json['boldText'] as bool? ?? false,
       isVirtualKeyboardVisible:
           json['isVirtualKeyboardVisible'] as bool? ?? false,
+      zoomLevel: json['zoomLevel'] as int? ?? null,
       disableAnimations: json['disableAnimations'] as bool? ?? false,
       highContrast: json['highContrast'] as bool? ?? false,
       accessibleNavigation: json['accessibleNavigation'] as bool? ?? false,
@@ -44,13 +45,14 @@ Map<String, dynamic> _$$_DevicePreviewDataToJson(
     <String, dynamic>{
       'isToolbarVisible': instance.isToolbarVisible,
       'isEnabled': instance.isEnabled,
-      'orientation': _$OrientationEnumMap[instance.orientation],
+      'orientation': _$OrientationEnumMap[instance.orientation]!,
       'deviceIdentifier': instance.deviceIdentifier,
       'locale': instance.locale,
       'isFrameVisible': instance.isFrameVisible,
       'isDarkMode': instance.isDarkMode,
       'boldText': instance.boldText,
       'isVirtualKeyboardVisible': instance.isVirtualKeyboardVisible,
+      'zoomLevel': instance.zoomLevel,
       'disableAnimations': instance.disableAnimations,
       'highContrast': instance.highContrast,
       'accessibleNavigation': instance.accessibleNavigation,
@@ -86,8 +88,8 @@ Map<String, dynamic> _$$_CustomDeviceInfoDataToJson(
         _$_CustomDeviceInfoData instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'type': _$DeviceTypeEnumMap[instance.type],
-      'platform': _$TargetPlatformEnumMap[instance.platform],
+      'type': _$DeviceTypeEnumMap[instance.type]!,
+      'platform': _$TargetPlatformEnumMap[instance.platform]!,
       'name': instance.name,
       'rotatedSafeAreas': const NullableEdgeInsetsJsonConverter()
           .toJson(instance.rotatedSafeAreas),
@@ -134,11 +136,11 @@ Map<String, dynamic> _$$_DevicePreviewSettingsDataToJson(
         _$_DevicePreviewSettingsData instance) =>
     <String, dynamic>{
       'toolbarPosition':
-          _$DevicePreviewToolBarPositionDataEnumMap[instance.toolbarPosition],
+          _$DevicePreviewToolBarPositionDataEnumMap[instance.toolbarPosition]!,
       'toolbarTheme':
-          _$DevicePreviewToolBarThemeDataEnumMap[instance.toolbarTheme],
+          _$DevicePreviewToolBarThemeDataEnumMap[instance.toolbarTheme]!,
       'backgroundTheme':
-          _$DevicePreviewBackgroundThemeDataEnumMap[instance.backgroundTheme],
+          _$DevicePreviewBackgroundThemeDataEnumMap[instance.backgroundTheme]!,
     };
 
 const _$DevicePreviewToolBarPositionDataEnumMap = {

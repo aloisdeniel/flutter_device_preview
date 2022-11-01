@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui' as ui;
 
 import 'package:device_frame/device_frame.dart';
 import 'package:device_preview/src/state/state.dart';
@@ -17,7 +18,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'dart:ui' as ui;
 
 import 'locales/default_locales.dart';
 import 'utilities/screenshot.dart';
@@ -422,50 +422,72 @@ class _DevicePreviewState extends State<DevicePreview> {
     final isDarkMode = context.select(
       (DevicePreviewStore store) => store.data.isDarkMode,
     );
+    final zoomLevel = context.select(
+      (DevicePreviewStore store) => store.data.zoomLevel,
+    );
 
-    return Container(
-      color: widget.backgroundColor ?? theme.canvasColor,
-      padding: EdgeInsets.only(
-        top: 20 + mediaQuery.viewPadding.top,
-        right: 20 + mediaQuery.viewPadding.right,
-        left: 20 + mediaQuery.viewPadding.left,
-        bottom: 20,
-      ),
-      child: FittedBox(
-        fit: BoxFit.contain,
-        child: RepaintBoundary(
-          key: _repaintKey,
-          child: DeviceFrame(
-            device: device,
-            isFrameVisible: isFrameVisible,
-            orientation: orientation,
-            screen: VirtualKeyboard(
-              isEnabled: isVirtualKeyboardVisible,
-              child: Theme(
-                data: Theme.of(context).copyWith(
-                  platform: device.identifier.platform,
-                  brightness: isDarkMode ? Brightness.dark : Brightness.light,
-                ),
-                child: MediaQuery(
-                  data: DevicePreview._mediaQuery(context),
-                  child: Builder(
-                    key: _appKey,
-                    builder: (context) {
-                      final app = widget.builder(context);
-                      assert(
-                        isWidgetsAppUsingInheritedMediaQuery(app),
-                        'Your widgets app should have its `useInheritedMediaQuery` property set to `true` in order to use DevicePreview.',
-                      );
-                      return app;
-                    },
-                  ),
-                ),
+    final deviceFrame = RepaintBoundary(
+      key: _repaintKey,
+      child: DeviceFrame(
+        device: device,
+        isFrameVisible: isFrameVisible,
+        orientation: orientation,
+        fitContainer: zoomLevel == null,
+        screen: VirtualKeyboard(
+          isEnabled: isVirtualKeyboardVisible,
+          child: Theme(
+            data: Theme.of(context).copyWith(
+              platform: device.identifier.platform,
+              brightness: isDarkMode ? Brightness.dark : Brightness.light,
+            ),
+            child: MediaQuery(
+              data: DevicePreview._mediaQuery(context),
+              child: Builder(
+                key: _appKey,
+                builder: (context) {
+                  final app = widget.builder(context);
+                  assert(
+                    isWidgetsAppUsingInheritedMediaQuery(app),
+                    'Your widgets app should have its `useInheritedMediaQuery` property set to `true` in order to use DevicePreview.',
+                  );
+                  return app;
+                },
               ),
             ),
           ),
         ),
       ),
     );
+
+    if (zoomLevel == null) {
+      return Container(
+        color: widget.backgroundColor ?? theme.canvasColor,
+        padding: EdgeInsets.only(
+          top: 20 + mediaQuery.viewPadding.top,
+          right: 20 + mediaQuery.viewPadding.right,
+          left: 20 + mediaQuery.viewPadding.left,
+          bottom: 20,
+        ),
+        child: deviceFrame,
+      );
+    } else {
+      return InteractiveViewer(
+        scaleEnabled: false,
+        boundaryMargin: const EdgeInsets.all(double.infinity),
+        child: Center(
+          child: Transform.scale(
+            scale: zoomLevel / 100,
+            child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onPanStart: (_) {
+                // ignore event to prevent pan inside device frame
+              },
+              child: deviceFrame,
+            ),
+          ),
+        ),
+      );
+    }
   }
 
   @override

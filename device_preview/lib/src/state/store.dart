@@ -6,10 +6,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../device_preview.dart';
+import '../../device_preview.dart' as device_preview;
 import '../storage/storage.dart';
 import 'custom_device.dart';
 import 'state.dart';
-import '../../device_preview.dart' as device_preview;
 
 /// The store is a container for the current [state] of the device preview.
 ///
@@ -216,6 +216,11 @@ extension DevicePreviewStateHelperExtensions on DevicePreviewStore {
     data = data.copyWith(
       isVirtualKeyboardVisible: !data.isVirtualKeyboardVisible,
     );
+  }
+
+  /// Disable or enable
+  void toggleZoomLevel() {
+    data = data.copyWith(zoomLevel: data.zoomLevel == null ? 100 : null);
   }
 
   /// Switch from light to dark mode.
