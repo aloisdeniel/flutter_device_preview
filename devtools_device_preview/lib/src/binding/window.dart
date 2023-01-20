@@ -278,6 +278,10 @@ class PreviewWindow implements ui.SingletonFlutterWindow {
 
   @override
   String? get systemFontFamily => parent.systemFontFamily;
+
+  @override
+  bool get nativeSpellCheckServiceDefined =>
+      parent.nativeSpellCheckServiceDefined;
 }
 
 class PreviewWindowPadding implements ui.WindowPadding {

@@ -24,6 +24,31 @@ class PreviewWidgetsFlutterBinding extends BindingBase
         SemanticsBinding,
         RendererBinding,
         WidgetsBinding {
+  @override
+  void initInstances() {
+    super.initInstances();
+    _instance = this;
+  }
+
+  @override
+  void initServiceExtensions() {
+    super.initServiceExtensions();
+
+    if (!kReleaseMode) {
+      registerBoolServiceExtension(
+        name: 'isDevicePreviewEnabled',
+        getter: () async => device != null,
+        setter: (bool value) async {
+          if (value && device == null) {
+            device = Devices.all.first;
+          } else if (!value && device != null) {
+            device = null;
+          }
+        },
+      );
+    }
+  }
+
   static PreviewWindow get previewWindow {
     return previewBinding.window as PreviewWindow;
   }
@@ -36,23 +61,26 @@ class PreviewWidgetsFlutterBinding extends BindingBase
     return previewBinding.renderView as PreviewRenderView;
   }
 
-  /// Returns an instance of the [WidgetsBinding], creating and
-  /// initializing it if necessary. If one is created, it will be a
-  /// [WidgetsFlutterBinding]. If one was previously initialized, then
-  /// it will at least implement [WidgetsBinding].
+  /// The current [TestWidgetsFlutterBinding], if one has been created.
   ///
-  /// You only need to call this method if you need the binding to be
-  /// initialized before calling [runApp].
-  ///
-  /// In the `flutter_test` framework, [testWidgets] initializes the
-  /// binding instance to a [TestWidgetsFlutterBinding], not a
-  /// [WidgetsFlutterBinding].
-  static WidgetsBinding ensureInitialized() {
-    if (WidgetsBinding.instance == null) PreviewWidgetsFlutterBinding();
-    return WidgetsBinding.instance!;
+  /// Provides access to the features exposed by this binding. The binding must
+  /// be initialized before using this getter; this is typically done by calling
+  /// [testWidgets] or [TestWidgetsFlutterBinding.ensureInitialized].
+  static PreviewWidgetsFlutterBinding get instance =>
+      BindingBase.checkInstance(_instance);
+  static PreviewWidgetsFlutterBinding? _instance;
+
+  /// Creates and initializes the binding. This function is
+  /// idempotent; calling it a second time will just return the
+  /// previously-created instance.
+  static PreviewWidgetsFlutterBinding ensureInitialized() {
+    if (PreviewWidgetsFlutterBinding._instance == null) {
+      PreviewWidgetsFlutterBinding();
+    }
+    return PreviewWidgetsFlutterBinding.instance;
   }
 
-  ui.SingletonFlutterWindow? _previewWindow;
+  final _previewWindow = PreviewWindow(ui.window);
 
   Orientation _orientation = Orientation.portrait;
   Orientation get orientation => _orientation;
@@ -106,12 +134,10 @@ class PreviewWidgetsFlutterBinding extends BindingBase
       PreviewWidgetsFlutterBinding.previewWindow.padding = null;
       PreviewWidgetsFlutterBinding.previewWindow.viewPadding = null;
     }
-    reassembleApplication();
   }
 
   @override
-  ui.SingletonFlutterWindow get window =>
-      _previewWindow ??= PreviewWindow(super.window);
+  ui.SingletonFlutterWindow get window => _previewWindow;
 
   @override
   void initRenderView() {
@@ -154,21 +180,10 @@ class PreviewWidgetsFlutterBinding extends BindingBase
             relativeDelta.dy * screenSize.height,
           ),
         );
+        super.handlePointerEvent(event);
       }
+    } else {
+      super.handlePointerEvent(event);
     }
-
-    super.handlePointerEvent(event);
-  }
-
-  @override
-  void handleMetricsChanged() {
-    super.handleMetricsChanged();
-    reassembleApplication();
-  }
-
-  @override
-  void handleLocaleChanged() {
-    super.handleLocaleChanged();
-    reassembleApplication();
   }
 }

@@ -1,4 +1,7 @@
+// ignore_for_file: avoid_print
+
 import 'package:device_frame/device_frame.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
@@ -7,9 +10,11 @@ import 'binding/window.dart';
 
 abstract class DevicePreviewDevtools {
   static void enable() {
-    print(
-        'Enabled, available devices : [ ${Devices.all.map((x) => x.identifier.toString()).join(',')} ]');
-    PreviewWidgetsFlutterBinding.ensureInitialized();
+    if (kDebugMode) {
+      print(
+          'Enabled, available devices : [ ${Devices.all.map((x) => x.identifier.toString()).join(',')} ]');
+      PreviewWidgetsFlutterBinding.ensureInitialized();
+    }
   }
 
   static void setBrightness(Brightness? value) {
@@ -62,8 +67,6 @@ abstract class DevicePreviewDevtools {
 
   static Future<void> setDevice(DeviceInfo? device) async {
     PreviewWidgetsFlutterBinding.previewBinding.device = device;
-    if (WidgetsBinding.instance != null) {
-      await WidgetsBinding.instance!.reassembleApplication();
-    }
+    await WidgetsBinding.instance.reassembleApplication();
   }
 }
