@@ -61,6 +61,10 @@ class DevicePreview extends StatefulWidget {
     this.storage,
     this.enabled = true,
     this.backgroundColor,
+    this.paddingTop = 20,
+    this.paddingRight = 20,
+    this.paddingLeft = 20,
+    this.paddingBottom = 20,
   }) : super(key: key);
 
   /// If not [enabled], the [child] is used directly.
@@ -102,6 +106,18 @@ class DevicePreview extends StatefulWidget {
   ///
   /// To disable settings persistence use `DevicePreviewStorage.none()`.
   final DevicePreviewStorage? storage;
+
+  /// The padding on the top of the frame.
+  final double paddingTop;
+
+  /// The padding on the right of the frame.
+  final double paddingRight;
+
+  /// The padding on the left of the frame.
+  final double paddingLeft;
+
+  /// The padding on the bottom of the frame.
+  final double paddingBottom;
 
   /// All the default available devices.
   static final List<DeviceInfo> defaultDevices = Devices.all;
@@ -426,10 +442,10 @@ class _DevicePreviewState extends State<DevicePreview> {
     return Container(
       color: widget.backgroundColor ?? theme.canvasColor,
       padding: EdgeInsets.only(
-        top: 20 + mediaQuery.viewPadding.top,
-        right: 20 + mediaQuery.viewPadding.right,
-        left: 20 + mediaQuery.viewPadding.left,
-        bottom: 20,
+        top: widget.paddingTop + mediaQuery.viewPadding.top,
+        right: widget.paddingRight + mediaQuery.viewPadding.right,
+        left: widget.paddingLeft + mediaQuery.viewPadding.left,
+        bottom: widget.paddingBottom,
       ),
       child: FittedBox(
         fit: BoxFit.contain,
