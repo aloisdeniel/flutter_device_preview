@@ -30,8 +30,7 @@ class AndroidDevices {
 
   DeviceInfo get sonyXperia1II => i_sony_xperia_1_ii.info;
 
-  DeviceInfo get smallPhone => _smallPhone;
-  DeviceInfo get p4 => _pixel4;
+  DeviceInfo get pixel4 => _pixel4;
   static final _pixel4 = DeviceInfo.genericPhone(
     platform: TargetPlatform.android,
     id: 'pixel4',
@@ -51,6 +50,8 @@ class AndroidDevices {
       bottom: 0.0,
     ),
   );
+
+  DeviceInfo get smallPhone => _smallPhone;
   static final _smallPhone = DeviceInfo.genericPhone(
     platform: TargetPlatform.android,
     name: 'Small',
@@ -181,7 +182,7 @@ class AndroidDevices {
         sonyXperia1II,
         smallPhone,
         mediumPhone,
-        p4,
+        pixel4,
         bigPhone,
         // Tablets
         smallTablet,
