@@ -4,7 +4,7 @@ description: Approximate how your Flutter app looks and performs on another devi
 homepage: https://github.com/aloisdeniel/flutter_device_preview
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=2.18.4 <3.0.0'
 
 dependencies:
   flutter:
