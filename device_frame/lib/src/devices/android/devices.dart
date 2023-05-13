@@ -178,11 +178,11 @@ class AndroidDevices {
         samsungGalaxyS20,
         samsungGalaxyNote20,
         samsungGalaxyNote20Ultra,
+        pixel4,
         onePlus8Pro,
         sonyXperia1II,
         smallPhone,
         mediumPhone,
-        pixel4,
         bigPhone,
         // Tablets
         smallTablet,
