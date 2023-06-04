@@ -1,3 +1,8 @@
+## 1.1.1
+
+* Fixes iPhone 12 size and safe area issue
+* Adding Pixel 4
+
 ## 1.1.0
 
 * Updated freezed dependency.

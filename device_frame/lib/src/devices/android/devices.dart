@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:device_frame/src/info/info.dart';
 
 import 'package:device_frame/src/devices/android/samsung_galaxy_s20/device.dart'
@@ -31,6 +29,27 @@ class AndroidDevices {
   DeviceInfo get onePlus8Pro => i_oneplus_8_pro.info;
 
   DeviceInfo get sonyXperia1II => i_sony_xperia_1_ii.info;
+
+  DeviceInfo get pixel4 => _pixel4;
+  static final _pixel4 = DeviceInfo.genericPhone(
+    platform: TargetPlatform.android,
+    id: 'pixel4',
+    name: 'Pixel 4',
+    pixelRatio: 3.5,
+    screenSize: const Size(412.0, 869.0),
+    safeAreas: const EdgeInsets.only(
+      left: 0.0,
+      top: 24.0,
+      right: 0.0,
+      bottom: 0.0,
+    ),
+    rotatedSafeAreas: const EdgeInsets.only(
+      left: 0.0,
+      top: 24.0,
+      right: 0.0,
+      bottom: 0.0,
+    ),
+  );
 
   DeviceInfo get smallPhone => _smallPhone;
   static final _smallPhone = DeviceInfo.genericPhone(
@@ -159,6 +178,7 @@ class AndroidDevices {
         samsungGalaxyS20,
         samsungGalaxyNote20,
         samsungGalaxyNote20Ultra,
+        pixel4,
         onePlus8Pro,
         sonyXperia1II,
         smallPhone,
