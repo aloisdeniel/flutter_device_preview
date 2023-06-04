@@ -1,11 +1,18 @@
 // ignore_for_file: require_trailing_commas, non_constant_identifier_names
 
+import 'dart:ui' as ui;
+
 part of 'device.dart';
 
 // Generated manually with https://fluttershapemaker.com/
 class _FramePainter extends CustomPainter {
   const _FramePainter();
 
+  /*
+  iPhone 14 Pro Max device figma link can be found here
+  https://www.figma.com/file/wZRgPlURZrOJl0kMiSJHk2/Untitled?node-id=0%3A1
+  Then enter into https://fluttershapemaker.com/
+  */
   @override
   void paint(Canvas canvas, Size size) {
 
@@ -14,7 +21,7 @@ class _FramePainter extends CustomPainter {
     path_0.lineTo(869.904,495.105);
     path_0.cubicTo(871.614,495.105,873,496.49,873,498.199);
     path_0.lineTo(873,683.864);
-    path_0.cubicTo(873,685.573,871.614,686.958,869.904,686.958);
+    path_0.cubicTo(873,685.572,871.614,686.958,869.904,686.958);
     path_0.lineTo(866.809,686.958);
     path_0.lineTo(866.809,495.105);
     path_0.close();
@@ -23,68 +30,47 @@ class _FramePainter extends CustomPainter {
     paint_0_fill.color = Color(0xff213744).withOpacity(1.0);
     canvas.drawPath(path_0,paint_0_fill);
 
+    Path path_1 = Path();
+    path_1.moveTo(6.19141,728.217);
+    path_1.lineTo(3.09565,728.217);
+    path_1.cubicTo(1.38592,728.217,-0.0000942926,726.831,-0.0000941431,725.122);
+    path_1.lineTo(-0.0000840393,609.598);
+    path_1.cubicTo(-0.0000838898,607.889,1.38593,606.503,3.09566,606.503);
+    path_1.lineTo(6.19142,606.503);
+    path_1.lineTo(6.19141,728.217);
+    path_1.close();
 
-    /*
-    NEED HELP::
-    if you look at line 36 you'll see a value `NaN` which
-    fluttershapemaker.com generates. I tried with other already added device
-    frame from figma and saw that for even existing iPhone 13 Pro Max Body
-    is generated now with NaN value. maybe a bug in fluttershapemaker now!
+    Paint paint_1_fill = Paint()..style=PaintingStyle.fill;
+    paint_1_fill.color = Color(0xff213744).withOpacity(1.0);
+    canvas.drawPath(path_1,paint_1_fill);
 
-    iPhone 14 Pro Max device figma link can be found here
-    https://www.figma.com/file/wZRgPlURZrOJl0kMiSJHk2/Untitled?node-id=0%3A1
-     */
+    Path path_2 = Path();
+    path_2.moveTo(6.19141,573.496);
+    path_2.lineTo(3.09565,573.496);
+    path_2.cubicTo(1.38592,573.496,-0.0000942926,572.111,-0.0000941431,570.402);
+    path_2.lineTo(-0.0000840393,454.877);
+    path_2.cubicTo(-0.0000838898,453.168,1.38593,451.783,3.09566,451.783);
+    path_2.lineTo(6.19142,451.783);
+    path_2.lineTo(6.19141,573.496);
+    path_2.close();
 
-    // Path path_1 = Path();
-    // path_1.moveTo(6.19155,728.217);
-    // path_1.lineTo(3.09579,728.217);
-    // path_1.cubicTo(1.38606,728.217,4.9259,-5,726.831,4.94084);
-    // path_1.cubicTo(-5,725.122,NaN,NaN,NaN,NaN);
-    // path_1.lineTo(5.95123,-5);
-    // path_1.lineTo(609.598,NaN);
-    // path_1.cubicTo(5.96618,-5,607.889,1.38607,606.503,3.0958);
-    // path_1.cubicTo(606.503,NaN,NaN,NaN,NaN,NaN);
-    // path_1.lineTo(6.19156,NaN);
-    // path_1.lineTo(6.19155,728.217);
-    // path_1.close();
-    //
-    // Paint paint_1_fill = Paint()..style=PaintingStyle.fill;
-    // paint_1_fill.color = Color(0xff213744).withOpacity(1.0);
-    // canvas.drawPath(path_1,paint_1_fill);
+    Paint paint_2_fill = Paint()..style=PaintingStyle.fill;
+    paint_2_fill.color = Color(0xff213744).withOpacity(1.0);
+    canvas.drawPath(path_2,paint_2_fill);
 
-    // Path path_2 = Path();
-    // path_2.moveTo(6.19157,573.496);
-    // path_2.lineTo(3.09581,573.496);
-    // path_2.cubicTo(1.38608,573.496,6.64251,-5,572.111,6.65746);
-    // path_2.cubicTo(-5,570.402,NaN,NaN,NaN,NaN);
-    // path_2.lineTo(7.66784,-5);
-    // path_2.lineTo(454.878,NaN);
-    // path_2.cubicTo(7.68279,-5,453.169,1.38609,451.783,3.09582);
-    // path_2.cubicTo(451.783,NaN,NaN,NaN,NaN,NaN);
-    // path_2.lineTo(6.19158,NaN);
-    // path_2.lineTo(6.19157,573.496);
-    // path_2.close();
+    Path path_3 = Path();
+    path_3.moveTo(6.19141,398.147);
+    path_3.lineTo(3.09566,398.147);
+    path_3.cubicTo(1.38592,398.147,-0.0000880937,396.761,-0.0000879442,395.052);
+    path_3.lineTo(-0.0000834336,343.479);
+    path_3.cubicTo(-0.0000832841,341.77,1.38593,340.384,3.09566,340.384);
+    path_3.lineTo(6.19141,340.384);
+    path_3.lineTo(6.19141,398.147);
+    path_3.close();
 
-    // Paint paint_2_fill = Paint()..style=PaintingStyle.fill;
-    // paint_2_fill.color = Color(0xff213744).withOpacity(1.0);
-    // canvas.drawPath(path_2,paint_2_fill);
-
-    // Path path_3 = Path();
-    // path_3.moveTo(6.19149,398.147);
-    // path_3.lineTo(3.09575,398.147);
-    // path_3.cubicTo(1.38601,398.147,-1.4947,-7,396.761,0);
-    // path_3.cubicTo(395.052,NaN,NaN,NaN,NaN,NaN);
-    // path_3.lineTo(4.51064,-6);
-    // path_3.lineTo(343.479,NaN);
-    // path_3.cubicTo(4.66011,-6,341.77,1.38602,340.385,3.09575);
-    // path_3.cubicTo(340.385,NaN,NaN,NaN,NaN,NaN);
-    // path_3.lineTo(6.1915,NaN);
-    // path_3.lineTo(6.19149,398.147);
-    // path_3.close();
-
-    // Paint paint_3_fill = Paint()..style=PaintingStyle.fill;
-    // paint_3_fill.color = Color(0xff213744).withOpacity(1.0);
-    // canvas.drawPath(path_3,paint_3_fill);
+    Paint paint_3_fill = Paint()..style=PaintingStyle.fill;
+    paint_3_fill.color = Color(0xff213744).withOpacity(1.0);
+    canvas.drawPath(path_3,paint_3_fill);
 
     Path path_4 = Path();
     path_4.moveTo(6.19141,187.727);
@@ -190,8 +176,8 @@ class _FramePainter extends CustomPainter {
 
     Path path_8 = Path();
     path_8.moveTo(856.489,177.413);
-    path_8.lineTo(866.809,177.413);
-    path_8.lineTo(866.809,189.79);
+    path_8.lineTo(866.808,177.413);
+    path_8.lineTo(866.808,189.79);
     path_8.lineTo(856.489,189.79);
     path_8.lineTo(856.489,177.413);
     path_8.close();
@@ -226,8 +212,8 @@ class _FramePainter extends CustomPainter {
 
     Path path_11 = Path();
     path_11.moveTo(856.489,1580.21);
-    path_11.lineTo(866.809,1580.21);
-    path_11.lineTo(866.809,1592.59);
+    path_11.lineTo(866.808,1580.21);
+    path_11.lineTo(866.808,1592.59);
     path_11.lineTo(856.489,1592.59);
     path_11.lineTo(856.489,1580.21);
     path_11.close();
@@ -263,18 +249,43 @@ class _FramePainter extends CustomPainter {
     canvas.drawPath(path_13,paint_13_fill);
 
     Path path_14 = Path();
-    path_14.moveTo(327,95);
-    path_14.cubicTo(327,78.9837,339.984,66,356,66);
-    path_14.lineTo(515,66);
-    path_14.cubicTo(531.016,66,544,78.9837,544,95);
-    path_14.cubicTo(544,111.016,531.016,124,515,124);
-    path_14.lineTo(356,124);
-    path_14.cubicTo(339.984,124,327,111.016,327,95);
+    path_14.moveTo(372,13);
+    path_14.lineTo(499,13);
+    path_14.lineTo(499,17);
+    path_14.cubicTo(499,21.4183,495.418,25,491,25);
+    path_14.lineTo(380,25);
+    path_14.cubicTo(375.582,25,372,21.4183,372,17);
+    path_14.lineTo(372,13);
     path_14.close();
 
     Paint paint_14_fill = Paint()..style=PaintingStyle.fill;
     paint_14_fill.color = Colors.black.withOpacity(1.0);
     canvas.drawPath(path_14,paint_14_fill);
+
+    Path path_15 = Path();
+    path_15.moveTo(134,25);
+    path_15.cubicTo(80.4284,25,37,68.4284,37,122);
+    path_15.lineTo(37,1624);
+    path_15.cubicTo(37,1677.57,80.4284,1721,134,1721);
+    path_15.lineTo(739,1721);
+    path_15.cubicTo(792.572,1721,836,1677.57,836,1624);
+    path_15.lineTo(836,122);
+    path_15.cubicTo(836,68.4284,792.572,25,739,25);
+    path_15.lineTo(134,25);
+    path_15.close();
+    path_15.moveTo(356.176,54);
+    path_15.cubicTo(340.159,54,327.176,66.9837,327.176,83);
+    path_15.cubicTo(327.176,99.0163,340.159,112,356.176,112);
+    path_15.lineTo(514.784,112);
+    path_15.cubicTo(530.801,112,543.784,99.0163,543.784,83);
+    path_15.cubicTo(543.784,66.9837,530.801,54,514.784,54);
+    path_15.lineTo(356.176,54);
+    path_15.close();
+
+    Paint paint_15_fill = Paint()..style=PaintingStyle.fill;
+    paint_15_fill.color = Color(0xffFF0000).withOpacity(1.0);
+    canvas.drawPath(path_15,paint_15_fill);
+
   }
 
   @override
