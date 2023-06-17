@@ -93,16 +93,13 @@ class _DevicePreviewScreenshotState extends State<DevicePreviewScreenshot> {
                     setState(() {
                       _isLoading = true;
                     });
-                    DeviceScreenshot? result;
                     try {
                       for (var device
                           in DevicePreview.availableDeviceIdentifiers(
                               context)) {
                         DevicePreview.selectDevice(context, device);
                         await Future.delayed(const Duration(milliseconds: 500));
-                        result = await DevicePreview.screenshot(context);
-                      }
-                      if (result != null) {
+                        final result = await DevicePreview.screenshot(context);
                         await widget.onScreenshot(this.context, result);
                       }
                     } finally {
