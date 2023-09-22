@@ -2,7 +2,7 @@ import 'package:devtools_device_preview/devtools_device_preview.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  DevicePreviewDevtools.enable();
+  DevicePreview.initialize();
 
   runApp(const MyApp());
 }
@@ -79,73 +79,6 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
-            ),
-            ListTile(
-              title: const Text('Set landscape orientation'),
-              onTap: () {
-                DevicePreviewDevtools.setOrientation(Orientation.landscape);
-              },
-            ),
-            ListTile(
-              title: const Text('Set portrait orientation'),
-              onTap: () {
-                DevicePreviewDevtools.setOrientation(Orientation.portrait);
-              },
-            ),
-            ListTile(
-              title: const Text('Set bold text on'),
-              onTap: () {
-                DevicePreviewDevtools.setBoldText(true);
-              },
-            ),
-            ListTile(
-              title: const Text('Set bold text off'),
-              onTap: () {
-                DevicePreviewDevtools.setBoldText(false);
-              },
-            ),
-            ListTile(
-              title: const Text('Set brightness to dark'),
-              onTap: () {
-                DevicePreviewDevtools.setBrightness(Brightness.dark);
-              },
-            ),
-            ListTile(
-              title: const Text('Set brightness to light'),
-              onTap: () {
-                DevicePreviewDevtools.setBrightness(Brightness.light);
-              },
-            ),
-            ListTile(
-              title: const Text('Switch to iPhone12Mini'),
-              onTap: () {
-                DevicePreviewDevtools.setDevice(Devices.ios.iPhone12Mini);
-              },
-            ),
-            ListTile(
-              title: const Text('Switch to samsungGalaxyNote20Ultra'),
-              onTap: () {
-                DevicePreviewDevtools.setDevice(
-                    Devices.android.samsungGalaxyNote20Ultra);
-              },
-            ),
-            ListTile(
-              title: const Text('Switch to iPadAir4'),
-              onTap: () {
-                DevicePreviewDevtools.setDevice(Devices.ios.iPadAir4);
-              },
-            ),
-            ListTile(
-              title: const Text('Switch to wideMonitor'),
-              onTap: () {
-                DevicePreviewDevtools.setDevice(Devices.windows.wideMonitor);
-              },
-            ),
-            ListTile(
-              title: const Text('Disable'),
-              onTap: () {
-                DevicePreviewDevtools.setDevice(null);
-              },
             ),
           ],
         ),

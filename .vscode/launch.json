@@ -12,7 +12,7 @@
         },
         {
             "name": "Example",
-            "program": "device_preview/example/lib/main.dart",
+            "program": "devtools_device_preview/example/lib/main.dart",
             "request": "launch",
             "type": "dart"
         }
