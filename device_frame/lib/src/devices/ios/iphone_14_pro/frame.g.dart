@@ -8,20 +8,20 @@ class _FramePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-
-    Path path_0 = Path();
-    path_0.moveTo(866.809,495.105);
-    path_0.lineTo(869.904,495.105);
-    path_0.cubicTo(871.614,495.105,873,496.49,873,498.199);
-    path_0.lineTo(873,683.864);
-    path_0.cubicTo(873,685.573,871.614,686.958,869.904,686.958);
-    path_0.lineTo(866.809,686.958);
-    path_0.lineTo(866.809,495.105);
-    path_0.close();
-
-    Paint paint_0_fill = Paint()..style=PaintingStyle.fill;
-    paint_0_fill.color = Color(0xff213744).withOpacity(1.0);
-    canvas.drawPath(path_0,paint_0_fill);
+    //
+    // Path path_0 = Path();
+    // path_0.moveTo(866.809,495.105);
+    // path_0.lineTo(869.904,495.105);
+    // path_0.cubicTo(871.614,495.105,873,496.49,873,498.199);
+    // path_0.lineTo(873,683.864);
+    // path_0.cubicTo(873,685.573,871.614,686.958,869.904,686.958);
+    // path_0.lineTo(866.809,686.958);
+    // path_0.lineTo(866.809,495.105);
+    // path_0.close();
+    //
+    // Paint paint_0_fill = Paint()..style=PaintingStyle.fill;
+    // paint_0_fill.color = Color(0xff213744).withOpacity(1.0);
+    // canvas.drawPath(path_0,paint_0_fill);
 
     Path path_4 = Path();
     path_4.moveTo(6.19141,187.727);
