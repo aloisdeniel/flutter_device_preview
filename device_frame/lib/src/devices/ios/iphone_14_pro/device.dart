@@ -13,9 +13,9 @@ final info = DeviceInfo(
     'iphone-14-pro',
   ),
   name: 'iPhone 14 Pro',
-  pixelRatio: 3.0,
+  pixelRatio: 1.0,
   frameSize: const Size(873.0, 1770.0),
-  screenSize: const Size(430, 932),
+  screenSize: const Size(440, 934),
   safeAreas: const EdgeInsets.only(
     left: 0.0,
     top: 47.0,
