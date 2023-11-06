@@ -12,7 +12,7 @@ final _screenPath = Path()
   ..cubicTo(837, 68.4284, 793.572, 25, 740, 25)
   ..lineTo(135, 25)
   ..close()
-  /// below code is for dynamic islan
+  /// below code is for dynamic island
   ..moveTo(357.176, 54)
   ..cubicTo(341.159, 54, 328.176, 66.9837, 328.176, 83)
   ..cubicTo(328.176, 99.0163, 341.159, 112, 357.176, 112)
