@@ -2,14 +2,16 @@ part of 'device.dart';
 
 // Generated manually with https://fluttershapemaker.com/
 final _screenPath = Path()
-  ..moveTo(135, 25)
-  ..cubicTo(81.4284, 25, 38, 68.4284, 38, 122)
-  ..lineTo(38, 1624)
-  ..cubicTo(38, 1677.57, 81.4284, 1721, 135, 1721)
-  ..lineTo(740, 1721)
-  ..cubicTo(793.572, 1721, 837, 1677.57, 837, 1624)
-  ..lineTo(837, 122)
-  ..cubicTo(837, 68.4284, 793.572, 25, 740, 25)
+//top corner
+  ..moveTo(135+5, 25+0)
+  ..cubicTo(81.4284+10, 25+5, 38+5, 68.4284-10, 38-5, 122+10)
+  // left side
+  ..lineTo(38-5, 1624-10)
+  ..cubicTo(35, 1677.57+20, 81.4284, 1721+10, 135+0, 1721+20)
+  ..lineTo(740+20, 1721+20)
+  ..cubicTo(793.572+10, 1721+0, 837+0, 1677.57+0, 837+0, 1624+0)
+  ..lineTo(837+5, 122+5)
+  ..cubicTo(837+0, 68.4284+10, 793.572+5, 25+5, 740+10, 25+5)
   ..lineTo(135, 25)
   ..close()
   /// below code is for dynamic island
