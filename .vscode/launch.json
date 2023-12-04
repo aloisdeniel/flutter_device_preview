@@ -15,6 +15,15 @@
             "program": "devtools_device_preview/example/lib/main.dart",
             "request": "launch",
             "type": "dart"
-        }
+        },
+        {
+            "name": "devtools_extension + simulated environment",
+            "cwd": "device_preview_devtools_extension",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--dart-define=use_simulated_environment=true"
+            ],
+        },
     ]
 }
