@@ -1,4 +1,5 @@
 import 'package:device_frame/src/devices/generic/desktop_monitor/device.dart';
+import 'package:device_frame/src/devices/generic/desktop_window/device.dart';
 import 'package:device_frame/src/devices/generic/laptop/device.dart';
 import 'package:device_frame/src/devices/generic/phone/device.dart';
 import 'package:device_frame/src/devices/generic/tablet/device.dart';
@@ -82,6 +83,27 @@ abstract class DeviceInfo with _$DeviceInfo {
         screenSize: screenSize,
         safeAreas: safeAreas,
         rotatedSafeAreas: rotatedSafeAreas,
+        pixelRatio: pixelRatio,
+        framePainter: framePainter,
+      );
+
+  factory DeviceInfo.genericDesktopWindow({
+    required TargetPlatform platform,
+    required String id,
+    required String name,
+    required Size screenSize,
+    required Rect windowPosition,
+    EdgeInsets safeAreas = EdgeInsets.zero,
+    double pixelRatio = 2.0,
+    GenericDesktopWindowFramePainter? framePainter,
+  }) =>
+      buildGenericDesktopWindowDevice(
+        platform: platform,
+        id: id,
+        name: name,
+        screenSize: screenSize,
+        windowPosition: windowPosition,
+        safeAreas: safeAreas,
         pixelRatio: pixelRatio,
         framePainter: framePainter,
       );
