@@ -7,6 +7,22 @@ import 'package:device_frame/src/devices/macos/macbook_pro/device.dart'
 class MacOSDevices {
   const MacOSDevices();
 
+  DeviceInfo get window => _window;
+  static final _window = DeviceInfo.genericDesktopWindow(
+    platform: TargetPlatform.macOS,
+    name: 'Window',
+    id: 'window',
+    screenSize: const Size(1920, 1080),
+    windowPosition: Rect.fromCenter(
+      center: const Offset(
+        1920 * 0.5,
+        1080 * 0.5,
+      ),
+      width: 1920,
+      height: 1080,
+    ),
+  );
+
   DeviceInfo get macBookPro => i_macbook_pro.info;
   DeviceInfo get wideMonitor => _wideMonitor;
   static final _wideMonitor = DeviceInfo.genericDesktopMonitor(
@@ -26,6 +42,7 @@ class MacOSDevices {
 
   /// All available devices.
   List<DeviceInfo> get all => [
+        window,
         macBookPro,
         wideMonitor,
       ];
