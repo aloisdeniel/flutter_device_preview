@@ -15,6 +15,7 @@ class SystemSection extends StatelessWidget {
     this.locale = true,
     this.theme = true,
     this.onThemeChanged,
+    this.onLocaleChanged,
   }) : super(key: key);
 
   /// Allow to select the current device locale.
@@ -24,7 +25,10 @@ class SystemSection extends StatelessWidget {
   final bool theme;
 
   /// Called when the theme is changed.
-  final void Function(bool isDarkMode)? onThemeChanged;
+  final Function(bool isDarkMode)? onThemeChanged;
+
+  /// Called when the locale is changed.
+  final Function(Locale locale)? onLocaleChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +71,9 @@ class SystemSection extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => Theme(
                     data: theme,
-                    child: const LocalePicker(),
+                    child: LocalePicker(
+                      onLocaleChanged: onLocaleChanged,
+                    ),
                   ),
                 ),
               );
