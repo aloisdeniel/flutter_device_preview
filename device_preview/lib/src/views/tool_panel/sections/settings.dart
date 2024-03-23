@@ -53,7 +53,7 @@ class SettingsSection extends StatelessWidget {
                 shape: BoxShape.circle,
                 color: background.scaffoldBackgroundColor,
                 border: Border.all(
-                  color: toolbar.backgroundColor,
+                  color: toolbar.scaffoldBackgroundColor,
                   width: 1,
                 ),
               ),
@@ -84,7 +84,7 @@ class SettingsSection extends StatelessWidget {
                 shape: BoxShape.circle,
                 color: toolbar.scaffoldBackgroundColor,
                 border: Border.all(
-                  color: toolbar.backgroundColor,
+                  color: toolbar.scaffoldBackgroundColor,
                   width: 1,
                 ),
               ),
