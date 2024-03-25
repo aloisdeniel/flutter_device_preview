@@ -43,6 +43,12 @@ class DeviceFrame extends StatelessWidget {
   /// only the screen is displayed.
   final bool isFrameVisible;
 
+  /// Indicated whether the screen should be clipped to
+  /// match the device frame.
+  ///
+  /// Mostly only useful if [isFrameVisible] is also false.
+  final bool clipScreen;
+
   /// Displays the given [screen] into the given [info]
   /// simulated device.
   ///
@@ -57,6 +63,7 @@ class DeviceFrame extends StatelessWidget {
     required this.screen,
     this.orientation = Orientation.portrait,
     this.isFrameVisible = true,
+    this.clipScreen = true,
   }) : super(key: key);
 
   /// Creates a [MediaQuery] from the given device [info], and for the current device [orientation].
@@ -150,9 +157,9 @@ class DeviceFrame extends StatelessWidget {
             width: bounds.width,
             height: bounds.height,
             child: ClipPath(
-              clipper: _ScreenClipper(
+              clipper: clipScreen ? _ScreenClipper(
                 device.screenPath,
-              ),
+              ) : null,
               child: FittedBox(
                 child: _screen(context, device),
               ),
