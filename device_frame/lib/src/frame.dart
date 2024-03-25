@@ -43,7 +43,7 @@ class DeviceFrame extends StatelessWidget {
   /// only the screen is displayed.
   final bool isFrameVisible;
 
-  /// Indicated whether the screen should be clipped to
+  /// Indicates whether the screen should be clipped to
   /// match the device frame.
   ///
   /// Mostly only useful if [isFrameVisible] is also false.
