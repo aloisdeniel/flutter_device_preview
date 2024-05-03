@@ -8,7 +8,7 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  device_frame: ^1.0.0-alpha.1
+  device_frame: ^1.1.0
   flutter:
     sdk: flutter
 
