@@ -1,11 +1,7 @@
 import 'package:device_preview/device_preview.dart';
-import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/views/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-
-import 'section.dart';
 
 /// All the settings for customizing the preview.
 class SettingsSection extends StatelessWidget {
@@ -42,9 +38,7 @@ class SettingsSection extends StatelessWidget {
             key: const Key('background-theme'),
             title: const Text('Background color'),
             subtitle: Text(
-              backgroundTheme == DevicePreviewBackgroundThemeData.dark
-                  ? 'Dark'
-                  : 'Light',
+              backgroundTheme == DevicePreviewBackgroundThemeData.dark ? 'Dark' : 'Light',
             ),
             trailing: Container(
               width: 24,
@@ -53,7 +47,7 @@ class SettingsSection extends StatelessWidget {
                 shape: BoxShape.circle,
                 color: background.scaffoldBackgroundColor,
                 border: Border.all(
-                  color: toolbar.backgroundColor,
+                  color: toolbar.appBarTheme.backgroundColor!,
                   width: 1,
                 ),
               ),
@@ -61,10 +55,9 @@ class SettingsSection extends StatelessWidget {
             onTap: () {
               final state = context.read<DevicePreviewStore>();
               state.settings = state.settings.copyWith(
-                backgroundTheme:
-                    backgroundTheme == DevicePreviewBackgroundThemeData.dark
-                        ? DevicePreviewBackgroundThemeData.light
-                        : DevicePreviewBackgroundThemeData.dark,
+                backgroundTheme: backgroundTheme == DevicePreviewBackgroundThemeData.dark
+                    ? DevicePreviewBackgroundThemeData.light
+                    : DevicePreviewBackgroundThemeData.dark,
               );
             },
           ),
@@ -73,9 +66,7 @@ class SettingsSection extends StatelessWidget {
             key: const Key('toolbar-theme'),
             title: const Text('Tools theme'),
             subtitle: Text(
-              toolbarTheme == DevicePreviewToolBarThemeData.dark
-                  ? 'Dark'
-                  : 'Light',
+              toolbarTheme == DevicePreviewToolBarThemeData.dark ? 'Dark' : 'Light',
             ),
             trailing: Container(
               width: 24,
@@ -84,7 +75,7 @@ class SettingsSection extends StatelessWidget {
                 shape: BoxShape.circle,
                 color: toolbar.scaffoldBackgroundColor,
                 border: Border.all(
-                  color: toolbar.backgroundColor,
+                  color: toolbar.colorScheme.surface,
                   width: 1,
                 ),
               ),

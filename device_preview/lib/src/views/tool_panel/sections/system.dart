@@ -1,7 +1,6 @@
 import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/views/tool_panel/sections/subsections/locale.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import 'section.dart';
@@ -15,6 +14,8 @@ class SystemSection extends StatelessWidget {
     Key? key,
     this.locale = true,
     this.theme = true,
+    this.onThemeChanged,
+    this.onLocaleChanged,
   }) : super(key: key);
 
   /// Allow to select the current device locale.
@@ -22,6 +23,12 @@ class SystemSection extends StatelessWidget {
 
   /// Allow to override the current system theme (dark/light)
   final bool theme;
+
+  /// Called when the theme is changed.
+  final Function(bool isDarkMode)? onThemeChanged;
+
+  /// Called when the locale is changed.
+  final Function(Locale locale)? onLocaleChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +57,9 @@ class SystemSection extends StatelessWidget {
             key: const Key('locale'),
             title: const Text('Locale'),
             subtitle: Text(selectedLocale.name),
-            trailing: Row(
+            trailing: const Row(
               mainAxisSize: MainAxisSize.min,
-              children: const [
+              children: [
                 Icon(Icons.language),
                 Icon(Icons.chevron_right_rounded),
               ],
@@ -64,7 +71,9 @@ class SystemSection extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => Theme(
                     data: theme,
-                    child: const LocalePicker(),
+                    child: LocalePicker(
+                      onLocaleChanged: onLocaleChanged,
+                    ),
                   ),
                 ),
               );
@@ -81,6 +90,7 @@ class SystemSection extends StatelessWidget {
             onTap: () {
               final state = context.read<DevicePreviewStore>();
               state.toggleDarkMode();
+              onThemeChanged?.call(state.data.isDarkMode);
             },
           ),
       ],

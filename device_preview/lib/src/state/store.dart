@@ -1,15 +1,10 @@
 import 'dart:async';
-import 'dart:ui';
 
-import 'package:device_frame/device_frame.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../device_preview.dart';
-import '../storage/storage.dart';
-import 'custom_device.dart';
-import 'state.dart';
 import '../../device_preview.dart' as device_preview;
+import '../../device_preview.dart';
+import 'custom_device.dart';
 
 /// The store is a container for the current [state] of the device preview.
 ///
@@ -69,11 +64,10 @@ class DevicePreviewStore extends ChangeNotifier {
         final availaiableLocales = locales != null
             ? locales
                 .map(
-                  (available) =>
-                      defaultAvailableLocales.cast<NamedLocale?>().firstWhere(
-                            (all) => all!.code == available.toString(),
-                            orElse: () => null,
-                          ),
+                  (available) => defaultAvailableLocales.cast<NamedLocale?>().firstWhere(
+                        (all) => all!.code == available.toString(),
+                        orElse: () => null,
+                      ),
                 )
                 .where((x) => x != null)
                 .toList()
@@ -159,8 +153,7 @@ extension DevicePreviewStateHelperExtensions on DevicePreviewStore {
   /// Access to device preview settings from state's data.
   ///
   /// Throws an exception if not initialized.
-  DevicePreviewSettingsData get settings =>
-      data.settings ?? const DevicePreviewSettingsData();
+  DevicePreviewSettingsData get settings => data.settings ?? const DevicePreviewSettingsData();
 
   set settings(DevicePreviewSettingsData value) {
     data = data.copyWith(settings: value);
@@ -175,9 +168,7 @@ extension DevicePreviewStateHelperExtensions on DevicePreviewStore {
     }
     return state.maybeMap(
       initialized: (state) => state.devices.firstWhere(
-        (x) =>
-            x.identifier.toString() ==
-            (data.deviceIdentifier ?? defaultDevice.identifier.toString()),
+        (x) => x.identifier.toString() == (data.deviceIdentifier ?? defaultDevice.identifier.toString()),
         orElse: () => state.devices.first,
       ),
       orElse: () => throw Exception('Not initialized'),
@@ -246,6 +237,5 @@ extension DevicePreviewStateHelperExtensions on DevicePreviewStore {
   }
 
   /// Updates the custom device configuration.
-  void updateCustomDevice(CustomDeviceInfoData data) =>
-      this.data = this.data.copyWith(customDevice: data);
+  void updateCustomDevice(CustomDeviceInfoData data) => this.data = this.data.copyWith(customDevice: data);
 }
