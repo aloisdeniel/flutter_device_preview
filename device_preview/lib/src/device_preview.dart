@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui' as ui;
 
 import 'package:device_frame/device_frame.dart';
 import 'package:device_preview/src/state/state.dart';
@@ -14,10 +15,8 @@ import 'package:device_preview/src/views/tool_panel/sections/system.dart';
 import 'package:device_preview/src/views/tool_panel/tool_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'dart:ui' as ui;
 
 import 'locales/default_locales.dart';
 import 'utilities/screenshot.dart';
@@ -338,8 +337,8 @@ class DevicePreview extends StatefulWidget {
 
     return mediaQuery.copyWith(
       platformBrightness: isDarkMode ? Brightness.dark : Brightness.light,
-      textScaleFactor: textScaleFactor,
       boldText: boldText,
+      textScaler: TextScaler.linear(textScaleFactor),
       disableAnimations: disableAnimations,
       accessibleNavigation: accessibleNavigation,
       invertColors: invertColors,
@@ -350,8 +349,7 @@ class DevicePreview extends StatefulWidget {
 class _DevicePreviewState extends State<DevicePreview> {
   bool _isToolPanelPopOverOpen = false;
 
-  late DevicePreviewStorage storage =
-      widget.storage ?? DevicePreviewStorage.preferences();
+  late DevicePreviewStorage storage = widget.storage ?? DevicePreviewStorage.preferences();
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -361,8 +359,7 @@ class _DevicePreviewState extends State<DevicePreview> {
 
   /// Takes a screenshot with the current configuration.
   Future<DeviceScreenshot> screenshot(DevicePreviewStore store) async {
-    final boundary =
-        _repaintKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+    final boundary = _repaintKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
     const format = ui.ImageByteFormat.png;
 
     final image = await boundary.toImage(
@@ -535,22 +532,14 @@ class _DevicePreviewState extends State<DevicePreview> {
 
                     final borderRadius = isToolbarVisible
                         ? BorderRadius.only(
-                            topRight: isSmall
-                                ? Radius.zero
-                                : const Radius.circular(16),
+                            topRight: isSmall ? Radius.zero : const Radius.circular(16),
                             bottomRight: const Radius.circular(16),
-                            bottomLeft: isSmall
-                                ? const Radius.circular(16)
-                                : Radius.zero,
+                            bottomLeft: isSmall ? const Radius.circular(16) : Radius.zero,
                           )
                         : BorderRadius.zero;
-                    final double rightPanelOffset = !isSmall
-                        ? (isEnabled
-                            ? ToolPanel.panelWidth - 10
-                            : (64 + mediaQuery.padding.right))
-                        : 0;
-                    final double bottomPanelOffset =
-                        isSmall ? mediaQuery.padding.bottom + 52 : 0;
+                    final double rightPanelOffset =
+                        !isSmall ? (isEnabled ? ToolPanel.panelWidth - 10 : (64 + mediaQuery.padding.right)) : 0;
+                    final double bottomPanelOffset = isSmall ? mediaQuery.padding.bottom + 52 : 0;
                     return Stack(
                       children: <Widget>[
                         if (isToolbarVisible && isSmall)
