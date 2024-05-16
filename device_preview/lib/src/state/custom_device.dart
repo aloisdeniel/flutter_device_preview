@@ -1,9 +1,5 @@
-import 'dart:ui';
-
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
-
-import 'state.dart';
 
 /// A device info that can be customized at runtime to update
 /// its current preview.
@@ -32,8 +28,7 @@ class CustomDeviceInfo implements DeviceInfo {
   final CustomDeviceInfoData data;
 
   @override
-  $DeviceInfoCopyWith<DeviceInfo> get copyWith =>
-      throw UnsupportedError('Read only');
+  $DeviceInfoCopyWith<DeviceInfo> get copyWith => throw UnsupportedError('Read only');
 
   @override
   final DeviceIdentifier identifier;
@@ -84,15 +79,10 @@ class CustomDeviceIdentifier implements DeviceIdentifier {
   DeviceType get type => data.type;
 
   @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is DeviceIdentifier &&
-            other.name == name &&
-            other.type == type &&
-            other.platform == platform);
+  bool operator ==(covariant DeviceIdentifier other) {
+    return identical(this, other) || (other.name == name && other.type == type && other.platform == platform);
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ name.hashCode ^ type.hashCode ^ platform.hashCode;
+  int get hashCode => runtimeType.hashCode ^ name.hashCode ^ type.hashCode ^ platform.hashCode;
 }

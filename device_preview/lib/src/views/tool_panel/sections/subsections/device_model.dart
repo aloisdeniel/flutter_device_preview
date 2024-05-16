@@ -1,10 +1,10 @@
+import 'package:collection/collection.dart';
 import 'package:device_frame/device_frame.dart';
 import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/views/tool_panel/widgets/device_type_icon.dart';
 import 'package:device_preview/src/views/tool_panel/widgets/target_platform_icon.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:collection/collection.dart';
 import 'package:provider/provider.dart';
 
 import '../section.dart';
@@ -22,8 +22,7 @@ class DeviceModelPicker extends StatefulWidget {
   State<DeviceModelPicker> createState() => _DeviceModelPickerState();
 }
 
-class _DeviceModelPickerState extends State<DeviceModelPicker>
-    with SingleTickerProviderStateMixin {
+class _DeviceModelPickerState extends State<DeviceModelPicker> with SingleTickerProviderStateMixin {
   late final TabController controller = TabController(
     vsync: this,
     length: _allPlatforms.length + 1,
@@ -74,7 +73,7 @@ class _DeviceModelPickerState extends State<DeviceModelPicker>
             const Tab(
               icon: Icon(Icons.tune),
               text: 'Custom',
-            )
+            ),
           ],
         ),
       ),
@@ -116,13 +115,10 @@ class _PlatformModelPicker extends StatelessWidget {
           .toList()
         ..sort((x, y) {
           final result = x.screenSize.width.compareTo(y.screenSize.width);
-          return result == 0
-              ? x.screenSize.height.compareTo(y.screenSize.height)
-              : result;
+          return result == 0 ? x.screenSize.height.compareTo(y.screenSize.height) : result;
         }),
     );
-    final byDeviceType =
-        groupBy<DeviceInfo, DeviceType>(devices, (d) => d.identifier.type);
+    final byDeviceType = groupBy<DeviceInfo, DeviceType>(devices, (d) => d.identifier.type);
     return ListView(
       children: [
         ...byDeviceType.entries
@@ -172,7 +168,7 @@ class _TypeSectionHeader extends StatelessWidget {
           }
         }()
             .toUpperCase(),
-        style: theme.textTheme.subtitle2?.copyWith(
+        style: theme.textTheme.titleSmall?.copyWith(
           color: theme.hintColor,
         ),
       ),
