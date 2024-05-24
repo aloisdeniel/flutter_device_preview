@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 /// An icon for a [TargetPlatform].
 class TargetPlatformIcon extends StatelessWidget {

@@ -3,7 +3,6 @@ import 'package:device_preview/src/views/tool_panel/sections/subsections/device_
 import 'package:device_preview/src/views/tool_panel/widgets/device_type_icon.dart';
 import 'package:device_preview/src/views/tool_panel/widgets/target_platform_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import 'section.dart';
