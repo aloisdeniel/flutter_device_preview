@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui' as ui;
 
 import 'package:device_frame/device_frame.dart';
 import 'package:device_preview/src/state/state.dart';
@@ -14,10 +15,8 @@ import 'package:device_preview/src/views/tool_panel/sections/system.dart';
 import 'package:device_preview/src/views/tool_panel/tool_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'dart:ui' as ui;
 
 import 'locales/default_locales.dart';
 import 'utilities/screenshot.dart';
@@ -571,7 +570,7 @@ class _DevicePreviewState extends State<DevicePreview> {
                         if (isToolbarVisible && !isSmall)
                           Positioned.fill(
                             key: const Key('Large'),
-                            child: DervicePreviewLargeLayout(
+                            child: DevicePreviewLargeLayout(
                               slivers: widget.tools,
                             ),
                           ),

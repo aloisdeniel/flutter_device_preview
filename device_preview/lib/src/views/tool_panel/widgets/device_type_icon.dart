@@ -1,6 +1,5 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 /// An icon for a [DeviceType].
 class DeviceTypeIcon extends StatelessWidget {

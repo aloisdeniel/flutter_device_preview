@@ -1,7 +1,6 @@
 import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/views/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 /// The panel which contains all the tools.
@@ -80,7 +79,7 @@ class _ToolPanel extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Device preview',
-          style: theme.textTheme.headline6?.copyWith(
+          style: theme.textTheme.titleLarge?.copyWith(
             fontSize: 14,
             fontWeight: FontWeight.bold,
             color: (theme.colorScheme.brightness == Brightness.dark
