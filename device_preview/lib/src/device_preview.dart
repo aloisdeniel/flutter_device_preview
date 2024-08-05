@@ -115,7 +115,7 @@ class DevicePreview extends StatefulWidget {
     SettingsSection(),
   ];
 
-  /// Additional bounding box surronding the application preview.
+  /// Additional bounding box surrounding the application preview.
   ///
   /// Default value:
   /// ```dart
