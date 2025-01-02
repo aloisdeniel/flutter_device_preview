@@ -28,7 +28,6 @@ extension ThemeToolbarExtension on DevicePreviewToolBarThemeData {
           primaryColor: accentColor,
           primaryColorDark: accentColor,
           indicatorColor: accentColor,
-          toggleableActiveColor: accentColor,
           highlightColor: accentColor.withOpacity(0.1),
           sliderTheme: base.sliderTheme.copyWith(
             thumbColor: accentColor,
@@ -51,7 +50,6 @@ extension ThemeToolbarExtension on DevicePreviewToolBarThemeData {
           primaryColor: accentColor,
           primaryColorDark: accentColor,
           indicatorColor: accentColor,
-          toggleableActiveColor: accentColor,
           highlightColor: accentColor,
           appBarTheme: base.appBarTheme.copyWith(
             color: barColor,

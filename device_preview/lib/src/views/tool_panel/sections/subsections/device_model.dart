@@ -172,7 +172,7 @@ class _TypeSectionHeader extends StatelessWidget {
           }
         }()
             .toUpperCase(),
-        style: theme.textTheme.subtitle2?.copyWith(
+        style: theme.textTheme.titleSmall?.copyWith(
           color: theme.hintColor,
         ),
       ),

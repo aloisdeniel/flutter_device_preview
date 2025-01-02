@@ -80,7 +80,7 @@ class _ToolPanel extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Device preview',
-          style: theme.textTheme.headline6?.copyWith(
+          style: theme.textTheme.titleLarge?.copyWith(
             fontSize: 14,
             fontWeight: FontWeight.bold,
             color: (theme.colorScheme.brightness == Brightness.dark
