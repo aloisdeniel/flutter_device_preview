@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui' as ui;
 
 import 'package:device_frame/device_frame.dart';
+import 'package:device_preview/src/model/tools_panel_model.dart';
 import 'package:device_preview/src/state/state.dart';
 import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/storage/storage.dart';
@@ -12,7 +13,6 @@ import 'package:device_preview/src/views/tool_panel/sections/accessibility.dart'
 import 'package:device_preview/src/views/tool_panel/sections/device.dart';
 import 'package:device_preview/src/views/tool_panel/sections/settings.dart';
 import 'package:device_preview/src/views/tool_panel/sections/system.dart';
-import 'package:device_preview/src/views/tool_panel/tool_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -49,18 +49,24 @@ import 'views/small.dart';
 class DevicePreview extends StatefulWidget {
   /// Create a new [DevicePreview].
   const DevicePreview({
-    Key? key,
+    super.key,
     required this.builder,
     this.devices,
     this.data,
     this.isToolbarVisible = true,
     this.availableLocales,
     this.defaultDevice,
+    @Deprecated(
+      'Use toolsLeft and toolsRight instead. '
+      'This variable will be removed in a future release. ',
+    )
     this.tools = defaultTools,
+    this.toolsPanelLeft,
+    this.toolsPanelRight,
     this.storage,
     this.enabled = true,
     this.backgroundColor,
-  }) : super(key: key);
+  });
 
   /// If not [enabled], the [child] is used directly.
   final bool enabled;
@@ -87,10 +93,21 @@ class DevicePreview extends StatefulWidget {
   /// The available devices used for previewing.
   final List<DeviceInfo>? devices;
 
-  /// The list of available tools.
-  ///
-  /// All the tools must be [Sliver]s and will be added to the menu.
+  @Deprecated(
+    'Use toolsPanelLeft and toolsPanelRight instead. '
+    'This variable will be removed in a future release.',
+  )
   final List<Widget> tools;
+
+  /// List of tools on the left side.
+  ///
+  /// All tools must be [Sliver]s and will be added to the left menu.
+  final ToolsPanelModel? toolsPanelLeft;
+
+  /// List of tools on the right side.
+  ///
+  /// All tools must be [Sliver]s and will be added to the right menu.
+  final ToolsPanelModel? toolsPanelRight;
 
   /// The available locales.
   final List<Locale>? availableLocales;
@@ -227,7 +244,7 @@ class DevicePreview extends StatefulWidget {
   }) {
     final store = Provider.of<DevicePreviewStore>(context);
     store.data = store.data.copyWith(
-      isToolbarVisible: true,
+      isToolbarVisibleRight: true,
       isEnabled: enablePreview,
     );
   }
@@ -242,7 +259,7 @@ class DevicePreview extends StatefulWidget {
   }) {
     final store = Provider.of<DevicePreviewStore>(context);
     store.data = store.data.copyWith(
-      isToolbarVisible: false,
+      isToolbarVisibleRight: false,
       isEnabled: !disablePreview,
     );
   }
@@ -349,6 +366,9 @@ class DevicePreview extends StatefulWidget {
 class _DevicePreviewState extends State<DevicePreview> {
   bool _isToolPanelPopOverOpen = false;
 
+  late ToolsPanelModel _toolsPanelLeft;
+  late ToolsPanelModel _toolsPanelRight;
+
   late DevicePreviewStorage storage =
       widget.storage ?? DevicePreviewStorage.preferences();
 
@@ -383,6 +403,10 @@ class _DevicePreviewState extends State<DevicePreview> {
   @override
   void initState() {
     _onScreenshot = StreamController<DeviceScreenshot>.broadcast();
+    _toolsPanelRight =
+        widget.toolsPanelRight ?? ToolsPanelModel(tools: widget.tools);
+    _toolsPanelLeft = widget.toolsPanelLeft ?? ToolsPanelModel(tools: []);
+
     super.initState();
   }
 
@@ -510,9 +534,13 @@ class _DevicePreviewState extends State<DevicePreview> {
           (DevicePreviewStore store) => store.settings.backgroundTheme,
         );
 
-        final isToolbarVisible = widget.isToolbarVisible &&
+        final isToolbarVisibleRight = widget.isToolbarVisible &&
             context.select(
-              (DevicePreviewStore store) => store.data.isToolbarVisible,
+              (DevicePreviewStore store) => store.data.isToolbarVisibleRight,
+            );
+        final isToolbarVisibleLeft = widget.isToolbarVisible &&
+            context.select(
+              (DevicePreviewStore store) => store.data.isToolbarVisibleLeft,
             );
 
         final toolbar = toolbarTheme.asThemeData();
@@ -532,62 +560,68 @@ class _DevicePreviewState extends State<DevicePreview> {
                     final mediaQuery = MediaQuery.of(context);
                     final isSmall = constraints.maxWidth < 700;
 
-                    final borderRadius = isToolbarVisible
-                        ? BorderRadius.only(
-                            topRight: isSmall
-                                ? Radius.zero
-                                : const Radius.circular(16),
-                            bottomRight: const Radius.circular(16),
-                            bottomLeft: isSmall
-                                ? const Radius.circular(16)
-                                : Radius.zero,
-                          )
-                        : BorderRadius.zero;
+                    final borderRadius = BorderRadius.zero;
                     final double rightPanelOffset = !isSmall
-                        ? (isEnabled
-                            ? ToolPanel.panelWidth - 10
+                        ? (isToolbarVisibleRight
+                            ? _toolsPanelRight.panelWidth - 10
+                            : (64 + mediaQuery.padding.right))
+                        : 0;
+                    final double leftPanelOffset = !isSmall
+                        ? (isToolbarVisibleLeft
+                            ? _toolsPanelLeft.panelWidth - 10
                             : (64 + mediaQuery.padding.right))
                         : 0;
                     final double bottomPanelOffset =
                         isSmall ? mediaQuery.padding.bottom + 52 : 0;
                     return Stack(
                       children: <Widget>[
-                        if (isToolbarVisible && isSmall)
+                        if (isSmall)
                           Positioned(
                             key: const Key('Small'),
                             bottom: 0,
                             right: 0,
                             left: 0,
                             child: DevicePreviewSmallLayout(
-                              slivers: widget.tools,
+                              toolsPanelRight: _toolsPanelRight,
+                              toolsPanelLeft: _toolsPanelLeft,
                               maxMenuHeight: constraints.maxHeight * 0.5,
                               scaffoldKey: scaffoldKey,
+                              isRight: true,
                               onMenuVisibleChanged: (isVisible) => setState(() {
                                 _isToolPanelPopOverOpen = isVisible;
                               }),
                             ),
                           ),
-                        if (isToolbarVisible && !isSmall)
+                        if (!isSmall && _toolsPanelLeft.tools.isNotEmpty)
                           Positioned.fill(
-                            key: const Key('Large'),
+                            key: const Key('Large-toolsPanelLeft'),
                             child: DevicePreviewLargeLayout(
-                              slivers: widget.tools,
+                              tools: _toolsPanelLeft,
+                              isRight: false,
+                            ),
+                          ),
+                        if (!isSmall && _toolsPanelRight.tools.isNotEmpty)
+                          Positioned.fill(
+                            key: const Key('Large-toolsPanelRight'),
+                            child: DevicePreviewLargeLayout(
+                              tools: _toolsPanelRight,
+                              isRight: true,
                             ),
                           ),
                         AnimatedPositioned(
                           key: const Key('preview'),
                           duration: const Duration(milliseconds: 200),
-                          left: 0,
-                          right: isToolbarVisible ? rightPanelOffset : 0,
+                          left: leftPanelOffset,
+                          right: rightPanelOffset,
                           top: 0,
-                          bottom: isToolbarVisible ? bottomPanelOffset : 0,
+                          bottom: bottomPanelOffset,
                           child: Theme(
                             data: background,
                             child: Container(
                               decoration: BoxDecoration(
                                 boxShadow: const [
                                   BoxShadow(
-                                    blurRadius: 20,
+                                    blurRadius: 10,
                                     color: Color(0xAA000000),
                                   ),
                                 ],

@@ -1,3 +1,4 @@
+import 'package:device_preview/src/model/tools_panel_model.dart';
 import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/views/theme.dart';
 import 'package:device_preview/src/views/tool_panel/tool_panel.dart';
@@ -7,17 +8,14 @@ import 'package:provider/provider.dart';
 
 /// The tool layout when the screen is large.
 class DevicePreviewLargeLayout extends StatefulWidget {
-  /// Create a new panel from the given tools grouped as [slivers].
   const DevicePreviewLargeLayout({
-    Key? key,
-    required this.slivers,
-  }) : super(key: key);
+    super.key,
+    required this.tools,
+    required this.isRight,
+  });
 
-  /// The sections containing the tools.
-  ///
-  /// They must be [Sliver]s.
-  final List<Widget> slivers;
-
+  final ToolsPanelModel tools;
+  final bool isRight;
   @override
   DevicePreviewLargeLayoutState createState() =>
       DevicePreviewLargeLayoutState();
@@ -42,7 +40,7 @@ class DevicePreviewLargeLayoutState extends State<DevicePreviewLargeLayout> {
     return Theme(
       data: toolbarTheme.asThemeData(),
       child: Directionality(
-        textDirection: TextDirection.ltr,
+        textDirection: TextDirection.rtl,
         child: Localizations(
           locale: const Locale('en', 'US'),
           delegates: const [
@@ -54,20 +52,22 @@ class DevicePreviewLargeLayoutState extends State<DevicePreviewLargeLayout> {
             children: [
               Positioned(
                 top: 0,
-                right: 0,
+                right: widget.isRight ? 0 : null,
+                left: !widget.isRight ? 0 : null,
                 bottom: 0,
-                width: ToolPanel.panelWidth,
+                width: widget.tools.panelWidth,
                 child: MediaQuery(
                   data: mediaQuery.copyWith(
                     padding: mediaQuery.padding.copyWith(left: 0) +
-                        const EdgeInsets.only(left: 40),
+                         EdgeInsets.only(left: widget.isRight ? 40 : 0),
                   ),
                   child: Navigator(
                     onGenerateInitialRoutes: (navigator, initialRoute) {
                       return [
                         MaterialPageRoute(
                           builder: (context) => ToolPanel(
-                            slivers: widget.slivers,
+                            slivers: widget.tools.tools,
+                            isRight: widget.isRight,
                           ),
                         ),
                       ];

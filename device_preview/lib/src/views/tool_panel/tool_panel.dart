@@ -10,22 +10,22 @@ class ToolPanel extends StatelessWidget {
   /// The [isModal] indicates whether the panel is shown modally as a new page, or if it
   /// stays visible on one side of the parent layout.
   const ToolPanel({
-    Key? key,
+    super.key,
     required this.slivers,
     this.isModal = false,
-  }) : super(key: key);
+    required this.isRight,
+  });
 
   /// Indicates whether the panel is shown modally as a new page, or if it
   /// stays visible on one side of the parent layout.
   final bool isModal;
 
+  final bool isRight;
+
   /// The sections containing the tools.
   ///
   /// They must be [Sliver]s.
   final List<Widget> slivers;
-
-  /// The panel width when not modal.
-  static const double panelWidth = 320;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +43,7 @@ class ToolPanel extends StatelessWidget {
                 child: _ToolPanel(
                   sections: slivers,
                   isModal: isModal,
+                  isRight: isRight,
                   onClose: () {
                     Navigator.maybePop(rootContext);
                   },
@@ -58,23 +59,30 @@ class ToolPanel extends StatelessWidget {
 
 class _ToolPanel extends StatelessWidget {
   const _ToolPanel({
-    Key? key,
     required this.isModal,
+    required this.isRight,
     required this.onClose,
     required this.sections,
-  }) : super(key: key);
+  });
 
   final bool isModal;
+  final bool isRight;
   final VoidCallback onClose;
   final List<Widget> sections;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isEnabled = context.select(
-      (DevicePreviewStore store) => store.data.isEnabled,
-    );
-
+    late bool isEnabled;
+    if (isRight) {
+      isEnabled = context.select(
+        (DevicePreviewStore store) => store.data.isToolbarVisibleRight,
+      );
+    } else {
+      isEnabled = context.select(
+        (DevicePreviewStore store) => store.data.isToolbarVisibleLeft,
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -87,20 +95,27 @@ class _ToolPanel extends StatelessWidget {
                 : theme.colorScheme.onPrimary),
           ),
         ),
-        leading: isModal
-            ? IconButton(
-                icon: const Icon(Icons.close),
-                tooltip: MaterialLocalizations.of(context).backButtonTooltip,
-                onPressed: onClose,
-              )
-            : null,
+        leading: _getLeading(
+          context: context,
+          isModal: isModal,
+          isRight: isRight,
+          onClose: onClose,
+        ),
         actions: [
-          if (!isModal)
+          if (!isModal && isRight)
             Switch(
               value: isEnabled,
               onChanged: (v) {
                 final state = context.read<DevicePreviewStore>();
-                state.data = state.data.copyWith(isEnabled: v);
+                if (isRight) {
+                  state.data = state.data.copyWith(
+                    isToolbarVisibleRight: v,
+                  );
+                } else {
+                  state.data = state.data.copyWith(
+                    isToolbarVisibleLeft: v,
+                  );
+                }
               },
             ),
         ],
@@ -110,18 +125,52 @@ class _ToolPanel extends StatelessWidget {
           CustomScrollView(
             slivers: sections,
           ),
-          IgnorePointer(
-            ignoring: isEnabled,
-            child: AnimatedOpacity(
-              opacity: isEnabled ? 0 : 1,
-              duration: const Duration(milliseconds: 200),
-              child: Container(
-                color: const Color(0xCC000000),
-              ),
-            ),
-          ),
         ],
       ),
     );
+  }
+
+  Widget _getLeading({
+    required BuildContext context,
+    required bool isModal,
+    required bool isRight,
+    required VoidCallback onClose,
+  }) {
+    late bool isEnabled;
+    if (isRight) {
+      isEnabled = context.select(
+        (DevicePreviewStore store) => store.data.isToolbarVisibleRight,
+      );
+    } else {
+      isEnabled = context.select(
+        (DevicePreviewStore store) => store.data.isToolbarVisibleLeft,
+      );
+    }
+
+    if (!isRight) {
+      return Switch(
+        value: isEnabled,
+        onChanged: (v) {
+          final state = context.read<DevicePreviewStore>();
+          if (isRight) {
+            state.data = state.data.copyWith(
+              isToolbarVisibleRight: v,
+            );
+          } else {
+            state.data = state.data.copyWith(
+              isToolbarVisibleLeft: v,
+            );
+          }
+        },
+      );
+    }
+    if (isModal) {
+      return IconButton(
+        icon: const Icon(Icons.close),
+        tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+        onPressed: onClose,
+      );
+    }
+    return const SizedBox.shrink();
   }
 }

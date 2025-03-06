@@ -1,3 +1,4 @@
+import 'package:device_preview/src/model/tools_panel_model.dart';
 import 'package:device_preview/src/state/store.dart';
 import 'package:device_preview/src/views/theme.dart';
 import 'package:flutter/material.dart';
@@ -7,17 +8,19 @@ import 'tool_panel/tool_panel.dart';
 
 /// The tool layout when the screen is small.
 class DevicePreviewSmallLayout extends StatelessWidget {
-  /// Create a new panel from the given tools grouped as [slivers].
   const DevicePreviewSmallLayout({
-    Key? key,
+    super.key,
     required this.maxMenuHeight,
     required this.scaffoldKey,
     required this.onMenuVisibleChanged,
-    required this.slivers,
-  }) : super(key: key);
+    required this.isRight,
+    required this.toolsPanelRight,
+    required this.toolsPanelLeft,
+  });
 
   /// The maximum modal menu height.
   final double maxMenuHeight;
+  final bool isRight;
 
   /// The key of the [Scaffold] that must be used to show the modal menu.
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -25,10 +28,8 @@ class DevicePreviewSmallLayout extends StatelessWidget {
   /// Invoked each time the menu is shown or hidden.
   final ValueChanged<bool> onMenuVisibleChanged;
 
-  /// The sections containing the tools.
-  ///
-  /// They must be [Sliver]s.
-  final List<Widget> slivers;
+  final ToolsPanelModel toolsPanelRight;
+  final ToolsPanelModel toolsPanelLeft;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,9 @@ class DevicePreviewSmallLayout extends StatelessWidget {
       child: SafeArea(
         top: false,
         child: _BottomToolbar(
-          showPanel: () async {
+          toolsPanelRight: toolsPanelRight,
+          toolsPanelLeft: toolsPanelLeft,
+          showPanel: (model) async {
             onMenuVisibleChanged(true);
             final sheet = scaffoldKey.currentState?.showBottomSheet(
               (context) => ClipRRect(
@@ -50,7 +53,8 @@ class DevicePreviewSmallLayout extends StatelessWidget {
                 ),
                 child: ToolPanel(
                   isModal: true,
-                  slivers: slivers,
+                  isRight: isRight,
+                  slivers: model.tools,
                 ),
               ),
               constraints: BoxConstraints(
@@ -69,12 +73,14 @@ class DevicePreviewSmallLayout extends StatelessWidget {
 
 class _BottomToolbar extends StatelessWidget {
   const _BottomToolbar({
-    Key? key,
     required this.showPanel,
-  }) : super(key: key);
+    required this.toolsPanelRight,
+    required this.toolsPanelLeft,
+  });
 
-  final VoidCallback showPanel;
-
+  final Function(ToolsPanelModel model) showPanel;
+  final ToolsPanelModel toolsPanelRight;
+  final ToolsPanelModel toolsPanelLeft;
   @override
   Widget build(BuildContext context) {
     final isEnabled = context.select(
@@ -82,15 +88,20 @@ class _BottomToolbar extends StatelessWidget {
     );
     return Material(
       child: ListTile(
-        title: const Text('Device Preview'),
-        onTap: isEnabled ? showPanel : null,
-        leading: const Icon(Icons.tune),
-        trailing: Switch(
-          value: isEnabled,
-          onChanged: (v) {
-            final state = context.read<DevicePreviewStore>();
-            state.data = state.data.copyWith(isEnabled: v);
-          },
+        leading: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (toolsPanelLeft.tools.isNotEmpty)
+              IconButton(
+                onPressed: isEnabled ? () => showPanel(toolsPanelLeft) : null,
+                icon: const Icon(Icons.tune),
+              ),
+            if (toolsPanelRight.tools.isNotEmpty)
+              IconButton(
+                onPressed: isEnabled ? () => showPanel(toolsPanelRight) : null,
+                icon: const Icon(Icons.tune),
+              ),
+          ],
         ),
       ),
     );
