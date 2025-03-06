@@ -611,8 +611,12 @@ class _DevicePreviewState extends State<DevicePreview> {
                         AnimatedPositioned(
                           key: const Key('preview'),
                           duration: const Duration(milliseconds: 200),
-                          left: leftPanelOffset,
-                          right: rightPanelOffset,
+                          left: _toolsPanelLeft.tools.isNotEmpty
+                              ? leftPanelOffset
+                              : 0,
+                          right: _toolsPanelRight.tools.isNotEmpty
+                              ? rightPanelOffset
+                              : 0,
                           top: 0,
                           bottom: bottomPanelOffset,
                           child: Theme(
