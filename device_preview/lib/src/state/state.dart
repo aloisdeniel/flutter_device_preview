@@ -40,7 +40,10 @@ class DevicePreviewData with _$DevicePreviewData {
   /// properties.
   const factory DevicePreviewData({
     /// Indicate whether the toolbar is visible.
-    @Default(true) bool isToolbarVisible,
+    @Default(true) bool isToolbarVisibleLeft,
+    
+    /// Indicate whether the toolbar is visible.
+    @Default(true) bool isToolbarVisibleRight,
 
     /// Indicate whether the device simulation is enabled.
     @Default(true) bool isEnabled,

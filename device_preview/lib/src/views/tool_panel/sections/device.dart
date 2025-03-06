@@ -14,12 +14,13 @@ class DeviceSection extends StatelessWidget {
   /// The items can be hidden with [model], [orientation], [frameVisibility],
   /// [virtualKeyboard] parameters.
   const DeviceSection({
-    Key? key,
+    super.key,
     this.model = true,
     this.orientation = true,
     this.frameVisibility = true,
     this.virtualKeyboard = true,
-  }) : super(key: key);
+    this.devicePreview = true,
+  });
 
   /// Allow to edit the current simulated model.
   final bool model;
@@ -32,6 +33,9 @@ class DeviceSection extends StatelessWidget {
 
   /// Allow to show or hide a software keyboard mockup.
   final bool virtualKeyboard;
+
+  /// Allow to show or hide the device preview.
+  final bool devicePreview;
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +62,31 @@ class DeviceSection extends StatelessWidget {
       (DevicePreviewStore store) => store.data.isFrameVisible,
     );
 
+    final isEnabled = context.select(
+      (DevicePreviewStore store) => store.data.isEnabled,
+    );
+
     return ToolPanelSection(
       title: 'Device',
       children: [
+        if (devicePreview)
+          ListTile(
+            key: const Key('devicePreview'),
+            title: const Text('Device preview'),
+            subtitle: Text(isEnabled ? 'Visible' : 'Hidden'),
+            trailing: Opacity(
+              opacity: isEnabled ? 1.0 : 0.3,
+              child: const Icon(
+                Icons.devices,
+              ),
+            ),
+            onTap: () {
+              final state = context.read<DevicePreviewStore>();
+              state.data = state.data.copyWith(
+                isEnabled: !isEnabled,
+              );
+            },
+          ),
         if (model)
           ListTile(
             key: const Key('model'),

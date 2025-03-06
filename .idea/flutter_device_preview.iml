@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/device_frame/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/device_frame/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/device_frame/build" />
+      <excludeFolder url="file://$MODULE_DIR$/device_frame/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/device_frame/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/device_frame/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/device_preview/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/device_preview/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/device_preview/build" />
+      <excludeFolder url="file://$MODULE_DIR$/device_preview/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/device_preview/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/device_preview/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/devtools_device_preview/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/devtools_device_preview/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/devtools_device_preview/build" />
+      <excludeFolder url="file://$MODULE_DIR$/devtools_device_preview/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/devtools_device_preview/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/devtools_device_preview/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/plugins/device_preview_screenshot/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/plugins/device_preview_screenshot/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/plugins/device_preview_screenshot/build" />
+      <excludeFolder url="file://$MODULE_DIR$/plugins/device_preview_screenshot/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/plugins/device_preview_screenshot/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/plugins/device_preview_screenshot/example/build" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>

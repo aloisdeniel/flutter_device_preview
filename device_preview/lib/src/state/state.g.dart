@@ -6,9 +6,11 @@ part of 'state.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_DevicePreviewData _$$_DevicePreviewDataFromJson(Map<String, dynamic> json) =>
-    _$_DevicePreviewData(
-      isToolbarVisible: json['isToolbarVisible'] as bool? ?? true,
+_$DevicePreviewDataImpl _$$DevicePreviewDataImplFromJson(
+        Map<String, dynamic> json) =>
+    _$DevicePreviewDataImpl(
+      isToolbarVisibleLeft: json['isToolbarVisibleLeft'] as bool? ?? true,
+      isToolbarVisibleRight: json['isToolbarVisibleRight'] as bool? ?? true,
       isEnabled: json['isEnabled'] as bool? ?? true,
       orientation:
           $enumDecodeNullable(_$OrientationEnumMap, json['orientation']) ??
@@ -39,12 +41,13 @@ _$_DevicePreviewData _$$_DevicePreviewDataFromJson(Map<String, dynamic> json) =>
               json['customDevice'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$_DevicePreviewDataToJson(
-        _$_DevicePreviewData instance) =>
+Map<String, dynamic> _$$DevicePreviewDataImplToJson(
+        _$DevicePreviewDataImpl instance) =>
     <String, dynamic>{
-      'isToolbarVisible': instance.isToolbarVisible,
+      'isToolbarVisibleLeft': instance.isToolbarVisibleLeft,
+      'isToolbarVisibleRight': instance.isToolbarVisibleRight,
       'isEnabled': instance.isEnabled,
-      'orientation': _$OrientationEnumMap[instance.orientation],
+      'orientation': _$OrientationEnumMap[instance.orientation]!,
       'deviceIdentifier': instance.deviceIdentifier,
       'locale': instance.locale,
       'isFrameVisible': instance.isFrameVisible,
@@ -66,9 +69,9 @@ const _$OrientationEnumMap = {
   Orientation.landscape: 'landscape',
 };
 
-_$_CustomDeviceInfoData _$$_CustomDeviceInfoDataFromJson(
+_$CustomDeviceInfoDataImpl _$$CustomDeviceInfoDataImplFromJson(
         Map<String, dynamic> json) =>
-    _$_CustomDeviceInfoData(
+    _$CustomDeviceInfoDataImpl(
       id: json['id'] as String,
       type: $enumDecode(_$DeviceTypeEnumMap, json['type']),
       platform: $enumDecode(_$TargetPlatformEnumMap, json['platform']),
@@ -82,12 +85,12 @@ _$_CustomDeviceInfoData _$$_CustomDeviceInfoDataFromJson(
       screenSize: const SizeJsonConverter().fromJson(json['screenSize']),
     );
 
-Map<String, dynamic> _$$_CustomDeviceInfoDataToJson(
-        _$_CustomDeviceInfoData instance) =>
+Map<String, dynamic> _$$CustomDeviceInfoDataImplToJson(
+        _$CustomDeviceInfoDataImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'type': _$DeviceTypeEnumMap[instance.type],
-      'platform': _$TargetPlatformEnumMap[instance.platform],
+      'type': _$DeviceTypeEnumMap[instance.type]!,
+      'platform': _$TargetPlatformEnumMap[instance.platform]!,
       'name': instance.name,
       'rotatedSafeAreas': const NullableEdgeInsetsJsonConverter()
           .toJson(instance.rotatedSafeAreas),
@@ -114,9 +117,9 @@ const _$TargetPlatformEnumMap = {
   TargetPlatform.windows: 'windows',
 };
 
-_$_DevicePreviewSettingsData _$$_DevicePreviewSettingsDataFromJson(
+_$DevicePreviewSettingsDataImpl _$$DevicePreviewSettingsDataImplFromJson(
         Map<String, dynamic> json) =>
-    _$_DevicePreviewSettingsData(
+    _$DevicePreviewSettingsDataImpl(
       toolbarPosition: $enumDecodeNullable(
               _$DevicePreviewToolBarPositionDataEnumMap,
               json['toolbarPosition']) ??
@@ -130,15 +133,15 @@ _$_DevicePreviewSettingsData _$$_DevicePreviewSettingsDataFromJson(
           DevicePreviewBackgroundThemeData.light,
     );
 
-Map<String, dynamic> _$$_DevicePreviewSettingsDataToJson(
-        _$_DevicePreviewSettingsData instance) =>
+Map<String, dynamic> _$$DevicePreviewSettingsDataImplToJson(
+        _$DevicePreviewSettingsDataImpl instance) =>
     <String, dynamic>{
       'toolbarPosition':
-          _$DevicePreviewToolBarPositionDataEnumMap[instance.toolbarPosition],
+          _$DevicePreviewToolBarPositionDataEnumMap[instance.toolbarPosition]!,
       'toolbarTheme':
-          _$DevicePreviewToolBarThemeDataEnumMap[instance.toolbarTheme],
+          _$DevicePreviewToolBarThemeDataEnumMap[instance.toolbarTheme]!,
       'backgroundTheme':
-          _$DevicePreviewBackgroundThemeDataEnumMap[instance.backgroundTheme],
+          _$DevicePreviewBackgroundThemeDataEnumMap[instance.backgroundTheme]!,
     };
 
 const _$DevicePreviewToolBarPositionDataEnumMap = {

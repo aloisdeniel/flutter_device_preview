@@ -19,3 +19,4 @@ export 'src/views/tool_panel/sections/device.dart';
 export 'src/views/tool_panel/sections/section.dart';
 export 'src/views/tool_panel/sections/settings.dart';
 export 'src/views/tool_panel/sections/system.dart';
+export 'src/model/tools_panel_model.dart';
