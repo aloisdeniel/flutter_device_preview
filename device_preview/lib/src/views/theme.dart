@@ -28,14 +28,14 @@ extension ThemeToolbarExtension on DevicePreviewToolBarThemeData {
           primaryColor: accentColor,
           primaryColorDark: accentColor,
           indicatorColor: accentColor,
-          highlightColor: accentColor.withOpacity(0.1),
+          highlightColor: accentColor.withAlpha((0.1 * 255).round()),
           sliderTheme: base.sliderTheme.copyWith(
             thumbColor: accentColor,
-            activeTrackColor: accentColor.withOpacity(0.7),
-            inactiveTrackColor: accentColor.withOpacity(0.12),
+            activeTrackColor: accentColor.withAlpha((0.7 * 255).round()),
+            inactiveTrackColor: accentColor.withAlpha((0.12 * 255).round()),
             activeTickMarkColor: accentColor,
             inactiveTickMarkColor: accentColor,
-            overlayColor: accentColor.withOpacity(0.12),
+            overlayColor: accentColor.withAlpha((0.12 * 255).round()),
           ),
         );
       case DevicePreviewToolBarThemeData.light:
@@ -56,11 +56,11 @@ extension ThemeToolbarExtension on DevicePreviewToolBarThemeData {
           ),
           sliderTheme: base.sliderTheme.copyWith(
             thumbColor: accentColor,
-            activeTrackColor: accentColor.withOpacity(0.7),
-            inactiveTrackColor: accentColor.withOpacity(0.12),
+            activeTrackColor: accentColor.withAlpha((0.7 * 255).round()),
+            inactiveTrackColor: accentColor.withAlpha((0.12 * 255).round()),
             activeTickMarkColor: accentColor,
             inactiveTickMarkColor: accentColor,
-            overlayColor: accentColor.withOpacity(0.12),
+            overlayColor: accentColor.withAlpha((0.12 * 255).round()),
           ),
         );
     }

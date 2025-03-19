@@ -219,10 +219,10 @@ class _FramePainter extends CustomPainter {
     paint_10_fill.shader = ui.Gradient.linear(
         Offset(size.width * 0.4285266, size.height * 0.9482793),
         Offset(size.width * 0.5712028, size.height * 0.9482793), [
-      const Color(0xff000000).withOpacity(0.5),
+      const Color(0xff000000).withAlpha((0.5 * 255).round()),
       const Color(0x00818487),
       const Color(0x00818487),
-      const Color(0xff000000).withOpacity(0.5)
+      const Color(0xff000000).withAlpha((0.5 * 255).round())
     ], [
       0,
       0.139373,
