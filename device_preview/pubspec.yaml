@@ -1,27 +1,27 @@
 name: device_preview
-version: 1.1.0
+version: 1.2.0
 description: Approximate how your Flutter app looks and performs on another device.
 homepage: https://github.com/aloisdeniel/flutter_device_preview
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
-
+  sdk: '>=3.3.0-0 <4.0.0'
+  flutter: ">=3.22.0"
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  provider: ^6.0.1
-  device_frame: ^1.1.0
-  freezed_annotation: ^2.0.3
-  json_annotation: ^4.4.0
-  shared_preferences: ^2.0.9
-  collection: ^1.15.0
+  provider: ^6.1.2
+  device_frame: ^1.2.0
+  freezed_annotation: ^2.4.1
+  json_annotation: ^4.9.0
+  shared_preferences: ^2.2.3
+  collection: ^1.18.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.1
-  build_runner: ^2.1.4
-  freezed: ^2.0.3
-  json_serializable: ^6.1.0
+  flutter_lints: ^4.0.0
+  build_runner: ^2.4.0
+ # freezed: ^2.5.3
+  json_serializable: ^6.8.0

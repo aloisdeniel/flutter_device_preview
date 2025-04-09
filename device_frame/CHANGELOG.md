@@ -1,3 +1,7 @@
+## 1.2.0
+
+* Updated dependencies to support Flutter 3.22.
+
 ## 1.1.0
 
 * Updated freezed dependency.

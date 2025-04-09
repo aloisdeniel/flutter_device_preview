@@ -1,10 +1,11 @@
 name: device_frame
 description: Mockups for common devices.
-version: 1.1.0
+version: 1.2.0
 homepage: https://github.com/aloisdeniel/flutter_device_preview/device_frame
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=3.4.0 <4.0.0'
+  flutter: '>=3.2.0'
 
 dependencies:
   freezed_annotation: ^2.0.3

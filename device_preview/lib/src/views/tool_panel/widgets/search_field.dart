@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 /// A search field for the tool menu.
 class ToolbarSearchField extends StatefulWidget {
@@ -25,10 +24,10 @@ class ToolbarSearchField extends StatefulWidget {
   final ValueChanged<String> onTextChanged;
 
   @override
-  _ToolbarSearchFieldState createState() => _ToolbarSearchFieldState();
+  ToolbarSearchFieldState createState() => ToolbarSearchFieldState();
 }
 
-class _ToolbarSearchFieldState extends State<ToolbarSearchField> {
+class ToolbarSearchFieldState extends State<ToolbarSearchField> {
   late final TextEditingController _controller = TextEditingController(
     text: widget.text,
   );
@@ -80,8 +79,8 @@ class _ToolbarSearchFieldState extends State<ToolbarSearchField> {
             border: InputBorder.none,
             prefixIcon: const Icon(Icons.search),
             suffix: InkWell(
-              child: const Icon(Icons.close),
               onTap: _clear,
+              child: const Icon(Icons.close),
             ),
           ),
         ),
