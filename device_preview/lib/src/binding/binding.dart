@@ -1,7 +1,5 @@
-import 'dart:ui' as ui;
-
-import 'package:device_frame/device_frame.dart';
-import 'package:device_preview/src/helpers/transforms.dart';
+import 'package:device_preview/src/binding/service_extension.dart';
+import 'package:device_preview/src/configuration/configuration.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
@@ -10,9 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import 'flutter_view.dart';
-import 'padding.dart';
 import 'render_view.dart';
-import 'window.dart';
 
 /// A concrete binding for applications based on the Widgets framework.
 ///
@@ -35,19 +31,35 @@ class PreviewWidgetsFlutterBinding extends BindingBase
   @override
   void initServiceExtensions() {
     super.initServiceExtensions();
-
     if (!kReleaseMode) {
-      registerBoolServiceExtension(
-        name: 'isDevicePreviewEnabled',
-        getter: () async => device != null,
-        setter: (bool value) async {
-          if (value && device == null) {
-            device = Devices.all.first;
-          } else if (!value && device != null) {
-            device = null;
-          }
+      registerPreviewServiceExtension(
+        setter: (value) async {
+          previewConfiguration = value;
         },
       );
+    }
+  }
+
+  /// The current preview configuration.
+  PreviewConfiguration? get previewConfiguration => renderViews
+      .whereType<PreviewRenderView>()
+      .firstOrNull
+      ?.previewView
+      .previewConfiguration;
+
+  /// Updates the current preview configuration.
+  set previewConfiguration(PreviewConfiguration? value) {
+    _updatePreviewConfiguration(value);
+    if (!kReleaseMode) {
+      sendStateToPreviewServiceExtension(
+        getter: () => Future.value(previewConfiguration),
+      );
+    }
+  }
+
+  _updatePreviewConfiguration(PreviewConfiguration? value) {
+    for (var view in renderViews.whereType<PreviewRenderView>()) {
+      view.previewView.previewConfiguration = value;
     }
   }
 
@@ -74,6 +86,7 @@ class PreviewWidgetsFlutterBinding extends BindingBase
   void addRenderView(RenderView view) {
     super.addRenderView(
       PreviewRenderView(
+        parent: view,
         view: PreviewFlutterView(
           parent: view.flutterView,
         ),

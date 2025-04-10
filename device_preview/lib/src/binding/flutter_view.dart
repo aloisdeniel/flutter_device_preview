@@ -61,7 +61,7 @@ class PreviewFlutterView implements FlutterView {
 
   @override
   void render(Scene scene) {
-    // TODO: implement render
+    parent.render(scene);
   }
 
   @override

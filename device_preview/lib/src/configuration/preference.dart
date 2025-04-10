@@ -4,6 +4,13 @@ abstract class PreviewPreference<T> {
   const factory PreviewPreference.system() = _System<T>;
   const factory PreviewPreference.overriden(T value) = _Overriden<T>;
 
+  factory PreviewPreference.fromNullable(T? value) {
+    if (value == null) {
+      return const PreviewPreference.system();
+    }
+    return PreviewPreference.overriden(value);
+  }
+
   K map<K>({
     required K Function() system,
     required K Function(T value) value,
