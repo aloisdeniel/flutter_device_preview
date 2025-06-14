@@ -1,8 +1,10 @@
 import 'dart:async';
+
 import 'package:flutter/widgets.dart';
+
+import '../../device_preview.dart' as device_preview;
 import '../../device_preview.dart';
 import 'custom_device.dart';
-import '../../device_preview.dart' as device_preview;
 
 /// The store is a container for the current [state] of the device preview.
 ///
@@ -14,6 +16,8 @@ class DevicePreviewStore extends ChangeNotifier {
     List<Locale>? locales,
     List<DeviceInfo>? devices,
     required this.storage,
+    this.onThemeChanged,
+    this.initialDarkMode,
   }) {
     initialize(
       locales: locales,
@@ -22,6 +26,12 @@ class DevicePreviewStore extends ChangeNotifier {
   }
 
   final DeviceInfo defaultDevice;
+
+  /// Callback that is triggered when theme changes
+  final void Function(bool isDark)? onThemeChanged;
+
+  /// Initial dark mode setting when store initializes (true for dark, false for light)
+  final bool? initialDarkMode;
 
   DevicePreviewState _state = const DevicePreviewState.notInitialized();
 
@@ -98,6 +108,13 @@ class DevicePreviewStore extends ChangeNotifier {
             customDevice: _defaultCustomDevice,
           );
         }
+
+        if (initialDarkMode != null) {
+          data = data.copyWith(
+            isDarkMode: initialDarkMode!,
+          );
+        }
+
         state = DevicePreviewState.initialized(
           locales: availaiableLocales.cast<NamedLocale>(),
           devices: devices!,
@@ -216,6 +233,7 @@ extension DevicePreviewStateHelperExtensions on DevicePreviewStore {
     data = data.copyWith(
       isDarkMode: !data.isDarkMode,
     );
+    onThemeChanged?.call(data.isDarkMode);
   }
 
   /// Change the simulated device orientation between portrait and landscape.

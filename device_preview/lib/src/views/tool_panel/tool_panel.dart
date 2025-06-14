@@ -1,19 +1,41 @@
-import 'package:device_preview/src/state/store.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:device_preview/src/views/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'widgets/tool_panel_widget.dart';
+
 /// The panel which contains all the tools.
+///
+/// This is the main entry point for the tool panel that can be displayed
+/// either modally or as a persistent sidebar. It provides device preview
+/// tools and settings through a customizable interface.
 class ToolPanel extends StatelessWidget {
   /// Create a new panel from the given tools grouped as [slivers].
   ///
-  /// The [isModal] indicates whether the panel is shown modally as a new page, or if it
-  /// stays visible on one side of the parent layout.
+  /// The [isModal] indicates whether the panel is shown modally as a new page
+  /// or stays visible on one side of the parent layout.
+  ///
+  /// Example:
+  /// ```dart
+  /// ToolPanel(
+  ///   slivers: [
+  ///     DeviceSection(),
+  ///     SystemSection(),
+  ///   ],
+  ///   isModal: false,
+  ///   enableQuickDevicesTools: true,
+  /// )
+  /// ```
   const ToolPanel({
-    Key? key,
+    super.key,
     required this.slivers,
     this.isModal = false,
-  }) : super(key: key);
+    this.quickDevices = const [],
+    this.enableQuickDevicesTools = false,
+    this.showDeviceToast = false,
+    this.showThemeToggle = true,
+  });
 
   /// Indicates whether the panel is shown modally as a new page, or if it
   /// stays visible on one side of the parent layout.
@@ -21,10 +43,38 @@ class ToolPanel extends StatelessWidget {
 
   /// The sections containing the tools.
   ///
-  /// They must be [Sliver]s.
+  /// They must be [Sliver]s and will be displayed in the tool panel
+  /// when device preview is enabled.
   final List<Widget> slivers;
 
+  /// The list of devices available for quick selection.
+  ///
+  /// When [enableQuickDevicesTools] is true, these devices will be
+  /// displayed as quick selection options.
+  final List<DeviceInfo> quickDevices;
+
+  /// Enables quick device selection tools.
+  ///
+  /// When enabled, users can quickly switch between devices using
+  /// a compact interface without opening the full device selector.
+  final bool enableQuickDevicesTools;
+
+  /// Shows a toast message when a device is selected instead of tooltip.
+  ///
+  /// When enabled, device selection will show a toast message with device
+  /// information instead of displaying tooltip on hover.
+  final bool showDeviceToast;
+
+  /// Shows a theme toggle button in the toolbar.
+  ///
+  /// When enabled, displays a theme toggle icon for quick switching
+  /// between dark and light themes.
+  final bool showThemeToggle;
+
   /// The panel width when not modal.
+  ///
+  /// This constant defines the standard width for the tool panel
+  /// when displayed as a sidebar.
   static const double panelWidth = 320;
 
   @override
@@ -40,9 +90,13 @@ class ToolPanel extends StatelessWidget {
               );
               return Theme(
                 data: toolbarTheme.asThemeData(),
-                child: _ToolPanel(
+                child: ToolPanelWidget(
                   sections: slivers,
                   isModal: isModal,
+                  quickDevices: quickDevices,
+                  enableQuickDevicesTools: enableQuickDevicesTools,
+                  showDeviceToast: showDeviceToast,
+                  showThemeToggle: showThemeToggle,
                   onClose: () {
                     Navigator.maybePop(rootContext);
                   },
@@ -52,76 +106,6 @@ class ToolPanel extends StatelessWidget {
           ),
         ];
       },
-    );
-  }
-}
-
-class _ToolPanel extends StatelessWidget {
-  const _ToolPanel({
-    Key? key,
-    required this.isModal,
-    required this.onClose,
-    required this.sections,
-  }) : super(key: key);
-
-  final bool isModal;
-  final VoidCallback onClose;
-  final List<Widget> sections;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isEnabled = context.select(
-      (DevicePreviewStore store) => store.data.isEnabled,
-    );
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Device preview',
-          style: theme.textTheme.titleLarge?.copyWith(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-            color: (theme.colorScheme.brightness == Brightness.dark
-                ? theme.colorScheme.onSurface
-                : theme.colorScheme.onPrimary),
-          ),
-        ),
-        leading: isModal
-            ? IconButton(
-                icon: const Icon(Icons.close),
-                tooltip: MaterialLocalizations.of(context).backButtonTooltip,
-                onPressed: onClose,
-              )
-            : null,
-        actions: [
-          if (!isModal)
-            Switch(
-              value: isEnabled,
-              onChanged: (v) {
-                final state = context.read<DevicePreviewStore>();
-                state.data = state.data.copyWith(isEnabled: v);
-              },
-            ),
-        ],
-      ),
-      body: Stack(
-        children: [
-          CustomScrollView(
-            slivers: sections,
-          ),
-          IgnorePointer(
-            ignoring: isEnabled,
-            child: AnimatedOpacity(
-              opacity: isEnabled ? 0 : 1,
-              duration: const Duration(milliseconds: 200),
-              child: Container(
-                color: const Color(0xCC000000),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

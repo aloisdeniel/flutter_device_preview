@@ -9,9 +9,14 @@ void main() {
   runApp(
     DevicePreview(
       enabled: true,
+      enableQuickDevicesTools: true,
       tools: const [
         ...DevicePreview.defaultTools,
         CustomPlugin(),
+      ],
+      quickDevices: [
+        Devices.ios.iPhone13ProMax,
+        Devices.ios.iPadPro11Inches,
       ],
       builder: (context) => const BasicApp(),
     ),
