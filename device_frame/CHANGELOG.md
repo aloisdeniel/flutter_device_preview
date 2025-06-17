@@ -1,3 +1,9 @@
+## 1.3.0
+
+* Added more devices: 
+    * **iOS**: iPhone 11 Pro Max, iPhone 15 Pro, iPhone 15 Pro Max, iPhone 16, iPhone 16 Plus, iPhone 16 Pro, iPhone 16 Pro Max, iPad Pro 11" (M4), iPad Pro 13" (M4)
+    * **Android**: Google Pixel 9, Google Pixel 9 Pro XL, Samsung Galaxy S25
+
 ## 1.2.0
 
 * Updated dependencies to support Flutter 3.22.
