@@ -1,4 +1,4 @@
-import 'package:device_preview/src/state/store.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:device_preview/src/views/theme.dart';
 import 'package:device_preview/src/views/tool_panel/tool_panel.dart';
 import 'package:flutter/material.dart';
@@ -9,14 +9,29 @@ import 'package:provider/provider.dart';
 class DevicePreviewLargeLayout extends StatefulWidget {
   /// Create a new panel from the given tools grouped as [slivers].
   const DevicePreviewLargeLayout({
-    Key? key,
+    super.key,
+    this.quickDevices = const [],
     required this.slivers,
-  }) : super(key: key);
+    this.enableQuickDevicesTools = false,
+    this.showDeviceToast = false,
+    this.showThemeToggle = true,
+  });
 
   /// The sections containing the tools.
   ///
   /// They must be [Sliver]s.
   final List<Widget> slivers;
+
+  final List<DeviceInfo> quickDevices;
+
+  /// Enables quick device selection tools.
+  final bool enableQuickDevicesTools;
+
+  /// Shows a toast message when a device is selected instead of tooltip.
+  final bool showDeviceToast;
+
+  /// Shows a theme toggle button in the toolbar.
+  final bool showThemeToggle;
 
   @override
   DevicePreviewLargeLayoutState createState() =>
@@ -68,6 +83,11 @@ class DevicePreviewLargeLayoutState extends State<DevicePreviewLargeLayout> {
                         MaterialPageRoute(
                           builder: (context) => ToolPanel(
                             slivers: widget.slivers,
+                            quickDevices: widget.quickDevices,
+                            enableQuickDevicesTools:
+                                widget.enableQuickDevicesTools,
+                            showDeviceToast: widget.showDeviceToast,
+                            showThemeToggle: widget.showThemeToggle,
                           ),
                         ),
                       ];
