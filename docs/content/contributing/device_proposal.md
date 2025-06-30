@@ -4,7 +4,7 @@
 
 All devices must be added as dedicated frames in the [offical Figma file](https://www.figma.com/file/WIamxcVDlHvxcCjLvJnwmR/DevicePreview---Frames?node-id=0%3A1).
 
-Each device frame mush have a `Screen` node which must contains a flatten shape, and a `Body` group which contains the device body elements.
+Each device frame must have a `Screen` node which must contains a flatten shape, and a `Body` group which contains the device body elements.
 
 ## Generate painter code
 
