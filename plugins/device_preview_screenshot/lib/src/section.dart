@@ -1,6 +1,6 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 import 'processors/base64.dart';
 import 'processors/processor.dart';
@@ -95,7 +95,7 @@ class _DevicePreviewScreenshotState extends State<DevicePreviewScreenshot> {
                     });
                     try {
                       final initialDevice =
-                          DevicePreview.selectedDevice(context);
+                          context.read<DevicePreviewStore>().deviceInfo;
                       for (var device
                           in DevicePreview.availableDeviceIdentifiers(
                               context)) {
