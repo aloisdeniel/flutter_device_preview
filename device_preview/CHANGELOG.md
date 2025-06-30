@@ -1,3 +1,7 @@
+## 1.3.0
+
+* Updated dependencies and adding support for Flutter 3.32.
+
 ## 1.2.0
 
 * Updated dependencies and adding support for Flutter 3.2.
