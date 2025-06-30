@@ -11,10 +11,10 @@ class SystemSection extends StatelessWidget {
   ///
   /// The items can be hidden with [locale], [theme] parameters.
   const SystemSection({
-    Key? key,
+    super.key,
     this.locale = true,
     this.theme = true,
-  }) : super(key: key);
+  });
 
   /// Allow to select the current device locale.
   final bool locale;

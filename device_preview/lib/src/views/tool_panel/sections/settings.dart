@@ -3,17 +3,16 @@ import 'package:device_preview/src/views/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 /// All the settings for customizing the preview.
 class SettingsSection extends StatelessWidget {
   /// Create a new menu section with settings for customizing the preview.
   ///
   /// The items can be hidden with [backgroundTheme], [toolsTheme] parameters.
   const SettingsSection({
-    Key? key,
+    super.key,
     this.backgroundTheme = true,
     this.toolsTheme = true,
-  }) : super(key: key);
+  });
 
   /// Allow to edit the current background theme.
   final bool backgroundTheme;

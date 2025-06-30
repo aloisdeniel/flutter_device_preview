@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 class ToolPanelSection extends StatelessWidget {
   /// Create a new panel section with the given [title] and [children].
   const ToolPanelSection({
-    Key? key,
+    super.key,
     required this.title,
     required this.children,
-  }) : super(key: key);
+  });
 
   /// The section header content.
   final String title;

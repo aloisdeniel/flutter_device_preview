@@ -8,8 +8,8 @@ import 'package:provider/provider.dart';
 class LocalePicker extends StatefulWidget {
   /// Create a new page for picking a simulated locale.
   const LocalePicker({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   LocalePickerState createState() => LocalePickerState();

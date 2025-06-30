@@ -37,7 +37,14 @@ class Home extends StatelessWidget {
             100,
             (i) => ListTile(
               title: Text('Tile $i'),
-              onTap: () {},
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Text('Dialog $i');
+                  },
+                );
+              },
             ),
           )
         ],

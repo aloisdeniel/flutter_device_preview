@@ -9,12 +9,12 @@ import 'tool_panel/tool_panel.dart';
 class DevicePreviewSmallLayout extends StatelessWidget {
   /// Create a new panel from the given tools grouped as [slivers].
   const DevicePreviewSmallLayout({
-    Key? key,
+    super.key,
     required this.maxMenuHeight,
     required this.scaffoldKey,
     required this.onMenuVisibleChanged,
     required this.slivers,
-  }) : super(key: key);
+  });
 
   /// The maximum modal menu height.
   final double maxMenuHeight;
@@ -69,9 +69,8 @@ class DevicePreviewSmallLayout extends StatelessWidget {
 
 class _BottomToolbar extends StatelessWidget {
   const _BottomToolbar({
-    Key? key,
     required this.showPanel,
-  }) : super(key: key);
+  });
 
   final VoidCallback showPanel;
 

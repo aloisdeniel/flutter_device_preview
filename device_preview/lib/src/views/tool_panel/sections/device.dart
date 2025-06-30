@@ -14,12 +14,12 @@ class DeviceSection extends StatelessWidget {
   /// The items can be hidden with [model], [orientation], [frameVisibility],
   /// [virtualKeyboard] parameters.
   const DeviceSection({
-    Key? key,
+    super.key,
     this.model = true,
     this.orientation = true,
     this.frameVisibility = true,
     this.virtualKeyboard = true,
-  }) : super(key: key);
+  });
 
   /// Allow to edit the current simulated model.
   final bool model;
