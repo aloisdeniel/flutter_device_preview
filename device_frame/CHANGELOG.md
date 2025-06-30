@@ -1,3 +1,7 @@
+## 1.4.0
+
+* Updated min sdk version and upgraded dependencies.
+
 ## 1.3.0
 
 * Added more devices: 
