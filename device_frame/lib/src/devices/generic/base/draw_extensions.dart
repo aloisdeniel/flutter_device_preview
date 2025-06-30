@@ -171,8 +171,8 @@ extension GenericDeviceFramePainterExtensions on Canvas {
           Offset(0, bounds.height),
           bounds.width,
           [
-            const Color(0xff1491F8).withOpacity(1),
-            const Color(0xff0043D8).withOpacity(1)
+            const Color(0xff1491F8),
+            const Color(0xff0043D8),
           ],
           [
             0,
