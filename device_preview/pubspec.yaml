@@ -16,7 +16,7 @@ dependencies:
   device_frame: ^1.4.0
   freezed_annotation: ^3.0.0
   json_annotation: ^4.9.0
-  shared_preferences: ^2.2.3
+  shared_preferences: ^2.2.4
   collection: ^1.18.0
 
 dev_dependencies:
