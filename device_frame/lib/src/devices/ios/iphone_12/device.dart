@@ -15,7 +15,7 @@ final info = DeviceInfo(
   name: 'iPhone 12',
   pixelRatio: 2.0,
   frameSize: const Size(873.0, 1771.0),
-  screenSize: const Size(1024.0, 1366.0),
+  screenSize: const Size(390.0, 844.0),
   safeAreas: const EdgeInsets.only(
     left: 0.0,
     top: 24.0,
