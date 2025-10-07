@@ -9,11 +9,8 @@ class ToolPanel extends StatelessWidget {
   ///
   /// The [isModal] indicates whether the panel is shown modally as a new page, or if it
   /// stays visible on one side of the parent layout.
-  const ToolPanel({
-    Key? key,
-    required this.slivers,
-    this.isModal = false,
-  }) : super(key: key);
+  const ToolPanel({Key? key, required this.slivers, this.isModal = false})
+    : super(key: key);
 
   /// Indicates whether the panel is shown modally as a new page, or if it
   /// stays visible on one side of the parent layout.
@@ -30,28 +27,32 @@ class ToolPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rootContext = context;
-    return Navigator(
-      onGenerateInitialRoutes: (nav, name) {
-        return [
-          MaterialPageRoute(
-            builder: (context) {
-              final toolbarTheme = context.select(
-                (DevicePreviewStore store) => store.settings.toolbarTheme,
-              );
-              return Theme(
-                data: toolbarTheme.asThemeData(),
-                child: _ToolPanel(
-                  sections: slivers,
-                  isModal: isModal,
-                  onClose: () {
-                    Navigator.maybePop(rootContext);
-                  },
-                ),
-              );
-            },
-          ),
-        ];
-      },
+    return FocusScope(
+      canRequestFocus: false,
+      child: Navigator(
+        requestFocus: false,
+        onGenerateInitialRoutes: (nav, name) {
+          return [
+            MaterialPageRoute(
+              builder: (context) {
+                final toolbarTheme = context.select(
+                  (DevicePreviewStore store) => store.settings.toolbarTheme,
+                );
+                return Theme(
+                  data: toolbarTheme.asThemeData(),
+                  child: _ToolPanel(
+                    sections: slivers,
+                    isModal: isModal,
+                    onClose: () {
+                      Navigator.maybePop(rootContext);
+                    },
+                  ),
+                );
+              },
+            ),
+          ];
+        },
+      ),
     );
   }
 }
@@ -107,17 +108,13 @@ class _ToolPanel extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          CustomScrollView(
-            slivers: sections,
-          ),
+          CustomScrollView(slivers: sections),
           IgnorePointer(
             ignoring: isEnabled,
             child: AnimatedOpacity(
               opacity: isEnabled ? 0 : 1,
               duration: const Duration(milliseconds: 200),
-              child: Container(
-                color: const Color(0xCC000000),
-              ),
+              child: Container(color: const Color(0xCC000000)),
             ),
           ),
         ],
