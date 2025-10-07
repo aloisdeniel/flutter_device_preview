@@ -8,10 +8,7 @@ import 'package:provider/provider.dart';
 /// The tool layout when the screen is large.
 class DevicePreviewLargeLayout extends StatefulWidget {
   /// Create a new panel from the given tools grouped as [slivers].
-  const DevicePreviewLargeLayout({
-    super.key,
-    required this.slivers,
-  });
+  const DevicePreviewLargeLayout({super.key, required this.slivers});
 
   /// The sections containing the tools.
   ///
@@ -59,19 +56,23 @@ class DevicePreviewLargeLayoutState extends State<DevicePreviewLargeLayout> {
                 width: ToolPanel.panelWidth,
                 child: MediaQuery(
                   data: mediaQuery.copyWith(
-                    padding: mediaQuery.padding.copyWith(left: 0) +
+                    padding:
+                        mediaQuery.padding.copyWith(left: 0) +
                         const EdgeInsets.only(left: 40),
                   ),
-                  child: Navigator(
-                    onGenerateInitialRoutes: (navigator, initialRoute) {
-                      return [
-                        MaterialPageRoute(
-                          builder: (context) => ToolPanel(
-                            slivers: widget.slivers,
+                  child: FocusScope(
+                    canRequestFocus: false,
+                    child: Navigator(
+                      requestFocus: false,
+                      onGenerateInitialRoutes: (navigator, initialRoute) {
+                        return [
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ToolPanel(slivers: widget.slivers),
                           ),
-                        ),
-                      ];
-                    },
+                        ];
+                      },
+                    ),
                   ),
                 ),
               ),

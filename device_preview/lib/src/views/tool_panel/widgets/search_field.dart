@@ -69,6 +69,7 @@ class ToolbarSearchFieldState extends State<ToolbarSearchField> {
         color: theme.scaffoldBackgroundColor,
         child: TextField(
           autofocus: false,
+          canRequestFocus: false,
           controller: _controller,
           decoration: InputDecoration(
             hintText: widget.hintText,

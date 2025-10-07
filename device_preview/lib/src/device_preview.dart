@@ -54,6 +54,7 @@ class DevicePreview extends StatefulWidget {
     this.devices,
     this.data,
     this.isToolbarVisible = true,
+    this.overlayNavigatorRequestsFocus = false,
     this.availableLocales,
     this.defaultDevice,
     this.tools = defaultTools,
@@ -68,6 +69,11 @@ class DevicePreview extends StatefulWidget {
 
   /// Indicates whether the tool bar should be visible or not.
   final bool isToolbarVisible;
+
+  /// Controls whether the internal overlay navigator should request focus.
+  ///
+  /// Defaults to false so the previewed app keeps the primary focus.
+  final bool overlayNavigatorRequestsFocus;
 
   /// The configuration. If not precised, it is loaded from preferences.
   final DevicePreviewData? data;
@@ -619,9 +625,11 @@ class _DevicePreviewState extends State<DevicePreview> {
                                 GlobalWidgetsLocalizations.delegate,
                               ],
                               child: FocusScope(
-                                canRequestFocus: false,
+                                canRequestFocus:
+                                    widget.overlayNavigatorRequestsFocus,
                                 child: Navigator(
-                                  requestFocus: false,
+                                  requestFocus:
+                                      widget.overlayNavigatorRequestsFocus,
                                   onGenerateInitialRoutes: (navigator, name) {
                                     return [
                                       MaterialPageRoute(

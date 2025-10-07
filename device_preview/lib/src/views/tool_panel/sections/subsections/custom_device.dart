@@ -26,6 +26,7 @@ Future<dynamic> _openDeviceSizeAdjustDialog({
           key: formKey,
           child: TextFormField(
             autofocus: false,
+            canRequestFocus: false,
             onSaved: (String? value) => navigator.pop(double.tryParse(value!)),
             keyboardType: TextInputType.number,
             validator: (value) {
