@@ -2,44 +2,37 @@ import 'dart:async';
 import 'dart:ui' as ui;
 
 import 'package:device_frame/device_frame.dart';
-import 'package:device_preview/src/state/state.dart';
-import 'package:device_preview/src/state/store.dart';
-import 'package:device_preview/src/storage/storage.dart';
-import 'package:device_preview/src/utilities/assert_inherited_media_query.dart';
-import 'package:device_preview/src/utilities/media_query_observer.dart';
-import 'package:device_preview/src/views/theme.dart';
-import 'package:device_preview/src/views/tool_panel/sections/accessibility.dart';
-import 'package:device_preview/src/views/tool_panel/sections/device.dart';
-import 'package:device_preview/src/views/tool_panel/sections/settings.dart';
-import 'package:device_preview/src/views/tool_panel/sections/system.dart';
-import 'package:device_preview/src/views/tool_panel/tool_panel.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'locales/default_locales.dart';
-import 'utilities/screenshot.dart';
-import 'views/large.dart';
-import 'views/small.dart';
+import '../device_preview.dart';
+import 'locales/default.dart';
+import 'state/state.dart';
+import 'state/store.dart';
+import 'storage/preferences.dart';
+import 'storage/storage.dart';
+import 'views/device_preview_large_layout.dart';
+import 'views/device_preview_small_layout.dart';
+import 'views/media_query_observer.dart';
+import 'views/tool_panel/tool_panel.dart';
+import 'views/virtual_keyboard.dart';
 
 /// Simulates how the result of [builder] would render on different
 /// devices.
 ///
 /// {@tool snippet}
 ///
-/// This sample shows how to define an app with a plugin.
+/// This sample shows how to define a [DevicePreview] that will be enabled
+/// only in development mode, and will persist user's preferences.
 ///
 /// ```dart
 /// DevicePreview(
-///   builder: (context) => MaterialApp(
-///      useInheritedMediaQuery: true,
-///      locale: DevicePreview.locale(context),
-///      builder: DevicePreview.appBuilder,
-///      theme: ThemeData.light(),
-///      darkTheme: ThemeData.dark(),
-///      home: const Home(),
-///    ),
+///   enabled: !kReleaseMode,
+///   builder: (context) => MyApp(),
 /// )
 /// ```
 /// {@end-tool}
@@ -47,22 +40,6 @@ import 'views/small.dart';
 /// See also :
 /// * [Devices] has a set of predefined common devices.
 class DevicePreview extends StatefulWidget {
-  /// Create a new [DevicePreview].
-  const DevicePreview({
-    Key? key,
-    required this.builder,
-    this.devices,
-    this.data,
-    this.isToolbarVisible = true,
-    this.availableLocales,
-    this.defaultDevice,
-    this.tools = defaultTools,
-    this.storage,
-    this.enabled = true,
-    this.backgroundColor,
-    this.padding,
-  }) : super(key: key);
-
   /// If not [enabled], the [child] is used directly.
   final bool enabled;
 
@@ -70,75 +47,55 @@ class DevicePreview extends StatefulWidget {
   final bool isToolbarVisible;
 
   /// The configuration. If not precised, it is loaded from preferences.
-  final DevicePreviewData? data;
+  final DevicePreviewStorage? storage;
 
   /// The previewed widget.
   ///
   /// It is common to give the root application widget.
   final WidgetBuilder builder;
 
-  /// The background color of the canvas
-  ///
-  /// Overrides `theme.canvasColor`
-  final Color? backgroundColor;
+  /// The available devices used for previewing.
+  final List<DeviceInfo> devices;
 
   /// The default selected device when opening device preview for the first time.
   final DeviceInfo? defaultDevice;
 
-  /// The available devices used for previewing.
-  final List<DeviceInfo>? devices;
+  /// The available locales.
+  final List<NamedLocale> availableLocales;
 
-  /// The list of available tools.
-  ///
-  /// All the tools must be [Sliver]s and will be added to the menu.
+  /// The background color.
+  final Color? backgroundColor;
+
+  /// The padding around the device frame.
+  final EdgeInsets? padding;
+
+  /// The tools that should be displayed in the toolbar.
   final List<Widget> tools;
 
-  /// The available locales.
-  final List<Locale>? availableLocales;
+  /// Create a new [DevicePreview].
+  const DevicePreview({
+    Key? key,
+    required this.builder,
+    this.devices = Devices.all,
+    this.defaultDevice,
+    this.availableLocales = defaultAvailableLocales,
+    this.backgroundColor,
+    this.padding,
+    this.tools = defaultTools,
+    this.storage,
+    this.enabled = true,
+    this.isToolbarVisible = true,
+  }) : super(key: key);
 
-  /// The storage used to persist preferences.
-  ///
-  /// By default, it saves preferences to the local device preferences.
-  ///
-  /// To disable settings persistence use `DevicePreviewStorage.none()`.
-  final DevicePreviewStorage? storage;
-
-  /// All the default available devices.
-  static final List<DeviceInfo> defaultDevices = Devices.all;
-
-  /// All the default tools included in the menu : [DeviceSection], [SystemSection],
-  /// [AccessibilitySection] and [SettingsSection].
-  static const List<Widget> defaultTools = <Widget>[
-    DeviceSection(),
-    SystemSection(),
-    AccessibilitySection(),
-    SettingsSection(),
-  ];
-
-  /// Additional bounding box surrounding the application preview.
-  ///
-  /// Default value:
-  /// ```dart
-  /// EdgeInsets.only(
-  ///   top: 20 + mediaQuery.viewPadding.top,
-  ///   right: 20 + mediaQuery.viewPadding.right,
-  ///   left: 20 + mediaQuery.viewPadding.left,
-  ///   bottom: 20,
-  /// )
-  /// ```
-  final EdgeInsetsGeometry? padding;
-
-  @override
-  _DevicePreviewState createState() => _DevicePreviewState();
-
-  /// The currently selected device.
+  /// Currently selected device from the [context].
   static DeviceInfo selectedDevice(BuildContext context) {
-    return context.select(
+    final device = context.select(
       (DevicePreviewStore store) => store.deviceInfo,
     );
+    return device;
   }
 
-  /// The simulated target platform for the currently selected device.
+  /// Currently simulated platform from the [context].
   static TargetPlatform platform(BuildContext context) {
     final platform = context.select(
       (DevicePreviewStore store) => store.deviceInfo.identifier.platform,
@@ -239,7 +196,7 @@ class DevicePreview extends StatefulWidget {
     BuildContext context, {
     bool enablePreview = true,
   }) {
-    final store = Provider.of<DevicePreviewStore>(context);
+    final store = Provider.of<DevicePreviewStore>(context, listen: false);
     store.data = store.data.copyWith(
       isToolbarVisible: true,
       isEnabled: enablePreview,
@@ -254,7 +211,7 @@ class DevicePreview extends StatefulWidget {
     BuildContext context, {
     bool disablePreview = true,
   }) {
-    final store = Provider.of<DevicePreviewStore>(context);
+    final store = Provider.of<DevicePreviewStore>(context, listen: false);
     store.data = store.data.copyWith(
       isToolbarVisible: false,
       isEnabled: !disablePreview,
@@ -358,6 +315,18 @@ class DevicePreview extends StatefulWidget {
       invertColors: invertColors,
     );
   }
+
+  @override
+  State<DevicePreview> createState() => _DevicePreviewState();
+
+  static const List<Widget> defaultTools = [
+    DeviceSection(),
+    SettingsSection(),
+    SystemSection(),
+    AccessibilitySection(),
+    StringsSection(),
+    CustomSection(),
+  ];
 }
 
 class _DevicePreviewState extends State<DevicePreview> {
@@ -406,6 +375,12 @@ class _DevicePreviewState extends State<DevicePreview> {
     if (oldWidget.storage != widget.storage && widget.storage != null) {
       storage = widget.storage!;
     }
+  }
+
+  @override
+  void dispose() {
+    _onScreenshot?.close();
+    super.dispose();
   }
 
   Widget _buildPreview(BuildContext context) {
