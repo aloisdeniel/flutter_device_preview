@@ -239,7 +239,7 @@ class DevicePreview extends StatefulWidget {
     BuildContext context, {
     bool enablePreview = true,
   }) {
-    final store = Provider.of<DevicePreviewStore>(context);
+    final store = Provider.of<DevicePreviewStore>(context, listen: false);
     store.data = store.data.copyWith(
       isToolbarVisible: true,
       isEnabled: enablePreview,
@@ -254,7 +254,7 @@ class DevicePreview extends StatefulWidget {
     BuildContext context, {
     bool disablePreview = true,
   }) {
-    final store = Provider.of<DevicePreviewStore>(context);
+    final store = Provider.of<DevicePreviewStore>(context, listen: false);
     store.data = store.data.copyWith(
       isToolbarVisible: false,
       isEnabled: !disablePreview,
@@ -494,9 +494,10 @@ class _DevicePreviewState extends State<DevicePreview> {
     return ChangeNotifierProvider(
       create: (context) => DevicePreviewStore(
         defaultDevice: widget.defaultDevice ?? Devices.ios.iPhone13,
-        devices: widget.devices,
-        locales: widget.availableLocales,
+        devices: widget.devices ?? Devices.all,
+        locales: widget.availableLocales ?? defaultAvailableLocales,
         storage: storage,
+        data: widget.data,
       ),
       builder: (context, child) {
         final isInitialized = context.select(
