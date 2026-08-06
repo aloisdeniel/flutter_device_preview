@@ -1,45 +1,636 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <title>Device Preview for Flutter</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="Device Preview for Flutter">
-  <meta name="viewport"
-    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
-  <link rel="stylesheet" href="css/code.css" />
-  <link rel="stylesheet" href="css/main.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>device_preview — simulate any device from the binding up</title>
+<meta name="description" content="Device Preview 3 simulates device characteristics at the Flutter binding level — no widgets, no wrappers, no in-app UI. Controlled programmatically and from a DevTools extension.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='2' width='24' height='28' rx='4' fill='none' stroke='%234fd1ff' stroke-width='2'/%3E%3Cline x1='10' y1='16' x2='22' y2='16' stroke='%23ffb454' stroke-width='2'/%3E%3Cline x1='16' y1='10' x2='16' y2='22' stroke='%23ffb454' stroke-width='2'/%3E%3C/svg%3E">
+<style>
+:root {
+  --paper: #081527;
+  --paper-raised: #0c1e36;
+  --paper-sunken: #060f1d;
+  --line: #16324f;
+  --line-strong: #1f4166;
+  --ink: #dbe9f7;
+  --ink-dim: #7e9ab8;
+  --ink-faint: #47617f;
+  --cyan: #4fd1ff;
+  --cyan-dim: rgba(79, 209, 255, .32);
+  --amber: #ffb454;
+  --green: #7ee2a8;
+  --display: "Bricolage Grotesque", sans-serif;
+  --body: "IBM Plex Sans", sans-serif;
+  --mono: "IBM Plex Mono", monospace;
+  --grid-minor: rgba(79, 141, 255, .05);
+  --grid-major: rgba(79, 141, 255, .09);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background:
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(var(--grid-minor) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px),
+    var(--paper);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+::selection { background: var(--cyan); color: var(--paper); }
+a { color: var(--cyan); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+code, pre, .mono { font-family: var(--mono); }
+
+.sheet { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+/* ---------- annotations ---------- */
+.tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 12px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--cyan);
+}
+.tag::before { content: ""; width: 26px; height: 1px; background: var(--cyan); }
+.ref { color: var(--ink-faint); font-family: var(--mono); font-size: 11px; letter-spacing: .1em; }
+
+/* ---------- nav ---------- */
+header.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in srgb, var(--paper) 86%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner { display: flex; align-items: center; gap: 28px; height: 60px; }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--ink); font-family: var(--mono); font-size: 15px; }
+.brand:hover { text-decoration: none; }
+.brand svg { display: block; }
+.brand b { font-weight: 500; }
+.brand .v { color: var(--amber); font-size: 12px; border: 1px solid color-mix(in srgb, var(--amber) 45%, transparent); border-radius: 99px; padding: 1px 8px; margin-left: 2px; }
+nav.links { margin-left: auto; display: flex; gap: 22px; }
+nav.links a { color: var(--ink-dim); font-size: 13.5px; font-family: var(--mono); letter-spacing: .04em; }
+nav.links a:hover { color: var(--cyan); text-decoration: none; }
+@media (max-width: 760px) { nav.links a:not(.gh) { display: none; } }
+
+/* ---------- hero ---------- */
+.hero { position: relative; padding: 84px 0 72px; overflow: hidden; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 56px; align-items: center; }
+@media (max-width: 940px) { .hero-grid { grid-template-columns: 1fr; } }
+h1 {
+  font-family: var(--display);
+  font-size: clamp(44px, 6.2vw, 76px);
+  font-weight: 800;
+  line-height: .98;
+  letter-spacing: -.02em;
+  margin: 18px 0 22px;
+}
+h1 .accent { color: var(--cyan); }
+h1 .outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--amber);
+}
+.lede { color: var(--ink-dim); font-size: 18px; max-width: 46ch; }
+.lede strong { color: var(--ink); font-weight: 600; }
+.hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; align-items: center; }
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: 14px;
+  padding: 11px 20px; border-radius: 6px;
+  border: 1px solid var(--cyan);
+}
+.btn.primary { background: var(--cyan); color: #05263a; font-weight: 500; }
+.btn.primary:hover { background: #7fdfff; text-decoration: none; }
+.btn.ghost { color: var(--cyan); }
+.btn.ghost:hover { background: var(--cyan-dim); text-decoration: none; }
+.install {
+  display: inline-flex; align-items: center; gap: 14px;
+  margin-top: 18px;
+  font-family: var(--mono); font-size: 13.5px;
+  color: var(--ink-dim);
+  border: 1px dashed var(--line-strong);
+  border-radius: 6px;
+  padding: 9px 14px;
+  background: var(--paper-sunken);
+}
+.install .dollar { color: var(--amber); user-select: none; }
+.copy-btn {
+  background: none; border: none; cursor: pointer;
+  color: var(--ink-faint); font-family: var(--mono); font-size: 11px;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: 2px 4px;
+}
+.copy-btn:hover { color: var(--cyan); }
+
+/* ---------- schematic ---------- */
+.schematic { position: relative; }
+.schematic svg { width: 100%; height: auto; display: block; }
+.presets { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; justify-content: center; }
+.chip {
+  font-family: var(--mono); font-size: 12px;
+  color: var(--ink-dim);
+  background: none;
+  border: 1px solid var(--line-strong);
+  border-radius: 99px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all .18s ease;
+}
+.chip:hover { color: var(--cyan); border-color: var(--cyan); }
+.chip.active { color: #05263a; background: var(--cyan); border-color: var(--cyan); font-weight: 500; }
+.dim-label { font-family: var(--mono); font-size: 11px; fill: var(--cyan); }
+.dim-label.amber { fill: var(--amber); }
+.dim-label.faint { fill: var(--ink-faint); }
+.sch-line { stroke: var(--cyan-dim); stroke-width: 1; }
+.sch-line.solid { stroke: var(--cyan); }
+
+/* ---------- sections ---------- */
+section { padding: 78px 0; border-top: 1px solid var(--line); position: relative; }
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; margin-bottom: 44px; }
+h2 {
+  font-family: var(--display);
+  font-size: clamp(28px, 3.6vw, 42px);
+  font-weight: 700;
+  letter-spacing: -.01em;
+  margin-top: 10px;
+}
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* one line */
+.oneline { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+@media (max-width: 860px) { .oneline { grid-template-columns: 1fr; } }
+.oneline p { color: var(--ink-dim); margin-bottom: 16px; }
+.oneline p strong { color: var(--ink); }
+
+/* code blocks */
+.codeblock {
+  position: relative;
+  background: var(--paper-sunken);
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.codeblock .bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--mono); font-size: 11px;
+  color: var(--ink-faint); letter-spacing: .08em;
+}
+.codeblock pre { padding: 18px 20px; overflow-x: auto; font-size: 13.5px; line-height: 1.7; }
+.c-kw { color: #7fb5ff; }
+.c-ty { color: #8be9c3; }
+.c-str { color: var(--amber); }
+.c-cm { color: var(--ink-faint); font-style: italic; }
+.c-fn { color: var(--cyan); }
+.c-num { color: #ff9fb2; }
+
+/* seams */
+.seams { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; counter-reset: seam; }
+@media (max-width: 860px) { .seams { grid-template-columns: 1fr; } }
+.seam {
+  position: relative;
+  background: var(--paper-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  padding: 28px 24px 24px;
+  transition: transform .2s ease, border-color .2s ease;
+}
+.seam:hover { transform: translateY(-4px); border-color: var(--cyan); }
+.seam::before {
+  counter-increment: seam;
+  content: "0" counter(seam);
+  position: absolute; top: -14px; left: 18px;
+  font-family: var(--mono); font-size: 12px;
+  color: var(--amber);
+  background: var(--paper);
+  border: 1px solid color-mix(in srgb, var(--amber) 45%, transparent);
+  border-radius: 99px;
+  padding: 2px 10px;
+}
+.seam h3 { font-family: var(--display); font-weight: 700; font-size: 19px; margin-bottom: 10px; }
+.seam code.ref-code { font-size: 12px; color: var(--cyan); }
+.seam p { color: var(--ink-dim); font-size: 14.5px; margin-top: 8px; }
+
+/* spec table */
+.spec { border: 1px solid var(--line-strong); border-radius: 10px; overflow: hidden; }
+.spec-row {
+  display: grid; grid-template-columns: 250px minmax(0,1fr) 130px;
+  border-top: 1px solid var(--line);
+  transition: background .15s ease;
+}
+.spec-row:first-child { border-top: none; }
+.spec-row:hover { background: var(--paper-raised); }
+.spec-row > div { padding: 15px 20px; }
+.spec-row .k { font-family: var(--mono); font-size: 13.5px; color: var(--ink); }
+.spec-row .d { color: var(--ink-dim); font-size: 14px; }
+.spec-row .m { font-family: var(--mono); font-size: 11px; color: var(--green); text-align: right; letter-spacing: .06em; align-self: center; }
+.spec-row .m.amber { color: var(--amber); }
+@media (max-width: 760px) {
+  .spec-row { grid-template-columns: 1fr; }
+  .spec-row .m { text-align: left; padding-top: 0; }
+  .spec-row .d { padding-top: 0; padding-bottom: 0; }
+}
+
+/* devtools */
+.devtools-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px; align-items: center; }
+@media (max-width: 940px) { .devtools-grid { grid-template-columns: 1fr; } }
+.devtools-grid p { color: var(--ink-dim); margin-bottom: 14px; }
+.devtools-grid p strong { color: var(--ink); }
+.panel-mock {
+  background: var(--paper-sunken);
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  font-family: var(--mono); font-size: 12.5px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -30px rgba(0,0,0,.6);
+}
+.panel-mock .pm-bar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 16px; border-bottom: 1px solid var(--line);
+  color: var(--ink-dim);
+}
+.pm-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); }
+.pm-bar .pm-reset { margin-left: auto; color: var(--cyan); }
+.panel-mock .pm-body { padding: 6px 0 14px; }
+.pm-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 9px 16px; color: var(--ink-dim);
+}
+.pm-row .val { color: var(--ink); background: var(--paper-raised); border: 1px solid var(--line); border-radius: 5px; padding: 3px 10px; }
+.pm-row .val.on { color: var(--cyan); border-color: color-mix(in srgb, var(--cyan) 40%, transparent); }
+.pm-sec { padding: 12px 16px 4px; font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-faint); }
+.pm-slider { flex: 1; margin: 0 14px; height: 3px; background: var(--line-strong); border-radius: 2px; position: relative; }
+.pm-slider i { position: absolute; left: 62%; top: -4px; width: 11px; height: 11px; background: var(--cyan); border-radius: 50%; }
+
+/* testing strip */
+.duo { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 22px; }
+@media (max-width: 860px) { .duo { grid-template-columns: 1fr; } }
+
+/* footer title block */
+footer { border-top: 1px solid var(--line); margin-top: 40px; }
+.titleblock {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  border: 1px solid var(--line-strong);
+  border-bottom: none;
+  font-family: var(--mono); font-size: 12px;
+  margin-top: 72px;
+}
+.tb-cell { border-right: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong); padding: 12px 16px; }
+.tb-cell:nth-child(4n) { border-right: none; }
+.tb-cell .lbl { display: block; font-size: 9.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 3px; }
+.tb-cell .val { color: var(--ink); }
+.tb-cell .val a { color: var(--cyan); }
+@media (max-width: 760px) { .titleblock { grid-template-columns: repeat(2, 1fr); } .tb-cell:nth-child(2n) { border-right: none; } }
+.foot-note { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 22px 0 34px; color: var(--ink-faint); font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; }
+
+/* hero entrance */
+@media (prefers-reduced-motion: no-preference) {
+  .stagger > * { opacity: 0; transform: translateY(16px); animation: rise .7s cubic-bezier(.2,.7,.2,1) forwards; }
+  .stagger > *:nth-child(1) { animation-delay: .05s; }
+  .stagger > *:nth-child(2) { animation-delay: .15s; }
+  .stagger > *:nth-child(3) { animation-delay: .25s; }
+  .stagger > *:nth-child(4) { animation-delay: .35s; }
+  .stagger > *:nth-child(5) { animation-delay: .45s; }
+  .schematic { opacity: 0; animation: rise .8s cubic-bezier(.2,.7,.2,1) .3s forwards; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+  .pm-dot { animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 50% { box-shadow: 0 0 2px var(--green); opacity: .6; } }
+}
+</style>
 </head>
-
 <body>
-  <div id="app"></div>
-  <script src="//cdn.jsdelivr.net/npm/docsify-edit-on-github"></script>
-  <script>
-    window.$docsify = {
-      name: 'Device Preview',
-      formatUpdated: '{MM}/{DD} {HH}:{mm}',
-      coverpage: true,
-      themeColor: '#58B5F0',
-      repo: '',
-      loadSidebar: true,
-      subMaxLevel: 2,
-      basePath:
-        'https://raw.githubusercontent.com/aloisdeniel/flutter_device_preview/master/docs/',
-      plugins: [
-        EditOnGithubPlugin.create('https://github.com/aloisdeniel/flutter_device_preview/blob/master/docs/',
-          null,
-          function (file) {
-            return 'Edit the page';
-          }),
-      ]
-    }
-  </script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/TaQini/docsify-twemoji@master/twemoji.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
-  <script src="js/prism-dart.js"></script>
-</body>
 
+<header class="nav">
+  <div class="sheet nav-inner">
+    <a class="brand" href="#">
+      <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
+        <rect x="4" y="2" width="24" height="28" rx="4" stroke="var(--cyan)" stroke-width="2"/>
+        <line x1="10" y1="16" x2="22" y2="16" stroke="var(--amber)" stroke-width="2"/>
+        <line x1="16" y1="10" x2="16" y2="22" stroke="var(--amber)" stroke-width="2"/>
+      </svg>
+      <b>device_preview</b><span class="v">3.0</span>
+    </a>
+    <nav class="links">
+      <a href="#how">How it works</a>
+      <a href="#simulate">Simulation</a>
+      <a href="#devtools">DevTools</a>
+      <a href="#api">API</a>
+      <a class="gh" href="https://github.com/aloisdeniel/flutter_device_preview">GitHub ↗</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="sheet hero-grid">
+    <div class="stagger">
+      <span class="tag">Flutter · binding-level simulation</span>
+      <h1>Any device.<br><span class="accent">Zero</span> <span class="outline">widgets.</span></h1>
+      <p class="lede">Device Preview simulates screen metrics, safe areas, locale, brightness, text scale and accessibility <strong>at the binding level</strong> — your widget tree stays completely untouched. Drive it from a DevTools panel or three lines of Dart.</p>
+      <div class="hero-ctas">
+        <a class="btn primary" href="#api">Get started</a>
+        <a class="btn ghost" href="https://pub.dev/packages/device_preview">pub.dev ↗</a>
+      </div>
+      <div class="install">
+        <span><span class="dollar">$</span> flutter pub add device_preview</span>
+        <button class="copy-btn" data-copy="flutter pub add device_preview">copy</button>
+      </div>
+    </div>
+
+    <div class="schematic">
+      <svg viewBox="0 0 560 420" aria-label="Technical schematic of a simulated device letterboxed inside the real screen">
+        <!-- real screen -->
+        <rect x="40" y="30" width="480" height="330" rx="6" fill="var(--paper-sunken)" stroke="var(--line-strong)"/>
+        <text x="48" y="22" class="dim-label faint">REAL SURFACE — HOST WINDOW</text>
+        <!-- letterbox hatching -->
+        <defs>
+          <pattern id="hatch" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+            <line x1="0" y1="0" x2="0" y2="7" stroke="var(--line)" stroke-width="1"/>
+          </pattern>
+        </defs>
+        <rect id="lbL" x="41" y="31" width="120" height="328" fill="url(#hatch)"/>
+        <rect id="lbR" x="399" y="31" width="120" height="328" fill="url(#hatch)"/>
+        <!-- simulated device -->
+        <g id="dev">
+          <rect id="devRect" x="212" y="45" width="136" height="300" rx="10" fill="var(--paper)" stroke="var(--cyan)" stroke-width="1.5"/>
+          <rect id="safeTop" x="212" y="45" width="136" height="21" fill="var(--cyan-dim)" opacity=".55"/>
+          <rect id="safeBot" x="212" y="333" width="136" height="12" fill="var(--cyan-dim)" opacity=".55"/>
+          <!-- crosshair -->
+          <line id="chH" x1="266" y1="195" x2="294" y2="195" stroke="var(--amber)" stroke-width="1"/>
+          <line id="chV" x1="280" y1="181" x2="280" y2="209" stroke="var(--amber)" stroke-width="1"/>
+        </g>
+        <!-- width dimension -->
+        <g id="dimW">
+          <line id="dimWl" x1="212" y1="376" x2="348" y2="376" class="sch-line solid"/>
+          <line id="dimWt1" x1="212" y1="370" x2="212" y2="382" class="sch-line solid"/>
+          <line id="dimWt2" x1="348" y1="370" x2="348" y2="382" class="sch-line solid"/>
+          <text id="labelW" x="280" y="394" text-anchor="middle" class="dim-label">393 lp</text>
+        </g>
+        <!-- height dimension -->
+        <g id="dimH">
+          <line id="dimHl" x1="374" y1="45" x2="374" y2="345" class="sch-line solid"/>
+          <line id="dimHt1" x1="368" y1="45" x2="380" y2="45" class="sch-line solid"/>
+          <line id="dimHt2" x1="368" y1="345" x2="380" y2="345" class="sch-line solid"/>
+          <text id="labelH" x="384" y="200" class="dim-label">852 lp</text>
+        </g>
+        <!-- safe area callouts -->
+        <line id="calloutTopLine" x1="212" y1="56" x2="150" y2="56" class="sch-line" stroke-dasharray="3 3"/>
+        <text id="labelTop" x="145" y="60" text-anchor="end" class="dim-label amber">top 59</text>
+        <line id="calloutBotLine" x1="212" y1="339" x2="150" y2="339" class="sch-line" stroke-dasharray="3 3"/>
+        <text id="labelBot" x="145" y="343" text-anchor="end" class="dim-label amber">bottom 34</text>
+        <!-- dpr note -->
+        <text id="labelDpr" x="48" y="350" class="dim-label">@3.0x</text>
+        <text id="labelFit" x="512" y="350" text-anchor="end" class="dim-label faint">scale-to-fit · centered</text>
+      </svg>
+      <div class="presets" role="group" aria-label="Device presets">
+        <button class="chip active" data-w="393" data-h="852" data-dpr="3.0" data-top="59" data-bot="34">iPhone 16 Pro</button>
+        <button class="chip" data-w="375" data-h="667" data-dpr="2.0" data-top="20" data-bot="0">iPhone SE</button>
+        <button class="chip" data-w="412" data-h="923" data-dpr="2.625" data-top="24" data-bot="24">Pixel 9</button>
+        <button class="chip" data-w="1032" data-h="1376" data-dpr="2.0" data-top="24" data-bot="20">iPad Pro 13″</button>
+        <button class="chip" data-w="1920" data-h="1080" data-dpr="2.0" data-top="0" data-bot="0">Desktop</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="how">
+  <div class="sheet">
+    <div class="sec-head reveal">
+      <div>
+        <span class="tag">Architecture</span>
+        <h2>One line. Three seams.<br>No wrapper widget.</h2>
+      </div>
+      <span class="ref">FIG. 01 — INTERPOSITION</span>
+    </div>
+
+    <div class="oneline reveal">
+      <div>
+        <p><strong>Previous generations of device preview tooling wrapped your app in widgets</strong> — a simulated <code>MediaQuery</code> here, a themed control panel there. It worked, but your widget tree was never quite <em>your</em> widget tree.</p>
+        <p>Device Preview 3 moves the whole simulation below the widget layer. A custom <code>WidgetsBinding</code> hands the framework a wrapped <code>FlutterView</code> and <code>PlatformDispatcher</code>, so every <code>MediaQuery</code>, every layout pass, every pointer event and every locale lookup sees the simulated device — <strong>because the framework itself does</strong>.</p>
+        <p>When simulation is off (the release default), the binding returns the host objects directly. Zero interposition, zero cost, zero behavioral difference.</p>
+      </div>
+      <div class="codeblock">
+        <div class="bar"><span>main.dart</span><button class="copy-btn" data-copy="void main() {
+  DevicePreviewBinding.ensureInitialized();
+  runApp(const MyApp());
+}">copy</button></div>
+        <pre><span class="c-kw">void</span> <span class="c-fn">main</span>() {
+  <span class="c-ty">DevicePreviewBinding</span>.<span class="c-fn">ensureInitialized</span>();
+  <span class="c-fn">runApp</span>(<span class="c-kw">const</span> <span class="c-ty">MyApp</span>());  <span class="c-cm">// completely unmodified</span>
+}</pre>
+      </div>
+    </div>
+
+    <div class="seams" style="margin-top: 64px;">
+      <div class="seam reveal">
+        <h3>The dispatcher seam</h3>
+        <code class="ref-code">BindingBase.platformDispatcher</code>
+        <p>A wrapping <code>PlatformDispatcher</code> + <code>FlutterView</code> pair answers every framework read — size, pixel ratio, padding, locales, brightness, text scale — with the simulated value, and delegates everything with engine side effects to the host. Explicit member-by-member delegation, no <code>noSuchMethod</code>: if a future SDK adds a member, the package fails loudly at compile time instead of silently at runtime.</p>
+      </div>
+      <div class="seam reveal">
+        <h3>The fit matrix</h3>
+        <code class="ref-code">createViewConfigurationFor</code>
+        <p>The root render view lays out at the simulated logical size and paints through a scale-to-fit matrix — centered, letterboxed, never upscaled. Pointer events are rewritten through the exact inverse, so taps, drags and hover land where they should. Semantics geometry rides the same transform for free.</p>
+      </div>
+      <div class="seam reveal">
+        <h3>The service protocol</h3>
+        <code class="ref-code">ext.device_preview.*</code>
+        <p>A small, versioned VM-service protocol exposes state, presets and mutations, and posts events on every change. It's what the DevTools extension speaks — and it's plain JSON, so CI scripts and editor plugins can speak it too. Tree-shaken out of release builds entirely.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="simulate">
+  <div class="sheet">
+    <div class="sec-head reveal">
+      <div>
+        <span class="tag">Coverage</span>
+        <h2>What gets simulated</h2>
+      </div>
+      <span class="ref">TBL. 02 — CHARACTERISTICS</span>
+    </div>
+    <div class="spec reveal">
+      <div class="spec-row"><div class="k">screenSize · devicePixelRatio</div><div class="d">Logical resolution and DPR — the app renders scale-to-fit inside your real window, letterboxed and centered.</div><div class="m">METRICS</div></div>
+      <div class="spec-row"><div class="k">padding · viewPadding</div><div class="d">Per-device, per-orientation safe areas: notches, punch-holes, home indicators.</div><div class="m">METRICS</div></div>
+      <div class="spec-row"><div class="k">displayFeatures</div><div class="d">Folds and hinges, rotated correctly with orientation.</div><div class="m">METRICS</div></div>
+      <div class="spec-row"><div class="k">orientation</div><div class="d">Portrait ⇄ landscape with proper safe-area rotation, from presets or the documented rotation rule.</div><div class="m">METRICS</div></div>
+      <div class="spec-row"><div class="k">locales</div><div class="d">Full ordered locale list — <code>WidgetsApp</code> resolution and <code>Intl</code> follow along.</div><div class="m">SYSTEM</div></div>
+      <div class="spec-row"><div class="k">platformBrightness</div><div class="d">Light / dark, live — <code>ThemeMode.system</code> reacts instantly.</div><div class="m">SYSTEM</div></div>
+      <div class="spec-row"><div class="k">textScaleFactor</div><div class="d">Linear text scaling, atomically coherent with <code>scaleFontSize</code>.</div><div class="m">SYSTEM</div></div>
+      <div class="spec-row"><div class="k">accessibility</div><div class="d">Seven tri-state flags — bold text, reduce motion, high contrast, invert colors, disable animations, accessible navigation, on/off switch labels. <code>null</code> means "real device value".</div><div class="m">SYSTEM</div></div>
+      <div class="spec-row"><div class="k">alwaysUse24HourFormat</div><div class="d">Time-format previews for date &amp; time UI.</div><div class="m">SYSTEM</div></div>
+      <div class="spec-row"><div class="k">targetPlatform</div><div class="d">Material/Cupertino switching via <code>defaultTargetPlatform</code> — debug builds only, capability-flagged over the protocol.</div><div class="m amber">DEBUG</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="devtools">
+  <div class="sheet">
+    <div class="sec-head reveal">
+      <div>
+        <span class="tag">Control surface</span>
+        <h2>Your app has no UI for this.<br>DevTools does.</h2>
+      </div>
+      <span class="ref">FIG. 03 — EXTENSION</span>
+    </div>
+    <div class="devtools-grid">
+      <div class="reveal">
+        <p><strong>Nothing is drawn over your app.</strong> The control panel lives where developer tooling belongs — in Flutter DevTools, as a first-class extension that appears automatically for any app depending on <code>device_preview</code>.</p>
+        <p>Pick a preset, rotate it, drag the text scale, flip brightness, reorder locales, toggle accessibility flags — the running app updates live over the VM service. Change simulation from Dart code instead and the panel follows, echo-free, thanks to per-request IDs.</p>
+        <p><strong>Hot restart proof:</strong> the app forgets, the panel doesn't. With <em>Keep across restarts</em> enabled, the extension re-pushes your simulation the moment the app comes back.</p>
+      </div>
+      <div class="panel-mock reveal" aria-hidden="true">
+        <div class="pm-bar"><span class="pm-dot"></span> device_preview <span class="pm-reset">⟲ reset</span></div>
+        <div class="pm-body">
+          <div class="pm-sec">Device</div>
+          <div class="pm-row"><span>Preset</span><span class="val on">iPhone 16 Pro · 393×852 @3x</span></div>
+          <div class="pm-row"><span>Orientation</span><span class="val">portrait ▾</span></div>
+          <div class="pm-sec">Display</div>
+          <div class="pm-row"><span>Brightness</span><span class="val on">dark</span></div>
+          <div class="pm-row"><span>Text scale</span><span class="pm-slider"><i></i></span><span class="val">1.3</span></div>
+          <div class="pm-sec">System</div>
+          <div class="pm-row"><span>Locales</span><span class="val">fr-FR, en-US</span></div>
+          <div class="pm-row"><span>Bold text</span><span class="val on">on</span></div>
+          <div class="pm-row"><span>Platform</span><span class="val">iOS ▾</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="api">
+  <div class="sheet">
+    <div class="sec-head reveal">
+      <div>
+        <span class="tag">Programmatic</span>
+        <h2>Or drive it from Dart</h2>
+      </div>
+      <span class="ref">LST. 04 — CONTROLLER</span>
+    </div>
+    <div class="duo">
+      <div class="codeblock reveal">
+        <div class="bar"><span>anywhere.dart — the controller API</span></div>
+        <pre><span class="c-kw">final</span> c = <span class="c-ty">DevicePreviewBinding</span>.controller;
+
+<span class="c-cm">// full preset, orientation included</span>
+<span class="c-kw">await</span> c.<span class="c-fn">applyPreset</span>(<span class="c-ty">DevicePresets</span>.iPhone16Pro);
+<span class="c-kw">await</span> c.<span class="c-fn">setOrientation</span>(<span class="c-ty">Orientation</span>.landscape);
+
+<span class="c-cm">// partial overrides, merged over the real device</span>
+<span class="c-kw">await</span> c.<span class="c-fn">update</span>((s) =&gt; s.<span class="c-fn">copyWith</span>(
+  textScaleFactor: <span class="c-num">2.0</span>,
+  platformBrightness: <span class="c-ty">Brightness</span>.dark,
+));
+
+<span class="c-cm">// back to reality</span>
+<span class="c-kw">await</span> c.<span class="c-fn">reset</span>();</pre>
+      </div>
+      <div class="codeblock reveal">
+        <div class="bar"><span>widget_test.dart — simulated widget tests</span></div>
+        <pre><span class="c-kw">void</span> <span class="c-fn">main</span>() {
+  <span class="c-kw">final</span> binding =
+      <span class="c-ty">TestDevicePreviewBinding</span>.<span class="c-fn">ensureInitialized</span>();
+
+  <span class="c-fn">testWidgets</span>(<span class="c-str">'lays out like an iPhone SE'</span>, (tester) <span class="c-kw">async</span> {
+    <span class="c-kw">await</span> binding.devicePreview!
+        .<span class="c-fn">applyPreset</span>(<span class="c-ty">DevicePresets</span>.iPhoneSe3);
+    <span class="c-kw">await</span> tester.<span class="c-fn">pumpWidget</span>(<span class="c-kw">const</span> <span class="c-ty">MyApp</span>());
+    <span class="c-cm">// MediaQuery: 375×667 @2x, SE safe areas.</span>
+  });
+}</pre>
+      </div>
+    </div>
+    <p class="reveal" style="color: var(--ink-dim); margin-top: 26px; max-width: 70ch;">The same machinery is a public mixin — <code>DevicePreviewBindingMixin</code> — so it layers onto <code>flutter_test</code> and <code>integration_test</code> bindings. The test-binding recipe is ~30 lines, lives in your own <code>test/</code> folder, and keeps <code>flutter_test</code> out of your app's dependency graph. Golden tests across a device matrix, without a device in sight.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="sheet">
+    <div class="titleblock reveal">
+      <div class="tb-cell"><span class="lbl">Project</span><span class="val">device_preview</span></div>
+      <div class="tb-cell"><span class="lbl">Revision</span><span class="val">3.0 — binding rebuild</span></div>
+      <div class="tb-cell"><span class="lbl">Scale</span><span class="val">fit · never &gt; 1:1</span></div>
+      <div class="tb-cell"><span class="lbl">Sheet</span><span class="val">1 of 1</span></div>
+      <div class="tb-cell"><span class="lbl">Source</span><span class="val"><a href="https://github.com/aloisdeniel/flutter_device_preview">github.com/aloisdeniel</a></span></div>
+      <div class="tb-cell"><span class="lbl">Package</span><span class="val"><a href="https://pub.dev/packages/device_preview">pub.dev/device_preview</a></span></div>
+      <div class="tb-cell"><span class="lbl">License</span><span class="val">MIT</span></div>
+      <div class="tb-cell"><span class="lbl">Drafted by</span><span class="val">Aloïs Deniel</span></div>
+    </div>
+    <div class="foot-note">
+      <span>NO WIDGETS WERE WRAPPED IN THE MAKING OF THIS PACKAGE</span>
+      <span>© <span id="year">2026</span> — MIT</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// copy buttons
+document.querySelectorAll('.copy-btn').forEach((btn) => {
+  btn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(btn.dataset.copy);
+      const old = btn.textContent;
+      btn.textContent = 'copied';
+      setTimeout(() => (btn.textContent = old), 1400);
+    } catch (_) {}
+  });
+});
+
+// scroll reveals
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+// schematic preset switcher
+const stage = { x: 40, y: 30, w: 480, h: 330, pad: 15 };
+const $ = (id) => document.getElementById(id);
+function setDevice(w, h, dpr, top, bot) {
+  const scale = Math.min((stage.w - stage.pad * 2) / w, (stage.h - stage.pad * 2) / h);
+  const dw = w * scale, dh = h * scale;
+  const x = stage.x + (stage.w - dw) / 2, y = stage.y + (stage.h - dh) / 2;
+  const attrs = (el, m) => Object.entries(m).forEach(([k, v]) => el.setAttribute(k, v));
+  attrs($('devRect'), { x, y, width: dw, height: dh });
+  attrs($('safeTop'), { x, y, width: dw, height: Math.max(top * scale, 0) });
+  attrs($('safeBot'), { x, y: y + dh - bot * scale, width: dw, height: Math.max(bot * scale, 0) });
+  const cx = x + dw / 2, cy = y + dh / 2;
+  attrs($('chH'), { x1: cx - 14, x2: cx + 14, y1: cy, y2: cy });
+  attrs($('chV'), { x1: cx, x2: cx, y1: cy - 14, y2: cy + 14 });
+  attrs($('lbL'), { width: Math.max(x - stage.x - 1, 0) });
+  attrs($('lbR'), { x: x + dw + 1, width: Math.max(stage.x + stage.w - (x + dw) - 1, 0) });
+  attrs($('dimWl'), { x1: x, x2: x + dw, y1: 376, y2: 376 });
+  attrs($('dimWt1'), { x1: x, x2: x }); attrs($('dimWt2'), { x1: x + dw, x2: x + dw });
+  $('labelW').setAttribute('x', cx); $('labelW').textContent = `${w} lp`;
+  attrs($('dimHl'), { y1: y, y2: y + dh });
+  attrs($('dimHt1'), { y1: y, y2: y }); attrs($('dimHt2'), { y1: y + dh, y2: y + dh });
+  $('labelH').setAttribute('y', cy + 4); $('labelH').textContent = `${h} lp`;
+  attrs($('calloutTopLine'), { x1: x, y1: y + Math.max(top * scale, 0) / 2, y2: y + Math.max(top * scale, 0) / 2 });
+  $('labelTop').setAttribute('y', y + Math.max(top * scale, 0) / 2 + 4);
+  $('labelTop').textContent = top ? `top ${top}` : 'top 0';
+  attrs($('calloutBotLine'), { x1: x, y1: y + dh - (bot * scale) / 2, y2: y + dh - (bot * scale) / 2 });
+  $('labelBot').setAttribute('y', y + dh - (bot * scale) / 2 + 4);
+  $('labelBot').textContent = bot ? `bottom ${bot}` : 'bottom 0';
+  $('labelDpr').textContent = `@${dpr}x`;
+}
+document.querySelectorAll('.chip').forEach((chip) => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.chip').forEach((c) => c.classList.remove('active'));
+    chip.classList.add('active');
+    const d = chip.dataset;
+    setDevice(+d.w, +d.h, +d.dpr, +d.top, +d.bot);
+  });
+});
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
 </html>

@@ -1,0 +1,220 @@
+import 'package:device_preview_devtools_extension/src/panel.dart';
+import 'package:device_preview_devtools_extension/src/panel_controller.dart';
+import 'package:device_preview_devtools_extension/src/platform/platform_io.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import 'fake_gateway.dart';
+
+void main() {
+  late FakeGateway gateway;
+  late PanelController controller;
+
+  Future<void> pumpPanel(WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(body: DevicePreviewPanel(controller: controller)),
+      ),
+    );
+    await tester.pumpAndSettle();
+  }
+
+  setUp(() {
+    gateway = FakeGateway(connected: true, available: true);
+    gateway.presetsJson = [testPhonePresetJson, testTabletPresetJson];
+    controller = PanelController(
+      gateway: gateway,
+      storage: InMemoryStorage(),
+      saveScreenshot: (_, __) {},
+      readyEventTimeout: const Duration(milliseconds: 10),
+      bannerDelay: const Duration(milliseconds: 10),
+    );
+  });
+
+  tearDown(() {
+    controller.dispose();
+    gateway.dispose();
+  });
+
+  group('empty states', () {
+    testWidgets('disconnected', (tester) async {
+      gateway.connectedNotifier.value = false;
+      await pumpPanel(tester);
+      expect(find.text('No app connected'), findsOneWidget);
+    });
+
+    testWidgets('no binding', (tester) async {
+      gateway.availableNotifier.value = false;
+      await pumpPanel(tester);
+      expect(
+        find.text('Device Preview is not active in this app'),
+        findsOneWidget,
+      );
+      // Let the banner grace timer fire (and verify the banner was shown).
+      await tester.pump(const Duration(milliseconds: 50));
+      expect(gateway.banners, hasLength(1));
+    });
+  });
+
+  group('device section', () {
+    testWidgets('shows sections and the active device label', (tester) async {
+      await controller.selectPreset(const PresetView(testPhonePresetJson));
+      await pumpPanel(tester);
+      expect(find.text('Device'), findsOneWidget);
+      expect(find.text('Display'), findsOneWidget);
+      expect(find.text('Locale'), findsOneWidget);
+      expect(find.text('Accessibility'), findsOneWidget);
+      expect(find.text('Platform'), findsOneWidget);
+      // Toolbar label + picker button label.
+      expect(find.text('Test Phone'), findsNWidgets(2));
+    });
+
+    testWidgets('preset picker searches, groups and selects', (tester) async {
+      await pumpPanel(tester);
+      await tester
+          .tap(find.byKey(const Key('device_preview_preset_picker_button')));
+      await tester.pumpAndSettle();
+
+      expect(
+        find.byKey(const Key('device_preview_real_device_entry')),
+        findsOneWidget,
+      );
+      expect(find.text('Phones'), findsOneWidget);
+      expect(find.text('Tablets'), findsOneWidget);
+      expect(find.widgetWithText(ListTile, 'Test Phone'), findsOneWidget);
+
+      await tester.enterText(
+        find.byKey(const Key('device_preview_preset_search')),
+        'tablet',
+      );
+      await tester.pumpAndSettle();
+      expect(find.widgetWithText(ListTile, 'Test Phone'), findsNothing);
+      expect(find.widgetWithText(ListTile, 'Test Tablet'), findsOneWidget);
+
+      await tester.tap(find.widgetWithText(ListTile, 'Test Tablet'));
+      await tester.pumpAndSettle();
+      expect(gateway.simulation?['presetId'], 'test-tablet');
+      expect(find.byType(Dialog), findsNothing);
+    });
+
+    testWidgets('real device entry clears metrics but keeps overrides',
+        (tester) async {
+      await controller.selectPreset(const PresetView(testPhonePresetJson));
+      await controller.setBrightness('dark');
+      await pumpPanel(tester);
+      await tester
+          .tap(find.byKey(const Key('device_preview_preset_picker_button')));
+      await tester.pumpAndSettle();
+      await tester
+          .tap(find.byKey(const Key('device_preview_real_device_entry')));
+      await tester.pumpAndSettle();
+      expect(gateway.simulation, {'platformBrightness': 'dark'});
+    });
+
+    testWidgets('orientation toggle is disabled without a simulated screen',
+        (tester) async {
+      await pumpPanel(tester);
+      final toggle = tester.widget<SegmentedButton<String>>(
+        find.byKey(const Key('device_preview_orientation_toggle')),
+      );
+      expect(toggle.onSelectionChanged, isNull);
+    });
+
+    testWidgets('orientation toggle rotates an active preset', (tester) async {
+      await controller.selectPreset(const PresetView(testPhonePresetJson));
+      await pumpPanel(tester);
+      await tester.tap(find.byIcon(Icons.stay_current_landscape));
+      await tester.pumpAndSettle();
+      expect(gateway.simulation?['orientation'], 'landscape');
+      expect(
+        gateway.simulation?['screenSize'],
+        {'width': 800.0, 'height': 400.0},
+      );
+    });
+
+    testWidgets('custom expander applies custom metrics', (tester) async {
+      await pumpPanel(tester);
+      await tester.tap(find.byKey(const Key('device_preview_custom_expander')));
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.byKey(const Key('device_preview_custom_width')),
+        '500',
+      );
+      await tester.enterText(
+        find.byKey(const Key('device_preview_custom_height')),
+        '1000',
+      );
+      await tester.enterText(
+        find.byKey(const Key('device_preview_custom_dpr')),
+        '2.5',
+      );
+      await tester.ensureVisible(
+        find.byKey(const Key('device_preview_custom_apply')),
+      );
+      await tester.tap(find.byKey(const Key('device_preview_custom_apply')));
+      await tester.pumpAndSettle();
+      expect(gateway.simulation?['screenSize'], {
+        'width': 500.0,
+        'height': 1000.0,
+      });
+      expect(gateway.simulation?['devicePixelRatio'], 2.5);
+      expect(gateway.simulation?['presetId'], isNull);
+    });
+  });
+
+  group('display section', () {
+    testWidgets('brightness segmented control sends the override',
+        (tester) async {
+      await pumpPanel(tester);
+      await tester.ensureVisible(
+        find.byKey(const Key('device_preview_brightness_toggle')),
+      );
+      await tester.tap(find.byIcon(Icons.dark_mode_outlined));
+      await tester.pumpAndSettle();
+      expect(gateway.simulation, {'platformBrightness': 'dark'});
+
+      // Back to system clears the override entirely.
+      final systemSegment = find.descendant(
+        of: find.byKey(const Key('device_preview_brightness_toggle')),
+        matching: find.text('System'),
+      );
+      await tester.tap(systemSegment);
+      await tester.pumpAndSettle();
+      expect(gateway.simulation, isNull);
+    });
+
+    testWidgets('text scale system chip clears the override', (tester) async {
+      await controller.setTextScaleFactor(2.0);
+      await pumpPanel(tester);
+      await tester.ensureVisible(
+        find.byKey(const Key('device_preview_text_scale_system_chip')),
+      );
+      await tester.tap(
+        find.byKey(const Key('device_preview_text_scale_system_chip')),
+      );
+      await tester.pumpAndSettle();
+      expect(gateway.simulation, isNull);
+    });
+
+    testWidgets('24-hour tri-state sends on/off/system', (tester) async {
+      await pumpPanel(tester);
+      final toggle = find.byKey(const Key('device_preview_24h_toggle'));
+      await tester.ensureVisible(toggle);
+      await tester.tap(
+        find.descendant(of: toggle, matching: find.text('On')),
+      );
+      await tester.pumpAndSettle();
+      expect(gateway.simulation, {'alwaysUse24HourFormat': true});
+      await tester.tap(
+        find.descendant(of: toggle, matching: find.text('Off')),
+      );
+      await tester.pumpAndSettle();
+      expect(gateway.simulation, {'alwaysUse24HourFormat': false});
+      await tester.tap(
+        find.descendant(of: toggle, matching: find.text('System')),
+      );
+      await tester.pumpAndSettle();
+      expect(gateway.simulation, isNull);
+    });
+  });
+}

@@ -1,86 +1,147 @@
-<p align="center">
-  <img src="https://github.com/aloisdeniel/flutter_device_preview/raw/master/logo.png" alt="Device Preview for Flutter" />
-</p>
+# device_preview
 
-<h4 align="center">Approximate how your app looks and performs on another device.</h4>
+> **Work in progress** — version 3 is a from-scratch rebuild. APIs described
+> here may change before the first stable release.
 
-<p align="center">
-  <a href="https://pub.dartlang.org/packages/device_preview"><img src="https://img.shields.io/pub/v/device_preview.svg"></a>
-  <a href="https://www.buymeacoffee.com/aloisdeniel">
-    <img src="https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&amp;style=flat">
-  </a>
-</p>
+Simulate the characteristics of another device — screen metrics, safe areas,
+locale, brightness, text scale, accessibility flags, target platform — from a
+DevTools extension or programmatically, with **no in-app UI** and **zero
+changes to your widget tree**.
 
-<p align="center">
-  <img src="https://github.com/aloisdeniel/flutter_device_preview/raw/master/device_preview.gif" alt="Device Preview for Flutter" />
-</p>
+## How it works: the binding strategy
 
-## Main features
+Instead of wrapping your app in widgets, `device_preview` ships a drop-in
+replacement for `WidgetsFlutterBinding` that interposes at the
+engine-abstraction level through exactly three framework seams:
 
-* Preview any device from any device
-* Change the device orientation
-* Dynamic system configuration (*language, dark mode, text scaling factor, ...)*
-* Freeform device with adjustable resolution and safe areas
-* Keep the application state
-* Plugin system (*Screenshot, File explorer, ...*)
-* Customizable plugins
+1. **`BindingBase.platformDispatcher`** — returns a wrapper
+   `PlatformDispatcher` (and wrapper implicit `FlutterView`) that merges
+   simulated values over the real host values. `MediaQueryData.fromView` reads
+   only from these two objects, so the whole `MediaQuery` surface is covered.
+2. **`RendererBinding.createViewConfigurationFor`** — lays out the root at the
+   simulated logical size and applies a scale-to-fit transform (centered
+   letterbox, never upscaled), so painting, hit testing, and semantics
+   geometry stay consistent for free.
+3. **`BindingBase.initServiceExtensions`** — registers
+   `ext.device_preview.*` VM service extensions (debug/profile only) that the
+   DevTools extension drives.
 
-## Quickstart
+When simulation is disabled (the default in release builds) the binding is
+behaviorally identical to `WidgetsFlutterBinding`: the wrappers are never
+installed and everything passes straight through.
 
-### Add dependency to your pubspec file
-
-Since Device Preview is a simple Dart package, you have to declare it as any other dependency in your `pubspec.yaml` file.
-
-```yaml
-dependencies:
-  device_preview: <latest version>
-```
-
-### Add DevicePreview
-
-Wrap your app's root widget in a `DevicePreview` and make sure to :
-
-* Set your app's `useInheritedMediaQuery` to `true`.
-* Set your app's `builder` to `DevicePreview.appBuilder`.
-* Set your app's `locale` to `DevicePreview.locale(context)`.
-
-> Make sure to override the previous properties as described. If not defined, `MediaQuery` won't be simulated for the selected device.
+## Usage
 
 ```dart
+void main() {
+  DevicePreviewBinding.ensureInitialized();
+  runApp(const MyApp()); // completely unmodified
+}
+```
+
+Programmatic control:
+
+```dart
+final c = DevicePreviewBinding.controller;
+await c.applyPreset(DevicePresets.iPhoneSe3);
+await c.update((s) => s.copyWith(textScaleFactor: 2.0, platformBrightness: Brightness.dark));
+await c.setOrientation(Orientation.landscape);
+await c.reset();
+```
+
+Device presets live in a separate, tree-shakable library:
+
+```dart
+import 'package:device_preview/presets.dart';
+```
+
+## Testing under a simulated device
+
+The simulation machinery is a public mixin, so you can layer it onto
+`flutter_test`'s binding in your own test suite. The package deliberately does
+**not** ship this class from `lib/` — that would force `flutter_test` into the
+regular dependencies of every app using `device_preview`. Copy this small
+recipe into your `test/` folder instead:
+
+```dart
+import 'dart:ui' as ui;
+
 import 'package:device_preview/device_preview.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_test/flutter_test.dart';
 
-void main() => runApp(
-  DevicePreview(
-    enabled: !kReleaseMode,
-    builder: (context) => MyApp(), // Wrap your app
-  ),
-);
+class TestDevicePreviewBinding extends AutomatedTestWidgetsFlutterBinding
+    with DevicePreviewBindingMixin {
+  static TestDevicePreviewBinding? _instance;
 
-class MyApp extends StatelessWidget {
+  static TestDevicePreviewBinding ensureInitialized({
+    DeviceSimulation? initialSimulation,
+  }) {
+    if (_instance == null) {
+      DevicePreviewBindingMixin.latchConfiguration(
+        enabled: true,
+        initialSimulation: initialSimulation,
+      );
+      TestDevicePreviewBinding();
+    }
+    return _instance!;
+  }
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      useInheritedMediaQuery: true,
-      locale: DevicePreview.locale(context),
-      builder: DevicePreview.appBuilder,
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
-      home: const HomePage(),
-    );
+  void initInstances() {
+    super.initInstances();
+    _instance = this;
+  }
+
+  @override
+  Widget wrapWithDefaultView(Widget rootWidget) {
+    final ui.FlutterView? wrapperView = previewImplicitView;
+    if (wrapperView != null) {
+      return View(view: wrapperView, child: rootWidget);
+    }
+    return super.wrapWithDefaultView(rootWidget);
   }
 }
 ```
 
-## Documentation
+Then:
 
-<a href='https://aloisdeniel.github.io/flutter_device_preview/' target='_blank'>Open the website</a>
+```dart
+void main() {
+  final binding = TestDevicePreviewBinding.ensureInitialized();
 
-## Demo
+  testWidgets('renders like an iPhone SE', (tester) async {
+    await binding.devicePreview!.applyPreset(DevicePresets.iPhoneSe3);
+    await tester.pumpWidget(const MyApp());
+    // MediaQuery now reports 375×667 @2x with the SE safe areas.
+  });
+}
+```
 
-<a href='https://flutter-device-preview.firebaseapp.com/' target='_blank'>Open the demo</a>
+With that in place, `MediaQuery` reflects the applied simulation inside
+`testWidgets`, the root lays out at the simulated size, `tester.tap` works in
+simulated-logical coordinates, and
+`binding.debugInjectPointerData(...)` lets you feed real-physical pointer
+packets through the same remapping an engine-delivered event would take.
 
-## Limitations
+Under the hood the simulation machinery is a mixin,
+`DevicePreviewBindingMixin`, that can be layered onto other binding stacks
+(apply it **last**). One caveat pins the shape of test compositions:
+`flutter_test`'s `TestWidgetsFlutterBinding` narrows the type of its
+`platformDispatcher` getter to `TestPlatformDispatcher`, so a binding built
+on it can never return the wrapper dispatcher from
+`binding.platformDispatcher` (it would be an invalid override). That is why
+the mixin leaves the `platformDispatcher` override to concrete bindings
+(`DevicePreviewBinding` overrides it as `=> previewPlatformDispatcher`), and
+why the recipe above routes simulation through the wrapper **view**
+instead (the root widget is wrapped in a `View` built on
+`previewImplicitView`). What that composition does *not* cover is framework
+reads that go through `binding.platformDispatcher` directly (for example
+`WidgetsApp`'s locale list); those are only interposed by the real
+`DevicePreviewBinding`.
 
-Think of Device Preview as a first-order approximation of how your app looks and feels on a mobile device. With Device Mode you don't actually run your code on a mobile device. You simulate the mobile user experience from your laptop, desktop or tablet.
+## Status
 
-> There are some aspects of mobile devices that Device Preview will never be able to simulate. When in doubt, your best bet is to actually run your app on a real device.
+The model layer, the binding/interposition layer, the controller, and the
+`ext.device_preview.*` service extensions (including the optional screenshot
+module) are implemented. The DevTools extension app is under construction.

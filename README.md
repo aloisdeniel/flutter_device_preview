@@ -2,7 +2,7 @@
   <img src="https://github.com/aloisdeniel/flutter_device_preview/raw/master/logo.png" alt="Device Preview for Flutter" />
 </p>
 
-<h4 align="center">Approximate how your app looks and performs on another device.</h4>
+<h4 align="center">Simulate any device from the binding up — no widgets, no wrappers, no in-app UI.</h4>
 
 <p align="center">
   <a href="https://pub.dartlang.org/packages/device_preview"><img src="https://img.shields.io/pub/v/device_preview.svg"></a>
@@ -11,76 +11,50 @@
   </a>
 </p>
 
-<p align="center">
-  <img src="https://github.com/aloisdeniel/flutter_device_preview/raw/master/device_preview.gif" alt="Device Preview for Flutter" />
-</p>
+Device Preview 3 simulates the characteristics of another device — screen size, pixel ratio, safe areas, orientation, display features, locales, brightness, text scale, accessibility flags, target platform — **at the `WidgetsBinding` level**. Your widget tree stays completely unmodified: the framework itself sees the simulated device, so every `MediaQuery`, layout pass, pointer event and locale resolution follows along. The app renders scale-to-fit, letterboxed and centered, inside your real window.
 
-## Main features
+There is no control panel drawn over your app. Simulation is driven:
 
-* Preview any device from any device
-* Change the device orientation
-* Dynamic system configuration (*language, dark mode, text scaling factor, ...)*
-* Freeform device with adjustable resolution and safe areas
-* Keep the application state
-* Plugin system (*Screenshot, File explorer, ...*)
-* Customizable plugins
+- **from Flutter DevTools**, via a first-class DevTools extension that appears automatically for any app depending on `device_preview`, or
+- **programmatically**, through a small controller API.
 
 ## Quickstart
-
-### Add dependency to your pubspec file
-
-Since Device Preview is a simple Dart package, you have to declare it as any other dependency in your `pubspec.yaml` file.
 
 ```yaml
 dependencies:
   device_preview: <latest version>
 ```
 
-### Add DevicePreview
-
-Wrap your app's root widget in a `DevicePreview` and make sure to :
-
-* Set your app's `useInheritedMediaQuery` to `true`.
-* Set your app's `builder` to `DevicePreview.appBuilder`.
-* Set your app's `locale` to `DevicePreview.locale(context)`.
-
-> Make sure to override the previous properties as described. If not defined, `MediaQuery` won't be simulated for the selected device.
-
 ```dart
-import 'package:device_preview/device_preview.dart';
-
-void main() => runApp(
-  DevicePreview(
-    enabled: !kReleaseMode,
-    builder: (context) => MyApp(), // Wrap your app
-  ),
-);
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      useInheritedMediaQuery: true,
-      locale: DevicePreview.locale(context),
-      builder: DevicePreview.appBuilder,
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
-      home: const HomePage(),
-    );
-  }
+void main() {
+  DevicePreviewBinding.ensureInitialized();
+  runApp(const MyApp()); // completely unmodified
 }
 ```
 
+That's the whole integration. Open DevTools, select the **device_preview** tab, and pick a device. Simulation is enabled in debug builds by default and fully disabled (zero interposition, tree-shaken service extensions) in release builds.
+
+Programmatic control:
+
+```dart
+final c = DevicePreviewBinding.controller;
+await c.applyPreset(DevicePresets.iPhone16Pro);
+await c.setOrientation(Orientation.landscape);
+await c.update((s) => s.copyWith(textScaleFactor: 2.0, platformBrightness: Brightness.dark));
+await c.reset();
+```
+
+See [`device_preview/README.md`](device_preview/README.md) for the full package documentation, including widget-test support via `DevicePreviewBindingMixin`.
+
 ## Documentation
 
-<a href='https://aloisdeniel.github.io/flutter_device_preview/' target='_blank'>Open the website</a>
+<a href='https://aloisdeniel.github.io/flutter_device_preview/' target='_blank'>Open the website</a> · [Design document](DESIGN.md)
 
-## Demo
+## Repository structure
 
-<a href='https://flutter-device-preview.firebaseapp.com/' target='_blank'>Open the demo</a>
-
-## Limitations
-
-Think of Device Preview as a first-order approximation of how your app looks and feels on a mobile device. With Device Mode you don't actually run your code on a mobile device. You simulate the mobile user experience from your laptop, desktop or tablet.
-
-> There are some aspects of mobile devices that Device Preview will never be able to simulate. When in doubt, your best bet is to actually run your app on a real device.
+| Directory | Contents |
+|---|---|
+| [`device_preview`](device_preview) | The published package: binding, controller, presets, service extensions, bundled DevTools extension build. |
+| [`device_preview_devtools_extension`](device_preview_devtools_extension) | Source of the DevTools extension web app (never published; built into `device_preview/extension/devtools/build`). |
+| [`device_frame`](device_frame) | Device frame drawings package (independent of the preview machinery). |
+| [`docs`](docs) | The website. |

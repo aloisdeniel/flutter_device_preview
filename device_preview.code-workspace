@@ -9,12 +9,8 @@
 			"path": "device_preview"
 		},
 		{
-			"name": "devtools_device_preview",
-			"path": "devtools_device_preview"
-		},
-		{
-			"name": "plugins/device_preview_screenshot",
-			"path": "plugins/device_preview_screenshot"
+			"name": "device_preview_devtools_extension",
+			"path": "device_preview_devtools_extension"
 		},
 		{
 			"name": "docs",

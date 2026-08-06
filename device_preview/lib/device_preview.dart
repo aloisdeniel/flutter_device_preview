@@ -1,21 +1,15 @@
-export 'package:device_frame/device_frame.dart';
+/// Simulate the characteristics of another device — screen metrics, safe
+/// areas, locale, brightness, text scale, accessibility flags, target
+/// platform — at the engine-abstraction level, with no in-app UI.
+///
+/// Device presets live in the separate, tree-shakable
+/// `package:device_preview/presets.dart` library.
+library;
 
-export 'src/device_preview.dart';
+export 'src/model/fit_transform.dart';
+export 'src/model/real_device_info.dart';
+export 'src/model/simulation.dart';
 
-export 'src/state/state.dart';
-export 'src/state/store.dart';
-
-export 'src/storage/file/file.dart';
-export 'src/storage/preferences/preferences.dart';
-export 'src/storage/storage.dart';
-
-export 'src/locales/locales.dart';
-export 'src/locales/default_locales.dart';
-
-export 'src/utilities/screenshot.dart';
-
-export 'src/views/tool_panel/sections/accessibility.dart';
-export 'src/views/tool_panel/sections/device.dart';
-export 'src/views/tool_panel/sections/section.dart';
-export 'src/views/tool_panel/sections/settings.dart';
-export 'src/views/tool_panel/sections/system.dart';
+export 'src/binding/binding.dart'
+    show DevicePreviewBinding, DevicePreviewBindingMixin;
+export 'src/controller/controller.dart' show DevicePreviewController;

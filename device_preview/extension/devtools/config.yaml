@@ -1,0 +1,5 @@
+name: device_preview
+issueTracker: https://github.com/aloisdeniel/flutter_device_preview/issues
+version: 3.0.0
+materialIconCodePoint: '0xe154'   # Icons.devices
+requiresConnection: true
