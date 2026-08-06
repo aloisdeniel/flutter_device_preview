@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>device_preview — simulate any device, with full framework fidelity</title>
-<meta name="description" content="Device Preview 3 simulates screen metrics, safe areas, locales, brightness, text scale and accessibility for any Flutter app — driven from a DevTools panel or a few lines of Dart.">
+<title>device_preview — test your Flutter app on every device, instantly</title>
+<meta name="description" content="Switch your running Flutter app to any screen size, safe area, locale, text scale or accessibility setting from Flutter DevTools — no rebuild, no simulator, no device required.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -189,10 +189,10 @@ h2 {
 .c-fn { color: var(--cyan); }
 .c-num { color: #ff9fb2; }
 
-/* seams */
-.seams { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; counter-reset: seam; }
-@media (max-width: 860px) { .seams { grid-template-columns: 1fr; } }
-.seam {
+/* problem cards */
+.probs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; counter-reset: prob; }
+@media (max-width: 860px) { .probs { grid-template-columns: 1fr; } }
+.prob {
   position: relative;
   background: var(--paper-raised);
   border: 1px solid var(--line-strong);
@@ -200,10 +200,10 @@ h2 {
   padding: 28px 24px 24px;
   transition: transform .2s ease, border-color .2s ease;
 }
-.seam:hover { transform: translateY(-4px); border-color: var(--cyan); }
-.seam::before {
-  counter-increment: seam;
-  content: "0" counter(seam);
+.prob:hover { transform: translateY(-4px); border-color: var(--cyan); }
+.prob::before {
+  counter-increment: prob;
+  content: "0" counter(prob);
   position: absolute; top: -14px; left: 18px;
   font-family: var(--mono); font-size: 12px;
   color: var(--amber);
@@ -212,9 +212,9 @@ h2 {
   border-radius: 99px;
   padding: 2px 10px;
 }
-.seam h3 { font-family: var(--display); font-weight: 700; font-size: 19px; margin-bottom: 10px; }
-.seam code.ref-code { font-size: 12px; color: var(--cyan); }
-.seam p { color: var(--ink-dim); font-size: 14.5px; margin-top: 8px; }
+.prob h3 { font-family: var(--display); font-weight: 700; font-size: 19px; margin-bottom: 10px; }
+.prob code.ref-code { font-size: 12px; color: var(--cyan); }
+.prob p { color: var(--ink-dim); font-size: 14.5px; margin-top: 8px; }
 
 /* spec table */
 .spec { border: 1px solid var(--line-strong); border-radius: 10px; overflow: hidden; }
@@ -317,8 +317,8 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
       <b>device_preview</b><span class="v">3.0</span>
     </a>
     <nav class="links">
-      <a href="#how">How it works</a>
-      <a href="#simulate">Simulation</a>
+      <a href="#why">Why</a>
+      <a href="#simulate">What it simulates</a>
       <a href="#devtools">DevTools</a>
       <a href="#api">API</a>
       <a class="gh" href="https://github.com/aloisdeniel/flutter_device_preview">GitHub ↗</a>
@@ -330,8 +330,8 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
   <div class="sheet hero-grid">
     <div class="stagger">
       <span class="tag">Flutter · device simulation</span>
-      <h1>Any device.<br><span class="accent">Full</span> <span class="outline">fidelity.</span></h1>
-      <p class="lede">Design for an iPhone SE, a foldable and a desktop window without leaving your keyboard. Device Preview simulates screen metrics, safe areas, orientation, locales, brightness, text scale and accessibility <strong>so faithfully the framework can't tell the difference</strong> — then hands you the controls in Flutter DevTools.</p>
+      <h1>Every device.<br><span class="accent">One</span> <span class="outline">app run.</span></h1>
+      <p class="lede">Switch your running Flutter app to an iPhone SE, an iPad in landscape or a 200%-text-scale Pixel — <strong>instantly, without a rebuild or a simulator</strong>. Screen size, safe areas, locale, brightness, text scale and accessibility all follow, so layout problems surface while you're still writing the layout.</p>
       <div class="hero-ctas">
         <a class="btn primary" href="#api">Get started</a>
         <a class="btn ghost" href="https://pub.dev/packages/device_preview">pub.dev ↗</a>
@@ -343,10 +343,10 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
     </div>
 
     <div class="schematic">
-      <svg viewBox="0 0 560 420" aria-label="Technical schematic of a simulated device letterboxed inside the real screen">
-        <!-- real screen -->
+      <svg viewBox="0 0 560 420" aria-label="Diagram of a simulated device shown inside your app window, with its dimensions and safe areas annotated">
+        <!-- your window -->
         <rect x="40" y="30" width="480" height="330" rx="6" fill="var(--paper-sunken)" stroke="var(--line-strong)"/>
-        <text x="48" y="22" class="dim-label faint">REAL SURFACE — HOST WINDOW</text>
+        <text x="48" y="22" class="dim-label faint">YOUR APP WINDOW</text>
         <!-- letterbox hatching -->
         <defs>
           <pattern id="hatch" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
@@ -385,7 +385,7 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
         <text id="labelBot" x="145" y="343" text-anchor="end" class="dim-label amber">bottom 34</text>
         <!-- dpr note -->
         <text id="labelDpr" x="48" y="350" class="dim-label">@3.0x</text>
-        <text id="labelFit" x="512" y="350" text-anchor="end" class="dim-label faint">scale-to-fit · centered</text>
+        <text id="labelFit" x="512" y="350" text-anchor="end" class="dim-label faint">pick a device →</text>
       </svg>
       <div class="presets" role="group" aria-label="Device presets">
         <button class="chip active" data-w="393" data-h="852" data-dpr="3.0" data-top="59" data-bot="34">iPhone 16 Pro</button>
@@ -398,24 +398,24 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
   </div>
 </div>
 
-<section id="how">
+<section id="why">
   <div class="sheet">
     <div class="sec-head reveal">
       <div>
-        <span class="tag">Architecture</span>
-        <h2>One line in <code style="font-size: .78em;">main()</code>.<br>Three seams underneath.</h2>
+        <span class="tag">Why</span>
+        <h2>Ship for devices<br>you don't own.</h2>
       </div>
-      <span class="ref">FIG. 01 — INTERPOSITION</span>
+      <span class="ref">FIG. 01 — THE GAP</span>
     </div>
 
     <div class="oneline reveal">
       <div>
-        <p>Simulation happens <strong>below the widget layer</strong>. A custom <code>WidgetsBinding</code> hands the framework a wrapped <code>FlutterView</code> and <code>PlatformDispatcher</code>, so every <code>MediaQuery</code>, every layout pass, every pointer event and every locale lookup reads the simulated device — <strong>because the framework itself does</strong>.</p>
-        <p>That depth is what makes it trustworthy. Responsive breakpoints, <code>SafeArea</code> insets, orientation branches, <code>Intl</code> formatting, platform-adaptive widgets and accessibility behaviour all react exactly as they would on the real hardware — including the code paths you'd never think to test.</p>
-        <p>When simulation is off — the release default — the binding returns the host objects directly. Zero interposition, zero cost, zero behavioural difference.</p>
+        <p>You build on one screen. Your users arrive on hundreds — a five-year-old phone with a 320pt-wide screen, a tablet in landscape, a desktop window dragged to half its width, a notched display, a fold.</p>
+        <p><strong>Add one line to <code>main()</code> and every one of them is a keystroke away.</strong> The app you're already running re-lays itself out at the new size, with that device's safe areas, pixel ratio, locale, brightness, text scale and accessibility settings. No rebuild, no simulator boot, no cable.</p>
+        <p>Because your app reads the simulated values through the same <code>MediaQuery</code> it always used, the things that usually break in front of a customer — a clipped headline, a button under the home indicator, an overflow at 200% text — break in front of <em>you</em>, seconds after you write them.</p>
       </div>
       <div class="codeblock">
-        <div class="bar"><span>main.dart</span><button class="copy-btn" data-copy="void main() {
+        <div class="bar"><span>main.dart — the entire integration</span><button class="copy-btn" data-copy="void main() {
   DevicePreviewBinding.ensureInitialized();
   runApp(const MyApp());
 }">copy</button></div>
@@ -426,21 +426,18 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
       </div>
     </div>
 
-    <div class="seams" style="margin-top: 64px;">
-      <div class="seam reveal">
-        <h3>The dispatcher seam</h3>
-        <code class="ref-code">BindingBase.platformDispatcher</code>
-        <p>A wrapping <code>PlatformDispatcher</code> + <code>FlutterView</code> pair answers every framework read — size, pixel ratio, padding, locales, brightness, text scale — with the simulated value, and delegates everything with engine side effects to the host. Explicit member-by-member delegation, no <code>noSuchMethod</code>: if a future SDK adds a member, the package fails loudly at compile time instead of silently at runtime.</p>
+    <div class="probs" style="margin-top: 64px;">
+      <div class="prob reveal">
+        <h3>The device you don't own</h3>
+        <p>Check the small phone, the tablet in landscape and the half-width desktop window in the time it takes to click three chips. Every screen in the catalog carries real metrics — resolution, pixel ratio and per-orientation safe areas — so what you see is what that hardware would show.</p>
       </div>
-      <div class="seam reveal">
-        <h3>The fit matrix</h3>
-        <code class="ref-code">createViewConfigurationFor</code>
-        <p>The root render view lays out at the simulated logical size and paints through a scale-to-fit matrix — centered, letterboxed, never upscaled. Pointer events are rewritten through the exact inverse, so taps, drags and hover land where they should. Semantics geometry rides the same transform for free.</p>
+      <div class="prob reveal">
+        <h3>The inset you forgot</h3>
+        <p>Notches, punch-holes, home indicators, hinges and the software keyboard all move in. <code>SafeArea</code>, <code>MediaQuery.padding</code> and <code>viewInsets</code> report the simulated device's values, so content that would hide under a cutout hides now — while you can still fix it.</p>
       </div>
-      <div class="seam reveal">
-        <h3>The service protocol</h3>
-        <code class="ref-code">ext.device_preview.*</code>
-        <p>A small, versioned VM-service protocol exposes state, presets and mutations, and posts events on every change. It's what the DevTools extension speaks — and it's plain JSON, so CI scripts and editor plugins can speak it too. Tree-shaken out of release builds entirely.</p>
+      <div class="prob reveal">
+        <h3>The user who isn't you</h3>
+        <p>Push text scale to 200%, switch to bold text or reduce motion, reorder locales, flip to dark mode — one panel, live, no device settings to dig through and no state to lose. The accessibility pass stops being a release-week scramble.</p>
       </div>
     </div>
   </div>
@@ -456,16 +453,17 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
       <span class="ref">TBL. 02 — CHARACTERISTICS</span>
     </div>
     <div class="spec reveal">
-      <div class="spec-row"><div class="k">screenSize · devicePixelRatio</div><div class="d">Logical resolution and DPR — the app renders scale-to-fit inside your real window, letterboxed and centered.</div><div class="m">METRICS</div></div>
-      <div class="spec-row"><div class="k">padding · viewPadding</div><div class="d">Per-device, per-orientation safe areas: notches, punch-holes, home indicators.</div><div class="m">METRICS</div></div>
-      <div class="spec-row"><div class="k">displayFeatures</div><div class="d">Folds and hinges, rotated correctly with orientation.</div><div class="m">METRICS</div></div>
-      <div class="spec-row"><div class="k">orientation</div><div class="d">Portrait ⇄ landscape with proper safe-area rotation, from presets or the documented rotation rule.</div><div class="m">METRICS</div></div>
-      <div class="spec-row"><div class="k">locales</div><div class="d">Full ordered locale list — <code>WidgetsApp</code> resolution and <code>Intl</code> follow along.</div><div class="m">SYSTEM</div></div>
-      <div class="spec-row"><div class="k">platformBrightness</div><div class="d">Light / dark, live — <code>ThemeMode.system</code> reacts instantly.</div><div class="m">SYSTEM</div></div>
-      <div class="spec-row"><div class="k">textScaleFactor</div><div class="d">Linear text scaling, atomically coherent with <code>scaleFontSize</code>.</div><div class="m">SYSTEM</div></div>
-      <div class="spec-row"><div class="k">accessibility</div><div class="d">Seven tri-state flags — bold text, reduce motion, high contrast, invert colors, disable animations, accessible navigation, on/off switch labels. <code>null</code> means "real device value".</div><div class="m">SYSTEM</div></div>
-      <div class="spec-row"><div class="k">alwaysUse24HourFormat</div><div class="d">Time-format previews for date &amp; time UI.</div><div class="m">SYSTEM</div></div>
-      <div class="spec-row"><div class="k">targetPlatform</div><div class="d">Material/Cupertino switching via <code>defaultTargetPlatform</code> — debug builds only, capability-flagged over the protocol.</div><div class="m amber">DEBUG</div></div>
+      <div class="spec-row"><div class="k">Screen size &amp; pixel ratio</div><div class="d">Any resolution and density, from a 320pt phone to a 13″ tablet. The app is scaled to fit your window, so a screen larger than your monitor still previews whole.</div><div class="m">SCREEN</div></div>
+      <div class="spec-row"><div class="k">Safe areas</div><div class="d">Notches, punch-holes and home indicators, correct per device and per orientation. <code>SafeArea</code> and <code>MediaQuery.padding</code> respond.</div><div class="m">SCREEN</div></div>
+      <div class="spec-row"><div class="k">Orientation</div><div class="d">Portrait ⇄ landscape in one click, with safe areas rotating the way the real device rotates them.</div><div class="m">SCREEN</div></div>
+      <div class="spec-row"><div class="k">Folds &amp; hinges</div><div class="d">Display features for foldables, so hinge-aware layouts can be checked without a foldable on the desk.</div><div class="m">SCREEN</div></div>
+      <div class="spec-row"><div class="k">Keyboard insets</div><div class="d">The software keyboard's <code>viewInsets</code> reach your layout, so you can see what the keyboard covers.</div><div class="m">SCREEN</div></div>
+      <div class="spec-row"><div class="k">Locales</div><div class="d">A full ordered locale list — your app's locale resolution, translations and <code>Intl</code> date, number and currency formatting all follow.</div><div class="m">SYSTEM</div></div>
+      <div class="spec-row"><div class="k">Brightness</div><div class="d">Light and dark, applied live — <code>ThemeMode.system</code> flips as you toggle.</div><div class="m">SYSTEM</div></div>
+      <div class="spec-row"><div class="k">Text scale</div><div class="d">Up to 200% and beyond, the single fastest way to find overflowing rows and clipped labels.</div><div class="m">SYSTEM</div></div>
+      <div class="spec-row"><div class="k">Accessibility</div><div class="d">Bold text, reduce motion, high contrast, invert colors, disable animations, accessible navigation and switch labels — each independently on, off, or left as the real device.</div><div class="m">SYSTEM</div></div>
+      <div class="spec-row"><div class="k">24-hour time</div><div class="d">Preview date and time UI the way users in 24-hour locales will read it.</div><div class="m">SYSTEM</div></div>
+      <div class="spec-row"><div class="k">Target platform</div><div class="d">Switch Material and Cupertino behaviour — scroll physics, page transitions, adaptive widgets — between iOS, Android, macOS, Windows and Linux. Debug builds only.</div><div class="m amber">DEBUG</div></div>
     </div>
   </div>
 </section>
@@ -481,9 +479,9 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
     </div>
     <div class="devtools-grid">
       <div class="reveal">
-        <p><strong>A first-class DevTools extension</strong>, shipped with the package and discovered automatically for any app that depends on it. Your whole screen stays free for the app you're designing.</p>
-        <p>Pick a preset, rotate it, drag the text scale, flip brightness, reorder locales, toggle accessibility flags — the running app updates live over the VM service. Change simulation from Dart code instead and the panel follows, echo-free, thanks to per-request IDs.</p>
-        <p><strong>Hot restart proof:</strong> the app forgets, the panel doesn't. With <em>Keep across restarts</em> enabled, the extension re-pushes your simulation the moment the app comes back.</p>
+        <p><strong>A device_preview tab appears in DevTools</strong> as soon as your app depends on the package — nothing to install, nothing to configure. Your screen stays entirely for the app you're designing.</p>
+        <p>Pick a device, rotate it, drag the text scale, flip brightness, reorder locales, toggle accessibility flags. The running app updates as you go, and it keeps its state: the screen you were on, the data you'd loaded, the form you'd half-filled are all still there.</p>
+        <p><strong>Hot restart doesn't lose your setup.</strong> Turn on <em>Keep across restarts</em> and the panel puts your simulated device back the moment the app returns.</p>
       </div>
       <div class="panel-mock reveal" aria-hidden="true">
         <div class="pm-bar"><span class="pm-dot"></span> device_preview <span class="pm-reset">⟲ reset</span></div>
@@ -508,8 +506,8 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
   <div class="sheet">
     <div class="sec-head reveal">
       <div>
-        <span class="tag">Programmatic</span>
-        <h2>Or drive it from Dart</h2>
+        <span class="tag">API</span>
+        <h2>Or drive it from Dart —<br>including in your tests.</h2>
       </div>
       <span class="ref">LST. 04 — CONTROLLER</span>
     </div>
@@ -546,7 +544,7 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
 }</pre>
       </div>
     </div>
-    <p class="reveal" style="color: var(--ink-dim); margin-top: 26px; max-width: 70ch;">The same machinery is a public mixin — <code>DevicePreviewBindingMixin</code> — so it layers onto <code>flutter_test</code> and <code>integration_test</code> bindings. The test-binding recipe is ~30 lines, lives in your own <code>test/</code> folder, and keeps <code>flutter_test</code> out of your app's dependency graph. Golden tests across a device matrix, without a device in sight.</p>
+    <p class="reveal" style="color: var(--ink-dim); margin-top: 26px; max-width: 72ch;">The same simulation is available to <code>flutter_test</code> and <code>integration_test</code>, so a widget test can assert that a screen fits an iPhone SE, or that nothing overflows at 200% text — and goldens can be captured for a whole matrix of devices in CI, without a device in sight. Presets ship in a separate import, so the ones you never reference are dropped from your build.</p>
   </div>
 </section>
 
@@ -554,16 +552,16 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
   <div class="sheet">
     <div class="titleblock reveal">
       <div class="tb-cell"><span class="lbl">Project</span><span class="val">device_preview</span></div>
-      <div class="tb-cell"><span class="lbl">Revision</span><span class="val">3.0 — binding rebuild</span></div>
-      <div class="tb-cell"><span class="lbl">Scale</span><span class="val">fit · never &gt; 1:1</span></div>
-      <div class="tb-cell"><span class="lbl">Sheet</span><span class="val">1 of 1</span></div>
+      <div class="tb-cell"><span class="lbl">Version</span><span class="val">3.0</span></div>
+      <div class="tb-cell"><span class="lbl">Setup</span><span class="val">one line in main()</span></div>
+      <div class="tb-cell"><span class="lbl">Controls</span><span class="val">DevTools · Dart · tests</span></div>
       <div class="tb-cell"><span class="lbl">Source</span><span class="val"><a href="https://github.com/aloisdeniel/flutter_device_preview">github.com/aloisdeniel</a></span></div>
       <div class="tb-cell"><span class="lbl">Package</span><span class="val"><a href="https://pub.dev/packages/device_preview">pub.dev/device_preview</a></span></div>
       <div class="tb-cell"><span class="lbl">License</span><span class="val">MIT</span></div>
       <div class="tb-cell"><span class="lbl">Drafted by</span><span class="val">Aloïs Deniel</span></div>
     </div>
     <div class="foot-note">
-      <span>SIMULATED AT THE BINDING · CONTROLLED FROM DEVTOOLS</span>
+      <span>FIND THE LAYOUT BUG BEFORE YOUR USERS DO</span>
       <span>© <span id="year">2026</span> — MIT</span>
     </div>
   </div>

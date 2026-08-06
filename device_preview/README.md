@@ -3,33 +3,37 @@
 > **Work in progress** — version 3 is a from-scratch rebuild. APIs described
 > here may change before the first stable release.
 
-Simulate the characteristics of another device — screen metrics, safe areas,
-locale, brightness, text scale, accessibility flags, target platform — from a
-DevTools extension or programmatically, with full framework fidelity: every
-`MediaQuery`, layout pass, pointer event and locale resolution reads the
-simulated device.
+Switch your **running** Flutter app to another device — an old 320pt phone, a
+tablet in landscape, a notched display, a half-width desktop window —
+instantly, with no rebuild and no simulator.
 
-## How it works: the binding strategy
+Screen size, pixel ratio, safe areas, orientation, folds, keyboard insets,
+locales, brightness, text scale, accessibility settings and target platform
+all change with it, and your app reads them through the same `MediaQuery` it
+always used. Layout problems that normally reach a customer — a clipped
+headline, a button under the home indicator, an overflow at 200% text —
+show up while you are still writing the screen.
 
-`device_preview` ships a drop-in replacement for `WidgetsFlutterBinding` that
-interposes at the engine-abstraction level through exactly three framework
-seams:
+Control it from **Flutter DevTools**, from **Dart**, or from your **tests**.
 
-1. **`BindingBase.platformDispatcher`** — returns a wrapper
-   `PlatformDispatcher` (and wrapper implicit `FlutterView`) that merges
-   simulated values over the real host values. `MediaQueryData.fromView` reads
-   only from these two objects, so the whole `MediaQuery` surface is covered.
-2. **`RendererBinding.createViewConfigurationFor`** — lays out the root at the
-   simulated logical size and applies a scale-to-fit transform (centered
-   letterbox, never upscaled), so painting, hit testing, and semantics
-   geometry stay consistent for free.
-3. **`BindingBase.initServiceExtensions`** — registers
-   `ext.device_preview.*` VM service extensions (debug/profile only) that the
-   DevTools extension drives.
+## What can be simulated
 
-When simulation is disabled (the default in release builds) the binding is
-behaviorally identical to `WidgetsFlutterBinding`: the wrappers are never
-installed and everything passes straight through.
+| | |
+|---|---|
+| **Screen size & pixel ratio** | Any resolution and density; the app is scaled to fit your window, so a screen bigger than your monitor still previews whole. |
+| **Safe areas** | Notches, punch-holes and home indicators, per device and per orientation. |
+| **Orientation** | Portrait ⇄ landscape, with safe areas rotating as the real device rotates them. |
+| **Folds & hinges** | Display features for foldables. |
+| **Keyboard insets** | See what the software keyboard covers. |
+| **Locales** | An ordered locale list; locale resolution, translations and `Intl` formatting follow. |
+| **Brightness** | Light and dark, applied live. |
+| **Text scale** | Up to 200% and beyond — the fastest way to find overflows. |
+| **Accessibility** | Bold text, reduce motion, high contrast, invert colors, disable animations, accessible navigation, switch labels — each on, off, or left as the real device. |
+| **24-hour time** | For date and time UI. |
+| **Target platform** | Material/Cupertino behaviour across iOS, Android, macOS, Windows and Linux (debug builds only). |
+
+Simulation is active in debug builds and completely disabled in release
+builds, where the package adds no behaviour of any kind.
 
 ## Usage
 
@@ -50,7 +54,7 @@ await c.setOrientation(Orientation.landscape);
 await c.reset();
 ```
 
-Device presets live in a separate, tree-shakable library:
+Device presets live in a separate import, so the ones you never reference are dropped from your build:
 
 ```dart
 import 'package:device_preview/presets.dart';
@@ -58,11 +62,12 @@ import 'package:device_preview/presets.dart';
 
 ## Testing under a simulated device
 
-The simulation machinery is a public mixin, so you can layer it onto
-`flutter_test`'s binding in your own test suite. The package deliberately does
-**not** ship this class from `lib/` — that would force `flutter_test` into the
-regular dependencies of every app using `device_preview`. Copy this small
-recipe into your `test/` folder instead:
+Widget tests can run under a simulated device too, so you can assert that a
+screen fits an iPhone SE, or that nothing overflows at 200% text, and capture
+goldens for a whole matrix of devices in CI.
+
+Add this small test binding to your `test/` folder. (It is not shipped from
+`lib/`, so that `flutter_test` never lands in your app's own dependencies.)
 
 ```dart
 import 'dart:ui' as ui;
@@ -119,32 +124,25 @@ void main() {
 }
 ```
 
-With that in place, `MediaQuery` reflects the applied simulation inside
-`testWidgets`, the root lays out at the simulated size, `tester.tap` works in
-simulated-logical coordinates, and
-`binding.debugInjectPointerData(...)` lets you feed real-physical pointer
-packets through the same remapping an engine-delivered event would take.
+Inside `testWidgets`, `MediaQuery` then reports the simulated device, the
+screen lays out at its size, and `tester.tap` works in its coordinates.
+`DevicePreviewBindingMixin` composes with `integration_test`'s binding the
+same way.
 
-Under the hood the simulation machinery is a mixin,
-`DevicePreviewBindingMixin`, that can be layered onto other binding stacks
-(apply it **last**). One caveat pins the shape of test compositions:
-`flutter_test`'s `TestWidgetsFlutterBinding` narrows the type of its
-`platformDispatcher` getter to `TestPlatformDispatcher`, so a binding built
-on it can never return the wrapper dispatcher from
-`binding.platformDispatcher` (it would be an invalid override). That is why
-the mixin leaves the `platformDispatcher` override to concrete bindings
-(`DevicePreviewBinding` overrides it as `=> previewPlatformDispatcher`), and
-why the recipe above routes simulation through the wrapper **view**
-instead (the root widget is wrapped in a `View` built on
-`previewImplicitView`). What that composition does *not* cover is framework
-reads that go through `binding.platformDispatcher` directly (for example
-`WidgetsApp`'s locale list); those are only interposed by the real
-`DevicePreviewBinding`.
+> **One limitation in tests:** `WidgetsApp`'s own locale resolution is not
+> simulated under `flutter_test` (everything else is). Assert on locale
+> behaviour in an integration test, or against `MediaQuery` directly.
 
 ## Status
 
-The model layer, the binding/interposition layer, the controller, the
-`ext.device_preview.*` service extensions (including the optional screenshot
-module) and the DevTools extension app are all implemented and covered by
-tests. What remains before a stable release is field testing: real DevTools
-sessions across platforms, and API feedback.
+Everything described above is implemented and covered by tests. What remains
+before a stable release is field testing across platforms and API feedback —
+please open an issue if something doesn't fit your workflow.
+
+## How it works
+
+The simulation happens below the widget layer, which is why it reaches
+`MediaQuery`, layout, gestures and locale resolution without any change to
+your widget tree. If you want the full architecture — the framework seams
+used, the scale-to-fit and pointer maths, the DevTools protocol — see
+[DESIGN.md](../DESIGN.md).

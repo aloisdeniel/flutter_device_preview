@@ -11,12 +11,11 @@
   </a>
 </p>
 
-Device Preview 3 simulates the characteristics of another device — screen size, pixel ratio, safe areas, orientation, display features, locales, brightness, text scale, accessibility flags, target platform — **at the `WidgetsBinding` level**. The framework itself reads the simulated device, so every `MediaQuery`, layout pass, pointer event and locale resolution follows along: responsive breakpoints, `SafeArea` insets, orientation branches, `Intl` formatting and platform-adaptive widgets all behave as they would on the real hardware. The app renders scale-to-fit, letterboxed and centered, inside your real window.
+You build on one screen; your users arrive on hundreds. Device Preview switches your **running** app to another device — an old 320pt phone, a tablet in landscape, a notched display, a half-width desktop window — instantly, with no rebuild and no simulator.
 
-Simulation is driven:
+Screen size, pixel ratio, safe areas, orientation, folds, keyboard insets, locales, brightness, text scale, accessibility settings and target platform all change with it, and your app reads them through the same `MediaQuery` it always used. So the problems that normally surface in front of a customer — a clipped headline, a button under the home indicator, an overflow at 200% text — surface in front of you instead.
 
-- **from Flutter DevTools**, via a first-class DevTools extension that appears automatically for any app depending on `device_preview`, or
-- **programmatically**, through a small controller API.
+Control it from **Flutter DevTools**, from **Dart**, or from your **tests**.
 
 ## Quickstart
 
@@ -32,7 +31,7 @@ void main() {
 }
 ```
 
-That's the whole integration. Open DevTools, select the **device_preview** tab, and pick a device. Simulation is enabled in debug builds by default and fully disabled (zero interposition, tree-shaken service extensions) in release builds.
+That's the whole integration. Open DevTools, select the **device_preview** tab, and pick a device. Simulation is active in debug builds and completely disabled in release builds, so nothing ships to your users.
 
 Programmatic control:
 
