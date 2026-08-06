@@ -117,16 +117,15 @@ class DevicePreview extends BindingBase
   /// Enables simulation, then initializes (once) and returns the ambient
   /// binding.
   ///
-  /// [when] is latched forever at first call; defaults to [kDebugMode].
-  /// Pass `when: !kReleaseMode` to also allow simulation in profile
-  /// builds (target-platform simulation stays debug-only regardless).
+  /// [enabled] is latched forever at first call. When null — the default —
+  /// it resolves to `!kReleaseMode`: on in debug and profile, off in
+  /// release (target-platform simulation stays debug-only regardless).
   ///
-  /// [initialSimulation] is applied before the first frame — useful for
-  /// golden/CI scenarios without DevTools.
-  static WidgetsBinding enable({
-    bool when = kDebugMode,
-    DeviceSimulation? initialSimulation,
-  });
+  /// To start under a given simulation before the first frame (golden/CI
+  /// scenarios without DevTools), apply it through the controller straight
+  /// after enabling, or latch one via
+  /// `DevicePreviewBindingMixin.latchConfiguration`.
+  static WidgetsBinding enable([bool? enabled]);
 
   /// The active controller, or null when the ambient binding is not a
   /// device-preview binding or simulation is disabled.
@@ -502,7 +501,7 @@ Debug diagnostic: applying a brightness simulation while `debugBrightnessOverrid
 | Third-party code holding raw `ui.PlatformDispatcher.instance` | Framework-internal uses audited clean; third-party reads see real values — documented limitation. `viewId` equality covers all hit-test/render paths. |
 | `_updateSystemChrome` probes simulated padding → status-bar style follows simulated layout | Cosmetic; documented. |
 | Multi-view / `runWidget` apps | Secondary views pass through untouched; documented as unsupported for simulation. Unknown protocol keys ignored = forward-compatible if per-view simulation ever lands. |
-| Release safety | `enabled` defaults `kDebugMode`; disabled path returns host dispatcher directly; extensions inside `if (!kReleaseMode)` → tree-shaken. |
+| Release safety | `enabled` resolves to `!kReleaseMode` when null; disabled path returns host dispatcher directly; extensions inside `if (!kReleaseMode)` → tree-shaken. |
 
 ---
 
@@ -647,7 +646,7 @@ Every open question from both inputs, decided:
 | 11 | Shared protocol package | **No** — extension reads everything from the app; `protocolVersion` field pins compatibility | One published package; app is the single source of truth, skew impossible. |
 | 12 | Mixin vs. concrete-only binding | **Ship `DevicePreviewBindingMixin` publicly**; wrapper host = `super.platformDispatcher` | It is the testability keystone (test + integration bindings) and costs nothing at runtime. |
 | 13 | Controller vs. binding-hosted API | **Separate `DevicePreviewController`**, reached via `DevicePreview.controller` | Protocol handlers and tests depend on an interface, not on a binding. |
-| 14 | Profile-mode support | **Opt-in via `DevicePreview.enable(when: !kReleaseMode)`; default stays `kDebugMode`**; `targetPlatform` capability-flagged false in profile | Extensions work in profile but platform sim cannot (`platform.dart:105`, const-folded); flags keep the UI honest. |
+| 14 | Profile-mode support | **On by default in profile** — `enable([bool? enabled])` resolves null to `!kReleaseMode`; `targetPlatform` capability-flagged false in profile | Extensions work in profile but platform sim cannot (`platform.dart:105`, const-folded); flags keep the UI honest. |
 | 15 | Custom preset discovery timing | **`device_preview.presetsChanged` event on `registerPreset`** | One `postEvent` line removes the staleness window. |
 | 16 | Hot-restart persistence | **DevTools-side re-push**, gated on the `device_preview.ready` event (+ fallback timer), stashed in memory + localStorage | The app can't remember across restarts; the panel can. `ready` closes B's race (#8). |
 | 17 | Multi-view / multi-window | **Pass-through only, documented unsupported; no reserved protocol fields** | Unknown-keys-ignored already gives forward compat; reserving fields now is speculation. |

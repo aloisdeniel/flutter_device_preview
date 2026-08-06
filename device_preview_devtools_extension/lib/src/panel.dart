@@ -58,9 +58,9 @@ class _DevicePreviewPanelState extends State<DevicePreviewPanel> {
         return const _EmptyState(
           icon: Icons.do_not_disturb_alt_outlined,
           title: 'Device Preview is disabled',
-          message: 'Device Preview is installed but simulation is disabled in '
-              'this build. Call `DevicePreview.enable(when: !kReleaseMode)` '
-              'to allow profile builds.',
+          message: 'Device Preview is installed but simulation is turned off '
+              'in this build. Call `DevicePreview.enable()` without an '
+              'argument to keep it on in debug and profile builds.',
         );
       case PanelStatus.paused:
         return _EmptyState(

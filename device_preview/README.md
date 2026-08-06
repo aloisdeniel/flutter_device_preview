@@ -32,7 +32,7 @@ Control it from **Flutter DevTools**, from **Dart**, or from your **tests**.
 | **24-hour time** | For date and time UI. |
 | **Target platform** | Material/Cupertino behaviour across iOS, Android, macOS, Windows and Linux (debug builds only). |
 
-Simulation is active in debug builds and completely disabled in release
+Simulation is active in debug and profile builds and completely off in release
 builds, where the package adds no behaviour of any kind.
 
 ## Usage
@@ -42,6 +42,15 @@ void main() {
   DevicePreview.enable();
   runApp(const MyApp()); // runs as usual — now simulatable
 }
+```
+
+`enable()` takes an optional positional flag. Left out, it resolves to
+`!kReleaseMode` — on in debug and profile, off in release:
+
+```dart
+DevicePreview.enable();            // debug + profile
+DevicePreview.enable(kDebugMode);  // debug only
+DevicePreview.enable(false);       // never
 ```
 
 Programmatic control:

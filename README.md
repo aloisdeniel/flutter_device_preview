@@ -31,7 +31,9 @@ void main() {
 }
 ```
 
-That's the whole integration. Open DevTools, select the **device_preview** tab, and pick a device. Simulation is active in debug builds and completely disabled in release builds, so nothing ships to your users.
+That's the whole integration. Open DevTools, select the **device_preview** tab, and pick a device.
+
+`enable()` is safe to call unconditionally: simulation is active in debug and profile builds and completely off in release, so nothing ships to your users. Pass a value to decide yourself — `DevicePreview.enable(kDebugMode)` for debug only, `DevicePreview.enable(false)` to turn it off.
 
 Programmatic control:
 

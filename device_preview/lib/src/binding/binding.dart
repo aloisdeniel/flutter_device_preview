@@ -57,14 +57,17 @@ mixin DevicePreviewBindingMixin
         SemanticsBinding,
         RendererBinding,
         WidgetsBinding {
-  static bool _latchedEnabled = kDebugMode;
+  static bool _latchedEnabled = !kReleaseMode;
   static DeviceSimulation? _latchedInitialSimulation;
 
   /// Latches the configuration consumed by the next binding constructed
   /// with this mixin. Must be called before the binding is constructed;
   /// [DevicePreview.enable] does this automatically.
+  ///
+  /// [initialSimulation] is applied before the first frame, which is how
+  /// golden and CI scenarios start under a given device without DevTools.
   static void latchConfiguration({
-    bool enabled = kDebugMode,
+    bool enabled = !kReleaseMode,
     DeviceSimulation? initialSimulation,
   }) {
     _latchedEnabled = enabled;
@@ -328,24 +331,32 @@ class DevicePreview extends BindingBase
   /// Enables device simulation, then initializes (once) and returns the
   /// ambient binding.
   ///
-  /// Call this before `runApp`. It is safe to call unconditionally: [when]
-  /// defaults to [kDebugMode], so release builds get a plain
-  /// [WidgetsFlutterBinding] with no simulation machinery at all. Pass
-  /// `when: !kReleaseMode` to also allow simulation in profile builds
-  /// (target-platform simulation stays debug-only regardless).
+  /// Call this before `runApp`. It is safe to call unconditionally: when
+  /// [enabled] is null — the default — simulation is active in debug and
+  /// profile builds and completely off in release builds, where the binding
+  /// behaves exactly like [WidgetsFlutterBinding]. Pass an explicit value to
+  /// decide yourself:
   ///
-  /// The value of [when] is latched forever at the first call.
+  /// ```dart
+  /// DevicePreview.enable();               // debug + profile
+  /// DevicePreview.enable(kDebugMode);     // debug only
+  /// DevicePreview.enable(false);          // never
+  /// ```
   ///
-  /// [initialSimulation] is applied before the first frame — useful for
-  /// golden/CI scenarios without DevTools.
-  static WidgetsBinding enable({
-    bool when = kDebugMode,
-    DeviceSimulation? initialSimulation,
-  }) {
+  /// Target-platform simulation stays debug-only regardless, because
+  /// `defaultTargetPlatform` is const-folded in other build modes.
+  ///
+  /// The resolved value is latched forever at the first call; later calls
+  /// return the existing binding unchanged.
+  ///
+  /// To start from a given simulation before the first frame (golden or CI
+  /// scenarios without DevTools), apply it through the controller right
+  /// after enabling, or latch one with
+  /// [DevicePreviewBindingMixin.latchConfiguration].
+  static WidgetsBinding enable([bool? enabled]) {
     if (_instance == null) {
       DevicePreviewBindingMixin.latchConfiguration(
-        enabled: when,
-        initialSimulation: initialSimulation,
+        enabled: enabled ?? !kReleaseMode,
       );
       DevicePreview();
     }
