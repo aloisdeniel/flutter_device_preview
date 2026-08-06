@@ -51,16 +51,16 @@ class _DevicePreviewPanelState extends State<DevicePreviewPanel> {
         return const _EmptyState(
           icon: Icons.extension_off_outlined,
           title: 'Device Preview is not active in this app',
-          message: 'Add `DevicePreviewBinding.ensureInitialized()` before '
+          message: 'Add `DevicePreview.enable()` before '
               '`runApp` and hot restart.',
         );
       case PanelStatus.disabled:
         return const _EmptyState(
           icon: Icons.do_not_disturb_alt_outlined,
           title: 'Device Preview is disabled',
-          message: 'The binding is installed but simulation is disabled in '
-              'this build. Pass `enabled: !kReleaseMode` to '
-              '`ensureInitialized` to allow profile builds.',
+          message: 'Device Preview is installed but simulation is disabled in '
+              'this build. Call `DevicePreview.enable(when: !kReleaseMode)` '
+              'to allow profile builds.',
         );
       case PanelStatus.paused:
         return _EmptyState(

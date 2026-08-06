@@ -21,7 +21,7 @@ import 'package:device_preview/device_preview.dart';
 /// dispatcher can never be returned from `binding.platformDispatcher` here
 /// (that would be an invalid override — the reason
 /// [DevicePreviewBindingMixin] leaves the `platformDispatcher` override to
-/// concrete bindings such as `DevicePreviewBinding`).
+/// concrete bindings such as `DevicePreview`).
 ///
 /// Instead, this binding routes simulation through the wrapper **view**: the
 /// root widget is wrapped in a `View` using
@@ -31,7 +31,7 @@ import 'package:device_preview/device_preview.dart';
 /// `PreviewViewConfiguration` for the wrapper's `RenderView`. What this
 /// composition does *not* cover is framework reads that go through
 /// `binding.platformDispatcher` directly (for example `WidgetsApp`'s locale
-/// list); those are only interposed by the real `DevicePreviewBinding`.
+/// list); those are only interposed by the real `DevicePreview`.
 class TestDevicePreviewBinding extends AutomatedTestWidgetsFlutterBinding
     with DevicePreviewBindingMixin {
   static TestDevicePreviewBinding? _instance;

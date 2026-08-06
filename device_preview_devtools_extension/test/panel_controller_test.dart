@@ -52,7 +52,7 @@ void main() {
       expect(gateway.banners.single['type'], 'warning');
       expect(
         gateway.banners.single['message'],
-        contains('DevicePreviewBinding.ensureInitialized()'),
+        contains('DevicePreview.enable()'),
       );
     });
 

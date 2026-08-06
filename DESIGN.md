@@ -37,7 +37,7 @@ repo/
       test_support.dart                    # TestDevicePreviewBinding + debugInjectPointerData
       src/
         binding/
-          binding.dart                     # DevicePreviewBinding + DevicePreviewBindingMixin
+          binding.dart                     # DevicePreview + DevicePreviewBindingMixin
           preview_platform_dispatcher.dart # implements ui.PlatformDispatcher
           preview_flutter_view.dart        # implements ui.FlutterView
           preview_values.dart              # PreviewViewPadding, PreviewAccessibilityFeatures
@@ -101,7 +101,7 @@ Build pipeline (CI): `dart run devtools_extensions build_and_copy --source=. --d
 ///
 /// ```dart
 /// void main() {
-///   DevicePreviewBinding.ensureInitialized();
+///   DevicePreview.enable();
 ///   runApp(const MyApp()); // completely unmodified
 /// }
 /// ```
@@ -109,21 +109,22 @@ Build pipeline (CI): `dart run devtools_extensions build_and_copy --source=. --d
 /// When [enabled] is false (the default in release builds), no wrapper
 /// objects are installed and the binding is behaviorally identical to
 /// [WidgetsFlutterBinding].
-class DevicePreviewBinding extends BindingBase
+class DevicePreview extends BindingBase
     with GestureBinding, SchedulerBinding, ServicesBinding, PaintingBinding,
         SemanticsBinding, RendererBinding, WidgetsBinding,
         DevicePreviewBindingMixin {
 
-  /// Initializes (once) and returns the ambient binding.
+  /// Enables simulation, then initializes (once) and returns the ambient
+  /// binding.
   ///
-  /// [enabled] is latched forever at first call; defaults to [kDebugMode].
-  /// Pass `enabled: !kReleaseMode` to also allow simulation in profile
+  /// [when] is latched forever at first call; defaults to [kDebugMode].
+  /// Pass `when: !kReleaseMode` to also allow simulation in profile
   /// builds (target-platform simulation stays debug-only regardless).
   ///
   /// [initialSimulation] is applied before the first frame — useful for
   /// golden/CI scenarios without DevTools.
-  static WidgetsBinding ensureInitialized({
-    bool enabled = kDebugMode,
+  static WidgetsBinding enable({
+    bool when = kDebugMode,
     DeviceSimulation? initialSimulation,
   });
 
@@ -372,11 +373,11 @@ Usage:
 
 ```dart
 void main() {
-  DevicePreviewBinding.ensureInitialized();
+  DevicePreview.enable();
   runApp(const MyApp());
 }
 
-final c = DevicePreviewBinding.controller;
+final c = DevicePreview.controller;
 await c.applyPreset(DevicePresets.iPhoneSe3);
 await c.update((s) => s.copyWith(textScaleFactor: 2.0, platformBrightness: Brightness.dark));
 await c.setOrientation(Orientation.landscape);
@@ -601,7 +602,7 @@ void main() => runApp(const DevToolsExtension(child: DevicePreviewPanel()));
 4. **Locale** — language-tag text field with validation + common-locales dropdown; ordered multi-locale list; clear chip.
 5. **Accessibility** — seven tri-state (system/on/off) controls mapping to the nullable flags.
 6. **Platform** — `TargetPlatform` dropdown + "real"; disabled with tooltip when `capabilities.targetPlatform == false`; note that applying triggers a reassemble.
-7. **Empty states** — not connected / connected-but-no-extension ("Add `DevicePreviewBinding.ensureInitialized()` before `runApp`.") / registered-but-disabled / isolate paused.
+7. **Empty states** — not connected / connected-but-no-extension ("Add `DevicePreview.enable()` before `runApp`.") / registered-but-disabled / isolate paused.
 
 Local dev: `flutter run -d chrome --dart-define=use_simulated_environment=true` against `device_preview/example`.
 
@@ -645,8 +646,8 @@ Every open question from both inputs, decided:
 | 10 | Screenshot | **Ship as the single optional module**, capability-flagged, isolated in `screenshot.dart`, error-enveloped | High demo/CI value; risk fully contained — failure can never touch the core. |
 | 11 | Shared protocol package | **No** — extension reads everything from the app; `protocolVersion` field pins compatibility | One published package; app is the single source of truth, skew impossible. |
 | 12 | Mixin vs. concrete-only binding | **Ship `DevicePreviewBindingMixin` publicly**; wrapper host = `super.platformDispatcher` | It is the testability keystone (test + integration bindings) and costs nothing at runtime. |
-| 13 | Controller vs. binding-hosted API | **Separate `DevicePreviewController`**, reached via `DevicePreviewBinding.controller` | Protocol handlers and tests depend on an interface, not on a binding. |
-| 14 | Profile-mode support | **Opt-in via `enabled: !kReleaseMode`; default stays `kDebugMode`**; `targetPlatform` capability-flagged false in profile | Extensions work in profile but platform sim cannot (`platform.dart:105`, const-folded); flags keep the UI honest. |
+| 13 | Controller vs. binding-hosted API | **Separate `DevicePreviewController`**, reached via `DevicePreview.controller` | Protocol handlers and tests depend on an interface, not on a binding. |
+| 14 | Profile-mode support | **Opt-in via `DevicePreview.enable(when: !kReleaseMode)`; default stays `kDebugMode`**; `targetPlatform` capability-flagged false in profile | Extensions work in profile but platform sim cannot (`platform.dart:105`, const-folded); flags keep the UI honest. |
 | 15 | Custom preset discovery timing | **`device_preview.presetsChanged` event on `registerPreset`** | One `postEvent` line removes the staleness window. |
 | 16 | Hot-restart persistence | **DevTools-side re-push**, gated on the `device_preview.ready` event (+ fallback timer), stashed in memory + localStorage | The app can't remember across restarts; the panel can. `ready` closes B's race (#8). |
 | 17 | Multi-view / multi-window | **Pass-through only, documented unsupported; no reserved protocol fields** | Unknown-keys-ignored already gives forward compat; reserving fields now is speculation. |
@@ -661,7 +662,7 @@ Every open question from both inputs, decided:
 
 The implementation follows this document with these reviewed deviations:
 
-1. **`platformDispatcher` override placement** — lives on the concrete `DevicePreviewBinding`, not the mixin: `TestWidgetsFlutterBinding` narrows the getter's return type to `TestPlatformDispatcher`, so a mixin-level override would be an invalid override when layered over test bindings. Test compositions route simulation through the wrapper *view* instead (`wrapWithDefaultView` → `View(view: previewImplicitView)`), which covers MediaQuery, root layout, the fit matrix, and pointer remap — but not framework reads of `binding.platformDispatcher` (e.g. `WidgetsApp` locale resolution).
+1. **`platformDispatcher` override placement** — lives on the concrete `DevicePreview`, not the mixin: `TestWidgetsFlutterBinding` narrows the getter's return type to `TestPlatformDispatcher`, so a mixin-level override would be an invalid override when layered over test bindings. Test compositions route simulation through the wrapper *view* instead (`wrapWithDefaultView` → `View(view: previewImplicitView)`), which covers MediaQuery, root layout, the fit matrix, and pointer remap — but not framework reads of `binding.platformDispatcher` (e.g. `WidgetsApp` locale resolution).
 2. **No `lib/test_support.dart`** — shipping it would force `flutter_test` into consumers' regular dependencies. The `TestDevicePreviewBinding` recipe is documented in the README and used internally from `test/support/test_binding.dart`. A separate `device_preview_test` package is the future home if demand appears.
 3. **Display features rotate with orientation** — `SimulatedDisplayFeature.rotatedToLandscape/rotatedToPortrait` applied by `resolve()`, `setOrientation`, and mirrored in the DevTools panel. `systemGestureInsets` deliberately do *not* rotate (edge semantics are orientation-stable on real platforms); pinned by test.
 4. **Controller mutations are serialized** — `apply`/`update`/`applyPreset`/`setOrientation` run through an internal queue; state commits before the (debug-only) targetPlatform reassemble await, and `stateChanged` posts in a `finally`. DevTools panel writes are serialized the same way.

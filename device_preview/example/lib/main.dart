@@ -2,7 +2,7 @@
 //
 // The app itself is completely ordinary: a [MaterialApp] whose layout adapts
 // to [MediaQuery]. The only device_preview-specific line is the call to
-// [DevicePreviewBinding.ensureInitialized] below — everything else is a
+// [DevicePreview.enable] below — everything else is a
 // regular Flutter app that happens to make the effects of a simulation easy
 // to see:
 //
@@ -16,7 +16,7 @@
 // NOTE: the real control surface for device_preview is the DevTools
 // extension ("Device Preview" tab in Dart DevTools). The buttons on the
 // first tab exist only to demonstrate the programmatic Dart API
-// (DevicePreviewBinding.controller); a production app would ship none of
+// (DevicePreview.controller); a production app would ship none of
 // them.
 
 import 'package:device_preview/device_preview.dart';
@@ -29,7 +29,7 @@ void main() {
   // runApp. In release builds this is behaviorally identical to
   // WidgetsFlutterBinding.ensureInitialized() (simulation defaults to
   // kDebugMode and the wrappers are never installed when disabled).
-  DevicePreviewBinding.ensureInitialized();
+  DevicePreview.enable();
   runApp(const DevicePreviewExampleApp());
 }
 
@@ -268,7 +268,7 @@ class _ApiDemoCard extends StatelessWidget {
 
   /// The controller, or null when simulation is disabled (e.g. release mode).
   DevicePreviewController? get _controller =>
-      DevicePreviewBinding.maybeController;
+      DevicePreview.maybeController;
 
   Future<void> _toggleOrientation(BuildContext context) async {
     final DevicePreviewController? c = _controller;

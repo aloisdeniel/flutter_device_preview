@@ -416,11 +416,11 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
       </div>
       <div class="codeblock">
         <div class="bar"><span>main.dart — the entire integration</span><button class="copy-btn" data-copy="void main() {
-  DevicePreviewBinding.ensureInitialized();
+  DevicePreview.enable();
   runApp(const MyApp());
 }">copy</button></div>
         <pre><span class="c-kw">void</span> <span class="c-fn">main</span>() {
-  <span class="c-ty">DevicePreviewBinding</span>.<span class="c-fn">ensureInitialized</span>();
+  <span class="c-ty">DevicePreview</span>.<span class="c-fn">enable</span>();
   <span class="c-fn">runApp</span>(<span class="c-kw">const</span> <span class="c-ty">MyApp</span>());  <span class="c-cm">// runs as usual — now simulatable</span>
 }</pre>
       </div>
@@ -514,7 +514,7 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
     <div class="duo">
       <div class="codeblock reveal">
         <div class="bar"><span>anywhere.dart — the controller API</span></div>
-        <pre><span class="c-kw">final</span> c = <span class="c-ty">DevicePreviewBinding</span>.controller;
+        <pre><span class="c-kw">final</span> c = <span class="c-ty">DevicePreview</span>.controller;
 
 <span class="c-cm">// full preset, orientation included</span>
 <span class="c-kw">await</span> c.<span class="c-fn">applyPreset</span>(<span class="c-ty">DevicePresets</span>.iPhone16Pro);

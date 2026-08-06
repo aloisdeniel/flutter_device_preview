@@ -36,7 +36,7 @@ import 'preview_view_configuration.dart';
 /// ui.PlatformDispatcher get platformDispatcher => previewPlatformDispatcher;
 /// ```
 ///
-/// [DevicePreviewBinding] does exactly that. The override intentionally
+/// [DevicePreview] does exactly that. The override intentionally
 /// lives in the concrete class rather than in this mixin: flutter_test's
 /// `TestWidgetsFlutterBinding` narrows the getter's type to
 /// `TestPlatformDispatcher`, so a mixin-level `ui.PlatformDispatcher`
@@ -62,7 +62,7 @@ mixin DevicePreviewBindingMixin
 
   /// Latches the configuration consumed by the next binding constructed
   /// with this mixin. Must be called before the binding is constructed;
-  /// [DevicePreviewBinding.ensureInitialized] does this automatically.
+  /// [DevicePreview.enable] does this automatically.
   static void latchConfiguration({
     bool enabled = kDebugMode,
     DeviceSimulation? initialSimulation,
@@ -286,20 +286,22 @@ mixin DevicePreviewBindingMixin
   }
 }
 
-/// Drop-in replacement for [WidgetsFlutterBinding] that can simulate the
-/// characteristics of another device.
+/// Entry point of `package:device_preview`, and a drop-in replacement for
+/// [WidgetsFlutterBinding] that can simulate the characteristics of another
+/// device.
 ///
 /// ```dart
 /// void main() {
-///   DevicePreviewBinding.ensureInitialized();
-///   runApp(const MyApp()); // completely unmodified
+///   DevicePreview.enable();
+///   runApp(const MyApp()); // runs as usual — now simulatable
 /// }
 /// ```
 ///
-/// When `enabled` is false (the default in release builds), no wrapper
-/// objects are installed and the binding is behaviorally identical to
-/// [WidgetsFlutterBinding].
-class DevicePreviewBinding extends BindingBase
+/// Use [enable] to install it, then [controller] (or [maybeController]) to
+/// drive the simulation from Dart. When simulation is off — the default in
+/// release builds — no wrapper objects are installed and the binding is
+/// behaviorally identical to [WidgetsFlutterBinding].
+class DevicePreview extends BindingBase
     with
         GestureBinding,
         SchedulerBinding,
@@ -309,7 +311,7 @@ class DevicePreviewBinding extends BindingBase
         RendererBinding,
         WidgetsBinding,
         DevicePreviewBindingMixin {
-  static DevicePreviewBinding? _instance;
+  static DevicePreview? _instance;
 
   @override
   void initInstances() {
@@ -323,25 +325,29 @@ class DevicePreviewBinding extends BindingBase
   @override
   ui.PlatformDispatcher get platformDispatcher => previewPlatformDispatcher;
 
-  /// Initializes (once) and returns the ambient binding.
+  /// Enables device simulation, then initializes (once) and returns the
+  /// ambient binding.
   ///
-  /// [enabled] is latched forever at the first call; defaults to
-  /// [kDebugMode]. Pass `enabled: !kReleaseMode` to also allow simulation in
-  /// profile builds (target-platform simulation stays debug-only
-  /// regardless).
+  /// Call this before `runApp`. It is safe to call unconditionally: [when]
+  /// defaults to [kDebugMode], so release builds get a plain
+  /// [WidgetsFlutterBinding] with no simulation machinery at all. Pass
+  /// `when: !kReleaseMode` to also allow simulation in profile builds
+  /// (target-platform simulation stays debug-only regardless).
+  ///
+  /// The value of [when] is latched forever at the first call.
   ///
   /// [initialSimulation] is applied before the first frame — useful for
   /// golden/CI scenarios without DevTools.
-  static WidgetsBinding ensureInitialized({
-    bool enabled = kDebugMode,
+  static WidgetsBinding enable({
+    bool when = kDebugMode,
     DeviceSimulation? initialSimulation,
   }) {
     if (_instance == null) {
       DevicePreviewBindingMixin.latchConfiguration(
-        enabled: enabled,
+        enabled: when,
         initialSimulation: initialSimulation,
       );
-      DevicePreviewBinding();
+      DevicePreview();
     }
     return _instance!;
   }
@@ -356,8 +362,8 @@ class DevicePreviewBinding extends BindingBase
     final DevicePreviewController? active = maybeController;
     if (active == null) {
       throw StateError(
-        'DevicePreviewBinding.controller is unavailable: either '
-        'DevicePreviewBinding.ensureInitialized() was never called, another '
+        'DevicePreview.controller is unavailable: either '
+        'DevicePreview.enable() was never called, another '
         'binding is installed, or simulation is disabled.',
       );
     }

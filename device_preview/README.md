@@ -39,7 +39,7 @@ builds, where the package adds no behaviour of any kind.
 
 ```dart
 void main() {
-  DevicePreviewBinding.ensureInitialized();
+  DevicePreview.enable();
   runApp(const MyApp()); // runs as usual — now simulatable
 }
 ```
@@ -47,7 +47,7 @@ void main() {
 Programmatic control:
 
 ```dart
-final c = DevicePreviewBinding.controller;
+final c = DevicePreview.controller;
 await c.applyPreset(DevicePresets.iPhoneSe3);
 await c.update((s) => s.copyWith(textScaleFactor: 2.0, platformBrightness: Brightness.dark));
 await c.setOrientation(Orientation.landscape);

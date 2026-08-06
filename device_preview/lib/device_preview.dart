@@ -11,5 +11,5 @@ export 'src/model/real_device_info.dart';
 export 'src/model/simulation.dart';
 
 export 'src/binding/binding.dart'
-    show DevicePreviewBinding, DevicePreviewBindingMixin;
+    show DevicePreview, DevicePreviewBindingMixin;
 export 'src/controller/controller.dart' show DevicePreviewController;

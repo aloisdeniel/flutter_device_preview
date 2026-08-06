@@ -12,7 +12,7 @@ enum PanelStatus {
   disconnected,
 
   /// Connected, but `ext.device_preview.getState` is not registered — the app
-  /// does not use `DevicePreviewBinding`.
+  /// does not use `DevicePreview`.
   noBinding,
 
   /// The binding is installed but simulation is disabled
@@ -300,7 +300,7 @@ class PanelController extends ChangeNotifier {
           type: 'warning',
           message:
               'Device Preview is not active in this app. Add '
-              '`DevicePreviewBinding.ensureInitialized()` before `runApp`.',
+              '`DevicePreview.enable()` before `runApp`.',
         );
       });
     }

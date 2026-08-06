@@ -26,7 +26,7 @@ dependencies:
 
 ```dart
 void main() {
-  DevicePreviewBinding.ensureInitialized();
+  DevicePreview.enable();
   runApp(const MyApp()); // runs as usual — now simulatable
 }
 ```
@@ -36,7 +36,7 @@ That's the whole integration. Open DevTools, select the **device_preview** tab, 
 Programmatic control:
 
 ```dart
-final c = DevicePreviewBinding.controller;
+final c = DevicePreview.controller;
 await c.applyPreset(DevicePresets.iPhone16Pro);
 await c.setOrientation(Orientation.landscape);
 await c.update((s) => s.copyWith(textScaleFactor: 2.0, platformBrightness: Brightness.dark));

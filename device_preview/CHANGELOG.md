@@ -6,7 +6,7 @@
 - Pure model layer: `DeviceSimulation`, `SimulatedAccessibilityFeatures`,
   `SimulatedDisplayFeature`, `RealDeviceInfo`, `FitTransform`, pointer
   rewrite, and the `DevicePresets` catalog.
-- Binding layer: `DevicePreviewBinding` and `DevicePreviewBindingMixin` with
+- Binding layer: `DevicePreview` and `DevicePreviewBindingMixin` with
   the wrapper `PlatformDispatcher`/`FlutterView` pair, the scale-to-fit
   `ViewConfiguration`, and pointer remapping.
 - `DevicePreviewController` (apply/update/applyPreset/setOrientation/reset,

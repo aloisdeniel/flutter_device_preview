@@ -9,7 +9,7 @@
 import 'package:flutter/foundation.dart';
 
 /// The service extension whose registration signals that a
-/// `DevicePreviewBinding` is installed in the inspected app.
+/// `DevicePreview` is installed in the inspected app.
 const String kGetStateExtension = 'ext.device_preview.getState';
 
 /// Prefix of all events posted by the device_preview package
@@ -73,7 +73,7 @@ abstract class DevicePreviewGateway {
   /// Whether `ext.device_preview.getState` is registered on the main isolate.
   ///
   /// Flips false on hot restart and back to true once the new isolate has run
-  /// `DevicePreviewBinding.ensureInitialized()` again.
+  /// `DevicePreview.enable()` again.
   ValueListenable<bool> get extensionAvailable;
 
   /// Broadcast stream of `device_preview.*` events posted by the app.
