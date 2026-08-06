@@ -5,14 +5,15 @@
 
 Simulate the characteristics of another device — screen metrics, safe areas,
 locale, brightness, text scale, accessibility flags, target platform — from a
-DevTools extension or programmatically, with **no in-app UI** and **zero
-changes to your widget tree**.
+DevTools extension or programmatically, with full framework fidelity: every
+`MediaQuery`, layout pass, pointer event and locale resolution reads the
+simulated device.
 
 ## How it works: the binding strategy
 
-Instead of wrapping your app in widgets, `device_preview` ships a drop-in
-replacement for `WidgetsFlutterBinding` that interposes at the
-engine-abstraction level through exactly three framework seams:
+`device_preview` ships a drop-in replacement for `WidgetsFlutterBinding` that
+interposes at the engine-abstraction level through exactly three framework
+seams:
 
 1. **`BindingBase.platformDispatcher`** — returns a wrapper
    `PlatformDispatcher` (and wrapper implicit `FlutterView`) that merges
@@ -35,7 +36,7 @@ installed and everything passes straight through.
 ```dart
 void main() {
   DevicePreviewBinding.ensureInitialized();
-  runApp(const MyApp()); // completely unmodified
+  runApp(const MyApp()); // runs as usual — now simulatable
 }
 ```
 
@@ -142,6 +143,8 @@ reads that go through `binding.platformDispatcher` directly (for example
 
 ## Status
 
-The model layer, the binding/interposition layer, the controller, and the
+The model layer, the binding/interposition layer, the controller, the
 `ext.device_preview.*` service extensions (including the optional screenshot
-module) are implemented. The DevTools extension app is under construction.
+module) and the DevTools extension app are all implemented and covered by
+tests. What remains before a stable release is field testing: real DevTools
+sessions across platforms, and API feedback.

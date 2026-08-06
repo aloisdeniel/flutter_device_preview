@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>device_preview — simulate any device from the binding up</title>
-<meta name="description" content="Device Preview 3 simulates device characteristics at the Flutter binding level — no widgets, no wrappers, no in-app UI. Controlled programmatically and from a DevTools extension.">
+<title>device_preview — simulate any device, with full framework fidelity</title>
+<meta name="description" content="Device Preview 3 simulates screen metrics, safe areas, locales, brightness, text scale and accessibility for any Flutter app — driven from a DevTools panel or a few lines of Dart.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -26,19 +26,15 @@
   --display: "Bricolage Grotesque", sans-serif;
   --body: "IBM Plex Sans", sans-serif;
   --mono: "IBM Plex Mono", monospace;
-  --grid-minor: rgba(79, 141, 255, .05);
-  --grid-major: rgba(79, 141, 255, .09);
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body {
   background:
-    linear-gradient(var(--grid-major) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
-    linear-gradient(var(--grid-minor) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px),
+    radial-gradient(1100px 620px at 78% -8%, rgba(79, 209, 255, .10), transparent 62%),
+    radial-gradient(760px 520px at 6% 4%, rgba(255, 180, 84, .05), transparent 60%),
     var(--paper);
-  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  background-attachment: fixed;
   color: var(--ink);
   font-family: var(--body);
   font-size: 16px;
@@ -333,9 +329,9 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
 <div class="hero">
   <div class="sheet hero-grid">
     <div class="stagger">
-      <span class="tag">Flutter · binding-level simulation</span>
-      <h1>Any device.<br><span class="accent">Zero</span> <span class="outline">widgets.</span></h1>
-      <p class="lede">Device Preview simulates screen metrics, safe areas, locale, brightness, text scale and accessibility <strong>at the binding level</strong> — your widget tree stays completely untouched. Drive it from a DevTools panel or three lines of Dart.</p>
+      <span class="tag">Flutter · device simulation</span>
+      <h1>Any device.<br><span class="accent">Full</span> <span class="outline">fidelity.</span></h1>
+      <p class="lede">Design for an iPhone SE, a foldable and a desktop window without leaving your keyboard. Device Preview simulates screen metrics, safe areas, orientation, locales, brightness, text scale and accessibility <strong>so faithfully the framework can't tell the difference</strong> — then hands you the controls in Flutter DevTools.</p>
       <div class="hero-ctas">
         <a class="btn primary" href="#api">Get started</a>
         <a class="btn ghost" href="https://pub.dev/packages/device_preview">pub.dev ↗</a>
@@ -407,16 +403,16 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
     <div class="sec-head reveal">
       <div>
         <span class="tag">Architecture</span>
-        <h2>One line. Three seams.<br>No wrapper widget.</h2>
+        <h2>One line in <code style="font-size: .78em;">main()</code>.<br>Three seams underneath.</h2>
       </div>
       <span class="ref">FIG. 01 — INTERPOSITION</span>
     </div>
 
     <div class="oneline reveal">
       <div>
-        <p><strong>Previous generations of device preview tooling wrapped your app in widgets</strong> — a simulated <code>MediaQuery</code> here, a themed control panel there. It worked, but your widget tree was never quite <em>your</em> widget tree.</p>
-        <p>Device Preview 3 moves the whole simulation below the widget layer. A custom <code>WidgetsBinding</code> hands the framework a wrapped <code>FlutterView</code> and <code>PlatformDispatcher</code>, so every <code>MediaQuery</code>, every layout pass, every pointer event and every locale lookup sees the simulated device — <strong>because the framework itself does</strong>.</p>
-        <p>When simulation is off (the release default), the binding returns the host objects directly. Zero interposition, zero cost, zero behavioral difference.</p>
+        <p>Simulation happens <strong>below the widget layer</strong>. A custom <code>WidgetsBinding</code> hands the framework a wrapped <code>FlutterView</code> and <code>PlatformDispatcher</code>, so every <code>MediaQuery</code>, every layout pass, every pointer event and every locale lookup reads the simulated device — <strong>because the framework itself does</strong>.</p>
+        <p>That depth is what makes it trustworthy. Responsive breakpoints, <code>SafeArea</code> insets, orientation branches, <code>Intl</code> formatting, platform-adaptive widgets and accessibility behaviour all react exactly as they would on the real hardware — including the code paths you'd never think to test.</p>
+        <p>When simulation is off — the release default — the binding returns the host objects directly. Zero interposition, zero cost, zero behavioural difference.</p>
       </div>
       <div class="codeblock">
         <div class="bar"><span>main.dart</span><button class="copy-btn" data-copy="void main() {
@@ -425,7 +421,7 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
 }">copy</button></div>
         <pre><span class="c-kw">void</span> <span class="c-fn">main</span>() {
   <span class="c-ty">DevicePreviewBinding</span>.<span class="c-fn">ensureInitialized</span>();
-  <span class="c-fn">runApp</span>(<span class="c-kw">const</span> <span class="c-ty">MyApp</span>());  <span class="c-cm">// completely unmodified</span>
+  <span class="c-fn">runApp</span>(<span class="c-kw">const</span> <span class="c-ty">MyApp</span>());  <span class="c-cm">// runs as usual — now simulatable</span>
 }</pre>
       </div>
     </div>
@@ -479,13 +475,13 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
     <div class="sec-head reveal">
       <div>
         <span class="tag">Control surface</span>
-        <h2>Your app has no UI for this.<br>DevTools does.</h2>
+        <h2>The controls live<br>in Flutter DevTools.</h2>
       </div>
       <span class="ref">FIG. 03 — EXTENSION</span>
     </div>
     <div class="devtools-grid">
       <div class="reveal">
-        <p><strong>Nothing is drawn over your app.</strong> The control panel lives where developer tooling belongs — in Flutter DevTools, as a first-class extension that appears automatically for any app depending on <code>device_preview</code>.</p>
+        <p><strong>A first-class DevTools extension</strong>, shipped with the package and discovered automatically for any app that depends on it. Your whole screen stays free for the app you're designing.</p>
         <p>Pick a preset, rotate it, drag the text scale, flip brightness, reorder locales, toggle accessibility flags — the running app updates live over the VM service. Change simulation from Dart code instead and the panel follows, echo-free, thanks to per-request IDs.</p>
         <p><strong>Hot restart proof:</strong> the app forgets, the panel doesn't. With <em>Keep across restarts</em> enabled, the extension re-pushes your simulation the moment the app comes back.</p>
       </div>
@@ -567,7 +563,7 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
       <div class="tb-cell"><span class="lbl">Drafted by</span><span class="val">Aloïs Deniel</span></div>
     </div>
     <div class="foot-note">
-      <span>NO WIDGETS WERE WRAPPED IN THE MAKING OF THIS PACKAGE</span>
+      <span>SIMULATED AT THE BINDING · CONTROLLED FROM DEVTOOLS</span>
       <span>© <span id="year">2026</span> — MIT</span>
     </div>
   </div>

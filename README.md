@@ -2,7 +2,7 @@
   <img src="https://github.com/aloisdeniel/flutter_device_preview/raw/master/logo.png" alt="Device Preview for Flutter" />
 </p>
 
-<h4 align="center">Simulate any device from the binding up — no widgets, no wrappers, no in-app UI.</h4>
+<h4 align="center">Simulate any device — screen, safe areas, locale, accessibility — with full framework fidelity.</h4>
 
 <p align="center">
   <a href="https://pub.dartlang.org/packages/device_preview"><img src="https://img.shields.io/pub/v/device_preview.svg"></a>
@@ -11,9 +11,9 @@
   </a>
 </p>
 
-Device Preview 3 simulates the characteristics of another device — screen size, pixel ratio, safe areas, orientation, display features, locales, brightness, text scale, accessibility flags, target platform — **at the `WidgetsBinding` level**. Your widget tree stays completely unmodified: the framework itself sees the simulated device, so every `MediaQuery`, layout pass, pointer event and locale resolution follows along. The app renders scale-to-fit, letterboxed and centered, inside your real window.
+Device Preview 3 simulates the characteristics of another device — screen size, pixel ratio, safe areas, orientation, display features, locales, brightness, text scale, accessibility flags, target platform — **at the `WidgetsBinding` level**. The framework itself reads the simulated device, so every `MediaQuery`, layout pass, pointer event and locale resolution follows along: responsive breakpoints, `SafeArea` insets, orientation branches, `Intl` formatting and platform-adaptive widgets all behave as they would on the real hardware. The app renders scale-to-fit, letterboxed and centered, inside your real window.
 
-There is no control panel drawn over your app. Simulation is driven:
+Simulation is driven:
 
 - **from Flutter DevTools**, via a first-class DevTools extension that appears automatically for any app depending on `device_preview`, or
 - **programmatically**, through a small controller API.
@@ -28,7 +28,7 @@ dependencies:
 ```dart
 void main() {
   DevicePreviewBinding.ensureInitialized();
-  runApp(const MyApp()); // completely unmodified
+  runApp(const MyApp()); // runs as usual — now simulatable
 }
 ```
 
