@@ -118,6 +118,27 @@ void main() {
       expect(gateway.simulation, {'platformBrightness': 'dark'});
     });
 
+    testWidgets('system UI switch is disabled without simulated bars',
+        (tester) async {
+      await pumpPanel(tester);
+      final disabled = tester.widget<Switch>(
+        find.byKey(const Key('device_preview_system_ui_switch')),
+      );
+      expect(disabled.onChanged, isNull);
+      expect(disabled.value, isTrue);
+
+      await controller.selectPreset(const PresetView(testFramedPresetJson));
+      await tester.pumpAndSettle();
+      final enabled = tester.widget<Switch>(
+        find.byKey(const Key('device_preview_system_ui_switch')),
+      );
+      expect(enabled.onChanged, isNotNull);
+
+      await tester.tap(find.byKey(const Key('device_preview_system_ui_switch')));
+      await tester.pumpAndSettle();
+      expect(gateway.simulation?['showSystemUi'], isFalse);
+    });
+
     testWidgets('orientation toggle is disabled without a simulated screen',
         (tester) async {
       await pumpPanel(tester);

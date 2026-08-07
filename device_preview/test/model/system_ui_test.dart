@@ -100,6 +100,47 @@ void main() {
       expect(simulation.copyWith(systemUi: null).systemUi, isNull);
     });
 
+    test('showSystemUi defaults to true and only travels when false', () {
+      expect(const DeviceSimulation().showSystemUi, isTrue);
+      expect(
+        const DeviceSimulation(systemUi: kSystemUi).toJson(),
+        isNot(contains('showSystemUi')),
+      );
+      const DeviceSimulation hidden = DeviceSimulation(
+        systemUi: kSystemUi,
+        showSystemUi: false,
+      );
+      expect(hidden.toJson()['showSystemUi'], isFalse);
+      expect(DeviceSimulation.fromJson(hidden.toJson()), hidden);
+      expect(
+        DeviceSimulation.fromJson(
+          const <String, Object?>{'showSystemUi': true},
+        ).showSystemUi,
+        isTrue,
+      );
+      expect(
+        () => DeviceSimulation.fromJson(
+          const <String, Object?>{'showSystemUi': 'no'},
+        ),
+        throwsFormatException,
+      );
+    });
+
+    test('showSystemUi survives copyWith and separates values', () {
+      const DeviceSimulation simulation = DeviceSimulation(systemUi: kSystemUi);
+      expect(simulation.copyWith().showSystemUi, isTrue);
+      expect(simulation.copyWith(showSystemUi: false).showSystemUi, isFalse);
+      expect(
+        simulation.copyWith(showSystemUi: false),
+        isNot(simulation),
+      );
+      // A hidden bar overrides nothing the app can observe.
+      expect(
+        const DeviceSimulation(showSystemUi: false).isEmpty,
+        isTrue,
+      );
+    });
+
     test('participates in equality', () {
       expect(
         const DeviceSimulation(systemUi: kSystemUi),

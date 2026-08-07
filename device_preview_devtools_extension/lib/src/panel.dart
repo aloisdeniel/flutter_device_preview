@@ -342,6 +342,17 @@ class _DeviceSection extends StatelessWidget {
           ],
         ),
         const SizedBox(height: denseSpacing),
+        _LabeledRow(
+          label: 'System UI',
+          child: Switch(
+            key: const Key('device_preview_system_ui_switch'),
+            value: controller.showSystemUi,
+            onChanged: controller.hasSystemUi
+                ? (value) => controller.setShowSystemUi(value)
+                : null,
+          ),
+        ),
+        const SizedBox(height: denseSpacing),
         _CustomDeviceExpander(controller: controller),
       ],
     );

@@ -149,7 +149,17 @@ Artwork is drawn at its natural size (its view box), never stretched, and is
 centered vertically in the bar unless `bottomInset` pins it to the outer edge.
 `leading` and `trailing` swap under a right-to-left directionality.
 
-Everything is static — the clock always reads 9:41, the battery never moves.
+Everything is static — the clock always reads the same time, the battery never
+moves. The iOS elements (clock glyphs, cellular bars, wifi, the battery with
+its percentage knocked out so the app shows through) come from one reference
+drawing: each group is emitted with its path data **verbatim**, under a
+`<g transform="scale(…) translate(…)">` that maps the reference coordinates
+onto the element's own view box. Editing them means editing that drawing and
+re-emitting, not retouching coordinates by hand.
+
+A simulation can hide the bars without dropping the device
+(`DeviceSimulation.showSystemUi`, the panel's **System UI** switch); the safe
+areas they sit in are unaffected, so the app lays out identically either way.
 
 ### Colors
 

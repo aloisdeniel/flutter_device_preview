@@ -294,6 +294,29 @@ void main() {
       expect(gateway.simulation?['systemUi'], isNull);
     });
 
+    test('the system UI toggle survives switching device', () async {
+      await ready();
+      await controller!.selectPreset(const PresetView(testFramedPresetJson));
+      expect(controller!.hasSystemUi, isTrue);
+      expect(controller!.showSystemUi, isTrue);
+
+      await controller!.setShowSystemUi(false);
+      expect(gateway.simulation?['showSystemUi'], isFalse);
+      expect(controller!.showSystemUi, isFalse);
+
+      // Not a metric field: picking another device keeps the choice.
+      await controller!.selectPreset(const PresetView(testPhonePresetJson));
+      expect(gateway.simulation?['showSystemUi'], isFalse);
+      expect(gateway.simulation?['presetId'], 'test-phone');
+      // …and that device has no bars to show anyway.
+      expect(controller!.hasSystemUi, isFalse);
+
+      await controller!.setShowSystemUi(true);
+      // Back to the default: the key leaves the wire entirely.
+      expect(gateway.simulation, isNot(contains('showSystemUi')));
+      expect(controller!.showSystemUi, isTrue);
+    });
+
     test('every built-in catalog device selects without error', () async {
       await ready();
       for (final preset in kBuiltInPresets) {

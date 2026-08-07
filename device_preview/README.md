@@ -32,7 +32,7 @@ Control it from **Flutter DevTools**, from **Dart**, or from your **tests**.
 | **24-hour time** | For date and time UI. |
 | **Target platform** | Material/Cupertino behaviour across iOS, Android, macOS, Windows and Linux (debug builds only). |
 | **Device frame** | The real device drawn around your app: rounded screen corners clip it, the body is painted behind it. Artwork ships with the DevTools catalog, not in your app. |
-| **System UI** | A simulated status bar and gesture pill, laid out from the device's safe areas and tinted from your app's `SystemUiOverlayStyle` — so a status bar style is visible while you write it. |
+| **System UI** | A simulated status bar and gesture pill, laid out from the device's safe areas and tinted from your app's `SystemUiOverlayStyle` — so a status bar style is visible while you write it. Toggle it off to inspect a screen bare. |
 
 Simulation is active in debug and profile builds and completely off in release
 builds, where the package adds no behaviour of any kind.
@@ -177,6 +177,9 @@ drawn over your app in the device's safe areas. Its colors are not artwork:
 they follow your app's live `SystemUiOverlayStyle`, whether you set it with
 `SystemChrome.setSystemUIOverlayStyle` or through the `AnnotatedRegion` an
 `AppBar` installs, so you can see a status bar style while you write it.
+`DeviceSimulation.showSystemUi` (the panel's **System UI** switch) hides the
+bars without changing the safe areas they sit in, so the app lays out the same
+either way.
 
 The SVG subset renderer used to draw all of this is embedded,
 dependency-free, and exported on its own

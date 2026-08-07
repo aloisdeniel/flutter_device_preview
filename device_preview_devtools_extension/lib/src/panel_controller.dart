@@ -274,6 +274,12 @@ class PanelController extends ChangeNotifier {
   /// Whether a screen size simulation is active (enables orientation toggle).
   bool get hasSimulatedScreen => simulation?['screenSize'] != null;
 
+  /// Whether the active device draws a simulated status bar / gesture pill.
+  bool get hasSystemUi => simulation?['systemUi'] != null;
+
+  /// Whether that system UI is currently shown (the default).
+  bool get showSystemUi => simulation?['showSystemUi'] != false;
+
   /// The preset matching the active simulation's `presetId`, if any.
   PresetView? get activePreset {
     final id = simulation?['presetId'];
@@ -536,6 +542,13 @@ class PanelController extends ChangeNotifier {
       await _pushSimulation(sim);
     });
   }
+
+  /// Shows or hides the simulated system UI.
+  ///
+  /// Not a metric field: the choice survives switching device, exactly like
+  /// the brightness or text scale overrides do.
+  Future<void> setShowSystemUi(bool value) =>
+      _mutate('showSystemUi', value ? null : false);
 
   /// Sets or clears (`null`) the platform brightness (`'light'`/`'dark'`).
   Future<void> setBrightness(String? brightness) =>

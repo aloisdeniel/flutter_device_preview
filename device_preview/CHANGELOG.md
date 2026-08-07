@@ -9,6 +9,8 @@
   `SystemChrome.setSystemUIOverlayStyle` and `AnnotatedRegion` — the latter
   needing its own annotation lookup, since the framework's probes assume a
   plain device-pixel-ratio root transform and miss under scale-to-fit.
+- `DeviceSimulation.showSystemUi` shows or hides those bars without touching
+  the safe areas they occupy.
 - `SvgDrawing.paint(currentColor:)` tints every shape that inherited its fill,
   which is what makes one drawing serve as a tintable icon set.
 - Device frames: `DeviceSimulation.frame` (`DeviceFrame`) carries the screen

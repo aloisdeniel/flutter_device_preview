@@ -32,6 +32,7 @@ class DeviceSimulation {
     this.screenSize,
     this.frame,
     this.systemUi,
+    this.showSystemUi = true,
     this.devicePixelRatio,
     this.padding,
     this.viewPadding,
@@ -66,6 +67,9 @@ class DeviceSimulation {
       systemUi: json['systemUi'] == null
           ? null
           : SystemUiSimulation.fromJson(decodeMap(json['systemUi'], 'systemUi')),
+      showSystemUi: json['showSystemUi'] == null
+          ? true
+          : decodeBool(json['showSystemUi'], 'showSystemUi'),
       devicePixelRatio: json['devicePixelRatio'] == null
           ? null
           : decodeDouble(json['devicePixelRatio'], 'devicePixelRatio'),
@@ -154,6 +158,13 @@ class DeviceSimulation {
   /// [padding] and disappears where the safe area is zero. Its colors follow
   /// the app's `SystemUiOverlayStyle`, never this description.
   final SystemUiSimulation? systemUi;
+
+  /// Whether [systemUi] is drawn. True by default.
+  ///
+  /// A pure display switch — hiding the bars changes nothing the app can
+  /// observe (the safe areas they sit in stay exactly as they were), so a
+  /// screen can be inspected edge to edge without dropping the device.
+  final bool showSystemUi;
 
   /// The simulated device pixel ratio.
   final double? devicePixelRatio;
@@ -254,6 +265,7 @@ class DeviceSimulation {
     Object? screenSize = _unset,
     Object? frame = _unset,
     Object? systemUi = _unset,
+    bool? showSystemUi,
     Object? devicePixelRatio = _unset,
     Object? padding = _unset,
     Object? viewPadding = _unset,
@@ -278,6 +290,7 @@ class DeviceSimulation {
       systemUi: identical(systemUi, _unset)
           ? this.systemUi
           : systemUi as SystemUiSimulation?,
+      showSystemUi: showSystemUi ?? this.showSystemUi,
       devicePixelRatio: identical(devicePixelRatio, _unset)
           ? this.devicePixelRatio
           : devicePixelRatio as double?,
@@ -324,6 +337,8 @@ class DeviceSimulation {
       if (screenSize != null) 'screenSize': encodeSize(screenSize!),
       if (frame != null) 'frame': frame!.toJson(),
       if (systemUi != null) 'systemUi': systemUi!.toJson(),
+      // Absent means "shown": only the non-default travels.
+      if (!showSystemUi) 'showSystemUi': false,
       if (devicePixelRatio != null) 'devicePixelRatio': devicePixelRatio,
       if (padding != null) 'padding': encodeEdgeInsets(padding!),
       if (viewPadding != null) 'viewPadding': encodeEdgeInsets(viewPadding!),
@@ -355,6 +370,7 @@ class DeviceSimulation {
         other.screenSize == screenSize &&
         other.frame == frame &&
         other.systemUi == systemUi &&
+        other.showSystemUi == showSystemUi &&
         other.devicePixelRatio == devicePixelRatio &&
         other.padding == padding &&
         other.viewPadding == viewPadding &&
@@ -375,6 +391,7 @@ class DeviceSimulation {
     screenSize,
     frame,
     systemUi,
+    showSystemUi,
     devicePixelRatio,
     padding,
     viewPadding,
@@ -396,6 +413,7 @@ class DeviceSimulation {
       if (screenSize != null) 'screenSize: $screenSize',
       if (frame != null) 'frame: $frame',
       if (systemUi != null) 'systemUi: $systemUi',
+      if (!showSystemUi) 'showSystemUi: false',
       if (devicePixelRatio != null) 'devicePixelRatio: $devicePixelRatio',
       if (padding != null) 'padding: $padding',
       if (viewPadding != null) 'viewPadding: $viewPadding',

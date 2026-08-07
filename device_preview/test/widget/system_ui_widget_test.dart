@@ -201,6 +201,32 @@ void main() {
       expect(_paintedColors(_frame()), contains(0xFF16181C));
     });
 
+    testWidgets('showSystemUi: false hides the bars, keeping the safe areas', (
+      WidgetTester tester,
+    ) async {
+      await binding.devicePreview!.apply(kSimulation);
+      await tester.pumpWidget(const ColoredBox(color: Color(0xFF224466)));
+      final int painted = _paintedColors(_frame()).length;
+      expect(painted, greaterThan(0));
+
+      await binding.devicePreview!.update(
+        (DeviceSimulation s) => s.copyWith(showSystemUi: false),
+      );
+      await tester.pump();
+      expect(_paintedColors(_frame()), isEmpty);
+      // Hiding is purely visual: the app still lays out under the safe areas.
+      expect(
+        binding.devicePreview!.simulation!.padding,
+        const EdgeInsets.only(top: 40, bottom: 30),
+      );
+
+      await binding.devicePreview!.update(
+        (DeviceSimulation s) => s.copyWith(showSystemUi: true),
+      );
+      await tester.pump();
+      expect(_paintedColors(_frame()), hasLength(painted));
+    });
+
     testWidgets('a real catalog entry paints its bars', (
       WidgetTester tester,
     ) async {

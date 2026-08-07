@@ -180,10 +180,12 @@ class RenderDevicePreviewFrame extends RenderProxyBox {
     return _painter;
   }
 
-  /// The painter for the simulated system UI, or null when there is none.
+  /// The painter for the simulated system UI, or null when there is none —
+  /// or when the simulation asks for it to be hidden.
   SystemUiPainter? get _activeSystemUiPainter {
-    final SystemUiSimulation? systemUi = _simulation.value?.systemUi;
-    if (systemUi == null || systemUi.isEmpty) {
+    final DeviceSimulation? simulation = _simulation.value;
+    final SystemUiSimulation? systemUi = simulation?.systemUi;
+    if (systemUi == null || systemUi.isEmpty || !simulation!.showSystemUi) {
       _systemUiPainter = null;
       return null;
     }
