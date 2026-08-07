@@ -47,6 +47,19 @@ void main() {
     }
   });
 
+  test('every physical device declares a plausible release year', () {
+    for (final device in kDeviceSpecs) {
+      final preset = PresetView(device);
+      if (preset.kind == 'desktop') continue;
+      expect(
+        preset.year,
+        isNotNull,
+        reason: '${preset.id} is missing "year"',
+      );
+      expect(preset.year, inInclusiveRange(2000, 2100), reason: preset.id);
+    }
+  });
+
   test('ids are unique', () {
     final ids = kDeviceSpecs.map((device) => device['id']).toList();
     expect(ids.toSet(), hasLength(ids.length));

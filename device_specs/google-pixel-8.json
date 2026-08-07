@@ -2,6 +2,7 @@
   "id": "google-pixel-8",
   "name": "Pixel 8",
   "brand": "Google",
+  "year": 2023,
   "platform": "android",
   "kind": "phone",
   "portraitSize": {

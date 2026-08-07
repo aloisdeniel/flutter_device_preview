@@ -33,7 +33,7 @@ Control it from **Flutter DevTools**, from **Dart**, or from your **tests**.
 | **Target platform** | Material/Cupertino behaviour across iOS, Android, macOS, Windows and Linux (debug builds only). |
 | **Device frame** | The real device drawn around your app: rounded screen corners clip it, the body is painted behind it. Artwork ships with the DevTools catalog, not in your app. |
 | **System UI** | A simulated status bar and gesture pill, laid out from the device's safe areas and tinted from your app's `SystemUiOverlayStyle` — so a status bar style is visible while you write it. Toggle it off to inspect a screen bare. |
-| **Touch input** | Your mouse reported to the app as a finger, so dragging scrolls a list the way a thumb does and gestures take their touch paths. |
+| **Touch input** | Your mouse reported to the app as a finger, so dragging scrolls a list the way a thumb does and gestures take their touch paths. Follows the simulated device unless you say otherwise: on for a phone, tablet or foldable, off for a desktop window. |
 
 Simulation is active in debug and profile builds and completely off in release
 builds, where the package adds no behaviour of any kind.
@@ -192,16 +192,24 @@ On a desktop or the web the host's mouse is not a drag device — Flutter's
 `ScrollBehavior.dragDevices` excludes it — so dragging a list in a phone
 preview does nothing, which is exactly the interaction you wanted to try.
 
+So it is on by default wherever it makes sense. `touchInput` is a tri-state
+and it starts unset, which means *auto*: the simulated device decides — a
+phone, a tablet or a foldable is a touchscreen, a desktop window is not, and
+neither is your real device when no screen is simulated. Override it either
+way when you need to:
+
 ```dart
-await c.update((s) => s.copyWith(pointerKind: PointerDeviceKind.touch));
+await c.update((s) => s.copyWith(touchInput: true));   // force touch
+await c.update((s) => s.copyWith(touchInput: false));  // force the real pointer
+await c.update((s) => s.copyWith(touchInput: null));   // back to auto
 ```
 
-Every pointer is then reported to the app as a finger: drags scroll,
-gestures take their touch paths, text selection follows the touch rules, and
-hovering stops — a finger cannot hover, so hover events are dropped rather
-than relabelled, and whatever the mouse was hovering is released. The scroll
-wheel and trackpad gestures keep their real kind, so wheel scrolling still
-works. The panel has a **Touch input** switch for it.
+When it resolves to touch, every pointer is reported to the app as a finger:
+drags scroll, gestures take their touch paths, text selection follows the
+touch rules, and hovering stops — a finger cannot hover, so hover events are
+dropped rather than relabelled, and whatever the mouse was hovering is
+released. The scroll wheel and trackpad gestures keep their real kind, so
+wheel scrolling still works. The panel has an **Auto / On / Off** row for it.
 
 ## Status
 

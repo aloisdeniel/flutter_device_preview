@@ -36,6 +36,7 @@ await DevicePreview.controller.applyPreset(preset);
 | `id` | string, **required** | Stable identifier; must match the file name. |
 | `name` | string, **required** | Display name, e.g. `iPhone 16 Pro`. |
 | `brand` | string | Manufacturer, e.g. `Apple`. Groups and sorts the picker. |
+| `year` | integer | Release year, e.g. `2025`. Shown in the picker, which sorts each brand newest first, and matched by its search field. |
 | `platform` | string, **required** | `TargetPlatform` name: `android`, `fuchsia`, `iOS`, `linux`, `macOS`, `windows`. |
 | `kind` | string | `phone` (default), `tablet`, `foldable`, `desktop`. |
 | `portraitSize` | `{width, height}`, **required** | Logical resolution, portrait. |
@@ -82,6 +83,15 @@ the device always stays fully visible.
 - `screenPath` — SVG path data (the `d` attribute), in screen coordinates.
   The app is clipped to it: this is what rounds the display corners. Omit it
   for a plain rectangular screen.
+
+  **Cutouts** are part of this outline, because that is what they physically
+  are — a hole in the panel, which the app never paints and the body shows
+  through. A notch is an indentation of the top edge (see
+  `apple-iphone-17e`). A Dynamic Island floats, so it is a second subpath
+  wound *counter-clockwise* against the clockwise outline (see
+  `apple-iphone-17-pro`): the clip is built with the non-zero fill rule, so
+  opposite winding punches a hole. The island every current model carries is
+  125 × 37, 11 below the top edge, horizontally centred.
 - `body` — an SVG document drawn **behind** the screen, so anything
   overlapping the screen area is hidden. Its view box should cover `size`.
   A string, or an array of lines joined with newlines (only for readability —
@@ -181,7 +191,7 @@ bar): it is preserved through the tint.
 ## Adding a device
 
 1. Copy the closest existing spec to `<brand>-<model>.json`.
-2. Fix the metrics, keeping the file name and `id` in sync.
+2. Fix the metrics, keeping the file name and `id` in sync, and set `year`.
 3. Draw the body with the screen cut-out in mind — it is *behind* the app.
    For the system UI, copy the closest device's `systemUi` and adjust the
    insets; keep every fill on `currentColor` so styling still works.

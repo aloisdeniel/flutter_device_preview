@@ -59,4 +59,4 @@ See [`device_preview/README.md`](device_preview/README.md) for the full package 
 | [`device_preview_devtools_extension`](device_preview_devtools_extension) | Source of the DevTools extension web app (never published; built into `device_preview/extension/devtools/build`). |
 | [`device_specs`](device_specs) | The device catalog: one JSON per device — metrics, screen outline and body artwork. Generated into the extension; see [its README](device_specs/README.md) to add a device. |
 | [`device_frame`](device_frame) | Device frame drawings package (independent of the preview machinery). |
-| [`docs`](docs) | The website. |
+| [`docs`](docs) | The website, including its interactive demo — `docs/demo` is the counter example built for the web, `docs/device_catalog.json` the catalog its HTML panel pushes to it. Rebuild both with [`tool/build_demo.sh`](tool/build_demo.sh). |

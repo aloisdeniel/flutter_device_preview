@@ -2,6 +2,7 @@
   "id": "apple-ipad-mini",
   "name": "iPad mini",
   "brand": "Apple",
+  "year": 2024,
   "platform": "iOS",
   "kind": "tablet",
   "portraitSize": {

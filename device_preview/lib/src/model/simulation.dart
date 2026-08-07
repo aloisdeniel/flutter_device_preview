@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import 'device_frame.dart';
+import 'device_kind.dart';
 import 'json_utils.dart';
 import 'system_ui.dart';
 
@@ -33,7 +34,8 @@ class DeviceSimulation {
     this.frame,
     this.systemUi,
     this.showSystemUi = true,
-    this.pointerKind,
+    this.touchInput,
+    this.deviceKind,
     this.devicePixelRatio,
     this.padding,
     this.viewPadding,
@@ -71,13 +73,12 @@ class DeviceSimulation {
       showSystemUi: json['showSystemUi'] == null
           ? true
           : decodeBool(json['showSystemUi'], 'showSystemUi'),
-      pointerKind: json['pointerKind'] == null
+      touchInput: json['touchInput'] == null
           ? null
-          : decodeEnum(
-              json['pointerKind'],
-              ui.PointerDeviceKind.values,
-              'pointerKind',
-            ),
+          : decodeBool(json['touchInput'], 'touchInput'),
+      deviceKind: json['deviceKind'] == null
+          ? null
+          : decodeEnum(json['deviceKind'], DeviceKind.values, 'deviceKind'),
       devicePixelRatio: json['devicePixelRatio'] == null
           ? null
           : decodeDouble(json['devicePixelRatio'], 'devicePixelRatio'),
@@ -174,17 +175,41 @@ class DeviceSimulation {
   /// screen can be inspected edge to edge without dropping the device.
   final bool showSystemUi;
 
-  /// The kind every pointer is reported as, or null to keep the host's own.
+  /// Whether the host's pointers reach the app as touches, or null — the
+  /// default — to follow the simulated device ([simulatesTouch]).
   ///
-  /// [ui.PointerDeviceKind.touch] makes the host's mouse act as a finger:
-  /// dragging scrolls a list (`ScrollBehavior.dragDevices` excludes the mouse
-  /// on desktop and the web), text selection follows the touch gestures, and
+  /// When it resolves to true the host's mouse acts as a finger: dragging
+  /// scrolls a list (`ScrollBehavior.dragDevices` excludes the mouse on
+  /// desktop and the web), text selection follows the touch gestures, and
   /// hover stops happening — a touchscreen reports nothing while nothing
   /// touches it, so hover events are dropped rather than relabelled.
   ///
   /// The scroll wheel and trackpad gestures keep their real kind: they have
   /// no touch equivalent, and rewriting them would only break scrolling.
-  final ui.PointerDeviceKind? pointerKind;
+  final bool? touchInput;
+
+  /// The category of the simulated device, when it is known.
+  ///
+  /// Presets fill it in; a custom size leaves it null. Nothing in the
+  /// simulation depends on it except the resolution of an unset
+  /// [touchInput] — see [simulatesTouch].
+  final DeviceKind? deviceKind;
+
+  /// Whether the host's pointers are delivered to the app as touches.
+  ///
+  /// [touchInput] when it is set; otherwise auto — the simulated device
+  /// decides. A phone, a tablet or a foldable is a touchscreen; a desktop
+  /// window is not. Without a [deviceKind] there is no device to follow (the
+  /// real one, or a custom size), so the host's own pointers are used.
+  bool get simulatesTouch =>
+      touchInput ??
+      (deviceKind != null && deviceKind != DeviceKind.desktop);
+
+  /// The kind every pointer is reported as, or null to keep the host's own.
+  ///
+  /// The resolved form of [simulatesTouch], as the pointer rewrite needs it.
+  ui.PointerDeviceKind? get effectivePointerKind =>
+      simulatesTouch ? ui.PointerDeviceKind.touch : null;
 
   /// The simulated device pixel ratio.
   final double? devicePixelRatio;
@@ -237,7 +262,8 @@ class DeviceSimulation {
       screenSize == null &&
       frame == null &&
       systemUi == null &&
-      pointerKind == null &&
+      touchInput == null &&
+      deviceKind == null &&
       devicePixelRatio == null &&
       padding == null &&
       viewPadding == null &&
@@ -287,7 +313,8 @@ class DeviceSimulation {
     Object? frame = _unset,
     Object? systemUi = _unset,
     bool? showSystemUi,
-    Object? pointerKind = _unset,
+    Object? touchInput = _unset,
+    Object? deviceKind = _unset,
     Object? devicePixelRatio = _unset,
     Object? padding = _unset,
     Object? viewPadding = _unset,
@@ -313,9 +340,12 @@ class DeviceSimulation {
           ? this.systemUi
           : systemUi as SystemUiSimulation?,
       showSystemUi: showSystemUi ?? this.showSystemUi,
-      pointerKind: identical(pointerKind, _unset)
-          ? this.pointerKind
-          : pointerKind as ui.PointerDeviceKind?,
+      touchInput: identical(touchInput, _unset)
+          ? this.touchInput
+          : touchInput as bool?,
+      deviceKind: identical(deviceKind, _unset)
+          ? this.deviceKind
+          : deviceKind as DeviceKind?,
       devicePixelRatio: identical(devicePixelRatio, _unset)
           ? this.devicePixelRatio
           : devicePixelRatio as double?,
@@ -364,7 +394,8 @@ class DeviceSimulation {
       if (systemUi != null) 'systemUi': systemUi!.toJson(),
       // Absent means "shown": only the non-default travels.
       if (!showSystemUi) 'showSystemUi': false,
-      if (pointerKind != null) 'pointerKind': pointerKind!.name,
+      if (touchInput != null) 'touchInput': touchInput,
+      if (deviceKind != null) 'deviceKind': deviceKind!.name,
       if (devicePixelRatio != null) 'devicePixelRatio': devicePixelRatio,
       if (padding != null) 'padding': encodeEdgeInsets(padding!),
       if (viewPadding != null) 'viewPadding': encodeEdgeInsets(viewPadding!),
@@ -397,7 +428,8 @@ class DeviceSimulation {
         other.frame == frame &&
         other.systemUi == systemUi &&
         other.showSystemUi == showSystemUi &&
-        other.pointerKind == pointerKind &&
+        other.touchInput == touchInput &&
+        other.deviceKind == deviceKind &&
         other.devicePixelRatio == devicePixelRatio &&
         other.padding == padding &&
         other.viewPadding == viewPadding &&
@@ -419,7 +451,8 @@ class DeviceSimulation {
     frame,
     systemUi,
     showSystemUi,
-    pointerKind,
+    touchInput,
+    deviceKind,
     devicePixelRatio,
     padding,
     viewPadding,
@@ -442,7 +475,8 @@ class DeviceSimulation {
       if (frame != null) 'frame: $frame',
       if (systemUi != null) 'systemUi: $systemUi',
       if (!showSystemUi) 'showSystemUi: false',
-      if (pointerKind != null) 'pointerKind: ${pointerKind!.name}',
+      if (touchInput != null) 'touchInput: $touchInput',
+      if (deviceKind != null) 'deviceKind: ${deviceKind!.name}',
       if (devicePixelRatio != null) 'devicePixelRatio: $devicePixelRatio',
       if (padding != null) 'padding: $padding',
       if (viewPadding != null) 'viewPadding: $viewPadding',

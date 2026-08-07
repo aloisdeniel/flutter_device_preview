@@ -40,7 +40,10 @@ class DevicePreviewProtocol {
   /// * 1 — initial release.
   /// * 2 — `simulation.frame` (screen outline + device body artwork), plus
   ///   the `frame` capability flag.
-  static const int protocolVersion = 2;
+  /// * 3 — `simulation.touchInput` (tri-state) and `simulation.deviceKind`
+  ///   replace `simulation.pointerKind`: an unset `touchInput` follows the
+  ///   simulated device instead of meaning "off".
+  static const int protocolVersion = 3;
 
   /// The active controller, or null when simulation is disabled.
   final DevicePreviewController? controller;

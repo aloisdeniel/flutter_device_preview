@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:device_preview/device_preview.dart';
+import 'package:device_preview/presets.dart';
 import 'package:device_preview/src/model/pointer_rewrite.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -190,7 +191,7 @@ void main() {
       // The same drag, with the pointer reported as a finger.
       await binding.devicePreview!.update(
         (DeviceSimulation s) =>
-            s.copyWith(pointerKind: ui.PointerDeviceKind.touch),
+            s.copyWith(touchInput: true),
       );
       await dragWith(tester, ui.PointerDeviceKind.mouse);
       expect(controller.offset, greaterThan(100));
@@ -203,7 +204,7 @@ void main() {
         const DeviceSimulation(
           screenSize: ui.Size(400, 800),
           devicePixelRatio: 2,
-          pointerKind: ui.PointerDeviceKind.touch,
+          touchInput: true,
         ),
       );
       final List<ui.PointerDeviceKind> taps = <ui.PointerDeviceKind>[];
@@ -283,7 +284,7 @@ void main() {
 
       await binding.devicePreview!.update(
         (DeviceSimulation s) =>
-            s.copyWith(pointerKind: ui.PointerDeviceKind.touch),
+            s.copyWith(touchInput: true),
       );
       await tester.pump();
       expect(hovering, <bool>[true, false]);
@@ -332,15 +333,18 @@ void main() {
 
       await binding.devicePreview!.update(
         (DeviceSimulation s) =>
-            s.copyWith(pointerKind: ui.PointerDeviceKind.touch),
+            s.copyWith(touchInput: true),
       );
       hover();
       await tester.pump();
       expect(hovers, hasLength(1), reason: 'a finger cannot hover');
 
-      // Clearing the override brings the host pointer back as it is.
+      // Forcing it off brings the host pointer back as it is. (Clearing the
+      // override to null would resolve back to auto — a simulated screen with
+      // no device kind counts as a handheld — so this asserts the explicit
+      // "off", which is the switch position that restores the mouse.)
       await binding.devicePreview!.update(
-        (DeviceSimulation s) => s.copyWith(pointerKind: null),
+        (DeviceSimulation s) => s.copyWith(touchInput: false),
       );
       hover();
       await tester.pump();
@@ -351,25 +355,120 @@ void main() {
   group('simulation model', () {
     test('round-trips through JSON', () {
       const DeviceSimulation simulation = DeviceSimulation(
-        pointerKind: ui.PointerDeviceKind.touch,
+        touchInput: true,
+        deviceKind: DeviceKind.tablet,
       );
-      expect(simulation.toJson()['pointerKind'], 'touch');
+      expect(simulation.toJson()['touchInput'], true);
+      expect(simulation.toJson()['deviceKind'], 'tablet');
       expect(DeviceSimulation.fromJson(simulation.toJson()), simulation);
       expect(simulation.isEmpty, isFalse);
       expect(
         () => DeviceSimulation.fromJson(
-          const <String, Object?>{'pointerKind': 'finger'},
+          const <String, Object?>{'touchInput': 'yes'},
+        ),
+        throwsFormatException,
+      );
+      expect(
+        () => DeviceSimulation.fromJson(
+          const <String, Object?>{'deviceKind': 'watch'},
         ),
         throwsFormatException,
       );
     });
 
     test('copyWith clears it when passed null explicitly', () {
-      const DeviceSimulation simulation = DeviceSimulation(
-        pointerKind: ui.PointerDeviceKind.touch,
+      const DeviceSimulation simulation = DeviceSimulation(touchInput: true);
+      expect(simulation.copyWith().touchInput, isTrue);
+      expect(simulation.copyWith(touchInput: null).touchInput, isNull);
+    });
+
+    test('an unset touchInput follows the simulated device', () {
+      // No screen simulated: the real device's own pointers.
+      expect(const DeviceSimulation().simulatesTouch, isFalse);
+      const ui.Size screen = ui.Size(400, 800);
+      for (final DeviceKind kind in <DeviceKind>[
+        DeviceKind.phone,
+        DeviceKind.tablet,
+        DeviceKind.foldable,
+      ]) {
+        expect(
+          DeviceSimulation(screenSize: screen, deviceKind: kind).simulatesTouch,
+          isTrue,
+          reason: '$kind is a touchscreen',
+        );
+      }
+      expect(
+        const DeviceSimulation(
+          screenSize: screen,
+          deviceKind: DeviceKind.desktop,
+        ).simulatesTouch,
+        isFalse,
       );
-      expect(simulation.copyWith().pointerKind, ui.PointerDeviceKind.touch);
-      expect(simulation.copyWith(pointerKind: null).pointerKind, isNull);
+      // A custom size names no device to follow: the host's own pointers.
+      expect(
+        const DeviceSimulation(screenSize: screen).simulatesTouch,
+        isFalse,
+      );
+    });
+
+    test('an explicit touchInput overrides the device', () {
+      const ui.Size screen = ui.Size(400, 800);
+      expect(
+        const DeviceSimulation(
+          screenSize: screen,
+          deviceKind: DeviceKind.phone,
+          touchInput: false,
+        ).simulatesTouch,
+        isFalse,
+      );
+      expect(
+        const DeviceSimulation(
+          screenSize: screen,
+          deviceKind: DeviceKind.desktop,
+          touchInput: true,
+        ).simulatesTouch,
+        isTrue,
+      );
+      expect(
+        const DeviceSimulation(
+          screenSize: screen,
+          deviceKind: DeviceKind.desktop,
+          touchInput: true,
+        ).effectivePointerKind,
+        ui.PointerDeviceKind.touch,
+      );
+      expect(
+        const DeviceSimulation(
+          screenSize: screen,
+          touchInput: false,
+        ).effectivePointerKind,
+        isNull,
+      );
+      expect(
+        const DeviceSimulation(screenSize: screen, touchInput: true)
+            .effectivePointerKind,
+        ui.PointerDeviceKind.touch,
+        reason: 'a custom size can still be told to simulate touch',
+      );
+    });
+
+    test('presets carry their kind, so auto can follow it', () {
+      expect(DevicePresets.iPhone17Pro.resolve().deviceKind, DeviceKind.phone);
+      expect(DevicePresets.iPhone17Pro.resolve().simulatesTouch, isTrue);
+      expect(
+        DevicePresets.iPadPro13
+            .resolve(orientation: Orientation.landscape)
+            .deviceKind,
+        DeviceKind.tablet,
+      );
+      expect(
+        DevicePresets.largeDesktopWindow.resolve().deviceKind,
+        DeviceKind.desktop,
+      );
+      expect(
+        DevicePresets.largeDesktopWindow.resolve().simulatesTouch,
+        isFalse,
+      );
     });
   });
 }

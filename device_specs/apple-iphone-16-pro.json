@@ -2,6 +2,7 @@
   "id": "apple-iphone-16-pro",
   "name": "iPhone 16 Pro",
   "brand": "Apple",
+  "year": 2024,
   "platform": "iOS",
   "kind": "phone",
   "portraitSize": {
@@ -30,7 +31,7 @@
       "x": 15,
       "y": 11
     },
-    "screenPath": "M 50,0 H 352 A 50,50 0 0 1 402,50 V 824 A 50,50 0 0 1 352,874 H 50 A 50,50 0 0 1 0,824 V 50 A 50,50 0 0 1 50,0 Z",
+    "screenPath": "M 50,0 H 352 A 50,50 0 0 1 402,50 V 824 A 50,50 0 0 1 352,874 H 50 A 50,50 0 0 1 0,824 V 50 A 50,50 0 0 1 50,0 Z M 245,11 H 157 A 18.5,18.5 0 0 0 157,48 H 245 A 18.5,18.5 0 0 0 245,11 Z",
     "body": [
       "<svg viewBox=\"0 0 432 896\">",
       "  <defs><clipPath id=\"shell\">",

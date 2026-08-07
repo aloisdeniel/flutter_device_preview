@@ -104,6 +104,48 @@ void main() {
       expect(find.byType(Dialog), findsNothing);
     });
 
+    testWidgets('preset picker shows and searches the release year',
+        (tester) async {
+      await pumpPanel(tester);
+      await tester
+          .tap(find.byKey(const Key('device_preview_preset_picker_button')));
+      await tester.pumpAndSettle();
+
+      // 2026 matches exactly one catalog device, and its subtitle carries the
+      // year between the brand and the metrics.
+      await tester.enterText(
+        find.byKey(const Key('device_preview_preset_search')),
+        '2026',
+      );
+      await tester.pumpAndSettle();
+      expect(find.widgetWithText(ListTile, 'iPhone 17e'), findsOneWidget);
+      expect(
+        find.text('Apple · 2026 · 390×844 · @3.0x · framed'),
+        findsOneWidget,
+      );
+
+      // Within a brand the newest devices come first.
+      await tester.enterText(
+        find.byKey(const Key('device_preview_preset_search')),
+        'iphone 1',
+      );
+      await tester.pumpAndSettle();
+      final names = tester
+          .widgetList<ListTile>(find.byType(ListTile))
+          .map((tile) => tile.title)
+          .whereType<Text>()
+          .map((text) => text.data)
+          .whereType<String>()
+          .where((name) => name.startsWith('iPhone'))
+          .toList();
+      // 2026 first, then the two 2025 models, then the 2024 ones (the tail of
+      // the list is below the fold and not built).
+      expect(
+        names.take(4),
+        ['iPhone 17e', 'iPhone 17', 'iPhone 17 Pro', 'iPhone 16'],
+      );
+    });
+
     testWidgets('real device entry clears metrics but keeps overrides',
         (tester) async {
       await controller.selectPreset(const PresetView(testPhonePresetJson));
@@ -139,15 +181,26 @@ void main() {
       expect(gateway.simulation?['showSystemUi'], isFalse);
     });
 
-    testWidgets('touch input switch sends the pointer kind', (tester) async {
+    testWidgets('touch input tri-state sends auto/on/off', (tester) async {
       await pumpPanel(tester);
-      await tester.tap(find.byKey(const Key('device_preview_touch_input_switch')));
-      await tester.pumpAndSettle();
-      expect(gateway.simulation?['pointerKind'], 'touch');
+      final toggle = find.byKey(const Key('device_preview_touch_input_toggle'));
+      expect(
+        tester.widget<SegmentedButton<String>>(toggle).selected,
+        <String>{'system'},
+        reason: 'auto by default',
+      );
 
-      await tester.tap(find.byKey(const Key('device_preview_touch_input_switch')));
+      await tester.tap(find.descendant(of: toggle, matching: find.text('On')));
       await tester.pumpAndSettle();
-      expect(gateway.simulation, isNull);
+      expect(gateway.simulation?['touchInput'], isTrue);
+
+      await tester.tap(find.descendant(of: toggle, matching: find.text('Off')));
+      await tester.pumpAndSettle();
+      expect(gateway.simulation?['touchInput'], isFalse);
+
+      await tester.tap(find.descendant(of: toggle, matching: find.text('Auto')));
+      await tester.pumpAndSettle();
+      expect(gateway.simulation, isNull, reason: 'nothing left to override');
     });
 
     testWidgets('orientation toggle is disabled without a simulated screen',

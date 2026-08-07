@@ -260,6 +260,7 @@ void main() {
         'platformBrightness': 'dark',
         'presetId': 'test-phone',
         'orientation': 'portrait',
+        'deviceKind': 'phone',
         'screenSize': {'width': 400.0, 'height': 800.0},
         'devicePixelRatio': 2.0,
         'padding': {'left': 0.0, 'top': 30.0, 'right': 0.0, 'bottom': 10.0},
@@ -319,17 +320,34 @@ void main() {
 
     test('the touch input toggle is independent of the device', () async {
       await ready();
-      expect(controller!.simulatesTouch, isFalse);
+      expect(controller!.touchInput, isNull, reason: 'auto by default');
 
-      await controller!.setSimulatesTouch(true);
-      expect(gateway.simulation?['pointerKind'], 'touch');
-      expect(controller!.simulatesTouch, isTrue);
+      await controller!.setTouchInput(true);
+      expect(gateway.simulation?['touchInput'], isTrue);
+      expect(controller!.touchInput, isTrue);
 
+      // An explicit choice is not a metric field: it survives a device change,
+      // which also stamps the kind that "auto" would have followed.
       await controller!.selectPreset(const PresetView(testPhonePresetJson));
-      expect(gateway.simulation?['pointerKind'], 'touch');
+      expect(gateway.simulation?['touchInput'], isTrue);
+      expect(gateway.simulation?['deviceKind'], 'phone');
 
-      await controller!.setSimulatesTouch(false);
-      expect(gateway.simulation, isNot(contains('pointerKind')));
+      await controller!.setTouchInput(false);
+      expect(gateway.simulation?['touchInput'], isFalse);
+
+      await controller!.setTouchInput(null);
+      expect(gateway.simulation, isNot(contains('touchInput')));
+    });
+
+    test('selecting a device stamps the kind that auto follows', () async {
+      await ready();
+      await controller!.selectPreset(const PresetView(testTabletPresetJson));
+      expect(gateway.simulation?['deviceKind'], 'tablet');
+
+      // "Real device" clears it with the rest of the metrics.
+      await controller!.selectRealDevice();
+      expect(gateway.simulation ?? const <String, Object?>{},
+          isNot(contains('deviceKind')));
     });
 
     test('every built-in catalog device selects without error', () async {

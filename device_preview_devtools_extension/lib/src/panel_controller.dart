@@ -35,6 +35,7 @@ const List<String> kMetricSimulationKeys = <String>[
   'screenSize',
   'frame',
   'systemUi',
+  'deviceKind',
   'devicePixelRatio',
   'padding',
   'viewPadding',
@@ -75,6 +76,10 @@ class PresetView {
 
   /// Manufacturer (e.g. `Apple`), or an empty string when unspecified.
   String get brand => json['brand'] as String? ?? '';
+
+  /// Release year (e.g. `2025`), or null when the device does not declare one
+  /// (desktop windows, app-registered presets).
+  int? get year => (json['year'] as num?)?.toInt();
 
   /// Screen outline and body artwork, when the device has a frame.
   Map<String, Object?>? get frame => _asMap(json['frame']);
@@ -280,8 +285,10 @@ class PanelController extends ChangeNotifier {
   /// Whether that system UI is currently shown (the default).
   bool get showSystemUi => simulation?['showSystemUi'] != false;
 
-  /// Whether the host's pointers are reported to the app as touches.
-  bool get simulatesTouch => simulation?['pointerKind'] == 'touch';
+  /// Whether the host's pointers are reported to the app as touches, or null
+  /// — "auto" — to let the selected device decide (touch on a phone, tablet
+  /// or foldable; the real pointer on a desktop window or no device at all).
+  bool? get touchInput => simulation?['touchInput'] as bool?;
 
   /// The preset matching the active simulation's `presetId`, if any.
   PresetView? get activePreset {
@@ -553,15 +560,16 @@ class PanelController extends ChangeNotifier {
   Future<void> setShowSystemUi(bool value) =>
       _mutate('showSystemUi', value ? null : false);
 
-  /// Makes the host's mouse act as a finger, or restores it.
+  /// Makes the host's mouse act as a finger (`true`), restores it (`false`),
+  /// or hands the choice to the selected device (`null`, the default).
   ///
-  /// What changes app-side: dragging scrolls (the mouse is not a drag device
-  /// on desktop or the web), gestures take their touch paths, and hovering
-  /// stops — a finger cannot hover. The scroll wheel keeps working.
+  /// What changes app-side when it resolves to touch: dragging scrolls (the
+  /// mouse is not a drag device on desktop or the web), gestures take their
+  /// touch paths, and hovering stops — a finger cannot hover. The scroll
+  /// wheel keeps working.
   ///
-  /// Not a metric field: the choice survives switching device.
-  Future<void> setSimulatesTouch(bool value) =>
-      _mutate('pointerKind', value ? 'touch' : null);
+  /// Not a metric field: an explicit choice survives switching device.
+  Future<void> setTouchInput(bool? value) => _mutate('touchInput', value);
 
   /// Sets or clears (`null`) the platform brightness (`'light'`/`'dark'`).
   Future<void> setBrightness(String? brightness) =>
@@ -688,6 +696,7 @@ class PanelController extends ChangeNotifier {
     }
     sim['presetId'] = preset.id;
     sim['orientation'] = orientation;
+    sim['deviceKind'] = preset.kind;
     // The frame is described in portrait and rotated app-side, so it is the
     // one metric field orientation never touches.
     final frame = preset.frame;

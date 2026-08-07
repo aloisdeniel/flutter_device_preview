@@ -10,24 +10,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import 'src/model/device_frame.dart';
+import 'src/model/device_kind.dart';
 import 'src/model/json_utils.dart';
 import 'src/model/simulation.dart';
 import 'src/model/system_ui.dart';
 
-/// The broad category of a device preset.
-enum DeviceKind {
-  /// A phone-sized device.
-  phone,
-
-  /// A tablet-sized device.
-  tablet,
-
-  /// A foldable device.
-  foldable,
-
-  /// A desktop window.
-  desktop,
-}
+export 'src/model/device_kind.dart';
 
 /// Description of a device: its metrics, and optionally the [frame] it is
 /// drawn in.
@@ -52,6 +40,7 @@ class DevicePreset {
     required this.portraitSize,
     required this.devicePixelRatio,
     this.brand,
+    this.year,
     this.frame,
     this.systemUi,
     this.portraitPadding = EdgeInsets.zero,
@@ -74,6 +63,7 @@ class DevicePreset {
       brand: json['brand'] == null
           ? null
           : decodeString(json['brand'], 'brand'),
+      year: json['year'] == null ? null : decodeInt(json['year'], 'year'),
       platform: decodeEnum(json['platform'], TargetPlatform.values, 'platform'),
       frame: json['frame'] == null
           ? null
@@ -133,6 +123,13 @@ class DevicePreset {
 
   /// The manufacturer, e.g. `'Apple'`. Null when unspecified.
   final String? brand;
+
+  /// The year the device was released, e.g. `2025`. Null when unspecified.
+  ///
+  /// Purely informational — nothing in the simulation depends on it. The
+  /// DevTools picker shows it so that a catalog spanning several generations
+  /// can be read at a glance.
+  final int? year;
 
   /// The platform of the device.
   final TargetPlatform platform;
@@ -210,6 +207,7 @@ class DevicePreset {
     if (orientation == Orientation.portrait) {
       return DeviceSimulation(
         presetId: id,
+        deviceKind: kind,
         screenSize: portraitSize,
         frame: frame,
         systemUi: systemUi,
@@ -228,6 +226,7 @@ class DevicePreset {
         rotateToLandscape(effectivePortraitViewPadding);
     return DeviceSimulation(
       presetId: id,
+      deviceKind: kind,
       orientation: Orientation.landscape,
       screenSize: ui.Size(portraitSize.height, portraitSize.width),
       // Frames are described in portrait and rotated at paint time.
@@ -254,6 +253,7 @@ class DevicePreset {
     'id': id,
     'name': name,
     if (brand != null) 'brand': brand,
+    if (year != null) 'year': year,
     'platform': platform.name,
     'kind': kind.name,
     'portraitSize': encodeSize(portraitSize),
@@ -283,6 +283,7 @@ class DevicePreset {
         other.id == id &&
         other.name == name &&
         other.brand == brand &&
+        other.year == year &&
         other.platform == platform &&
         other.frame == frame &&
         other.systemUi == systemUi &&
@@ -302,6 +303,7 @@ class DevicePreset {
     id,
     name,
     brand,
+    year,
     platform,
     frame,
     systemUi,
@@ -332,6 +334,7 @@ abstract final class DevicePresets {
     id: 'apple-iphone-se-3',
     name: 'iPhone SE (3rd gen)',
     brand: 'Apple',
+    year: 2022,
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(375, 667),
     devicePixelRatio: 2.0,
@@ -345,6 +348,7 @@ abstract final class DevicePresets {
     id: 'apple-iphone-16',
     name: 'iPhone 16',
     brand: 'Apple',
+    year: 2024,
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(393, 852),
     devicePixelRatio: 3.0,
@@ -357,6 +361,7 @@ abstract final class DevicePresets {
     id: 'apple-iphone-16-pro',
     name: 'iPhone 16 Pro',
     brand: 'Apple',
+    year: 2024,
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(402, 874),
     devicePixelRatio: 3.0,
@@ -369,8 +374,61 @@ abstract final class DevicePresets {
     id: 'apple-iphone-16-pro-max',
     name: 'iPhone 16 Pro Max',
     brand: 'Apple',
+    year: 2024,
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(440, 956),
+    devicePixelRatio: 3.0,
+    portraitPadding: EdgeInsets.only(top: 62, bottom: 34),
+    landscapePadding: EdgeInsets.only(left: 62, right: 62, bottom: 21),
+  );
+
+  /// iPhone 17e — notch, the 6.1" entry model.
+  static const DevicePreset iPhone17e = DevicePreset(
+    id: 'apple-iphone-17e',
+    name: 'iPhone 17e',
+    brand: 'Apple',
+    year: 2026,
+    platform: TargetPlatform.iOS,
+    portraitSize: ui.Size(390, 844),
+    devicePixelRatio: 3.0,
+    portraitPadding: EdgeInsets.only(top: 47, bottom: 34),
+    landscapePadding: EdgeInsets.only(left: 47, right: 47, bottom: 21),
+  );
+
+  /// iPhone 17 — Dynamic Island, 6.3" display.
+  static const DevicePreset iPhone17 = DevicePreset(
+    id: 'apple-iphone-17',
+    name: 'iPhone 17',
+    brand: 'Apple',
+    year: 2025,
+    platform: TargetPlatform.iOS,
+    portraitSize: ui.Size(402, 874),
+    devicePixelRatio: 3.0,
+    portraitPadding: EdgeInsets.only(top: 62, bottom: 34),
+    landscapePadding: EdgeInsets.only(left: 62, right: 62, bottom: 21),
+  );
+
+  /// iPhone 17 Pro — Dynamic Island, 6.3" display.
+  static const DevicePreset iPhone17Pro = DevicePreset(
+    id: 'apple-iphone-17-pro',
+    name: 'iPhone 17 Pro',
+    brand: 'Apple',
+    year: 2025,
+    platform: TargetPlatform.iOS,
+    portraitSize: ui.Size(402, 874),
+    devicePixelRatio: 3.0,
+    portraitPadding: EdgeInsets.only(top: 62, bottom: 34),
+    landscapePadding: EdgeInsets.only(left: 62, right: 62, bottom: 21),
+  );
+
+  /// iPhone Air — Dynamic Island, 6.5" display.
+  static const DevicePreset iPhoneAir = DevicePreset(
+    id: 'apple-iphone-air',
+    name: 'iPhone Air',
+    brand: 'Apple',
+    year: 2025,
+    platform: TargetPlatform.iOS,
+    portraitSize: ui.Size(420, 912),
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 62, bottom: 34),
     landscapePadding: EdgeInsets.only(left: 62, right: 62, bottom: 21),
@@ -381,6 +439,7 @@ abstract final class DevicePresets {
     id: 'apple-ipad-pro-13',
     name: 'iPad Pro 13"',
     brand: 'Apple',
+    year: 2024,
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(1032, 1376),
     devicePixelRatio: 2.0,
@@ -394,6 +453,7 @@ abstract final class DevicePresets {
     id: 'apple-ipad-mini',
     name: 'iPad mini',
     brand: 'Apple',
+    year: 2024,
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(744, 1133),
     devicePixelRatio: 2.0,
@@ -407,6 +467,7 @@ abstract final class DevicePresets {
     id: 'google-pixel-8',
     name: 'Pixel 8',
     brand: 'Google',
+    year: 2023,
     platform: TargetPlatform.android,
     portraitSize: ui.Size(412, 915),
     devicePixelRatio: 2.625,
@@ -419,6 +480,7 @@ abstract final class DevicePresets {
     id: 'google-pixel-9',
     name: 'Pixel 9',
     brand: 'Google',
+    year: 2024,
     platform: TargetPlatform.android,
     portraitSize: ui.Size(412, 923),
     devicePixelRatio: 2.625,
@@ -431,6 +493,7 @@ abstract final class DevicePresets {
     id: 'google-pixel-tablet',
     name: 'Pixel Tablet',
     brand: 'Google',
+    year: 2023,
     platform: TargetPlatform.android,
     portraitSize: ui.Size(800, 1280),
     devicePixelRatio: 2.0,
@@ -444,6 +507,7 @@ abstract final class DevicePresets {
     id: 'samsung-galaxy-s24',
     name: 'Galaxy S24',
     brand: 'Samsung',
+    year: 2024,
     platform: TargetPlatform.android,
     portraitSize: ui.Size(360, 780),
     devicePixelRatio: 3.0,
@@ -479,6 +543,10 @@ abstract final class DevicePresets {
     iPhone16,
     iPhone16Pro,
     iPhone16ProMax,
+    iPhone17e,
+    iPhone17,
+    iPhone17Pro,
+    iPhoneAir,
     iPadPro13,
     iPadMini,
     pixel8,

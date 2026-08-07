@@ -356,7 +356,7 @@ mixin DevicePreviewBindingMixin
   /// Moves every known host mouse far outside the view, so whatever it was
   /// hovering exits.
   ///
-  /// Called when [DeviceSimulation.pointerKind] changes: from then on the
+  /// Called when [DeviceSimulation.simulatesTouch] changes: from then on the
   /// mouse's hover events are dropped (a finger cannot hover), and the hover
   /// state it left behind — a highlighted button, an open tooltip — would
   /// otherwise never be cleared. A hover far away rather than a removal, so
@@ -439,7 +439,7 @@ mixin DevicePreviewBindingMixin
     ui.PointerDataPacket effective = packet;
     if (simulationEnabled && hostView != null && simulation != null) {
       final double realRatio = hostView.devicePixelRatio;
-      final ui.PointerDeviceKind? kind = simulation.pointerKind;
+      final ui.PointerDeviceKind? kind = simulation.effectivePointerKind;
       final List<ui.PointerData> data = <ui.PointerData>[];
       for (final ui.PointerData datum in packet.data) {
         if (datum.viewId != hostView.viewId) {

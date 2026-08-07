@@ -2,6 +2,7 @@
   "id": "apple-iphone-16",
   "name": "iPhone 16",
   "brand": "Apple",
+  "year": 2024,
   "platform": "iOS",
   "kind": "phone",
   "portraitSize": {
@@ -30,7 +31,7 @@
       "x": 15,
       "y": 11
     },
-    "screenPath": "M 47,0 H 346 A 47,47 0 0 1 393,47 V 805 A 47,47 0 0 1 346,852 H 47 A 47,47 0 0 1 0,805 V 47 A 47,47 0 0 1 47,0 Z",
+    "screenPath": "M 47,0 H 346 A 47,47 0 0 1 393,47 V 805 A 47,47 0 0 1 346,852 H 47 A 47,47 0 0 1 0,805 V 47 A 47,47 0 0 1 47,0 Z M 240.5,11 H 152.5 A 18.5,18.5 0 0 0 152.5,48 H 240.5 A 18.5,18.5 0 0 0 240.5,11 Z",
     "body": [
       "<svg viewBox=\"0 0 423 874\">",
       "  <defs><clipPath id=\"shell\">",

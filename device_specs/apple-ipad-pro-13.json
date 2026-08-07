@@ -2,6 +2,7 @@
   "id": "apple-ipad-pro-13",
   "name": "iPad Pro 13\"",
   "brand": "Apple",
+  "year": 2024,
   "platform": "iOS",
   "kind": "tablet",
   "portraitSize": {

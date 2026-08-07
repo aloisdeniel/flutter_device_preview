@@ -2,6 +2,7 @@
   "id": "google-pixel-tablet",
   "name": "Pixel Tablet",
   "brand": "Google",
+  "year": 2023,
   "platform": "android",
   "kind": "tablet",
   "portraitSize": {

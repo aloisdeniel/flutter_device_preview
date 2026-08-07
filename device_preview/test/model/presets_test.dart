@@ -8,10 +8,18 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('DevicePresets catalog', () {
-    test('contains the 12 documented presets with unique ids', () {
-      expect(DevicePresets.all, hasLength(12));
+    test('contains the 16 documented presets with unique ids', () {
+      expect(DevicePresets.all, hasLength(16));
       final ids = DevicePresets.all.map((p) => p.id).toSet();
-      expect(ids, hasLength(12));
+      expect(ids, hasLength(16));
+    });
+
+    test('every device preset declares a release year', () {
+      for (final preset in DevicePresets.all) {
+        if (preset.kind == DeviceKind.desktop) continue;
+        expect(preset.year, isNotNull, reason: preset.id);
+        expect(preset.year, inInclusiveRange(2000, 2100), reason: preset.id);
+      }
     });
 
     test('contains no foldable presets', () {
@@ -42,6 +50,16 @@ void main() {
         DevicePresets.iPhone16ProMax.portraitSize,
         const ui.Size(440, 956),
       );
+      expect(DevicePresets.iPhone17.portraitSize, const ui.Size(402, 874));
+      expect(DevicePresets.iPhone17Pro.portraitSize, const ui.Size(402, 874));
+      expect(DevicePresets.iPhone17Pro.devicePixelRatio, 3.0);
+      expect(DevicePresets.iPhone17e.portraitSize, const ui.Size(390, 844));
+      expect(
+        DevicePresets.iPhone17e.portraitPadding,
+        const EdgeInsets.only(top: 47, bottom: 34), // notch, not an island
+      );
+      expect(DevicePresets.iPhoneAir.portraitSize, const ui.Size(420, 912));
+      expect(DevicePresets.iPhoneAir.year, 2025);
       expect(DevicePresets.iPadPro13.portraitSize, const ui.Size(1032, 1376));
       expect(DevicePresets.iPadPro13.kind, DeviceKind.tablet);
       expect(DevicePresets.pixel8.portraitSize, const ui.Size(412, 915));
@@ -240,6 +258,30 @@ void main() {
       expect(preset.portraitPadding, EdgeInsets.zero);
       expect(preset.kind, DeviceKind.phone);
       expect(preset.displayFeatures, isEmpty);
+    });
+
+    test('year survives the round trip and defaults to null', () {
+      expect(DevicePresets.iPhone17Pro.toJson()['year'], 2025);
+      expect(
+        DevicePreset.fromJson(DevicePresets.iPhone17Pro.toJson()).year,
+        2025,
+      );
+      expect(DevicePresets.smallDesktopWindow.toJson().containsKey('year'),
+          isFalse);
+    });
+
+    test('fromJson throws on a non-integer year', () {
+      expect(
+        () => DevicePreset.fromJson(<String, Object?>{
+          'id': 'x',
+          'name': 'X',
+          'platform': 'android',
+          'portraitSize': {'width': 100, 'height': 200},
+          'devicePixelRatio': 2,
+          'year': '2025',
+        }),
+        throwsFormatException,
+      );
     });
 
     test('fromJson throws on missing required keys', () {

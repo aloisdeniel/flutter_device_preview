@@ -9,6 +9,7 @@
 library;
 
 export 'src/model/device_frame.dart';
+export 'src/model/device_kind.dart';
 export 'src/model/fit_transform.dart';
 export 'src/model/real_device_info.dart';
 export 'src/model/simulation.dart';

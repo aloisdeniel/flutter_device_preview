@@ -56,7 +56,6 @@ code, pre, .mono { font-family: var(--mono); }
   text-transform: uppercase; color: var(--cyan);
 }
 .tag::before { content: ""; width: 26px; height: 1px; background: var(--cyan); }
-.ref { color: var(--ink-faint); font-family: var(--mono); font-size: 11px; letter-spacing: .1em; }
 
 /* ---------- nav ---------- */
 header.nav {
@@ -78,8 +77,7 @@ nav.links a:hover { color: var(--cyan); text-decoration: none; }
 
 /* ---------- hero ---------- */
 .hero { position: relative; padding: 84px 0 72px; overflow: hidden; }
-.hero-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 56px; align-items: center; }
-@media (max-width: 940px) { .hero-grid { grid-template-columns: 1fr; } }
+.hero-grid > .stagger { max-width: 780px; }
 h1 {
   font-family: var(--display);
   font-size: clamp(44px, 6.2vw, 76px);
@@ -93,7 +91,7 @@ h1 .outline {
   color: transparent;
   -webkit-text-stroke: 1.5px var(--amber);
 }
-.lede { color: var(--ink-dim); font-size: 18px; max-width: 46ch; }
+.lede { color: var(--ink-dim); font-size: 18px; max-width: 54ch; }
 .lede strong { color: var(--ink); font-weight: 600; }
 .hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; align-items: center; }
 .btn {
@@ -125,31 +123,171 @@ h1 .outline {
 }
 .copy-btn:hover { color: var(--cyan); }
 
-/* ---------- schematic ---------- */
-.schematic { position: relative; }
-.schematic svg { width: 100%; height: auto; display: block; }
-.presets { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; justify-content: center; }
-.chip {
-  font-family: var(--mono); font-size: 12px;
-  color: var(--ink-dim);
-  background: none;
+/* ---------- interactive demo ---------- */
+.demo-lede { color: var(--ink-dim); max-width: 70ch; margin-bottom: 30px; }
+.demo-lede strong { color: var(--ink); font-weight: 600; }
+.demo-grid { display: grid; grid-template-columns: minmax(0, 1fr) 372px; gap: 22px; }
+@media (max-width: 1000px) { .demo-grid { grid-template-columns: 1fr; } }
+
+.stage {
+  position: relative;
+  min-height: 700px;
   border: 1px solid var(--line-strong);
-  border-radius: 99px;
-  padding: 6px 14px;
-  cursor: pointer;
-  transition: all .18s ease;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: var(--paper-sunken);
+  background-image: radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0);
+  background-size: 24px 24px;
 }
-.chip:hover { color: var(--cyan); border-color: var(--cyan); }
-.chip.active { color: #05263a; background: var(--cyan); border-color: var(--cyan); font-weight: 500; }
-.dim-label { font-family: var(--mono); font-size: 11px; fill: var(--cyan); }
-.dim-label.amber { fill: var(--amber); }
-.dim-label.faint { fill: var(--ink-faint); }
-.sch-line { stroke: var(--cyan-dim); stroke-width: 1; }
-.sch-line.solid { stroke: var(--cyan); }
+@media (max-width: 1000px) { .stage { min-height: 520px; } }
+.stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+.stage-msg {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  font-family: var(--mono); font-size: 12.5px; line-height: 1.8;
+  color: var(--ink-faint); text-align: center;
+  background: var(--paper-sunken);
+}
+.stage-msg.hidden { display: none; }
+.stage-msg b { color: var(--ink-dim); font-weight: 400; }
+
+/* the panel — the DevTools extension's layout, in HTML */
+.dp-panel {
+  display: flex; flex-direction: column;
+  max-height: 700px;
+  background: var(--paper-sunken);
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  font-family: var(--mono); font-size: 12.5px;
+  color: var(--ink-dim);
+  box-shadow: 0 30px 60px -30px rgba(0,0,0,.6);
+  overflow: hidden;
+}
+@media (max-width: 1000px) { .dp-panel { max-height: none; } }
+.dp-bar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-bottom: 1px solid var(--line);
+}
+.dp-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ink-faint); flex: none; }
+.dp-dot.on { background: var(--green); box-shadow: 0 0 8px var(--green); }
+.dp-name { color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dp-reset {
+  margin-left: auto; flex: none;
+  background: none; border: 1px solid var(--line-strong); border-radius: 5px;
+  color: var(--cyan); font-family: var(--mono); font-size: 11px;
+  padding: 3px 9px; cursor: pointer;
+}
+.dp-reset:hover { background: var(--cyan-dim); }
+.dp-body { overflow-y: auto; padding-bottom: 10px; }
+.dp-sec {
+  padding: 14px 14px 6px;
+  font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.dp-row { display: flex; align-items: center; gap: 10px; padding: 5px 14px; }
+.dp-lbl { flex: 0 0 98px; }
+.dp-ctl { flex: 1; display: flex; align-items: center; justify-content: flex-end; gap: 8px; min-width: 0; }
+.dp-val { color: var(--ink); font-size: 11.5px; min-width: 52px; text-align: right; }
+.dp-note { padding: 6px 14px 0; font-size: 11px; color: var(--ink-faint); line-height: 1.6; }
+.dp-foot {
+  border-top: 1px solid var(--line);
+  padding: 9px 14px;
+  font-size: 11px; color: var(--ink-faint);
+  display: flex; justify-content: space-between; gap: 10px;
+}
+.dp-foot b { color: var(--cyan); font-weight: 400; }
+
+.dp-panel select, .dp-panel input[type="number"] {
+  background: var(--paper-raised); color: var(--ink);
+  border: 1px solid var(--line-strong); border-radius: 5px;
+  font-family: var(--mono); font-size: 11.5px;
+  padding: 4px 6px; max-width: 100%;
+}
+.dp-panel select:focus-visible, .dp-panel input:focus-visible, .dp-panel button:focus-visible {
+  outline: 1px solid var(--cyan); outline-offset: 1px;
+}
+.dp-panel select:disabled, .dp-panel input:disabled { opacity: .45; cursor: not-allowed; }
+.dp-panel select { min-width: 0; }
+#dpPreset { flex: 1; }
+
+.dp-seg { display: inline-flex; border: 1px solid var(--line-strong); border-radius: 5px; overflow: hidden; flex: none; }
+.dp-seg button {
+  background: none; border: none; border-left: 1px solid var(--line-strong);
+  color: var(--ink-dim); font-family: var(--mono); font-size: 11px;
+  padding: 4px 9px; cursor: pointer;
+}
+.dp-seg button:first-child { border-left: none; }
+.dp-seg button[aria-pressed="true"] { background: var(--cyan); color: #05263a; }
+.dp-seg button:disabled { opacity: .4; cursor: not-allowed; }
+
+.dp-switch {
+  appearance: none; -webkit-appearance: none;
+  position: relative; width: 34px; height: 18px; flex: none;
+  background: var(--paper-raised); border: 1px solid var(--line-strong);
+  border-radius: 99px; cursor: pointer; margin: 0;
+}
+.dp-switch::after {
+  content: ""; position: absolute; top: 2px; left: 2px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--ink-faint); transition: left .15s ease, background .15s ease;
+}
+.dp-switch:checked { background: var(--cyan-dim); border-color: var(--cyan); }
+.dp-switch:checked::after { left: 18px; background: var(--cyan); }
+.dp-switch:disabled { opacity: .4; cursor: not-allowed; }
+
+.dp-panel input[type="range"] { flex: 1; min-width: 0; accent-color: var(--cyan); cursor: pointer; }
+
+.dp-btn {
+  background: none; border: 1px solid var(--line-strong); border-radius: 5px;
+  color: var(--ink-dim); font-family: var(--mono); font-size: 11px;
+  padding: 4px 9px; cursor: pointer; flex: none;
+}
+.dp-btn:hover:not(:disabled) { color: var(--cyan); border-color: var(--cyan); }
+.dp-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+.dp-custom { padding: 4px 14px 0; }
+.dp-custom summary { cursor: pointer; font-size: 11.5px; color: var(--ink-faint); padding: 4px 0; }
+.dp-custom summary:hover { color: var(--cyan); }
+.dp-fields { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 0 2px; }
+.dp-fields label { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; }
+.dp-fields input { width: 58px; }
+
+.dp-chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 4px 14px 2px; }
+.dp-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 1px solid var(--line-strong); border-radius: 99px;
+  padding: 3px 6px 3px 10px; font-size: 11px; color: var(--ink);
+}
+.dp-chip.primary { border-color: color-mix(in srgb, var(--cyan) 45%, transparent); color: var(--cyan); }
+.dp-chip button {
+  background: none; border: none; color: var(--ink-faint);
+  cursor: pointer; font-family: var(--mono); font-size: 12px; line-height: 1; padding: 0 2px;
+}
+.dp-chip button:hover { color: var(--amber); }
+.dp-empty { padding: 2px 14px 4px; font-size: 11px; color: var(--ink-faint); }
+
+/* ---------- latest news ---------- */
+.news { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 34px; }
+@media (max-width: 760px) { .news { grid-template-columns: 1fr; gap: 14px; } }
+.news-meta {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
+  font-family: var(--mono); font-size: 12px; color: var(--ink-faint);
+  letter-spacing: .06em;
+}
+.news-meta .ver {
+  color: var(--amber);
+  border: 1px solid color-mix(in srgb, var(--amber) 45%, transparent);
+  border-radius: 99px; padding: 1px 10px;
+}
+.news-body { max-width: 74ch; }
+.news-body p { color: var(--ink-dim); margin-bottom: 18px; }
+.news-body p:last-child { margin-bottom: 0; }
+.news-body strong { color: var(--ink); font-weight: 600; }
 
 /* ---------- sections ---------- */
 section { padding: 78px 0; border-top: 1px solid var(--line); position: relative; }
-.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; margin-bottom: 44px; }
+.sec-head { margin-bottom: 44px; }
 h2 {
   font-family: var(--display);
   font-size: clamp(28px, 3.6vw, 42px);
@@ -237,35 +375,16 @@ h2 {
 }
 
 /* devtools */
-.devtools-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px; align-items: center; }
+.devtools-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 48px; }
 @media (max-width: 940px) { .devtools-grid { grid-template-columns: 1fr; } }
 .devtools-grid p { color: var(--ink-dim); margin-bottom: 14px; }
 .devtools-grid p strong { color: var(--ink); }
-.panel-mock {
-  background: var(--paper-sunken);
-  border: 1px solid var(--line-strong);
-  border-radius: 10px;
-  font-family: var(--mono); font-size: 12.5px;
-  overflow: hidden;
-  box-shadow: 0 30px 60px -30px rgba(0,0,0,.6);
-}
-.panel-mock .pm-bar {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 16px; border-bottom: 1px solid var(--line);
-  color: var(--ink-dim);
-}
-.pm-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); }
-.pm-bar .pm-reset { margin-left: auto; color: var(--cyan); }
-.panel-mock .pm-body { padding: 6px 0 14px; }
-.pm-row {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 9px 16px; color: var(--ink-dim);
-}
-.pm-row .val { color: var(--ink); background: var(--paper-raised); border: 1px solid var(--line); border-radius: 5px; padding: 3px 10px; }
-.pm-row .val.on { color: var(--cyan); border-color: color-mix(in srgb, var(--cyan) 40%, transparent); }
-.pm-sec { padding: 12px 16px 4px; font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-faint); }
-.pm-slider { flex: 1; margin: 0 14px; height: 3px; background: var(--line-strong); border-radius: 2px; position: relative; }
-.pm-slider i { position: absolute; left: 62%; top: -4px; width: 11px; height: 11px; background: var(--cyan); border-radius: 50%; }
+.panel-index { border: 1px solid var(--line-strong); border-radius: 10px; overflow: hidden; }
+.panel-index .pi-row { display: grid; grid-template-columns: 108px minmax(0, 1fr); border-top: 1px solid var(--line); }
+.panel-index .pi-row:first-child { border-top: none; }
+.panel-index .pi-row > * { padding: 13px 16px; }
+.panel-index .pi-k { font-family: var(--mono); font-size: 12.5px; color: var(--cyan); }
+.panel-index .pi-d { color: var(--ink-dim); font-size: 14px; }
 
 /* testing strip */
 .duo { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 22px; }
@@ -297,9 +416,8 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
   .stagger > *:nth-child(3) { animation-delay: .25s; }
   .stagger > *:nth-child(4) { animation-delay: .35s; }
   .stagger > *:nth-child(5) { animation-delay: .45s; }
-  .schematic { opacity: 0; animation: rise .8s cubic-bezier(.2,.7,.2,1) .3s forwards; }
   @keyframes rise { to { opacity: 1; transform: none; } }
-  .pm-dot { animation: pulse 2.4s ease-in-out infinite; }
+  .dp-dot.on { animation: pulse 2.4s ease-in-out infinite; }
   @keyframes pulse { 50% { box-shadow: 0 0 2px var(--green); opacity: .6; } }
 }
 </style>
@@ -317,6 +435,8 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
       <b>device_preview</b><span class="v">3.0</span>
     </a>
     <nav class="links">
+      <a href="#demo">Demo</a>
+      <a href="#news">News</a>
       <a href="#why">Why</a>
       <a href="#simulate">What it simulates</a>
       <a href="#devtools">DevTools</a>
@@ -333,7 +453,8 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
       <h1>Every device.<br><span class="accent">One</span> <span class="outline">app run.</span></h1>
       <p class="lede">Switch your running Flutter app to an iPhone SE, an iPad in landscape or a 200%-text-scale Pixel — <strong>instantly, without a rebuild or a simulator</strong>. Screen size, safe areas, locale, brightness, text scale and accessibility all follow, so layout problems surface while you're still writing the layout.</p>
       <div class="hero-ctas">
-        <a class="btn primary" href="#api">Get started</a>
+        <a class="btn primary" href="#demo">Try it live</a>
+        <a class="btn ghost" href="#api">Get started</a>
         <a class="btn ghost" href="https://pub.dev/packages/device_preview">pub.dev ↗</a>
       </div>
       <div class="install">
@@ -341,71 +462,166 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
         <button class="copy-btn" data-copy="flutter pub add device_preview">copy</button>
       </div>
     </div>
+  </div>
+</div>
 
-    <div class="schematic">
-      <svg viewBox="0 0 560 420" aria-label="Diagram of a simulated device shown inside your app window, with its dimensions and safe areas annotated">
-        <!-- your window -->
-        <rect x="40" y="30" width="480" height="330" rx="6" fill="var(--paper-sunken)" stroke="var(--line-strong)"/>
-        <text x="48" y="22" class="dim-label faint">YOUR APP WINDOW</text>
-        <!-- letterbox hatching -->
-        <defs>
-          <pattern id="hatch" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-            <line x1="0" y1="0" x2="0" y2="7" stroke="var(--line)" stroke-width="1"/>
-          </pattern>
-        </defs>
-        <rect id="lbL" x="41" y="31" width="120" height="328" fill="url(#hatch)"/>
-        <rect id="lbR" x="399" y="31" width="120" height="328" fill="url(#hatch)"/>
-        <!-- simulated device -->
-        <g id="dev">
-          <rect id="devRect" x="212" y="45" width="136" height="300" rx="10" fill="var(--paper)" stroke="var(--cyan)" stroke-width="1.5"/>
-          <rect id="safeTop" x="212" y="45" width="136" height="21" fill="var(--cyan-dim)" opacity=".55"/>
-          <rect id="safeBot" x="212" y="333" width="136" height="12" fill="var(--cyan-dim)" opacity=".55"/>
-          <!-- crosshair -->
-          <line id="chH" x1="266" y1="195" x2="294" y2="195" stroke="var(--amber)" stroke-width="1"/>
-          <line id="chV" x1="280" y1="181" x2="280" y2="209" stroke="var(--amber)" stroke-width="1"/>
-        </g>
-        <!-- width dimension -->
-        <g id="dimW">
-          <line id="dimWl" x1="212" y1="376" x2="348" y2="376" class="sch-line solid"/>
-          <line id="dimWt1" x1="212" y1="370" x2="212" y2="382" class="sch-line solid"/>
-          <line id="dimWt2" x1="348" y1="370" x2="348" y2="382" class="sch-line solid"/>
-          <text id="labelW" x="280" y="394" text-anchor="middle" class="dim-label">393 lp</text>
-        </g>
-        <!-- height dimension -->
-        <g id="dimH">
-          <line id="dimHl" x1="374" y1="45" x2="374" y2="345" class="sch-line solid"/>
-          <line id="dimHt1" x1="368" y1="45" x2="380" y2="45" class="sch-line solid"/>
-          <line id="dimHt2" x1="368" y1="345" x2="380" y2="345" class="sch-line solid"/>
-          <text id="labelH" x="384" y="200" class="dim-label">852 lp</text>
-        </g>
-        <!-- safe area callouts -->
-        <line id="calloutTopLine" x1="212" y1="56" x2="150" y2="56" class="sch-line" stroke-dasharray="3 3"/>
-        <text id="labelTop" x="145" y="60" text-anchor="end" class="dim-label amber">top 59</text>
-        <line id="calloutBotLine" x1="212" y1="339" x2="150" y2="339" class="sch-line" stroke-dasharray="3 3"/>
-        <text id="labelBot" x="145" y="343" text-anchor="end" class="dim-label amber">bottom 34</text>
-        <!-- dpr note -->
-        <text id="labelDpr" x="48" y="350" class="dim-label">@3.0x</text>
-        <text id="labelFit" x="512" y="350" text-anchor="end" class="dim-label faint">pick a device →</text>
-      </svg>
-      <div class="presets" role="group" aria-label="Device presets">
-        <button class="chip active" data-w="393" data-h="852" data-dpr="3.0" data-top="59" data-bot="34">iPhone 16 Pro</button>
-        <button class="chip" data-w="375" data-h="667" data-dpr="2.0" data-top="20" data-bot="0">iPhone SE</button>
-        <button class="chip" data-w="412" data-h="923" data-dpr="2.625" data-top="24" data-bot="24">Pixel 9</button>
-        <button class="chip" data-w="1032" data-h="1376" data-dpr="2.0" data-top="24" data-bot="20">iPad Pro 13″</button>
-        <button class="chip" data-w="1920" data-h="1080" data-dpr="2.0" data-top="0" data-bot="0">Desktop</button>
+<section id="demo">
+  <div class="sheet">
+    <div class="sec-head reveal">
+      <span class="tag">Live demo</span>
+      <h2>Not a mockup.<br>A running app.</h2>
+    </div>
+
+    <p class="demo-lede reveal">On the left, the Flutter counter app compiled for the web — <strong>the stock one</strong>, with nothing but a theme change and <code>DevicePreview.enable()</code>. On the right, the same controls the DevTools extension gives you, rebuilt in HTML and talking to the app over <code>postMessage</code> instead of the VM service. Pick a device, rotate it, push the text scale: the app you are looking at re-lays itself out, and the counter keeps counting.</p>
+
+    <div class="demo-grid reveal">
+      <div class="stage">
+        <div class="stage-msg" id="dpStageMsg"><span><b>Loading the demo…</b><br>a 3 MB Flutter web app, fetched once</span></div>
+      </div>
+
+      <aside class="dp-panel" id="dpPanel" aria-label="Device preview controls">
+        <div class="dp-bar">
+          <span class="dp-dot" id="dpDot"></span>
+          <span class="dp-name" id="dpDeviceLabel">Connecting…</span>
+          <button class="dp-reset" type="button" id="dpReset" title="Clear the whole simulation (pass through to the real device)">⟲ reset</button>
+        </div>
+
+        <div class="dp-body">
+          <div class="dp-sec">Device</div>
+          <div class="dp-row">
+            <span class="dp-lbl">Preset</span>
+            <span class="dp-ctl"><select id="dpPreset" aria-label="Device preset"></select></span>
+          </div>
+          <div class="dp-row">
+            <span class="dp-lbl">Orientation</span>
+            <span class="dp-ctl">
+              <span class="dp-seg" id="dpOrientation" role="group" aria-label="Orientation">
+                <button type="button" data-value="portrait">portrait</button>
+                <button type="button" data-value="landscape">landscape</button>
+              </span>
+            </span>
+          </div>
+          <div class="dp-row">
+            <label class="dp-lbl" for="dpSystemUi">System UI</label>
+            <span class="dp-ctl"><input type="checkbox" class="dp-switch" id="dpSystemUi"></span>
+          </div>
+          <div class="dp-row">
+            <span class="dp-lbl">Touch input</span>
+            <span class="dp-ctl">
+              <span class="dp-seg dp-tri" id="dpTouch" role="group" aria-label="Touch input">
+                <button type="button" data-value="">auto</button>
+                <button type="button" data-value="on">on</button>
+                <button type="button" data-value="off">off</button>
+              </span>
+            </span>
+          </div>
+          <details class="dp-custom">
+            <summary>Custom…</summary>
+            <div class="dp-fields">
+              <label>W <input type="number" id="dpCustomW" value="390" min="1"></label>
+              <label>H <input type="number" id="dpCustomH" value="844" min="1"></label>
+              <label>DPR <input type="number" id="dpCustomDpr" value="3" min="0.5" step="0.5"></label>
+              <button class="dp-btn" type="button" id="dpCustomApply">apply</button>
+            </div>
+          </details>
+
+          <div class="dp-sec">Display</div>
+          <div class="dp-row">
+            <span class="dp-lbl">Brightness</span>
+            <span class="dp-ctl">
+              <span class="dp-seg" id="dpBrightness" role="group" aria-label="Brightness">
+                <button type="button" data-value="">system</button>
+                <button type="button" data-value="light">light</button>
+                <button type="button" data-value="dark">dark</button>
+              </span>
+            </span>
+          </div>
+          <div class="dp-row">
+            <label class="dp-lbl" for="dpTextScale">Text scale</label>
+            <span class="dp-ctl">
+              <input type="range" id="dpTextScale" min="0.5" max="3" step="0.1" value="1">
+              <span class="dp-val" id="dpTextScaleVal">system</span>
+              <button class="dp-btn" type="button" id="dpTextScaleReset" title="Follow the real device">auto</button>
+            </span>
+          </div>
+          <div class="dp-row">
+            <span class="dp-lbl">24-hour time</span>
+            <span class="dp-ctl">
+              <span class="dp-seg dp-tri" id="dp24h" role="group" aria-label="24-hour time">
+                <button type="button" data-value="">system</button>
+                <button type="button" data-value="on">on</button>
+                <button type="button" data-value="off">off</button>
+              </span>
+            </span>
+          </div>
+
+          <div class="dp-sec">Locale</div>
+          <div class="dp-row">
+            <span class="dp-ctl" style="justify-content: flex-start;">
+              <select id="dpLocaleChoice" aria-label="Locale to add"></select>
+              <button class="dp-btn" type="button" id="dpLocaleAdd">add</button>
+              <button class="dp-btn" type="button" id="dpLocaleClear">clear</button>
+            </span>
+          </div>
+          <div class="dp-chips" id="dpLocales"></div>
+          <p class="dp-empty" id="dpLocalesEmpty">Using the real device locales.</p>
+
+          <div class="dp-sec">Accessibility</div>
+          <div id="dpA11y"></div>
+
+          <div class="dp-sec">Platform</div>
+          <div class="dp-row">
+            <label class="dp-lbl" for="dpPlatform">Target</label>
+            <span class="dp-ctl">
+              <select id="dpPlatform">
+                <option value="">real platform</option>
+                <option value="android">android</option>
+                <option value="iOS">iOS</option>
+                <option value="macOS">macOS</option>
+                <option value="windows">windows</option>
+                <option value="linux">linux</option>
+                <option value="fuchsia">fuchsia</option>
+              </select>
+            </span>
+          </div>
+          <p class="dp-note" id="dpPlatformNote">Applying a platform override triggers a reassemble (like a hot reload).</p>
+        </div>
+
+        <div class="dp-foot">
+          <span id="dpMetrics">—</span>
+          <span id="dpFit"></span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="news">
+  <div class="sheet">
+    <div class="sec-head reveal">
+      <span class="tag">Latest news</span>
+      <h2>3.0 moves the simulation<br>under your app.</h2>
+    </div>
+    <div class="news reveal">
+      <div class="news-meta">
+        <span>August 2026</span>
+        <span class="ver">v3.0</span>
+      </div>
+      <div class="news-body">
+        <p><strong>3.0 is a rewrite.</strong> Until now, device_preview was a widget: it sat at the root of your tree, injected a <code>MediaQuery</code> underneath itself, and drew its own control panel next to the simulated screen. That worked, but the simulation only existed <em>below</em> that widget — and it lived inside the app it was measuring. The idea is unchanged; everything under it has moved one layer down.</p>
+        <p><strong>The simulation now lives in a custom <code>WidgetsBinding</code></strong>, installed by one line before <code>runApp</code>. It wraps the engine's <code>PlatformDispatcher</code> and <code>FlutterView</code>, so screen size, pixel ratio, safe areas, orientation, locale, brightness, text scale and accessibility flags are simulated at the boundary the framework itself reads. Nothing is injected halfway down the tree, so <code>MediaQuery.of</code> is right everywhere — inside routes, dialogs and overlays — and code that reads <code>View.of(context)</code> or the dispatcher directly agrees with it. Pointer packets pass through the same seam, which is how your mouse can be delivered to the app as a finger. And because it is a binding rather than a widget, <code>flutter_test</code> can install it too — the same simulation, with no wrapper around the app.</p>
+        <p><strong>That is what makes it solid.</strong> A wrapper can only simulate what sits below it, so an app effectively held two answers to the same question — the engine's and the injected one — and anything that read the wrong one, or that built its own <code>MediaQuery</code> from the view, quietly saw the real device. There is nothing to opt into now and nothing to remember: no <code>builder:</code> to thread through <code>MaterialApp</code>, no rule about staying under the wrapper, no widget that has to be first. And it is consistent by construction: metrics, safe areas, locale resolution, text scaling, accessibility flags and pointer routing all come through the one seam, so they cannot drift apart from each other, and every change travels the notification path the framework already uses for a real device — a rotation or a brightness switch is indistinguishable from the engine sending one. The simulation applies everywhere or nowhere; there is no half-simulated tree. It is also why a golden captured this way matches what the panel just showed you: the same code path, not a lookalike.</p>
+        <p><strong>The controls moved to Flutter DevTools</strong> for the same reason. A panel that lives in your widget tree perturbs what it measures: it adds ancestors, competes for focus and theme, and takes screen away from the app you are trying to look at. Outside the tree, your app keeps the whole window and none of the control surface ships with it — the device frames live in the extension, and only the device you selected travels over the VM service. DevTools is already open beside a running Flutter app on every platform, so there is nothing to install and nothing to configure; and when you would rather script the same changes, the controller API and your tests reach them directly.</p>
       </div>
     </div>
   </div>
-</div>
+</section>
 
 <section id="why">
   <div class="sheet">
     <div class="sec-head reveal">
-      <div>
-        <span class="tag">Why</span>
-        <h2>Ship for devices<br>you don't own.</h2>
-      </div>
-      <span class="ref">FIG. 01 — THE GAP</span>
+      <span class="tag">Why</span>
+      <h2>Ship for devices<br>you don't own.</h2>
     </div>
 
     <div class="oneline reveal">
@@ -446,11 +662,8 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
 <section id="simulate">
   <div class="sheet">
     <div class="sec-head reveal">
-      <div>
-        <span class="tag">Coverage</span>
-        <h2>What gets simulated</h2>
-      </div>
-      <span class="ref">TBL. 02 — CHARACTERISTICS</span>
+      <span class="tag">Coverage</span>
+      <h2>What gets simulated</h2>
     </div>
     <div class="spec reveal">
       <div class="spec-row"><div class="k">Screen size &amp; pixel ratio</div><div class="d">Any resolution and density, from a 320pt phone to a 13″ tablet. The app is scaled to fit your window, so a screen larger than your monitor still previews whole.</div><div class="m">SCREEN</div></div>
@@ -459,7 +672,7 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
       <div class="spec-row"><div class="k">Folds &amp; hinges</div><div class="d">Display features for foldables, so hinge-aware layouts can be checked without a foldable on the desk.</div><div class="m">SCREEN</div></div>
       <div class="spec-row"><div class="k">Device frame</div><div class="d">The device drawn around your app: its screen outline clips the corners, its body is painted behind. Nothing ships in your app — the frame travels from the DevTools catalog when you pick a device.</div><div class="m">SCREEN</div></div>
       <div class="spec-row"><div class="k">System UI</div><div class="d">A simulated status bar and gesture pill, laid out from the device's own safe areas and tinted from your app's <code>SystemUiOverlayStyle</code> — so a status bar style is visible while you write it. One switch hides them.</div><div class="m">SCREEN</div></div>
-      <div class="spec-row"><div class="k">Touch input</div><div class="d">Your mouse reported to the app as a finger: drag to scroll a list the way a thumb does — the mouse is not a drag device on desktop or the web — with gestures on their touch paths and no hover. The wheel keeps scrolling.</div><div class="m">INPUT</div></div>
+      <div class="spec-row"><div class="k">Touch input</div><div class="d">Your mouse reported to the app as a finger: drag to scroll a list the way a thumb does — the mouse is not a drag device on desktop or the web — with gestures on their touch paths and no hover. The wheel keeps scrolling. Left on <em>auto</em> it follows the device: on for a phone, tablet or foldable, off for a desktop window.</div><div class="m">INPUT</div></div>
       <div class="spec-row"><div class="k">Keyboard insets</div><div class="d">The software keyboard's <code>viewInsets</code> reach your layout, so you can see what the keyboard covers.</div><div class="m">SCREEN</div></div>
       <div class="spec-row"><div class="k">Locales</div><div class="d">A full ordered locale list — your app's locale resolution, translations and <code>Intl</code> date, number and currency formatting all follow.</div><div class="m">SYSTEM</div></div>
       <div class="spec-row"><div class="k">Brightness</div><div class="d">Light and dark, applied live — <code>ThemeMode.system</code> flips as you toggle.</div><div class="m">SYSTEM</div></div>
@@ -474,34 +687,22 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
 <section id="devtools">
   <div class="sheet">
     <div class="sec-head reveal">
-      <div>
-        <span class="tag">Control surface</span>
-        <h2>The controls live<br>in Flutter DevTools.</h2>
-      </div>
-      <span class="ref">FIG. 03 — EXTENSION</span>
+      <span class="tag">Control surface</span>
+      <h2>The controls live<br>in Flutter DevTools.</h2>
     </div>
     <div class="devtools-grid">
       <div class="reveal">
         <p><strong>A device_preview tab appears in DevTools</strong> as soon as your app depends on the package — nothing to install, nothing to configure. Your screen stays entirely for the app you're designing.</p>
         <p>Pick a device, rotate it, drag the text scale, flip brightness, reorder locales, toggle accessibility flags. The running app updates as you go, and it keeps its state: the screen you were on, the data you'd loaded, the form you'd half-filled are all still there.</p>
         <p><strong>Hot restart doesn't lose your setup.</strong> Turn on <em>Keep across restarts</em> and the panel puts your simulated device back the moment the app returns.</p>
+        <p><a class="btn ghost" href="#demo">↑ Try the panel on the live demo</a></p>
       </div>
-      <div class="panel-mock reveal" aria-hidden="true">
-        <div class="pm-bar"><span class="pm-dot"></span> device_preview <span class="pm-reset">⟲ reset</span></div>
-        <div class="pm-body">
-          <div class="pm-sec">Device</div>
-          <div class="pm-row"><span>Preset</span><span class="val on">iPhone 16 Pro · 402×874 @3x</span></div>
-          <div class="pm-row"><span>Orientation</span><span class="val">portrait ▾</span></div>
-          <div class="pm-row"><span>System UI</span><span class="val on">shown</span></div>
-          <div class="pm-row"><span>Touch input</span><span class="val on">on</span></div>
-          <div class="pm-sec">Display</div>
-          <div class="pm-row"><span>Brightness</span><span class="val on">dark</span></div>
-          <div class="pm-row"><span>Text scale</span><span class="pm-slider"><i></i></span><span class="val">1.3</span></div>
-          <div class="pm-sec">System</div>
-          <div class="pm-row"><span>Locales</span><span class="val">fr-FR, en-US</span></div>
-          <div class="pm-row"><span>Bold text</span><span class="val on">on</span></div>
-          <div class="pm-row"><span>Platform</span><span class="val">iOS ▾</span></div>
-        </div>
+      <div class="panel-index reveal">
+        <div class="pi-row"><div class="pi-k">Device</div><div class="pi-d">The catalog, orientation, the simulated system UI, mouse-as-finger — and a custom size when no catalog entry fits.</div></div>
+        <div class="pi-row"><div class="pi-k">Display</div><div class="pi-d">Brightness, text scale, 24-hour time.</div></div>
+        <div class="pi-row"><div class="pi-k">Locale</div><div class="pi-d">The ordered locale list your app resolves against.</div></div>
+        <div class="pi-row"><div class="pi-k">Accessibility</div><div class="pi-d">Seven flags, each on, off, or left as the real device reports it.</div></div>
+        <div class="pi-row"><div class="pi-k">Platform</div><div class="pi-d">The target platform Material and Cupertino adapt to. Debug builds only.</div></div>
       </div>
     </div>
   </div>
@@ -510,11 +711,8 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
 <section id="api">
   <div class="sheet">
     <div class="sec-head reveal">
-      <div>
-        <span class="tag">API</span>
-        <h2>Or drive it from Dart —<br>including in your tests.</h2>
-      </div>
-      <span class="ref">LST. 04 — CONTROLLER</span>
+      <span class="tag">API</span>
+      <h2>Or drive it from Dart —<br>including in your tests.</h2>
     </div>
     <div class="duo">
       <div class="codeblock reveal">
@@ -591,45 +789,557 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 
-// schematic preset switcher
-const stage = { x: 40, y: 30, w: 480, h: 330, pad: 15 };
 const $ = (id) => document.getElementById(id);
-function setDevice(w, h, dpr, top, bot) {
-  const scale = Math.min((stage.w - stage.pad * 2) / w, (stage.h - stage.pad * 2) / h);
-  const dw = w * scale, dh = h * scale;
-  const x = stage.x + (stage.w - dw) / 2, y = stage.y + (stage.h - dh) / 2;
-  const attrs = (el, m) => Object.entries(m).forEach(([k, v]) => el.setAttribute(k, v));
-  attrs($('devRect'), { x, y, width: dw, height: dh });
-  attrs($('safeTop'), { x, y, width: dw, height: Math.max(top * scale, 0) });
-  attrs($('safeBot'), { x, y: y + dh - bot * scale, width: dw, height: Math.max(bot * scale, 0) });
-  const cx = x + dw / 2, cy = y + dh / 2;
-  attrs($('chH'), { x1: cx - 14, x2: cx + 14, y1: cy, y2: cy });
-  attrs($('chV'), { x1: cx, x2: cx, y1: cy - 14, y2: cy + 14 });
-  attrs($('lbL'), { width: Math.max(x - stage.x - 1, 0) });
-  attrs($('lbR'), { x: x + dw + 1, width: Math.max(stage.x + stage.w - (x + dw) - 1, 0) });
-  attrs($('dimWl'), { x1: x, x2: x + dw, y1: 376, y2: 376 });
-  attrs($('dimWt1'), { x1: x, x2: x }); attrs($('dimWt2'), { x1: x + dw, x2: x + dw });
-  $('labelW').setAttribute('x', cx); $('labelW').textContent = `${w} lp`;
-  attrs($('dimHl'), { y1: y, y2: y + dh });
-  attrs($('dimHt1'), { y1: y, y2: y }); attrs($('dimHt2'), { y1: y + dh, y2: y + dh });
-  $('labelH').setAttribute('y', cy + 4); $('labelH').textContent = `${h} lp`;
-  attrs($('calloutTopLine'), { x1: x, y1: y + Math.max(top * scale, 0) / 2, y2: y + Math.max(top * scale, 0) / 2 });
-  $('labelTop').setAttribute('y', y + Math.max(top * scale, 0) / 2 + 4);
-  $('labelTop').textContent = top ? `top ${top}` : 'top 0';
-  attrs($('calloutBotLine'), { x1: x, y1: y + dh - (bot * scale) / 2, y2: y + dh - (bot * scale) / 2 });
-  $('labelBot').setAttribute('y', y + dh - (bot * scale) / 2 + 4);
-  $('labelBot').textContent = bot ? `bottom ${bot}` : 'bottom 0';
-  $('labelDpr').textContent = `@${dpr}x`;
-}
-document.querySelectorAll('.chip').forEach((chip) => {
-  chip.addEventListener('click', () => {
-    document.querySelectorAll('.chip').forEach((c) => c.classList.remove('active'));
-    chip.classList.add('active');
-    const d = chip.dataset;
-    setDevice(+d.w, +d.h, +d.dpr, +d.top, +d.bot);
-  });
-});
+
 document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ---------------------------------------------------------------------------
+ * The live demo.
+ *
+ * This is the DevTools extension's panel, rebuilt in HTML. It plays the same
+ * part its Dart original does: the page owns the device catalog
+ * (device_catalog.json, generated from device_specs/) and the panel state,
+ * builds a whole DeviceSimulation JSON locally, and pushes it to the app —
+ * which is the single source of truth and answers with its state. Only the
+ * transport differs: window.postMessage instead of the VM service.
+ * ------------------------------------------------------------------------ */
+(() => {
+  const CHANNEL = 'device_preview_demo';
+  const DEMO_URL = 'demo/index.html';
+  const CATALOG_URL = 'device_catalog.json';
+  const DEFAULT_DEVICE = 'apple-iphone-17-pro';
+
+  // Simulation keys describing screen metrics: picking a device replaces
+  // exactly this set and preserves every other override.
+  const METRIC_KEYS = ['presetId', 'orientation', 'screenSize', 'frame', 'systemUi',
+    'deviceKind', 'devicePixelRatio', 'padding', 'viewPadding', 'systemGestureInsets',
+    'displayFeatures'];
+  const A11Y_FLAGS = [
+    ['accessibleNavigation', 'Accessible nav'],
+    ['invertColors', 'Invert colors'],
+    ['disableAnimations', 'No animations'],
+    ['boldText', 'Bold text'],
+    ['reduceMotion', 'Reduce motion'],
+    ['highContrast', 'High contrast'],
+    ['onOffSwitchLabels', 'Switch labels'],
+  ];
+  const COMMON_LOCALES = ['en-US', 'en-GB', 'fr-FR', 'de-DE', 'es-ES', 'it-IT',
+    'pt-BR', 'nl-NL', 'ru-RU', 'ja-JP', 'ko-KR', 'zh-CN', 'ar-SA', 'hi-IN'];
+  const KIND_LABELS = { phone: 'Phones', tablet: 'Tablets', foldable: 'Foldables', desktop: 'Desktop windows' };
+  const KIND_ORDER = ['phone', 'tablet', 'foldable', 'desktop'];
+
+  const section = document.getElementById('demo');
+  const stage = section.querySelector('.stage');
+  const stageMsg = $('dpStageMsg');
+
+  let frame = null;
+  let catalog = [];
+  let state = null;
+  let connected = false;
+  let bootstrapped = false;
+  let seq = 0;
+  const pending = new Map();
+  let queue = Promise.resolve();
+
+  // --- transport -----------------------------------------------------------
+
+  function send(type, extra) {
+    if (!frame || !frame.contentWindow) return Promise.reject(new Error('no app'));
+    const requestId = 'page-' + (++seq);
+    return new Promise((resolve, reject) => {
+      const timer = setTimeout(() => {
+        pending.delete(requestId);
+        reject(new Error('timed out'));
+      }, 10000);
+      pending.set(requestId, { resolve, timer });
+      frame.contentWindow.postMessage(
+        JSON.stringify(Object.assign({ channel: CHANNEL, type, requestId }, extra || {})),
+        '*',
+      );
+    });
+  }
+
+  window.addEventListener('message', (event) => {
+    if (typeof event.data !== 'string') return;
+    let msg;
+    try { msg = JSON.parse(event.data); } catch (_) { return; }
+    if (!msg || msg.channel !== CHANNEL) return;
+    if (msg.state) state = msg.state;
+    const entry = msg.requestId ? pending.get(msg.requestId) : null;
+    if (entry) {
+      pending.delete(msg.requestId);
+      clearTimeout(entry.timer);
+      entry.resolve(msg.state);
+    }
+    if (msg.type === 'ready' || msg.type === 'state') onConnected();
+    render();
+  });
+
+  function onConnected() {
+    if (!connected) {
+      connected = true;
+      stageMsg.classList.add('hidden');
+      $('dpDot').classList.add('on');
+    }
+    maybeBootstrap();
+  }
+
+  /** Puts a device on screen as soon as both ends are up, so the demo never
+   *  greets a visitor with an unsimulated window. */
+  function maybeBootstrap() {
+    if (bootstrapped || !connected || !catalog.length) return;
+    bootstrapped = true;
+    if (state && state.simulation && state.simulation.screenSize) return;
+    const preset = presetById(DEFAULT_DEVICE) || catalog[0];
+    enqueue(() => applyPreset(preset, 'portrait'));
+  }
+
+  // --- simulation state ----------------------------------------------------
+
+  const simulation = () => (state && state.simulation) || null;
+  const clone = (value) => JSON.parse(JSON.stringify(value));
+  const currentSim = () => (simulation() ? clone(simulation()) : {});
+  const presetById = (id) => catalog.find((p) => p.id === id) || null;
+
+  /** A simulation carrying nothing but its orientation label overrides
+   *  nothing: send it as a plain reset. */
+  function normalize(sim) {
+    const keys = Object.keys(sim);
+    if (keys.length === 0 || (keys.length === 1 && keys[0] === 'orientation')) return null;
+    return sim;
+  }
+
+  function enqueue(task) {
+    const result = queue.then(() => task());
+    queue = result.catch(() => {});
+    return result;
+  }
+
+  function push(sim) {
+    return send('setSimulation', { simulation: normalize(sim) })
+      .then((next) => { if (next) { state = next; render(); } })
+      .catch(() => { render(); });
+  }
+
+  function mutate(key, value) {
+    return enqueue(() => {
+      const sim = currentSim();
+      if (value === null || value === undefined) delete sim[key];
+      else sim[key] = value;
+      return push(sim);
+    });
+  }
+
+  /** The rotation rule of the design doc: the notch mirrors to both sides,
+   *  the home indicator stays at the bottom. */
+  function rotateInsets(insets, toLandscape) {
+    const side = (key) => Number(insets[key]) || 0;
+    return toLandscape
+      ? { left: side('top'), top: 0, right: side('top'), bottom: side('bottom') }
+      : { left: 0, top: side('left'), right: 0, bottom: side('bottom') };
+  }
+
+  /** Display features are geometry: map their bounds through the quarter turn. */
+  function rotateFeatures(features, toLandscape, extent) {
+    return features.map((feature) => {
+      if (!feature || !feature.bounds) return feature;
+      const side = (key) => Number(feature.bounds[key]) || 0;
+      const bounds = toLandscape
+        ? { left: side('top'), top: extent - side('right'), right: side('bottom'), bottom: extent - side('left') }
+        : { left: extent - side('bottom'), top: side('left'), right: extent - side('top'), bottom: side('right') };
+      return Object.assign({}, feature, { bounds });
+    });
+  }
+
+  function applyPreset(preset, orientation, extra) {
+    const sim = currentSim();
+    METRIC_KEYS.forEach((key) => delete sim[key]);
+    Object.assign(sim, extra || {});
+    sim.presetId = preset.id;
+    sim.orientation = orientation;
+    sim.deviceKind = preset.kind || 'phone';
+    // The frame and the bars are described in portrait and resolved app-side,
+    // so rotation never touches them.
+    if (preset.frame) sim.frame = preset.frame;
+    if (preset.systemUi) sim.systemUi = preset.systemUi;
+    const landscape = orientation === 'landscape';
+    const size = preset.portraitSize;
+    if (size) {
+      sim.screenSize = landscape
+        ? { width: size.height, height: size.width }
+        : Object.assign({}, size);
+    }
+    if (preset.devicePixelRatio != null) sim.devicePixelRatio = preset.devicePixelRatio;
+    const portraitPadding = preset.portraitPadding;
+    const padding = landscape
+      ? preset.landscapePadding || (portraitPadding ? rotateInsets(portraitPadding, true) : null)
+      : portraitPadding;
+    if (padding) sim.padding = padding;
+    const portraitViewPadding = preset.portraitViewPadding || portraitPadding;
+    const viewPadding = landscape
+      ? preset.landscapeViewPadding || (portraitViewPadding ? rotateInsets(portraitViewPadding, true) : null)
+      : portraitViewPadding;
+    if (viewPadding) sim.viewPadding = viewPadding;
+    const gestures = preset.systemGestureInsets;
+    if (gestures && Object.keys(gestures).some((key) => Number(gestures[key]) !== 0)) {
+      sim.systemGestureInsets = gestures;
+    }
+    const features = preset.displayFeatures;
+    if (features && features.length) {
+      sim.displayFeatures = landscape && size
+        ? rotateFeatures(features, true, size.width)
+        : features;
+    }
+    return push(sim);
+  }
+
+  function selectRealDevice() {
+    return enqueue(() => {
+      const sim = currentSim();
+      METRIC_KEYS.forEach((key) => delete sim[key]);
+      return push(sim);
+    });
+  }
+
+  function setOrientation(orientation) {
+    return enqueue(() => {
+      const sim = currentSim();
+      if (!sim.screenSize || sim.orientation === orientation) return Promise.resolve();
+      const preset = presetById(sim.presetId);
+      if (preset) return applyPreset(preset, orientation);
+      const landscape = orientation === 'landscape';
+      const size = sim.screenSize;
+      if (sim.displayFeatures) {
+        const extent = Number(landscape ? size.width : size.height) || 0;
+        sim.displayFeatures = rotateFeatures(sim.displayFeatures, landscape, extent);
+      }
+      sim.screenSize = { width: size.height, height: size.width };
+      if (sim.padding) sim.padding = rotateInsets(sim.padding, landscape);
+      if (sim.viewPadding) sim.viewPadding = rotateInsets(sim.viewPadding, landscape);
+      sim.orientation = orientation;
+      return push(sim);
+    });
+  }
+
+  function setCustomMetrics(width, height, dpr) {
+    return enqueue(() => {
+      const sim = currentSim();
+      METRIC_KEYS.forEach((key) => delete sim[key]);
+      sim.orientation = height >= width ? 'portrait' : 'landscape';
+      sim.screenSize = { width, height };
+      sim.devicePixelRatio = dpr;
+      return push(sim);
+    });
+  }
+
+  function setAccessibilityFlag(flag, value) {
+    return enqueue(() => {
+      const sim = currentSim();
+      const accessibility = Object.assign({}, sim.accessibility || {});
+      if (value === null) delete accessibility[flag];
+      else accessibility[flag] = value;
+      if (Object.keys(accessibility).length === 0) delete sim.accessibility;
+      else sim.accessibility = accessibility;
+      return push(sim);
+    });
+  }
+
+  // --- rendering -----------------------------------------------------------
+
+  function segValue(group, value) {
+    group.querySelectorAll('button').forEach((button) => {
+      button.setAttribute('aria-pressed', String(button.dataset.value === value));
+    });
+  }
+
+  function setSegDisabled(group, disabled) {
+    group.querySelectorAll('button').forEach((button) => { button.disabled = disabled; });
+  }
+
+  const round = (value) => Math.round(Number(value) || 0);
+
+  function buildPresetOptions() {
+    const select = $('dpPreset');
+    select.innerHTML = '';
+    const real = document.createElement('option');
+    real.value = '';
+    real.textContent = 'Real device';
+    select.appendChild(real);
+    const kinds = KIND_ORDER.filter((kind) => catalog.some((p) => (p.kind || 'phone') === kind));
+    kinds.forEach((kind) => {
+      const group = document.createElement('optgroup');
+      group.label = KIND_LABELS[kind] || kind;
+      catalog
+        .filter((preset) => (preset.kind || 'phone') === kind)
+        // Same order as the DevTools picker: by brand, then newest first.
+        .sort((a, b) => (a.brand || '').localeCompare(b.brand || '')
+          || (b.year || 0) - (a.year || 0)
+          || a.name.localeCompare(b.name))
+        .forEach((preset) => {
+          const option = document.createElement('option');
+          option.value = preset.id;
+          const size = preset.portraitSize;
+          // Year before the metrics: a narrow <select> truncates the tail.
+          option.textContent = [
+            preset.name,
+            preset.year ? `· ${preset.year}` : null,
+            size ? `— ${round(size.width)}×${round(size.height)}` : null,
+          ].filter(Boolean).join(' ');
+          group.appendChild(option);
+        });
+      select.appendChild(group);
+    });
+    const custom = document.createElement('option');
+    custom.value = '__custom';
+    custom.textContent = 'Custom size';
+    custom.hidden = true;
+    select.appendChild(custom);
+  }
+
+  function renderLocales(sim) {
+    const locales = (sim && sim.locales) || [];
+    const list = $('dpLocales');
+    list.innerHTML = '';
+    locales.forEach((tag, index) => {
+      const chip = document.createElement('span');
+      chip.className = 'dp-chip' + (index === 0 ? ' primary' : '');
+      chip.appendChild(document.createTextNode(index === 0 ? `${tag} · primary` : tag));
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.textContent = '×';
+      remove.title = `Remove ${tag}`;
+      remove.addEventListener('click', () => {
+        const next = locales.filter((entry) => entry !== tag);
+        mutate('locales', next.length ? next : null);
+      });
+      chip.appendChild(remove);
+      list.appendChild(chip);
+    });
+    $('dpLocalesEmpty').style.display = locales.length ? 'none' : '';
+    $('dpLocaleClear').disabled = locales.length === 0;
+  }
+
+  function render() {
+    const sim = simulation();
+    const caps = (state && state.capabilities) || {};
+    const real = (state && state.realDevice) || {};
+    const hasScreen = !!(sim && sim.screenSize);
+
+    const preset = sim ? presetById(sim.presetId) : null;
+    $('dpDeviceLabel').textContent = !hasScreen
+      ? 'Real device'
+      : (preset ? preset.name : (sim.presetId || 'Custom size'));
+
+    const select = $('dpPreset');
+    if (select.options.length) {
+      const custom = select.querySelector('option[value="__custom"]');
+      if (custom) custom.hidden = !(hasScreen && !sim.presetId);
+      select.value = hasScreen ? (sim.presetId || '__custom') : '';
+    }
+
+    segValue($('dpOrientation'), (sim && sim.orientation) || 'portrait');
+    setSegDisabled($('dpOrientation'), !hasScreen);
+
+    const systemUi = $('dpSystemUi');
+    systemUi.checked = !sim || sim.showSystemUi !== false;
+    systemUi.disabled = !(sim && sim.systemUi);
+
+    const touch = sim && sim.touchInput;
+    segValue($('dpTouch'), touch === true ? 'on' : touch === false ? 'off' : '');
+
+    segValue($('dpBrightness'), (sim && sim.platformBrightness) || '');
+
+    const scale = sim && sim.textScaleFactor != null ? Number(sim.textScaleFactor) : null;
+    const slider = $('dpTextScale');
+    if (document.activeElement !== slider) {
+      slider.value = String(scale != null ? scale : (Number(real.textScaleFactor) || 1));
+    }
+    $('dpTextScaleVal').textContent = scale != null ? `×${scale.toFixed(1)}` : 'system';
+    $('dpTextScaleReset').disabled = scale == null;
+
+    const use24h = sim && sim.alwaysUse24HourFormat;
+    segValue($('dp24h'), use24h === true ? 'on' : use24h === false ? 'off' : '');
+
+    renderLocales(sim);
+
+    const accessibility = (sim && sim.accessibility) || {};
+    A11Y_FLAGS.forEach(([flag]) => {
+      const value = accessibility[flag];
+      segValue($(`dpA11y_${flag}`), value === true ? 'on' : value === false ? 'off' : '');
+    });
+
+    const platform = $('dpPlatform');
+    platform.value = (sim && sim.platform) || '';
+    platform.disabled = caps.targetPlatform !== true;
+    $('dpPlatformNote').textContent = platform.disabled
+      ? 'Target platform simulation needs a debug build — this demo is compiled for release, like the real panel would report.'
+      : 'Applying a platform override triggers a reassemble (like a hot reload).';
+
+    const size = sim && sim.screenSize;
+    const dpr = sim && sim.devicePixelRatio != null ? sim.devicePixelRatio : real.devicePixelRatio;
+    const shownSize = size || real.logicalSize;
+    $('dpMetrics').textContent = shownSize
+      ? `${round(shownSize.width)} × ${round(shownSize.height)}${dpr != null ? ` @${dpr}x` : ''}`
+      : '—';
+    const fit = state && state.fit;
+    $('dpFit').innerHTML = fit && fit.scale
+      ? `shown at <b>${Math.round(fit.scale * 100)}%</b>`
+      : '';
+  }
+
+  // --- wiring --------------------------------------------------------------
+
+  A11Y_FLAGS.forEach(([flag, label]) => {
+    const row = document.createElement('div');
+    row.className = 'dp-row';
+    row.innerHTML = `<span class="dp-lbl">${label}</span><span class="dp-ctl">` +
+      `<span class="dp-seg" id="dpA11y_${flag}" role="group" aria-label="${label}">` +
+      '<button type="button" data-value="">system</button>' +
+      '<button type="button" data-value="on">on</button>' +
+      '<button type="button" data-value="off">off</button></span></span>';
+    $('dpA11y').appendChild(row);
+    $(`dpA11y_${flag}`).addEventListener('click', (event) => {
+      const button = event.target.closest('button');
+      if (!button) return;
+      setAccessibilityFlag(flag, button.dataset.value === 'on' ? true : button.dataset.value === 'off' ? false : null);
+    });
+  });
+
+  COMMON_LOCALES.forEach((tag) => {
+    const option = document.createElement('option');
+    option.value = tag;
+    option.textContent = tag;
+    $('dpLocaleChoice').appendChild(option);
+  });
+
+  $('dpPreset').addEventListener('change', (event) => {
+    const id = event.target.value;
+    if (id === '__custom') return;
+    if (!id) { selectRealDevice(); return; }
+    const preset = presetById(id);
+    if (preset) {
+      const sim = simulation();
+      enqueue(() => applyPreset(preset, (sim && sim.orientation) || 'portrait'));
+    }
+  });
+
+  $('dpOrientation').addEventListener('click', (event) => {
+    const button = event.target.closest('button');
+    if (button && !button.disabled) setOrientation(button.dataset.value);
+  });
+
+  $('dpSystemUi').addEventListener('change', (event) => {
+    mutate('showSystemUi', event.target.checked ? null : false);
+  });
+
+  $('dpTouch').addEventListener('click', (event) => {
+    const button = event.target.closest('button');
+    if (!button) return;
+    mutate('touchInput', button.dataset.value === 'on' ? true : button.dataset.value === 'off' ? false : null);
+  });
+
+  $('dpCustomApply').addEventListener('click', () => {
+    const width = Number($('dpCustomW').value);
+    const height = Number($('dpCustomH').value);
+    const dpr = Number($('dpCustomDpr').value);
+    if (!(width > 0 && height > 0 && dpr > 0)) return;
+    setCustomMetrics(width, height, dpr);
+  });
+
+  $('dpBrightness').addEventListener('click', (event) => {
+    const button = event.target.closest('button');
+    if (button) mutate('platformBrightness', button.dataset.value || null);
+  });
+
+  $('dp24h').addEventListener('click', (event) => {
+    const button = event.target.closest('button');
+    if (!button) return;
+    mutate('alwaysUse24HourFormat', button.dataset.value === 'on' ? true : button.dataset.value === 'off' ? false : null);
+  });
+
+  $('dpTextScale').addEventListener('input', (event) => {
+    $('dpTextScaleVal').textContent = `×${Number(event.target.value).toFixed(1)}`;
+  });
+  $('dpTextScale').addEventListener('change', (event) => {
+    mutate('textScaleFactor', Number(Number(event.target.value).toFixed(1)));
+  });
+  $('dpTextScaleReset').addEventListener('click', () => mutate('textScaleFactor', null));
+
+  $('dpLocaleAdd').addEventListener('click', () => {
+    const tag = $('dpLocaleChoice').value;
+    const locales = (simulation() && simulation().locales) || [];
+    if (!tag || locales.indexOf(tag) !== -1) return;
+    mutate('locales', locales.concat([tag]));
+  });
+  $('dpLocaleClear').addEventListener('click', () => mutate('locales', null));
+
+  $('dpPlatform').addEventListener('change', (event) => {
+    mutate('platform', event.target.value || null);
+  });
+
+  $('dpReset').addEventListener('click', () => enqueue(() => push({})));
+
+  // The fit percentage depends on the size of the stage, which the app only
+  // reports when asked.
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    if (!connected) return;
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { send('getState').catch(() => {}); }, 250);
+  });
+
+  // --- boot ----------------------------------------------------------------
+
+  function failStage(title, detail) {
+    stageMsg.classList.remove('hidden');
+    stageMsg.innerHTML = `<span><b>${title}</b><br>${detail}</span>`;
+  }
+
+  function boot() {
+    fetch(CATALOG_URL)
+      .then((response) => response.json())
+      .then((data) => {
+        catalog = (data && data.presets) || [];
+        buildPresetOptions();
+        render();
+        maybeBootstrap();
+      })
+      .catch(() => {
+        $('dpPreset').disabled = true;
+        $('dpDeviceLabel').textContent = 'Device catalog unavailable';
+      });
+
+    frame = document.createElement('iframe');
+    frame.title = 'The Flutter counter example, running under device_preview';
+    frame.src = DEMO_URL;
+    frame.addEventListener('load', () => {
+      // The app posts `ready` on startup; this covers the case where it did so
+      // before this page was listening.
+      send('getState').catch(() => {});
+    });
+    stage.appendChild(frame);
+
+    setTimeout(() => {
+      if (!connected) {
+        failStage(
+          'The demo could not start.',
+          'It needs this page served over HTTP — try <code>python3 -m http.server -d docs</code> — ' +
+          'and a build in <code>docs/demo</code> (<code>tool/build_demo.sh</code>).',
+        );
+      }
+    }, 20000);
+  }
+
+  // Three megabytes are only worth fetching for a visitor who scrolls here.
+  const demoObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      demoObserver.disconnect();
+      boot();
+    });
+  }, { rootMargin: '300px' });
+  demoObserver.observe(section);
+})();
 </script>
 </body>
 </html>

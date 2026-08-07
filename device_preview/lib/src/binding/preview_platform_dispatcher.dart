@@ -298,7 +298,8 @@ class PreviewPlatformDispatcher implements ui.PlatformDispatcher {
     if (wrapper == null) {
       return packet;
     }
-    final ui.PointerDeviceKind? kind = state.simulation?.pointerKind;
+    final ui.PointerDeviceKind? kind =
+        state.simulation?.effectivePointerKind;
     final double realRatio = wrapper.hostView.devicePixelRatio;
     final double simulatedRatio = wrapper.devicePixelRatio;
     final FitTransform fit = state.fit;

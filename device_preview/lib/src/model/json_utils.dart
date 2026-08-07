@@ -15,6 +15,20 @@ double decodeDouble(Object? value, String context) {
   throw FormatException('Expected a number for "$context", got: $value');
 }
 
+/// Reads a required `int` from [value], accepting any integral JSON number.
+///
+/// Throws a [FormatException] when the value is missing, not a number, or
+/// has a fractional part.
+int decodeInt(Object? value, String context) {
+  if (value is int) {
+    return value;
+  }
+  if (value is num && value == value.roundToDouble()) {
+    return value.toInt();
+  }
+  throw FormatException('Expected an integer for "$context", got: $value');
+}
+
 /// Reads a `bool` from [value].
 ///
 /// Throws a [FormatException] when the value is not a boolean.

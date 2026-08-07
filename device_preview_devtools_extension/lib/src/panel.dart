@@ -353,13 +353,12 @@ class _DeviceSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: denseSpacing),
-        _LabeledRow(
+        _TriStateRow(
           label: 'Touch input',
-          child: Switch(
-            key: const Key('device_preview_touch_input_switch'),
-            value: controller.simulatesTouch,
-            onChanged: (value) => controller.setSimulatesTouch(value),
-          ),
+          triKey: const Key('device_preview_touch_input_toggle'),
+          systemLabel: 'Auto',
+          value: controller.touchInput,
+          onChanged: controller.setTouchInput,
         ),
         const SizedBox(height: denseSpacing),
         _CustomDeviceExpander(controller: controller),
@@ -447,6 +446,7 @@ class _PresetPickerDialogState extends State<_PresetPickerDialog> {
               p.name.toLowerCase().contains(query) ||
               p.brand.toLowerCase().contains(query) ||
               p.platform.toLowerCase().contains(query) ||
+              '${p.year}'.contains(query) ||
               p.id.toLowerCase().contains(query),
         )
         .toList();
@@ -464,7 +464,12 @@ class _PresetPickerDialogState extends State<_PresetPickerDialog> {
           final byBrand = a.brand.compareTo(b.brand);
           if (byBrand != 0) return byBrand;
           final byPlatform = a.platform.compareTo(b.platform);
-          return byPlatform != 0 ? byPlatform : a.name.compareTo(b.name);
+          if (byPlatform != 0) return byPlatform;
+          // Newest first: a catalog spanning several generations is most
+          // useful with this year's devices at the top. Undated entries (an
+          // app's own presets) sort last.
+          final byYear = (b.year ?? 0).compareTo(a.year ?? 0);
+          return byYear != 0 ? byYear : a.name.compareTo(b.name);
         },
       );
     }
@@ -552,6 +557,7 @@ class _PresetPickerDialogState extends State<_PresetPickerDialog> {
     final dpr = preset.devicePixelRatio;
     return [
       if (preset.brand.isNotEmpty) preset.brand else preset.platform,
+      if (preset.year != null) '${preset.year}',
       if (width != null && height != null) '$width×$height',
       if (dpr != null) '@${dpr}x',
       if (preset.frame != null) 'framed',
@@ -1078,18 +1084,24 @@ class _LabeledRow extends StatelessWidget {
 }
 
 /// A `System | On | Off` tri-state selector for a nullable boolean override.
+///
+/// [systemLabel] names the null position: what the app would do on its own.
+/// For most overrides that is the real device ("System"); for touch input it
+/// is the simulated one, so the row says "Auto".
 class _TriStateRow extends StatelessWidget {
   const _TriStateRow({
     required this.label,
     required this.value,
     required this.onChanged,
     this.triKey,
+    this.systemLabel = 'System',
   });
 
   final String label;
   final bool? value;
   final ValueChanged<bool?> onChanged;
   final Key? triKey;
+  final String systemLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -1102,10 +1114,10 @@ class _TriStateRow extends StatelessWidget {
       label: label,
       child: SegmentedButton<String>(
         key: triKey,
-        segments: const [
-          ButtonSegment(value: 'system', label: Text('System')),
-          ButtonSegment(value: 'on', label: Text('On')),
-          ButtonSegment(value: 'off', label: Text('Off')),
+        segments: [
+          ButtonSegment(value: 'system', label: Text(systemLabel)),
+          const ButtonSegment(value: 'on', label: Text('On')),
+          const ButtonSegment(value: 'off', label: Text('Off')),
         ],
         selected: {selected},
         showSelectedIcon: false,

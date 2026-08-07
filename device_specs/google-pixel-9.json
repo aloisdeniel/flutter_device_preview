@@ -2,6 +2,7 @@
   "id": "google-pixel-9",
   "name": "Pixel 9",
   "brand": "Google",
+  "year": 2024,
   "platform": "android",
   "kind": "phone",
   "portraitSize": {

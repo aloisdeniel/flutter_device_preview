@@ -26,7 +26,8 @@ class PreviewState {
   /// metric simulation is active.
   ui.VoidCallback? onHostMetricsChanged;
 
-  /// Invoked by the controller when [DeviceSimulation.pointerKind] changes.
+  /// Invoked by the controller when [DeviceSimulation.simulatesTouch]
+  /// changes.
   ///
   /// The binding uses it to send the host's mouse out of the window:
   /// relabelled pointers stop producing hover events, so without this whatever
