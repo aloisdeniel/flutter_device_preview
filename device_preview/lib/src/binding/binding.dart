@@ -14,6 +14,7 @@ import '../model/simulation.dart';
 import '../service/extensions.dart';
 import '../service/protocol.dart';
 import '../service/screenshot.dart';
+import '../widgets/device_preview_frame.dart';
 import 'preview_flutter_view.dart';
 import 'preview_platform_dispatcher.dart';
 import 'preview_state.dart';
@@ -173,11 +174,36 @@ mixin DevicePreviewBindingMixin
           capabilities: () => <String, Object?>{
             'targetPlatform': simulationEnabled && kDebugMode,
             'screenshot': simulationEnabled && _controller != null,
+            // Screen clipping and body artwork are rendered by the root
+            // wrapper this binding installs; a composition that builds its
+            // own View without DevicePreviewFrame simply ignores the field.
+            'frame': simulationEnabled && _controller != null,
           },
         ),
         screenshot: screenshot,
       );
     }
+  }
+
+  /// Wraps the root widget with [DevicePreviewFrame] so the simulated device
+  /// body paints behind the app and the app is clipped to the simulated
+  /// screen outline.
+  ///
+  /// A pass-through when simulation is disabled, and — since the frame is
+  /// driven by the live simulation — a no-op renderer until a simulation
+  /// carrying a [DeviceSimulation.frame] is applied.
+  @override
+  Widget wrapWithDefaultView(Widget rootWidget) {
+    final DevicePreviewControllerImpl? controller = _controller;
+    if (!simulationEnabled || controller == null) {
+      return super.wrapWithDefaultView(rootWidget);
+    }
+    return super.wrapWithDefaultView(
+      DevicePreviewFrame(
+        simulation: controller.simulationListenable,
+        child: rootWidget,
+      ),
+    );
   }
 
   /// Returns a scale-to-fit configuration for the wrapper view's RenderView

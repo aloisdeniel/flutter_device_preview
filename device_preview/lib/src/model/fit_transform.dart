@@ -24,28 +24,43 @@ class FitTransform {
   /// Computes the fit of [simulatedLogicalSize] inside [realLogicalSize]:
   ///
   /// ```
-  /// scale  = min(real.w / sim.w, real.h / sim.h).clamp(0, 1)
-  /// offset = (real − sim × scale) / 2
+  /// scale  = min(real.w / content.w, real.h / content.h).clamp(0, 1)
+  /// offset = (real − content × scale) / 2 − content.topLeft × scale
   /// ```
+  ///
+  /// [contentBounds] is what must stay visible, in simulated logical
+  /// coordinates; it defaults to the screen rectangle
+  /// (`Offset.zero & simulatedLogicalSize`). A device frame extends past the
+  /// screen — usually into negative coordinates — so passing its bounds is
+  /// what keeps the whole device body inside the window. [offset] stays the
+  /// position of the simulated origin either way, so pointer remapping and
+  /// the root paint matrix are unaffected.
   ///
   /// Degenerate inputs (non-finite, zero, or negative dimensions on either
   /// size) yield [identity] so downstream math stays safe.
   factory FitTransform.compute({
     required ui.Size realLogicalSize,
     required ui.Size simulatedLogicalSize,
+    ui.Rect? contentBounds,
   }) {
     if (!_isValid(realLogicalSize) || !_isValid(simulatedLogicalSize)) {
       return identity;
     }
+    ui.Rect content = contentBounds ?? (ui.Offset.zero & simulatedLogicalSize);
+    if (!_isValid(content.size)) {
+      content = ui.Offset.zero & simulatedLogicalSize;
+    }
     final double scale = math
         .min(
-          realLogicalSize.width / simulatedLogicalSize.width,
-          realLogicalSize.height / simulatedLogicalSize.height,
+          realLogicalSize.width / content.width,
+          realLogicalSize.height / content.height,
         )
         .clamp(0.0, 1.0);
     final ui.Offset offset = ui.Offset(
-      (realLogicalSize.width - simulatedLogicalSize.width * scale) / 2,
-      (realLogicalSize.height - simulatedLogicalSize.height * scale) / 2,
+      (realLogicalSize.width - content.width * scale) / 2 -
+          content.left * scale,
+      (realLogicalSize.height - content.height * scale) / 2 -
+          content.top * scale,
     );
     return FitTransform(scale: scale, offset: offset);
   }

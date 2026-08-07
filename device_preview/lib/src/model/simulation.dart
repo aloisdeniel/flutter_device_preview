@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
+import 'device_frame.dart';
 import 'json_utils.dart';
 
 /// Sentinel used by the `copyWith` implementations to distinguish "parameter
@@ -28,6 +29,7 @@ class DeviceSimulation {
     this.presetId,
     this.orientation = Orientation.portrait,
     this.screenSize,
+    this.frame,
     this.devicePixelRatio,
     this.padding,
     this.viewPadding,
@@ -56,6 +58,9 @@ class DeviceSimulation {
       screenSize: json['screenSize'] == null
           ? null
           : decodeSize(json['screenSize'], 'screenSize'),
+      frame: json['frame'] == null
+          ? null
+          : DeviceFrame.fromJson(decodeMap(json['frame'], 'frame')),
       devicePixelRatio: json['devicePixelRatio'] == null
           ? null
           : decodeDouble(json['devicePixelRatio'], 'devicePixelRatio'),
@@ -131,6 +136,13 @@ class DeviceSimulation {
   /// When null, no metric simulation is active ([simulatesMetrics] is false).
   final ui.Size? screenSize;
 
+  /// The physical appearance of the device: screen outline and body artwork.
+  ///
+  /// Null (the default) renders the app as a plain, unclipped rectangle. The
+  /// frame is always described in portrait and rotated with [orientation], so
+  /// rotating a simulation leaves this field untouched.
+  final DeviceFrame? frame;
+
   /// The simulated device pixel ratio.
   final double? devicePixelRatio;
 
@@ -180,6 +192,7 @@ class DeviceSimulation {
   bool get isEmpty =>
       presetId == null &&
       screenSize == null &&
+      frame == null &&
       devicePixelRatio == null &&
       padding == null &&
       viewPadding == null &&
@@ -195,6 +208,27 @@ class DeviceSimulation {
   /// Whether screen metrics are simulated ([screenSize] is non-null).
   bool get simulatesMetrics => screenSize != null;
 
+  /// The rectangle the simulation paints into, in simulated logical pixels.
+  ///
+  /// The screen rectangle, grown to include the device body when a [frame] is
+  /// simulated — the body starts at negative coordinates, so this rectangle
+  /// usually does too. The binding fits *this* rectangle inside the real
+  /// window, which is what keeps a device body fully visible.
+  ///
+  /// [ui.Rect.zero] when no metric simulation is active.
+  ui.Rect get contentBounds {
+    final ui.Size? size = screenSize;
+    if (size == null) {
+      return ui.Rect.zero;
+    }
+    final ui.Rect screen = ui.Offset.zero & size;
+    final DeviceFrame? deviceFrame = frame;
+    if (deviceFrame == null || deviceFrame.size.isEmpty) {
+      return screen;
+    }
+    return screen.expandToInclude(deviceFrame.bodyBounds(size, orientation));
+  }
+
   /// Creates a copy with the given fields replaced.
   ///
   /// Sentinel-based: passing `null` explicitly CLEARS the corresponding
@@ -205,6 +239,7 @@ class DeviceSimulation {
     Object? presetId = _unset,
     Orientation? orientation,
     Object? screenSize = _unset,
+    Object? frame = _unset,
     Object? devicePixelRatio = _unset,
     Object? padding = _unset,
     Object? viewPadding = _unset,
@@ -225,6 +260,7 @@ class DeviceSimulation {
       screenSize: identical(screenSize, _unset)
           ? this.screenSize
           : screenSize as ui.Size?,
+      frame: identical(frame, _unset) ? this.frame : frame as DeviceFrame?,
       devicePixelRatio: identical(devicePixelRatio, _unset)
           ? this.devicePixelRatio
           : devicePixelRatio as double?,
@@ -269,6 +305,7 @@ class DeviceSimulation {
       if (presetId != null) 'presetId': presetId,
       'orientation': orientation.name,
       if (screenSize != null) 'screenSize': encodeSize(screenSize!),
+      if (frame != null) 'frame': frame!.toJson(),
       if (devicePixelRatio != null) 'devicePixelRatio': devicePixelRatio,
       if (padding != null) 'padding': encodeEdgeInsets(padding!),
       if (viewPadding != null) 'viewPadding': encodeEdgeInsets(viewPadding!),
@@ -298,6 +335,7 @@ class DeviceSimulation {
         other.presetId == presetId &&
         other.orientation == orientation &&
         other.screenSize == screenSize &&
+        other.frame == frame &&
         other.devicePixelRatio == devicePixelRatio &&
         other.padding == padding &&
         other.viewPadding == viewPadding &&
@@ -316,6 +354,7 @@ class DeviceSimulation {
     presetId,
     orientation,
     screenSize,
+    frame,
     devicePixelRatio,
     padding,
     viewPadding,
@@ -335,6 +374,7 @@ class DeviceSimulation {
       if (presetId != null) 'presetId: $presetId',
       'orientation: ${orientation.name}',
       if (screenSize != null) 'screenSize: $screenSize',
+      if (frame != null) 'frame: $frame',
       if (devicePixelRatio != null) 'devicePixelRatio: $devicePixelRatio',
       if (padding != null) 'padding: $padding',
       if (viewPadding != null) 'viewPadding: $viewPadding',

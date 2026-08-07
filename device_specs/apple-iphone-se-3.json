@@ -1,0 +1,62 @@
+{
+  "id": "apple-iphone-se-3",
+  "name": "iPhone SE (3rd gen)",
+  "brand": "Apple",
+  "platform": "iOS",
+  "kind": "phone",
+  "portraitSize": {
+    "width": 375,
+    "height": 667
+  },
+  "devicePixelRatio": 2.0,
+  "portraitPadding": {
+    "left": 0,
+    "top": 20,
+    "right": 0,
+    "bottom": 0
+  },
+  "landscapePadding": {
+    "left": 0,
+    "top": 0,
+    "right": 0,
+    "bottom": 0
+  },
+  "landscapeViewPadding": {
+    "left": 0,
+    "top": 0,
+    "right": 0,
+    "bottom": 0
+  },
+  "frame": {
+    "size": {
+      "width": 409,
+      "height": 805
+    },
+    "screenOffset": {
+      "x": 17,
+      "y": 62
+    },
+    "screenPath": "",
+    "body": [
+      "<svg viewBox=\"0 0 409 805\">",
+      "  <defs><clipPath id=\"shell\">",
+      "    <path d=\"M 17,0 H 392 A 13,13 0 0 1 405,13 V 792 A 13,13 0 0 1 392,805 H 17 A 13,13 0 0 1 4,792 V 13 A 13,13 0 0 1 17,0 Z\"/>",
+      "  </clipPath></defs>",
+      "  <g fill=\"#f2f2f4\">",
+      "    <rect x=\"0\" y=\"161\" width=\"6\" height=\"44.27\" rx=\"2\"/>",
+      "    <rect x=\"0\" y=\"217.35\" width=\"6\" height=\"44.27\" rx=\"2\"/>",
+      "    <rect x=\"403\" y=\"193.2\" width=\"6\" height=\"64.4\" rx=\"2\"/>",
+      "  </g>",
+      "  <path d=\"M 17,0 H 392 A 13,13 0 0 1 405,13 V 792 A 13,13 0 0 1 392,805 H 17 A 13,13 0 0 1 4,792 V 13 A 13,13 0 0 1 17,0 Z\" fill=\"#d9d9dd\"/>",
+      "  <path d=\"M 17,2 H 392 A 11,11 0 0 1 403,13 V 792 A 11,11 0 0 1 392,803 H 17 A 11,11 0 0 1 6,792 V 13 A 11,11 0 0 1 17,2 Z\" fill=\"#f2f2f4\"/>",
+      "  <g clip-path=\"url(#shell)\">",
+      "    <path d=\"M -805,0 L -483,0 L 102.25,805 L -219.75,805 Z\" fill=\"#ffffff\" fill-opacity=\"0.18\"/>",
+      "  </g>",
+      "  <path d=\"M 17,3.5 H 392 A 9.5,9.5 0 0 1 401.5,13 V 792 A 9.5,9.5 0 0 1 392,801.5 H 17 A 9.5,9.5 0 0 1 7.5,792 V 13 A 9.5,9.5 0 0 1 17,3.5 Z\" fill=\"#111114\"/>",
+      "  <circle cx=\"204.5\" cy=\"767\" r=\"22\" fill=\"none\"/>",
+      "  <circle cx=\"204.5\" cy=\"767\" r=\"22\" fill=\"#26262a\"/>",
+      "  <rect x=\"178.5\" y=\"29\" width=\"52\" height=\"4\" rx=\"2\" fill=\"#26262a\"/>",
+      "</svg>"
+    ]
+  }
+}

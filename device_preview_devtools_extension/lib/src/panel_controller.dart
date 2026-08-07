@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
+import 'devices/device_catalog.g.dart';
 import 'gateway_api.dart';
 import 'platform/platform_io.dart';
 
@@ -32,6 +33,7 @@ const List<String> kMetricSimulationKeys = <String>[
   'presetId',
   'orientation',
   'screenSize',
+  'frame',
   'devicePixelRatio',
   'padding',
   'viewPadding',
@@ -50,16 +52,18 @@ const List<String> kAccessibilityFlags = <String>[
   'onOffSwitchLabels',
 ];
 
-/// Raw-JSON-backed view over one entry of `ext.device_preview.listPresets`.
+/// Raw-JSON-backed view over one device: an entry of the generated
+/// [kDeviceSpecs] catalog, or of `ext.device_preview.listPresets` for presets
+/// the app registered itself.
 ///
 /// The extension deliberately does not re-model the domain: unknown keys are
 /// carried along untouched and every getter is null-tolerant.
 @immutable
 class PresetView {
-  /// Wraps the raw `DevicePreset.toJson()` map.
+  /// Wraps a raw `DevicePreset.toJson()` map.
   const PresetView(this.json);
 
-  /// The raw preset JSON, as sent by the app.
+  /// The raw preset JSON.
   final Map<String, Object?> json;
 
   /// Stable preset identifier (e.g. `apple-iphone-16-pro`).
@@ -67,6 +71,12 @@ class PresetView {
 
   /// Human readable name (e.g. `iPhone 16 Pro`).
   String get name => json['name'] as String? ?? id;
+
+  /// Manufacturer (e.g. `Apple`), or an empty string when unspecified.
+  String get brand => json['brand'] as String? ?? '';
+
+  /// Screen outline and body artwork, when the device has a frame.
+  Map<String, Object?>? get frame => _asMap(json['frame']);
 
   /// Target platform name (e.g. `iOS`, `android`).
   String get platform => json['platform'] as String? ?? 'unknown';
@@ -147,8 +157,15 @@ Map<String, Object?>? _asMap(Object? value) =>
 Map<String, Object?> _deepCopy(Map<String, Object?> json) =>
     Map<String, Object?>.from(jsonDecode(jsonEncode(json)) as Map);
 
-bool get _isSimulatedEnvironment =>
-    !kReleaseMode && const bool.fromEnvironment('use_simulated_environment');
+/// The built-in device catalog, generated from `device_specs/*.json`.
+///
+/// Unlike the app's own presets these carry frame artwork (screen outline and
+/// device body), which is why the catalog lives here: only the selected
+/// device's artwork is ever pushed over the wire, and the published package
+/// ships none of it.
+final List<PresetView> kBuiltInPresets = List<PresetView>.unmodifiable(
+  kDeviceSpecs.map(PresetView.new),
+);
 
 /// The panel's single source of local truth, mirroring the inspected app's
 /// device_preview state over the service extension protocol.
@@ -209,7 +226,10 @@ class PanelController extends ChangeNotifier {
 
   PanelStatus _status = PanelStatus.disconnected;
   Map<String, Object?>? _stateJson;
-  List<PresetView> _presets = const <PresetView>[];
+
+  /// Presets the inspected app registered itself, minus the ones the built-in
+  /// catalog already describes (the catalog entry wins: it has artwork).
+  List<PresetView> _customPresets = const <PresetView>[];
   Map<String, Object?>? _stashedSimulation;
   bool _keepAcrossRestarts = false;
   bool _disposed = false;
@@ -235,8 +255,14 @@ class PanelController extends ChangeNotifier {
   /// The active simulation JSON, or null when passing through.
   Map<String, Object?>? get simulation => state?.simulation;
 
-  /// Presets reported by `ext.device_preview.listPresets`.
-  List<PresetView> get presets => _presets;
+  /// The devices offered by the picker: the built-in catalog, followed by any
+  /// preset the inspected app registered through
+  /// `DevicePreviewController.registerPreset` that the catalog does not
+  /// already cover.
+  List<PresetView> get presets => <PresetView>[
+        ...kBuiltInPresets,
+        ..._customPresets,
+      ];
 
   /// Whether the "Keep across restarts" toggle is on.
   bool get keepAcrossRestarts => _keepAcrossRestarts;
@@ -248,7 +274,7 @@ class PanelController extends ChangeNotifier {
   PresetView? get activePreset {
     final id = simulation?['presetId'];
     if (id is! String) return null;
-    for (final preset in _presets) {
+    for (final preset in presets) {
       if (preset.id == id) return preset;
     }
     return null;
@@ -272,7 +298,7 @@ class PanelController extends ChangeNotifier {
       _bannerTimer?.cancel();
       _pendingRequestIds.clear();
       _stateJson = null;
-      _presets = const <PresetView>[];
+      _customPresets = const <PresetView>[];
       _setStatus(PanelStatus.disconnected);
     } else {
       _onAvailabilityChanged();
@@ -377,20 +403,19 @@ class PanelController extends ChangeNotifier {
   }
 
   Future<void> _refreshPresets({bool notify = true}) async {
+    final builtInIds = kBuiltInPresets.map((p) => p.id).toSet();
     try {
       final result = await gateway.call('ext.device_preview.listPresets');
       final rawPresets = result['presets'];
-      _presets = <PresetView>[
+      _customPresets = <PresetView>[
         if (rawPresets is List)
           for (final entry in rawPresets)
-            if (entry is Map) PresetView(Map<String, Object?>.from(entry)),
+            if (entry is Map &&
+                !builtInIds.contains(entry['id'] as String? ?? ''))
+              PresetView(Map<String, Object?>.from(entry)),
       ];
     } on GatewayException {
-      _presets = const <PresetView>[];
-    }
-    if (_presets.isEmpty && _isSimulatedEnvironment) {
-      // FALLBACK — simulated dev environment only (see bottom of file).
-      _presets = simulatedEnvironmentFallbackPresets;
+      _customPresets = const <PresetView>[];
     }
     if (notify) notifyListeners();
   }
@@ -633,6 +658,10 @@ class PanelController extends ChangeNotifier {
     }
     sim['presetId'] = preset.id;
     sim['orientation'] = orientation;
+    // The frame is described in portrait and rotated app-side, so it is the
+    // one metric field orientation never touches.
+    final frame = preset.frame;
+    if (frame != null) sim['frame'] = frame;
     final landscape = orientation == 'landscape';
     final size = preset.portraitSize;
     if (size != null) {
@@ -871,60 +900,3 @@ class PanelController extends ChangeNotifier {
     super.dispose();
   }
 }
-
-// ----------------------------------------------------------------------------
-// FALLBACK PRESETS — SIMULATED DEV ENVIRONMENT ONLY.
-//
-// The real catalog ALWAYS comes from `ext.device_preview.listPresets` at
-// runtime; this tiny list exists solely so the panel is usable when developed
-// against the devtools_extensions simulated environment
-// (`--dart-define=use_simulated_environment=true`) without a device_preview
-// app attached. It is never used in production DevTools.
-// ----------------------------------------------------------------------------
-
-/// See the note above: simulated-dev-environment-only fallback catalog.
-final List<PresetView> simulatedEnvironmentFallbackPresets =
-    List<PresetView>.unmodifiable(<PresetView>[
-  const PresetView(<String, Object?>{
-    'id': 'apple-iphone-se-3',
-    'name': 'iPhone SE (3rd gen) [fallback]',
-    'platform': 'iOS',
-    'kind': 'phone',
-    'portraitSize': <String, Object?>{'width': 375.0, 'height': 667.0},
-    'devicePixelRatio': 2.0,
-    'portraitPadding': <String, Object?>{
-      'left': 0.0,
-      'top': 20.0,
-      'right': 0.0,
-      'bottom': 0.0,
-    },
-  }),
-  const PresetView(<String, Object?>{
-    'id': 'google-pixel-8',
-    'name': 'Pixel 8 [fallback]',
-    'platform': 'android',
-    'kind': 'phone',
-    'portraitSize': <String, Object?>{'width': 412.0, 'height': 915.0},
-    'devicePixelRatio': 2.625,
-    'portraitPadding': <String, Object?>{
-      'left': 0.0,
-      'top': 24.0,
-      'right': 0.0,
-      'bottom': 0.0,
-    },
-  }),
-  const PresetView(<String, Object?>{
-    'id': 'apple-ipad-pro-13',
-    'name': 'iPad Pro 13" [fallback]',
-    'platform': 'iOS',
-    'kind': 'tablet',
-    'portraitSize': <String, Object?>{'width': 1032.0, 'height': 1376.0},
-    'devicePixelRatio': 2.0,
-    'portraitPadding': <String, Object?>{
-      'left': 0.0,
-      'top': 24.0,
-      'right': 0.0,
-      'bottom': 20.0,
-    },
-  }),
-]);

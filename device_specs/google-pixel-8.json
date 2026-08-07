@@ -1,0 +1,53 @@
+{
+  "id": "google-pixel-8",
+  "name": "Pixel 8",
+  "brand": "Google",
+  "platform": "android",
+  "kind": "phone",
+  "portraitSize": {
+    "width": 412,
+    "height": 915
+  },
+  "devicePixelRatio": 2.625,
+  "portraitPadding": {
+    "left": 0,
+    "top": 24,
+    "right": 0,
+    "bottom": 24
+  },
+  "landscapePadding": {
+    "left": 0,
+    "top": 24,
+    "right": 0,
+    "bottom": 24
+  },
+  "frame": {
+    "size": {
+      "width": 440,
+      "height": 935
+    },
+    "screenOffset": {
+      "x": 14,
+      "y": 10
+    },
+    "screenPath": "M 26,0 H 386 A 26,26 0 0 1 412,26 V 889 A 26,26 0 0 1 386,915 H 26 A 26,26 0 0 1 0,889 V 26 A 26,26 0 0 1 26,0 Z",
+    "body": [
+      "<svg viewBox=\"0 0 440 935\">",
+      "  <defs><clipPath id=\"shell\">",
+      "    <path d=\"M 40,0 H 400 A 36,36 0 0 1 436,36 V 899 A 36,36 0 0 1 400,935 H 40 A 36,36 0 0 1 4,899 V 36 A 36,36 0 0 1 40,0 Z\"/>",
+      "  </clipPath></defs>",
+      "  <g fill=\"#5b6166\">",
+      "    <rect x=\"0\" y=\"187\" width=\"6\" height=\"51.42\" rx=\"2\"/>",
+      "    <rect x=\"0\" y=\"252.45\" width=\"6\" height=\"51.42\" rx=\"2\"/>",
+      "    <rect x=\"434\" y=\"224.4\" width=\"6\" height=\"74.8\" rx=\"2\"/>",
+      "  </g>",
+      "  <path d=\"M 40,0 H 400 A 36,36 0 0 1 436,36 V 899 A 36,36 0 0 1 400,935 H 40 A 36,36 0 0 1 4,899 V 36 A 36,36 0 0 1 40,0 Z\" fill=\"#2f3336\"/>",
+      "  <path d=\"M 40,2 H 400 A 34,34 0 0 1 434,36 V 899 A 34,34 0 0 1 400,933 H 40 A 34,34 0 0 1 6,899 V 36 A 34,34 0 0 1 40,2 Z\" fill=\"#5b6166\"/>",
+      "  <g clip-path=\"url(#shell)\">",
+      "    <path d=\"M -935,0 L -561,0 L 110,935 L -264,935 Z\" fill=\"#ffffff\" fill-opacity=\"0.18\"/>",
+      "  </g>",
+      "  <path d=\"M 40,3.5 H 400 A 32.5,32.5 0 0 1 432.5,36 V 899 A 32.5,32.5 0 0 1 400,931.5 H 40 A 32.5,32.5 0 0 1 7.5,899 V 36 A 32.5,32.5 0 0 1 40,3.5 Z\" fill=\"#0b0d0e\"/>",
+      "</svg>"
+    ]
+  }
+}

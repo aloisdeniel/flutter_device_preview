@@ -35,6 +35,46 @@ void main() {
       expect(fit.offset.dy, 0.0);
     });
 
+    test('content bounds reserve room for the device body', () {
+      // A 400x600 screen inside a 420x620 body starting at (-10, -10).
+      const content = Rect.fromLTRB(-10, -10, 410, 610);
+      final fit = FitTransform.compute(
+        realLogicalSize: const Size(420, 620),
+        simulatedLogicalSize: const Size(400, 600),
+        contentBounds: content,
+      );
+      // The whole body fits exactly, so no down-scaling is needed...
+      expect(fit.scale, 1.0);
+      // ...and the origin moves to leave the body's top-left inside.
+      expect(fit.offset, const Offset(10, 10));
+      // The body's corners land exactly on the window's corners.
+      expect(fit.toRealLogical(content.topLeft), Offset.zero);
+      expect(fit.toRealLogical(content.bottomRight), const Offset(420, 620));
+    });
+
+    test('content bounds drive the scale, not the screen size', () {
+      const content = Rect.fromLTRB(-100, -100, 500, 700);
+      final fit = FitTransform.compute(
+        realLogicalSize: const Size(300, 400),
+        simulatedLogicalSize: const Size(400, 600),
+        contentBounds: content,
+      );
+      // min(300/600, 400/800) = 0.5 — the screen alone would have fit better.
+      expect(fit.scale, 0.5);
+      expect(fit.toRealLogical(content.topLeft), Offset.zero);
+      expect(fit.toRealLogical(content.bottomRight), const Offset(300, 400));
+    });
+
+    test('degenerate content bounds fall back to the screen rectangle', () {
+      final fit = FitTransform.compute(
+        realLogicalSize: const Size(1000, 800),
+        simulatedLogicalSize: const Size(400, 600),
+        contentBounds: Rect.zero,
+      );
+      expect(fit.scale, 1.0);
+      expect(fit.offset, const Offset((1000 - 400) / 2, (800 - 600) / 2));
+    });
+
     test('same sizes yield identity', () {
       final fit = FitTransform.compute(
         realLogicalSize: const Size(402, 874),

@@ -57,5 +57,6 @@ See [`device_preview/README.md`](device_preview/README.md) for the full package 
 |---|---|
 | [`device_preview`](device_preview) | The published package: binding, controller, presets, service extensions, bundled DevTools extension build. |
 | [`device_preview_devtools_extension`](device_preview_devtools_extension) | Source of the DevTools extension web app (never published; built into `device_preview/extension/devtools/build`). |
+| [`device_specs`](device_specs) | The device catalog: one JSON per device — metrics, screen outline and body artwork. Generated into the extension; see [its README](device_specs/README.md) to add a device. |
 | [`device_frame`](device_frame) | Device frame drawings package (independent of the preview machinery). |
 | [`docs`](docs) | The website. |

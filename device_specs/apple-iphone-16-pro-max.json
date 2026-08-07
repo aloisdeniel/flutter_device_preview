@@ -1,0 +1,53 @@
+{
+  "id": "apple-iphone-16-pro-max",
+  "name": "iPhone 16 Pro Max",
+  "brand": "Apple",
+  "platform": "iOS",
+  "kind": "phone",
+  "portraitSize": {
+    "width": 440,
+    "height": 956
+  },
+  "devicePixelRatio": 3.0,
+  "portraitPadding": {
+    "left": 0,
+    "top": 62,
+    "right": 0,
+    "bottom": 34
+  },
+  "landscapePadding": {
+    "left": 62,
+    "top": 0,
+    "right": 62,
+    "bottom": 21
+  },
+  "frame": {
+    "size": {
+      "width": 470,
+      "height": 978
+    },
+    "screenOffset": {
+      "x": 15,
+      "y": 11
+    },
+    "screenPath": "M 53,0 H 387 A 53,53 0 0 1 440,53 V 903 A 53,53 0 0 1 387,956 H 53 A 53,53 0 0 1 0,903 V 53 A 53,53 0 0 1 53,0 Z",
+    "body": [
+      "<svg viewBox=\"0 0 470 978\">",
+      "  <defs><clipPath id=\"shell\">",
+      "    <path d=\"M 68,0 H 402 A 64,64 0 0 1 466,64 V 914 A 64,64 0 0 1 402,978 H 68 A 64,64 0 0 1 4,914 V 64 A 64,64 0 0 1 68,0 Z\"/>",
+      "  </clipPath></defs>",
+      "  <g fill=\"#6e6e74\">",
+      "    <rect x=\"0\" y=\"195.6\" width=\"6\" height=\"53.79\" rx=\"2\"/>",
+      "    <rect x=\"0\" y=\"264.06\" width=\"6\" height=\"53.79\" rx=\"2\"/>",
+      "    <rect x=\"464\" y=\"234.72\" width=\"6\" height=\"78.24\" rx=\"2\"/>",
+      "  </g>",
+      "  <path d=\"M 68,0 H 402 A 64,64 0 0 1 466,64 V 914 A 64,64 0 0 1 402,978 H 68 A 64,64 0 0 1 4,914 V 64 A 64,64 0 0 1 68,0 Z\" fill=\"#4a4a4f\"/>",
+      "  <path d=\"M 68,2 H 402 A 62,62 0 0 1 464,64 V 914 A 62,62 0 0 1 402,976 H 68 A 62,62 0 0 1 6,914 V 64 A 62,62 0 0 1 68,2 Z\" fill=\"#6e6e74\"/>",
+      "  <g clip-path=\"url(#shell)\">",
+      "    <path d=\"M -978,0 L -586.8,0 L 117.5,978 L -273.7,978 Z\" fill=\"#ffffff\" fill-opacity=\"0.18\"/>",
+      "  </g>",
+      "  <path d=\"M 68,3.5 H 402 A 60.5,60.5 0 0 1 462.5,64 V 914 A 60.5,60.5 0 0 1 402,974.5 H 68 A 60.5,60.5 0 0 1 7.5,914 V 64 A 60.5,60.5 0 0 1 68,3.5 Z\" fill=\"#0a0a0b\"/>",
+      "</svg>"
+    ]
+  }
+}

@@ -56,11 +56,23 @@ class TestDevicePreviewBinding extends AutomatedTestWidgetsFlutterBinding
     _instance = this;
   }
 
+  /// Mirrors what [DevicePreview] does, minus the dispatcher seam: the root
+  /// widget goes under the wrapper view, wrapped in [DevicePreviewFrame] so
+  /// the simulated screen outline and device body render here too.
   @override
   Widget wrapWithDefaultView(Widget rootWidget) {
     final ui.FlutterView? wrapperView = previewImplicitView;
+    final DevicePreviewController? controller = devicePreview;
     if (wrapperView != null) {
-      return View(view: wrapperView, child: rootWidget);
+      return View(
+        view: wrapperView,
+        child: controller == null
+            ? rootWidget
+            : DevicePreviewFrame(
+                simulation: controller.simulationListenable,
+                child: rootWidget,
+              ),
+      );
     }
     return super.wrapWithDefaultView(rootWidget);
   }

@@ -11,11 +11,14 @@ import '../model/simulation.dart';
 /// Optional screenshot module for `ext.device_preview.screenshot`.
 ///
 /// Renders the root layer (an [OffsetLayer]) to a PNG. While metric
-/// simulation is active the capture covers exactly the simulated screen:
+/// simulation is active the capture covers exactly the simulated content —
+/// the screen, or the whole device body when a frame is simulated
+/// ([DeviceSimulation.contentBounds]):
 ///
-/// * bounds = `fit.offset × realDPR & simLogical × fit.scale × realDPR`
+/// * bounds = `(fit.offset + content.topLeft × fit.scale) × realDPR &
+///   content.size × fit.scale × realDPR`
 /// * pixelRatio = `simDPR / (fit.scale × realDPR)` → exactly
-///   `simLogical × simDPR` pixels.
+///   `content.size × simDPR` pixels.
 ///
 /// Entirely failure-isolated: any error returns a protocol error envelope
 /// and can never affect the simulation core. Advertised via
@@ -80,14 +83,14 @@ class DevicePreviewScreenshot {
       final double pixelRatio;
       if (simulation != null && simulation.simulatesMetrics) {
         final FitTransform fit = state.fit;
-        final ui.Size logical = simulation.screenSize!;
+        final Rect content = simulation.contentBounds;
         final double outputRatio =
             requestedRatio ?? (simulation.devicePixelRatio ?? realRatio);
         bounds =
-            (fit.offset * realRatio) &
+            (fit.toRealLogical(content.topLeft) * realRatio) &
             Size(
-              logical.width * fit.scale * realRatio,
-              logical.height * fit.scale * realRatio,
+              content.width * fit.scale * realRatio,
+              content.height * fit.scale * realRatio,
             );
         pixelRatio = outputRatio / (fit.scale * realRatio);
       } else {

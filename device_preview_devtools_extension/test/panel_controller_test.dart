@@ -66,7 +66,12 @@ void main() {
       expect(controller!.status, PanelStatus.ready);
       expect(gateway.callsTo('ext.device_preview.getState'), hasLength(1));
       expect(gateway.callsTo('ext.device_preview.listPresets'), hasLength(1));
-      expect(controller!.presets.map((p) => p.id), ['test-phone']);
+      // The built-in catalog is local; app presets are appended to it.
+      expect(controller!.presets.map((p) => p.id), contains('test-phone'));
+      expect(
+        controller!.presets.map((p) => p.id),
+        containsAll(kBuiltInPresets.map((p) => p.id)),
+      );
     });
 
     test('availability flip syncs via fallback timer without ready event',
@@ -119,7 +124,8 @@ void main() {
       gateway.connectedNotifier.value = false;
       expect(controller!.status, PanelStatus.disconnected);
       expect(controller!.state, isNull);
-      expect(controller!.presets, isEmpty);
+      // The built-in catalog stays; only app-registered presets are dropped.
+      expect(controller!.presets, hasLength(kBuiltInPresets.length));
     });
   });
 
@@ -232,7 +238,7 @@ void main() {
       gateway.presetsJson = [testPhonePresetJson, testTabletPresetJson];
       gateway.emit('device_preview.presetsChanged', {'count': 2});
       await pumpEventQueue();
-      expect(controller!.presets, hasLength(2));
+      expect(controller!.presets, hasLength(kBuiltInPresets.length + 2));
     });
   });
 
@@ -264,6 +270,36 @@ void main() {
           'bottom': 10.0,
         },
       });
+    });
+
+    test('selectPreset pushes the frame artwork', () async {
+      await ready();
+      await controller!.selectPreset(const PresetView(testFramedPresetJson));
+      expect(
+        gateway.simulation?['frame'],
+        testFramedPresetJson['frame'],
+      );
+
+      // The frame is described in portrait: rotating must leave it untouched.
+      await controller!.setOrientation('landscape');
+      expect(gateway.simulation?['frame'], testFramedPresetJson['frame']);
+      expect(gateway.simulation?['screenSize'], {
+        'width': 800.0,
+        'height': 400.0,
+      });
+
+      // "Real device" clears it along with the other metric fields.
+      await controller!.selectRealDevice();
+      expect(gateway.simulation?['frame'], isNull);
+    });
+
+    test('every built-in catalog device selects without error', () async {
+      await ready();
+      for (final preset in kBuiltInPresets) {
+        await controller!.selectPreset(preset);
+        expect(gateway.simulation?['presetId'], preset.id);
+        expect(gateway.simulation?['frame'], preset.frame);
+      }
     });
 
     test('setOrientation uses the preset landscape metrics (rotation rule)',

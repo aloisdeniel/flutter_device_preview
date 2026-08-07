@@ -1,0 +1,48 @@
+{
+  "id": "google-pixel-tablet",
+  "name": "Pixel Tablet",
+  "brand": "Google",
+  "platform": "android",
+  "kind": "tablet",
+  "portraitSize": {
+    "width": 800,
+    "height": 1280
+  },
+  "devicePixelRatio": 2.0,
+  "portraitPadding": {
+    "left": 0,
+    "top": 24,
+    "right": 0,
+    "bottom": 24
+  },
+  "landscapePadding": {
+    "left": 0,
+    "top": 24,
+    "right": 0,
+    "bottom": 24
+  },
+  "frame": {
+    "size": {
+      "width": 844,
+      "height": 1324
+    },
+    "screenOffset": {
+      "x": 22,
+      "y": 22
+    },
+    "screenPath": "M 14,0 H 786 A 14,14 0 0 1 800,14 V 1266 A 14,14 0 0 1 786,1280 H 14 A 14,14 0 0 1 0,1266 V 14 A 14,14 0 0 1 14,0 Z",
+    "body": [
+      "<svg viewBox=\"0 0 844 1324\">",
+      "  <defs><clipPath id=\"shell\">",
+      "    <path d=\"M 36,0 H 808 A 36,36 0 0 1 844,36 V 1288 A 36,36 0 0 1 808,1324 H 36 A 36,36 0 0 1 0,1288 V 36 A 36,36 0 0 1 36,0 Z\"/>",
+      "  </clipPath></defs>",
+      "  <path d=\"M 36,0 H 808 A 36,36 0 0 1 844,36 V 1288 A 36,36 0 0 1 808,1324 H 36 A 36,36 0 0 1 0,1288 V 36 A 36,36 0 0 1 36,0 Z\" fill=\"#2f3336\"/>",
+      "  <path d=\"M 36,2 H 808 A 34,34 0 0 1 842,36 V 1288 A 34,34 0 0 1 808,1322 H 36 A 34,34 0 0 1 2,1288 V 36 A 34,34 0 0 1 36,2 Z\" fill=\"#5b6166\"/>",
+      "  <g clip-path=\"url(#shell)\">",
+      "    <path d=\"M -1324,0 L -794.4,0 L 211,1324 L -318.6,1324 Z\" fill=\"#ffffff\" fill-opacity=\"0.18\"/>",
+      "  </g>",
+      "  <path d=\"M 36,3.5 H 808 A 32.5,32.5 0 0 1 840.5,36 V 1288 A 32.5,32.5 0 0 1 808,1320.5 H 36 A 32.5,32.5 0 0 1 3.5,1288 V 36 A 32.5,32.5 0 0 1 36,3.5 Z\" fill=\"#0b0d0e\"/>",
+      "</svg>"
+    ]
+  }
+}

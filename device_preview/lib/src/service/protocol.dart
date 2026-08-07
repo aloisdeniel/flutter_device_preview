@@ -36,7 +36,11 @@ class DevicePreviewProtocol {
 
   /// The current protocol version, pinned in every state shape and in the
   /// `device_preview.ready` event.
-  static const int protocolVersion = 1;
+  ///
+  /// * 1 — initial release.
+  /// * 2 — `simulation.frame` (screen outline + device body artwork), plus
+  ///   the `frame` capability flag.
+  static const int protocolVersion = 2;
 
   /// The active controller, or null when simulation is disabled.
   final DevicePreviewController? controller;

@@ -31,6 +31,7 @@ Control it from **Flutter DevTools**, from **Dart**, or from your **tests**.
 | **Accessibility** | Bold text, reduce motion, high contrast, invert colors, disable animations, accessible navigation, switch labels — each on, off, or left as the real device. |
 | **24-hour time** | For date and time UI. |
 | **Target platform** | Material/Cupertino behaviour across iOS, Android, macOS, Windows and Linux (debug builds only). |
+| **Device frame** | The real device drawn around your app: rounded screen corners clip it, the body is painted behind it. Artwork ships with the DevTools catalog, not in your app. |
 
 Simulation is active in debug and profile builds and completely off in release
 builds, where the package adds no behaviour of any kind.
@@ -111,8 +112,18 @@ class TestDevicePreviewBinding extends AutomatedTestWidgetsFlutterBinding
   @override
   Widget wrapWithDefaultView(Widget rootWidget) {
     final ui.FlutterView? wrapperView = previewImplicitView;
+    final controller = devicePreview;
     if (wrapperView != null) {
-      return View(view: wrapperView, child: rootWidget);
+      return View(
+        view: wrapperView,
+        // Only needed for device frames (screen clipping + body artwork).
+        child: controller == null
+            ? rootWidget
+            : DevicePreviewFrame(
+                simulation: controller.simulationListenable,
+                child: rootWidget,
+              ),
+      );
     }
     return super.wrapWithDefaultView(rootWidget);
   }
@@ -141,6 +152,26 @@ same way.
 > **One limitation in tests:** `WidgetsApp`'s own locale resolution is not
 > simulated under `flutter_test` (everything else is). Assert on locale
 > behaviour in an integration test, or against `MediaQuery` directly.
+
+## Device frames
+
+A simulation can also carry the device's *appearance* — the outline its screen
+is clipped to, and the body drawn behind it:
+
+```dart
+await c.update((s) => s.copyWith(
+  frame: DeviceFrame.fromJson(jsonDecode(specSource)['frame']),
+));
+```
+
+Picking a device in DevTools does this for you. The artwork lives in the
+repository's [`device_specs/`](https://github.com/aloisdeniel/flutter_device_preview/tree/master/device_specs)
+catalog and travels over the simulation protocol, so your app only ever holds
+the device it is currently simulating — this package ships no images and no
+SVG dependency. Frames are described in portrait and rotate with the device.
+
+The SVG subset renderer used to draw them is embedded, dependency-free, and
+exported on its own (`package:device_preview/svg.dart`) if you need it.
 
 ## Status
 

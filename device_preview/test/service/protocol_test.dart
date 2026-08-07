@@ -115,7 +115,7 @@ void main() {
         'fit',
         'capabilities',
       });
-      expect(state['protocolVersion'], 1);
+      expect(state['protocolVersion'], DevicePreviewProtocol.protocolVersion);
       expect(state['enabled'], isTrue);
       expect(state['simulation'], controller.current!.toJson());
       expect(state['realDevice'], controller.realDevice.toJson());

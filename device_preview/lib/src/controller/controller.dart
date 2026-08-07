@@ -75,7 +75,7 @@ abstract class DevicePreviewController implements Listenable {
 ///
 /// | Changed fields | Trigger |
 /// |---|---|
-/// | screenSize / devicePixelRatio / padding / viewPadding / systemGestureInsets / displayFeatures / orientation / alwaysUse24HourFormat | recompute fit, then `handleMetricsChanged()` |
+/// | screenSize / frame / devicePixelRatio / padding / viewPadding / systemGestureInsets / displayFeatures / orientation / alwaysUse24HourFormat | recompute fit, then `handleMetricsChanged()` |
 /// | textScaleFactor | `handleTextScaleFactorChanged()` |
 /// | platformBrightness | `handlePlatformBrightnessChanged()` |
 /// | locales | `handleLocaleChanged()` |
@@ -184,6 +184,8 @@ class DevicePreviewControllerImpl implements DevicePreviewController {
     state.fit = FitTransform.compute(
       realLogicalSize: hostView.physicalSize / hostView.devicePixelRatio,
       simulatedLogicalSize: active.screenSize!,
+      // Reserve room for the device body, which surrounds the screen.
+      contentBounds: active.contentBounds,
     );
   }
 
@@ -387,6 +389,7 @@ class DevicePreviewControllerImpl implements DevicePreviewController {
 
     final bool metricsChanged =
         previous?.screenSize != next?.screenSize ||
+        previous?.frame != next?.frame ||
         previous?.devicePixelRatio != next?.devicePixelRatio ||
         previous?.padding != next?.padding ||
         previous?.viewPadding != next?.viewPadding ||

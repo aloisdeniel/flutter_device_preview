@@ -6,9 +6,20 @@ into `device_preview/extension/devtools/build/` and served by the DevTools
 server.
 
 The extension does not import `device_preview` and there is no shared protocol
-package: it fetches the preset catalog and all state from the running app over
-the VM service (`ext.device_preview.*` service extensions), treats JSON
-loosely (unknown keys ignored), and pins compatibility via `protocolVersion`.
+package: it talks to the running app over the VM service
+(`ext.device_preview.*` service extensions), treats JSON loosely (unknown keys
+ignored), and pins compatibility via `protocolVersion`.
+
+The device catalog is **local** — generated from `device_specs/*.json` at the
+root of the repository into `lib/src/devices/device_catalog.g.dart` — because
+it carries frame artwork that the published package deliberately does not
+ship. Presets the app registers itself (`listPresets`) are appended to it,
+minus the ids the catalog already covers.
+
+```console
+dart run tool/generate_device_catalog.dart          # after editing a spec
+dart run tool/generate_device_catalog.dart --check  # what the test guard runs
+```
 
 ## Layout
 
@@ -21,6 +32,9 @@ loosely (unknown keys ignored), and pins compatibility via `protocolVersion`.
 - `lib/src/panel.dart` — the single-screen UI, sections as private widgets.
 - `lib/src/platform/` — conditional `package:web` helpers (localStorage,
   screenshot download) with VM stubs so tests run on the Dart VM.
+- `lib/src/devices/device_catalog.g.dart` — generated device catalog (never
+  edited by hand; see `tool/generate_device_catalog.dart` and
+  `device_specs/README.md`).
 
 ## Local development
 
@@ -32,10 +46,14 @@ flutter run -d chrome --dart-define=use_simulated_environment=true
 ```
 
 Start `device_preview/example` separately and paste its VM service URI into
-the simulator's connect field. A tiny fallback preset list is used **only**
-in the simulated environment when no app catalog is reachable.
+the simulator's connect field. The device list works without an app attached —
+it comes from the generated catalog.
 
 ## Build & ship into the parent package
+
+DevTools serves the **built copy** in `device_preview/extension/devtools/build/`,
+never this source tree: any panel or catalog change is invisible until you
+rebuild it (and reload DevTools — the bundle is cached by the browser).
 
 ```console
 flutter pub get

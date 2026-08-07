@@ -1,0 +1,53 @@
+{
+  "id": "samsung-galaxy-s24",
+  "name": "Galaxy S24",
+  "brand": "Samsung",
+  "platform": "android",
+  "kind": "phone",
+  "portraitSize": {
+    "width": 360,
+    "height": 780
+  },
+  "devicePixelRatio": 3.0,
+  "portraitPadding": {
+    "left": 0,
+    "top": 24,
+    "right": 0,
+    "bottom": 24
+  },
+  "landscapePadding": {
+    "left": 0,
+    "top": 24,
+    "right": 0,
+    "bottom": 24
+  },
+  "frame": {
+    "size": {
+      "width": 384,
+      "height": 796
+    },
+    "screenOffset": {
+      "x": 12,
+      "y": 8
+    },
+    "screenPath": "M 20,0 H 340 A 20,20 0 0 1 360,20 V 760 A 20,20 0 0 1 340,780 H 20 A 20,20 0 0 1 0,760 V 20 A 20,20 0 0 1 20,0 Z",
+    "body": [
+      "<svg viewBox=\"0 0 384 796\">",
+      "  <defs><clipPath id=\"shell\">",
+      "    <path d=\"M 32,0 H 352 A 28,28 0 0 1 380,28 V 768 A 28,28 0 0 1 352,796 H 32 A 28,28 0 0 1 4,768 V 28 A 28,28 0 0 1 32,0 Z\"/>",
+      "  </clipPath></defs>",
+      "  <g fill=\"#3d4149\">",
+      "    <rect x=\"0\" y=\"159.2\" width=\"6\" height=\"43.78\" rx=\"2\"/>",
+      "    <rect x=\"0\" y=\"214.92\" width=\"6\" height=\"43.78\" rx=\"2\"/>",
+      "    <rect x=\"378\" y=\"191.04\" width=\"6\" height=\"63.68\" rx=\"2\"/>",
+      "  </g>",
+      "  <path d=\"M 32,0 H 352 A 28,28 0 0 1 380,28 V 768 A 28,28 0 0 1 352,796 H 32 A 28,28 0 0 1 4,768 V 28 A 28,28 0 0 1 32,0 Z\" fill=\"#1f2126\"/>",
+      "  <path d=\"M 32,2 H 352 A 26,26 0 0 1 378,28 V 768 A 26,26 0 0 1 352,794 H 32 A 26,26 0 0 1 6,768 V 28 A 26,26 0 0 1 32,2 Z\" fill=\"#3d4149\"/>",
+      "  <g clip-path=\"url(#shell)\">",
+      "    <path d=\"M -796,0 L -477.6,0 L 96,796 L -222.4,796 Z\" fill=\"#ffffff\" fill-opacity=\"0.18\"/>",
+      "  </g>",
+      "  <path d=\"M 32,3.5 H 352 A 24.5,24.5 0 0 1 376.5,28 V 768 A 24.5,24.5 0 0 1 352,792.5 H 32 A 24.5,24.5 0 0 1 7.5,768 V 28 A 24.5,24.5 0 0 1 32,3.5 Z\" fill=\"#08090b\"/>",
+      "</svg>"
+    ]
+  }
+}

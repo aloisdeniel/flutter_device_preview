@@ -9,6 +9,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
+import 'src/model/device_frame.dart';
 import 'src/model/json_utils.dart';
 import 'src/model/simulation.dart';
 
@@ -27,11 +28,19 @@ enum DeviceKind {
   desktop,
 }
 
-/// Metrics-only description of a device. No frame artwork, no images.
+/// Description of a device: its metrics, and optionally the [frame] it is
+/// drawn in.
 ///
 /// Metric fields are expressed for the portrait orientation; landscape
 /// values are either provided explicitly or derived by the documented
 /// rotation rule (see [rotateToLandscape]).
+///
+/// The built-in [DevicePresets] are metrics-only — no artwork ships in the
+/// package. Frames come from the device spec catalog of the DevTools
+/// extension (`device_specs/` at the root of the repository), which pushes
+/// them over the simulation protocol; [fromJson] decodes exactly that
+/// catalog format, so a spec file can also be loaded directly by an app that
+/// wants a framed golden test.
 @immutable
 class DevicePreset {
   /// Creates a device preset.
@@ -41,6 +50,8 @@ class DevicePreset {
     required this.platform,
     required this.portraitSize,
     required this.devicePixelRatio,
+    this.brand,
+    this.frame,
     this.portraitPadding = EdgeInsets.zero,
     this.portraitViewPadding,
     this.landscapePadding,
@@ -58,7 +69,13 @@ class DevicePreset {
     return DevicePreset(
       id: decodeString(json['id'], 'id'),
       name: decodeString(json['name'], 'name'),
+      brand: json['brand'] == null
+          ? null
+          : decodeString(json['brand'], 'brand'),
       platform: decodeEnum(json['platform'], TargetPlatform.values, 'platform'),
+      frame: json['frame'] == null
+          ? null
+          : DeviceFrame.fromJson(decodeMap(json['frame'], 'frame')),
       portraitSize: decodeSize(json['portraitSize'], 'portraitSize'),
       devicePixelRatio: decodeDouble(
         json['devicePixelRatio'],
@@ -109,8 +126,15 @@ class DevicePreset {
   /// Human-readable name, e.g. `'iPhone 16 Pro'`.
   final String name;
 
+  /// The manufacturer, e.g. `'Apple'`. Null when unspecified.
+  final String? brand;
+
   /// The platform of the device.
   final TargetPlatform platform;
+
+  /// The device's screen outline and body artwork, or null for a plain
+  /// rectangular screen with no artwork.
+  final DeviceFrame? frame;
 
   /// The logical screen size in portrait orientation.
   ///
@@ -178,6 +202,7 @@ class DevicePreset {
       return DeviceSimulation(
         presetId: id,
         screenSize: portraitSize,
+        frame: frame,
         devicePixelRatio: devicePixelRatio,
         padding: portraitPadding,
         viewPadding: effectivePortraitViewPadding,
@@ -195,6 +220,8 @@ class DevicePreset {
       presetId: id,
       orientation: Orientation.landscape,
       screenSize: ui.Size(portraitSize.height, portraitSize.width),
+      // Frames are described in portrait and rotated at paint time.
+      frame: frame,
       devicePixelRatio: devicePixelRatio,
       padding: resolvedLandscapePadding,
       viewPadding: resolvedLandscapeViewPadding,
@@ -214,9 +241,11 @@ class DevicePreset {
   Map<String, Object?> toJson() => <String, Object?>{
     'id': id,
     'name': name,
+    if (brand != null) 'brand': brand,
     'platform': platform.name,
     'kind': kind.name,
     'portraitSize': encodeSize(portraitSize),
+    if (frame != null) 'frame': frame!.toJson(),
     'devicePixelRatio': devicePixelRatio,
     'portraitPadding': encodeEdgeInsets(portraitPadding),
     if (portraitViewPadding != null)
@@ -240,7 +269,9 @@ class DevicePreset {
     return other is DevicePreset &&
         other.id == id &&
         other.name == name &&
+        other.brand == brand &&
         other.platform == platform &&
+        other.frame == frame &&
         other.portraitSize == portraitSize &&
         other.devicePixelRatio == devicePixelRatio &&
         other.portraitPadding == portraitPadding &&
@@ -256,7 +287,9 @@ class DevicePreset {
   int get hashCode => Object.hash(
     id,
     name,
+    brand,
     platform,
+    frame,
     portraitSize,
     devicePixelRatio,
     portraitPadding,
@@ -283,6 +316,7 @@ abstract final class DevicePresets {
   static const DevicePreset iPhoneSe3 = DevicePreset(
     id: 'apple-iphone-se-3',
     name: 'iPhone SE (3rd gen)',
+    brand: 'Apple',
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(375, 667),
     devicePixelRatio: 2.0,
@@ -295,6 +329,7 @@ abstract final class DevicePresets {
   static const DevicePreset iPhone16 = DevicePreset(
     id: 'apple-iphone-16',
     name: 'iPhone 16',
+    brand: 'Apple',
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(393, 852),
     devicePixelRatio: 3.0,
@@ -306,6 +341,7 @@ abstract final class DevicePresets {
   static const DevicePreset iPhone16Pro = DevicePreset(
     id: 'apple-iphone-16-pro',
     name: 'iPhone 16 Pro',
+    brand: 'Apple',
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(402, 874),
     devicePixelRatio: 3.0,
@@ -317,6 +353,7 @@ abstract final class DevicePresets {
   static const DevicePreset iPhone16ProMax = DevicePreset(
     id: 'apple-iphone-16-pro-max',
     name: 'iPhone 16 Pro Max',
+    brand: 'Apple',
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(440, 956),
     devicePixelRatio: 3.0,
@@ -328,6 +365,7 @@ abstract final class DevicePresets {
   static const DevicePreset iPadPro13 = DevicePreset(
     id: 'apple-ipad-pro-13',
     name: 'iPad Pro 13"',
+    brand: 'Apple',
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(1032, 1376),
     devicePixelRatio: 2.0,
@@ -340,6 +378,7 @@ abstract final class DevicePresets {
   static const DevicePreset iPadMini = DevicePreset(
     id: 'apple-ipad-mini',
     name: 'iPad mini',
+    brand: 'Apple',
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(744, 1133),
     devicePixelRatio: 2.0,
@@ -352,6 +391,7 @@ abstract final class DevicePresets {
   static const DevicePreset pixel8 = DevicePreset(
     id: 'google-pixel-8',
     name: 'Pixel 8',
+    brand: 'Google',
     platform: TargetPlatform.android,
     portraitSize: ui.Size(412, 915),
     devicePixelRatio: 2.625,
@@ -363,6 +403,7 @@ abstract final class DevicePresets {
   static const DevicePreset pixel9 = DevicePreset(
     id: 'google-pixel-9',
     name: 'Pixel 9',
+    brand: 'Google',
     platform: TargetPlatform.android,
     portraitSize: ui.Size(412, 923),
     devicePixelRatio: 2.625,
@@ -374,6 +415,7 @@ abstract final class DevicePresets {
   static const DevicePreset pixelTablet = DevicePreset(
     id: 'google-pixel-tablet',
     name: 'Pixel Tablet',
+    brand: 'Google',
     platform: TargetPlatform.android,
     portraitSize: ui.Size(800, 1280),
     devicePixelRatio: 2.0,
@@ -386,6 +428,7 @@ abstract final class DevicePresets {
   static const DevicePreset galaxyS24 = DevicePreset(
     id: 'samsung-galaxy-s24',
     name: 'Galaxy S24',
+    brand: 'Samsung',
     platform: TargetPlatform.android,
     portraitSize: ui.Size(360, 780),
     devicePixelRatio: 3.0,
@@ -397,6 +440,7 @@ abstract final class DevicePresets {
   static const DevicePreset smallDesktopWindow = DevicePreset(
     id: 'desktop-small',
     name: 'Small Desktop Window',
+    brand: 'Generic',
     platform: TargetPlatform.windows,
     portraitSize: ui.Size(1024, 640),
     devicePixelRatio: 1.0,
@@ -407,6 +451,7 @@ abstract final class DevicePresets {
   static const DevicePreset largeDesktopWindow = DevicePreset(
     id: 'desktop-large',
     name: 'Large Desktop Window',
+    brand: 'Generic',
     platform: TargetPlatform.macOS,
     portraitSize: ui.Size(1920, 1080),
     devicePixelRatio: 2.0,

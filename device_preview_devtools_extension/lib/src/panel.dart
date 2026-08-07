@@ -425,6 +425,7 @@ class _PresetPickerDialogState extends State<_PresetPickerDialog> {
           (p) =>
               query.isEmpty ||
               p.name.toLowerCase().contains(query) ||
+              p.brand.toLowerCase().contains(query) ||
               p.platform.toLowerCase().contains(query) ||
               p.id.toLowerCase().contains(query),
         )
@@ -440,6 +441,8 @@ class _PresetPickerDialogState extends State<_PresetPickerDialog> {
     for (final kind in orderedKinds) {
       byKind[kind]!.sort(
         (a, b) {
+          final byBrand = a.brand.compareTo(b.brand);
+          if (byBrand != 0) return byBrand;
           final byPlatform = a.platform.compareTo(b.platform);
           return byPlatform != 0 ? byPlatform : a.name.compareTo(b.name);
         },
@@ -528,9 +531,10 @@ class _PresetPickerDialogState extends State<_PresetPickerDialog> {
     final height = (size?['height'] as num?)?.toStringAsFixed(0);
     final dpr = preset.devicePixelRatio;
     return [
-      preset.platform,
+      if (preset.brand.isNotEmpty) preset.brand else preset.platform,
       if (width != null && height != null) '$width×$height',
       if (dpr != null) '@${dpr}x',
+      if (preset.frame != null) 'framed',
     ].join(' · ');
   }
 }

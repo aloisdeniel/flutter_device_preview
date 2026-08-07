@@ -183,6 +183,24 @@ const Map<String, Object?> testPhonePresetJson = <String, Object?>{
   },
 };
 
+/// A preset carrying frame artwork, like the built-in catalog entries.
+const Map<String, Object?> testFramedPresetJson = <String, Object?>{
+  'id': 'test-framed',
+  'name': 'Test Framed Phone',
+  'brand': 'Test',
+  'platform': 'android',
+  'kind': 'phone',
+  'portraitSize': <String, Object?>{'width': 400.0, 'height': 800.0},
+  'devicePixelRatio': 2.0,
+  'frame': <String, Object?>{
+    'size': <String, Object?>{'width': 420.0, 'height': 820.0},
+    'screenOffset': <String, Object?>{'x': 10.0, 'y': 10.0},
+    'screenPath': 'M 0,0 H 400 V 800 H 0 Z',
+    'body': '<svg viewBox="0 0 420 820">'
+        '<rect x="0" y="0" width="420" height="820" fill="#101010"/></svg>',
+  },
+};
+
 /// A second preset (tablet) used across tests.
 const Map<String, Object?> testTabletPresetJson = <String, Object?>{
   'id': 'test-tablet',

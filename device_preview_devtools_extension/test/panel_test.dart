@@ -79,13 +79,20 @@ void main() {
         find.byKey(const Key('device_preview_real_device_entry')),
         findsOneWidget,
       );
+      // The built-in catalog fills the list, so narrow it down to the two
+      // app-registered presets before asserting on grouping.
+      await tester.enterText(
+        find.byKey(const Key('device_preview_preset_search')),
+        'test-',
+      );
+      await tester.pumpAndSettle();
       expect(find.text('Phones'), findsOneWidget);
       expect(find.text('Tablets'), findsOneWidget);
       expect(find.widgetWithText(ListTile, 'Test Phone'), findsOneWidget);
 
       await tester.enterText(
         find.byKey(const Key('device_preview_preset_search')),
-        'tablet',
+        'test tablet',
       );
       await tester.pumpAndSettle();
       expect(find.widgetWithText(ListTile, 'Test Phone'), findsNothing);

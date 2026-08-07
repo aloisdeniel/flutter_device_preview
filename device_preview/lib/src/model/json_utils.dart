@@ -73,6 +73,39 @@ ui.Size decodeSize(Object? value, String context) {
   );
 }
 
+/// Encodes [offset] as `{"x": …, "y": …}`.
+Map<String, Object?> encodeOffset(ui.Offset offset) => <String, Object?>{
+  'x': offset.dx,
+  'y': offset.dy,
+};
+
+/// Decodes an offset encoded by [encodeOffset].
+ui.Offset decodeOffset(Object? value, String context) {
+  final Map<String, Object?> map = decodeMap(value, context);
+  return ui.Offset(
+    decodeDouble(map['x'], '$context.x'),
+    decodeDouble(map['y'], '$context.y'),
+  );
+}
+
+/// Reads a `String`, also accepting an array of strings joined with newlines.
+///
+/// Multi-line artwork (SVG documents) stays readable in JSON spec files this
+/// way, while the wire format keeps a plain string.
+String decodeStringOrLines(Object? value, String context) {
+  if (value is String) {
+    return value;
+  }
+  if (value is List) {
+    return value
+        .map((Object? line) => decodeString(line, '$context[]'))
+        .join('\n');
+  }
+  throw FormatException(
+    'Expected a string or an array of strings for "$context", got: $value',
+  );
+}
+
 /// Encodes [insets] as `{"left": …, "top": …, "right": …, "bottom": …}`.
 Map<String, Object?> encodeEdgeInsets(EdgeInsets insets) => <String, Object?>{
   'left': insets.left,

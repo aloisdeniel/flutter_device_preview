@@ -18,7 +18,7 @@ A custom `WidgetsBinding` that simulates device characteristics (screen metrics,
 
 **Design invariants (non-negotiable for implementers):**
 
-1. Exactly **three framework override seams**: `BindingBase.platformDispatcher` (getter, `foundation/binding.dart:249`), `RendererBinding.createViewConfigurationFor` (`rendering/binding.dart:369`), `BindingBase.initServiceExtensions`. Nothing else in the framework is overridden — no `wrapWithDefaultView`, no `handlePointerEvent`, no `hitTestInView`.
+1. Exactly **three framework override seams**: `BindingBase.platformDispatcher` (getter, `foundation/binding.dart:249`), `RendererBinding.createViewConfigurationFor` (`rendering/binding.dart:369`), `BindingBase.initServiceExtensions`. Nothing else in the framework is overridden — no `handlePointerEvent`, no `hitTestInView`. *(As built: device frames added a fourth, `wrapWithDefaultView` — see §8.1.)*
 2. Wrapper objects use `implements` + explicit delegation, **no `noSuchMethod`**. SDK interface drift is a compile error by design — loud, immediate, trivially fixable (the same trade flutter_test accepts).
 3. One `PreviewPlatformDispatcher` and one `PreviewFlutterView` instance for process lifetime (identity is load-bearing: `platform_dispatcher.dart:243-251`, `widgets/view.dart:908-911`).
 4. When disabled, the `platformDispatcher` getter returns the host dispatcher directly — zero interposition, behaviorally identical to `WidgetsFlutterBinding`.
@@ -30,10 +30,12 @@ A custom `WidgetsBinding` that simulates device characteristics (screen metrics,
 
 ```
 repo/
+  device_specs/                            # device catalog SOURCE: one JSON per device (metrics + frame artwork)
   device_preview/                          # THE published package (depends on flutter only)
     lib/
-      device_preview.dart                  # public API (binding, mixin, controller, simulation)
+      device_preview.dart                  # public API (binding, mixin, controller, simulation, frame)
       presets.dart                         # DevicePreset + catalog (separate library, tree-shakable)
+      svg.dart                             # embedded SVG subset renderer (separate library)
       test_support.dart                    # TestDevicePreviewBinding + debugInjectPointerData
       src/
         binding/
@@ -509,6 +511,8 @@ Debug diagnostic: applying a brightness simulation while `debugBrightnessOverrid
 
 All registered via raw `developer.registerExtension` (own `ext.device_preview.` prefix — never `ext.flutter.`), inside `if (!kReleaseMode)` so release builds tree-shake them. All request params are strings (VM contract): complex payloads travel as one JSON-encoded string param. Handlers never throw: failures return `{"error": {"code", "message"}}` inside a success response; only malformed JSON returns `ServiceExtensionResponse.error(invalidParams, …)`. Target platform is carried in `simulation.targetPlatform` and applied app-side — DevTools never calls `ext.flutter.platformOverride` (one writer).
 
+`protocolVersion` is **2**: version 1 shipped without `simulation.frame` (the screen outline and body artwork) and without the `frame` capability flag. Both are additive — a version-1 panel talking to a version-2 app simply never sends a frame.
+
 ### Methods
 
 | Method | Args | Result |
@@ -523,7 +527,7 @@ All registered via raw `developer.registerExtension` (own `ext.device_preview.` 
 
 ```json
 {
-  "protocolVersion": 1,
+  "protocolVersion": 2,
   "enabled": true,
   "simulation": { /* DeviceSimulation.toJson(), or null when passing through */ },
   "realDevice": {
@@ -536,7 +540,7 @@ All registered via raw `developer.registerExtension` (own `ext.device_preview.` 
     "targetPlatform": "iOS"
   },
   "fit": {"scale": 0.82, "offset": {"x": 12.0, "y": 0.0}},
-  "capabilities": {"targetPlatform": true, "screenshot": true}
+  "capabilities": {"targetPlatform": true, "screenshot": true, "frame": true}
 }
 ```
 
@@ -547,6 +551,10 @@ All registered via raw `developer.registerExtension` (own `ext.device_preview.` 
   "presetId": "apple-iphone-se-3",
   "orientation": "portrait",
   "screenSize": {"width": 375.0, "height": 667.0},
+  "frame": {"size": {"width": 403.0, "height": 805.0},
+            "screenOffset": {"x": 14.0, "y": 62.0},
+            "screenPath": "M 0,0 H 375 …",
+            "body": "<svg viewBox=\"0 0 403 805\">…</svg>"},
   "devicePixelRatio": 2.0,
   "padding": {"left": 0, "top": 20, "right": 0, "bottom": 0},
   "viewPadding": {"left": 0, "top": 20, "right": 0, "bottom": 0},
@@ -566,7 +574,7 @@ All registered via raw `developer.registerExtension` (own `ext.device_preview.` 
 
 | Event kind | Data | When |
 |---|---|---|
-| `device_preview.ready` | `{"protocolVersion": 1}` | Once from `initServiceExtensions` — i.e. again after every hot restart. The DevTools re-push trigger. |
+| `device_preview.ready` | `{"protocolVersion": 2}` | Once from `initServiceExtensions` — i.e. again after every hot restart. The DevTools re-push trigger. |
 | `device_preview.stateChanged` | `{"simulation": {…} \| null, "fit": {…}, "source": "programmatic" \| "devtools" \| "restore", "requestId": "<echoed if provided>"}` | After every successful apply/reset, whatever the source. `requestId` echo lets the panel suppress its own echoes. |
 | `device_preview.presetsChanged` | `{"count": 17}` | On `registerPreset` — panel refetches `listPresets`. |
 
@@ -667,3 +675,13 @@ The implementation follows this document with these reviewed deviations:
 4. **Controller mutations are serialized** — `apply`/`update`/`applyPreset`/`setOrientation` run through an internal queue; state commits before the (debug-only) targetPlatform reassemble await, and `stateChanged` posts in a `finally`. DevTools panel writes are serialized the same way.
 5. **`sendPortPlatformMessage(Object port)`** — the web `dart:ui` interface declares `Object`, native declares `SendPort`; `Object` is the only signature valid on both compilers.
 6. **`setSimulation` accepts an extra `source` arg** (`devtools`/`restore`) so restore pushes are correctly labeled in `stateChanged`; unknown-keys-ignored keeps it forward-compatible.
+
+### 8.1 Device frames (protocol version 2)
+
+Simulating a device's *appearance* — the outline its screen is clipped to and the body painted behind it — added a fourth override seam and moved the catalog. Both contradict decisions taken earlier in this document, deliberately:
+
+7. **A fourth framework seam: `wrapWithDefaultView`** (§0 claimed exactly three). `DevicePreviewBindingMixin` wraps the root widget in `DevicePreviewFrame` — a `RenderProxyBox` that paints the body **outside its own bounds** and pushes a clip path around the app. The alternative, a custom `RenderView`, is not reachable: since the multi-view refactor the `View` widget owns its `RenderView`. The wrapper is inert without a frame (no clip layer, no painting), and compositions that build their own `View` (test bindings) opt in by wrapping with `DevicePreviewFrame` themselves — the same one line the README recipe now carries.
+8. **The device catalog moved into the extension** (§1 decision 11 said the app is the single source of truth). Frames carry artwork; shipping ~12 device bodies inside the published package would tax every app for something only DevTools users see. The catalog is now `device_specs/*.json` at the repository root, generated by `device_preview_devtools_extension/tool/generate_device_catalog.dart` into one `device_catalog.g.dart`, and pushed device-by-device over `setSimulation`. `listPresets` still works and is still merged in (app-registered customs only, deduplicated by id), so the protocol did not lose a capability — only the *default* catalog changed sides. The spec JSON is exactly `DevicePreset.toJson()` plus `brand` and `frame`, so `DevicePreset.fromJson` reads a spec file directly.
+9. **Frames are described in portrait and rotated at paint time** — a quarter turn mapping `(x, y) → (y, portraitWidth − x)`, the same rotation display features use. `setOrientation` therefore leaves `frame` untouched, and `DeviceFrame` needs no landscape variant.
+10. **The letterbox fits the body, not the screen** — `FitTransform.compute` takes an optional `contentBounds` (`DeviceSimulation.contentBounds`: the screen rectangle grown to the body, usually starting at negative coordinates). `offset` remains the position of the simulated origin, so pointer remapping, the root paint matrix and the state shape are unchanged. The screenshot module captures the same rectangle, so a framed device screenshots with its body.
+11. **An embedded SVG subset renderer** (`package:device_preview/svg.dart`) — filled paths/rects/circles/ellipses/polygons, groups, transforms, clip paths, flat colors. No dependency was acceptable in a package that depends on flutter alone, and device artwork needs nothing more. Malformed artwork is failure-isolated: reported once through `FlutterError.reportError`, then skipped.

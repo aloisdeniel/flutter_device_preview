@@ -1,0 +1,32 @@
+{
+  "id": "desktop-large",
+  "name": "Large Desktop Window",
+  "brand": "Generic",
+  "platform": "macOS",
+  "kind": "desktop",
+  "portraitSize": {
+    "width": 1920,
+    "height": 1080
+  },
+  "devicePixelRatio": 2.0,
+  "frame": {
+    "size": {
+      "width": 1922,
+      "height": 1109
+    },
+    "screenOffset": {
+      "x": 1,
+      "y": 28
+    },
+    "screenPath": "M 0,0 H 1920 V 1068 A 12,12 0 0 1 1908,1080 H 12 A 12,12 0 0 1 0,1068 Z",
+    "body": [
+      "<svg viewBox=\"0 0 1922 1109\">",
+      "  <path d=\"M 12,0 H 1910 A 12,12 0 0 1 1922,12 V 1097 A 12,12 0 0 1 1910,1109 H 12 A 12,12 0 0 1 0,1097 V 12 A 12,12 0 0 1 12,0 Z\" fill=\"#26282c\"/>",
+      "  <circle cx=\"16\" cy=\"14\" r=\"6\" fill=\"#ff5f57\"/>",
+      "  <circle cx=\"36\" cy=\"14\" r=\"6\" fill=\"#febc2e\"/>",
+      "  <circle cx=\"56\" cy=\"14\" r=\"6\" fill=\"#28c840\"/>",
+      "  <rect x=\"891\" y=\"9\" width=\"140\" height=\"10\" rx=\"5\" fill=\"#c9ccd1\" fill-opacity=\"0.35\"/>",
+      "</svg>"
+    ]
+  }
+}
