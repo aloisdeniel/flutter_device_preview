@@ -22,7 +22,7 @@ void main() {
   // `true` rather than the default: the demo is a *release* web build, where
   // simulation would otherwise be off. A real app calls `DevicePreview
   // .enable()` with no argument, which keeps release builds untouched.
-  DevicePreview.enable(enabled: true);
+  DevicePreview.enable(enabled: true, padding: const EdgeInsets.all(16));
   connectDemoPanel(DevicePreview.maybeController);
   runApp(const CounterApp());
 }
