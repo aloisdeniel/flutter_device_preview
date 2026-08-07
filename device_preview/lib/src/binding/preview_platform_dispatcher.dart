@@ -281,37 +281,51 @@ class PreviewPlatformDispatcher implements ui.PlatformDispatcher {
   }
 
   void _handleHostPointerDataPacket(ui.PointerDataPacket packet) {
+    state.observeHostPointers(packet);
     _onPointerDataPacket?.call(rewritePointerDataPacket(packet));
   }
 
   /// Rewrites [packet] into simulated physical coordinates when metric
-  /// simulation is active.
+  /// simulation is active, and relabels the pointer kind when the simulation
+  /// asks for one.
   ///
-  /// When no metric simulation is active (or the mapping is the identity)
-  /// the same packet object is forwarded untouched — zero-allocation fast
-  /// path. Data targeting other views passes through untouched (multi-view
-  /// simulation is unsupported).
+  /// When neither applies the same packet object is forwarded untouched —
+  /// zero-allocation fast path. Data targeting other views passes through
+  /// untouched (multi-view simulation is unsupported).
   @visibleForTesting
   ui.PointerDataPacket rewritePointerDataPacket(ui.PointerDataPacket packet) {
     final PreviewFlutterView? wrapper = _implicitView;
-    if (wrapper == null || !state.simulatesMetrics) {
+    if (wrapper == null) {
       return packet;
     }
+    final ui.PointerDeviceKind? kind = state.simulation?.pointerKind;
     final double realRatio = wrapper.hostView.devicePixelRatio;
     final double simulatedRatio = wrapper.devicePixelRatio;
     final FitTransform fit = state.fit;
-    if (fit == FitTransform.identity && realRatio == simulatedRatio) {
+    final bool rewritesGeometry =
+        state.simulatesMetrics &&
+        !(fit == FitTransform.identity && realRatio == simulatedRatio);
+    if (!rewritesGeometry && kind == null) {
       return packet;
     }
-    return ui.PointerDataPacket(
-      data: <ui.PointerData>[
-        for (final ui.PointerData datum in packet.data)
-          if (datum.viewId == wrapper.viewId)
-            rewritePointerData(datum, fit, realRatio, simulatedRatio)
-          else
-            datum,
-      ],
-    );
+    final List<ui.PointerData> data = <ui.PointerData>[];
+    for (final ui.PointerData datum in packet.data) {
+      if (datum.viewId != wrapper.viewId) {
+        data.add(datum);
+        continue;
+      }
+      ui.PointerData? rewritten = rewritesGeometry
+          ? rewritePointerData(datum, fit, realRatio, simulatedRatio)
+          : datum;
+      if (kind != null) {
+        // Null drops the event: the simulated kind could not have produced it.
+        rewritten = retargetPointerKind(rewritten, kind);
+      }
+      if (rewritten != null) {
+        data.add(rewritten);
+      }
+    }
+    return ui.PointerDataPacket(data: data);
   }
 
   /// Feeds [packet] through the host-side pointer trampoline, exactly as if

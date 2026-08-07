@@ -457,6 +457,9 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
       <div class="spec-row"><div class="k">Safe areas</div><div class="d">Notches, punch-holes and home indicators, correct per device and per orientation. <code>SafeArea</code> and <code>MediaQuery.padding</code> respond.</div><div class="m">SCREEN</div></div>
       <div class="spec-row"><div class="k">Orientation</div><div class="d">Portrait ⇄ landscape in one click, with safe areas rotating the way the real device rotates them.</div><div class="m">SCREEN</div></div>
       <div class="spec-row"><div class="k">Folds &amp; hinges</div><div class="d">Display features for foldables, so hinge-aware layouts can be checked without a foldable on the desk.</div><div class="m">SCREEN</div></div>
+      <div class="spec-row"><div class="k">Device frame</div><div class="d">The device drawn around your app: its screen outline clips the corners, its body is painted behind. Nothing ships in your app — the frame travels from the DevTools catalog when you pick a device.</div><div class="m">SCREEN</div></div>
+      <div class="spec-row"><div class="k">System UI</div><div class="d">A simulated status bar and gesture pill, laid out from the device's own safe areas and tinted from your app's <code>SystemUiOverlayStyle</code> — so a status bar style is visible while you write it. One switch hides them.</div><div class="m">SCREEN</div></div>
+      <div class="spec-row"><div class="k">Touch input</div><div class="d">Your mouse reported to the app as a finger: drag to scroll a list the way a thumb does — the mouse is not a drag device on desktop or the web — with gestures on their touch paths and no hover. The wheel keeps scrolling.</div><div class="m">INPUT</div></div>
       <div class="spec-row"><div class="k">Keyboard insets</div><div class="d">The software keyboard's <code>viewInsets</code> reach your layout, so you can see what the keyboard covers.</div><div class="m">SCREEN</div></div>
       <div class="spec-row"><div class="k">Locales</div><div class="d">A full ordered locale list — your app's locale resolution, translations and <code>Intl</code> date, number and currency formatting all follow.</div><div class="m">SYSTEM</div></div>
       <div class="spec-row"><div class="k">Brightness</div><div class="d">Light and dark, applied live — <code>ThemeMode.system</code> flips as you toggle.</div><div class="m">SYSTEM</div></div>
@@ -487,8 +490,10 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
         <div class="pm-bar"><span class="pm-dot"></span> device_preview <span class="pm-reset">⟲ reset</span></div>
         <div class="pm-body">
           <div class="pm-sec">Device</div>
-          <div class="pm-row"><span>Preset</span><span class="val on">iPhone 16 Pro · 393×852 @3x</span></div>
+          <div class="pm-row"><span>Preset</span><span class="val on">iPhone 16 Pro · 402×874 @3x</span></div>
           <div class="pm-row"><span>Orientation</span><span class="val">portrait ▾</span></div>
+          <div class="pm-row"><span>System UI</span><span class="val on">shown</span></div>
+          <div class="pm-row"><span>Touch input</span><span class="val on">on</span></div>
           <div class="pm-sec">Display</div>
           <div class="pm-row"><span>Brightness</span><span class="val on">dark</span></div>
           <div class="pm-row"><span>Text scale</span><span class="pm-slider"><i></i></span><span class="val">1.3</span></div>

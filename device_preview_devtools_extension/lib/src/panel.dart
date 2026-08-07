@@ -353,6 +353,15 @@ class _DeviceSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: denseSpacing),
+        _LabeledRow(
+          label: 'Touch input',
+          child: Switch(
+            key: const Key('device_preview_touch_input_switch'),
+            value: controller.simulatesTouch,
+            onChanged: (value) => controller.setSimulatesTouch(value),
+          ),
+        ),
+        const SizedBox(height: denseSpacing),
         _CustomDeviceExpander(controller: controller),
       ],
     );

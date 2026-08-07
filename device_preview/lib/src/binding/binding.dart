@@ -159,6 +159,7 @@ mixin DevicePreviewBindingMixin
       handleAccessibilityFeaturesChanged: handleAccessibilityFeaturesChanged,
       applyTargetPlatformOverride: _applyTargetPlatformOverride,
     );
+    _state.onPointerKindChanged = _dismissHostHover;
     final DeviceSimulation? initial = _latchedInitialSimulation;
     _latchedInitialSimulation = null;
     if (initial != null) {
@@ -352,6 +353,48 @@ mixin DevicePreviewBindingMixin
     return null;
   }
 
+  /// Moves every known host mouse far outside the view, so whatever it was
+  /// hovering exits.
+  ///
+  /// Called when [DeviceSimulation.pointerKind] changes: from then on the
+  /// mouse's hover events are dropped (a finger cannot hover), and the hover
+  /// state it left behind — a highlighted button, an open tooltip — would
+  /// otherwise never be cleared. A hover far away rather than a removal, so
+  /// the framework's view of which devices exist stays exactly the engine's.
+  ///
+  /// The packet is handed straight to the framework's handler: it is already
+  /// expressed in simulated coordinates and must not be rewritten again.
+  void _dismissHostHover() {
+    final ui.PointerDataPacketCallback? handler =
+        platformDispatcher.onPointerDataPacket;
+    if (handler == null || _state.hostMouseDevices.isEmpty) {
+      return;
+    }
+    final int? viewId =
+        _previewDispatcher?.previewImplicitView?.viewId ??
+        _hostPlatformDispatcher.implicitView?.viewId;
+    if (viewId == null) {
+      return;
+    }
+    handler(
+      ui.PointerDataPacket(
+        data: <ui.PointerData>[
+          for (final int device in _state.hostMouseDevices)
+            ui.PointerData(
+              viewId: viewId,
+              timeStamp: _state.lastPointerTimeStamp,
+              change: ui.PointerChange.hover,
+              kind: ui.PointerDeviceKind.mouse,
+              device: device,
+              physicalX: -100000,
+              physicalY: -100000,
+              synthesized: true,
+            ),
+        ],
+      ),
+    );
+  }
+
   Future<void> _applyTargetPlatformOverride(TargetPlatform? platform) async {
     if (kDebugMode) {
       debugDefaultTargetPlatformOverride = platform;
@@ -392,27 +435,34 @@ mixin DevicePreviewBindingMixin
     }
     final ui.FlutterView? hostView = _hostPlatformDispatcher.implicitView;
     final DeviceSimulation? simulation = _state.simulation;
+    _state.observeHostPointers(packet);
     ui.PointerDataPacket effective = packet;
-    if (simulationEnabled &&
-        hostView != null &&
-        simulation != null &&
-        simulation.simulatesMetrics) {
+    if (simulationEnabled && hostView != null && simulation != null) {
       final double realRatio = hostView.devicePixelRatio;
-      effective = ui.PointerDataPacket(
-        data: <ui.PointerData>[
-          for (final ui.PointerData datum in packet.data)
-            if (datum.viewId == hostView.viewId)
-              rewritePointerData(
+      final ui.PointerDeviceKind? kind = simulation.pointerKind;
+      final List<ui.PointerData> data = <ui.PointerData>[];
+      for (final ui.PointerData datum in packet.data) {
+        if (datum.viewId != hostView.viewId) {
+          data.add(datum);
+          continue;
+        }
+        ui.PointerData? rewritten = simulation.simulatesMetrics
+            ? rewritePointerData(
                 datum,
                 _state.fit,
                 realRatio,
                 platformDispatcher.view(id: datum.viewId)?.devicePixelRatio ??
                     realRatio,
               )
-            else
-              datum,
-        ],
-      );
+            : datum;
+        if (kind != null) {
+          rewritten = retargetPointerKind(rewritten, kind);
+        }
+        if (rewritten != null) {
+          data.add(rewritten);
+        }
+      }
+      effective = ui.PointerDataPacket(data: data);
     }
     platformDispatcher.onPointerDataPacket?.call(effective);
   }

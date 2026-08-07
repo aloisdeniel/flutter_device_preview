@@ -139,6 +139,17 @@ void main() {
       expect(gateway.simulation?['showSystemUi'], isFalse);
     });
 
+    testWidgets('touch input switch sends the pointer kind', (tester) async {
+      await pumpPanel(tester);
+      await tester.tap(find.byKey(const Key('device_preview_touch_input_switch')));
+      await tester.pumpAndSettle();
+      expect(gateway.simulation?['pointerKind'], 'touch');
+
+      await tester.tap(find.byKey(const Key('device_preview_touch_input_switch')));
+      await tester.pumpAndSettle();
+      expect(gateway.simulation, isNull);
+    });
+
     testWidgets('orientation toggle is disabled without a simulated screen',
         (tester) async {
       await pumpPanel(tester);

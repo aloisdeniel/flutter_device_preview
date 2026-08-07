@@ -24,6 +24,86 @@ import 'fit_transform.dart';
 /// Identity fast path: when [fit] is [FitTransform.identity] and the two
 /// device pixel ratios are equal, the exact same [datum] object is returned
 /// with zero allocation.
+/// Reports [datum] as coming from a [kind] pointer instead of the host's own.
+///
+/// This is what lets a mouse act as a finger: relabelled events take the
+/// framework's touch paths — `ScrollBehavior.dragDevices` excludes the mouse
+/// on desktop and the web, so dragging a list only scrolls once the pointer
+/// claims to be a touch — and `_synthesiseDownButtons` gives them the primary
+/// button a touch always carries.
+///
+/// Returns null for events the target kind could not produce, which the
+/// caller drops: a touchscreen reports nothing while nothing touches it, so
+/// hovers disappear rather than arriving as impossible hovering fingers.
+///
+/// Pointer *signals* (the scroll wheel, trackpad zoom) keep their real kind:
+/// they have no touch equivalent, and rewriting them would only break
+/// wheel scrolling. Data already of the requested kind is returned untouched.
+///
+/// Safe mid-stream: `PointerEventConverter` is stateless, so a pointer whose
+/// kind changes between two events cannot desynchronize it.
+ui.PointerData? retargetPointerKind(
+  ui.PointerData datum,
+  ui.PointerDeviceKind kind,
+) {
+  if (datum.kind == kind || datum.signalKind != null &&
+      datum.signalKind != ui.PointerSignalKind.none) {
+    return datum;
+  }
+  final bool hovers =
+      kind == ui.PointerDeviceKind.mouse ||
+      kind == ui.PointerDeviceKind.stylus ||
+      kind == ui.PointerDeviceKind.invertedStylus ||
+      kind == ui.PointerDeviceKind.trackpad;
+  if (!hovers && datum.change == ui.PointerChange.hover) {
+    return null;
+  }
+  return _copyWithKind(datum, kind);
+}
+
+ui.PointerData _copyWithKind(ui.PointerData datum, ui.PointerDeviceKind kind) {
+  return ui.PointerData(
+    viewId: datum.viewId,
+    embedderId: datum.embedderId,
+    timeStamp: datum.timeStamp,
+    change: datum.change,
+    kind: kind,
+    signalKind: datum.signalKind,
+    device: datum.device,
+    pointerIdentifier: datum.pointerIdentifier,
+    physicalX: datum.physicalX,
+    physicalY: datum.physicalY,
+    physicalDeltaX: datum.physicalDeltaX,
+    physicalDeltaY: datum.physicalDeltaY,
+    buttons: datum.buttons,
+    obscured: datum.obscured,
+    synthesized: datum.synthesized,
+    pressure: datum.pressure,
+    pressureMin: datum.pressureMin,
+    pressureMax: datum.pressureMax,
+    distance: datum.distance,
+    distanceMax: datum.distanceMax,
+    size: datum.size,
+    radiusMajor: datum.radiusMajor,
+    radiusMinor: datum.radiusMinor,
+    radiusMin: datum.radiusMin,
+    radiusMax: datum.radiusMax,
+    orientation: datum.orientation,
+    tilt: datum.tilt,
+    platformData: datum.platformData,
+    scrollDeltaX: datum.scrollDeltaX,
+    scrollDeltaY: datum.scrollDeltaY,
+    panX: datum.panX,
+    panY: datum.panY,
+    panDeltaX: datum.panDeltaX,
+    panDeltaY: datum.panDeltaY,
+    scale: datum.scale,
+    rotation: datum.rotation,
+    onRespond: ({bool allowPlatformDefault = false}) =>
+        datum.respond(allowPlatformDefault: allowPlatformDefault),
+  );
+}
+
 ui.PointerData rewritePointerData(
   ui.PointerData datum,
   FitTransform fit,

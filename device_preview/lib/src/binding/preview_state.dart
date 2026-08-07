@@ -26,6 +26,39 @@ class PreviewState {
   /// metric simulation is active.
   ui.VoidCallback? onHostMetricsChanged;
 
+  /// Invoked by the controller when [DeviceSimulation.pointerKind] changes.
+  ///
+  /// The binding uses it to send the host's mouse out of the window:
+  /// relabelled pointers stop producing hover events, so without this whatever
+  /// was hovered when the switch flipped would stay hovered forever.
+  ui.VoidCallback? onPointerKindChanged;
+
+  /// Host mouse devices seen in the window, and the last timestamp any pointer
+  /// carried — everything needed to synthesize a departure for them later.
+  ///
+  /// Fed from wherever host pointer data enters (the wrapper dispatcher's
+  /// trampoline in production, the binding's inject seam in tests), so the
+  /// two compositions share one view of which mice exist.
+  final Set<int> hostMouseDevices = <int>{};
+
+  /// The timestamp of the last host pointer datum seen.
+  Duration lastPointerTimeStamp = Duration.zero;
+
+  /// Records the mouse devices of [packet].
+  void observeHostPointers(ui.PointerDataPacket packet) {
+    for (final ui.PointerData datum in packet.data) {
+      lastPointerTimeStamp = datum.timeStamp;
+      if (datum.kind != ui.PointerDeviceKind.mouse) {
+        continue;
+      }
+      if (datum.change == ui.PointerChange.remove) {
+        hostMouseDevices.remove(datum.device);
+      } else {
+        hostMouseDevices.add(datum.device);
+      }
+    }
+  }
+
   /// Whether the active simulation simulates screen metrics.
   bool get simulatesMetrics => simulation?.simulatesMetrics ?? false;
 }

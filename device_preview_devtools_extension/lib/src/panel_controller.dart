@@ -280,6 +280,9 @@ class PanelController extends ChangeNotifier {
   /// Whether that system UI is currently shown (the default).
   bool get showSystemUi => simulation?['showSystemUi'] != false;
 
+  /// Whether the host's pointers are reported to the app as touches.
+  bool get simulatesTouch => simulation?['pointerKind'] == 'touch';
+
   /// The preset matching the active simulation's `presetId`, if any.
   PresetView? get activePreset {
     final id = simulation?['presetId'];
@@ -549,6 +552,16 @@ class PanelController extends ChangeNotifier {
   /// the brightness or text scale overrides do.
   Future<void> setShowSystemUi(bool value) =>
       _mutate('showSystemUi', value ? null : false);
+
+  /// Makes the host's mouse act as a finger, or restores it.
+  ///
+  /// What changes app-side: dragging scrolls (the mouse is not a drag device
+  /// on desktop or the web), gestures take their touch paths, and hovering
+  /// stops — a finger cannot hover. The scroll wheel keeps working.
+  ///
+  /// Not a metric field: the choice survives switching device.
+  Future<void> setSimulatesTouch(bool value) =>
+      _mutate('pointerKind', value ? 'touch' : null);
 
   /// Sets or clears (`null`) the platform brightness (`'light'`/`'dark'`).
   Future<void> setBrightness(String? brightness) =>

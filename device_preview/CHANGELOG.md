@@ -11,6 +11,11 @@
   plain device-pixel-ratio root transform and miss under scale-to-fit.
 - `DeviceSimulation.showSystemUi` shows or hides those bars without touching
   the safe areas they occupy.
+- `DeviceSimulation.pointerKind` reports the host's pointers as another kind —
+  `PointerDeviceKind.touch` makes a mouse act as a finger, so dragging scrolls
+  (the mouse is not a drag device on desktop or the web). Hovers are dropped
+  rather than relabelled, pointer signals (wheel, trackpad) keep their real
+  kind, and the host's hover state is released when the mode changes.
 - `SvgDrawing.paint(currentColor:)` tints every shape that inherited its fill,
   which is what makes one drawing serve as a tintable icon set.
 - Device frames: `DeviceSimulation.frame` (`DeviceFrame`) carries the screen

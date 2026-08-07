@@ -33,6 +33,7 @@ Control it from **Flutter DevTools**, from **Dart**, or from your **tests**.
 | **Target platform** | Material/Cupertino behaviour across iOS, Android, macOS, Windows and Linux (debug builds only). |
 | **Device frame** | The real device drawn around your app: rounded screen corners clip it, the body is painted behind it. Artwork ships with the DevTools catalog, not in your app. |
 | **System UI** | A simulated status bar and gesture pill, laid out from the device's safe areas and tinted from your app's `SystemUiOverlayStyle` — so a status bar style is visible while you write it. Toggle it off to inspect a screen bare. |
+| **Touch input** | Your mouse reported to the app as a finger, so dragging scrolls a list the way a thumb does and gestures take their touch paths. |
 
 Simulation is active in debug and profile builds and completely off in release
 builds, where the package adds no behaviour of any kind.
@@ -184,6 +185,23 @@ either way.
 The SVG subset renderer used to draw all of this is embedded,
 dependency-free, and exported on its own
 (`package:device_preview/svg.dart`) if you need it.
+
+## Touch input
+
+On a desktop or the web the host's mouse is not a drag device — Flutter's
+`ScrollBehavior.dragDevices` excludes it — so dragging a list in a phone
+preview does nothing, which is exactly the interaction you wanted to try.
+
+```dart
+await c.update((s) => s.copyWith(pointerKind: PointerDeviceKind.touch));
+```
+
+Every pointer is then reported to the app as a finger: drags scroll,
+gestures take their touch paths, text selection follows the touch rules, and
+hovering stops — a finger cannot hover, so hover events are dropped rather
+than relabelled, and whatever the mouse was hovering is released. The scroll
+wheel and trackpad gestures keep their real kind, so wheel scrolling still
+works. The panel has a **Touch input** switch for it.
 
 ## Status
 

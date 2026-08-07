@@ -80,6 +80,7 @@ abstract class DevicePreviewController implements Listenable {
 /// | platformBrightness | `handlePlatformBrightnessChanged()` |
 /// | locales | `handleLocaleChanged()` |
 /// | accessibility | `handleAccessibilityFeaturesChanged()` |
+/// | pointerKind | dismiss the host's hover (relabelled pointers cannot hover) |
 /// | targetPlatform | debug-only override + `reassembleApplication()` |
 class DevicePreviewControllerImpl implements DevicePreviewController {
   /// Creates a controller over the shared [state].
@@ -407,6 +408,8 @@ class DevicePreviewControllerImpl implements DevicePreviewController {
         previous?.accessibility != next?.accessibility;
     final bool platformChanged =
         previous?.targetPlatform != next?.targetPlatform;
+    final bool pointerKindChanged =
+        previous?.pointerKind != next?.pointerKind;
 
     // Commit the rendered state (read live by the wrappers) and the reported
     // state ([simulation] / listeners) together, before any asynchronous
@@ -430,6 +433,11 @@ class DevicePreviewControllerImpl implements DevicePreviewController {
       }
       if (accessibilityChanged) {
         _handleAccessibilityFeaturesChanged();
+      }
+      if (pointerKindChanged) {
+        // Relabelled pointers stop hovering, so send the host's mouse away
+        // before anything it was hovering stays highlighted forever.
+        state.onPointerKindChanged?.call();
       }
       if (platformChanged) {
         await _applyTargetPlatformOverride(next?.targetPlatform);

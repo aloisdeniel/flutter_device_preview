@@ -317,6 +317,21 @@ void main() {
       expect(controller!.showSystemUi, isTrue);
     });
 
+    test('the touch input toggle is independent of the device', () async {
+      await ready();
+      expect(controller!.simulatesTouch, isFalse);
+
+      await controller!.setSimulatesTouch(true);
+      expect(gateway.simulation?['pointerKind'], 'touch');
+      expect(controller!.simulatesTouch, isTrue);
+
+      await controller!.selectPreset(const PresetView(testPhonePresetJson));
+      expect(gateway.simulation?['pointerKind'], 'touch');
+
+      await controller!.setSimulatesTouch(false);
+      expect(gateway.simulation, isNot(contains('pointerKind')));
+    });
+
     test('every built-in catalog device selects without error', () async {
       await ready();
       for (final preset in kBuiltInPresets) {
