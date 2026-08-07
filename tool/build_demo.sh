@@ -2,7 +2,8 @@
 #
 # Builds the interactive demo of the landing page:
 #
-#   * `docs/demo/`               — the counter example (`example/lib/counter.dart`)
+#   * `docs/demo/`               — the two demo apps (`example/lib/demo.dart`:
+#                                  counter + showcase, chosen by `?app=`)
 #                                  compiled for the web,
 #   * `docs/device_catalog.json` — the device catalog the page's panel pushes
 #                                  to it.
@@ -22,7 +23,7 @@ echo "==> Generating docs/device_catalog.json"
 (cd "$root" && dart tool/generate_demo_catalog.dart)
 
 echo "==> Building the demo app (release, web)"
-(cd "$example" && flutter build web --release --target lib/counter.dart)
+(cd "$example" && flutter build web --release --target lib/demo.dart)
 
 echo "==> Copying to docs/demo"
 rm -rf "$out"
