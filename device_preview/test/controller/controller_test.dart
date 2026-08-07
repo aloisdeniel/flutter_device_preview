@@ -193,6 +193,40 @@ void main() {
     });
   });
 
+  group('setOrientation padding (preset-less rotation)', () {
+    test('the documented rotation rule and its inverse round-trip the '
+        'paddings', () async {
+      final ControllerHarness harness = ControllerHarness();
+      addTearDown(harness.dispose);
+      const EdgeInsets portrait = EdgeInsets.only(top: 47, bottom: 34);
+      await harness.controller.apply(
+        const DeviceSimulation(
+          screenSize: ui.Size(375, 667),
+          padding: portrait,
+          viewPadding: portrait,
+        ),
+      );
+
+      await harness.controller.setOrientation(Orientation.landscape);
+      const EdgeInsets landscape =
+          EdgeInsets.only(left: 47, right: 47, bottom: 34);
+      expect(harness.controller.simulation!.padding, landscape);
+      expect(harness.controller.simulation!.viewPadding, landscape);
+      expect(
+        harness.controller.simulation!.screenSize,
+        const ui.Size(667, 375),
+      );
+
+      await harness.controller.setOrientation(Orientation.portrait);
+      expect(harness.controller.simulation!.padding, portrait);
+      expect(harness.controller.simulation!.viewPadding, portrait);
+      expect(
+        harness.controller.simulation!.screenSize,
+        const ui.Size(375, 667),
+      );
+    });
+  });
+
   group('setOrientation display features (preset-less rotation)', () {
     const SimulatedDisplayFeature verticalHinge = SimulatedDisplayFeature(
       // Vertical hinge on an 800×1104 portrait screen.
@@ -278,6 +312,47 @@ void main() {
       final DeviceSimulation? result = harness.controller.simulation;
       expect(result!.presetId, 'apple-iphone-se-3');
       expect(result.platformBrightness, ui.Brightness.dark);
+    });
+
+    test('applyPreset preserves touchInput and showSystemUi — the DevTools '
+        'panel treats both as device-switch-surviving overrides', () async {
+      final ControllerHarness harness = ControllerHarness();
+      addTearDown(harness.dispose);
+      await harness.controller.apply(
+        const DeviceSimulation(touchInput: false, showSystemUi: false),
+      );
+      await harness.controller.applyPreset(DevicePresets.iPhoneSe3);
+      final DeviceSimulation? result = harness.controller.simulation;
+      expect(result!.touchInput, false);
+      expect(result.showSystemUi, false);
+    });
+
+    test('setOrientation on a preset simulation keeps wire-pushed frame and '
+        'systemUi artwork the local preset does not carry', () async {
+      final ControllerHarness harness = ControllerHarness();
+      addTearDown(harness.dispose);
+      // What the DevTools panel pushes: a built-in presetId plus catalog
+      // artwork that only exists on the wire, never in DevicePresets.
+      const DeviceFrame frame = DeviceFrame(
+        size: ui.Size(120, 220),
+        screenOffset: ui.Offset(10, 10),
+        screenPath: 'M0,0 H100 V200 H0 Z',
+        body: '<svg viewBox="0 0 120 220"/>',
+      );
+      const SystemUiSimulation systemUi = SystemUiSimulation(
+        statusBar: SystemUiBar(),
+      );
+      await harness.controller.apply(
+        DevicePresets.iPhoneSe3
+            .resolve()
+            .copyWith(frame: frame, systemUi: systemUi),
+      );
+      await harness.controller.setOrientation(Orientation.landscape);
+      final DeviceSimulation? result = harness.controller.simulation;
+      expect(result!.orientation, Orientation.landscape);
+      expect(result.presetId, 'apple-iphone-se-3');
+      expect(result.frame, frame);
+      expect(result.systemUi, systemUi);
     });
   });
 }

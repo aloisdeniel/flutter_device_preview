@@ -145,6 +145,24 @@ void main() {
       expect(view.systemGestureInsets.bottom, 16);
     });
 
+    test('the keyboard consumes the bottom safe area, like a real engine', () {
+      state.simulation = metricSimulation(
+        padding: const EdgeInsets.only(top: 20, bottom: 17),
+      );
+      state.fit = const FitTransform(scale: 0.5, offset: ui.Offset.zero);
+      // Real keyboard: hostInsetPhysical=300, realDPR=3, fit.scale=0.5 →
+      // simulated inset 400 physical, far above the 34-physical bottom
+      // padding: padding.bottom collapses to 0 while the keyboard shows.
+      host.viewInsets = const StubViewPadding(bottom: 300);
+      expect(view.padding.bottom, 0);
+      expect(view.padding.top, 40);
+      // viewPadding is NOT reduced — that is exactly the engine contract.
+      expect(view.viewPadding.bottom, 34);
+      // Keyboard dismissed: the safe area comes back.
+      host.viewInsets = const StubViewPadding();
+      expect(view.padding.bottom, 34);
+    });
+
     test('viewInsets map the real keyboard inset into simulated space', () {
       // hostInsetPhysical=300, realDPR=3, fit.scale=0.5, simDPR=2:
       // simInsetLogical = 300 / 3 / 0.5 = 200 → 200 × 2 = 400 physical.

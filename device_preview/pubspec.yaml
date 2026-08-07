@@ -4,7 +4,7 @@ description: >-
   metrics, safe areas, locale, brightness, text scale, accessibility flags,
   target platform) at the engine-abstraction level. No in-app UI — driven
   programmatically and by a DevTools extension.
-version: 3.0.0-dev.2
+version: 3.0.0-prerelease1
 homepage: https://github.com/aloisdeniel/flutter_device_preview
 repository: https://github.com/aloisdeniel/flutter_device_preview
 issue_tracker: https://github.com/aloisdeniel/flutter_device_preview/issues
@@ -21,3 +21,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+  # For the VM-service e2e smoke test (test/e2e/), which connects back to the
+  # test process's own VM service and exercises the real service-extension
+  # glue over the wire.
+  vm_service: ^15.0.0

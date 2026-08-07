@@ -1,8 +1,5 @@
 # device_preview
 
-> **Work in progress** — version 3 is a from-scratch rebuild. APIs described
-> here may change before the first stable release.
-
 Switch your **running** Flutter app to another device — an old 320pt phone, a
 tablet in landscape, a notched display, a half-width desktop window —
 instantly, with no rebuild and no simulator.
@@ -210,12 +207,6 @@ touch rules, and hovering stops — a finger cannot hover, so hover events are
 dropped rather than relabelled, and whatever the mouse was hovering is
 released. The scroll wheel and trackpad gestures keep their real kind, so
 wheel scrolling still works. The panel has an **Auto / On / Off** row for it.
-
-## Status
-
-Everything described above is implemented and covered by tests. What remains
-before a stable release is field testing across platforms and API feedback —
-please open an issue if something doesn't fit your workflow.
 
 ## How it works
 

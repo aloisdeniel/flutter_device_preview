@@ -274,7 +274,14 @@ class _Flattener {
     // handled at the leaf.
     final ui.Color? color;
     bool inheritsColor = parent.inheritsColor;
-    if (rawFill == null || rawFill == 'currentColor') {
+    if (rawFill == 'currentColor') {
+      // CSS semantics: `currentColor` resolves to the `color` property — the
+      // paint-time tint here — not to the inherited fill. It must follow the
+      // tint even under a group with an explicit (or `none`) fill; black is
+      // the spec default for `color` when no tint is supplied.
+      color = parent.color ?? const ui.Color(0xFF000000);
+      inheritsColor = true;
+    } else if (rawFill == null) {
       color = parent.color;
     } else if (rawFill == 'none' || rawFill == 'transparent') {
       color = null;

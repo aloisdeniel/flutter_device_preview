@@ -17,8 +17,9 @@ import '../model/simulation.dart';
 ///
 /// * bounds = `(fit.offset + content.topLeft × fit.scale) × realDPR &
 ///   content.size × fit.scale × realDPR`
-/// * pixelRatio = `simDPR / (fit.scale × realDPR)` → exactly
-///   `content.size × simDPR` pixels.
+/// * pixelRatio = `simDPR / (fit.scale × realDPR)` →
+///   `content.size × simDPR` pixels, within one pixel per side (the engine
+///   ceils the raster size, so float error can add a pixel).
 ///
 /// Entirely failure-isolated: any error returns a protocol error envelope
 /// and can never affect the simulation core. Advertised via

@@ -45,7 +45,8 @@ abstract class DevicePreviewController implements Listenable {
 
   /// Builds a simulation from [preset] and applies it, preserving active
   /// non-metric overrides (locale, brightness, text scale, accessibility,
-  /// platform) unless [resetOverrides] is true.
+  /// platform, touch input, system UI visibility) unless [resetOverrides] is
+  /// true.
   Future<void> applyPreset(
     DevicePreset preset, {
     Orientation orientation = Orientation.portrait,
@@ -248,6 +249,9 @@ class DevicePreviewControllerImpl implements DevicePreviewController {
     DeviceSimulation next = preset.resolve(orientation: orientation);
     final DeviceSimulation? current = state.simulation;
     if (!resetOverrides && current != null) {
+      // The override set mirrors the DevTools panel's non-metric keys
+      // (kMetricSimulationKeys): both writers of the protocol must agree on
+      // which fields survive a device switch.
       next = next.copyWith(
         locales: current.locales,
         platformBrightness: current.platformBrightness,
@@ -255,6 +259,8 @@ class DevicePreviewControllerImpl implements DevicePreviewController {
         accessibility: current.accessibility,
         alwaysUse24HourFormat: current.alwaysUse24HourFormat,
         targetPlatform: current.targetPlatform,
+        touchInput: current.touchInput,
+        showSystemUi: current.showSystemUi,
       );
     }
     return next;
@@ -275,11 +281,16 @@ class DevicePreviewControllerImpl implements DevicePreviewController {
         final DevicePreset? preset = _presetById(presetId);
         if (preset != null) {
           return _applyNow(
+            // Rotation is not a device switch: the frame is described in
+            // portrait and rotated at paint time, so the active artwork must
+            // survive even when the local preset carries none (DevTools
+            // pushes catalog devices whose artwork only exists on the wire,
+            // under the same presetId as the artwork-free built-in preset).
             _resolvePresetSimulation(
               preset,
               orientation: orientation,
               resetOverrides: false,
-            ),
+            ).copyWith(frame: current.frame, systemUi: current.systemUi),
             source: 'programmatic',
           );
         }

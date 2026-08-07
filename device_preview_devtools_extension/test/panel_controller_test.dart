@@ -193,6 +193,92 @@ void main() {
       expect(stored, isNotNull);
       expect(jsonDecode(stored!), {'textScaleFactor': 2.0});
     });
+
+    test('the stash does not leak into a different app across a disconnect',
+        () async {
+      await primeWithSimulation();
+      controller!.keepAcrossRestarts = true;
+
+      // Full disconnect, then the same panel connects to a DIFFERENT app
+      // (new service URI) that has no stash of its own.
+      gateway.connectedNotifier.value = false;
+      expect(controller!.status, PanelStatus.disconnected);
+      gateway.serviceUri = 'ws://127.0.0.1:8888/other-app=/';
+      gateway.simulation = null;
+      gateway.calls.clear();
+      gateway.connectedNotifier.value = true;
+      gateway.emit('device_preview.ready', {'protocolVersion': 3});
+      await pumpEventQueue();
+
+      // App A's simulation must not be pushed into app B.
+      expect(gateway.callsTo('ext.device_preview.setSimulation'), isEmpty);
+      expect(controller!.status, PanelStatus.ready);
+      expect(controller!.simulation, isNull);
+    });
+
+    test('reconnecting to the same app still restores from storage', () async {
+      await primeWithSimulation();
+      controller!.keepAcrossRestarts = true;
+
+      // Disconnect and reconnect with the SAME service URI: the per-URI
+      // stored stash applies even though the in-memory copy was dropped.
+      gateway.connectedNotifier.value = false;
+      gateway.simulation = null;
+      gateway.calls.clear();
+      gateway.connectedNotifier.value = true;
+      gateway.emit('device_preview.ready', {'protocolVersion': 3});
+      await pumpEventQueue();
+
+      final setCalls = gateway.callsTo('ext.device_preview.setSimulation');
+      expect(setCalls, hasLength(1));
+      expect(setCalls.single.args?['source'], 'restore');
+      expect(gateway.simulation, {'textScaleFactor': 2.0});
+    });
+  });
+
+  group('mutation errors', () {
+    Future<void> ready() async {
+      gateway = FakeGateway(connected: true, available: true);
+      createController();
+      await pumpEventQueue();
+      expect(controller!.status, PanelStatus.ready);
+    }
+
+    test('an invalidParams rejection does not flip the panel to paused and '
+        're-fetches the app state', () async {
+      await ready();
+      gateway.calls.clear();
+      gateway.throwOn['ext.device_preview.setSimulation'] =
+          const GatewayException(
+        method: 'ext.device_preview.setSimulation',
+        message: 'locales[0]: too many subtags',
+        isRpcError: true,
+        code: -32602, // ServiceExtensionResponse.invalidParams
+      );
+      await controller!.setTextScaleFactor(2.0);
+      await pumpEventQueue();
+
+      // The isolate is running — it merely refused the payload.
+      expect(controller!.status, PanelStatus.ready);
+      expect(gateway.notifications, hasLength(1));
+      // The panel re-fetched the app's truth instead of keeping the refused
+      // value.
+      expect(gateway.callsTo('ext.device_preview.getState'), isNotEmpty);
+      expect(controller!.simulation, isNull);
+    });
+
+    test('other RPC errors still flip the panel to paused', () async {
+      await ready();
+      gateway.throwOn['ext.device_preview.setSimulation'] =
+          const GatewayException(
+        method: 'ext.device_preview.setSimulation',
+        message: 'isolate is paused',
+        isRpcError: true,
+        code: 105,
+      );
+      await controller!.setTextScaleFactor(2.0);
+      expect(controller!.status, PanelStatus.paused);
+    });
   });
 
   group('echo suppression', () {
@@ -271,6 +357,30 @@ void main() {
           'bottom': 10.0,
         },
       });
+    });
+
+    test('landscape viewPadding falls back to landscapePadding like '
+        'DevicePreset.resolve app-side', () async {
+      gateway = FakeGateway(connected: true, available: true);
+      gateway.presetsJson = [testNotchedPresetJson];
+      createController();
+      await pumpEventQueue();
+
+      await controller!
+          .selectPreset(const PresetView(testNotchedPresetJson));
+      await controller!.setOrientation('landscape');
+
+      // The spec declares landscapePadding but no landscapeViewPadding: the
+      // panel must send the spec's landscape values, not a rotated portrait
+      // viewPadding (which would report bottom: 34 instead of 21).
+      const landscape = {
+        'left': 59.0,
+        'top': 0.0,
+        'right': 59.0,
+        'bottom': 21.0,
+      };
+      expect(gateway.simulation?['padding'], landscape);
+      expect(gateway.simulation?['viewPadding'], landscape);
     });
 
     test('selectPreset pushes the frame artwork', () async {

@@ -58,8 +58,8 @@ repo/
     extension/
       devtools/
         config.yaml
-        build/                             # committed pre-compiled web output
-        .pubignore                         # "!build" (build/ is gitignored but pub-included)
+        build/                             # committed pre-compiled web output (.gitignore re-includes it)
+        .pubignore                         # "!build" (pub-included despite the global build/ ignore)
     example/
     test/
 
@@ -517,7 +517,7 @@ Debug diagnostic: applying a brightness simulation while `debugBrightnessOverrid
 
 All registered via raw `developer.registerExtension` (own `ext.device_preview.` prefix — never `ext.flutter.`), inside `if (!kReleaseMode)` so release builds tree-shake them. All request params are strings (VM contract): complex payloads travel as one JSON-encoded string param. Handlers never throw: failures return `{"error": {"code", "message"}}` inside a success response; only malformed JSON returns `ServiceExtensionResponse.error(invalidParams, …)`. Target platform is carried in `simulation.targetPlatform` and applied app-side — DevTools never calls `ext.flutter.platformOverride` (one writer).
 
-`protocolVersion` is **2**: version 1 shipped without `simulation.frame` (the screen outline and body artwork), without `simulation.systemUi` (the decorative status bar and gesture pill) and without the `frame` capability flag. All are additive — a version-1 panel talking to a version-2 app simply never sends them.
+`protocolVersion` is **3** (the constant lives in `DevicePreviewProtocol.protocolVersion`; this document mirrors it): version 1 shipped without `simulation.frame` (the screen outline and body artwork), without `simulation.systemUi` (the decorative status bar and gesture pill) and without the `frame` capability flag; version 3 replaced `simulation.pointerKind` with the tri-state `simulation.touchInput` plus `simulation.deviceKind` (an unset `touchInput` follows the simulated device instead of meaning "off"). The additions are additive — an older panel talking to a newer app simply never sends them.
 
 ### Methods
 
@@ -533,7 +533,7 @@ All registered via raw `developer.registerExtension` (own `ext.device_preview.` 
 
 ```json
 {
-  "protocolVersion": 2,
+  "protocolVersion": 3,
   "enabled": true,
   "simulation": { /* DeviceSimulation.toJson(), or null when passing through */ },
   "realDevice": {
@@ -585,7 +585,7 @@ All registered via raw `developer.registerExtension` (own `ext.device_preview.` 
 
 | Event kind | Data | When |
 |---|---|---|
-| `device_preview.ready` | `{"protocolVersion": 2}` | Once from `initServiceExtensions` — i.e. again after every hot restart. The DevTools re-push trigger. |
+| `device_preview.ready` | `{"protocolVersion": 3}` | Once from `initServiceExtensions` — i.e. again after every hot restart. The DevTools re-push trigger. |
 | `device_preview.stateChanged` | `{"simulation": {…} \| null, "fit": {…}, "source": "programmatic" \| "devtools" \| "restore", "requestId": "<echoed if provided>"}` | After every successful apply/reset, whatever the source. `requestId` echo lets the panel suppress its own echoes. |
 | `device_preview.presetsChanged` | `{"count": 17}` | On `registerPreset` — panel refetches `listPresets`. |
 

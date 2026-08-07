@@ -6,6 +6,14 @@
 .pub/
 build/
 
+# EXCEPT the pre-compiled DevTools extension: it ships inside the published
+# device_preview package (extension/devtools/build/ served by the DevTools
+# server), so the repository must carry it — a fresh checkout publishing
+# without it would ship a broken DevTools panel. Rebuild with
+# tool/build_devtools_extension.sh; tool/check_release.sh guards its presence.
+!device_preview/extension/devtools/build/
+!device_preview/extension/devtools/build/**
+
 # If you're building an application, you may want to check-in your pubspec.lock
 pubspec.lock
 

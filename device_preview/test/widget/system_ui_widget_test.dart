@@ -5,6 +5,7 @@ import 'dart:ui' as ui;
 import 'package:device_preview/device_preview.dart';
 import 'package:device_preview/presets.dart';
 import 'package:device_preview/src/widgets/system_ui_painter.dart';
+import 'package:flutter/foundation.dart' show FlutterExceptionHandler;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/rendering.dart';
@@ -43,6 +44,7 @@ void main() {
     late _Recorder recorder;
 
     setUp(() => recorder = _Recorder());
+    tearDown(() => recorder.dispose());
 
     void paint({
       SystemUiSimulation systemUi = kSystemUi,
@@ -265,11 +267,15 @@ RenderDevicePreviewFrame _frame() {
 /// filled with.
 List<int> _paintedColors(RenderDevicePreviewFrame render) {
   final _Recorder recorder = _Recorder();
-  render.paint(
-    _RecordingContext(ContainerLayer(), render.paintBounds, recorder.canvas),
-    Offset.zero,
-  );
-  return recorder.colors;
+  try {
+    render.paint(
+      _RecordingContext(ContainerLayer(), render.paintBounds, recorder.canvas),
+      Offset.zero,
+    );
+    return recorder.colors;
+  } finally {
+    recorder.dispose();
+  }
 }
 
 Object? _takeError() {
@@ -281,14 +287,24 @@ Object? _takeError() {
 FlutterErrorDetails? _lastError;
 
 /// Records `drawPath` / `drawRect` calls, with the canvas transform applied.
+///
+/// Also intercepts [FlutterError.onError] (read back through `_takeError`);
+/// [dispose] restores the previous handler so errors reported after the
+/// recorder's scope are not silently swallowed for the rest of the run.
 class _Recorder {
   _Recorder() {
+    _previousOnError = FlutterError.onError;
     FlutterError.onError = (FlutterErrorDetails details) => _lastError = details;
     _canvas = _RecordingCanvas(this);
   }
 
   late final ui.Canvas _canvas;
   final ui.PictureRecorder _recorder = ui.PictureRecorder();
+  FlutterExceptionHandler? _previousOnError;
+
+  void dispose() {
+    FlutterError.onError = _previousOnError;
+  }
 
   ui.Canvas get canvas => _canvas;
 

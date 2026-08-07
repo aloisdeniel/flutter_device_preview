@@ -390,6 +390,7 @@ class _PresetPickerButton extends StatelessWidget {
           builder: (context) => _PresetPickerDialog(
             presets: controller.presets,
             activePresetId: controller.simulation?['presetId'] as String?,
+            hasSimulatedScreen: controller.hasSimulatedScreen,
           ),
         );
         if (selection == null) return;
@@ -415,10 +416,18 @@ class _PresetSelection {
 
 /// Searchable preset list, grouped by device kind then platform.
 class _PresetPickerDialog extends StatefulWidget {
-  const _PresetPickerDialog({required this.presets, this.activePresetId});
+  const _PresetPickerDialog({
+    required this.presets,
+    this.activePresetId,
+    this.hasSimulatedScreen = false,
+  });
 
   final List<PresetView> presets;
   final String? activePresetId;
+
+  /// Whether any screen simulation is active — a Custom-metrics simulation
+  /// has no presetId yet is not "Real device".
+  final bool hasSimulatedScreen;
 
   @override
   State<_PresetPickerDialog> createState() => _PresetPickerDialogState();
@@ -501,7 +510,7 @@ class _PresetPickerDialogState extends State<_PresetPickerDialog> {
                     subtitle: const Text(
                       'Clear the screen simulation, keep other overrides',
                     ),
-                    selected: widget.activePresetId == null,
+                    selected: !widget.hasSimulatedScreen,
                     onTap: () => Navigator.of(context)
                         .pop(const _PresetSelection.realDevice()),
                   ),
@@ -832,8 +841,11 @@ const List<String> _commonLocales = [
   'hi-IN',
 ];
 
+// At most two extra subtags: the app-side codec (`decodeLocale`) accepts
+// `language[-Script][-COUNTRY]` and rejects longer tags with invalidParams,
+// so the panel must not accept what the app will refuse.
 final RegExp _languageTagPattern =
-    RegExp(r'^[A-Za-z]{2,3}([-_][A-Za-z0-9]{2,8})*$');
+    RegExp(r'^[A-Za-z]{2,3}([-_][A-Za-z0-9]{2,8}){0,2}$');
 
 class _LocaleSection extends StatefulWidget {
   const _LocaleSection({required this.controller});

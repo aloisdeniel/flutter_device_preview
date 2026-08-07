@@ -61,18 +61,26 @@ mixin DevicePreviewBindingMixin
   static bool _latchedEnabled = !kReleaseMode;
   static DeviceSimulation? _latchedInitialSimulation;
 
+  static const Object _unsetInitialSimulation = Object();
+
   /// Latches the configuration consumed by the next binding constructed
   /// with this mixin. Must be called before the binding is constructed;
   /// [DevicePreview.enable] does this automatically.
   ///
   /// [initialSimulation] is applied before the first frame, which is how
   /// golden and CI scenarios start under a given device without DevTools.
+  /// Sentinel-based: omitting it keeps any previously latched simulation —
+  /// so `latchConfiguration(initialSimulation: ...)` followed by
+  /// [DevicePreview.enable] (which re-latches [enabled]) works — while
+  /// passing `null` explicitly clears the latch.
   static void latchConfiguration({
     bool enabled = !kReleaseMode,
-    DeviceSimulation? initialSimulation,
+    Object? initialSimulation = _unsetInitialSimulation,
   }) {
     _latchedEnabled = enabled;
-    _latchedInitialSimulation = initialSimulation;
+    if (!identical(initialSimulation, _unsetInitialSimulation)) {
+      _latchedInitialSimulation = initialSimulation as DeviceSimulation?;
+    }
   }
 
   /// Whether simulation machinery is installed. Latched before init and

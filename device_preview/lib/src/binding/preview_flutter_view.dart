@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/painting.dart';
@@ -98,9 +99,21 @@ class PreviewFlutterView implements ui.FlutterView {
     if (simulation == null) {
       return hostView.padding;
     }
-    return PreviewViewPadding.fromEdgeInsets(
+    // Like the engines, the parts of the safe area consumed by view insets
+    // are removed: with the (real) keyboard open, `MediaQuery.padding.bottom`
+    // collapses to 0 on a real device and must do so under simulation too.
+    final ui.ViewPadding base = PreviewViewPadding.fromEdgeInsets(
       simulation.padding ?? EdgeInsets.zero,
       devicePixelRatio,
+    );
+    final ui.ViewPadding insets = viewInsets;
+    double reduce(double side, double inset) =>
+        inset <= 0 ? side : math.max(0, side - inset);
+    return PreviewViewPadding(
+      left: reduce(base.left, insets.left),
+      top: reduce(base.top, insets.top),
+      right: reduce(base.right, insets.right),
+      bottom: reduce(base.bottom, insets.bottom),
     );
   }
 

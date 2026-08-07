@@ -63,8 +63,13 @@ class FakeGateway implements DevicePreviewGateway {
   List<CallRecord> callsTo(String method) =>
       calls.where((c) => c.method == method).toList();
 
+  /// Whether the app renders wire-pushed frame artwork.
+  bool canFrame = true;
+
+  // Keep in sync with `DevicePreviewProtocol.protocolVersion` app-side —
+  // the fake must advertise what a real 3.0 app sends.
   Map<String, Object?> stateShape() => <String, Object?>{
-        'protocolVersion': 1,
+        'protocolVersion': 3,
         'enabled': enabled,
         'simulation': simulation == null
             ? null
@@ -90,6 +95,7 @@ class FakeGateway implements DevicePreviewGateway {
         'capabilities': <String, Object?>{
           'targetPlatform': canTargetPlatform,
           'screenshot': canScreenshot,
+          'frame': canFrame,
         },
       };
 
@@ -210,6 +216,29 @@ const Map<String, Object?> testFramedPresetJson = <String, Object?>{
           '<rect width="100" height="4" fill="currentColor"/></svg>',
       'bottomInset': 6.0,
     },
+  },
+};
+
+/// A preset declaring landscape padding but no landscape view padding, like
+/// most of the generated device catalog.
+const Map<String, Object?> testNotchedPresetJson = <String, Object?>{
+  'id': 'test-notched',
+  'name': 'Test Notched Phone',
+  'platform': 'iOS',
+  'kind': 'phone',
+  'portraitSize': <String, Object?>{'width': 393.0, 'height': 852.0},
+  'devicePixelRatio': 3.0,
+  'portraitPadding': <String, Object?>{
+    'left': 0.0,
+    'top': 59.0,
+    'right': 0.0,
+    'bottom': 34.0,
+  },
+  'landscapePadding': <String, Object?>{
+    'left': 59.0,
+    'top': 0.0,
+    'right': 59.0,
+    'bottom': 21.0,
   },
 };
 

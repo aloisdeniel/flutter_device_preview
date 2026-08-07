@@ -1,5 +1,45 @@
 # Changelog
 
+## 3.0.0-prerelease1
+
+The 3.0 release is a from-scratch rebuild: a custom `WidgetsBinding` that
+simulates device characteristics (screen metrics, safe areas, locale,
+brightness, text scale, accessibility flags, target platform) at the
+engine-abstraction level. There is no in-app UI — the simulation is driven
+programmatically through `DevicePreview.controller` and from the bundled
+Flutter DevTools extension. See the README for the full feature tour and the
+2.x migration notes, and the `3.0.0-dev.*` entries below for the rebuild's
+incremental history.
+
+Changes since 3.0.0-dev.2:
+
+- `DevicePreviewBindingMixin.latchConfiguration` is now sentinel-based:
+  `DevicePreview.enable()` after `latchConfiguration(initialSimulation: ...)`
+  no longer silently discards the latched simulation (the documented
+  golden/CI startup sequence).
+- `setOrientation` keeps the active `frame` and `systemUi` artwork when the
+  simulation was pushed from DevTools (rotation is not a device switch).
+- `applyPreset` and `setOrientation` now preserve `touchInput` and
+  `showSystemUi`, matching the DevTools panel's definition of
+  device-switch-surviving overrides.
+- Simulated `MediaQuery.padding` now collapses where the real keyboard's
+  `viewInsets` overlap it, matching real engine behavior.
+- SVG artwork: `fill="currentColor"` now follows the paint-time tint (the
+  app's `SystemUiOverlayStyle`) even nested under groups with an explicit or
+  `none` fill, per CSS `currentColor` semantics.
+- DevTools panel: landscape `viewPadding` now falls back through
+  `landscapePadding` exactly like `DevicePreset.resolve`, so DevTools and
+  `applyPreset` produce identical metrics for every catalog device.
+- DevTools panel: a rejected payload (`invalidParams`) no longer flips the
+  panel to the "isolate paused" empty state; the panel re-fetches the app's
+  actual state instead.
+- DevTools panel: the in-memory simulation stash is cleared on disconnect, so
+  a previous app's simulation is never pushed into a different app on
+  reconnect (the persisted stash stays keyed per VM-service URI).
+- New test layers: a VM-service e2e smoke over the real service-extension
+  glue (`tool/check_release.sh` runs it), a production-composition
+  host-resize seam test, and screenshot capture tests.
+
 ## 3.0.0-dev.2
 
 - Simulated system UI: `DeviceSimulation.systemUi` (`SystemUiSimulation`)

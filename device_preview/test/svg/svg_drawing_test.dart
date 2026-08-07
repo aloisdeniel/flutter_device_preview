@@ -203,6 +203,31 @@ void main() {
       expect(drawing.shapes.single.color, const ui.Color(0xFFFF0000));
     });
 
+    test('currentColor follows the paint-time tint regardless of the '
+        'inherited fill', () {
+      final SvgDrawing drawing = SvgDrawing.parse(
+        document(
+          // CSS: currentColor resolves to the `color` property (the tint),
+          // not to the fill an element would inherit.
+          '<rect width="1" height="1" fill="currentColor"/>'
+          '<g fill="#ff0000"><rect width="1" height="1" '
+          'fill="currentColor"/></g>'
+          '<g fill="none"><rect width="1" height="1" '
+          'fill="currentColor"/></g>',
+        ),
+      );
+      expect(drawing.shapes, hasLength(3));
+      expect(
+        drawing.shapes.map((SvgShape s) => s.followsCurrentColor),
+        everyElement(isTrue),
+      );
+      // Under fill="none" the spec default for `color` (black) applies when
+      // no tint is supplied; under an explicit group fill the untinted
+      // fallback keeps the inherited color.
+      expect(drawing.shapes[1].color, const ui.Color(0xFFFF0000));
+      expect(drawing.shapes[2].color, const ui.Color(0xFF000000));
+    });
+
     test('opacity and fill-opacity multiply into the alpha channel', () {
       final SvgDrawing drawing = SvgDrawing.parse(
         document(

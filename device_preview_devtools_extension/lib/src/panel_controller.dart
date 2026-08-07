@@ -245,6 +245,10 @@ class PanelController extends ChangeNotifier {
 
   static const String _keepStorageKey = 'device_preview.keepAcrossRestarts';
 
+  /// `ServiceExtensionResponse.invalidParams`: the app-side glue rejected the
+  /// request payload. The only RPC error that proves the isolate is running.
+  static const int _kInvalidParamsCode = -32602;
+
   String get _stashStorageKey =>
       'device_preview.simulation:${gateway.serviceUri ?? 'unknown'}';
 
@@ -318,6 +322,10 @@ class PanelController extends ChangeNotifier {
       _bannerTimer?.cancel();
       _pendingRequestIds.clear();
       _stateJson = null;
+      // The stash is keyed per VM-service URI in storage; the in-memory copy
+      // belongs to the connection that just ended. Keeping it would leak one
+      // app's simulation into the next app this panel connects to.
+      _stashedSimulation = null;
       _customPresets = const <PresetView>[];
       _setStatus(PanelStatus.disconnected);
     } else {
@@ -724,8 +732,12 @@ class PanelController extends ChangeNotifier {
         : portraitPadding;
     if (padding != null) sim['padding'] = padding;
     final portraitViewPadding = preset.portraitViewPadding ?? portraitPadding;
+    // Same fallback chain as `DevicePreset.resolve` app-side:
+    // landscapeViewPadding ?? landscapePadding ?? rotated portrait — the two
+    // writers of the protocol must produce identical metrics for a device.
     final viewPadding = landscape
         ? preset.landscapeViewPadding ??
+            preset.landscapePadding ??
             (portraitViewPadding == null
                 ? null
                 : _rotateInsets(portraitViewPadding, toLandscape: true))
@@ -871,7 +883,14 @@ class PanelController extends ChangeNotifier {
           'source': source,
         },
       );
-      if (_checkErrorEnvelope(result)) return;
+      if (_checkErrorEnvelope(result)) {
+        // A failed request still changes state when the handler threw
+        // mid-apply, and that stateChanged event carries this requestId. It
+        // must not be swallowed as a reconciled echo — it is the only
+        // reconciliation this request will get.
+        _pendingRequestIds.remove(requestId);
+        return;
+      }
       if (!reconcile) return;
       _stateJson = result;
       _restash();
@@ -898,7 +917,14 @@ class PanelController extends ChangeNotifier {
 
   void _onMutationError(GatewayException error) {
     if (_disposed) return;
-    if (error.isRpcError) _setStatus(PanelStatus.paused);
+    if (error.isRpcError && error.code != _kInvalidParamsCode) {
+      _setStatus(PanelStatus.paused);
+    } else if (error.isRpcError) {
+      // `invalidParams` proves the isolate is running — the app refused the
+      // payload. The panel holds a value the app never applied; re-fetch the
+      // app's truth instead of flipping to the paused empty state.
+      unawaited(_syncNow());
+    }
     gateway.showNotification('Device Preview: ${error.message}');
   }
 

@@ -50,6 +50,16 @@ class TestDevicePreviewBinding extends AutomatedTestWidgetsFlutterBinding
     return _instance!;
   }
 
+  /// Initializes (once) and returns the binding without touching the latch —
+  /// for tests that drive [DevicePreviewBindingMixin.latchConfiguration]
+  /// themselves.
+  static TestDevicePreviewBinding ensureInitializedWithoutLatching() {
+    if (_instance == null) {
+      TestDevicePreviewBinding();
+    }
+    return _instance!;
+  }
+
   @override
   void initInstances() {
     super.initInstances();
