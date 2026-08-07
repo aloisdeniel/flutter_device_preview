@@ -328,21 +328,6 @@ class DevicePreset {
 /// logical pixels; iOS landscape insets follow real UIKit behavior
 /// (notch/island mirrored to the sides, 21px home indicator).
 abstract final class DevicePresets {
-  /// iPhone SE (3rd generation) — home button, status bar hidden in
-  /// landscape.
-  static const DevicePreset iPhoneSe3 = DevicePreset(
-    id: 'apple-iphone-se-3',
-    name: 'iPhone SE (3rd gen)',
-    brand: 'Apple',
-    year: 2022,
-    platform: TargetPlatform.iOS,
-    portraitSize: ui.Size(375, 667),
-    devicePixelRatio: 2.0,
-    portraitPadding: EdgeInsets.only(top: 20),
-    landscapePadding: EdgeInsets.zero,
-    landscapeViewPadding: EdgeInsets.zero,
-  );
-
   /// iPhone 16 — Dynamic Island.
   static const DevicePreset iPhone16 = DevicePreset(
     id: 'apple-iphone-16',
@@ -380,6 +365,32 @@ abstract final class DevicePresets {
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 62, bottom: 34),
     landscapePadding: EdgeInsets.only(left: 62, right: 62, bottom: 21),
+  );
+
+  /// iPhone 16 Plus — Dynamic Island, 6.7" display.
+  static const DevicePreset iPhone16Plus = DevicePreset(
+    id: 'apple-iphone-16-plus',
+    name: 'iPhone 16 Plus',
+    brand: 'Apple',
+    year: 2024,
+    platform: TargetPlatform.iOS,
+    portraitSize: ui.Size(430, 932),
+    devicePixelRatio: 3.0,
+    portraitPadding: EdgeInsets.only(top: 59, bottom: 34),
+    landscapePadding: EdgeInsets.only(left: 59, right: 59, bottom: 21),
+  );
+
+  /// iPhone 16e — notch, the 6.1" entry model.
+  static const DevicePreset iPhone16e = DevicePreset(
+    id: 'apple-iphone-16e',
+    name: 'iPhone 16e',
+    brand: 'Apple',
+    year: 2025,
+    platform: TargetPlatform.iOS,
+    portraitSize: ui.Size(390, 844),
+    devicePixelRatio: 3.0,
+    portraitPadding: EdgeInsets.only(top: 47, bottom: 34),
+    landscapePadding: EdgeInsets.only(left: 47, right: 47, bottom: 21),
   );
 
   /// iPhone 17e — notch, the 6.1" entry model.
@@ -448,6 +459,48 @@ abstract final class DevicePresets {
     kind: DeviceKind.tablet,
   );
 
+  /// iPad Pro 11" (M4).
+  static const DevicePreset iPadPro11 = DevicePreset(
+    id: 'apple-ipad-pro-11',
+    name: 'iPad Pro 11"',
+    brand: 'Apple',
+    year: 2024,
+    platform: TargetPlatform.iOS,
+    portraitSize: ui.Size(834, 1210),
+    devicePixelRatio: 2.0,
+    portraitPadding: EdgeInsets.only(top: 24, bottom: 20),
+    landscapePadding: EdgeInsets.only(top: 24, bottom: 20),
+    kind: DeviceKind.tablet,
+  );
+
+  /// iPad Air 13" (M3).
+  static const DevicePreset iPadAir13 = DevicePreset(
+    id: 'apple-ipad-air-13',
+    name: 'iPad Air 13"',
+    brand: 'Apple',
+    year: 2025,
+    platform: TargetPlatform.iOS,
+    portraitSize: ui.Size(1024, 1366),
+    devicePixelRatio: 2.0,
+    portraitPadding: EdgeInsets.only(top: 24, bottom: 20),
+    landscapePadding: EdgeInsets.only(top: 24, bottom: 20),
+    kind: DeviceKind.tablet,
+  );
+
+  /// iPad Air 11" (M3).
+  static const DevicePreset iPadAir11 = DevicePreset(
+    id: 'apple-ipad-air-11',
+    name: 'iPad Air 11"',
+    brand: 'Apple',
+    year: 2025,
+    platform: TargetPlatform.iOS,
+    portraitSize: ui.Size(820, 1180),
+    devicePixelRatio: 2.0,
+    portraitPadding: EdgeInsets.only(top: 24, bottom: 20),
+    landscapePadding: EdgeInsets.only(top: 24, bottom: 20),
+    kind: DeviceKind.tablet,
+  );
+
   /// iPad mini (6th/7th generation).
   static const DevicePreset iPadMini = DevicePreset(
     id: 'apple-ipad-mini',
@@ -460,19 +513,6 @@ abstract final class DevicePresets {
     portraitPadding: EdgeInsets.only(top: 24, bottom: 20),
     landscapePadding: EdgeInsets.only(top: 24, bottom: 20),
     kind: DeviceKind.tablet,
-  );
-
-  /// Google Pixel 8 — gesture navigation.
-  static const DevicePreset pixel8 = DevicePreset(
-    id: 'google-pixel-8',
-    name: 'Pixel 8',
-    brand: 'Google',
-    year: 2023,
-    platform: TargetPlatform.android,
-    portraitSize: ui.Size(412, 915),
-    devicePixelRatio: 2.625,
-    portraitPadding: EdgeInsets.only(top: 24, bottom: 24),
-    landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
   );
 
   /// Google Pixel 9 — gesture navigation.
@@ -488,18 +528,17 @@ abstract final class DevicePresets {
     landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
   );
 
-  /// Google Pixel Tablet.
-  static const DevicePreset pixelTablet = DevicePreset(
-    id: 'google-pixel-tablet',
-    name: 'Pixel Tablet',
+  /// Google Pixel 10 — gesture navigation.
+  static const DevicePreset pixel10 = DevicePreset(
+    id: 'google-pixel-10',
+    name: 'Pixel 10',
     brand: 'Google',
-    year: 2023,
+    year: 2025,
     platform: TargetPlatform.android,
-    portraitSize: ui.Size(800, 1280),
-    devicePixelRatio: 2.0,
+    portraitSize: ui.Size(412, 923),
+    devicePixelRatio: 2.625,
     portraitPadding: EdgeInsets.only(top: 24, bottom: 24),
     landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
-    kind: DeviceKind.tablet,
   );
 
   /// Samsung Galaxy S24 — punch-hole, gesture navigation.
@@ -513,6 +552,47 @@ abstract final class DevicePresets {
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 24, bottom: 24),
     landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
+  );
+
+  /// Samsung Galaxy S25 — punch-hole, gesture navigation.
+  static const DevicePreset galaxyS25 = DevicePreset(
+    id: 'samsung-galaxy-s25',
+    name: 'Galaxy S25',
+    brand: 'Samsung',
+    year: 2025,
+    platform: TargetPlatform.android,
+    portraitSize: ui.Size(360, 780),
+    devicePixelRatio: 3.0,
+    portraitPadding: EdgeInsets.only(top: 24, bottom: 24),
+    landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
+  );
+
+  /// Samsung Galaxy Tab S10+.
+  static const DevicePreset galaxyTabS10Plus = DevicePreset(
+    id: 'samsung-galaxy-tab-s10-plus',
+    name: 'Galaxy Tab S10+',
+    brand: 'Samsung',
+    year: 2024,
+    platform: TargetPlatform.android,
+    portraitSize: ui.Size(876, 1400),
+    devicePixelRatio: 2.0,
+    portraitPadding: EdgeInsets.only(top: 24, bottom: 24),
+    landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
+    kind: DeviceKind.tablet,
+  );
+
+  /// Samsung Galaxy Tab S11.
+  static const DevicePreset galaxyTabS11 = DevicePreset(
+    id: 'samsung-galaxy-tab-s11',
+    name: 'Galaxy Tab S11',
+    brand: 'Samsung',
+    year: 2025,
+    platform: TargetPlatform.android,
+    portraitSize: ui.Size(800, 1280),
+    devicePixelRatio: 2.0,
+    portraitPadding: EdgeInsets.only(top: 24, bottom: 24),
+    landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
+    kind: DeviceKind.tablet,
   );
 
   /// A small desktop window: 1024×640 at 1x.
@@ -539,20 +619,26 @@ abstract final class DevicePresets {
 
   /// All built-in presets.
   static const List<DevicePreset> all = <DevicePreset>[
-    iPhoneSe3,
     iPhone16,
+    iPhone16Plus,
     iPhone16Pro,
     iPhone16ProMax,
+    iPhone16e,
     iPhone17e,
     iPhone17,
     iPhone17Pro,
     iPhoneAir,
     iPadPro13,
+    iPadPro11,
+    iPadAir13,
+    iPadAir11,
     iPadMini,
-    pixel8,
     pixel9,
-    pixelTablet,
+    pixel10,
     galaxyS24,
+    galaxyS25,
+    galaxyTabS10Plus,
+    galaxyTabS11,
     smallDesktopWindow,
     largeDesktopWindow,
   ];

@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 DeviceSimulation buildFullSimulation() {
   return const DeviceSimulation(
-    presetId: 'apple-iphone-se-3',
+    presetId: 'apple-iphone-16',
     orientation: Orientation.landscape,
     screenSize: ui.Size(667, 375),
     devicePixelRatio: 2.0,
@@ -37,7 +37,7 @@ void main() {
   group('DeviceSimulation JSON', () {
     test('toJson matches the documented shape', () {
       final json = buildFullSimulation().toJson();
-      expect(json['presetId'], 'apple-iphone-se-3');
+      expect(json['presetId'], 'apple-iphone-16');
       expect(json['orientation'], 'landscape');
       expect(json['screenSize'], {'width': 667.0, 'height': 375.0});
       expect(json['devicePixelRatio'], 2.0);

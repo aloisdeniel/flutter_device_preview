@@ -28,7 +28,7 @@ class DisabledDevicePreviewBinding extends AutomatedTestWidgetsFlutterBinding
     if (_instance == null) {
       DevicePreviewBindingMixin.latchConfiguration(
         enabled: false,
-        initialSimulation: DevicePresets.iPhoneSe3.resolve(),
+        initialSimulation: DevicePresets.iPhone16.resolve(),
       );
       DisabledDevicePreviewBinding();
     }
@@ -102,9 +102,9 @@ void main() {
       ),
     );
     final MediaQueryData control = MediaQueryData.fromView(tester.view);
-    // The latched iPhoneSe3 initialSimulation must have left no trace.
+    // The latched iPhone16 initialSimulation must have left no trace.
     expect(observed.size, control.size);
-    expect(observed.size, isNot(const Size(375, 667)));
+    expect(observed.size, isNot(const Size(393, 852)));
     expect(observed.devicePixelRatio, control.devicePixelRatio);
     expect(observed.padding, control.padding);
     expect(observed.viewPadding, control.viewPadding);

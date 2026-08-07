@@ -11,8 +11,8 @@ import 'package:flutter_test/flutter_test.dart';
 class _FakeController implements DevicePreviewController {
   DeviceSimulation? current;
   final List<DevicePreset> registered = <DevicePreset>[
-    DevicePresets.iPhoneSe3,
-    DevicePresets.pixel8,
+    DevicePresets.iPhone16,
+    DevicePresets.pixel10,
   ];
 
   @override
@@ -239,7 +239,7 @@ void main() {
       );
       final List<Object?> presets = result['presets']! as List<Object?>;
       expect(presets, hasLength(2));
-      expect(presets.first, DevicePresets.iPhoneSe3.toJson());
+      expect(presets.first, DevicePresets.iPhone16.toJson());
     });
   });
 

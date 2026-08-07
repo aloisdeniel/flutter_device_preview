@@ -554,9 +554,9 @@ All registered via raw `developer.registerExtension` (own `ext.device_preview.` 
 
 ```json
 {
-  "presetId": "apple-iphone-se-3",
+  "presetId": "apple-iphone-16",
   "orientation": "portrait",
-  "screenSize": {"width": 375.0, "height": 667.0},
+  "screenSize": {"width": 393.0, "height": 852.0},
   "frame": {"size": {"width": 403.0, "height": 805.0},
             "screenOffset": {"x": 14.0, "y": 62.0},
             "screenPath": "M 0,0 H 375 …",

@@ -107,12 +107,15 @@ void main() {
       await tester.pumpWidget(
         probe((BuildContext context) => observed = MediaQuery.of(context)),
       );
-      await binding.devicePreview!.applyPreset(DevicePresets.iPhoneSe3);
+      await binding.devicePreview!.applyPreset(DevicePresets.iPhone16);
       await tester.pump();
-      expect(observed.size, const Size(375, 667));
-      expect(observed.devicePixelRatio, 2.0);
-      expect(observed.padding, const EdgeInsets.only(top: 20));
-      expect(observed.viewPadding, const EdgeInsets.only(top: 20));
+      expect(observed.size, const Size(393, 852));
+      expect(observed.devicePixelRatio, 3.0);
+      expect(observed.padding, const EdgeInsets.only(top: 59, bottom: 34));
+      expect(
+        observed.viewPadding,
+        const EdgeInsets.only(top: 59, bottom: 34),
+      );
     });
 
     testWidgets('brightness and text scale simulate through the wrapper '
@@ -354,7 +357,7 @@ void main() {
     testWidgets('realDevice reports the host (test) metrics', (
       WidgetTester tester,
     ) async {
-      await binding.devicePreview!.applyPreset(DevicePresets.iPhoneSe3);
+      await binding.devicePreview!.applyPreset(DevicePresets.iPhone16);
       final RealDeviceInfo real = binding.devicePreview!.realDevice;
       expect(real.logicalSize, const Size(800, 600));
       expect(real.devicePixelRatio, 3.0);
@@ -367,13 +370,16 @@ void main() {
       await tester.pumpWidget(
         probe((BuildContext context) => observed = MediaQuery.of(context)),
       );
-      await binding.devicePreview!.applyPreset(DevicePresets.iPhoneSe3);
+      await binding.devicePreview!.applyPreset(DevicePresets.iPhone16);
       await tester.pump();
-      expect(observed.size, const Size(375, 667));
+      expect(observed.size, const Size(393, 852));
       await binding.devicePreview!.setOrientation(Orientation.landscape);
       await tester.pump();
-      expect(observed.size, const Size(667, 375));
-      expect(observed.padding, EdgeInsets.zero);
+      expect(observed.size, const Size(852, 393));
+      expect(
+        observed.padding,
+        const EdgeInsets.only(left: 59, right: 59, bottom: 21),
+      );
     });
   });
 }

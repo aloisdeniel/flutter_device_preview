@@ -59,7 +59,7 @@ void main() {
 
   test('a host resize while simulating refreshes the fit and re-triggers '
       'the framework metrics handler', () async {
-    await controller.apply(DevicePresets.iPhoneSe3.resolve());
+    await controller.apply(DevicePresets.iPhone16.resolve());
     handlerCalls.clear();
     frameworkMetricsCallbacks = 0;
     final FitTransform before = controller.fitTransform;

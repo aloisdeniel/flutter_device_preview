@@ -473,7 +473,7 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
     <div class="stagger">
       <span class="tag">Flutter · device simulation</span>
       <h1>Every device.<br><span class="accent">One</span> <span class="outline">app run.</span></h1>
-      <p class="lede">Switch your running Flutter app to an iPhone SE, an iPad in landscape or a 200%-text-scale Pixel — <strong>instantly, without a rebuild or a simulator</strong>. Screen size, safe areas, locale, brightness, text scale and accessibility all follow, so layout problems surface while you're still writing the layout.</p>
+      <p class="lede">Switch your running Flutter app to an iPhone, an iPad in landscape or a 200%-text-scale Pixel — <strong>instantly, without a rebuild or a simulator</strong>. Screen size, safe areas, locale, brightness, text scale and accessibility all follow, so layout problems surface while you're still writing the layout.</p>
       <div class="hero-ctas">
         <a class="btn primary" href="#demo">Try it live</a>
         <a class="btn ghost" href="#api">Get started</a>
@@ -789,16 +789,16 @@ void main() {
   <span class="c-kw">final</span> binding =
       <span class="c-ty">TestDevicePreviewBinding</span>.<span class="c-fn">ensureInitialized</span>();
 
-  <span class="c-fn">testWidgets</span>(<span class="c-str">'lays out like an iPhone SE'</span>, (tester) <span class="c-kw">async</span> {
+  <span class="c-fn">testWidgets</span>(<span class="c-str">'lays out like an iPhone 16'</span>, (tester) <span class="c-kw">async</span> {
     <span class="c-kw">await</span> binding.devicePreview!
-        .<span class="c-fn">applyPreset</span>(<span class="c-ty">DevicePresets</span>.iPhoneSe3);
+        .<span class="c-fn">applyPreset</span>(<span class="c-ty">DevicePresets</span>.iPhone16);
     <span class="c-kw">await</span> tester.<span class="c-fn">pumpWidget</span>(<span class="c-kw">const</span> <span class="c-ty">MyApp</span>());
-    <span class="c-cm">// MediaQuery: 375×667 @2x, SE safe areas.</span>
+    <span class="c-cm">// MediaQuery: 393×852 @3x, iPhone 16 safe areas.</span>
   });
 }</pre>
       </div>
     </div>
-    <p class="reveal" style="color: var(--ink-dim); margin-top: 26px; max-width: 72ch;">The same simulation is available to <code>flutter_test</code> and <code>integration_test</code>, so a widget test can assert that a screen fits an iPhone SE, or that nothing overflows at 200% text — and goldens can be captured for a whole matrix of devices in CI, without a device in sight. Presets ship in a separate import, so the ones you never reference are dropped from your build.</p>
+    <p class="reveal" style="color: var(--ink-dim); margin-top: 26px; max-width: 72ch;">The same simulation is available to <code>flutter_test</code> and <code>integration_test</code>, so a widget test can assert that a screen fits a small phone, or that nothing overflows at 200% text — and goldens can be captured for a whole matrix of devices in CI, without a device in sight. Presets ship in a separate import, so the ones you never reference are dropped from your build.</p>
   </div>
 </section>
 

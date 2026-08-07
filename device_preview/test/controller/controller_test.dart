@@ -308,9 +308,9 @@ void main() {
       await harness.controller.apply(
         const DeviceSimulation(platformBrightness: ui.Brightness.dark),
       );
-      await harness.controller.applyPreset(DevicePresets.iPhoneSe3);
+      await harness.controller.applyPreset(DevicePresets.iPhone16);
       final DeviceSimulation? result = harness.controller.simulation;
-      expect(result!.presetId, 'apple-iphone-se-3');
+      expect(result!.presetId, 'apple-iphone-16');
       expect(result.platformBrightness, ui.Brightness.dark);
     });
 
@@ -321,7 +321,7 @@ void main() {
       await harness.controller.apply(
         const DeviceSimulation(touchInput: false, showSystemUi: false),
       );
-      await harness.controller.applyPreset(DevicePresets.iPhoneSe3);
+      await harness.controller.applyPreset(DevicePresets.iPhone16);
       final DeviceSimulation? result = harness.controller.simulation;
       expect(result!.touchInput, false);
       expect(result.showSystemUi, false);
@@ -343,14 +343,14 @@ void main() {
         statusBar: SystemUiBar(),
       );
       await harness.controller.apply(
-        DevicePresets.iPhoneSe3
+        DevicePresets.iPhone16
             .resolve()
             .copyWith(frame: frame, systemUi: systemUi),
       );
       await harness.controller.setOrientation(Orientation.landscape);
       final DeviceSimulation? result = harness.controller.simulation;
       expect(result!.orientation, Orientation.landscape);
-      expect(result.presetId, 'apple-iphone-se-3');
+      expect(result.presetId, 'apple-iphone-16');
       expect(result.frame, frame);
       expect(result.systemUi, systemUi);
     });

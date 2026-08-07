@@ -65,7 +65,7 @@ void main() {
 
   testWidgets('a simulated capture covers contentBounds at the simulated '
       'device pixel ratio', (WidgetTester tester) async {
-    await binding.devicePreview!.applyPreset(DevicePresets.iPhoneSe3);
+    await binding.devicePreview!.applyPreset(DevicePresets.iPhone16);
     await tester.pumpWidget(const ColoredBox(color: Color(0xFF2266AA)));
 
     // Mirror the applied simulation in the handler's state, with the fit the
@@ -76,11 +76,11 @@ void main() {
     final Map<String, Object?> result = await capture(tester, state);
 
     expect(result['error'], isNull);
-    // iPhone SE (3rd gen): 375×667 logical at DPR 2 → 750×1334 pixels,
-    // regardless of the host window's size or ratio. Within one pixel: the
-    // engine ceils `bounds × pixelRatio`, so float error can add a pixel.
-    expect(result['width'], closeTo(750, 1));
-    expect(result['height'], closeTo(1334, 1));
+    // iPhone 16: 393×852 logical at DPR 3 → 1179×2556 pixels, regardless of
+    // the host window's size or ratio. Within one pixel: the engine ceils
+    // `bounds × pixelRatio`, so float error can add a pixel.
+    expect(result['width'], closeTo(1179, 1));
+    expect(result['height'], closeTo(2556, 1));
   });
 
   testWidgets('an unparsable pixelRatio returns the invalidParams envelope', (

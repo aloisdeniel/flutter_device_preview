@@ -8,10 +8,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('DevicePresets catalog', () {
-    test('contains the 16 documented presets with unique ids', () {
-      expect(DevicePresets.all, hasLength(16));
+    test('contains the 22 documented presets with unique ids', () {
+      expect(DevicePresets.all, hasLength(22));
       final ids = DevicePresets.all.map((p) => p.id).toSet();
-      expect(ids, hasLength(16));
+      expect(ids, hasLength(22));
     });
 
     test('every device preset declares a release year', () {
@@ -41,9 +41,17 @@ void main() {
     });
 
     test('key metrics match the researched catalog', () {
-      expect(DevicePresets.iPhoneSe3.portraitSize, const ui.Size(375, 667));
-      expect(DevicePresets.iPhoneSe3.devicePixelRatio, 2.0);
       expect(DevicePresets.iPhone16.portraitSize, const ui.Size(393, 852));
+      expect(DevicePresets.iPhone16.devicePixelRatio, 3.0);
+      expect(
+        DevicePresets.iPhone16Plus.portraitSize,
+        const ui.Size(430, 932),
+      );
+      expect(DevicePresets.iPhone16e.portraitSize, const ui.Size(390, 844));
+      expect(
+        DevicePresets.iPhone16e.portraitPadding,
+        const EdgeInsets.only(top: 47, bottom: 34), // notch, not an island
+      );
       expect(DevicePresets.iPhone16Pro.portraitSize, const ui.Size(402, 874));
       expect(DevicePresets.iPhone16Pro.devicePixelRatio, 3.0);
       expect(
@@ -62,10 +70,28 @@ void main() {
       expect(DevicePresets.iPhoneAir.year, 2025);
       expect(DevicePresets.iPadPro13.portraitSize, const ui.Size(1032, 1376));
       expect(DevicePresets.iPadPro13.kind, DeviceKind.tablet);
-      expect(DevicePresets.pixel8.portraitSize, const ui.Size(412, 915));
-      expect(DevicePresets.pixel8.devicePixelRatio, 2.625);
+      expect(DevicePresets.iPadPro11.portraitSize, const ui.Size(834, 1210));
+      expect(DevicePresets.iPadAir13.portraitSize, const ui.Size(1024, 1366));
+      expect(DevicePresets.iPadAir11.portraitSize, const ui.Size(820, 1180));
+      expect(DevicePresets.iPadAir11.year, 2025);
+      expect(DevicePresets.pixel9.portraitSize, const ui.Size(412, 923));
+      expect(DevicePresets.pixel9.devicePixelRatio, 2.625);
+      expect(DevicePresets.pixel10.portraitSize, const ui.Size(412, 923));
+      expect(DevicePresets.pixel10.year, 2025);
       expect(DevicePresets.galaxyS24.portraitSize, const ui.Size(360, 780));
       expect(DevicePresets.galaxyS24.devicePixelRatio, 3.0);
+      expect(DevicePresets.galaxyS25.portraitSize, const ui.Size(360, 780));
+      expect(DevicePresets.galaxyS25.year, 2025);
+      expect(
+        DevicePresets.galaxyTabS10Plus.portraitSize,
+        const ui.Size(876, 1400),
+      );
+      expect(DevicePresets.galaxyTabS10Plus.kind, DeviceKind.tablet);
+      expect(
+        DevicePresets.galaxyTabS11.portraitSize,
+        const ui.Size(800, 1280),
+      );
+      expect(DevicePresets.galaxyTabS11.kind, DeviceKind.tablet);
       expect(
         DevicePresets.smallDesktopWindow.portraitSize,
         const ui.Size(1024, 640),
@@ -121,10 +147,19 @@ void main() {
       expect(sim.viewPadding, sim.padding);
     });
 
-    test('iPhone SE landscape has no safe areas (status bar hidden)', () {
-      final sim = DevicePresets.iPhoneSe3.resolve(
-        orientation: Orientation.landscape,
+    test('explicit zero landscape safe areas stay zero (status bar hidden '
+        'in landscape)', () {
+      const preset = DevicePreset(
+        id: 'custom-home-button',
+        name: 'Custom Home-Button Phone',
+        platform: TargetPlatform.iOS,
+        portraitSize: ui.Size(375, 667),
+        devicePixelRatio: 2.0,
+        portraitPadding: EdgeInsets.only(top: 20),
+        landscapePadding: EdgeInsets.zero,
+        landscapeViewPadding: EdgeInsets.zero,
       );
+      final sim = preset.resolve(orientation: Orientation.landscape);
       expect(sim.screenSize, const ui.Size(667, 375));
       expect(sim.padding, EdgeInsets.zero);
       expect(sim.viewPadding, EdgeInsets.zero);

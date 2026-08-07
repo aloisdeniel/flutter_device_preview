@@ -14,7 +14,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../support/test_binding.dart';
 
 void main() {
-  final DeviceSimulation latched = DevicePresets.iPhoneSe3.resolve();
+  final DeviceSimulation latched = DevicePresets.iPhone16.resolve();
   // Step 1: the user latches a simulation before calling the entry point.
   DevicePreviewBindingMixin.latchConfiguration(
     enabled: true,
@@ -32,7 +32,7 @@ void main() {
       're-latch of the entry point', (WidgetTester tester) async {
     expect(binding.devicePreview, isNotNull);
     expect(binding.devicePreview!.simulation, latched);
-    expect(binding.devicePreview!.simulation!.presetId, 'apple-iphone-se-3');
+    expect(binding.devicePreview!.simulation!.presetId, 'apple-iphone-16');
   });
 
   testWidgets('passing null explicitly clears a previously latched '

@@ -138,11 +138,11 @@ void main() {
           .whereType<String>()
           .where((name) => name.startsWith('iPhone'))
           .toList();
-      // 2026 first, then the two 2025 models, then the 2024 ones (the tail of
-      // the list is below the fold and not built).
+      // 2026 first, then the 2025 models by name, then the 2024 ones (the
+      // tail of the list is below the fold and not built).
       expect(
         names.take(4),
-        ['iPhone 17e', 'iPhone 17', 'iPhone 17 Pro', 'iPhone 16'],
+        ['iPhone 17e', 'iPhone 16e', 'iPhone 17', 'iPhone 17 Pro'],
       );
     });
 

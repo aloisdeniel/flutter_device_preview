@@ -358,7 +358,7 @@ class _ApiDemoCard extends StatelessWidget {
                 children: <Widget>[
                   FilledButton.tonal(
                     onPressed: () =>
-                        controller.applyPreset(DevicePresets.iPhoneSe3),
+                        controller.applyPreset(DevicePresets.iPhone16),
                     child: const Text('iPhone SE preset'),
                   ),
                   FilledButton.tonal(

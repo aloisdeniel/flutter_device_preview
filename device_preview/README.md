@@ -72,7 +72,7 @@ import 'package:device_preview/presets.dart';
 ## Testing under a simulated device
 
 Widget tests can run under a simulated device too, so you can assert that a
-screen fits an iPhone SE, or that nothing overflows at 200% text, and capture
+screen fits a small phone, or that nothing overflows at 200% text, and capture
 goldens for a whole matrix of devices in CI.
 
 Add this small test binding to your `test/` folder. (It is not shipped from
@@ -135,10 +135,10 @@ Then:
 void main() {
   final binding = TestDevicePreviewBinding.ensureInitialized();
 
-  testWidgets('renders like an iPhone SE', (tester) async {
-    await binding.devicePreview!.applyPreset(DevicePresets.iPhoneSe3);
+  testWidgets('renders like an iPhone 16', (tester) async {
+    await binding.devicePreview!.applyPreset(DevicePresets.iPhone16);
     await tester.pumpWidget(const MyApp());
-    // MediaQuery now reports 375×667 @2x with the SE safe areas.
+    // MediaQuery now reports 393×852 @3x with the iPhone 16 safe areas.
   });
 }
 ```
