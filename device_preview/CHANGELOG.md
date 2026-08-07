@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.0.0-prerelease2
+
+Device catalog refreshed to the two latest generations — 22 devices:
+
+- Added iPhone 16 Plus and iPhone 16e (completing the 16 line), iPad Pro
+  11", iPad Air 11" and 13", Pixel 10, Galaxy S25, and the Galaxy Tab S10+
+  and Tab S11 tablets.
+- Removed iPhone SE (3rd gen) (`DevicePresets.iPhoneSe3`), Pixel 8
+  (`DevicePresets.pixel8`) and Pixel Tablet (`DevicePresets.pixelTablet`);
+  the generic desktop windows remain. Apps that referenced the removed
+  presets can keep the metrics as custom `DevicePreset`s via
+  `registerPreset`.
+- The bundled DevTools extension ships the matching regenerated catalog
+  (frame artwork included) for every device above.
+
 ## 3.0.0-prerelease1
 
 The 3.0 release is a from-scratch rebuild: a custom `WidgetsBinding` that
