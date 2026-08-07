@@ -285,6 +285,27 @@ h1 .outline {
 .news-body p:last-child { margin-bottom: 0; }
 .news-body strong { color: var(--ink); font-weight: 600; }
 
+/* ---------- get started steps ---------- */
+.steps { list-style: none; counter-reset: step; }
+.steps li { position: relative; padding-left: 40px; margin-bottom: 22px; color: var(--ink-dim); }
+.steps li:last-child { margin-bottom: 0; }
+.steps li::before {
+  counter-increment: step; content: counter(step);
+  position: absolute; left: 0; top: 2px;
+  width: 24px; height: 24px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 12px; color: var(--cyan);
+  border: 1px solid var(--line-strong);
+}
+.steps strong { color: var(--ink); font-weight: 600; }
+.sub-head { margin: 66px 0 26px; }
+.sub-head h3 {
+  font-family: var(--display); font-weight: 700;
+  font-size: clamp(21px, 2.4vw, 28px);
+  line-height: 1.15; letter-spacing: -.01em;
+  margin-top: 8px;
+}
+
 /* ---------- sections ---------- */
 section { padding: 78px 0; border-top: 1px solid var(--line); position: relative; }
 .sec-head { margin-bottom: 44px; }
@@ -292,6 +313,7 @@ h2 {
   font-family: var(--display);
   font-size: clamp(28px, 3.6vw, 42px);
   font-weight: 700;
+  line-height: 1.08;
   letter-spacing: -.01em;
   margin-top: 10px;
 }
@@ -440,7 +462,7 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
       <a href="#why">Why</a>
       <a href="#simulate">What it simulates</a>
       <a href="#devtools">DevTools</a>
-      <a href="#api">API</a>
+      <a href="#api">Get started</a>
       <a class="gh" href="https://github.com/aloisdeniel/flutter_device_preview">GitHub ↗</a>
     </nav>
   </div>
@@ -711,8 +733,37 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
 <section id="api">
   <div class="sheet">
     <div class="sec-head reveal">
+      <span class="tag">Get started</span>
+      <h2>One line in main().<br>Then a tab in DevTools.</h2>
+    </div>
+
+    <div class="oneline reveal">
+      <div>
+        <ol class="steps">
+          <li><strong>Add the package.</strong> <code>flutter pub add device_preview</code> — no platform setup, no configuration file, nothing to register.</li>
+          <li><strong>Enable it before <code>runApp</code>.</strong> That is the entire integration, and it is safe to leave in: simulation is active in debug and profile builds and completely off in release, where the binding behaves exactly like <code>WidgetsFlutterBinding</code>.</li>
+          <li><strong>Open Flutter DevTools and pick the <em>device_preview</em> tab.</strong> Choose a device: the app you are already running moves onto it, keeping the screen you were on and the state you had loaded.</li>
+        </ol>
+      </div>
+      <div class="codeblock">
+        <div class="bar"><span>main.dart</span><button class="copy-btn" data-copy="import 'package:device_preview/device_preview.dart';
+
+void main() {
+  DevicePreview.enable();
+  runApp(const MyApp());
+}">copy</button></div>
+        <pre><span class="c-kw">import</span> <span class="c-str">'package:device_preview/device_preview.dart'</span>;
+
+<span class="c-kw">void</span> <span class="c-fn">main</span>() {
+  <span class="c-ty">DevicePreview</span>.<span class="c-fn">enable</span>();  <span class="c-cm">// debug + profile only</span>
+  <span class="c-fn">runApp</span>(<span class="c-kw">const</span> <span class="c-ty">MyApp</span>());
+}</pre>
+      </div>
+    </div>
+
+    <div class="sub-head reveal">
       <span class="tag">API</span>
-      <h2>Or drive it from Dart —<br>including in your tests.</h2>
+      <h3>Or drive it from Dart —<br>including in your tests.</h3>
     </div>
     <div class="duo">
       <div class="codeblock reveal">
