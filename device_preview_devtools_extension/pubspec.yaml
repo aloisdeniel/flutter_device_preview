@@ -1,0 +1,27 @@
+name: device_preview_devtools_extension
+description: >-
+  DevTools extension web app for the device_preview package. Built and copied
+  into device_preview/extension/devtools/build via `dart run
+  devtools_extensions build_and_copy`; never published to pub.dev.
+publish_to: none
+version: 3.0.0
+
+environment:
+  sdk: ">=3.6.0 <4.0.0"
+  flutter: ">=3.27.1"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  devtools_extensions: ^0.5.1
+  devtools_app_shared: ^0.5.1
+  vm_service: ">=13.0.0 <16.0.0"
+  web: ^1.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true

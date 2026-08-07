@@ -1,0 +1,32 @@
+{
+  "id": "desktop-small",
+  "name": "Small Desktop Window",
+  "brand": "Generic",
+  "platform": "windows",
+  "kind": "desktop",
+  "portraitSize": {
+    "width": 1024,
+    "height": 640
+  },
+  "devicePixelRatio": 1.0,
+  "frame": {
+    "size": {
+      "width": 1026,
+      "height": 673
+    },
+    "screenOffset": {
+      "x": 1,
+      "y": 32
+    },
+    "screenPath": "M 0,0 H 1024 V 632 A 8,8 0 0 1 1016,640 H 8 A 8,8 0 0 1 0,632 Z",
+    "body": [
+      "<svg viewBox=\"0 0 1026 673\">",
+      "  <path d=\"M 8,0 H 1018 A 8,8 0 0 1 1026,8 V 665 A 8,8 0 0 1 1018,673 H 8 A 8,8 0 0 1 0,665 V 8 A 8,8 0 0 1 8,0 Z\" fill=\"#202226\"/>",
+      "  <rect x=\"980\" y=\"15\" width=\"10\" height=\"2\" fill=\"#c9ccd1\"/>",
+      "  <rect x=\"994\" y=\"15\" width=\"10\" height=\"2\" fill=\"#c9ccd1\"/>",
+      "  <rect x=\"1008\" y=\"15\" width=\"10\" height=\"2\" fill=\"#c9ccd1\"/>",
+      "  <rect x=\"443\" y=\"11\" width=\"140\" height=\"10\" rx=\"5\" fill=\"#c9ccd1\" fill-opacity=\"0.35\"/>",
+      "</svg>"
+    ]
+  }
+}

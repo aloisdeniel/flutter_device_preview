@@ -1,0 +1,5 @@
+name: device_preview
+issueTracker: https://github.com/aloisdeniel/flutter_device_preview/issues
+version: 3.0.0
+materialIconCodePoint: '0xe1cb'   # Icons.devices (phone + tablet + laptop)
+requiresConnection: true

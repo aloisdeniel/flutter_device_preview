@@ -1,45 +1,1396 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <title>Device Preview for Flutter</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="Device Preview for Flutter">
-  <meta name="viewport"
-    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css">
-  <link rel="stylesheet" href="css/code.css" />
-  <link rel="stylesheet" href="css/main.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>device_preview — test your Flutter app on every device, instantly</title>
+<meta name="description" content="Switch your running Flutter app to any screen size, safe area, locale, text scale or accessibility setting from Flutter DevTools — no rebuild, no simulator, no device required.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='2' width='24' height='28' rx='4' fill='none' stroke='%234fd1ff' stroke-width='2'/%3E%3Cline x1='10' y1='16' x2='22' y2='16' stroke='%23ffb454' stroke-width='2'/%3E%3Cline x1='16' y1='10' x2='16' y2='22' stroke='%23ffb454' stroke-width='2'/%3E%3C/svg%3E">
+<style>
+:root {
+  --paper: #081527;
+  --paper-raised: #0c1e36;
+  --paper-sunken: #060f1d;
+  --line: #16324f;
+  --line-strong: #1f4166;
+  --ink: #dbe9f7;
+  --ink-dim: #7e9ab8;
+  --ink-faint: #47617f;
+  --cyan: #4fd1ff;
+  --cyan-dim: rgba(79, 209, 255, .32);
+  --amber: #ffb454;
+  --green: #7ee2a8;
+  --display: "Bricolage Grotesque", sans-serif;
+  --body: "IBM Plex Sans", sans-serif;
+  --mono: "IBM Plex Mono", monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background:
+    radial-gradient(1100px 620px at 78% -8%, rgba(79, 209, 255, .10), transparent 62%),
+    radial-gradient(760px 520px at 6% 4%, rgba(255, 180, 84, .05), transparent 60%),
+    var(--paper);
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+::selection { background: var(--cyan); color: var(--paper); }
+a { color: var(--cyan); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+code, pre, .mono { font-family: var(--mono); }
+
+.sheet { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+/* ---------- annotations ---------- */
+.tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 12px; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--cyan);
+}
+.tag::before { content: ""; width: 26px; height: 1px; background: var(--cyan); }
+
+/* ---------- nav ---------- */
+header.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in srgb, var(--paper) 86%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner { display: flex; align-items: center; gap: 28px; height: 60px; }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--ink); font-family: var(--mono); font-size: 15px; }
+.brand:hover { text-decoration: none; }
+.brand svg { display: block; }
+.brand b { font-weight: 500; }
+.brand .v { color: var(--amber); font-size: 12px; border: 1px solid color-mix(in srgb, var(--amber) 45%, transparent); border-radius: 99px; padding: 1px 8px; margin-left: 2px; }
+nav.links { margin-left: auto; display: flex; gap: 22px; }
+nav.links a { color: var(--ink-dim); font-size: 13.5px; font-family: var(--mono); letter-spacing: .04em; }
+nav.links a:hover { color: var(--cyan); text-decoration: none; }
+@media (max-width: 760px) { nav.links a:not(.gh) { display: none; } }
+
+/* ---------- hero ---------- */
+.hero { position: relative; padding: 84px 0 72px; overflow: hidden; }
+.hero-grid > .stagger { max-width: 780px; }
+h1 {
+  font-family: var(--display);
+  font-size: clamp(44px, 6.2vw, 76px);
+  font-weight: 800;
+  line-height: .98;
+  letter-spacing: -.02em;
+  margin: 18px 0 22px;
+}
+h1 .accent { color: var(--cyan); }
+h1 .outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--amber);
+}
+.lede { color: var(--ink-dim); font-size: 18px; max-width: 54ch; }
+.lede strong { color: var(--ink); font-weight: 600; }
+.hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; align-items: center; }
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: 14px;
+  padding: 11px 20px; border-radius: 6px;
+  border: 1px solid var(--cyan);
+}
+.btn.primary { background: var(--cyan); color: #05263a; font-weight: 500; }
+.btn.primary:hover { background: #7fdfff; text-decoration: none; }
+.btn.ghost { color: var(--cyan); }
+.btn.ghost:hover { background: var(--cyan-dim); text-decoration: none; }
+.install {
+  display: inline-flex; align-items: center; gap: 14px;
+  margin-top: 18px;
+  font-family: var(--mono); font-size: 13.5px;
+  color: var(--ink-dim);
+  border: 1px dashed var(--line-strong);
+  border-radius: 6px;
+  padding: 9px 14px;
+  background: var(--paper-sunken);
+}
+.install .dollar { color: var(--amber); user-select: none; }
+.copy-btn {
+  background: none; border: none; cursor: pointer;
+  color: var(--ink-faint); font-family: var(--mono); font-size: 11px;
+  letter-spacing: .1em; text-transform: uppercase;
+  padding: 2px 4px;
+}
+.copy-btn:hover { color: var(--cyan); }
+
+/* ---------- interactive demo ---------- */
+.demo-lede { color: var(--ink-dim); max-width: 70ch; margin-bottom: 30px; }
+.demo-lede strong { color: var(--ink); font-weight: 600; }
+.demo-grid { display: grid; grid-template-columns: minmax(0, 1fr) 372px; gap: 22px; }
+@media (max-width: 1000px) { .demo-grid { grid-template-columns: 1fr; } }
+
+.stage {
+  position: relative;
+  min-height: 700px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: var(--paper-sunken);
+  background-image: radial-gradient(circle at 1px 1px, var(--line) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+@media (max-width: 1000px) { .stage { min-height: 520px; } }
+.stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+.stage-msg {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  font-family: var(--mono); font-size: 12.5px; line-height: 1.8;
+  color: var(--ink-faint); text-align: center;
+  background: var(--paper-sunken);
+}
+.stage-msg.hidden { display: none; }
+.stage-msg b { color: var(--ink-dim); font-weight: 400; }
+
+/* the panel — the DevTools extension's layout, in HTML */
+.dp-panel {
+  display: flex; flex-direction: column;
+  max-height: 700px;
+  background: var(--paper-sunken);
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  font-family: var(--mono); font-size: 12.5px;
+  color: var(--ink-dim);
+  box-shadow: 0 30px 60px -30px rgba(0,0,0,.6);
+  overflow: hidden;
+}
+@media (max-width: 1000px) { .dp-panel { max-height: none; } }
+.dp-bar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-bottom: 1px solid var(--line);
+}
+.dp-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ink-faint); flex: none; }
+.dp-dot.on { background: var(--green); box-shadow: 0 0 8px var(--green); }
+.dp-name { color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dp-reset {
+  margin-left: auto; flex: none;
+  background: none; border: 1px solid var(--line-strong); border-radius: 5px;
+  color: var(--cyan); font-family: var(--mono); font-size: 11px;
+  padding: 3px 9px; cursor: pointer;
+}
+.dp-reset:hover { background: var(--cyan-dim); }
+.dp-body { overflow-y: auto; padding-bottom: 10px; }
+.dp-sec {
+  padding: 14px 14px 6px;
+  font-size: 10.5px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.dp-row { display: flex; align-items: center; gap: 10px; padding: 5px 14px; }
+.dp-lbl { flex: 0 0 98px; }
+.dp-ctl { flex: 1; display: flex; align-items: center; justify-content: flex-end; gap: 8px; min-width: 0; }
+.dp-val { color: var(--ink); font-size: 11.5px; min-width: 52px; text-align: right; }
+.dp-note { padding: 6px 14px 0; font-size: 11px; color: var(--ink-faint); line-height: 1.6; }
+.dp-foot {
+  border-top: 1px solid var(--line);
+  padding: 9px 14px;
+  font-size: 11px; color: var(--ink-faint);
+  display: flex; justify-content: space-between; gap: 10px;
+}
+.dp-foot b { color: var(--cyan); font-weight: 400; }
+
+.dp-panel select, .dp-panel input[type="number"] {
+  background: var(--paper-raised); color: var(--ink);
+  border: 1px solid var(--line-strong); border-radius: 5px;
+  font-family: var(--mono); font-size: 11.5px;
+  padding: 4px 6px; max-width: 100%;
+}
+.dp-panel select:focus-visible, .dp-panel input:focus-visible, .dp-panel button:focus-visible {
+  outline: 1px solid var(--cyan); outline-offset: 1px;
+}
+.dp-panel select:disabled, .dp-panel input:disabled { opacity: .45; cursor: not-allowed; }
+.dp-panel select { min-width: 0; }
+#dpPreset { flex: 1; }
+
+.dp-seg { display: inline-flex; border: 1px solid var(--line-strong); border-radius: 5px; overflow: hidden; flex: none; }
+.dp-seg button {
+  background: none; border: none; border-left: 1px solid var(--line-strong);
+  color: var(--ink-dim); font-family: var(--mono); font-size: 11px;
+  padding: 4px 9px; cursor: pointer;
+}
+.dp-seg button:first-child { border-left: none; }
+.dp-seg button[aria-pressed="true"] { background: var(--cyan); color: #05263a; }
+.dp-seg button:disabled { opacity: .4; cursor: not-allowed; }
+
+.dp-switch {
+  appearance: none; -webkit-appearance: none;
+  position: relative; width: 34px; height: 18px; flex: none;
+  background: var(--paper-raised); border: 1px solid var(--line-strong);
+  border-radius: 99px; cursor: pointer; margin: 0;
+}
+.dp-switch::after {
+  content: ""; position: absolute; top: 2px; left: 2px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--ink-faint); transition: left .15s ease, background .15s ease;
+}
+.dp-switch:checked { background: var(--cyan-dim); border-color: var(--cyan); }
+.dp-switch:checked::after { left: 18px; background: var(--cyan); }
+.dp-switch:disabled { opacity: .4; cursor: not-allowed; }
+
+.dp-panel input[type="range"] { flex: 1; min-width: 0; accent-color: var(--cyan); cursor: pointer; }
+
+.dp-btn {
+  background: none; border: 1px solid var(--line-strong); border-radius: 5px;
+  color: var(--ink-dim); font-family: var(--mono); font-size: 11px;
+  padding: 4px 9px; cursor: pointer; flex: none;
+}
+.dp-btn:hover:not(:disabled) { color: var(--cyan); border-color: var(--cyan); }
+.dp-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+.dp-custom { padding: 4px 14px 0; }
+.dp-custom summary { cursor: pointer; font-size: 11.5px; color: var(--ink-faint); padding: 4px 0; }
+.dp-custom summary:hover { color: var(--cyan); }
+.dp-fields { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px 0 2px; }
+.dp-fields label { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; }
+.dp-fields input { width: 58px; }
+
+.dp-chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 4px 14px 2px; }
+.dp-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 1px solid var(--line-strong); border-radius: 99px;
+  padding: 3px 6px 3px 10px; font-size: 11px; color: var(--ink);
+}
+.dp-chip.primary { border-color: color-mix(in srgb, var(--cyan) 45%, transparent); color: var(--cyan); }
+.dp-chip button {
+  background: none; border: none; color: var(--ink-faint);
+  cursor: pointer; font-family: var(--mono); font-size: 12px; line-height: 1; padding: 0 2px;
+}
+.dp-chip button:hover { color: var(--amber); }
+.dp-empty { padding: 2px 14px 4px; font-size: 11px; color: var(--ink-faint); }
+
+/* ---------- latest news ---------- */
+.news { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 34px; }
+@media (max-width: 760px) { .news { grid-template-columns: 1fr; gap: 14px; } }
+.news-meta {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
+  font-family: var(--mono); font-size: 12px; color: var(--ink-faint);
+  letter-spacing: .06em;
+}
+.news-meta .ver {
+  color: var(--amber);
+  border: 1px solid color-mix(in srgb, var(--amber) 45%, transparent);
+  border-radius: 99px; padding: 1px 10px;
+}
+.news-body { max-width: 74ch; }
+.news-body p { color: var(--ink-dim); margin-bottom: 18px; }
+.news-body p:last-child { margin-bottom: 0; }
+.news-body strong { color: var(--ink); font-weight: 600; }
+
+/* ---------- get started steps ---------- */
+.steps { list-style: none; counter-reset: step; }
+.steps li { position: relative; padding-left: 40px; margin-bottom: 22px; color: var(--ink-dim); }
+.steps li:last-child { margin-bottom: 0; }
+.steps li::before {
+  counter-increment: step; content: counter(step);
+  position: absolute; left: 0; top: 2px;
+  width: 24px; height: 24px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 12px; color: var(--cyan);
+  border: 1px solid var(--line-strong);
+}
+.steps strong { color: var(--ink); font-weight: 600; }
+.sub-head { margin: 66px 0 26px; }
+.sub-head h3 {
+  font-family: var(--display); font-weight: 700;
+  font-size: clamp(21px, 2.4vw, 28px);
+  line-height: 1.15; letter-spacing: -.01em;
+  margin-top: 8px;
+}
+
+/* ---------- sections ---------- */
+section { padding: 78px 0; border-top: 1px solid var(--line); position: relative; }
+.sec-head { margin-bottom: 44px; }
+h2 {
+  font-family: var(--display);
+  font-size: clamp(28px, 3.6vw, 42px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -.01em;
+  margin-top: 10px;
+}
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* one line */
+.oneline { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+@media (max-width: 860px) { .oneline { grid-template-columns: 1fr; } }
+.oneline p { color: var(--ink-dim); margin-bottom: 16px; }
+.oneline p strong { color: var(--ink); }
+
+/* code blocks */
+.codeblock {
+  position: relative;
+  background: var(--paper-sunken);
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.codeblock .bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--mono); font-size: 11px;
+  color: var(--ink-faint); letter-spacing: .08em;
+}
+.codeblock pre { padding: 18px 20px; overflow-x: auto; font-size: 13.5px; line-height: 1.7; }
+.c-kw { color: #7fb5ff; }
+.c-ty { color: #8be9c3; }
+.c-str { color: var(--amber); }
+.c-cm { color: var(--ink-faint); font-style: italic; }
+.c-fn { color: var(--cyan); }
+.c-num { color: #ff9fb2; }
+
+/* problem cards */
+.probs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; counter-reset: prob; }
+@media (max-width: 860px) { .probs { grid-template-columns: 1fr; } }
+.prob {
+  position: relative;
+  background: var(--paper-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  padding: 28px 24px 24px;
+  transition: transform .2s ease, border-color .2s ease;
+}
+.prob:hover { transform: translateY(-4px); border-color: var(--cyan); }
+.prob::before {
+  counter-increment: prob;
+  content: "0" counter(prob);
+  position: absolute; top: -14px; left: 18px;
+  font-family: var(--mono); font-size: 12px;
+  color: var(--amber);
+  background: var(--paper);
+  border: 1px solid color-mix(in srgb, var(--amber) 45%, transparent);
+  border-radius: 99px;
+  padding: 2px 10px;
+}
+.prob h3 { font-family: var(--display); font-weight: 700; font-size: 19px; margin-bottom: 10px; }
+.prob code.ref-code { font-size: 12px; color: var(--cyan); }
+.prob p { color: var(--ink-dim); font-size: 14.5px; margin-top: 8px; }
+
+/* spec table */
+.spec { border: 1px solid var(--line-strong); border-radius: 10px; overflow: hidden; }
+.spec-row {
+  display: grid; grid-template-columns: 250px minmax(0,1fr) 130px;
+  border-top: 1px solid var(--line);
+  transition: background .15s ease;
+}
+.spec-row:first-child { border-top: none; }
+.spec-row:hover { background: var(--paper-raised); }
+.spec-row > div { padding: 15px 20px; }
+.spec-row .k { font-family: var(--mono); font-size: 13.5px; color: var(--ink); }
+.spec-row .d { color: var(--ink-dim); font-size: 14px; }
+.spec-row .m { font-family: var(--mono); font-size: 11px; color: var(--green); text-align: right; letter-spacing: .06em; align-self: center; }
+.spec-row .m.amber { color: var(--amber); }
+@media (max-width: 760px) {
+  .spec-row { grid-template-columns: 1fr; }
+  .spec-row .m { text-align: left; padding-top: 0; }
+  .spec-row .d { padding-top: 0; padding-bottom: 0; }
+}
+
+/* devtools */
+.devtools-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 48px; }
+@media (max-width: 940px) { .devtools-grid { grid-template-columns: 1fr; } }
+.devtools-grid p { color: var(--ink-dim); margin-bottom: 14px; }
+.devtools-grid p strong { color: var(--ink); }
+.panel-index { border: 1px solid var(--line-strong); border-radius: 10px; overflow: hidden; }
+.panel-index .pi-row { display: grid; grid-template-columns: 108px minmax(0, 1fr); border-top: 1px solid var(--line); }
+.panel-index .pi-row:first-child { border-top: none; }
+.panel-index .pi-row > * { padding: 13px 16px; }
+.panel-index .pi-k { font-family: var(--mono); font-size: 12.5px; color: var(--cyan); }
+.panel-index .pi-d { color: var(--ink-dim); font-size: 14px; }
+
+/* testing strip */
+.duo { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 22px; }
+@media (max-width: 860px) { .duo { grid-template-columns: 1fr; } }
+
+/* footer title block */
+footer { border-top: 1px solid var(--line); margin-top: 40px; }
+.titleblock {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  border: 1px solid var(--line-strong);
+  border-bottom: none;
+  font-family: var(--mono); font-size: 12px;
+  margin-top: 72px;
+}
+.tb-cell { border-right: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong); padding: 12px 16px; }
+.tb-cell:nth-child(4n) { border-right: none; }
+.tb-cell .lbl { display: block; font-size: 9.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 3px; }
+.tb-cell .val { color: var(--ink); }
+.tb-cell .val a { color: var(--cyan); }
+@media (max-width: 760px) { .titleblock { grid-template-columns: repeat(2, 1fr); } .tb-cell:nth-child(2n) { border-right: none; } }
+.foot-note { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 22px 0 34px; color: var(--ink-faint); font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; }
+
+/* hero entrance */
+@media (prefers-reduced-motion: no-preference) {
+  .stagger > * { opacity: 0; transform: translateY(16px); animation: rise .7s cubic-bezier(.2,.7,.2,1) forwards; }
+  .stagger > *:nth-child(1) { animation-delay: .05s; }
+  .stagger > *:nth-child(2) { animation-delay: .15s; }
+  .stagger > *:nth-child(3) { animation-delay: .25s; }
+  .stagger > *:nth-child(4) { animation-delay: .35s; }
+  .stagger > *:nth-child(5) { animation-delay: .45s; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+  .dp-dot.on { animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 50% { box-shadow: 0 0 2px var(--green); opacity: .6; } }
+}
+</style>
 </head>
-
 <body>
-  <div id="app"></div>
-  <script src="//cdn.jsdelivr.net/npm/docsify-edit-on-github"></script>
-  <script>
-    window.$docsify = {
-      name: 'Device Preview',
-      formatUpdated: '{MM}/{DD} {HH}:{mm}',
-      coverpage: true,
-      themeColor: '#58B5F0',
-      repo: '',
-      loadSidebar: true,
-      subMaxLevel: 2,
-      basePath:
-        'https://raw.githubusercontent.com/aloisdeniel/flutter_device_preview/master/docs/',
-      plugins: [
-        EditOnGithubPlugin.create('https://github.com/aloisdeniel/flutter_device_preview/blob/master/docs/',
-          null,
-          function (file) {
-            return 'Edit the page';
-          }),
-      ]
-    }
-  </script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/TaQini/docsify-twemoji@master/twemoji.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
-  <script src="js/prism-dart.js"></script>
-</body>
 
+<header class="nav">
+  <div class="sheet nav-inner">
+    <a class="brand" href="#">
+      <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
+        <rect x="4" y="2" width="24" height="28" rx="4" stroke="var(--cyan)" stroke-width="2"/>
+        <line x1="10" y1="16" x2="22" y2="16" stroke="var(--amber)" stroke-width="2"/>
+        <line x1="16" y1="10" x2="16" y2="22" stroke="var(--amber)" stroke-width="2"/>
+      </svg>
+      <b>device_preview</b><span class="v">3.0</span>
+    </a>
+    <nav class="links">
+      <a href="#demo">Demo</a>
+      <a href="#news">News</a>
+      <a href="#why">Why</a>
+      <a href="#simulate">What it simulates</a>
+      <a href="#devtools">DevTools</a>
+      <a href="#api">Get started</a>
+      <a class="gh" href="https://github.com/aloisdeniel/flutter_device_preview">GitHub ↗</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="sheet hero-grid">
+    <div class="stagger">
+      <span class="tag">Flutter · device simulation</span>
+      <h1>Every device.<br><span class="accent">One</span> <span class="outline">app run.</span></h1>
+      <p class="lede">Switch your running Flutter app to an iPhone SE, an iPad in landscape or a 200%-text-scale Pixel — <strong>instantly, without a rebuild or a simulator</strong>. Screen size, safe areas, locale, brightness, text scale and accessibility all follow, so layout problems surface while you're still writing the layout.</p>
+      <div class="hero-ctas">
+        <a class="btn primary" href="#demo">Try it live</a>
+        <a class="btn ghost" href="#api">Get started</a>
+        <a class="btn ghost" href="https://pub.dev/packages/device_preview">pub.dev ↗</a>
+      </div>
+      <div class="install">
+        <span><span class="dollar">$</span> flutter pub add device_preview</span>
+        <button class="copy-btn" data-copy="flutter pub add device_preview">copy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="demo">
+  <div class="sheet">
+    <div class="sec-head reveal">
+      <span class="tag">Live demo</span>
+      <h2>Not a mockup.<br>A running app.</h2>
+    </div>
+
+    <p class="demo-lede reveal">On the left, the Flutter counter app compiled for the web — <strong>the stock one</strong>, with nothing but a theme change and <code>DevicePreview.enable()</code>. On the right, the same controls the DevTools extension gives you, rebuilt in HTML and talking to the app over <code>postMessage</code> instead of the VM service. Pick a device, rotate it, push the text scale: the app you are looking at re-lays itself out, and the counter keeps counting.</p>
+
+    <div class="demo-grid reveal">
+      <div class="stage">
+        <div class="stage-msg" id="dpStageMsg"><span><b>Loading the demo…</b><br>a 3 MB Flutter web app, fetched once</span></div>
+      </div>
+
+      <aside class="dp-panel" id="dpPanel" aria-label="Device preview controls">
+        <div class="dp-bar">
+          <span class="dp-dot" id="dpDot"></span>
+          <span class="dp-name" id="dpDeviceLabel">Connecting…</span>
+          <button class="dp-reset" type="button" id="dpReset" title="Clear the whole simulation (pass through to the real device)">⟲ reset</button>
+        </div>
+
+        <div class="dp-body">
+          <div class="dp-sec">Device</div>
+          <div class="dp-row">
+            <span class="dp-lbl">Preset</span>
+            <span class="dp-ctl"><select id="dpPreset" aria-label="Device preset"></select></span>
+          </div>
+          <div class="dp-row">
+            <span class="dp-lbl">Orientation</span>
+            <span class="dp-ctl">
+              <span class="dp-seg" id="dpOrientation" role="group" aria-label="Orientation">
+                <button type="button" data-value="portrait">portrait</button>
+                <button type="button" data-value="landscape">landscape</button>
+              </span>
+            </span>
+          </div>
+          <div class="dp-row">
+            <label class="dp-lbl" for="dpSystemUi">System UI</label>
+            <span class="dp-ctl"><input type="checkbox" class="dp-switch" id="dpSystemUi"></span>
+          </div>
+          <div class="dp-row">
+            <span class="dp-lbl">Touch input</span>
+            <span class="dp-ctl">
+              <span class="dp-seg dp-tri" id="dpTouch" role="group" aria-label="Touch input">
+                <button type="button" data-value="">auto</button>
+                <button type="button" data-value="on">on</button>
+                <button type="button" data-value="off">off</button>
+              </span>
+            </span>
+          </div>
+          <details class="dp-custom">
+            <summary>Custom…</summary>
+            <div class="dp-fields">
+              <label>W <input type="number" id="dpCustomW" value="390" min="1"></label>
+              <label>H <input type="number" id="dpCustomH" value="844" min="1"></label>
+              <label>DPR <input type="number" id="dpCustomDpr" value="3" min="0.5" step="0.5"></label>
+              <button class="dp-btn" type="button" id="dpCustomApply">apply</button>
+            </div>
+          </details>
+
+          <div class="dp-sec">Display</div>
+          <div class="dp-row">
+            <span class="dp-lbl">Brightness</span>
+            <span class="dp-ctl">
+              <span class="dp-seg" id="dpBrightness" role="group" aria-label="Brightness">
+                <button type="button" data-value="">system</button>
+                <button type="button" data-value="light">light</button>
+                <button type="button" data-value="dark">dark</button>
+              </span>
+            </span>
+          </div>
+          <div class="dp-row">
+            <label class="dp-lbl" for="dpTextScale">Text scale</label>
+            <span class="dp-ctl">
+              <input type="range" id="dpTextScale" min="0.5" max="3" step="0.1" value="1">
+              <span class="dp-val" id="dpTextScaleVal">system</span>
+              <button class="dp-btn" type="button" id="dpTextScaleReset" title="Follow the real device">auto</button>
+            </span>
+          </div>
+          <div class="dp-row">
+            <span class="dp-lbl">24-hour time</span>
+            <span class="dp-ctl">
+              <span class="dp-seg dp-tri" id="dp24h" role="group" aria-label="24-hour time">
+                <button type="button" data-value="">system</button>
+                <button type="button" data-value="on">on</button>
+                <button type="button" data-value="off">off</button>
+              </span>
+            </span>
+          </div>
+
+          <div class="dp-sec">Locale</div>
+          <div class="dp-row">
+            <span class="dp-ctl" style="justify-content: flex-start;">
+              <select id="dpLocaleChoice" aria-label="Locale to add"></select>
+              <button class="dp-btn" type="button" id="dpLocaleAdd">add</button>
+              <button class="dp-btn" type="button" id="dpLocaleClear">clear</button>
+            </span>
+          </div>
+          <div class="dp-chips" id="dpLocales"></div>
+          <p class="dp-empty" id="dpLocalesEmpty">Using the real device locales.</p>
+
+          <div class="dp-sec">Accessibility</div>
+          <div id="dpA11y"></div>
+
+          <div class="dp-sec">Platform</div>
+          <div class="dp-row">
+            <label class="dp-lbl" for="dpPlatform">Target</label>
+            <span class="dp-ctl">
+              <select id="dpPlatform">
+                <option value="">real platform</option>
+                <option value="android">android</option>
+                <option value="iOS">iOS</option>
+                <option value="macOS">macOS</option>
+                <option value="windows">windows</option>
+                <option value="linux">linux</option>
+                <option value="fuchsia">fuchsia</option>
+              </select>
+            </span>
+          </div>
+          <p class="dp-note" id="dpPlatformNote">Applying a platform override triggers a reassemble (like a hot reload).</p>
+        </div>
+
+        <div class="dp-foot">
+          <span id="dpMetrics">—</span>
+          <span id="dpFit"></span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="news">
+  <div class="sheet">
+    <div class="sec-head reveal">
+      <span class="tag">Latest news</span>
+      <h2>3.0 moves the simulation<br>under your app.</h2>
+    </div>
+    <div class="news reveal">
+      <div class="news-meta">
+        <span>August 2026</span>
+        <span class="ver">v3.0</span>
+      </div>
+      <div class="news-body">
+        <p><strong>3.0 is a rewrite.</strong> Until now, device_preview was a widget: it sat at the root of your tree, injected a <code>MediaQuery</code> underneath itself, and drew its own control panel next to the simulated screen. That worked, but the simulation only existed <em>below</em> that widget — and it lived inside the app it was measuring. The idea is unchanged; everything under it has moved one layer down.</p>
+        <p><strong>The simulation now lives in a custom <code>WidgetsBinding</code></strong>, installed by one line before <code>runApp</code>. It wraps the engine's <code>PlatformDispatcher</code> and <code>FlutterView</code>, so screen size, pixel ratio, safe areas, orientation, locale, brightness, text scale and accessibility flags are simulated at the boundary the framework itself reads. Nothing is injected halfway down the tree, so <code>MediaQuery.of</code> is right everywhere — inside routes, dialogs and overlays — and code that reads <code>View.of(context)</code> or the dispatcher directly agrees with it. Pointer packets pass through the same seam, which is how your mouse can be delivered to the app as a finger. And because it is a binding rather than a widget, <code>flutter_test</code> can install it too — the same simulation, with no wrapper around the app.</p>
+        <p><strong>That is what makes it solid.</strong> A wrapper can only simulate what sits below it, so an app effectively held two answers to the same question — the engine's and the injected one — and anything that read the wrong one, or that built its own <code>MediaQuery</code> from the view, quietly saw the real device. There is nothing to opt into now and nothing to remember: no <code>builder:</code> to thread through <code>MaterialApp</code>, no rule about staying under the wrapper, no widget that has to be first. And it is consistent by construction: metrics, safe areas, locale resolution, text scaling, accessibility flags and pointer routing all come through the one seam, so they cannot drift apart from each other, and every change travels the notification path the framework already uses for a real device — a rotation or a brightness switch is indistinguishable from the engine sending one. The simulation applies everywhere or nowhere; there is no half-simulated tree. It is also why a golden captured this way matches what the panel just showed you: the same code path, not a lookalike.</p>
+        <p><strong>The controls moved to Flutter DevTools</strong> for the same reason. A panel that lives in your widget tree perturbs what it measures: it adds ancestors, competes for focus and theme, and takes screen away from the app you are trying to look at. Outside the tree, your app keeps the whole window and none of the control surface ships with it — the device frames live in the extension, and only the device you selected travels over the VM service. DevTools is already open beside a running Flutter app on every platform, so there is nothing to install and nothing to configure; and when you would rather script the same changes, the controller API and your tests reach them directly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="sheet">
+    <div class="sec-head reveal">
+      <span class="tag">Why</span>
+      <h2>Ship for devices<br>you don't own.</h2>
+    </div>
+
+    <div class="oneline reveal">
+      <div>
+        <p>You build on one screen. Your users arrive on hundreds — a five-year-old phone with a 320pt-wide screen, a tablet in landscape, a desktop window dragged to half its width, a notched display, a fold.</p>
+        <p><strong>Add one line to <code>main()</code> and every one of them is a keystroke away.</strong> The app you're already running re-lays itself out at the new size, with that device's safe areas, pixel ratio, locale, brightness, text scale and accessibility settings. No rebuild, no simulator boot, no cable.</p>
+        <p>Because your app reads the simulated values through the same <code>MediaQuery</code> it always used, the things that usually break in front of a customer — a clipped headline, a button under the home indicator, an overflow at 200% text — break in front of <em>you</em>, seconds after you write them.</p>
+      </div>
+      <div class="codeblock">
+        <div class="bar"><span>main.dart — the entire integration</span><button class="copy-btn" data-copy="void main() {
+  DevicePreview.enable();
+  runApp(const MyApp());
+}">copy</button></div>
+        <pre><span class="c-kw">void</span> <span class="c-fn">main</span>() {
+  <span class="c-ty">DevicePreview</span>.<span class="c-fn">enable</span>();
+  <span class="c-fn">runApp</span>(<span class="c-kw">const</span> <span class="c-ty">MyApp</span>());  <span class="c-cm">// runs as usual — now simulatable</span>
+}</pre>
+      </div>
+    </div>
+
+    <div class="probs" style="margin-top: 64px;">
+      <div class="prob reveal">
+        <h3>The device you don't own</h3>
+        <p>Check the small phone, the tablet in landscape and the half-width desktop window in the time it takes to click three chips. Every screen in the catalog carries real metrics — resolution, pixel ratio and per-orientation safe areas — so what you see is what that hardware would show.</p>
+      </div>
+      <div class="prob reveal">
+        <h3>The inset you forgot</h3>
+        <p>Notches, punch-holes, home indicators, hinges and the software keyboard all move in. <code>SafeArea</code>, <code>MediaQuery.padding</code> and <code>viewInsets</code> report the simulated device's values, so content that would hide under a cutout hides now — while you can still fix it.</p>
+      </div>
+      <div class="prob reveal">
+        <h3>The user who isn't you</h3>
+        <p>Push text scale to 200%, switch to bold text or reduce motion, reorder locales, flip to dark mode — one panel, live, no device settings to dig through and no state to lose. The accessibility pass stops being a release-week scramble.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="simulate">
+  <div class="sheet">
+    <div class="sec-head reveal">
+      <span class="tag">Coverage</span>
+      <h2>What gets simulated</h2>
+    </div>
+    <div class="spec reveal">
+      <div class="spec-row"><div class="k">Screen size &amp; pixel ratio</div><div class="d">Any resolution and density, from a 320pt phone to a 13″ tablet. The app is scaled to fit your window, so a screen larger than your monitor still previews whole.</div><div class="m">SCREEN</div></div>
+      <div class="spec-row"><div class="k">Safe areas</div><div class="d">Notches, punch-holes and home indicators, correct per device and per orientation. <code>SafeArea</code> and <code>MediaQuery.padding</code> respond.</div><div class="m">SCREEN</div></div>
+      <div class="spec-row"><div class="k">Orientation</div><div class="d">Portrait ⇄ landscape in one click, with safe areas rotating the way the real device rotates them.</div><div class="m">SCREEN</div></div>
+      <div class="spec-row"><div class="k">Folds &amp; hinges</div><div class="d">Display features for foldables, so hinge-aware layouts can be checked without a foldable on the desk.</div><div class="m">SCREEN</div></div>
+      <div class="spec-row"><div class="k">Device frame</div><div class="d">The device drawn around your app: its screen outline clips the corners, its body is painted behind. Nothing ships in your app — the frame travels from the DevTools catalog when you pick a device.</div><div class="m">SCREEN</div></div>
+      <div class="spec-row"><div class="k">System UI</div><div class="d">A simulated status bar and gesture pill, laid out from the device's own safe areas and tinted from your app's <code>SystemUiOverlayStyle</code> — so a status bar style is visible while you write it. One switch hides them.</div><div class="m">SCREEN</div></div>
+      <div class="spec-row"><div class="k">Touch input</div><div class="d">Your mouse reported to the app as a finger: drag to scroll a list the way a thumb does — the mouse is not a drag device on desktop or the web — with gestures on their touch paths and no hover. The wheel keeps scrolling. Left on <em>auto</em> it follows the device: on for a phone, tablet or foldable, off for a desktop window.</div><div class="m">INPUT</div></div>
+      <div class="spec-row"><div class="k">Keyboard insets</div><div class="d">The software keyboard's <code>viewInsets</code> reach your layout, so you can see what the keyboard covers.</div><div class="m">SCREEN</div></div>
+      <div class="spec-row"><div class="k">Locales</div><div class="d">A full ordered locale list — your app's locale resolution, translations and <code>Intl</code> date, number and currency formatting all follow.</div><div class="m">SYSTEM</div></div>
+      <div class="spec-row"><div class="k">Brightness</div><div class="d">Light and dark, applied live — <code>ThemeMode.system</code> flips as you toggle.</div><div class="m">SYSTEM</div></div>
+      <div class="spec-row"><div class="k">Text scale</div><div class="d">Up to 200% and beyond, the single fastest way to find overflowing rows and clipped labels.</div><div class="m">SYSTEM</div></div>
+      <div class="spec-row"><div class="k">Accessibility</div><div class="d">Bold text, reduce motion, high contrast, invert colors, disable animations, accessible navigation and switch labels — each independently on, off, or left as the real device.</div><div class="m">SYSTEM</div></div>
+      <div class="spec-row"><div class="k">24-hour time</div><div class="d">Preview date and time UI the way users in 24-hour locales will read it.</div><div class="m">SYSTEM</div></div>
+      <div class="spec-row"><div class="k">Target platform</div><div class="d">Switch Material and Cupertino behaviour — scroll physics, page transitions, adaptive widgets — between iOS, Android, macOS, Windows and Linux. Debug builds only.</div><div class="m amber">DEBUG</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="devtools">
+  <div class="sheet">
+    <div class="sec-head reveal">
+      <span class="tag">Control surface</span>
+      <h2>The controls live<br>in Flutter DevTools.</h2>
+    </div>
+    <div class="devtools-grid">
+      <div class="reveal">
+        <p><strong>A device_preview tab appears in DevTools</strong> as soon as your app depends on the package — nothing to install, nothing to configure. Your screen stays entirely for the app you're designing.</p>
+        <p>Pick a device, rotate it, drag the text scale, flip brightness, reorder locales, toggle accessibility flags. The running app updates as you go, and it keeps its state: the screen you were on, the data you'd loaded, the form you'd half-filled are all still there.</p>
+        <p><strong>Hot restart doesn't lose your setup.</strong> Turn on <em>Keep across restarts</em> and the panel puts your simulated device back the moment the app returns.</p>
+        <p><a class="btn ghost" href="#demo">↑ Try the panel on the live demo</a></p>
+      </div>
+      <div class="panel-index reveal">
+        <div class="pi-row"><div class="pi-k">Device</div><div class="pi-d">The catalog, orientation, the simulated system UI, mouse-as-finger — and a custom size when no catalog entry fits.</div></div>
+        <div class="pi-row"><div class="pi-k">Display</div><div class="pi-d">Brightness, text scale, 24-hour time.</div></div>
+        <div class="pi-row"><div class="pi-k">Locale</div><div class="pi-d">The ordered locale list your app resolves against.</div></div>
+        <div class="pi-row"><div class="pi-k">Accessibility</div><div class="pi-d">Seven flags, each on, off, or left as the real device reports it.</div></div>
+        <div class="pi-row"><div class="pi-k">Platform</div><div class="pi-d">The target platform Material and Cupertino adapt to. Debug builds only.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="api">
+  <div class="sheet">
+    <div class="sec-head reveal">
+      <span class="tag">Get started</span>
+      <h2>One line in main().<br>Then a tab in DevTools.</h2>
+    </div>
+
+    <div class="oneline reveal">
+      <div>
+        <ol class="steps">
+          <li><strong>Add the package.</strong> <code>flutter pub add device_preview</code> — no platform setup, no configuration file, nothing to register.</li>
+          <li><strong>Enable it before <code>runApp</code>.</strong> That is the entire integration, and it is safe to leave in: simulation is active in debug and profile builds and completely off in release, where the binding behaves exactly like <code>WidgetsFlutterBinding</code>.</li>
+          <li><strong>Open Flutter DevTools and pick the <em>device_preview</em> tab.</strong> Choose a device: the app you are already running moves onto it, keeping the screen you were on and the state you had loaded.</li>
+        </ol>
+      </div>
+      <div class="codeblock">
+        <div class="bar"><span>main.dart</span><button class="copy-btn" data-copy="import 'package:device_preview/device_preview.dart';
+
+void main() {
+  DevicePreview.enable();
+  runApp(const MyApp());
+}">copy</button></div>
+        <pre><span class="c-kw">import</span> <span class="c-str">'package:device_preview/device_preview.dart'</span>;
+
+<span class="c-kw">void</span> <span class="c-fn">main</span>() {
+  <span class="c-ty">DevicePreview</span>.<span class="c-fn">enable</span>();  <span class="c-cm">// debug + profile only</span>
+  <span class="c-fn">runApp</span>(<span class="c-kw">const</span> <span class="c-ty">MyApp</span>());
+}</pre>
+      </div>
+    </div>
+
+    <div class="sub-head reveal">
+      <span class="tag">API</span>
+      <h3>Or drive it from Dart —<br>including in your tests.</h3>
+    </div>
+    <div class="duo">
+      <div class="codeblock reveal">
+        <div class="bar"><span>anywhere.dart — the controller API</span></div>
+        <pre><span class="c-kw">final</span> c = <span class="c-ty">DevicePreview</span>.controller;
+
+<span class="c-cm">// full preset, orientation included</span>
+<span class="c-kw">await</span> c.<span class="c-fn">applyPreset</span>(<span class="c-ty">DevicePresets</span>.iPhone16Pro);
+<span class="c-kw">await</span> c.<span class="c-fn">setOrientation</span>(<span class="c-ty">Orientation</span>.landscape);
+
+<span class="c-cm">// partial overrides, merged over the real device</span>
+<span class="c-kw">await</span> c.<span class="c-fn">update</span>((s) =&gt; s.<span class="c-fn">copyWith</span>(
+  textScaleFactor: <span class="c-num">2.0</span>,
+  platformBrightness: <span class="c-ty">Brightness</span>.dark,
+));
+
+<span class="c-cm">// back to reality</span>
+<span class="c-kw">await</span> c.<span class="c-fn">reset</span>();</pre>
+      </div>
+      <div class="codeblock reveal">
+        <div class="bar"><span>widget_test.dart — simulated widget tests</span></div>
+        <pre><span class="c-kw">void</span> <span class="c-fn">main</span>() {
+  <span class="c-kw">final</span> binding =
+      <span class="c-ty">TestDevicePreviewBinding</span>.<span class="c-fn">ensureInitialized</span>();
+
+  <span class="c-fn">testWidgets</span>(<span class="c-str">'lays out like an iPhone SE'</span>, (tester) <span class="c-kw">async</span> {
+    <span class="c-kw">await</span> binding.devicePreview!
+        .<span class="c-fn">applyPreset</span>(<span class="c-ty">DevicePresets</span>.iPhoneSe3);
+    <span class="c-kw">await</span> tester.<span class="c-fn">pumpWidget</span>(<span class="c-kw">const</span> <span class="c-ty">MyApp</span>());
+    <span class="c-cm">// MediaQuery: 375×667 @2x, SE safe areas.</span>
+  });
+}</pre>
+      </div>
+    </div>
+    <p class="reveal" style="color: var(--ink-dim); margin-top: 26px; max-width: 72ch;">The same simulation is available to <code>flutter_test</code> and <code>integration_test</code>, so a widget test can assert that a screen fits an iPhone SE, or that nothing overflows at 200% text — and goldens can be captured for a whole matrix of devices in CI, without a device in sight. Presets ship in a separate import, so the ones you never reference are dropped from your build.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="sheet">
+    <div class="titleblock reveal">
+      <div class="tb-cell"><span class="lbl">Project</span><span class="val">device_preview</span></div>
+      <div class="tb-cell"><span class="lbl">Version</span><span class="val">3.0</span></div>
+      <div class="tb-cell"><span class="lbl">Setup</span><span class="val">one line in main()</span></div>
+      <div class="tb-cell"><span class="lbl">Controls</span><span class="val">DevTools · Dart · tests</span></div>
+      <div class="tb-cell"><span class="lbl">Source</span><span class="val"><a href="https://github.com/aloisdeniel/flutter_device_preview">github.com/aloisdeniel</a></span></div>
+      <div class="tb-cell"><span class="lbl">Package</span><span class="val"><a href="https://pub.dev/packages/device_preview">pub.dev/device_preview</a></span></div>
+      <div class="tb-cell"><span class="lbl">License</span><span class="val">MIT</span></div>
+      <div class="tb-cell"><span class="lbl">Drafted by</span><span class="val">Aloïs Deniel</span></div>
+    </div>
+    <div class="foot-note">
+      <span>FIND THE LAYOUT BUG BEFORE YOUR USERS DO</span>
+      <span>© <span id="year">2026</span> — MIT</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// copy buttons
+document.querySelectorAll('.copy-btn').forEach((btn) => {
+  btn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(btn.dataset.copy);
+      const old = btn.textContent;
+      btn.textContent = 'copied';
+      setTimeout(() => (btn.textContent = old), 1400);
+    } catch (_) {}
+  });
+});
+
+// scroll reveals
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+
+const $ = (id) => document.getElementById(id);
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ---------------------------------------------------------------------------
+ * The live demo.
+ *
+ * This is the DevTools extension's panel, rebuilt in HTML. It plays the same
+ * part its Dart original does: the page owns the device catalog
+ * (device_catalog.json, generated from device_specs/) and the panel state,
+ * builds a whole DeviceSimulation JSON locally, and pushes it to the app —
+ * which is the single source of truth and answers with its state. Only the
+ * transport differs: window.postMessage instead of the VM service.
+ * ------------------------------------------------------------------------ */
+(() => {
+  const CHANNEL = 'device_preview_demo';
+  const DEMO_URL = 'demo/index.html';
+  const CATALOG_URL = 'device_catalog.json';
+  const DEFAULT_DEVICE = 'apple-iphone-17-pro';
+
+  // Simulation keys describing screen metrics: picking a device replaces
+  // exactly this set and preserves every other override.
+  const METRIC_KEYS = ['presetId', 'orientation', 'screenSize', 'frame', 'systemUi',
+    'deviceKind', 'devicePixelRatio', 'padding', 'viewPadding', 'systemGestureInsets',
+    'displayFeatures'];
+  const A11Y_FLAGS = [
+    ['accessibleNavigation', 'Accessible nav'],
+    ['invertColors', 'Invert colors'],
+    ['disableAnimations', 'No animations'],
+    ['boldText', 'Bold text'],
+    ['reduceMotion', 'Reduce motion'],
+    ['highContrast', 'High contrast'],
+    ['onOffSwitchLabels', 'Switch labels'],
+  ];
+  const COMMON_LOCALES = ['en-US', 'en-GB', 'fr-FR', 'de-DE', 'es-ES', 'it-IT',
+    'pt-BR', 'nl-NL', 'ru-RU', 'ja-JP', 'ko-KR', 'zh-CN', 'ar-SA', 'hi-IN'];
+  const KIND_LABELS = { phone: 'Phones', tablet: 'Tablets', foldable: 'Foldables', desktop: 'Desktop windows' };
+  const KIND_ORDER = ['phone', 'tablet', 'foldable', 'desktop'];
+
+  const section = document.getElementById('demo');
+  const stage = section.querySelector('.stage');
+  const stageMsg = $('dpStageMsg');
+
+  let frame = null;
+  let catalog = [];
+  let state = null;
+  let connected = false;
+  let bootstrapped = false;
+  let seq = 0;
+  const pending = new Map();
+  let queue = Promise.resolve();
+
+  // --- transport -----------------------------------------------------------
+
+  function send(type, extra) {
+    if (!frame || !frame.contentWindow) return Promise.reject(new Error('no app'));
+    const requestId = 'page-' + (++seq);
+    return new Promise((resolve, reject) => {
+      const timer = setTimeout(() => {
+        pending.delete(requestId);
+        reject(new Error('timed out'));
+      }, 10000);
+      pending.set(requestId, { resolve, timer });
+      frame.contentWindow.postMessage(
+        JSON.stringify(Object.assign({ channel: CHANNEL, type, requestId }, extra || {})),
+        '*',
+      );
+    });
+  }
+
+  window.addEventListener('message', (event) => {
+    if (typeof event.data !== 'string') return;
+    let msg;
+    try { msg = JSON.parse(event.data); } catch (_) { return; }
+    if (!msg || msg.channel !== CHANNEL) return;
+    if (msg.state) state = msg.state;
+    const entry = msg.requestId ? pending.get(msg.requestId) : null;
+    if (entry) {
+      pending.delete(msg.requestId);
+      clearTimeout(entry.timer);
+      entry.resolve(msg.state);
+    }
+    if (msg.type === 'ready' || msg.type === 'state') onConnected();
+    render();
+  });
+
+  function onConnected() {
+    if (!connected) {
+      connected = true;
+      stageMsg.classList.add('hidden');
+      $('dpDot').classList.add('on');
+    }
+    maybeBootstrap();
+  }
+
+  /** Puts a device on screen as soon as both ends are up, so the demo never
+   *  greets a visitor with an unsimulated window. */
+  function maybeBootstrap() {
+    if (bootstrapped || !connected || !catalog.length) return;
+    bootstrapped = true;
+    if (state && state.simulation && state.simulation.screenSize) return;
+    const preset = presetById(DEFAULT_DEVICE) || catalog[0];
+    enqueue(() => applyPreset(preset, 'portrait'));
+  }
+
+  // --- simulation state ----------------------------------------------------
+
+  const simulation = () => (state && state.simulation) || null;
+  const clone = (value) => JSON.parse(JSON.stringify(value));
+  const currentSim = () => (simulation() ? clone(simulation()) : {});
+  const presetById = (id) => catalog.find((p) => p.id === id) || null;
+
+  /** A simulation carrying nothing but its orientation label overrides
+   *  nothing: send it as a plain reset. */
+  function normalize(sim) {
+    const keys = Object.keys(sim);
+    if (keys.length === 0 || (keys.length === 1 && keys[0] === 'orientation')) return null;
+    return sim;
+  }
+
+  function enqueue(task) {
+    const result = queue.then(() => task());
+    queue = result.catch(() => {});
+    return result;
+  }
+
+  function push(sim) {
+    return send('setSimulation', { simulation: normalize(sim) })
+      .then((next) => { if (next) { state = next; render(); } })
+      .catch(() => { render(); });
+  }
+
+  function mutate(key, value) {
+    return enqueue(() => {
+      const sim = currentSim();
+      if (value === null || value === undefined) delete sim[key];
+      else sim[key] = value;
+      return push(sim);
+    });
+  }
+
+  /** The rotation rule of the design doc: the notch mirrors to both sides,
+   *  the home indicator stays at the bottom. */
+  function rotateInsets(insets, toLandscape) {
+    const side = (key) => Number(insets[key]) || 0;
+    return toLandscape
+      ? { left: side('top'), top: 0, right: side('top'), bottom: side('bottom') }
+      : { left: 0, top: side('left'), right: 0, bottom: side('bottom') };
+  }
+
+  /** Display features are geometry: map their bounds through the quarter turn. */
+  function rotateFeatures(features, toLandscape, extent) {
+    return features.map((feature) => {
+      if (!feature || !feature.bounds) return feature;
+      const side = (key) => Number(feature.bounds[key]) || 0;
+      const bounds = toLandscape
+        ? { left: side('top'), top: extent - side('right'), right: side('bottom'), bottom: extent - side('left') }
+        : { left: extent - side('bottom'), top: side('left'), right: extent - side('top'), bottom: side('right') };
+      return Object.assign({}, feature, { bounds });
+    });
+  }
+
+  function applyPreset(preset, orientation, extra) {
+    const sim = currentSim();
+    METRIC_KEYS.forEach((key) => delete sim[key]);
+    Object.assign(sim, extra || {});
+    sim.presetId = preset.id;
+    sim.orientation = orientation;
+    sim.deviceKind = preset.kind || 'phone';
+    // The frame and the bars are described in portrait and resolved app-side,
+    // so rotation never touches them.
+    if (preset.frame) sim.frame = preset.frame;
+    if (preset.systemUi) sim.systemUi = preset.systemUi;
+    const landscape = orientation === 'landscape';
+    const size = preset.portraitSize;
+    if (size) {
+      sim.screenSize = landscape
+        ? { width: size.height, height: size.width }
+        : Object.assign({}, size);
+    }
+    if (preset.devicePixelRatio != null) sim.devicePixelRatio = preset.devicePixelRatio;
+    const portraitPadding = preset.portraitPadding;
+    const padding = landscape
+      ? preset.landscapePadding || (portraitPadding ? rotateInsets(portraitPadding, true) : null)
+      : portraitPadding;
+    if (padding) sim.padding = padding;
+    const portraitViewPadding = preset.portraitViewPadding || portraitPadding;
+    const viewPadding = landscape
+      ? preset.landscapeViewPadding || (portraitViewPadding ? rotateInsets(portraitViewPadding, true) : null)
+      : portraitViewPadding;
+    if (viewPadding) sim.viewPadding = viewPadding;
+    const gestures = preset.systemGestureInsets;
+    if (gestures && Object.keys(gestures).some((key) => Number(gestures[key]) !== 0)) {
+      sim.systemGestureInsets = gestures;
+    }
+    const features = preset.displayFeatures;
+    if (features && features.length) {
+      sim.displayFeatures = landscape && size
+        ? rotateFeatures(features, true, size.width)
+        : features;
+    }
+    return push(sim);
+  }
+
+  function selectRealDevice() {
+    return enqueue(() => {
+      const sim = currentSim();
+      METRIC_KEYS.forEach((key) => delete sim[key]);
+      return push(sim);
+    });
+  }
+
+  function setOrientation(orientation) {
+    return enqueue(() => {
+      const sim = currentSim();
+      if (!sim.screenSize || sim.orientation === orientation) return Promise.resolve();
+      const preset = presetById(sim.presetId);
+      if (preset) return applyPreset(preset, orientation);
+      const landscape = orientation === 'landscape';
+      const size = sim.screenSize;
+      if (sim.displayFeatures) {
+        const extent = Number(landscape ? size.width : size.height) || 0;
+        sim.displayFeatures = rotateFeatures(sim.displayFeatures, landscape, extent);
+      }
+      sim.screenSize = { width: size.height, height: size.width };
+      if (sim.padding) sim.padding = rotateInsets(sim.padding, landscape);
+      if (sim.viewPadding) sim.viewPadding = rotateInsets(sim.viewPadding, landscape);
+      sim.orientation = orientation;
+      return push(sim);
+    });
+  }
+
+  function setCustomMetrics(width, height, dpr) {
+    return enqueue(() => {
+      const sim = currentSim();
+      METRIC_KEYS.forEach((key) => delete sim[key]);
+      sim.orientation = height >= width ? 'portrait' : 'landscape';
+      sim.screenSize = { width, height };
+      sim.devicePixelRatio = dpr;
+      return push(sim);
+    });
+  }
+
+  function setAccessibilityFlag(flag, value) {
+    return enqueue(() => {
+      const sim = currentSim();
+      const accessibility = Object.assign({}, sim.accessibility || {});
+      if (value === null) delete accessibility[flag];
+      else accessibility[flag] = value;
+      if (Object.keys(accessibility).length === 0) delete sim.accessibility;
+      else sim.accessibility = accessibility;
+      return push(sim);
+    });
+  }
+
+  // --- rendering -----------------------------------------------------------
+
+  function segValue(group, value) {
+    group.querySelectorAll('button').forEach((button) => {
+      button.setAttribute('aria-pressed', String(button.dataset.value === value));
+    });
+  }
+
+  function setSegDisabled(group, disabled) {
+    group.querySelectorAll('button').forEach((button) => { button.disabled = disabled; });
+  }
+
+  const round = (value) => Math.round(Number(value) || 0);
+
+  function buildPresetOptions() {
+    const select = $('dpPreset');
+    select.innerHTML = '';
+    const real = document.createElement('option');
+    real.value = '';
+    real.textContent = 'Real device';
+    select.appendChild(real);
+    const kinds = KIND_ORDER.filter((kind) => catalog.some((p) => (p.kind || 'phone') === kind));
+    kinds.forEach((kind) => {
+      const group = document.createElement('optgroup');
+      group.label = KIND_LABELS[kind] || kind;
+      catalog
+        .filter((preset) => (preset.kind || 'phone') === kind)
+        // Same order as the DevTools picker: by brand, then newest first.
+        .sort((a, b) => (a.brand || '').localeCompare(b.brand || '')
+          || (b.year || 0) - (a.year || 0)
+          || a.name.localeCompare(b.name))
+        .forEach((preset) => {
+          const option = document.createElement('option');
+          option.value = preset.id;
+          const size = preset.portraitSize;
+          // Year before the metrics: a narrow <select> truncates the tail.
+          option.textContent = [
+            preset.name,
+            preset.year ? `· ${preset.year}` : null,
+            size ? `— ${round(size.width)}×${round(size.height)}` : null,
+          ].filter(Boolean).join(' ');
+          group.appendChild(option);
+        });
+      select.appendChild(group);
+    });
+    const custom = document.createElement('option');
+    custom.value = '__custom';
+    custom.textContent = 'Custom size';
+    custom.hidden = true;
+    select.appendChild(custom);
+  }
+
+  function renderLocales(sim) {
+    const locales = (sim && sim.locales) || [];
+    const list = $('dpLocales');
+    list.innerHTML = '';
+    locales.forEach((tag, index) => {
+      const chip = document.createElement('span');
+      chip.className = 'dp-chip' + (index === 0 ? ' primary' : '');
+      chip.appendChild(document.createTextNode(index === 0 ? `${tag} · primary` : tag));
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.textContent = '×';
+      remove.title = `Remove ${tag}`;
+      remove.addEventListener('click', () => {
+        const next = locales.filter((entry) => entry !== tag);
+        mutate('locales', next.length ? next : null);
+      });
+      chip.appendChild(remove);
+      list.appendChild(chip);
+    });
+    $('dpLocalesEmpty').style.display = locales.length ? 'none' : '';
+    $('dpLocaleClear').disabled = locales.length === 0;
+  }
+
+  function render() {
+    const sim = simulation();
+    const caps = (state && state.capabilities) || {};
+    const real = (state && state.realDevice) || {};
+    const hasScreen = !!(sim && sim.screenSize);
+
+    const preset = sim ? presetById(sim.presetId) : null;
+    $('dpDeviceLabel').textContent = !hasScreen
+      ? 'Real device'
+      : (preset ? preset.name : (sim.presetId || 'Custom size'));
+
+    const select = $('dpPreset');
+    if (select.options.length) {
+      const custom = select.querySelector('option[value="__custom"]');
+      if (custom) custom.hidden = !(hasScreen && !sim.presetId);
+      select.value = hasScreen ? (sim.presetId || '__custom') : '';
+    }
+
+    segValue($('dpOrientation'), (sim && sim.orientation) || 'portrait');
+    setSegDisabled($('dpOrientation'), !hasScreen);
+
+    const systemUi = $('dpSystemUi');
+    systemUi.checked = !sim || sim.showSystemUi !== false;
+    systemUi.disabled = !(sim && sim.systemUi);
+
+    const touch = sim && sim.touchInput;
+    segValue($('dpTouch'), touch === true ? 'on' : touch === false ? 'off' : '');
+
+    segValue($('dpBrightness'), (sim && sim.platformBrightness) || '');
+
+    const scale = sim && sim.textScaleFactor != null ? Number(sim.textScaleFactor) : null;
+    const slider = $('dpTextScale');
+    if (document.activeElement !== slider) {
+      slider.value = String(scale != null ? scale : (Number(real.textScaleFactor) || 1));
+    }
+    $('dpTextScaleVal').textContent = scale != null ? `×${scale.toFixed(1)}` : 'system';
+    $('dpTextScaleReset').disabled = scale == null;
+
+    const use24h = sim && sim.alwaysUse24HourFormat;
+    segValue($('dp24h'), use24h === true ? 'on' : use24h === false ? 'off' : '');
+
+    renderLocales(sim);
+
+    const accessibility = (sim && sim.accessibility) || {};
+    A11Y_FLAGS.forEach(([flag]) => {
+      const value = accessibility[flag];
+      segValue($(`dpA11y_${flag}`), value === true ? 'on' : value === false ? 'off' : '');
+    });
+
+    const platform = $('dpPlatform');
+    platform.value = (sim && sim.platform) || '';
+    platform.disabled = caps.targetPlatform !== true;
+    $('dpPlatformNote').textContent = platform.disabled
+      ? 'Target platform simulation needs a debug build — this demo is compiled for release, like the real panel would report.'
+      : 'Applying a platform override triggers a reassemble (like a hot reload).';
+
+    const size = sim && sim.screenSize;
+    const dpr = sim && sim.devicePixelRatio != null ? sim.devicePixelRatio : real.devicePixelRatio;
+    const shownSize = size || real.logicalSize;
+    $('dpMetrics').textContent = shownSize
+      ? `${round(shownSize.width)} × ${round(shownSize.height)}${dpr != null ? ` @${dpr}x` : ''}`
+      : '—';
+    const fit = state && state.fit;
+    $('dpFit').innerHTML = fit && fit.scale
+      ? `shown at <b>${Math.round(fit.scale * 100)}%</b>`
+      : '';
+  }
+
+  // --- wiring --------------------------------------------------------------
+
+  A11Y_FLAGS.forEach(([flag, label]) => {
+    const row = document.createElement('div');
+    row.className = 'dp-row';
+    row.innerHTML = `<span class="dp-lbl">${label}</span><span class="dp-ctl">` +
+      `<span class="dp-seg" id="dpA11y_${flag}" role="group" aria-label="${label}">` +
+      '<button type="button" data-value="">system</button>' +
+      '<button type="button" data-value="on">on</button>' +
+      '<button type="button" data-value="off">off</button></span></span>';
+    $('dpA11y').appendChild(row);
+    $(`dpA11y_${flag}`).addEventListener('click', (event) => {
+      const button = event.target.closest('button');
+      if (!button) return;
+      setAccessibilityFlag(flag, button.dataset.value === 'on' ? true : button.dataset.value === 'off' ? false : null);
+    });
+  });
+
+  COMMON_LOCALES.forEach((tag) => {
+    const option = document.createElement('option');
+    option.value = tag;
+    option.textContent = tag;
+    $('dpLocaleChoice').appendChild(option);
+  });
+
+  $('dpPreset').addEventListener('change', (event) => {
+    const id = event.target.value;
+    if (id === '__custom') return;
+    if (!id) { selectRealDevice(); return; }
+    const preset = presetById(id);
+    if (preset) {
+      const sim = simulation();
+      enqueue(() => applyPreset(preset, (sim && sim.orientation) || 'portrait'));
+    }
+  });
+
+  $('dpOrientation').addEventListener('click', (event) => {
+    const button = event.target.closest('button');
+    if (button && !button.disabled) setOrientation(button.dataset.value);
+  });
+
+  $('dpSystemUi').addEventListener('change', (event) => {
+    mutate('showSystemUi', event.target.checked ? null : false);
+  });
+
+  $('dpTouch').addEventListener('click', (event) => {
+    const button = event.target.closest('button');
+    if (!button) return;
+    mutate('touchInput', button.dataset.value === 'on' ? true : button.dataset.value === 'off' ? false : null);
+  });
+
+  $('dpCustomApply').addEventListener('click', () => {
+    const width = Number($('dpCustomW').value);
+    const height = Number($('dpCustomH').value);
+    const dpr = Number($('dpCustomDpr').value);
+    if (!(width > 0 && height > 0 && dpr > 0)) return;
+    setCustomMetrics(width, height, dpr);
+  });
+
+  $('dpBrightness').addEventListener('click', (event) => {
+    const button = event.target.closest('button');
+    if (button) mutate('platformBrightness', button.dataset.value || null);
+  });
+
+  $('dp24h').addEventListener('click', (event) => {
+    const button = event.target.closest('button');
+    if (!button) return;
+    mutate('alwaysUse24HourFormat', button.dataset.value === 'on' ? true : button.dataset.value === 'off' ? false : null);
+  });
+
+  $('dpTextScale').addEventListener('input', (event) => {
+    $('dpTextScaleVal').textContent = `×${Number(event.target.value).toFixed(1)}`;
+  });
+  $('dpTextScale').addEventListener('change', (event) => {
+    mutate('textScaleFactor', Number(Number(event.target.value).toFixed(1)));
+  });
+  $('dpTextScaleReset').addEventListener('click', () => mutate('textScaleFactor', null));
+
+  $('dpLocaleAdd').addEventListener('click', () => {
+    const tag = $('dpLocaleChoice').value;
+    const locales = (simulation() && simulation().locales) || [];
+    if (!tag || locales.indexOf(tag) !== -1) return;
+    mutate('locales', locales.concat([tag]));
+  });
+  $('dpLocaleClear').addEventListener('click', () => mutate('locales', null));
+
+  $('dpPlatform').addEventListener('change', (event) => {
+    mutate('platform', event.target.value || null);
+  });
+
+  $('dpReset').addEventListener('click', () => enqueue(() => push({})));
+
+  // The fit percentage depends on the size of the stage, which the app only
+  // reports when asked.
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    if (!connected) return;
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { send('getState').catch(() => {}); }, 250);
+  });
+
+  // --- boot ----------------------------------------------------------------
+
+  function failStage(title, detail) {
+    stageMsg.classList.remove('hidden');
+    stageMsg.innerHTML = `<span><b>${title}</b><br>${detail}</span>`;
+  }
+
+  function boot() {
+    fetch(CATALOG_URL)
+      .then((response) => response.json())
+      .then((data) => {
+        catalog = (data && data.presets) || [];
+        buildPresetOptions();
+        render();
+        maybeBootstrap();
+      })
+      .catch(() => {
+        $('dpPreset').disabled = true;
+        $('dpDeviceLabel').textContent = 'Device catalog unavailable';
+      });
+
+    frame = document.createElement('iframe');
+    frame.title = 'The Flutter counter example, running under device_preview';
+    frame.src = DEMO_URL;
+    frame.addEventListener('load', () => {
+      // The app posts `ready` on startup; this covers the case where it did so
+      // before this page was listening.
+      send('getState').catch(() => {});
+    });
+    stage.appendChild(frame);
+
+    setTimeout(() => {
+      if (!connected) {
+        failStage(
+          'The demo could not start.',
+          'It needs this page served over HTTP — try <code>python3 -m http.server -d docs</code> — ' +
+          'and a build in <code>docs/demo</code> (<code>tool/build_demo.sh</code>).',
+        );
+      }
+    }, 20000);
+  }
+
+  // Three megabytes are only worth fetching for a visitor who scrolls here.
+  const demoObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      demoObserver.disconnect();
+      boot();
+    });
+  }, { rootMargin: '300px' });
+  demoObserver.observe(section);
+})();
+</script>
+</body>
 </html>

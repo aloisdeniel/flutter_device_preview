@@ -1,303 +1,94 @@
-## 1.3.1
-
-* Adds padding property to `DevicePreview` to allow custom padding around the device frame.
-
-## 1.3.0
-
-* Updated dependencies and adding support for Flutter 3.32.
-
-## 1.2.0
-
-* Updated dependencies and adding support for Flutter 3.2.
-
-## 1.1.0
-
-* Updated dependencies and adding support for Flutter 3.0.
-
-## 1.0.0-alpha.15
-
-* Updated device_frame which added new android devices and fixed padding.
-
-## 1.0.0-alpha.14
-
-* Missing export of `DeviceScreenshot`.
-
-## 1.0.0-alpha.13
-
-* Added device type section headers
-* Improved disabled item icon visibility changes.
-* Fixed accesible navigation, invert colors and bold text not available.
-* Removed path_drawing dependency.
-
-## 1.0.0-alpha.12
-
-* Updated device_frame which added a new list of devices.
-
-## 1.0.0-alpha.11
-
-* Added section visibility parameters to hide items.
-
-## 1.0.0-alpha.10
-
-* Added conditional import for web, to improve the pub.dev score.
-
-## 1.0.0-alpha.8
-
-* Removed generated files from example.
-
-## 1.0.0-alpha.7
-
-* Fixed `enabled` issue.
-* Fixed SVG issue with custom device.
-
-## 1.0.0-alpha.6
-
-* Upgraded `device_frame` dependency.
-* Fixed theming issues in small layout.
-
-## 1.0.0-alpha.5
-
-* Added `DevicePreview.selectedDevice` method. 
-
-## 1.0.0-alpha.4
-
-* Added `DevicePreview.availableDeviceIdentifiers` method. 
-
-## 1.0.0-alpha.3
-
-* Upgraded device_frame dependency.
-
-## 1.0.0-alpha.2
-
-* Upgraded provider dependency.
-
-## 1.0.0-alpha.1
-
-* Adaptative layout to make the tool easier to use on mobile.
-* Big refactor to make the package more maintainable :
-    * Switched all UI components to Material design
-    * Removed all include plugins *(available soon as separated packages)*
-
-## 0.8.0
-
-* Removed `DevicePreview.appBuilder` to switch to newer `useInheritedMediaQuery` property instead.
-
-## 0.7.5
-
-* Upgraded dependencies
-* Migrated to flutter_lints
-* Removed dependency to awesome_fonts
-
-## 0.7.4
-
-* Fixing `basicLocaleListResolution` throwing `imported from multiple packages` conflict error.
-
-## 0.7.3
-
-* Fixing missing part file.
-
-## 0.7.2
-
-* Upgraded dependencies.
-* Fixed issue on web with null empty locale list.
-
-## 0.7.1
-
-* Fixed screenshot error.
-* Fixed initialization null check.
-
-## 0.7.0
-
-* Null-safety compatibility.
-* Upgraded dependencies for Flutter 2.0.
-
-## 0.6.2-beta
-
-* Added Directionality to overlay.
-
-## 0.6.1-beta
-
-* Added styling options to hide toolbar buttons.
-* Added a `defaultDevice`.
-
-## 0.6.0-beta
-
-* Support for `MediaQuery.maybeOf` Flutter API breaking change.
-
-## 0.5.5
-
-* Fixed an issue with language picker.
-
-## 0.5.4
-
-* Fixed issue with [DevicePreview.selectDevice] method.
-
-## 0.5.3
-
-* Added the [DevicePreview.selectDevice] method.
-
-## 0.5.2
-
-* Removed Flutter plugin directories.
-
-## 0.5.1
-
-* Fixed linting issues.
-
-## 0.5.0
-
-* Updated documentation
-
-## 0.5.0-prerelease.16
-
-* Fix shared preferences plugin navigation restoration issues.
-
-## 0.5.0-prerelease.15
-
-* Fix styling issues.
-
-## 0.5.0-prerelease.14
-
-* Fix issue when not enabled.
-
-## 0.5.0-prerelease.13
-
-* Fixed several styling issues.
-* Fix issue when not enabled.
-
-## 0.5.0-prerelease.12
-
-* Added the plugin system.
-
-## 0.5.0-prerelease.11
-
-* Fixed device screen clip.
-
-## 0.5.0-prerelease.6
-
-* Fixed hidden popovers when not fullscreen.
-* Fixed overflow errors.
-
-## 0.5.0-prerelease.5
-
-* Improved loading time.
-
-## 0.5.0-prerelease.4
-
-* Keeping state of application when enabling/disabling preview.
-
-## 0.5.0-prerelease.3
-
-* Custom device selector.
-
-## 0.5.0-prerelease.2
-
-* Added linux devices.
-
-## 0.5.0-prerelease
-
-* New redesigned frames.
-* Added enabled switch.
-* Removed restart button
-* Fixed issues with conflicting global key.
-* Minor UI tweaks.
-
-## 0.4.8
-
-- Fixed issues with MaterialLocalization.
-- Added copy to clipboard for image links.
-
-## 0.4.7
-
-- Upgraded freezed dependencies.
-
-## 0.4.6
-
-- Add an option to hide device frame shadow.
-
-## 0.4.5
-
-- Removed debug prints.
-
-## 0.4.4
-
-- Removed debug prints.
-
-## 0.4.3
-
-- Added settings window for customizing preview appearance and layout.
-
-## 0.4.2
-
-- Added a virtual keyboard.
-
-## 0.4.1+1
-
-- Fixed an issue with duplicated windows.
-
-## 0.4.1
-
-- Tool bar is bigger.
-- Windows background is now semi-transparent.
-- Windows can be dragged.
-
-## 0.4.0+1
-
-- Fixed linter issues.
-
-## 0.4.0
-
-- Redesigned UI : now a bottom bar.
-
-## 0.3.0+1
-
-- Removed `flutter_svg` unused dependency.
-
-## 0.3.0
-
-- Changed screenshot processor for a more generic solution.
-
-## 0.2.7
-
-- Update to stable API surface for macOS
-- Fix API deprecations
-
-## 0.2.6+1
-
-- Updated documentation.
-
-## 0.2.6
-
-- Removed root navigator to fix dialogs.
-
-## 0.2.5
-
-- Fix settings still visible when `widget.areSettingsEnabled` is `false`.
-- Moved example to package folder.
-
-## 0.2.4
-
-- Added optional data to override the loaded one.
-
-## 0.2.3
-
-- Remove `hightContrast` (not on stable yet).
-
-## 0.2.2
-
-- Remove desktop dependencies.
-
-## 0.2.1
-
-- Add throttling for data saving
-
-## 0.2.0
-
-- Add Android devices
-- Add locale picker
-- Add preferences (dark mode, text scaling factor, ...)
-- Saving configuration between sessions.
-
-## 0.1.9-beta
-
-- Initial version
+# Changelog
+
+## 3.0.0-prerelease1
+
+The 3.0 release is a from-scratch rebuild: a custom `WidgetsBinding` that
+simulates device characteristics (screen metrics, safe areas, locale,
+brightness, text scale, accessibility flags, target platform) at the
+engine-abstraction level. There is no in-app UI — the simulation is driven
+programmatically through `DevicePreview.controller` and from the bundled
+Flutter DevTools extension. See the README for the full feature tour and the
+2.x migration notes, and the `3.0.0-dev.*` entries below for the rebuild's
+incremental history.
+
+Changes since 3.0.0-dev.2:
+
+- `DevicePreviewBindingMixin.latchConfiguration` is now sentinel-based:
+  `DevicePreview.enable()` after `latchConfiguration(initialSimulation: ...)`
+  no longer silently discards the latched simulation (the documented
+  golden/CI startup sequence).
+- `setOrientation` keeps the active `frame` and `systemUi` artwork when the
+  simulation was pushed from DevTools (rotation is not a device switch).
+- `applyPreset` and `setOrientation` now preserve `touchInput` and
+  `showSystemUi`, matching the DevTools panel's definition of
+  device-switch-surviving overrides.
+- Simulated `MediaQuery.padding` now collapses where the real keyboard's
+  `viewInsets` overlap it, matching real engine behavior.
+- SVG artwork: `fill="currentColor"` now follows the paint-time tint (the
+  app's `SystemUiOverlayStyle`) even nested under groups with an explicit or
+  `none` fill, per CSS `currentColor` semantics.
+- DevTools panel: landscape `viewPadding` now falls back through
+  `landscapePadding` exactly like `DevicePreset.resolve`, so DevTools and
+  `applyPreset` produce identical metrics for every catalog device.
+- DevTools panel: a rejected payload (`invalidParams`) no longer flips the
+  panel to the "isolate paused" empty state; the panel re-fetches the app's
+  actual state instead.
+- DevTools panel: the in-memory simulation stash is cleared on disconnect, so
+  a previous app's simulation is never pushed into a different app on
+  reconnect (the persisted stash stays keyed per VM-service URI).
+- New test layers: a VM-service e2e smoke over the real service-extension
+  glue (`tool/check_release.sh` runs it), a production-composition
+  host-resize seam test, and screenshot capture tests.
+
+## 3.0.0-dev.2
+
+- Simulated system UI: `DeviceSimulation.systemUi` (`SystemUiSimulation`)
+  draws a static status bar and gesture pill over the app, laid out from the
+  simulated safe areas, and tinted from the app's live `SystemUiOverlayStyle`
+  (`SystemUiColors.resolve`). The binding tracks that style through both
+  `SystemChrome.setSystemUIOverlayStyle` and `AnnotatedRegion` — the latter
+  needing its own annotation lookup, since the framework's probes assume a
+  plain device-pixel-ratio root transform and miss under scale-to-fit.
+- `DeviceSimulation.showSystemUi` shows or hides those bars without touching
+  the safe areas they occupy.
+- `DeviceSimulation.touchInput` (`bool?`) reports the host's pointers to the
+  app as touches, so dragging scrolls (the mouse is not a drag device on
+  desktop or the web). Unset — the default — means *auto*: the simulated
+  device decides, through the new `DeviceSimulation.deviceKind` that presets
+  fill in. A phone, tablet or foldable is a touchscreen; a desktop window is
+  not, and neither is a custom size that names no device. Hovers are dropped
+  rather than relabelled, pointer signals (wheel, trackpad) keep their real
+  kind, and the host's hover state is released when the mode changes.
+- `DeviceKind` moved to the core library (still exported from
+  `presets.dart`), since a simulation carries it too. Protocol version 3.
+- `SvgDrawing.paint(currentColor:)` tints every shape that inherited its fill,
+  which is what makes one drawing serve as a tintable icon set.
+- Device frames: `DeviceSimulation.frame` (`DeviceFrame`) carries the screen
+  outline the app is clipped to and the SVG body painted behind it, described
+  in portrait and rotated with the device. The scale-to-fit letterbox and the
+  screenshot capture now cover the whole body
+  (`DeviceSimulation.contentBounds`, `FitTransform.compute(contentBounds:)`).
+- `DevicePreviewFrame` / `RenderDevicePreviewFrame`, installed automatically
+  by the binding around the root widget.
+- Embedded, dependency-free SVG subset renderer exported as
+  `package:device_preview/svg.dart` (`SvgDrawing`, `parseSvgPathData`,
+  `parseXmlDocument`).
+- `DevicePreset` gains `brand` and `frame`; the JSON form matches the
+  `device_specs/` catalog at the root of the repository.
+- Protocol version 2: `simulation.frame` and the `frame` capability flag.
+
+## 3.0.0-dev.1
+
+- From-scratch rebuild (work in progress).
+- Pure model layer: `DeviceSimulation`, `SimulatedAccessibilityFeatures`,
+  `SimulatedDisplayFeature`, `RealDeviceInfo`, `FitTransform`, pointer
+  rewrite, and the `DevicePresets` catalog.
+- Binding layer: `DevicePreview` and `DevicePreviewBindingMixin` with
+  the wrapper `PlatformDispatcher`/`FlutterView` pair, the scale-to-fit
+  `ViewConfiguration`, and pointer remapping.
+- `DevicePreviewController` (apply/update/applyPreset/setOrientation/reset,
+  live `realDevice`, `fitTransform`, custom preset registration).
+- `ext.device_preview.*` service extensions: `getState`, `setSimulation`,
+  `reset`, `listPresets`, plus the optional capability-flagged `screenshot`
+  module, and the `device_preview.ready` / `stateChanged` / `presetsChanged`
+  events.
