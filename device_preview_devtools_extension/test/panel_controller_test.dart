@@ -291,6 +291,7 @@ void main() {
       // "Real device" clears it along with the other metric fields.
       await controller!.selectRealDevice();
       expect(gateway.simulation?['frame'], isNull);
+      expect(gateway.simulation?['systemUi'], isNull);
     });
 
     test('every built-in catalog device selects without error', () async {
@@ -299,6 +300,7 @@ void main() {
         await controller!.selectPreset(preset);
         expect(gateway.simulation?['presetId'], preset.id);
         expect(gateway.simulation?['frame'], preset.frame);
+        expect(gateway.simulation?['systemUi'], preset.systemUi);
       }
     });
 

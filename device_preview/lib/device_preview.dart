@@ -12,6 +12,7 @@ export 'src/model/device_frame.dart';
 export 'src/model/fit_transform.dart';
 export 'src/model/real_device_info.dart';
 export 'src/model/simulation.dart';
+export 'src/model/system_ui.dart';
 
 export 'src/binding/binding.dart'
     show DevicePreview, DevicePreviewBindingMixin;

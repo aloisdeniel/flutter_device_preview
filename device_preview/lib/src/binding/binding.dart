@@ -83,6 +83,21 @@ mixin DevicePreviewBindingMixin
   PreviewPlatformDispatcher? _previewDispatcher;
   DevicePreviewControllerImpl? _controller;
 
+  /// The app's last known system overlay style, republished after every frame.
+  ///
+  /// `SystemChrome.latestStyle` is where both `setSystemUIOverlayStyle` calls
+  /// and `AnnotatedRegion<SystemUiOverlayStyle>` values (which
+  /// `RenderView.compositeFrame` resolves against the *simulated* safe areas)
+  /// end up, so this is one notifier for every way an app styles its bars.
+  /// It only ever changes value — [SystemUiOverlayStyle] compares by value —
+  /// so a repaint is never scheduled for an unchanged style.
+  final ValueNotifier<SystemUiOverlayStyle?> _systemOverlayStyle =
+      ValueNotifier<SystemUiOverlayStyle?>(null);
+
+  /// The app's live system overlay style, driving the simulated system UI.
+  ValueListenable<SystemUiOverlayStyle?> get systemOverlayStyle =>
+      _systemOverlayStyle;
+
   /// The controller, or null when [simulationEnabled] is false (or no
   /// implicit view exists to simulate).
   DevicePreviewController? get devicePreview => _controller;
@@ -201,8 +216,96 @@ mixin DevicePreviewBindingMixin
     return super.wrapWithDefaultView(
       DevicePreviewFrame(
         simulation: controller.simulationListenable,
+        overlayStyle: _systemOverlayStyle,
         child: rootWidget,
       ),
+    );
+  }
+
+  /// Picks up the style the frame just resolved.
+  ///
+  /// `RenderView.compositeFrame` reads the app's overlay style annotations at
+  /// the end of the frame, so this is the earliest the value can be observed;
+  /// a change repaints the frame on the next one.
+  @override
+  void drawFrame() {
+    super.drawFrame();
+    if (simulationEnabled) {
+      // `SystemChrome.setSystemUIOverlayStyle` commits to `latestStyle` from a
+      // microtask, so reading it synchronously here would always see the
+      // previous frame's value. Ours is queued after the framework's — FIFO —
+      // so by the time it runs the style is the one this frame resolved.
+      scheduleMicrotask(_captureSystemOverlayStyle);
+    }
+  }
+
+  void _captureSystemOverlayStyle() {
+    if (!simulationEnabled) {
+      return;
+    }
+    // `latestStyle` is annotated @visibleForTesting, and is where every
+    // *direct* `SystemChrome.setSystemUIOverlayStyle` call lands — the pattern
+    // an app uses outside a widget. Reading it is inert (a getter over a
+    // static field); if it ever disappears upstream this fails to compile,
+    // which is a loud, cheap failure to fix.
+    // ignore: invalid_use_of_visible_for_testing_member
+    final SystemUiOverlayStyle? direct = SystemChrome.latestStyle;
+    _systemOverlayStyle.value = _annotatedOverlayStyle() ?? direct;
+  }
+
+  /// The `AnnotatedRegion<SystemUiOverlayStyle>` an `AppBar` (or any other
+  /// widget) placed under the simulated status and navigation bars.
+  ///
+  /// This repeats what `RenderView.compositeFrame` does, with one fix: the
+  /// framework probes `paintBounds` — physical coordinates that assume the
+  /// root transform is a plain `devicePixelRatio` scale. Under the scale-to-fit
+  /// configuration it is not, so its probes land off the simulated screen and
+  /// find nothing. Mapping the probe points through the very matrix the frame
+  /// was composited with puts them back where the app actually painted.
+  SystemUiOverlayStyle? _annotatedOverlayStyle() {
+    final RenderView? renderView = _findPreviewRenderView();
+    if (renderView == null || !renderView.hasConfiguration) {
+      return null;
+    }
+    // Reading the root layer from outside the render tree, as the screenshot
+    // module does: the risk stays isolated to this debug-only read.
+    // ignore: invalid_use_of_protected_member
+    final Layer? layer = renderView.layer;
+    if (layer is! ContainerLayer) {
+      return null;
+    }
+    final ViewConfiguration configuration = renderView.configuration;
+    final ui.Size size = renderView.size;
+    final double ratio = configuration.devicePixelRatio;
+    if (size.isEmpty || ratio <= 0) {
+      return null;
+    }
+    final Matrix4 matrix = configuration.toMatrix();
+    final ui.ViewPadding padding = renderView.flutterView.padding;
+    SystemUiOverlayStyle? find(double y) => layer.find<SystemUiOverlayStyle>(
+      MatrixUtils.transformPoint(matrix, Offset(size.width / 2, y)),
+    );
+
+    // The vertical center of each bar, in simulated logical pixels.
+    final SystemUiOverlayStyle? upper = find(padding.top / ratio / 2);
+    final SystemUiOverlayStyle? lower = find(
+      size.height - 1 - padding.bottom / ratio / 2,
+    );
+    if (upper == null || lower == null) {
+      return upper ?? lower;
+    }
+    // Both present: the upper region styles the status bar, the lower one the
+    // navigation bar — the same split the framework applies.
+    return SystemUiOverlayStyle(
+      statusBarBrightness: upper.statusBarBrightness,
+      statusBarIconBrightness: upper.statusBarIconBrightness,
+      statusBarColor: upper.statusBarColor,
+      systemStatusBarContrastEnforced: upper.systemStatusBarContrastEnforced,
+      systemNavigationBarColor: lower.systemNavigationBarColor,
+      systemNavigationBarDividerColor: lower.systemNavigationBarDividerColor,
+      systemNavigationBarIconBrightness: lower.systemNavigationBarIconBrightness,
+      systemNavigationBarContrastEnforced:
+          lower.systemNavigationBarContrastEnforced,
     );
   }
 

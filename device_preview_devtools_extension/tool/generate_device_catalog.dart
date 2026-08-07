@@ -33,6 +33,19 @@ const Set<String> kSpecKeys = <String>{
   'systemGestureInsets',
   'displayFeatures',
   'frame',
+  'systemUi',
+};
+
+/// Keys of the optional `systemUi` object, and of each bar inside it.
+const Set<String> kSystemUiKeys = <String>{'statusBar', 'navigationBar'};
+
+/// Keys of one system bar.
+const Set<String> kBarKeys = <String>{
+  'leading',
+  'center',
+  'trailing',
+  'inset',
+  'bottomInset',
 };
 
 /// Keys of the optional `frame` object.
@@ -223,6 +236,47 @@ void _validate(Map<String, Object?> spec, String name) {
   if (spec['frame'] != null) {
     _validateFrame(spec['frame'], name);
   }
+  if (spec['systemUi'] != null) {
+    _validateSystemUi(spec['systemUi'], name);
+  }
+}
+
+void _validateSystemUi(Object? systemUi, String name) {
+  if (systemUi is! Map) {
+    throw FormatException('$name: "systemUi" must be an object');
+  }
+  for (final Object? key in systemUi.keys) {
+    if (!kSystemUiKeys.contains(key)) {
+      throw FormatException('$name: unknown systemUi key "$key"');
+    }
+  }
+  systemUi.forEach((Object? barName, Object? bar) {
+    if (bar is! Map) {
+      throw FormatException('$name: systemUi.$barName must be an object');
+    }
+    for (final Object? key in bar.keys) {
+      if (!kBarKeys.contains(key)) {
+        throw FormatException('$name: unknown systemUi.$barName key "$key"');
+      }
+    }
+    for (final String slot in <String>['leading', 'center', 'trailing']) {
+      final Object? artwork = bar[slot];
+      if (artwork == null) {
+        continue;
+      }
+      final String source = _joinLines(artwork, '$name: $barName.$slot');
+      if (!source.trimLeft().startsWith('<svg')) {
+        throw FormatException(
+          '$name: systemUi.$barName.$slot must be an <svg> document',
+        );
+      }
+    }
+    for (final String key in <String>['inset', 'bottomInset']) {
+      if (bar[key] != null && bar[key] is! num) {
+        throw FormatException('$name: systemUi.$barName.$key must be a number');
+      }
+    }
+  });
 }
 
 void _validateFrame(Object? frame, String name) {
@@ -299,6 +353,24 @@ Map<String, Object?> _normalize(Map<String, Object?> spec) {
   final Map<String, Object?> result = <String, Object?>{};
   for (final String key in kSpecKeys) {
     if (!spec.containsKey(key) || spec[key] == null) {
+      continue;
+    }
+    if (key == 'systemUi') {
+      final Map<String, Object?> systemUi = <String, Object?>{};
+      (spec['systemUi']! as Map).forEach((Object? barName, Object? bar) {
+        final Map<String, Object?> normalized = <String, Object?>{};
+        for (final String barKey in kBarKeys) {
+          final Object? value = (bar as Map)[barKey];
+          if (value == null) {
+            continue;
+          }
+          normalized[barKey] = barKey == 'inset' || barKey == 'bottomInset'
+              ? value
+              : _joinLines(value, '$barName.$barKey');
+        }
+        systemUi['$barName'] = normalized;
+      });
+      result[key] = systemUi;
       continue;
     }
     if (key == 'frame') {

@@ -70,6 +70,7 @@ class TestDevicePreviewBinding extends AutomatedTestWidgetsFlutterBinding
             ? rootWidget
             : DevicePreviewFrame(
                 simulation: controller.simulationListenable,
+                overlayStyle: systemOverlayStyle,
                 child: rootWidget,
               ),
       );

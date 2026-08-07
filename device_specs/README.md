@@ -47,6 +47,7 @@ await DevicePreview.controller.applyPreset(preset);
 | `systemGestureInsets` | insets | Orientation-invariant. |
 | `displayFeatures` | array | `{bounds: {left, top, right, bottom}, type, state}`, in portrait coordinates. |
 | `frame` | object | The device's appearance — see below. |
+| `systemUi` | object | The device's status bar and gesture pill — see below. |
 
 All lengths are logical pixels.
 
@@ -109,10 +110,70 @@ compositing a layer.
 Malformed artwork is never fatal for a previewed app: the failure is reported
 once through `FlutterError.reportError` and that part of the frame is skipped.
 
+## `systemUi`
+
+The platform's own on-screen furniture, drawn **over** the app: a status bar
+at the top, a gesture pill or navigation bar at the bottom.
+
+```jsonc
+"systemUi": {
+  "statusBar": {
+    "inset": 30,                                  // horizontal edge inset
+    "leading": ["<svg viewBox=\"0 0 31 14\">", "…"],   // the clock
+    "trailing": ["<svg viewBox=\"0 0 74 12\">", "…"]   // signal, wifi, battery
+  },
+  "navigationBar": {
+    "center": ["<svg viewBox=\"0 0 144 5\">", "…"],    // the home indicator
+    "bottomInset": 8                              // from the screen's edge
+  }
+}
+```
+
+Neither bar declares a height or a position. Each fills the **safe area** on
+its side of the screen — the padding already resolved for the current
+orientation — so an iPhone's status bar disappears in landscape, a
+home-button device gets no gesture pill, and nothing needs a landscape
+variant:
+
+```
+ ┌──────────────────────────────────┐
+ │ ⟨inset⟩ leading  center  trailing │  ← padding.top
+ ├──────────────────────────────────┤
+ │              the app             │
+ ├──────────────────────────────────┤
+ │              center              │  ← padding.bottom
+ └──────────────────────────────────┘
+```
+
+Artwork is drawn at its natural size (its view box), never stretched, and is
+centered vertically in the bar unless `bottomInset` pins it to the outer edge.
+`leading` and `trailing` swap under a right-to-left directionality.
+
+Everything is static — the clock always reads 9:41, the battery never moves.
+
+### Colors
+
+Nothing in the artwork carries its own color: every shape uses
+`fill="currentColor"` (or no `fill` at all) and is tinted at paint time from
+the app's live `SystemUiOverlayStyle` — whether it comes from
+`SystemChrome.setSystemUIOverlayStyle` or from an `AnnotatedRegion`, e.g. the
+one an `AppBar` installs:
+
+| What | Comes from |
+|---|---|
+| Status bar icons | `statusBarIconBrightness`, else the inverse of `statusBarBrightness`, else the inverse of the simulated platform brightness |
+| Navigation bar icons | `systemNavigationBarIconBrightness`, else the status bar icon color |
+| Bar backgrounds, divider | `statusBarColor`, `systemNavigationBarColor`, `systemNavigationBarDividerColor` — **Android only**, since no other platform can tint its bars |
+
+Use `fill-opacity` for secondary detail (a battery outline, an empty signal
+bar): it is preserved through the tint.
+
 ## Adding a device
 
 1. Copy the closest existing spec to `<brand>-<model>.json`.
 2. Fix the metrics, keeping the file name and `id` in sync.
 3. Draw the body with the screen cut-out in mind — it is *behind* the app.
+   For the system UI, copy the closest device's `systemUi` and adjust the
+   insets; keep every fill on `currentColor` so styling still works.
 4. Regenerate the catalog, then run `flutter test` in
    `device_preview_devtools_extension`.

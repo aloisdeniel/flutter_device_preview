@@ -34,6 +34,7 @@ const List<String> kMetricSimulationKeys = <String>[
   'orientation',
   'screenSize',
   'frame',
+  'systemUi',
   'devicePixelRatio',
   'padding',
   'viewPadding',
@@ -77,6 +78,9 @@ class PresetView {
 
   /// Screen outline and body artwork, when the device has a frame.
   Map<String, Object?>? get frame => _asMap(json['frame']);
+
+  /// Decorative system UI (status bar, gesture pill), when the device has it.
+  Map<String, Object?>? get systemUi => _asMap(json['systemUi']);
 
   /// Target platform name (e.g. `iOS`, `android`).
   String get platform => json['platform'] as String? ?? 'unknown';
@@ -662,6 +666,10 @@ class PanelController extends ChangeNotifier {
     // one metric field orientation never touches.
     final frame = preset.frame;
     if (frame != null) sim['frame'] = frame;
+    // Like the frame, the bars are orientation-independent: they follow the
+    // safe areas, which are resolved below.
+    final systemUi = preset.systemUi;
+    if (systemUi != null) sim['systemUi'] = systemUi;
     final landscape = orientation == 'landscape';
     final size = preset.portraitSize;
     if (size != null) {

@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 
 import 'device_frame.dart';
 import 'json_utils.dart';
+import 'system_ui.dart';
 
 /// Sentinel used by the `copyWith` implementations to distinguish "parameter
 /// not passed" from "parameter explicitly set to null" (which clears the
@@ -30,6 +31,7 @@ class DeviceSimulation {
     this.orientation = Orientation.portrait,
     this.screenSize,
     this.frame,
+    this.systemUi,
     this.devicePixelRatio,
     this.padding,
     this.viewPadding,
@@ -61,6 +63,9 @@ class DeviceSimulation {
       frame: json['frame'] == null
           ? null
           : DeviceFrame.fromJson(decodeMap(json['frame'], 'frame')),
+      systemUi: json['systemUi'] == null
+          ? null
+          : SystemUiSimulation.fromJson(decodeMap(json['systemUi'], 'systemUi')),
       devicePixelRatio: json['devicePixelRatio'] == null
           ? null
           : decodeDouble(json['devicePixelRatio'], 'devicePixelRatio'),
@@ -143,6 +148,13 @@ class DeviceSimulation {
   /// rotating a simulation leaves this field untouched.
   final DeviceFrame? frame;
 
+  /// Decorative system UI — status bar, gesture pill — drawn over the app.
+  ///
+  /// Each bar fills the safe area on its side of the screen, so it follows
+  /// [padding] and disappears where the safe area is zero. Its colors follow
+  /// the app's `SystemUiOverlayStyle`, never this description.
+  final SystemUiSimulation? systemUi;
+
   /// The simulated device pixel ratio.
   final double? devicePixelRatio;
 
@@ -193,6 +205,7 @@ class DeviceSimulation {
       presetId == null &&
       screenSize == null &&
       frame == null &&
+      systemUi == null &&
       devicePixelRatio == null &&
       padding == null &&
       viewPadding == null &&
@@ -240,6 +253,7 @@ class DeviceSimulation {
     Orientation? orientation,
     Object? screenSize = _unset,
     Object? frame = _unset,
+    Object? systemUi = _unset,
     Object? devicePixelRatio = _unset,
     Object? padding = _unset,
     Object? viewPadding = _unset,
@@ -261,6 +275,9 @@ class DeviceSimulation {
           ? this.screenSize
           : screenSize as ui.Size?,
       frame: identical(frame, _unset) ? this.frame : frame as DeviceFrame?,
+      systemUi: identical(systemUi, _unset)
+          ? this.systemUi
+          : systemUi as SystemUiSimulation?,
       devicePixelRatio: identical(devicePixelRatio, _unset)
           ? this.devicePixelRatio
           : devicePixelRatio as double?,
@@ -306,6 +323,7 @@ class DeviceSimulation {
       'orientation': orientation.name,
       if (screenSize != null) 'screenSize': encodeSize(screenSize!),
       if (frame != null) 'frame': frame!.toJson(),
+      if (systemUi != null) 'systemUi': systemUi!.toJson(),
       if (devicePixelRatio != null) 'devicePixelRatio': devicePixelRatio,
       if (padding != null) 'padding': encodeEdgeInsets(padding!),
       if (viewPadding != null) 'viewPadding': encodeEdgeInsets(viewPadding!),
@@ -336,6 +354,7 @@ class DeviceSimulation {
         other.orientation == orientation &&
         other.screenSize == screenSize &&
         other.frame == frame &&
+        other.systemUi == systemUi &&
         other.devicePixelRatio == devicePixelRatio &&
         other.padding == padding &&
         other.viewPadding == viewPadding &&
@@ -355,6 +374,7 @@ class DeviceSimulation {
     orientation,
     screenSize,
     frame,
+    systemUi,
     devicePixelRatio,
     padding,
     viewPadding,
@@ -375,6 +395,7 @@ class DeviceSimulation {
       'orientation: ${orientation.name}',
       if (screenSize != null) 'screenSize: $screenSize',
       if (frame != null) 'frame: $frame',
+      if (systemUi != null) 'systemUi: $systemUi',
       if (devicePixelRatio != null) 'devicePixelRatio: $devicePixelRatio',
       if (padding != null) 'padding: $padding',
       if (viewPadding != null) 'viewPadding: $viewPadding',

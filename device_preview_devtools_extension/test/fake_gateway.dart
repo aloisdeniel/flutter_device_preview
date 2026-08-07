@@ -199,6 +199,18 @@ const Map<String, Object?> testFramedPresetJson = <String, Object?>{
     'body': '<svg viewBox="0 0 420 820">'
         '<rect x="0" y="0" width="420" height="820" fill="#101010"/></svg>',
   },
+  'systemUi': <String, Object?>{
+    'statusBar': <String, Object?>{
+      'inset': 12.0,
+      'leading': '<svg viewBox="0 0 20 12">'
+          '<rect width="20" height="12" fill="currentColor"/></svg>',
+    },
+    'navigationBar': <String, Object?>{
+      'center': '<svg viewBox="0 0 100 4">'
+          '<rect width="100" height="4" fill="currentColor"/></svg>',
+      'bottomInset': 6.0,
+    },
+  },
 };
 
 /// A second preset (tablet) used across tests.

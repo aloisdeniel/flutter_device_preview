@@ -15,13 +15,21 @@ import 'svg_xml.dart';
 @immutable
 class SvgShape {
   /// Creates a flattened shape.
-  const SvgShape({required this.path, required this.color, this.clips = const <ui.Path>[]});
+  const SvgShape({
+    required this.path,
+    required this.color,
+    this.clips = const <ui.Path>[],
+    this.followsCurrentColor = false,
+  });
 
   /// The outline to fill, in view box coordinates.
   final ui.Path path;
 
   /// The resolved fill color, including `fill-opacity` and inherited
   /// `opacity`.
+  ///
+  /// When [followsCurrentColor] is true this is the color the shape takes
+  /// when no tint is supplied; its alpha still carries the resolved opacity.
   final ui.Color color;
 
   /// Clip outlines to intersect before filling, in view box coordinates.
@@ -29,6 +37,13 @@ class SvgShape {
   /// One entry per `clip-path` reference on the shape or on any of its
   /// ancestors, outermost first.
   final List<ui.Path> clips;
+
+  /// Whether this shape inherited its fill — because it declared
+  /// `fill="currentColor"`, or declared no fill at all.
+  ///
+  /// Those shapes follow the `currentColor` passed to [SvgDrawing.paint],
+  /// which is how one drawing serves as a tintable icon set.
+  final bool followsCurrentColor;
 }
 
 /// A parsed, dependency-free rendering of a small SVG subset.
@@ -104,18 +119,26 @@ class SvgDrawing {
   bool get isEmpty => shapes.isEmpty;
 
   /// Paints the drawing in its own view box coordinates.
-  void paint(ui.Canvas canvas) {
+  ///
+  /// [currentColor] tints every shape that inherited its fill
+  /// ([SvgShape.followsCurrentColor]), preserving the shape's own opacity —
+  /// what makes a single drawing usable as a status bar icon set whose color
+  /// follows the system overlay style.
+  void paint(ui.Canvas canvas, {ui.Color? currentColor}) {
     final ui.Paint paint = ui.Paint()..isAntiAlias = true;
     for (final SvgShape shape in shapes) {
+      final ui.Color color = currentColor != null && shape.followsCurrentColor
+          ? currentColor.withValues(alpha: currentColor.a * shape.color.a)
+          : shape.color;
       if (shape.clips.isEmpty) {
-        canvas.drawPath(shape.path, paint..color = shape.color);
+        canvas.drawPath(shape.path, paint..color = color);
         continue;
       }
       canvas.save();
       for (final ui.Path clip in shape.clips) {
         canvas.clipPath(clip);
       }
-      canvas.drawPath(shape.path, paint..color = shape.color);
+      canvas.drawPath(shape.path, paint..color = color);
       canvas.restore();
     }
   }
@@ -126,7 +149,11 @@ class SvgDrawing {
   /// the aspect ratio — device bodies declare a view box that already matches
   /// their target rectangle, and an exact mapping keeps the screen cut-out
   /// aligned with the simulated screen.
-  void paintInto(ui.Canvas canvas, ui.Rect destination) {
+  void paintInto(
+    ui.Canvas canvas,
+    ui.Rect destination, {
+    ui.Color? currentColor,
+  }) {
     if (shapes.isEmpty || viewBox.isEmpty || destination.isEmpty) {
       return;
     }
@@ -137,7 +164,7 @@ class SvgDrawing {
       destination.height / viewBox.height,
     );
     canvas.translate(-viewBox.left, -viewBox.top);
-    paint(canvas);
+    paint(canvas, currentColor: currentColor);
     canvas.restore();
   }
 
@@ -184,12 +211,16 @@ class _InheritedStyle {
     required this.color,
     required this.opacity,
     required this.clips,
+    this.inheritsColor = true,
   });
 
   final Matrix4 transform;
 
   /// The inherited `fill`, or null for `fill="none"`.
   final ui.Color? color;
+
+  /// Whether [color] came from inheritance rather than an explicit fill.
+  final bool inheritsColor;
   final double opacity;
   final List<ui.Path> clips;
 }
@@ -242,17 +273,21 @@ class _Flattener {
     // `none` is inheritable, so it is carried as a null color rather than
     // handled at the leaf.
     final ui.Color? color;
+    bool inheritsColor = parent.inheritsColor;
     if (rawFill == null || rawFill == 'currentColor') {
       color = parent.color;
     } else if (rawFill == 'none' || rawFill == 'transparent') {
       color = null;
     } else {
-      color = _parseColor(rawFill) ?? parent.color;
+      final ui.Color? parsed = _parseColor(rawFill);
+      color = parsed ?? parent.color;
+      inheritsColor = parsed == null && parent.inheritsColor;
     }
     final List<ui.Path> clips = _resolveClips(attributes, transform, parent);
     final _InheritedStyle style = _InheritedStyle(
       transform: transform,
       color: color,
+      inheritsColor: inheritsColor,
       opacity: opacity,
       clips: clips,
     );
@@ -277,6 +312,7 @@ class _Flattener {
         path: path.transform(transform.storage),
         color: color.withValues(alpha: color.a * alpha),
         clips: clips,
+        followsCurrentColor: inheritsColor,
       ),
     );
   }

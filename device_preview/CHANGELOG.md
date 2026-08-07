@@ -2,6 +2,15 @@
 
 ## 3.0.0-dev.2
 
+- Simulated system UI: `DeviceSimulation.systemUi` (`SystemUiSimulation`)
+  draws a static status bar and gesture pill over the app, laid out from the
+  simulated safe areas, and tinted from the app's live `SystemUiOverlayStyle`
+  (`SystemUiColors.resolve`). The binding tracks that style through both
+  `SystemChrome.setSystemUIOverlayStyle` and `AnnotatedRegion` — the latter
+  needing its own annotation lookup, since the framework's probes assume a
+  plain device-pixel-ratio root transform and miss under scale-to-fit.
+- `SvgDrawing.paint(currentColor:)` tints every shape that inherited its fill,
+  which is what makes one drawing serve as a tintable icon set.
 - Device frames: `DeviceSimulation.frame` (`DeviceFrame`) carries the screen
   outline the app is clipped to and the SVG body painted behind it, described
   in portrait and rotated with the device. The scale-to-fit letterbox and the

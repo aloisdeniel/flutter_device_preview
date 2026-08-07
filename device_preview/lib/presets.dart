@@ -12,6 +12,7 @@ import 'package:flutter/widgets.dart';
 import 'src/model/device_frame.dart';
 import 'src/model/json_utils.dart';
 import 'src/model/simulation.dart';
+import 'src/model/system_ui.dart';
 
 /// The broad category of a device preset.
 enum DeviceKind {
@@ -52,6 +53,7 @@ class DevicePreset {
     required this.devicePixelRatio,
     this.brand,
     this.frame,
+    this.systemUi,
     this.portraitPadding = EdgeInsets.zero,
     this.portraitViewPadding,
     this.landscapePadding,
@@ -76,6 +78,9 @@ class DevicePreset {
       frame: json['frame'] == null
           ? null
           : DeviceFrame.fromJson(decodeMap(json['frame'], 'frame')),
+      systemUi: json['systemUi'] == null
+          ? null
+          : SystemUiSimulation.fromJson(decodeMap(json['systemUi'], 'systemUi')),
       portraitSize: decodeSize(json['portraitSize'], 'portraitSize'),
       devicePixelRatio: decodeDouble(
         json['devicePixelRatio'],
@@ -135,6 +140,10 @@ class DevicePreset {
   /// The device's screen outline and body artwork, or null for a plain
   /// rectangular screen with no artwork.
   final DeviceFrame? frame;
+
+  /// The device's decorative system UI (status bar, gesture pill), or null
+  /// to leave the screen bare.
+  final SystemUiSimulation? systemUi;
 
   /// The logical screen size in portrait orientation.
   ///
@@ -203,6 +212,7 @@ class DevicePreset {
         presetId: id,
         screenSize: portraitSize,
         frame: frame,
+        systemUi: systemUi,
         devicePixelRatio: devicePixelRatio,
         padding: portraitPadding,
         viewPadding: effectivePortraitViewPadding,
@@ -222,6 +232,8 @@ class DevicePreset {
       screenSize: ui.Size(portraitSize.height, portraitSize.width),
       // Frames are described in portrait and rotated at paint time.
       frame: frame,
+      // System bars follow the safe areas, which resolve() already rotated.
+      systemUi: systemUi,
       devicePixelRatio: devicePixelRatio,
       padding: resolvedLandscapePadding,
       viewPadding: resolvedLandscapeViewPadding,
@@ -246,6 +258,7 @@ class DevicePreset {
     'kind': kind.name,
     'portraitSize': encodeSize(portraitSize),
     if (frame != null) 'frame': frame!.toJson(),
+    if (systemUi != null) 'systemUi': systemUi!.toJson(),
     'devicePixelRatio': devicePixelRatio,
     'portraitPadding': encodeEdgeInsets(portraitPadding),
     if (portraitViewPadding != null)
@@ -272,6 +285,7 @@ class DevicePreset {
         other.brand == brand &&
         other.platform == platform &&
         other.frame == frame &&
+        other.systemUi == systemUi &&
         other.portraitSize == portraitSize &&
         other.devicePixelRatio == devicePixelRatio &&
         other.portraitPadding == portraitPadding &&
@@ -290,6 +304,7 @@ class DevicePreset {
     brand,
     platform,
     frame,
+    systemUi,
     portraitSize,
     devicePixelRatio,
     portraitPadding,
