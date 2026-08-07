@@ -44,13 +44,31 @@ void main() {
 }
 ```
 
-`enable()` takes an optional positional flag. Left out, it resolves to
+`enable()` takes an optional `enabled` flag. Left out, it resolves to
 `!kReleaseMode` — on in debug and profile, off in release:
 
 ```dart
-DevicePreview.enable();            // debug + profile
-DevicePreview.enable(kDebugMode);  // debug only
-DevicePreview.enable(false);       // never
+DevicePreview.enable();                     // debug + profile
+DevicePreview.enable(enabled: kDebugMode);  // debug only
+DevicePreview.enable(enabled: false);       // never
+```
+
+It can also reserve padding around the simulated device and paint a
+background behind it. The safe areas of the hosting platform (a real notch,
+status bar, or home indicator) are automatically added to the padding, so the
+simulated device never hides under the host's own system UI:
+
+```dart
+DevicePreview.enable(
+  padding: const EdgeInsets.all(16),
+  backgroundDecoration: const BoxDecoration(
+    gradient: LinearGradient(
+      colors: [Color(0xFF1D1D25), Color(0xFF38383F)],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ),
+  ),
+);
 ```
 
 Programmatic control:

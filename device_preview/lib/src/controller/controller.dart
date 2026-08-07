@@ -89,6 +89,7 @@ class DevicePreviewControllerImpl implements DevicePreviewController {
     required this.state,
     required this.hostView,
     required this.hostDispatcher,
+    this.framePadding = EdgeInsets.zero,
     required VoidCallback handleMetricsChanged,
     required VoidCallback handleTextScaleFactorChanged,
     required VoidCallback handlePlatformBrightnessChanged,
@@ -116,6 +117,11 @@ class DevicePreviewControllerImpl implements DevicePreviewController {
 
   /// The real (host) platform dispatcher.
   final ui.PlatformDispatcher hostDispatcher;
+
+  /// Extra room reserved around the simulated device in the real window, in
+  /// real logical pixels, on top of the host's own safe areas (which are
+  /// always added — see [recomputeFit]).
+  final EdgeInsets framePadding;
 
   final VoidCallback _handleMetricsChanged;
   final VoidCallback _handleTextScaleFactorChanged;
@@ -177,17 +183,24 @@ class DevicePreviewControllerImpl implements DevicePreviewController {
 
   /// Recomputes [fitTransform] from the current host metrics and the active
   /// simulation.
+  ///
+  /// The host's live safe areas are folded into [framePadding], so the
+  /// simulated device stays clear of the real notch, status bar, or home
+  /// indicator when the preview runs on a mobile host.
   void recomputeFit() {
     final DeviceSimulation? active = state.simulation;
     if (active == null || !active.simulatesMetrics) {
       state.fit = FitTransform.identity;
       return;
     }
+    final double ratio = hostView.devicePixelRatio;
     state.fit = FitTransform.compute(
-      realLogicalSize: hostView.physicalSize / hostView.devicePixelRatio,
+      realLogicalSize: hostView.physicalSize / ratio,
       simulatedLogicalSize: active.screenSize!,
       // Reserve room for the device body, which surrounds the screen.
       contentBounds: active.contentBounds,
+      realInsets:
+          framePadding + EdgeInsets.fromViewPadding(hostView.padding, ratio),
     );
   }
 

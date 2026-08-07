@@ -15,6 +15,7 @@ import '../service/extensions.dart';
 import '../service/protocol.dart';
 import '../service/screenshot.dart';
 import '../widgets/device_preview_frame.dart';
+import '../widgets/preview_background.dart';
 import 'preview_flutter_view.dart';
 import 'preview_platform_dispatcher.dart';
 import 'preview_state.dart';
@@ -59,6 +60,8 @@ mixin DevicePreviewBindingMixin
         RendererBinding,
         WidgetsBinding {
   static bool _latchedEnabled = !kReleaseMode;
+  static EdgeInsets _latchedPadding = EdgeInsets.zero;
+  static BoxDecoration? _latchedBackgroundDecoration;
   static DeviceSimulation? _latchedInitialSimulation;
 
   static const Object _unsetInitialSimulation = Object();
@@ -67,17 +70,25 @@ mixin DevicePreviewBindingMixin
   /// with this mixin. Must be called before the binding is constructed;
   /// [DevicePreview.enable] does this automatically.
   ///
+  /// [padding] and [backgroundDecoration] configure the room reserved around
+  /// the simulated device and the decoration painted there — see
+  /// [DevicePreview.enable], which forwards them here.
+  ///
   /// [initialSimulation] is applied before the first frame, which is how
   /// golden and CI scenarios start under a given device without DevTools.
   /// Sentinel-based: omitting it keeps any previously latched simulation —
   /// so `latchConfiguration(initialSimulation: ...)` followed by
-  /// [DevicePreview.enable] (which re-latches [enabled]) works — while
-  /// passing `null` explicitly clears the latch.
+  /// [DevicePreview.enable] (which re-latches the other fields) works —
+  /// while passing `null` explicitly clears the latch.
   static void latchConfiguration({
     bool enabled = !kReleaseMode,
+    EdgeInsets padding = EdgeInsets.zero,
+    BoxDecoration? backgroundDecoration,
     Object? initialSimulation = _unsetInitialSimulation,
   }) {
     _latchedEnabled = enabled;
+    _latchedPadding = padding;
+    _latchedBackgroundDecoration = backgroundDecoration;
     if (!identical(initialSimulation, _unsetInitialSimulation)) {
       _latchedInitialSimulation = initialSimulation as DeviceSimulation?;
     }
@@ -86,6 +97,16 @@ mixin DevicePreviewBindingMixin
   /// Whether simulation machinery is installed. Latched before init and
   /// fixed for the binding's lifetime.
   late final bool simulationEnabled = _latchedEnabled;
+
+  /// Extra room reserved around the simulated device in the real window, in
+  /// real logical pixels. The host's live safe areas are always added on top
+  /// of it. Latched before init and fixed for the binding's lifetime.
+  late final EdgeInsets framePadding = _latchedPadding;
+
+  /// The decoration painted across the real window behind the simulated
+  /// device, or null to leave the letterbox unpainted. Latched before init
+  /// and fixed for the binding's lifetime.
+  late final BoxDecoration? backgroundDecoration = _latchedBackgroundDecoration;
 
   final PreviewState _state = PreviewState();
   PreviewPlatformDispatcher? _previewDispatcher;
@@ -160,6 +181,7 @@ mixin DevicePreviewBindingMixin
       state: _state,
       hostView: hostView,
       hostDispatcher: dispatcher.host,
+      framePadding: framePadding,
       handleMetricsChanged: handleMetricsChanged,
       handleTextScaleFactorChanged: handleTextScaleFactorChanged,
       handlePlatformBrightnessChanged: handlePlatformBrightnessChanged,
@@ -211,7 +233,8 @@ mixin DevicePreviewBindingMixin
 
   /// Wraps the root widget with [DevicePreviewFrame] so the simulated device
   /// body paints behind the app and the app is clipped to the simulated
-  /// screen outline.
+  /// screen outline — and, when a [backgroundDecoration] is configured, with
+  /// the background painter filling the window behind all of it.
   ///
   /// A pass-through when simulation is disabled, and — since the frame is
   /// driven by the live simulation — a no-op renderer until a simulation
@@ -222,13 +245,22 @@ mixin DevicePreviewBindingMixin
     if (!simulationEnabled || controller == null) {
       return super.wrapWithDefaultView(rootWidget);
     }
-    return super.wrapWithDefaultView(
-      DevicePreviewFrame(
-        simulation: controller.simulationListenable,
-        overlayStyle: _systemOverlayStyle,
-        child: rootWidget,
-      ),
+    Widget wrapped = DevicePreviewFrame(
+      simulation: controller.simulationListenable,
+      overlayStyle: _systemOverlayStyle,
+      child: rootWidget,
     );
+    final BoxDecoration? decoration = backgroundDecoration;
+    if (decoration != null) {
+      wrapped = PreviewBackground(
+        decoration: decoration,
+        simulation: controller.simulationListenable,
+        fit: _state.fitNotifier,
+        hostView: controller.hostView,
+        child: wrapped,
+      );
+    }
+    return super.wrapWithDefaultView(wrapped);
   }
 
   /// Picks up the style the frame just resolved.
@@ -525,25 +557,48 @@ class DevicePreview extends BindingBase
   /// decide yourself:
   ///
   /// ```dart
-  /// DevicePreview.enable();               // debug + profile
-  /// DevicePreview.enable(kDebugMode);     // debug only
-  /// DevicePreview.enable(false);          // never
+  /// DevicePreview.enable();                    // debug + profile
+  /// DevicePreview.enable(enabled: kDebugMode); // debug only
+  /// DevicePreview.enable(enabled: false);      // never
   /// ```
   ///
   /// Target-platform simulation stays debug-only regardless, because
   /// `defaultTargetPlatform` is const-folded in other build modes.
   ///
-  /// The resolved value is latched forever at the first call; later calls
+  /// [padding] reserves extra room around the simulated device when it is
+  /// fitted into the real window, in real logical pixels. The safe areas of
+  /// the hosting platform — the real notch, status bar, or home indicator —
+  /// are automatically added to this value, so the simulated device never
+  /// hides under the host's own system UI.
+  ///
+  /// [backgroundDecoration] is painted across the real window behind the
+  /// simulated device (visible in the letterbox a metric simulation leaves
+  /// around itself). Left null, nothing is painted there.
+  ///
+  /// ```dart
+  /// DevicePreview.enable(
+  ///   padding: const EdgeInsets.all(16),
+  ///   backgroundDecoration: const BoxDecoration(color: Color(0xFF1D1D25)),
+  /// );
+  /// ```
+  ///
+  /// The resolved values are latched forever at the first call; later calls
   /// return the existing binding unchanged.
   ///
   /// To start from a given simulation before the first frame (golden or CI
   /// scenarios without DevTools), apply it through the controller right
   /// after enabling, or latch one with
   /// [DevicePreviewBindingMixin.latchConfiguration].
-  static WidgetsBinding enable([bool? enabled]) {
+  static WidgetsBinding enable({
+    bool? enabled,
+    EdgeInsets padding = EdgeInsets.zero,
+    BoxDecoration? backgroundDecoration,
+  }) {
     if (_instance == null) {
       DevicePreviewBindingMixin.latchConfiguration(
         enabled: enabled ?? !kReleaseMode,
+        padding: padding,
+        backgroundDecoration: backgroundDecoration,
       );
       DevicePreview();
     }

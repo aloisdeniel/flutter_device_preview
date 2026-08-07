@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:device_preview/device_preview.dart';
+import 'package:flutter/painting.dart' show EdgeInsets;
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -70,6 +71,66 @@ void main() {
         realLogicalSize: const Size(1000, 800),
         simulatedLogicalSize: const Size(400, 600),
         contentBounds: Rect.zero,
+      );
+      expect(fit.scale, 1.0);
+      expect(fit.offset, const Offset((1000 - 400) / 2, (800 - 600) / 2));
+    });
+
+    test('real insets shrink the available area and drive the scale', () {
+      final fit = FitTransform.compute(
+        realLogicalSize: const Size(1000, 800),
+        simulatedLogicalSize: const Size(500, 700),
+        realInsets: const EdgeInsets.all(50),
+      );
+      // Available 900x700: min(900/500 = 1.8, 700/700 = 1.0) → 1.0.
+      expect(fit.scale, 1.0);
+      // Centered inside the deflated rect, not the full window.
+      expect(fit.offset, const Offset(50 + (900 - 500) / 2, 50));
+    });
+
+    test('asymmetric insets recenter within the remaining area', () {
+      final fit = FitTransform.compute(
+        realLogicalSize: const Size(400, 900),
+        simulatedLogicalSize: const Size(400, 800),
+        realInsets: const EdgeInsets.only(top: 100),
+      );
+      // Available (0, 100)–(400, 900): the content just fits below the inset.
+      expect(fit.scale, 1.0);
+      expect(fit.offset, const Offset(0, 100));
+    });
+
+    test('insets force a down-scale when the content no longer fits', () {
+      final fit = FitTransform.compute(
+        realLogicalSize: const Size(400, 800),
+        simulatedLogicalSize: const Size(400, 800),
+        realInsets: const EdgeInsets.symmetric(vertical: 200),
+      );
+      // Available 400x400: min(400/400, 400/800) = 0.5.
+      expect(fit.scale, 0.5);
+      expect(fit.offset, const Offset((400 - 200) / 2, 200 + (400 - 400) / 2));
+    });
+
+    test('insets compose with content bounds', () {
+      // A 400x600 screen inside a 420x620 body starting at (-10, -10).
+      const content = Rect.fromLTRB(-10, -10, 410, 610);
+      final fit = FitTransform.compute(
+        realLogicalSize: const Size(440, 640),
+        simulatedLogicalSize: const Size(400, 600),
+        contentBounds: content,
+        realInsets: const EdgeInsets.all(10),
+      );
+      // The insets leave exactly the body's size: still no down-scaling.
+      expect(fit.scale, 1.0);
+      // Screen origin sits at inset (10) + body margin (10).
+      expect(fit.offset, const Offset(20, 20));
+      expect(fit.toRealLogical(content.topLeft), const Offset(10, 10));
+    });
+
+    test('insets that consume the whole window are ignored', () {
+      final fit = FitTransform.compute(
+        realLogicalSize: const Size(1000, 800),
+        simulatedLogicalSize: const Size(400, 600),
+        realInsets: const EdgeInsets.symmetric(horizontal: 500),
       );
       expect(fit.scale, 1.0);
       expect(fit.offset, const Offset((1000 - 400) / 2, (800 - 600) / 2));

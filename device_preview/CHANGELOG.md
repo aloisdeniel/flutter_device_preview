@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased
+
+- `DevicePreview.enable` gained `padding` and `backgroundDecoration`
+  parameters: `padding` reserves room around the simulated device when it is
+  fitted into the real window, and `backgroundDecoration` paints the window
+  behind the device (the letterbox). Both are latched at enable time, like
+  `enabled`.
+- The safe areas of the hosting platform (a real notch, status bar, or home
+  indicator) are now automatically added to the padding, so the simulated
+  device stays clear of the host's own system UI.
+- **Breaking**: `DevicePreview.enable`'s positional flag became the named
+  `enabled` parameter — `DevicePreview.enable(kDebugMode)` is now
+  `DevicePreview.enable(enabled: kDebugMode)`.
+
 ## 3.0.0-prerelease2
 
 Device catalog refreshed to the two latest generations — 22 devices:
