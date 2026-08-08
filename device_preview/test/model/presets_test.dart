@@ -1,17 +1,16 @@
 import 'dart:convert';
 import 'dart:ui' as ui;
 
-import 'package:device_preview/device_preview.dart' show SimulatedDisplayFeature;
 import 'package:device_preview/presets.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('DevicePresets catalog', () {
-    test('contains the 22 documented presets with unique ids', () {
-      expect(DevicePresets.all, hasLength(22));
+    test('contains the 26 documented presets with unique ids', () {
+      expect(DevicePresets.all, hasLength(26));
       final ids = DevicePresets.all.map((p) => p.id).toSet();
-      expect(ids, hasLength(22));
+      expect(ids, hasLength(26));
     });
 
     test('every device preset declares a release year', () {
@@ -22,12 +21,47 @@ void main() {
       }
     });
 
-    test('contains no foldable presets', () {
+    test('every foldable preset reports a flat fold spanning its screen', () {
+      final foldables = DevicePresets.all
+          .where((p) => p.kind == DeviceKind.foldable)
+          .toList();
+      expect(foldables.map((p) => p.id), <String>[
+        'google-pixel-10-pro-fold',
+        'samsung-galaxy-z-flip-8',
+        'samsung-galaxy-z-fold-8',
+        'samsung-galaxy-z-fold-8-ultra',
+      ]);
+      for (final preset in foldables) {
+        expect(preset.displayFeatures, hasLength(1), reason: preset.id);
+        final feature = preset.displayFeatures.single;
+        expect(feature.type, ui.DisplayFeatureType.fold, reason: preset.id);
+        expect(
+          feature.state,
+          ui.DisplayFeatureState.postureFlat,
+          reason: preset.id,
+        );
+        // A crease has zero area and runs edge to edge through the center
+        // of the panel, along one axis or the other.
+        final bounds = feature.bounds;
+        final size = preset.portraitSize;
+        if (bounds.width == 0) {
+          expect(bounds.left, size.width / 2, reason: preset.id);
+          expect(bounds.top, 0, reason: preset.id);
+          expect(bounds.bottom, size.height, reason: preset.id);
+        } else {
+          expect(bounds.height, 0, reason: preset.id);
+          expect(bounds.top, size.height / 2, reason: preset.id);
+          expect(bounds.left, 0, reason: preset.id);
+          expect(bounds.right, size.width, reason: preset.id);
+        }
+      }
+      // Only foldables carry display features.
       expect(
-        DevicePresets.all.where((p) => p.kind == DeviceKind.foldable),
+        DevicePresets.all
+            .where((p) => p.kind != DeviceKind.foldable)
+            .expand((p) => p.displayFeatures),
         isEmpty,
       );
-      expect(DevicePresets.all.expand((p) => p.displayFeatures), isEmpty);
     });
 
     test('byId finds every catalog entry', () {

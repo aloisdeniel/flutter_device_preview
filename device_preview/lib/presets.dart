@@ -16,6 +16,7 @@ import 'src/model/simulation.dart';
 import 'src/model/system_ui.dart';
 
 export 'src/model/device_kind.dart';
+export 'src/model/simulation.dart' show SimulatedDisplayFeature;
 
 /// Description of a device: its metrics, and optionally the [frame] it is
 /// drawn in.
@@ -541,6 +542,28 @@ abstract final class DevicePresets {
     landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
   );
 
+  /// Google Pixel 10 Pro Fold — 8" inner display, book-style fold with a
+  /// vertical crease at mid-width.
+  static const DevicePreset pixel10ProFold = DevicePreset(
+    id: 'google-pixel-10-pro-fold',
+    name: 'Pixel 10 Pro Fold',
+    brand: 'Google',
+    year: 2025,
+    platform: TargetPlatform.android,
+    portraitSize: ui.Size(852, 883),
+    devicePixelRatio: 2.4375,
+    portraitPadding: EdgeInsets.only(top: 24, bottom: 24),
+    landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
+    displayFeatures: <SimulatedDisplayFeature>[
+      SimulatedDisplayFeature(
+        bounds: ui.Rect.fromLTRB(426, 0, 426, 883),
+        type: ui.DisplayFeatureType.fold,
+        state: ui.DisplayFeatureState.postureFlat,
+      ),
+    ],
+    kind: DeviceKind.foldable,
+  );
+
   /// Samsung Galaxy S24 — punch-hole, gesture navigation.
   static const DevicePreset galaxyS24 = DevicePreset(
     id: 'samsung-galaxy-s24',
@@ -565,6 +588,72 @@ abstract final class DevicePresets {
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 24, bottom: 24),
     landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
+  );
+
+  /// Samsung Galaxy Z Flip8 — clamshell fold, horizontal crease at
+  /// mid-height.
+  static const DevicePreset galaxyZFlip8 = DevicePreset(
+    id: 'samsung-galaxy-z-flip-8',
+    name: 'Galaxy Z Flip8',
+    brand: 'Samsung',
+    year: 2026,
+    platform: TargetPlatform.android,
+    portraitSize: ui.Size(360, 840),
+    devicePixelRatio: 3.0,
+    portraitPadding: EdgeInsets.only(top: 24, bottom: 24),
+    landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
+    displayFeatures: <SimulatedDisplayFeature>[
+      SimulatedDisplayFeature(
+        bounds: ui.Rect.fromLTRB(0, 420, 360, 420),
+        type: ui.DisplayFeatureType.fold,
+        state: ui.DisplayFeatureState.postureFlat,
+      ),
+    ],
+    kind: DeviceKind.foldable,
+  );
+
+  /// Samsung Galaxy Z Fold8 — 7.6" inner display; the wide-format fold
+  /// opens vertically, so the crease is horizontal at mid-height.
+  static const DevicePreset galaxyZFold8 = DevicePreset(
+    id: 'samsung-galaxy-z-fold-8',
+    name: 'Galaxy Z Fold8',
+    brand: 'Samsung',
+    year: 2026,
+    platform: TargetPlatform.android,
+    portraitSize: ui.Size(731, 979),
+    devicePixelRatio: 2.5,
+    portraitPadding: EdgeInsets.only(top: 24, bottom: 24),
+    landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
+    displayFeatures: <SimulatedDisplayFeature>[
+      SimulatedDisplayFeature(
+        bounds: ui.Rect.fromLTRB(0, 489.5, 731, 489.5),
+        type: ui.DisplayFeatureType.fold,
+        state: ui.DisplayFeatureState.postureFlat,
+      ),
+    ],
+    kind: DeviceKind.foldable,
+  );
+
+  /// Samsung Galaxy Z Fold8 Ultra — 8" inner display, book-style fold with
+  /// a vertical crease at mid-width.
+  static const DevicePreset galaxyZFold8Ultra = DevicePreset(
+    id: 'samsung-galaxy-z-fold-8-ultra',
+    name: 'Galaxy Z Fold8 Ultra',
+    brand: 'Samsung',
+    year: 2026,
+    platform: TargetPlatform.android,
+    portraitSize: ui.Size(860, 954),
+    devicePixelRatio: 2.625,
+    portraitPadding: EdgeInsets.only(top: 24, bottom: 24),
+    landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
+    displayFeatures: <SimulatedDisplayFeature>[
+      SimulatedDisplayFeature(
+        bounds: ui.Rect.fromLTRB(430, 0, 430, 954),
+        type: ui.DisplayFeatureType.fold,
+        state: ui.DisplayFeatureState.postureFlat,
+      ),
+    ],
+    kind: DeviceKind.foldable,
   );
 
   /// Samsung Galaxy Tab S10+.
@@ -635,8 +724,12 @@ abstract final class DevicePresets {
     iPadMini,
     pixel9,
     pixel10,
+    pixel10ProFold,
     galaxyS24,
     galaxyS25,
+    galaxyZFlip8,
+    galaxyZFold8,
+    galaxyZFold8Ultra,
     galaxyTabS10Plus,
     galaxyTabS11,
     smallDesktopWindow,

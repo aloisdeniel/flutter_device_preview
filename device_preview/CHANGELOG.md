@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+- Four foldable presets — the catalog's first: Pixel 10 Pro Fold
+  (`DevicePresets.pixel10ProFold`), Galaxy Z Fold8 (`galaxyZFold8`),
+  Galaxy Z Fold8 Ultra (`galaxyZFold8Ultra`) and Galaxy Z Flip8
+  (`galaxyZFlip8`), 26 devices in all. Each simulates its unfolded inner
+  display and reports the crease as a `fold` display feature
+  (`postureFlat`), so hinge-aware layouts such as two-pane split at the
+  fold, in both orientations.
+- `package:device_preview/presets.dart` now re-exports
+  `SimulatedDisplayFeature`, which the foldable presets carry.
+
 ## 3.0.0-prerelease3
 
 - `DevicePreview.enable` gained `padding` and `backgroundDecoration`
