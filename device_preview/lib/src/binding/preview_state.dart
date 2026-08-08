@@ -1,5 +1,7 @@
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
+
 import '../model/fit_transform.dart';
 import '../model/simulation.dart';
 
@@ -14,9 +16,17 @@ class PreviewState {
   /// The active simulation, or null when passing through.
   DeviceSimulation? simulation;
 
+  /// Listenable form of [fit], for painters that must repaint when the
+  /// letterbox moves (the background decoration render object). Notifies only
+  /// on value changes — [FitTransform] compares by value.
+  final ValueNotifier<FitTransform> fitNotifier = ValueNotifier<FitTransform>(
+    FitTransform.identity,
+  );
+
   /// The current scale-to-fit mapping ([FitTransform.identity] when no
   /// metric simulation is active).
-  FitTransform fit = FitTransform.identity;
+  FitTransform get fit => fitNotifier.value;
+  set fit(FitTransform value) => fitNotifier.value = value;
 
   /// Invoked by the wrapper dispatcher's real `onMetricsChanged` trampoline
   /// before applying the swallow-vs-forward policy.

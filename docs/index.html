@@ -211,6 +211,22 @@ h1 .outline {
 .dp-panel select { min-width: 0; }
 #dpPreset { flex: 1; }
 
+/* the demo picker — which app runs inside the simulated device */
+.dp-app {
+  display: flex;
+  margin: 12px 14px 2px;
+  border: 1px solid var(--line-strong); border-radius: 6px;
+  overflow: hidden;
+}
+.dp-app button {
+  flex: 1;
+  background: none; border: none; border-left: 1px solid var(--line-strong);
+  color: var(--ink-dim); font-family: var(--mono); font-size: 11.5px;
+  padding: 6px 8px; cursor: pointer;
+}
+.dp-app button:first-child { border-left: none; }
+.dp-app button[aria-pressed="true"] { background: var(--cyan); color: #05263a; }
+
 .dp-seg { display: inline-flex; border: 1px solid var(--line-strong); border-radius: 5px; overflow: hidden; flex: none; }
 .dp-seg button {
   background: none; border: none; border-left: 1px solid var(--line-strong);
@@ -494,7 +510,7 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
       <h2>Not a mockup.<br>A running app.</h2>
     </div>
 
-    <p class="demo-lede reveal">On the left, the Flutter counter app compiled for the web — <strong>the stock one</strong>, with nothing but a theme change and <code>DevicePreview.enable()</code>. On the right, the same controls the DevTools extension gives you, rebuilt in HTML and talking to the app over <code>postMessage</code> instead of the VM service. Pick a device, rotate it, push the text scale: the app you are looking at re-lays itself out, and the counter keeps counting.</p>
+    <p class="demo-lede reveal">On the left, a Flutter app compiled for the web. On the right, the same controls the DevTools extension gives you, rebuilt in HTML and talking to the app over <code>postMessage</code> instead of the VM service. The picker at the top of the panel swaps what runs inside the simulated device: the <strong>device lab</strong>, an app that shows off everything a simulation touches — labeled safe areas under the notch, a clock that follows the locale and the 24-hour toggle, a layout that splits around a foldable's hinge — or the <strong>stock counter app</strong>, with nothing but a theme change and <code>DevicePreview.enable()</code>. Either way: pick a device, rotate it, push the text scale, and the app re-lays itself out live.</p>
 
     <div class="demo-grid reveal">
       <div class="stage">
@@ -509,6 +525,11 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
         </div>
 
         <div class="dp-body">
+          <div class="dp-app" id="dpApp" role="group" aria-label="Demo app">
+            <button type="button" data-value="showcase" aria-pressed="true">Device lab</button>
+            <button type="button" data-value="counter" aria-pressed="false">Counter</button>
+          </div>
+
           <div class="dp-sec">Device</div>
           <div class="dp-row">
             <span class="dp-lbl">Preset</span>
@@ -852,7 +873,12 @@ document.getElementById('year').textContent = new Date().getFullYear();
  * ------------------------------------------------------------------------ */
 (() => {
   const CHANNEL = 'device_preview_demo';
-  const DEMO_URL = 'demo/index.html';
+  // One bundle, two apps: the `app` query parameter picks which one runs
+  // (see example/lib/demo.dart).
+  const DEMO_APPS = {
+    showcase: { url: 'demo/index.html?app=showcase', title: 'The device-lab showcase, running under device_preview' },
+    counter: { url: 'demo/index.html?app=counter', title: 'The Flutter counter example, running under device_preview' },
+  };
   const CATALOG_URL = 'device_catalog.json';
   const DEFAULT_DEVICE = 'apple-iphone-17-pro';
 
@@ -884,6 +910,9 @@ document.getElementById('year').textContent = new Date().getFullYear();
   let state = null;
   let connected = false;
   let bootstrapped = false;
+  let currentApp = 'showcase';
+  // The simulation to re-apply after a demo switch reloads the iframe.
+  let restoreSim = null;
   let seq = 0;
   const pending = new Map();
   let queue = Promise.resolve();
@@ -932,13 +961,42 @@ document.getElementById('year').textContent = new Date().getFullYear();
   }
 
   /** Puts a device on screen as soon as both ends are up, so the demo never
-   *  greets a visitor with an unsimulated window. */
+   *  greets a visitor with an unsimulated window. After a demo switch, the
+   *  simulation stashed from the previous app is restored instead. */
   function maybeBootstrap() {
     if (bootstrapped || !connected || !catalog.length) return;
     bootstrapped = true;
+    if (restoreSim) {
+      const sim = restoreSim;
+      restoreSim = null;
+      enqueue(() => send('setSimulation', { simulation: normalize(sim) }));
+      return;
+    }
     if (state && state.simulation && state.simulation.screenSize) return;
     const preset = presetById(DEFAULT_DEVICE) || catalog[0];
     enqueue(() => applyPreset(preset, 'portrait'));
+  }
+
+  /** Swaps the app inside the simulated device: reloads the iframe on the
+   *  other entry and re-applies the running simulation once it reconnects. */
+  function selectApp(app) {
+    if (!DEMO_APPS[app] || app === currentApp || !frame) return;
+    currentApp = app;
+    restoreSim = simulation() ? clone(simulation()) : null;
+    connected = false;
+    bootstrapped = false;
+    $('dpDot').classList.remove('on');
+    stageMsg.innerHTML = '<span><b>Loading…</b></span>';
+    stageMsg.classList.remove('hidden');
+    renderAppPicker();
+    frame.title = DEMO_APPS[app].title;
+    frame.src = DEMO_APPS[app].url;
+  }
+
+  function renderAppPicker() {
+    document.querySelectorAll('#dpApp button').forEach((button) => {
+      button.setAttribute('aria-pressed', String(button.dataset.value === currentApp));
+    });
   }
 
   // --- simulation state ----------------------------------------------------
@@ -1326,6 +1384,11 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
   $('dpReset').addEventListener('click', () => enqueue(() => push({})));
 
+  $('dpApp').addEventListener('click', (event) => {
+    const button = event.target.closest('button');
+    if (button) selectApp(button.dataset.value);
+  });
+
   // The fit percentage depends on the size of the stage, which the app only
   // reports when asked.
   let resizeTimer = null;
@@ -1357,8 +1420,8 @@ document.getElementById('year').textContent = new Date().getFullYear();
       });
 
     frame = document.createElement('iframe');
-    frame.title = 'The Flutter counter example, running under device_preview';
-    frame.src = DEMO_URL;
+    frame.title = DEMO_APPS[currentApp].title;
+    frame.src = DEMO_APPS[currentApp].url;
     frame.addEventListener('load', () => {
       // The app posts `ready` on startup; this covers the case where it did so
       // before this page was listening.

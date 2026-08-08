@@ -14,11 +14,12 @@ import '../binding/fakes.dart';
 /// Harness bundling a [DevicePreviewControllerImpl] with recording handlers
 /// and a scriptable target-platform override.
 class ControllerHarness {
-  ControllerHarness() {
+  ControllerHarness({EdgeInsets framePadding = EdgeInsets.zero}) {
     controller = DevicePreviewControllerImpl(
       state: state,
       hostView: dispatcher.implicitView!,
       hostDispatcher: dispatcher,
+      framePadding: framePadding,
       handleMetricsChanged: () => handlerCalls.add('metrics'),
       handleTextScaleFactorChanged: () => handlerCalls.add('textScale'),
       handlePlatformBrightnessChanged: () => handlerCalls.add('brightness'),
@@ -353,6 +354,39 @@ void main() {
       expect(result.presetId, 'apple-iphone-16');
       expect(result.frame, frame);
       expect(result.systemUi, systemUi);
+    });
+  });
+
+  group('scale-to-fit chrome insets', () {
+    test('the fit reserves the host safe areas', () async {
+      // The fake host is 800x600 logical (2400x1800 at 3.0x) with a
+      // 120-physical-pixel top view padding → a 40-logical-pixel safe area.
+      final ControllerHarness harness = ControllerHarness();
+      addTearDown(harness.dispose);
+      await harness.controller.apply(
+        const DeviceSimulation(screenSize: ui.Size(800, 600)),
+      );
+      final FitTransform fit = harness.controller.fitTransform;
+      // Available 800x560: min(800/800, 560/600) = 560/600.
+      expect(fit.scale, closeTo(560 / 600, 1e-12));
+      // Centered below the safe area: 40 + (560 − 600 × scale) / 2 = 40.
+      expect(fit.offset.dy, closeTo(40, 1e-12));
+      expect(fit.offset.dx, closeTo((800 - 800 * 560 / 600) / 2, 1e-12));
+    });
+
+    test('the configured frame padding adds to the host safe areas', () async {
+      final ControllerHarness harness = ControllerHarness(
+        framePadding: const EdgeInsets.all(10),
+      );
+      addTearDown(harness.dispose);
+      await harness.controller.apply(
+        const DeviceSimulation(screenSize: ui.Size(800, 600)),
+      );
+      final FitTransform fit = harness.controller.fitTransform;
+      // Available (10, 50)–(790, 590) = 780x540: min(780/800, 540/600) = 0.9.
+      expect(fit.scale, closeTo(0.9, 1e-12));
+      expect(fit.offset.dx, closeTo(10 + (780 - 800 * 0.9) / 2, 1e-12));
+      expect(fit.offset.dy, closeTo(50 + (540 - 600 * 0.9) / 2, 1e-12));
     });
   });
 }

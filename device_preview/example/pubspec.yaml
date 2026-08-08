@@ -11,8 +11,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # The showcase demo localizes itself into every locale the panel offers.
+  flutter_localizations:
+    sdk: flutter
   device_preview:
     path: ../
+  intl: any # pinned by flutter_localizations
 
 dev_dependencies:
   flutter_test:

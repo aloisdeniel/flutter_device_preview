@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/painting.dart' show EdgeInsets;
 
 /// The scale-to-fit mapping between the simulated logical coordinate space
 /// and the real logical coordinate space.
@@ -24,8 +25,10 @@ class FitTransform {
   /// Computes the fit of [simulatedLogicalSize] inside [realLogicalSize]:
   ///
   /// ```
-  /// scale  = min(real.w / content.w, real.h / content.h).clamp(0, 1)
-  /// offset = (real − content × scale) / 2 − content.topLeft × scale
+  /// available = (0,0 & real) deflated by realInsets
+  /// scale  = min(available.w / content.w, available.h / content.h).clamp(0, 1)
+  /// offset = available.topLeft
+  ///        + (available − content × scale) / 2 − content.topLeft × scale
   /// ```
   ///
   /// [contentBounds] is what must stay visible, in simulated logical
@@ -36,12 +39,19 @@ class FitTransform {
   /// position of the simulated origin either way, so pointer remapping and
   /// the root paint matrix are unaffected.
   ///
+  /// [realInsets] is the strip of the real window reserved around the
+  /// content, in real logical pixels — the configured frame padding plus the
+  /// host's own safe areas. The content is scaled to fit and centered inside
+  /// the deflated rectangle instead of the full window. Insets that leave no
+  /// room (or are non-finite) are ignored rather than collapsing the fit.
+  ///
   /// Degenerate inputs (non-finite, zero, or negative dimensions on either
   /// size) yield [identity] so downstream math stays safe.
   factory FitTransform.compute({
     required ui.Size realLogicalSize,
     required ui.Size simulatedLogicalSize,
     ui.Rect? contentBounds,
+    EdgeInsets realInsets = EdgeInsets.zero,
   }) {
     if (!_isValid(realLogicalSize) || !_isValid(simulatedLogicalSize)) {
       return identity;
@@ -50,16 +60,24 @@ class FitTransform {
     if (!_isValid(content.size)) {
       content = ui.Offset.zero & simulatedLogicalSize;
     }
+    ui.Rect available = realInsets.deflateRect(
+      ui.Offset.zero & realLogicalSize,
+    );
+    if (!_isValid(available.size)) {
+      available = ui.Offset.zero & realLogicalSize;
+    }
     final double scale = math
         .min(
-          realLogicalSize.width / content.width,
-          realLogicalSize.height / content.height,
+          available.width / content.width,
+          available.height / content.height,
         )
         .clamp(0.0, 1.0);
     final ui.Offset offset = ui.Offset(
-      (realLogicalSize.width - content.width * scale) / 2 -
+      available.left +
+          (available.width - content.width * scale) / 2 -
           content.left * scale,
-      (realLogicalSize.height - content.height * scale) / 2 -
+      available.top +
+          (available.height - content.height * scale) / 2 -
           content.top * scale,
     );
     return FitTransform(scale: scale, offset: offset);
