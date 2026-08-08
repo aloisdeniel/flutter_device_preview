@@ -212,20 +212,7 @@ h1 .outline {
 #dpPreset { flex: 1; }
 
 /* the demo picker — which app runs inside the simulated device */
-.dp-app {
-  display: flex;
-  margin: 12px 14px 2px;
-  border: 1px solid var(--line-strong); border-radius: 6px;
-  overflow: hidden;
-}
-.dp-app button {
-  flex: 1;
-  background: none; border: none; border-left: 1px solid var(--line-strong);
-  color: var(--ink-dim); font-family: var(--mono); font-size: 11.5px;
-  padding: 6px 8px; cursor: pointer;
-}
-.dp-app button:first-child { border-left: none; }
-.dp-app button[aria-pressed="true"] { background: var(--cyan); color: #05263a; }
+#dpApp { flex: 1; }
 
 .dp-seg { display: inline-flex; border: 1px solid var(--line-strong); border-radius: 5px; overflow: hidden; flex: none; }
 .dp-seg button {
@@ -510,7 +497,7 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
       <h2>Not a mockup.<br>A running app.</h2>
     </div>
 
-    <p class="demo-lede reveal">On the left, a Flutter app compiled for the web. On the right, the same controls the DevTools extension gives you, rebuilt in HTML and talking to the app over <code>postMessage</code> instead of the VM service. The picker at the top of the panel swaps what runs inside the simulated device: the <strong>device lab</strong>, an app that shows off everything a simulation touches — labeled safe areas under the notch, a clock that follows the locale and the 24-hour toggle, a layout that splits around a foldable's hinge — or the <strong>stock counter app</strong>, with nothing but a theme change and <code>DevicePreview.enable()</code>. Either way: pick a device, rotate it, push the text scale, and the app re-lays itself out live.</p>
+    <p class="demo-lede reveal">On the left, a Flutter app compiled for the web. On the right, the same controls the DevTools extension gives you, rebuilt in HTML and talking to the app over <code>postMessage</code> instead of the VM service. The picker at the top of the panel swaps what runs inside the simulated device: the <strong>stock counter app</strong>, with nothing but a theme change and <code>DevicePreview.enable()</code>; a <strong>todo app</strong> with navigation, bottom sheets, dialogs and toasts; or the <strong>device lab</strong>, which shows off everything a simulation touches — labeled safe areas under the notch, a clock that follows the locale and the 24-hour toggle, a layout that splits around a foldable's hinge. Either way: pick a device, rotate it, push the text scale, and the app re-lays itself out live.</p>
 
     <div class="demo-grid reveal">
       <div class="stage">
@@ -525,9 +512,16 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
         </div>
 
         <div class="dp-body">
-          <div class="dp-app" id="dpApp" role="group" aria-label="Demo app">
-            <button type="button" data-value="showcase" aria-pressed="true">Device lab</button>
-            <button type="button" data-value="counter" aria-pressed="false">Counter</button>
+          <div class="dp-sec">Demo</div>
+          <div class="dp-row">
+            <label class="dp-lbl" for="dpApp">App</label>
+            <span class="dp-ctl">
+              <select id="dpApp" aria-label="Demo app">
+                <option value="counter" selected>Counter</option>
+                <option value="todo">Todo</option>
+                <option value="showcase">Device lab</option>
+              </select>
+            </span>
           </div>
 
           <div class="dp-sec">Device</div>
@@ -873,11 +867,12 @@ document.getElementById('year').textContent = new Date().getFullYear();
  * ------------------------------------------------------------------------ */
 (() => {
   const CHANNEL = 'device_preview_demo';
-  // One bundle, two apps: the `app` query parameter picks which one runs
+  // One bundle, three apps: the `app` query parameter picks which one runs
   // (see example/lib/demo.dart).
   const DEMO_APPS = {
-    showcase: { url: 'demo/index.html?app=showcase', title: 'The device-lab showcase, running under device_preview' },
     counter: { url: 'demo/index.html?app=counter', title: 'The Flutter counter example, running under device_preview' },
+    todo: { url: 'demo/index.html?app=todo', title: 'The todo example, running under device_preview' },
+    showcase: { url: 'demo/index.html?app=showcase', title: 'The device-lab showcase, running under device_preview' },
   };
   const CATALOG_URL = 'device_catalog.json';
   const DEFAULT_DEVICE = 'apple-iphone-17-pro';
@@ -910,7 +905,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
   let state = null;
   let connected = false;
   let bootstrapped = false;
-  let currentApp = 'showcase';
+  let currentApp = 'counter';
   // The simulation to re-apply after a demo switch reloads the iframe.
   let restoreSim = null;
   let seq = 0;
@@ -977,10 +972,14 @@ document.getElementById('year').textContent = new Date().getFullYear();
     enqueue(() => applyPreset(preset, 'portrait'));
   }
 
-  /** Swaps the app inside the simulated device: reloads the iframe on the
-   *  other entry and re-applies the running simulation once it reconnects. */
+  /** Swaps the app inside the simulated device: reloads the iframe on
+   *  another entry and re-applies the running simulation once it
+   *  reconnects. */
   function selectApp(app) {
-    if (!DEMO_APPS[app] || app === currentApp || !frame) return;
+    if (!DEMO_APPS[app] || app === currentApp || !frame) {
+      renderAppPicker();
+      return;
+    }
     currentApp = app;
     restoreSim = simulation() ? clone(simulation()) : null;
     connected = false;
@@ -994,9 +993,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
   }
 
   function renderAppPicker() {
-    document.querySelectorAll('#dpApp button').forEach((button) => {
-      button.setAttribute('aria-pressed', String(button.dataset.value === currentApp));
-    });
+    $('dpApp').value = currentApp;
   }
 
   // --- simulation state ----------------------------------------------------
@@ -1384,10 +1381,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
   $('dpReset').addEventListener('click', () => enqueue(() => push({})));
 
-  $('dpApp').addEventListener('click', (event) => {
-    const button = event.target.closest('button');
-    if (button) selectApp(button.dataset.value);
-  });
+  $('dpApp').addEventListener('change', (event) => selectApp(event.target.value));
 
   // The fit percentage depends on the size of the stage, which the app only
   // reports when asked.

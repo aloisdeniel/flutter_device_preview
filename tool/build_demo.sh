@@ -2,9 +2,9 @@
 #
 # Builds the interactive demo of the landing page:
 #
-#   * `docs/demo/`               — the two demo apps (`example/lib/demo.dart`:
-#                                  counter + showcase, chosen by `?app=`)
-#                                  compiled for the web,
+#   * `docs/demo/`               — the demo apps (`example/lib/demo.dart`:
+#                                  counter + todo + showcase, chosen by
+#                                  `?app=`) compiled for the web,
 #   * `docs/device_catalog.json` — the device catalog the page's panel pushes
 #                                  to it.
 #
