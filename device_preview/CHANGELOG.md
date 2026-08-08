@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 3.0.0-prerelease3
 
 - `DevicePreview.enable` gained `padding` and `backgroundDecoration`
   parameters: `padding` reserves room around the simulated device when it is
@@ -13,6 +13,10 @@
 - **Breaking**: `DevicePreview.enable`'s positional flag became the named
   `enabled` parameter — `DevicePreview.enable(kDebugMode)` is now
   `DevicePreview.enable(enabled: kDebugMode)`.
+- The example gained a "device lab" showcase app (`example/lib/showcase.dart`)
+  that makes every simulated characteristic visible: labeled safe-area bands,
+  a locale- and 24-hour-aware clock, a hinge-aware two-pane layout, and an
+  animation that honors `disableAnimations`.
 
 ## 3.0.0-prerelease2
 
