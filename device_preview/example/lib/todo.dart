@@ -5,13 +5,18 @@
 //  * a scrollable main list under an app bar and above the safe areas,
 //  * a bottom modal sheet (the add flow) that rides the keyboard's
 //    `viewInsets` and the bottom safe area,
-//  * page navigation (task → its subtasks),
+//  * page navigation (task → its subtasks) — except on an unfolded device
+//    whose crease splits the screen side by side, where the selected task's
+//    subtasks take the pane right of the fold instead
+//    (`MediaQuery.displayFeatures`),
 //  * confirmation dialogs (delete, from each item's menu button), and
 //  * snack bars confirming every mutation.
 //
 // Like the other demos, it is an ordinary Flutter app: the only
 // device_preview-specific lines are in [main]. Build the web bundle with
 // `tool/build_demo.sh` at the root of the repository.
+
+import 'dart:ui' show DisplayFeature, DisplayFeatureType;
 
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
@@ -191,6 +196,24 @@ void _toast(BuildContext context, String message) {
     );
 }
 
+/// The vertical fold or hinge splitting the screen into side-by-side panes,
+/// when there is one: a book-style foldable in portrait, or a clamshell
+/// rotated to landscape. Cutouts and horizontal creases don't split.
+Rect? _verticalFold(BuildContext context) {
+  final Size size = MediaQuery.sizeOf(context);
+  for (final DisplayFeature feature in MediaQuery.displayFeaturesOf(context)) {
+    if (feature.type == DisplayFeatureType.cutout) {
+      continue;
+    }
+    final Rect bounds = feature.bounds;
+    final bool spansHeight = bounds.top <= 0 && bounds.bottom >= size.height;
+    if (spansHeight && bounds.left > 0 && bounds.right < size.width) {
+      return bounds;
+    }
+  }
+  return null;
+}
+
 /// The main list of tasks.
 class TodoListPage extends StatefulWidget {
   /// Creates the main list over [items].
@@ -204,6 +227,9 @@ class TodoListPage extends StatefulWidget {
 }
 
 class _TodoListPageState extends State<TodoListPage> {
+  /// The task shown in the detail pane, in the two-pane layout.
+  TodoItem? _selected;
+
   Future<void> _add() async {
     final String? title = await _promptForTitle(context, hint: 'New task');
     if (title == null || !mounted) {
@@ -217,20 +243,28 @@ class _TodoListPageState extends State<TodoListPage> {
     if (!await _confirmDelete(context, item.title) || !mounted) {
       return;
     }
-    setState(() => widget.items.remove(item));
+    setState(() {
+      widget.items.remove(item);
+      if (_selected == item) {
+        _selected = null;
+      }
+    });
     _toast(context, 'Deleted "${item.title}"');
   }
 
-  Future<void> _open(TodoItem item) async {
-    await Navigator.of(context).push(
-      MaterialPageRoute<void>(builder: (_) => TaskPage(task: item)),
-    );
+  Future<void> _open(TodoItem item, {required bool twoPane}) async {
+    if (twoPane) {
+      setState(() => _selected = item);
+      return;
+    }
+    await Navigator.of(
+      context,
+    ).push(MaterialPageRoute<void>(builder: (_) => TaskPage(task: item)));
     // Subtask counts may have changed while the detail page was up.
     setState(() {});
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _list({required bool twoPane}) {
     return Scaffold(
       appBar: AppBar(title: const Text('Tasks')),
       body: ListView.builder(
@@ -245,9 +279,10 @@ class _TodoListPageState extends State<TodoListPage> {
           return _TodoTile(
             item: item,
             subtitle: total == 0 ? null : '$done of $total subtasks done',
+            selected: twoPane && item == _selected,
             onToggle: (bool? value) =>
                 setState(() => item.done = value ?? false),
-            onTap: () => _open(item),
+            onTap: () => _open(item, twoPane: twoPane),
             onDelete: () => _delete(item),
           );
         },
@@ -259,15 +294,61 @@ class _TodoListPageState extends State<TodoListPage> {
       ),
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    final Rect? fold = _verticalFold(context);
+    if (fold == null) {
+      return _list(twoPane: false);
+    }
+    // Two panes around the crease: the list left of it, the selected task's
+    // subtasks right of it. Same TaskPage as the pushed route — embedded
+    // under the root route it grows no back button.
+    final TodoItem? selected = _selected;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        SizedBox(width: fold.left, child: _list(twoPane: true)),
+        SizedBox(width: fold.width),
+        Expanded(
+          child: selected == null
+              ? Scaffold(
+                  body: Center(
+                    child: Text(
+                      'Select a task to see its subtasks.',
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ),
+                )
+              : TaskPage(
+                  // A new selection is a new page, not a mutated one.
+                  key: ObjectKey(selected),
+                  task: selected,
+                  onChanged: () => setState(() {}),
+                ),
+        ),
+      ],
+    );
+  }
 }
 
 /// A task's page: its subtasks, with the same add / delete / toast flows.
+///
+/// Pushed as a route on single-screen devices; embedded as the pane right of
+/// the fold in [TodoListPage]'s two-pane layout.
 class TaskPage extends StatefulWidget {
   /// Creates the page for [task].
-  const TaskPage({super.key, required this.task});
+  const TaskPage({super.key, required this.task, this.onChanged});
 
   /// The task whose subtasks are shown.
   final TodoItem task;
+
+  /// Called after every mutation, so an embedding list can refresh its
+  /// subtask counts live. The pushed route leaves it null and refreshes on
+  /// pop instead.
+  final VoidCallback? onChanged;
 
   @override
   State<TaskPage> createState() => _TaskPageState();
@@ -280,6 +361,7 @@ class _TaskPageState extends State<TaskPage> {
       return;
     }
     setState(() => widget.task.subtasks.add(TodoItem(title)));
+    widget.onChanged?.call();
     _toast(context, 'Added "$title"');
   }
 
@@ -288,6 +370,7 @@ class _TaskPageState extends State<TaskPage> {
       return;
     }
     setState(() => widget.task.subtasks.remove(subtask));
+    widget.onChanged?.call();
     _toast(context, 'Deleted "${subtask.title}"');
   }
 
@@ -314,8 +397,10 @@ class _TaskPageState extends State<TaskPage> {
                 final TodoItem subtask = subtasks[index];
                 return _TodoTile(
                   item: subtask,
-                  onToggle: (bool? value) =>
-                      setState(() => subtask.done = value ?? false),
+                  onToggle: (bool? value) {
+                    setState(() => subtask.done = value ?? false);
+                    widget.onChanged?.call();
+                  },
                   onDelete: () => _delete(subtask),
                 );
               },
@@ -334,6 +419,7 @@ class _TodoTile extends StatelessWidget {
   const _TodoTile({
     required this.item,
     this.subtitle,
+    this.selected = false,
     required this.onToggle,
     this.onTap,
     required this.onDelete,
@@ -341,6 +427,7 @@ class _TodoTile extends StatelessWidget {
 
   final TodoItem item;
   final String? subtitle;
+  final bool selected;
   final ValueChanged<bool?> onToggle;
   final VoidCallback? onTap;
   final VoidCallback onDelete;
@@ -349,6 +436,9 @@ class _TodoTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final ColorScheme colors = Theme.of(context).colorScheme;
     return ListTile(
+      selected: selected,
+      selectedTileColor: colors.secondaryContainer,
+      selectedColor: colors.onSecondaryContainer,
       leading: Checkbox(value: item.done, onChanged: onToggle),
       title: Text(
         item.title,
@@ -369,13 +459,12 @@ class _TodoTile extends StatelessWidget {
             child: const Text('Delete'),
           ),
         ],
-        builder:
-            (BuildContext context, MenuController menu, Widget? child) =>
-                IconButton(
-                  icon: const Icon(Icons.more_vert),
-                  tooltip: 'Task menu',
-                  onPressed: () => menu.isOpen ? menu.close() : menu.open(),
-                ),
+        builder: (BuildContext context, MenuController menu, Widget? child) =>
+            IconButton(
+              icon: const Icon(Icons.more_vert),
+              tooltip: 'Task menu',
+              onPressed: () => menu.isOpen ? menu.close() : menu.open(),
+            ),
       ),
     );
   }
