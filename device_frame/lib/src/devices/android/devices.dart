@@ -43,6 +43,26 @@ class AndroidDevices {
   DeviceInfo get googlePixel9ProXL => i_google_pixel_9_pro_xl.info;
 
   DeviceInfo get smallPhone => _smallPhone;
+  DeviceInfo get p4 => _pixel4;
+  static final _pixel4 = DeviceInfo.genericPhone(
+    platform: TargetPlatform.android,
+    id: 'pixel4',
+    name: 'Pixel 4',
+    pixelRatio: 3.5,
+    screenSize: const Size(412.0, 869.0),
+    safeAreas: const EdgeInsets.only(
+      left: 0.0,
+      top: 24.0,
+      right: 0.0,
+      bottom: 0.0,
+    ),
+    rotatedSafeAreas: const EdgeInsets.only(
+      left: 0.0,
+      top: 24.0,
+      right: 0.0,
+      bottom: 0.0,
+    ),
+  );
   static final _smallPhone = DeviceInfo.genericPhone(
     platform: TargetPlatform.android,
     name: 'Small',
@@ -176,6 +196,7 @@ class AndroidDevices {
         googlePixel9ProXL,
         smallPhone,
         mediumPhone,
+        p4,
         bigPhone,
         // Tablets
         smallTablet,
