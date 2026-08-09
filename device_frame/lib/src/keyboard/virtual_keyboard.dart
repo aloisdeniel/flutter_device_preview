@@ -86,7 +86,7 @@ class _VirtualKeyboard extends StatelessWidget {
     double? height,
   }) : height = height ?? minHeight;
 
-  static const double minHeight = 214;
+  static const double minHeight = 248;
   final double height;
   static const double spacing = 22;
 
