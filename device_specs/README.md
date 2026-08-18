@@ -76,8 +76,12 @@ screen — the screen's top-left corner is the origin, so the body starts at
 ```
 
 The iPhone and iPad frames are derived from the official iOS Simulator bezel
-artwork; `.claude/skills/simulator-specs/` documents the extraction process
-and holds the script that regenerates them.
+artwork; `.claude/skills/extract-cupertino-specs/` documents the extraction
+process and holds the script that regenerates them.
+`.claude/skills/extract-pixel-specs/` is its Android counterpart, deriving
+the Google Pixel specs from the official emulator device skins and a live
+emulator probe (it needs a recent Android Studio for current-generation
+skins).
 
 Landscape is not described separately: the whole frame is rotated a quarter
 turn at paint time, like turning the real device around. The app is laid out
