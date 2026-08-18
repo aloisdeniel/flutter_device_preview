@@ -369,6 +369,12 @@ class PreviewPlatformDispatcher implements ui.PlatformDispatcher {
   set onDrawFrame(ui.VoidCallback? callback) => host.onDrawFrame = callback;
 
   @override
+  ui.HitTestCallback? get onHitTest => host.onHitTest;
+
+  @override
+  set onHitTest(ui.HitTestCallback? callback) => host.onHitTest = callback;
+
+  @override
   ui.KeyDataCallback? get onKeyData => host.onKeyData;
 
   @override

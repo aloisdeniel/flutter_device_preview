@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+- The iPhone and iPad frames are now derived from the official iOS
+  Simulator bezel artwork (Xcode's "Show Device Bezels" chrome): exact
+  body sizes, bezel borders, Apple's own outer corner radii, and the true
+  continuous-curvature display outlines from the simulator framebuffer
+  masks, notch and Dynamic Island included. See
+  `.claude/skills/simulator-bezels/` for the extraction process.
+- Compatibility with Flutter 3.47: `PreviewPlatformDispatcher` forwards
+  the new `PlatformDispatcher.onHitTest` callback. The minimum Flutter
+  version is now 3.47.0.
 - Four foldable presets — the catalog's first: Pixel 10 Pro Fold
   (`DevicePresets.pixel10ProFold`), Galaxy Z Fold8 (`galaxyZFold8`),
   Galaxy Z Fold8 Ultra (`galaxyZFold8Ultra`) and Galaxy Z Flip8

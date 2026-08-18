@@ -166,8 +166,8 @@ void main() {
       // rounded screen outline.
       expect(_recordPaths(render), isNotEmpty);
       expect(render, paints..clipPath());
-      // The letterbox reserves the body: 432x896 around a 402x874 screen.
-      expect(simulation.contentBounds, const Rect.fromLTRB(-15, -11, 417, 885));
+      // The letterbox reserves the body: 436x908 around a 402x874 screen.
+      expect(simulation.contentBounds, const Rect.fromLTRB(-17, -17, 419, 891));
       expect(tester.takeException(), isNull);
     });
   });

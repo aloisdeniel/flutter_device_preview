@@ -75,6 +75,10 @@ screen — the screen's top-left corner is the origin, so the body starts at
       └───────────────────┘
 ```
 
+The iPhone and iPad frames are derived from the official iOS Simulator bezel
+artwork; `.claude/skills/simulator-bezels/` documents the extraction process
+and holds the script that regenerates them.
+
 Landscape is not described separately: the whole frame is rotated a quarter
 turn at paint time, like turning the real device around. The app is laid out
 inside the screen and the letterbox is computed from the **body** bounds, so
