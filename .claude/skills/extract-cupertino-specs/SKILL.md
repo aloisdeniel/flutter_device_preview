@@ -1,5 +1,5 @@
 ---
-name: simulator-specs
+name: extract-cupertino-specs
 description: Rebuild the Apple device specs in device_specs/ from the locally installed iOS Simulator — frame artwork from Xcode's bezel chrome, plus screen size, scale and safe areas probed from a booted simulator. Use when iPhone/iPad specs need to be (re)derived from Apple's own definitions.
 ---
 
@@ -147,7 +147,7 @@ overwrites a donor-based spec's hand-authored metrics:
 
 ```sh
 python3 -m venv /tmp/specs-venv && /tmp/specs-venv/bin/pip install pymupdf
-/tmp/specs-venv/bin/python .claude/skills/simulator-specs/extract_specs.py
+/tmp/specs-venv/bin/python .claude/skills/extract-cupertino-specs/extract_specs.py
 # --no-probe   frames only, no simulators booted (fast)
 # --dry-run    report without writing
 # ids...       limit to specific spec ids

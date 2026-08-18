@@ -7,12 +7,24 @@
   body sizes, bezel borders, Apple's own outer corner radii, and the true
   continuous-curvature display outlines from the simulator framebuffer
   masks, notch and Dynamic Island included. See
-  `.claude/skills/simulator-specs/` for the extraction process.
+  `.claude/skills/extract-cupertino-specs/` for the extraction process.
 - Apple metrics are now verified against a live simulator: a probe app is
   booted per device type and reports the safe areas UIKit actually applies.
   The iPhone values were confirmed exact; every iPad's bottom safe-area
   inset was corrected from 20 to 25 logical pixels (both orientations), in
   the specs and the built-in `DevicePresets`.
+- The Google Pixel specs are now derived the same way, by an Android
+  counterpart skill (`.claude/skills/extract-pixel-specs/`): frame artwork,
+  screen shape and the camera punch-hole cutout come from the official
+  emulator device skins (Android Studio 2026.1), and the metrics from a
+  booted Android 16 emulator. Pixel 9/10 sizes are now the exact
+  411.43×923.43 a device reports (was the rounded 412×923), the fold is
+  851.69×882.87 with its crease recentred accordingly, and the safe areas
+  match today's Android 16 system bars — including its taller status bar
+  (54 dp portrait / 52 landscape on the slabs; 36/56 on the fold, bottom
+  24 and 32 respectively). Specs, built-in `DevicePresets` and the bundled
+  catalog all updated together; the frames now show each device's punch
+  hole (top-centre on the slabs, top-right on the fold's inner display).
 - Compatibility with Flutter 3.47: `PreviewPlatformDispatcher` forwards
   the new `PlatformDispatcher.onHitTest` callback. The minimum Flutter
   version is now 3.47.0.

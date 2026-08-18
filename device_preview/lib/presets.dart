@@ -523,10 +523,10 @@ abstract final class DevicePresets {
     brand: 'Google',
     year: 2024,
     platform: TargetPlatform.android,
-    portraitSize: ui.Size(412, 923),
+    portraitSize: ui.Size(411.43, 923.43),
     devicePixelRatio: 2.625,
-    portraitPadding: EdgeInsets.only(top: 24, bottom: 24),
-    landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
+    portraitPadding: EdgeInsets.only(top: 54, bottom: 24),
+    landscapePadding: EdgeInsets.only(top: 52, bottom: 24),
   );
 
   /// Google Pixel 10 — gesture navigation.
@@ -536,10 +536,10 @@ abstract final class DevicePresets {
     brand: 'Google',
     year: 2025,
     platform: TargetPlatform.android,
-    portraitSize: ui.Size(412, 923),
+    portraitSize: ui.Size(411.43, 923.43),
     devicePixelRatio: 2.625,
-    portraitPadding: EdgeInsets.only(top: 24, bottom: 24),
-    landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
+    portraitPadding: EdgeInsets.only(top: 54, bottom: 24),
+    landscapePadding: EdgeInsets.only(top: 52, bottom: 24),
   );
 
   /// Google Pixel 10 Pro Fold — 8" inner display, book-style fold with a
@@ -550,13 +550,13 @@ abstract final class DevicePresets {
     brand: 'Google',
     year: 2025,
     platform: TargetPlatform.android,
-    portraitSize: ui.Size(852, 883),
+    portraitSize: ui.Size(851.69, 882.87),
     devicePixelRatio: 2.4375,
-    portraitPadding: EdgeInsets.only(top: 24, bottom: 24),
-    landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
+    portraitPadding: EdgeInsets.only(top: 36, bottom: 32),
+    landscapePadding: EdgeInsets.only(top: 56, bottom: 32),
     displayFeatures: <SimulatedDisplayFeature>[
       SimulatedDisplayFeature(
-        bounds: ui.Rect.fromLTRB(426, 0, 426, 883),
+        bounds: ui.Rect.fromLTRB(425.845, 0, 425.845, 882.87),
         type: ui.DisplayFeatureType.fold,
         state: ui.DisplayFeatureState.postureFlat,
       ),

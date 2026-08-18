@@ -21,3 +21,7 @@ pubspec.lock
 # If you don't generate documentation locally you can remove this line.
 doc/api/
 tools/.fvm/flutter_sdk
+
+# Python bytecode caches (skill scripts)
+__pycache__/
+*.pyc
