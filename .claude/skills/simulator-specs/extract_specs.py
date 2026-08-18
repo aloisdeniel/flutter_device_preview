@@ -1,11 +1,25 @@
 #!/usr/bin/env python3
-"""Rebuild the Apple `frame` objects in device_specs/ from the iOS Simulator
-bezel artwork inside the locally installed Xcode.
+"""Rebuild the Apple specs in device_specs/ from the locally installed
+iOS Simulator.
+
+Two sources, per device:
+
+* Static artwork (always): the framebuffer mask and DeviceKit chrome inside
+  Xcode rebuild the `frame` object (body, bezel, exact display outline).
+* A live probe (unless --no-probe): a tiny UIKit app is compiled with
+  swiftc, installed on a throwaway simulator of that device type, and
+  reports the metrics UIKit actually applies — screen size, scale, and the
+  portrait/landscape safe areas — which rewrite `portraitSize`,
+  `devicePixelRatio`, `portraitPadding` and `landscapePadding`.
+
+Devices marked `donor` in DEVICES have no simulated counterpart (unreleased
+hardware): their frame artwork is derived from the donor device type, and
+the probe never overwrites their hand-authored metrics.
 
 See SKILL.md next to this file for the discovery process and the geometry
 model. Requires pymupdf (`pip install pymupdf`). Usage:
 
-    python extract_bezels.py [--dry-run] [ids...]
+    python extract_specs.py [--dry-run] [--no-probe] [ids...]
 """
 
 import argparse
@@ -14,38 +28,66 @@ import json
 import os
 import plistlib
 import re
+import shutil
 import subprocess
 import sys
+import tempfile
 
 import pymupdf
 
-# Catalog id -> (simdevicetype name, retarget) where retarget is None for a
-# device whose logical panel matches the simulated one, or the target
-# (width, height) for a 9-slice retarget of the donor mask. Devices absent
-# from the installed Xcode list a donor device type here.
+# Catalog id -> how to derive it from the simulator.
+#   sim:      the .simdevicetype name (the donor's for unreleased devices)
+#   retarget: (width, height) to 9-slice-stretch the donor mask to
+#   donor:    True when `sim` is a stand-in — frame artwork only, keep the
+#             spec's hand-authored metrics
 DEVICES = {
-    "apple-iphone-16": ("iPhone 16", None),
-    "apple-iphone-16-plus": ("iPhone 16 Plus", None),
-    "apple-iphone-16-pro": ("iPhone 16 Pro", None),
-    "apple-iphone-16-pro-max": ("iPhone 16 Pro Max", None),
+    "apple-iphone-16": {"sim": "iPhone 16"},
+    "apple-iphone-16-plus": {"sim": "iPhone 16 Plus"},
+    "apple-iphone-16-pro": {"sim": "iPhone 16 Pro"},
+    "apple-iphone-16-pro-max": {"sim": "iPhone 16 Pro Max"},
     # iPhone 16e / 17e: same 390x844 notch panel as the iPhone 14.
-    "apple-iphone-16e": ("iPhone 14", None),
-    "apple-iphone-17e": ("iPhone 14", None),
+    "apple-iphone-16e": {"sim": "iPhone 14", "donor": True},
+    "apple-iphone-17e": {"sim": "iPhone 14", "donor": True},
     # iPhone 17 / 17 Pro: same 402x874 island panel as the iPhone 16 Pro.
-    "apple-iphone-17": ("iPhone 16 Pro", None),
-    "apple-iphone-17-pro": ("iPhone 16 Pro", None),
+    "apple-iphone-17": {"sim": "iPhone 16 Pro", "donor": True},
+    "apple-iphone-17-pro": {"sim": "iPhone 16 Pro", "donor": True},
     # iPhone Air: no simulated counterpart; stretch the 16 Pro artwork.
-    "apple-iphone-air": ("iPhone 16 Pro", (420, 912)),
-    "apple-ipad-pro-11": ("iPad Pro 11-inch (M4)", None),
-    "apple-ipad-pro-13": ("iPad Pro 13-inch (M4)", None),
-    "apple-ipad-air-11": ("iPad Air 11-inch (M2)", None),
-    "apple-ipad-air-13": ("iPad Air 13-inch (M2)", None),
-    "apple-ipad-mini": ("iPad mini (A17 Pro)", None),
+    "apple-iphone-air": {"sim": "iPhone 16 Pro", "donor": True,
+                         "retarget": (420, 912)},
+    "apple-ipad-pro-11": {"sim": "iPad Pro 11-inch (M4)"},
+    "apple-ipad-pro-13": {"sim": "iPad Pro 13-inch (M4)"},
+    "apple-ipad-air-11": {"sim": "iPad Air 11-inch (M2)"},
+    "apple-ipad-air-13": {"sim": "iPad Air 13-inch (M2)"},
+    "apple-ipad-mini": {"sim": "iPad mini (A17 Pro)"},
 }
 
-REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(
-    os.path.abspath(__file__)))))
+SKILL_DIR = os.path.dirname(os.path.abspath(__file__))
+REPO = os.path.dirname(os.path.dirname(os.path.dirname(SKILL_DIR)))
 SPECS = os.path.join(REPO, "device_specs")
+
+PROBE_BUNDLE_ID = "dev.devicepreview.specprobe"
+PROBE_INFO_PLIST = """<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleExecutable</key><string>Probe</string>
+  <key>CFBundleIdentifier</key><string>{bundle}</string>
+  <key>CFBundleName</key><string>Probe</string>
+  <key>CFBundlePackageType</key><string>APPL</string>
+  <key>CFBundleShortVersionString</key><string>1.0</string>
+  <key>CFBundleVersion</key><string>1</string>
+  <key>MinimumOSVersion</key><string>16.0</string>
+  <key>UILaunchScreen</key><dict/>
+  <key>UIDeviceFamily</key><array><integer>1</integer><integer>2</integer></array>
+  <key>UISupportedInterfaceOrientations</key>
+  <array>
+    <string>UIInterfaceOrientationPortrait</string>
+    <string>UIInterfaceOrientationLandscapeLeft</string>
+    <string>UIInterfaceOrientationLandscapeRight</string>
+  </array>
+</dict>
+</plist>
+"""
 
 
 def developer_dir():
@@ -99,6 +141,115 @@ def fmt(value):
     if rounded == int(rounded):
         return str(int(rounded))
     return f"{rounded:g}"
+
+
+def fmt_json(value):
+    return int(value) if value == int(value) else round(value, 2)
+
+
+# --- live metrics probe ------------------------------------------------------
+
+class Simctl:
+    """Wraps `xcrun simctl` and the one-off probe app build."""
+
+    def __init__(self, dev):
+        self.dev = dev
+        self.env = {**os.environ, "DEVELOPER_DIR": dev}
+        self.app_dir = None
+        self._device_types = None
+
+    def run(self, *args, timeout=120, check=True):
+        return subprocess.run(["xcrun", "simctl", *args], env=self.env,
+                              capture_output=True, text=True, check=check,
+                              timeout=timeout)
+
+    def device_type_id(self, name):
+        if self._device_types is None:
+            listing = json.loads(self.run("list", "devicetypes", "-j").stdout)
+            self._device_types = {
+                t["name"]: t["identifier"] for t in listing["devicetypes"]
+            }
+        if name not in self._device_types:
+            sys.exit(f"error: simctl knows no device type named {name!r}")
+        return self._device_types[name]
+
+    def newest_ios_runtime(self):
+        listing = json.loads(self.run("list", "runtimes", "-j").stdout)
+        ios = [r for r in listing["runtimes"]
+               if r["isAvailable"] and r["platform"] == "iOS"]
+        if not ios:
+            sys.exit("error: no available iOS simulator runtime")
+        return max(ios, key=lambda r: [int(p) for p in
+                                       r["version"].split(".")])["identifier"]
+
+    def build_probe(self, workdir):
+        """Compile probe.swift against the iphonesimulator SDK.
+
+        SDKROOT must point at the simulator SDK: with the default macOS
+        sysroot the linker stamps a macOS SDK version and UIKit letterboxes
+        the app into a compatibility size, which corrupts every metric.
+        """
+        sdk = subprocess.run(
+            ["xcrun", "--sdk", "iphonesimulator", "--show-sdk-path"],
+            env=self.env, capture_output=True, text=True, check=True,
+        ).stdout.strip()
+        app = os.path.join(workdir, "Probe.app")
+        os.makedirs(app)
+        with open(os.path.join(app, "Info.plist"), "w") as f:
+            f.write(PROBE_INFO_PLIST.format(bundle=PROBE_BUNDLE_ID))
+        subprocess.run(
+            ["xcrun", "swiftc", "-target", "arm64-apple-ios16.0-simulator",
+             os.path.join(SKILL_DIR, "probe.swift"),
+             "-o", os.path.join(app, "Probe")],
+            env={**self.env, "SDKROOT": sdk}, check=True,
+        )
+        self.app_dir = app
+
+    def probe(self, sim_name):
+        """Boot a throwaway simulator of `sim_name` and run the probe app."""
+        device_type = self.device_type_id(sim_name)
+        runtime = self.newest_ios_runtime()
+        udid = self.run("create", "specprobe-tmp", device_type,
+                        runtime).stdout.strip()
+        try:
+            self.run("boot", udid)
+            self.run("bootstatus", udid, "-b", timeout=300)
+            self.run("install", udid, self.app_dir)
+            out = self.run("launch", "--console-pty", udid,
+                           PROBE_BUNDLE_ID, timeout=180).stdout
+            for line in out.splitlines():
+                if line.startswith("SPECPROBE "):
+                    return json.loads(line[len("SPECPROBE "):])
+            sys.exit(f"error: probe produced no metrics on {sim_name}:\n{out}")
+        finally:
+            self.run("shutdown", udid, check=False)
+            self.run("delete", udid, check=False)
+
+
+def merge_metrics(spec_id, spec, metrics):
+    """Write the probed metrics into the spec, reporting every change."""
+    if not metrics.get("landscapeIsLandscape"):
+        sys.exit(f"error: probe never reached landscape on {spec_id}")
+
+    def pad(values):
+        return {side: fmt_json(values[side])
+                for side in ("left", "top", "right", "bottom")}
+
+    changes = []
+
+    def assign(key, value):
+        if spec.get(key) != value:
+            changes.append(f"{key}: {spec.get(key)} -> {value}")
+        spec[key] = value
+
+    assign("portraitSize", {"width": fmt_json(metrics["width"]),
+                            "height": fmt_json(metrics["height"])})
+    assign("devicePixelRatio", float(metrics["scale"]))
+    assign("portraitPadding", pad(metrics["padding"]))
+    assign("landscapePadding", pad(metrics["landscapePadding"]))
+    for change in changes:
+        print(f"  {change}")
+    return changes
 
 
 # --- framebuffer mask -> screenPath ------------------------------------------
@@ -298,7 +449,9 @@ def body_svg(size, shapes, radius):
 
 # --- spec update -------------------------------------------------------------
 
-def update_spec(dev, spec_id, sim_name, retarget, dry_run):
+def update_spec(dev, spec_id, mapping, simctl, dry_run):
+    sim_name = mapping["sim"]
+    retarget = mapping.get("retarget")
     spec_path = os.path.join(SPECS, f"{spec_id}.json")
     original = open(spec_path).read()
     spec = json.loads(original)
@@ -311,6 +464,21 @@ def update_spec(dev, spec_id, sim_name, retarget, dry_run):
     donor = (profile["mainScreenWidth"] / scale,
              profile["mainScreenHeight"] / scale)
     logical = retarget or donor
+    probed = simctl is not None and not mapping.get("donor")
+    print(f"{spec_id} (from {sim_name}"
+          f"{' retargeted' if retarget else ''}"
+          f"{', probed' if probed else ''})")
+
+    if probed:
+        metrics = simctl.probe(sim_name)
+        if (metrics["width"], metrics["height"]) != donor or \
+                metrics["scale"] != scale:
+            sys.exit(f"error: probe reported "
+                     f"{metrics['width']}x{metrics['height']}"
+                     f"@{metrics['scale']} but {sim_name}'s profile says "
+                     f"{donor[0]:g}x{donor[1]:g}@{scale:g} — the probe app "
+                     "was letterboxed, check its build")
+        merge_metrics(spec_id, spec, metrics)
 
     size = spec["portraitSize"]
     if (size["width"], size["height"]) != logical or \
@@ -361,9 +529,8 @@ def update_spec(dev, spec_id, sim_name, retarget, dry_run):
         "body": body_svg(body, shapes, radius),
     }
 
-    print(f"{spec_id}: body {fmt(body[0])}x{fmt(body[1])} border {fmt(border)}"
-          f" radius {radius} shapes {len(shapes)}"
-          f" (from {sim_name}{' retargeted' if retarget else ''})")
+    print(f"  frame: body {fmt(body[0])}x{fmt(body[1])} border {fmt(border)}"
+          f" radius {radius} shapes {len(shapes)}")
     if not dry_run:
         text = json.dumps(spec, indent=2)
         if original.endswith("\n"):
@@ -371,20 +538,30 @@ def update_spec(dev, spec_id, sim_name, retarget, dry_run):
         open(spec_path, "w").write(text)
 
 
-def fmt_json(value):
-    return int(value) if value == int(value) else round(value, 2)
-
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("ids", nargs="*", default=None)
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--no-probe", action="store_true",
+                        help="skip the booted-simulator metrics probe and "
+                             "only rebuild the frame artwork")
     args = parser.parse_args()
     dev = developer_dir()
     print(f"developer dir: {dev}")
-    for spec_id in args.ids or sorted(DEVICES):
-        sim_name, retarget = DEVICES[spec_id]
-        update_spec(dev, spec_id, sim_name, retarget, args.dry_run)
+
+    ids = args.ids or sorted(DEVICES)
+    simctl = None
+    workdir = None
+    if not args.no_probe and any(not DEVICES[i].get("donor") for i in ids):
+        simctl = Simctl(dev)
+        workdir = tempfile.mkdtemp(prefix="specprobe-")
+        simctl.build_probe(workdir)
+    try:
+        for spec_id in ids:
+            update_spec(dev, spec_id, DEVICES[spec_id], simctl, args.dry_run)
+    finally:
+        if workdir:
+            shutil.rmtree(workdir, ignore_errors=True)
 
 
 if __name__ == "__main__":

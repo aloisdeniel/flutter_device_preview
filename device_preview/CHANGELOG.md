@@ -7,7 +7,12 @@
   body sizes, bezel borders, Apple's own outer corner radii, and the true
   continuous-curvature display outlines from the simulator framebuffer
   masks, notch and Dynamic Island included. See
-  `.claude/skills/simulator-bezels/` for the extraction process.
+  `.claude/skills/simulator-specs/` for the extraction process.
+- Apple metrics are now verified against a live simulator: a probe app is
+  booted per device type and reports the safe areas UIKit actually applies.
+  The iPhone values were confirmed exact; every iPad's bottom safe-area
+  inset was corrected from 20 to 25 logical pixels (both orientations), in
+  the specs and the built-in `DevicePresets`.
 - Compatibility with Flutter 3.47: `PreviewPlatformDispatcher` forwards
   the new `PlatformDispatcher.onHitTest` callback. The minimum Flutter
   version is now 3.47.0.

@@ -26,13 +26,13 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'left': 0,
           'top': 24,
           'right': 0,
-          'bottom': 20,
+          'bottom': 25,
         },
         'landscapePadding': <String, Object?>{
           'left': 0,
           'top': 24,
           'right': 0,
-          'bottom': 20,
+          'bottom': 25,
         },
         'frame': <String, Object?>{
           'size': <String, Object?>{
@@ -74,13 +74,13 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'left': 0,
           'top': 24,
           'right': 0,
-          'bottom': 20,
+          'bottom': 25,
         },
         'landscapePadding': <String, Object?>{
           'left': 0,
           'top': 24,
           'right': 0,
-          'bottom': 20,
+          'bottom': 25,
         },
         'frame': <String, Object?>{
           'size': <String, Object?>{
@@ -122,13 +122,13 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'left': 0,
           'top': 24,
           'right': 0,
-          'bottom': 20,
+          'bottom': 25,
         },
         'landscapePadding': <String, Object?>{
           'left': 0,
           'top': 24,
           'right': 0,
-          'bottom': 20,
+          'bottom': 25,
         },
         'frame': <String, Object?>{
           'size': <String, Object?>{
@@ -170,13 +170,13 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'left': 0,
           'top': 24,
           'right': 0,
-          'bottom': 20,
+          'bottom': 25,
         },
         'landscapePadding': <String, Object?>{
           'left': 0,
           'top': 24,
           'right': 0,
-          'bottom': 20,
+          'bottom': 25,
         },
         'frame': <String, Object?>{
           'size': <String, Object?>{
@@ -218,13 +218,13 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'left': 0,
           'top': 24,
           'right': 0,
-          'bottom': 20,
+          'bottom': 25,
         },
         'landscapePadding': <String, Object?>{
           'left': 0,
           'top': 24,
           'right': 0,
-          'bottom': 20,
+          'bottom': 25,
         },
         'frame': <String, Object?>{
           'size': <String, Object?>{
