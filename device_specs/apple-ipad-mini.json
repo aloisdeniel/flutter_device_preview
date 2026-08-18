@@ -12,13 +12,13 @@
   "devicePixelRatio": 2.0,
   "portraitPadding": {
     "left": 0,
-    "top": 24,
+    "top": 32,
     "right": 0,
     "bottom": 25
   },
   "landscapePadding": {
     "left": 0,
-    "top": 24,
+    "top": 32,
     "right": 0,
     "bottom": 25
   },

@@ -339,7 +339,7 @@ abstract final class DevicePresets {
     portraitSize: ui.Size(393, 852),
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 59, bottom: 34),
-    landscapePadding: EdgeInsets.only(left: 59, right: 59, bottom: 21),
+    landscapePadding: EdgeInsets.only(left: 59, right: 59, bottom: 20),
   );
 
   /// iPhone 16 Pro — Dynamic Island.
@@ -352,7 +352,7 @@ abstract final class DevicePresets {
     portraitSize: ui.Size(402, 874),
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 62, bottom: 34),
-    landscapePadding: EdgeInsets.only(left: 62, right: 62, bottom: 21),
+    landscapePadding: EdgeInsets.only(left: 62, right: 62, bottom: 20),
   );
 
   /// iPhone 16 Pro Max — Dynamic Island.
@@ -365,7 +365,7 @@ abstract final class DevicePresets {
     portraitSize: ui.Size(440, 956),
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 62, bottom: 34),
-    landscapePadding: EdgeInsets.only(left: 62, right: 62, bottom: 21),
+    landscapePadding: EdgeInsets.only(left: 62, right: 62, bottom: 20),
   );
 
   /// iPhone 16 Plus — Dynamic Island, 6.7" display.
@@ -378,7 +378,7 @@ abstract final class DevicePresets {
     portraitSize: ui.Size(430, 932),
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 59, bottom: 34),
-    landscapePadding: EdgeInsets.only(left: 59, right: 59, bottom: 21),
+    landscapePadding: EdgeInsets.only(left: 59, right: 59, bottom: 20),
   );
 
   /// iPhone 16e — notch, the 6.1" entry model.
@@ -391,7 +391,7 @@ abstract final class DevicePresets {
     portraitSize: ui.Size(390, 844),
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 47, bottom: 34),
-    landscapePadding: EdgeInsets.only(left: 47, right: 47, bottom: 21),
+    landscapePadding: EdgeInsets.only(left: 47, right: 47, bottom: 20),
   );
 
   /// iPhone 17e — notch, the 6.1" entry model.
@@ -404,7 +404,7 @@ abstract final class DevicePresets {
     portraitSize: ui.Size(390, 844),
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 47, bottom: 34),
-    landscapePadding: EdgeInsets.only(left: 47, right: 47, bottom: 21),
+    landscapePadding: EdgeInsets.only(left: 47, right: 47, bottom: 20),
   );
 
   /// iPhone 17 — Dynamic Island, 6.3" display.
@@ -417,7 +417,7 @@ abstract final class DevicePresets {
     portraitSize: ui.Size(402, 874),
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 62, bottom: 34),
-    landscapePadding: EdgeInsets.only(left: 62, right: 62, bottom: 21),
+    landscapePadding: EdgeInsets.only(left: 62, right: 62, bottom: 20),
   );
 
   /// iPhone 17 Pro — Dynamic Island, 6.3" display.
@@ -430,7 +430,7 @@ abstract final class DevicePresets {
     portraitSize: ui.Size(402, 874),
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 62, bottom: 34),
-    landscapePadding: EdgeInsets.only(left: 62, right: 62, bottom: 21),
+    landscapePadding: EdgeInsets.only(left: 62, right: 62, bottom: 20),
   );
 
   /// iPhone Air — Dynamic Island, 6.5" display.
@@ -442,8 +442,8 @@ abstract final class DevicePresets {
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(420, 912),
     devicePixelRatio: 3.0,
-    portraitPadding: EdgeInsets.only(top: 62, bottom: 34),
-    landscapePadding: EdgeInsets.only(left: 62, right: 62, bottom: 21),
+    portraitPadding: EdgeInsets.only(top: 68, bottom: 34),
+    landscapePadding: EdgeInsets.only(left: 68, right: 68, bottom: 20),
   );
 
   /// iPad Pro 13" (M4).
@@ -455,8 +455,8 @@ abstract final class DevicePresets {
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(1032, 1376),
     devicePixelRatio: 2.0,
-    portraitPadding: EdgeInsets.only(top: 24, bottom: 25),
-    landscapePadding: EdgeInsets.only(top: 24, bottom: 25),
+    portraitPadding: EdgeInsets.only(top: 32, bottom: 25),
+    landscapePadding: EdgeInsets.only(top: 32, bottom: 25),
     kind: DeviceKind.tablet,
   );
 
@@ -469,8 +469,8 @@ abstract final class DevicePresets {
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(834, 1210),
     devicePixelRatio: 2.0,
-    portraitPadding: EdgeInsets.only(top: 24, bottom: 25),
-    landscapePadding: EdgeInsets.only(top: 24, bottom: 25),
+    portraitPadding: EdgeInsets.only(top: 32, bottom: 25),
+    landscapePadding: EdgeInsets.only(top: 32, bottom: 25),
     kind: DeviceKind.tablet,
   );
 
@@ -483,8 +483,8 @@ abstract final class DevicePresets {
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(1024, 1366),
     devicePixelRatio: 2.0,
-    portraitPadding: EdgeInsets.only(top: 24, bottom: 25),
-    landscapePadding: EdgeInsets.only(top: 24, bottom: 25),
+    portraitPadding: EdgeInsets.only(top: 32, bottom: 25),
+    landscapePadding: EdgeInsets.only(top: 32, bottom: 25),
     kind: DeviceKind.tablet,
   );
 
@@ -497,8 +497,8 @@ abstract final class DevicePresets {
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(820, 1180),
     devicePixelRatio: 2.0,
-    portraitPadding: EdgeInsets.only(top: 24, bottom: 25),
-    landscapePadding: EdgeInsets.only(top: 24, bottom: 25),
+    portraitPadding: EdgeInsets.only(top: 32, bottom: 25),
+    landscapePadding: EdgeInsets.only(top: 32, bottom: 25),
     kind: DeviceKind.tablet,
   );
 
@@ -511,8 +511,8 @@ abstract final class DevicePresets {
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(744, 1133),
     devicePixelRatio: 2.0,
-    portraitPadding: EdgeInsets.only(top: 24, bottom: 25),
-    landscapePadding: EdgeInsets.only(top: 24, bottom: 25),
+    portraitPadding: EdgeInsets.only(top: 32, bottom: 25),
+    landscapePadding: EdgeInsets.only(top: 32, bottom: 25),
     kind: DeviceKind.tablet,
   );
 
