@@ -333,6 +333,9 @@ class FakePlatformDispatcher implements ui.PlatformDispatcher {
   ui.KeyDataCallback? onKeyData;
 
   @override
+  ui.HitTestCallback? onHitTest;
+
+  @override
   ui.TimingsCallback? onReportTimings;
 
   @override

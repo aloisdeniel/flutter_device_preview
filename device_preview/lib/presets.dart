@@ -455,8 +455,8 @@ abstract final class DevicePresets {
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(1032, 1376),
     devicePixelRatio: 2.0,
-    portraitPadding: EdgeInsets.only(top: 24, bottom: 20),
-    landscapePadding: EdgeInsets.only(top: 24, bottom: 20),
+    portraitPadding: EdgeInsets.only(top: 24, bottom: 25),
+    landscapePadding: EdgeInsets.only(top: 24, bottom: 25),
     kind: DeviceKind.tablet,
   );
 
@@ -469,8 +469,8 @@ abstract final class DevicePresets {
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(834, 1210),
     devicePixelRatio: 2.0,
-    portraitPadding: EdgeInsets.only(top: 24, bottom: 20),
-    landscapePadding: EdgeInsets.only(top: 24, bottom: 20),
+    portraitPadding: EdgeInsets.only(top: 24, bottom: 25),
+    landscapePadding: EdgeInsets.only(top: 24, bottom: 25),
     kind: DeviceKind.tablet,
   );
 
@@ -483,8 +483,8 @@ abstract final class DevicePresets {
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(1024, 1366),
     devicePixelRatio: 2.0,
-    portraitPadding: EdgeInsets.only(top: 24, bottom: 20),
-    landscapePadding: EdgeInsets.only(top: 24, bottom: 20),
+    portraitPadding: EdgeInsets.only(top: 24, bottom: 25),
+    landscapePadding: EdgeInsets.only(top: 24, bottom: 25),
     kind: DeviceKind.tablet,
   );
 
@@ -497,8 +497,8 @@ abstract final class DevicePresets {
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(820, 1180),
     devicePixelRatio: 2.0,
-    portraitPadding: EdgeInsets.only(top: 24, bottom: 20),
-    landscapePadding: EdgeInsets.only(top: 24, bottom: 20),
+    portraitPadding: EdgeInsets.only(top: 24, bottom: 25),
+    landscapePadding: EdgeInsets.only(top: 24, bottom: 25),
     kind: DeviceKind.tablet,
   );
 
@@ -511,8 +511,8 @@ abstract final class DevicePresets {
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(744, 1133),
     devicePixelRatio: 2.0,
-    portraitPadding: EdgeInsets.only(top: 24, bottom: 20),
-    landscapePadding: EdgeInsets.only(top: 24, bottom: 20),
+    portraitPadding: EdgeInsets.only(top: 24, bottom: 25),
+    landscapePadding: EdgeInsets.only(top: 24, bottom: 25),
     kind: DeviceKind.tablet,
   );
 
