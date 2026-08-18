@@ -108,9 +108,9 @@ void main() {
       expect(DevicePresets.iPadAir13.portraitSize, const ui.Size(1024, 1366));
       expect(DevicePresets.iPadAir11.portraitSize, const ui.Size(820, 1180));
       expect(DevicePresets.iPadAir11.year, 2025);
-      expect(DevicePresets.pixel9.portraitSize, const ui.Size(412, 923));
+      expect(DevicePresets.pixel9.portraitSize, const ui.Size(411.43, 923.43));
       expect(DevicePresets.pixel9.devicePixelRatio, 2.625);
-      expect(DevicePresets.pixel10.portraitSize, const ui.Size(412, 923));
+      expect(DevicePresets.pixel10.portraitSize, const ui.Size(411.43, 923.43));
       expect(DevicePresets.pixel10.year, 2025);
       expect(DevicePresets.galaxyS24.portraitSize, const ui.Size(360, 780));
       expect(DevicePresets.galaxyS24.devicePixelRatio, 3.0);

@@ -90,8 +90,15 @@ adb shell dumpsys window               # InsetsSource STATUS_BAR / NAVIGATION_BA
 
 - `devicePixelRatio` = density / 160; logical size = px / dpr.
 - Bar frames appear as `InsetsSource type=ITYPE_STATUS_BAR frame=[l,t][r,b]`
-  (API ≤ 33) or `type=statusBars` (newer) — the parser accepts both. Each
-  bar hugs one display edge; the frame thickness on that edge is the inset.
+  (API ≤ 33) or `type=statusBars` (newer) — the parser accepts both, and on
+  current APIs only the `dumpsys window displays` subcommand still lists
+  them. Each bar hugs one display edge; the frame thickness on that edge is
+  the inset.
+- **SystemUI settles late**: `sys.boot_completed` fires while the bars are
+  still transitional (a default-height status bar that later grows — on
+  Android 16 a Pixel's settles at 54 dp — and zero-area navigation bars).
+  Wait a grace period, then poll until both bars report non-degenerate
+  frames that are identical on two consecutive reads.
 - **Landscape needs a foreground app that allows rotation** — the launcher
   is portrait-locked and `cmd window user-rotation lock 1` silently does
   nothing until e.g. `am start -a android.settings.SETTINGS` is in front.

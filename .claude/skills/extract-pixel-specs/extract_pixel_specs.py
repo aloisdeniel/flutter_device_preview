@@ -30,11 +30,15 @@ from PIL import Image
 #   skip:       reason this device cannot be derived yet
 DEVICES = {
     "google-pixel-9": {"skin": "pixel_9", "avd_device": "pixel_9"},
-    # Pixel 10: same 412x923 @2.625 panel as the Pixel 9.
-    "google-pixel-10": {"skin": "pixel_9", "avd_device": "pixel_9",
-                        "donor": True},
-    "google-pixel-10-pro-fold": {
-        "skip": "foldable: the skin's folded/unfolded layout is not modeled"},
+    # Pixel 10 has its own skin but no AVD definition yet; it shares the
+    # Pixel 9's 1080x2424 @2.625 panel, so that profile probes its metrics.
+    "google-pixel-10": {"skin": "pixel_10", "avd_device": "pixel_9"},
+    # The fold ships two skins; `default` is the unfolded inner display,
+    # which is what the spec simulates. The probe AVD may boot on the
+    # folded outer display — soft_probe keeps the spec's metrics then.
+    "google-pixel-10-pro-fold": {"skin": "pixel_10_pro_fold/default",
+                                 "avd_device": "pixel_9_pro_fold",
+                                 "soft_probe": True},
 }
 
 SKILL_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -120,9 +124,12 @@ def parse_layout(path):
 def skin_geometry(skin_dir):
     layout = parse_layout(os.path.join(skin_dir, "layout"))
     display = layout["parts"]["device"]["display"]
-    portrait = layout["layouts"]["portrait"]
+    # Unfolded foldable skins call their only layout "landscape".
+    layouts = layout["layouts"]
+    chosen = layouts.get("portrait") or next(
+        part for part in layouts.values() if isinstance(part, dict))
     device_offset = None
-    for key, part in portrait.items():
+    for key, part in chosen.items():
         if isinstance(part, dict) and part.get("name") == "device":
             device_offset = (int(part["x"]), int(part["y"]))
     if device_offset is None:
@@ -132,6 +139,9 @@ def skin_geometry(skin_dir):
         "screen_px": (int(display["width"]), int(display["height"])),
         "screen_pos": (device_offset[0] + int(display.get("x", 0)),
                        device_offset[1] + int(display.get("y", 0))),
+        # Newer layouts declare the screen corner radius themselves.
+        "corner_radius": int(display["corner_radius"])
+        if "corner_radius" in display else None,
         "back": os.path.join(skin_dir, images["background"]["image"]),
         "mask": os.path.join(skin_dir, images["foreground"]["mask"])
         if "foreground" in images and "mask" in images["foreground"]
@@ -185,35 +195,59 @@ def analyze_back(back_path, screen_pos, screen_px):
 
 def analyze_mask(mask_path, screen_px):
     """Screen corner radius and camera punch hole from the mask overlay:
-    opaque pixels are what covers the screen (corners + punch hole)."""
+    opaque pixels are what covers the screen. Corner overlays touch the
+    screen edges (row 0); a punch hole is an island that touches none, so
+    connected components in the top strip separate the two — this also
+    finds holes sitting near a corner, like a foldable's inner camera."""
     if mask_path is None or not os.path.exists(mask_path):
         return {"radius": 0, "hole": None}
     alpha = Image.open(mask_path).convert("RGBA").getchannel("A")
     w, h = alpha.size
-    top = [alpha.getpixel((x, 0)) for x in range(w)]
+    strip_h = min(h, max(200, h // 6))
+    grid = [[alpha.getpixel((x, y)) >= OPAQUE for x in range(w)]
+            for y in range(strip_h)]
 
-    def run_from(sequence):
-        count = 0
-        for value in sequence:
-            if value < OPAQUE:
-                break
-            count += 1
-        return count
+    # The corner radius, when the layout does not declare it: the extent of
+    # the top-left overlay along row 0 (tolerating a few transparent
+    # antialiased pixels before it starts).
+    radius = 0
+    x = 0
+    while x < w // 2 and not grid[0][x]:
+        x += 1
+    if x < 8:
+        while x < w // 2 and grid[0][x]:
+            x += 1
+        radius = x
 
-    radius = max(run_from(top), run_from(reversed(top)))
-    # The punch hole: opaque pixels in the top strip, clear of the corners
-    # (the x window excludes the corner overlays entirely).
-    xs, ys = [], []
-    for y in range(0, min(h, max(radius * 3, h // 8))):
-        for x in range(radius + 4, w - radius - 4):
-            if alpha.getpixel((x, y)) >= OPAQUE:
-                xs.append(x)
-                ys.append(y)
+    seen = [[False] * w for _ in range(strip_h)]
     hole = None
-    if xs:
-        hx0, hx1, hy0, hy1 = min(xs), max(xs), min(ys), max(ys)
-        hole = {"cx": (hx0 + hx1 + 1) / 2, "cy": (hy0 + hy1 + 1) / 2,
-                "r": max(hx1 - hx0, hy1 - hy0) / 2 + 0.5}
+    for y0 in range(strip_h):
+        for x0 in range(w):
+            if not grid[y0][x0] or seen[y0][x0]:
+                continue
+            stack, pixels, touches_border = [(x0, y0)], [], False
+            seen[y0][x0] = True
+            while stack:
+                px, py = stack.pop()
+                pixels.append((px, py))
+                if py == 0 or py == strip_h - 1:
+                    touches_border = True
+                for nx, ny in ((px - 1, py), (px + 1, py),
+                               (px, py - 1), (px, py + 1)):
+                    if 0 <= nx < w and 0 <= ny < strip_h and \
+                            grid[ny][nx] and not seen[ny][nx]:
+                        seen[ny][nx] = True
+                        stack.append((nx, ny))
+            if touches_border:
+                continue  # corner or edge overlay, not a hole
+            xs = [p[0] for p in pixels]
+            ys = [p[1] for p in pixels]
+            candidate = {"cx": (min(xs) + max(xs) + 1) / 2,
+                         "cy": (min(ys) + max(ys) + 1) / 2,
+                         "r": max(max(xs) - min(xs),
+                                  max(ys) - min(ys)) / 2 + 0.5}
+            if hole is None or candidate["r"] > hole["r"]:
+                hole = candidate
     return {"radius": radius, "hole": hole}
 
 
@@ -238,6 +272,8 @@ def build_frame(skin_dir, dpr):
     back = analyze_back(geometry["back"], geometry["screen_pos"],
                         geometry["screen_px"])
     mask = analyze_mask(geometry["mask"], geometry["screen_px"])
+    if geometry["corner_radius"] is not None:
+        mask["radius"] = geometry["corner_radius"]
     bx0, by0, bx1, by1 = back["bounds"]
     sw, sh = geometry["screen_px"]
     sx, sy = geometry["screen_pos"]
@@ -285,6 +321,7 @@ class EmulatorProbe:
         self.avdmanager = self._tool("cmdline-tools/latest/bin/avdmanager")
         self.emulator = self._tool("emulator/emulator")
         self.adb = self._tool("platform-tools/adb", which="adb")
+        self.cache = {}  # avd_device -> metrics (panel donors share a boot)
 
     def _tool(self, relative, which=None):
         path = os.path.join(self.sdk, relative)
@@ -312,27 +349,47 @@ class EmulatorProbe:
         return subprocess.run([self.adb, "shell", *args], capture_output=True,
                               text=True, timeout=timeout).stdout
 
-    def bar_insets(self, dpr):
-        dump = subprocess.run([self.adb, "shell", "dumpsys", "window"],
-                              capture_output=True, text=True,
-                              timeout=60).stdout
-        display = re.search(r"mDisplayFrame=Rect\((\d+), (\d+) - (\d+), (\d+)",
-                            dump)
-        if not display:
-            sys.exit("error: no mDisplayFrame in dumpsys window")
+    def bar_insets(self, dpr, wait=True):
+        """Bar insets from `dumpsys window displays` — the only section
+        that still lists InsetsSource frames on current APIs.
+
+        SystemUI registers the bar sources noticeably after
+        `sys.boot_completed`, and their first frames are transitional (a
+        default-height status bar that later grows, zero-area navigation
+        bars) — so poll until both bars report non-degenerate frames that
+        are identical on two consecutive reads.
+        """
+        deadline = time.time() + (120 if wait else 0)
+        pattern = (r"InsetsSource.*?type=(?:ITYPE_)?(STATUS_BAR|statusBars|"
+                   r"NAVIGATION_BAR|navigationBars)\b.*?"
+                   r"frame=\[(\d+),(\d+)\]\[(\d+),(\d+)\]")
+        previous = None
+        while True:
+            dump = subprocess.run(
+                [self.adb, "shell", "dumpsys", "window", "displays"],
+                capture_output=True, text=True, timeout=60).stdout
+            display = re.search(
+                r"mDisplayFrame=Rect\((\d+), (\d+) - (\d+), (\d+)", dump)
+            bars = {}
+            for kind, l, t, r, b in re.findall(pattern, dump):
+                key = kind.lower().replace("_", "").replace("bars", "bar")
+                frame = (int(l), int(t), int(r), int(b))
+                if frame[2] > frame[0] and frame[3] > frame[1]:
+                    bars.setdefault(key, frame)
+            ready = display and {"statusbar", "navigationbar"} <= set(bars)
+            if ready and bars == previous:
+                break
+            if time.time() > deadline:
+                if ready:
+                    break  # never went quiet; take the last reading
+                sys.exit("error: system bars never appeared in "
+                         f"dumpsys window displays (saw {sorted(bars)})")
+            previous = bars if ready else None
+            time.sleep(3)
         dw = int(display.group(3)) - int(display.group(1))
         dh = int(display.group(4)) - int(display.group(2))
         insets = {"left": 0, "top": 0, "right": 0, "bottom": 0}
-        seen = set()
-        pattern = (r"type=(?:ITYPE_)?(STATUS_BAR|statusBars|"
-                   r"NAVIGATION_BAR|navigationBars)\b.*?"
-                   r"frame=\[(\d+),(\d+)\]\[(\d+),(\d+)\]")
-        for kind, l, t, r, b in re.findall(pattern, dump):
-            key = kind.lower().replace("_", "").replace("bars", "bar")
-            if key in seen:
-                continue  # dumpsys repeats the state per window
-            seen.add(key)
-            l, t, r, b = int(l), int(t), int(r), int(b)
+        for l, t, r, b in bars.values():
             if t == 0 and b < dh:
                 insets["top"] = max(insets["top"], round((b - t) / dpr))
             elif b == dh and t > 0:
@@ -344,6 +401,13 @@ class EmulatorProbe:
         return insets, dw > dh
 
     def probe(self, avd_device):
+        if avd_device in self.cache:
+            return self.cache[avd_device]
+        metrics = self._probe(avd_device)
+        self.cache[avd_device] = metrics
+        return metrics
+
+    def _probe(self, avd_device):
         create = subprocess.run(
             [self.avdmanager, "create", "avd", "-n", "specprobe-tmp",
              "-k", self.system_image(), "-d", avd_device, "--force"],
@@ -363,6 +427,10 @@ class EmulatorProbe:
                 time.sleep(3)
             else:
                 sys.exit("error: emulator never finished booting")
+            # SystemUI keeps reconfiguring (status bar height included) for
+            # a while after boot; give it a flat grace period before the
+            # stability-polled reads.
+            time.sleep(30)
             size = re.search(r"(\d+)x(\d+)",
                              self.shell("wm", "size"))
             density = re.search(r"density: (\d+)",
@@ -441,7 +509,19 @@ def update_spec(spec_id, mapping, roots, probe, dry_run):
 
     if probe is not None and not donor:
         metrics = probe.probe(mapping["avd_device"])
-        merge_metrics(spec, metrics)
+        size = spec["portraitSize"]
+        mismatched = abs(metrics["width"] - size["width"]) > 1 or \
+            abs(metrics["height"] - size["height"]) > 1
+        if mismatched and mapping.get("soft_probe"):
+            print(f"  probe reported {metrics['width']:g}x"
+                  f"{metrics['height']:g} (another posture/display?) — "
+                  "keeping the spec's metrics")
+        elif mismatched:
+            sys.exit(f"error: probe reported {metrics['width']:g}x"
+                     f"{metrics['height']:g} but {spec_id} is "
+                     f"{size['width']}x{size['height']} — fix the mapping")
+        else:
+            merge_metrics(spec, metrics)
 
     dpr = spec["devicePixelRatio"]
     frame, screen_dp = build_frame(skin_dir, dpr)
