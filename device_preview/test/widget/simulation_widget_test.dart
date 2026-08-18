@@ -378,7 +378,7 @@ void main() {
       expect(observed.size, const Size(852, 393));
       expect(
         observed.padding,
-        const EdgeInsets.only(left: 59, right: 59, bottom: 21),
+        const EdgeInsets.only(left: 59, right: 59, bottom: 20),
       );
     });
   });

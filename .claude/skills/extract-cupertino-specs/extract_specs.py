@@ -14,7 +14,13 @@ Two sources, per device:
 
 Devices marked `donor` in DEVICES have no simulated counterpart (unreleased
 hardware): their frame artwork is derived from the donor device type, and
-the probe never overwrites their hand-authored metrics.
+the probe never overwrites their hand-authored metrics. (None as of Xcode
+26.6 — every catalog device has a real simulator — but the mechanism stays
+for the next unreleased generation.)
+
+Point DEVELOPER_DIR at the Xcode that defines the newest devices; bezel
+chrome is looked up across every installed Xcode, since Xcode 26 no longer
+ships any (see SKILL.md).
 
 See SKILL.md next to this file for the discovery process and the geometry
 model. Requires pymupdf (`pip install pymupdf`). Usage:
@@ -32,6 +38,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 
 import pymupdf
 
@@ -45,20 +52,24 @@ DEVICES = {
     "apple-iphone-16-plus": {"sim": "iPhone 16 Plus"},
     "apple-iphone-16-pro": {"sim": "iPhone 16 Pro"},
     "apple-iphone-16-pro-max": {"sim": "iPhone 16 Pro Max"},
-    # iPhone 16e / 17e: same 390x844 notch panel as the iPhone 14.
-    "apple-iphone-16e": {"sim": "iPhone 14", "donor": True},
-    "apple-iphone-17e": {"sim": "iPhone 14", "donor": True},
-    # iPhone 17 / 17 Pro: same 402x874 island panel as the iPhone 16 Pro.
-    "apple-iphone-17": {"sim": "iPhone 16 Pro", "donor": True},
-    "apple-iphone-17-pro": {"sim": "iPhone 16 Pro", "donor": True},
-    # iPhone Air: no simulated counterpart; stretch the 16 Pro artwork.
-    "apple-iphone-air": {"sim": "iPhone 16 Pro", "donor": True,
-                         "retarget": (420, 912)},
+    "apple-iphone-16e": {"sim": "iPhone 16e"},
+    "apple-iphone-17": {"sim": "iPhone 17"},
+    "apple-iphone-17-pro": {"sim": "iPhone 17 Pro"},
+    "apple-iphone-17e": {"sim": "iPhone 17e"},
+    "apple-iphone-air": {"sim": "iPhone Air"},
     "apple-ipad-pro-11": {"sim": "iPad Pro 11-inch (M4)"},
     "apple-ipad-pro-13": {"sim": "iPad Pro 13-inch (M4)"},
-    "apple-ipad-air-11": {"sim": "iPad Air 11-inch (M2)"},
-    "apple-ipad-air-13": {"sim": "iPad Air 13-inch (M2)"},
+    # The catalog's 2025 Airs are the M3 generation (tablet4 chrome).
+    "apple-ipad-air-11": {"sim": "iPad Air 11-inch (M3)"},
+    "apple-ipad-air-13": {"sim": "iPad Air 13-inch (M3)"},
     "apple-ipad-mini": {"sim": "iPad mini (A17 Pro)"},
+}
+
+# Chrome classes newer profiles declare but no installed Xcode ships art
+# for (Xcode 26 stopped bundling DeviceKit chrome entirely). Fall back to
+# the class of the chassis the device physically shares.
+CHROME_FALLBACKS = {
+    "phone13": "phone4",  # iPhone 16e/17e reuse the iPhone 14 chassis
 }
 
 SKILL_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -91,6 +102,11 @@ PROBE_INFO_PLIST = """<?xml version="1.0" encoding="UTF-8"?>
 
 
 def developer_dir():
+    override = os.environ.get("DEVELOPER_DIR")
+    if override:
+        if os.path.isdir(override):
+            return override
+        sys.exit(f"error: DEVELOPER_DIR does not exist: {override}")
     try:
         dev = subprocess.run(["xcode-select", "-p"], capture_output=True,
                              text=True, check=True).stdout.strip()
@@ -119,13 +135,26 @@ def find_device_type(dev, name):
 
 
 def chrome_resources(dev, chrome_id):
+    """Chrome bundles may live in a different Xcode than the selected one:
+    Xcode 26 dropped DeviceKit chrome, so an older install often supplies
+    the artwork for device types the newer one defines."""
     short = chrome_id.rsplit(".", 1)[-1]
-    path = os.path.join(dev, "Platforms/iPhoneOS.platform/Library/Developer/"
-                             "DeviceKit/Chrome", f"{short}.devicechrome",
-                        "Contents/Resources")
-    if not os.path.isdir(path):
-        sys.exit(f"error: chrome bundle not found: {short}")
-    return path
+    for name in (short, CHROME_FALLBACKS.get(short)):
+        if name is None:
+            continue
+        for root in [dev] + [os.path.join(app, "Contents/Developer")
+                             for app in
+                             sorted(glob.glob("/Applications/Xcode*.app"))]:
+            path = os.path.join(
+                root, "Platforms/iPhoneOS.platform/Library/Developer/"
+                      "DeviceKit/Chrome", f"{name}.devicechrome",
+                "Contents/Resources")
+            if os.path.isdir(path):
+                if name != short:
+                    print(f"  chrome {short} has no artwork anywhere; "
+                          f"using {name}")
+                return path
+    sys.exit(f"error: chrome bundle not found: {short}")
 
 
 def load_chrome_json(resources):
@@ -212,18 +241,28 @@ class Simctl:
         udid = self.run("create", "specprobe-tmp", device_type,
                         runtime).stdout.strip()
         try:
-            self.run("boot", udid)
-            self.run("bootstatus", udid, "-b", timeout=300)
-            self.run("install", udid, self.app_dir)
+            # The first boot of a freshly downloaded runtime can take
+            # several minutes (dyld cache setup and friends).
+            self.run("boot", udid, timeout=900)
+            self.run("bootstatus", udid, "-b", timeout=900)
+            # Right after bootstatus the install service can still be
+            # coming up (exit 149); one retry after a pause covers it.
+            try:
+                self.run("install", udid, self.app_dir, timeout=300)
+            except subprocess.CalledProcessError:
+                time.sleep(15)
+                self.run("install", udid, self.app_dir, timeout=300)
             out = self.run("launch", "--console-pty", udid,
-                           PROBE_BUNDLE_ID, timeout=180).stdout
+                           PROBE_BUNDLE_ID, timeout=300).stdout
             for line in out.splitlines():
                 if line.startswith("SPECPROBE "):
                     return json.loads(line[len("SPECPROBE "):])
             sys.exit(f"error: probe produced no metrics on {sim_name}:\n{out}")
         finally:
-            self.run("shutdown", udid, check=False)
-            self.run("delete", udid, check=False)
+            try:
+                self.run("shutdown", udid, check=False, timeout=300)
+            finally:
+                self.run("delete", udid, check=False, timeout=300)
 
 
 def merge_metrics(spec_id, spec, metrics):
@@ -329,18 +368,25 @@ def mask_subpaths(pdf_path):
         stack = stack[-6:]
     if best is None or best[0] == 0:
         sys.exit(f"error: no outline path found in {pdf_path}")
-    return best[1], page.rect.height
+    return best[1], page.rect.width, page.rect.height
 
 
 def screen_path(pdf_path, scale, donor_size, retarget):
-    subpaths, page_h = mask_subpaths(pdf_path)
+    subpaths, page_w, page_h = mask_subpaths(pdf_path)
+    # Masks are usually authored at framebuffer resolution, but not always
+    # (the iPhone Air's is drawn at 2x): normalize by the page's own size
+    # rather than assuming pixels.
+    unit_x = page_w / (donor_size[0] * scale) * scale
+    unit_y = page_h / (donor_size[1] * scale) * scale
+    if abs(unit_x - unit_y) > 1e-6:
+        sys.exit(f"error: anisotropic mask page in {pdf_path}")
     dw = dh = 0
     if retarget is not None:
         dw = retarget[0] - donor_size[0]
         dh = retarget[1] - donor_size[1]
 
     def point(x, y):
-        x, y = x / scale, (page_h - y) / scale
+        x, y = x / unit_x, (page_h - y) / unit_y
         if x > donor_size[0] / 2:
             x += dw
         if y > donor_size[1] / 2:
@@ -365,6 +411,21 @@ def screen_path(pdf_path, scale, donor_size, retarget):
 
 def hex_color(rgb):
     return "#%02x%02x%02x" % tuple(round(c * 255) for c in rgb)
+
+
+def composite_native_border(resources, chrome):
+    """The bezel border the composite was drawn for: its concentric strokes
+    are all centered on the native screen rect, so the innermost stroke's
+    bounding box (widest stroke inset by half its width) locates it."""
+    composite = os.path.join(
+        resources, chrome["images"]["composite"] + ".pdf")
+    page = pymupdf.open(composite)[0]
+    best = None
+    for item in page.get_drawings():
+        if item["type"] == "s" and item.get("width"):
+            inset = item["rect"].x0 + item["width"] / 2
+            best = inset if best is None else min(best, inset)
+    return None if best is None else round(best, 2)
 
 
 def composite_shapes(resources, chrome, border):
@@ -496,14 +557,38 @@ def update_spec(dev, spec_id, mapping, simctl, dry_run):
     radius = outside["cornerRadiusX"]
 
     composite_name = chrome["images"].get("composite")
+    composite_fits = False
     if composite_name and os.path.exists(
             os.path.join(resources, composite_name + ".pdf")):
         page = pymupdf.open(
             os.path.join(resources, composite_name + ".pdf"))[0].rect
         border = (page.width - donor[0]) / 2
-        if border != (page.height - donor[1]) / 2 or border <= 0:
-            sys.exit(f"error: off-center composite for {spec_id}")
+        # A chrome class can serve several panel sizes but ship a composite
+        # drawn for only one of them (tablet4's is the 11" Air body);
+        # off-center means "not this panel", not an error.
+        composite_fits = border > 0 and \
+            border == (page.height - donor[1]) / 2
+    if composite_fits:
         shapes = composite_shapes(resources, chrome, border)
+    elif composite_name and os.path.exists(
+            os.path.join(resources, composite_name + ".pdf")) and \
+            composite_native_border(resources, chrome) is not None:
+        # Stroke-stack phone chromes keep their bezel rings only in the
+        # composite (their corner tiles are screen-face art with guide
+        # tints), and the stack is the same for every panel of the class —
+        # read it from the composite drawn for its native panel and
+        # re-center it on this panel with the declared border. Nested-fill
+        # composites (tablets) fall through to the 9-slice tiles instead.
+        native_border = composite_native_border(resources, chrome)
+        border = chrome["images"]["sizing"]["leftWidth"]
+        # Ring insets are measured from the composite's body edge; the
+        # stack itself does not change with the panel, so shift it by the
+        # difference between this panel's border and the native one.
+        shift = border - native_border
+        shapes = [("ring", round(shape[1] + shift, 2), shape[2], shape[3])
+                  for shape in
+                  composite_shapes(resources, chrome, native_border)
+                  if shape[0] == "ring"]
     else:
         border = chrome["images"]["sizing"]["leftWidth"]
         shapes = slice_rings(resources, chrome)

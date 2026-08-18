@@ -24,27 +24,27 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'devicePixelRatio': 2.0,
         'portraitPadding': <String, Object?>{
           'left': 0,
-          'top': 24,
+          'top': 32,
           'right': 0,
           'bottom': 25,
         },
         'landscapePadding': <String, Object?>{
           'left': 0,
-          'top': 24,
+          'top': 32,
           'right': 0,
           'bottom': 25,
         },
         'frame': <String, Object?>{
           'size': <String, Object?>{
-            'width': 912,
-            'height': 1272,
+            'width': 938,
+            'height': 1298,
           },
           'screenOffset': <String, Object?>{
-            'x': 46,
-            'y': 46,
+            'x': 59,
+            'y': 59,
           },
           'screenPath': 'M 25.55,0 C 281.85,0 538.15,0 794.45,0 C 796.52,0 798.71,-0.01 800.29,0.04 C 802.03,0.09 803.72,0.21 805.4,0.53 C 808.83,1.19 812.01,2.69 814.66,5.34 C 817.31,7.99 818.81,11.17 819.46,14.6 C 819.79,16.28 819.91,17.97 819.96,19.71 C 820.01,21.29 820,23.48 820,25.55 L 820,1154.45 C 820,1156.52 820.01,1158.71 819.96,1160.29 C 819.91,1162.03 819.79,1163.72 819.46,1165.4 C 818.81,1168.83 817.31,1172.01 814.66,1174.66 C 812.01,1177.31 808.83,1178.81 805.4,1179.47 C 803.72,1179.79 802.03,1179.91 800.29,1179.96 C 798.71,1180.01 796.52,1180 794.45,1180 L 25.55,1180 C 23.47,1180 21.29,1180.01 19.71,1179.96 C 17.97,1179.91 16.28,1179.79 14.6,1179.47 C 11.17,1178.81 7.99,1177.31 5.34,1174.66 C 2.69,1172.01 1.19,1168.83 0.53,1165.4 C 0.21,1163.72 0.09,1162.03 0.04,1160.29 C -0.01,1158.71 0,1156.52 0,1154.45 L 0,25.55 C 0,23.48 -0.01,21.29 0.04,19.71 C 0.09,17.97 0.21,16.28 0.53,14.6 C 1.19,11.17 2.69,7.99 5.34,5.34 C 7.99,2.69 11.17,1.19 14.6,0.53 C 16.28,0.21 17.97,0.09 19.71,0.04 C 21.29,-0.01 23.48,0 25.55,0 Z',
-          'body': '<svg viewBox="0 0 912 1272">\n  <rect x="-4" y="-4" width="920" height="1280" rx="65" fill="#000000" fill-opacity="0.15"/>\n  <rect x="-3" y="-3" width="918" height="1278" rx="64" fill="#7e7e7e"/>\n  <rect x="-2" y="-2" width="916" height="1276" rx="63" fill="#2c2c2c"/>\n  <rect x="3" y="3" width="906" height="1266" rx="58" fill="#010101"/>\n</svg>',
+          'body': '<svg viewBox="0 0 938 1298">\n  <rect x="0" y="0" width="938" height="1298" rx="81" fill="#7e7e7e"/>\n  <rect x="1" y="1" width="936" height="1296" rx="80" fill="#2c2c2c"/>\n  <rect x="6" y="6" width="926" height="1286" rx="75" fill="#010101"/>\n</svg>',
         },
         'systemUi': <String, Object?>{
           'statusBar': <String, Object?>{
@@ -72,27 +72,27 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'devicePixelRatio': 2.0,
         'portraitPadding': <String, Object?>{
           'left': 0,
-          'top': 24,
+          'top': 32,
           'right': 0,
           'bottom': 25,
         },
         'landscapePadding': <String, Object?>{
           'left': 0,
-          'top': 24,
+          'top': 32,
           'right': 0,
           'bottom': 25,
         },
         'frame': <String, Object?>{
           'size': <String, Object?>{
-            'width': 1116,
-            'height': 1458,
+            'width': 1142,
+            'height': 1484,
           },
           'screenOffset': <String, Object?>{
-            'x': 46,
-            'y': 46,
+            'x': 59,
+            'y': 59,
           },
           'screenPath': 'M 1024,1340.45 L 1024,25.55 C 1024,17.48 1024.35,11.04 1018.66,5.34 C 1012.96,-0.35 1006.52,0 998.45,0 L 25.55,0 C 17.49,0 11.04,-0.35 5.35,5.34 C -0.35,11.04 0.01,17.48 0.01,25.55 L 0.01,1340.45 C 0.01,1348.52 -0.35,1354.96 5.35,1360.66 C 11.04,1366.35 17.49,1366 25.55,1366 L 998.45,1366 C 1006.52,1366 1012.96,1366.35 1018.66,1360.66 C 1024.35,1354.96 1024,1348.52 1024,1340.45 Z',
-          'body': '<svg viewBox="0 0 1116 1458">\n  <rect x="-4" y="-4" width="1124" height="1466" rx="65" fill="#000000" fill-opacity="0.15"/>\n  <rect x="-3" y="-3" width="1122" height="1464" rx="64" fill="#7e7e7e"/>\n  <rect x="-2" y="-2" width="1120" height="1462" rx="63" fill="#2c2c2c"/>\n  <rect x="3" y="3" width="1110" height="1452" rx="58" fill="#010101"/>\n</svg>',
+          'body': '<svg viewBox="0 0 1142 1484">\n  <rect x="-1" y="-1" width="1144" height="1486" rx="82" fill="#000000" fill-opacity="0.15"/>\n  <rect x="0" y="0" width="1142" height="1484" rx="81" fill="#7e7e7e"/>\n  <rect x="1" y="1" width="1140" height="1482" rx="80" fill="#2c2c2c"/>\n  <rect x="6" y="6" width="1130" height="1472" rx="75" fill="#010101"/>\n</svg>',
         },
         'systemUi': <String, Object?>{
           'statusBar': <String, Object?>{
@@ -120,13 +120,13 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'devicePixelRatio': 2.0,
         'portraitPadding': <String, Object?>{
           'left': 0,
-          'top': 24,
+          'top': 32,
           'right': 0,
           'bottom': 25,
         },
         'landscapePadding': <String, Object?>{
           'left': 0,
-          'top': 24,
+          'top': 32,
           'right': 0,
           'bottom': 25,
         },
@@ -168,13 +168,13 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'devicePixelRatio': 2.0,
         'portraitPadding': <String, Object?>{
           'left': 0,
-          'top': 24,
+          'top': 32,
           'right': 0,
           'bottom': 25,
         },
         'landscapePadding': <String, Object?>{
           'left': 0,
-          'top': 24,
+          'top': 32,
           'right': 0,
           'bottom': 25,
         },
@@ -216,13 +216,13 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'devicePixelRatio': 2.0,
         'portraitPadding': <String, Object?>{
           'left': 0,
-          'top': 24,
+          'top': 32,
           'right': 0,
           'bottom': 25,
         },
         'landscapePadding': <String, Object?>{
           'left': 0,
-          'top': 24,
+          'top': 32,
           'right': 0,
           'bottom': 25,
         },
@@ -272,7 +272,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'left': 59,
           'top': 0,
           'right': 59,
-          'bottom': 21,
+          'bottom': 20,
         },
         'frame': <String, Object?>{
           'size': <String, Object?>{
@@ -320,7 +320,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'left': 62,
           'top': 0,
           'right': 62,
-          'bottom': 21,
+          'bottom': 20,
         },
         'frame': <String, Object?>{
           'size': <String, Object?>{
@@ -368,7 +368,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'left': 62,
           'top': 0,
           'right': 62,
-          'bottom': 21,
+          'bottom': 20,
         },
         'frame': <String, Object?>{
           'size': <String, Object?>{
@@ -416,7 +416,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'left': 59,
           'top': 0,
           'right': 59,
-          'bottom': 21,
+          'bottom': 20,
         },
         'frame': <String, Object?>{
           'size': <String, Object?>{
@@ -464,7 +464,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'left': 47,
           'top': 0,
           'right': 47,
-          'bottom': 21,
+          'bottom': 20,
         },
         'frame': <String, Object?>{
           'size': <String, Object?>{
@@ -512,7 +512,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'left': 62,
           'top': 0,
           'right': 62,
-          'bottom': 21,
+          'bottom': 20,
         },
         'frame': <String, Object?>{
           'size': <String, Object?>{
@@ -560,7 +560,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'left': 62,
           'top': 0,
           'right': 62,
-          'bottom': 21,
+          'bottom': 20,
         },
         'frame': <String, Object?>{
           'size': <String, Object?>{
@@ -608,7 +608,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'left': 47,
           'top': 0,
           'right': 47,
-          'bottom': 21,
+          'bottom': 20,
         },
         'frame': <String, Object?>{
           'size': <String, Object?>{
@@ -648,27 +648,27 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'devicePixelRatio': 3.0,
         'portraitPadding': <String, Object?>{
           'left': 0,
-          'top': 62,
+          'top': 68,
           'right': 0,
           'bottom': 34,
         },
         'landscapePadding': <String, Object?>{
-          'left': 62,
+          'left': 68,
           'top': 0,
-          'right': 62,
-          'bottom': 21,
+          'right': 68,
+          'bottom': 20,
         },
         'frame': <String, Object?>{
           'size': <String, Object?>{
-            'width': 454,
-            'height': 946,
+            'width': 456,
+            'height': 948,
           },
           'screenOffset': <String, Object?>{
-            'x': 17,
-            'y': 17,
+            'x': 18,
+            'y': 18,
           },
-          'screenPath': 'M 335.34,0 C 340.68,0 346.02,0.02 351.37,0.21 C 357.49,0.44 363.54,0.9 369.58,2.03 C 381.77,4.3 392.86,9.23 401.81,18.19 C 410.77,27.14 415.7,38.23 417.97,50.43 C 419.1,56.46 419.56,62.51 419.79,68.62 C 419.98,73.92 420,79.21 420,84.5 L 420,827.5 C 420,832.79 419.98,838.08 419.79,843.38 C 419.56,849.49 419.1,855.54 417.97,861.57 C 415.7,873.77 410.77,884.86 401.81,893.81 C 392.86,902.77 381.77,907.7 369.58,909.97 C 363.54,911.1 357.49,911.56 351.37,911.79 C 346.02,911.98 340.68,912 335.34,912 L 84.66,912 C 79.32,912 73.98,911.98 68.63,911.79 C 62.51,911.56 56.46,911.1 50.42,909.97 C 38.23,907.7 27.14,902.77 18.19,893.81 C 9.23,884.86 4.3,873.77 2.03,861.57 C 0.9,855.54 0.44,849.49 0.21,843.38 C 0.02,838.08 0,832.79 0,827.5 L 0,84.5 C 0,79.21 0.02,73.92 0.21,68.62 C 0.44,62.51 0.9,56.46 2.03,50.43 C 4.3,38.23 9.23,27.14 18.19,18.19 C 27.14,9.23 38.23,4.3 50.42,2.03 C 56.46,0.9 62.51,0.44 68.63,0.21 C 73.98,0.02 79.32,0 84.66,0 L 335.34,0 Z M 254,11 H 166 A 18.5,18.5 0 0 0 166,48 H 254 A 18.5,18.5 0 0 0 254,11 Z',
-          'body': '<svg viewBox="0 0 454 946">\n  <rect x="1" y="1" width="452" height="944" rx="79" fill="#000000"/>\n  <rect x="2" y="2" width="450" height="942" rx="78" fill="#7e7e7e"/>\n  <rect x="16" y="16" width="422" height="914" rx="64" fill="#7e7e7e"/>\n  <rect x="3" y="3" width="448" height="940" rx="77" fill="#2c2c2c"/>\n  <rect x="16" y="16" width="422" height="914" rx="64" fill="#2c2c2c"/>\n  <rect x="8" y="8" width="438" height="930" rx="72" fill="#000000"/>\n  <rect x="16" y="16" width="422" height="914" rx="64" fill="#000000"/>\n</svg>',
+          'screenPath': 'M 331.55,0 C 337.13,0 342.71,0.02 348.29,0.22 C 354.69,0.46 361.01,0.94 367.32,2.12 C 380.06,4.49 391.64,9.64 401,18.98 C 410.35,28.32 415.51,39.9 417.88,52.62 C 419.06,58.92 419.54,65.23 419.78,71.61 C 419.98,77.13 420,82.65 420,88.17 L 420,86.99 L 420,825.01 L 420,826.19 C 419.99,830.93 419.95,835.66 419.78,840.39 C 419.54,846.77 419.06,853.08 417.88,859.38 C 415.51,872.1 410.35,883.67 401,893.02 C 391.64,902.36 380.06,907.51 367.32,909.88 C 361.01,911.06 354.69,911.54 348.29,911.78 C 343.19,911.97 338.09,912 332.98,912 L 208.21,912 L 87.26,912 L 86.06,912 C 82.07,912 78.09,911.97 74.1,911.85 L 71.71,911.78 C 65.31,911.54 58.99,911.06 52.68,909.88 C 39.94,907.51 28.36,902.36 19,893.02 C 9.65,883.67 4.49,872.1 2.12,859.38 C 0.95,853.08 0.46,846.77 0.22,840.39 C 0.02,834.87 0,829.35 0,823.83 L 0,88.17 C 0,82.65 0.02,77.13 0.22,71.61 C 0.46,65.23 0.95,58.92 2.12,52.62 C 4.49,39.9 9.65,28.32 19,18.98 C 28.36,9.64 39.94,4.49 52.68,2.12 C 58.99,0.94 65.31,0.46 71.71,0.22 C 77.29,0.02 82.87,0 88.45,0 L 331.55,0 Z M 254,11 H 166 A 18.5,18.5 0 0 0 166,48 H 254 A 18.5,18.5 0 0 0 254,11 Z',
+          'body': '<svg viewBox="0 0 456 948">\n  <rect x="2" y="2" width="452" height="944" rx="78" fill="#000000"/>\n  <rect x="3" y="3" width="450" height="942" rx="77" fill="#7e7e7e"/>\n  <rect x="4" y="4" width="448" height="940" rx="76" fill="#2c2c2c"/>\n  <rect x="9.33" y="9.33" width="437.34" height="929.34" rx="70.67" fill="#000000"/>\n  <rect x="8.33" y="8.33" width="439.34" height="931.34" rx="71.67" fill="#000000"/>\n</svg>',
         },
         'systemUi': <String, Object?>{
           'statusBar': <String, Object?>{

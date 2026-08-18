@@ -176,7 +176,7 @@ void main() {
       );
       expect(
         sim.padding,
-        const EdgeInsets.only(left: 59, right: 59, bottom: 21),
+        const EdgeInsets.only(left: 59, right: 59, bottom: 20),
       );
       expect(sim.viewPadding, sim.padding);
     });

@@ -33,6 +33,26 @@ xcode-select -p                      # the active developer dir
 ls /Applications | grep -i xcode     # fallback: versioned installs
 ```
 
+`DEVELOPER_DIR=…` overrides the selection (the script honors it) — useful
+when several Xcodes coexist, which they routinely do: **the newest Xcode
+defines the newest devices, but only older Xcodes still ship the bezel
+chrome** (see below), and the script pulls each piece from wherever it is.
+
+**Xcode 26 changed the layout.** Device profiles no longer live inside the
+Xcode bundle at all: `xcodebuild -downloadPlatform iOS` installs them
+system-wide into `/Library/Developer/CoreSimulator/Profiles/DeviceTypes/`
+(the runtime volume under `/Library/Developer/CoreSimulator/Volumes/` only
+carries the OS). `xcrun simctl list devicetypes -j` prints each type's
+`bundlePath` — the fastest way to find them on any version. Xcode 26 also
+ships **no DeviceKit chrome** (no `*.devicechrome`, and its `Simulator.app`
+`Assets.car` holds only icons); keep an Xcode 16.x installed for the bezel
+art. Newer profiles may declare chrome classes no Xcode has art for
+(`phone13` = iPhone 16e/17e): `CHROME_FALLBACKS` in the script maps them to
+the chassis they physically share (`phone4`, the iPhone 14 body). Note
+Xcode 26.x needs macOS 15+ — on 14.x its CoreSimulator `SimRenderServer`
+segfaults on every boot and wedges `simctl` (delete + kill
+`CoreSimulatorService` to recover).
+
 From the developer dir (`$DEV`), the three relevant sources are:
 
 1. **Device type bundles** — one per simulated device:
@@ -132,22 +152,34 @@ deletes the device. Expect ~30–60 s per device.
 
 ## 4. Devices Xcode doesn't know yet
 
-Specs for unreleased/absent devices reuse a **donor** (marked `donor` in
-the mapping table at the top of `extract_specs.py` — extend it when adding
-devices). Donors contribute **frame artwork only**; the probe never
-overwrites a donor-based spec's hand-authored metrics:
+With Xcode 26.6 every catalog device has a real simulator, so no donors are
+in use — but the mechanism stays for the next unreleased generation. Specs
+for absent devices reuse a **donor** (marked `donor` in the mapping table
+at the top of `extract_specs.py`). Donors contribute **frame artwork
+only**; the probe never overwrites a donor-based spec's hand-authored
+metrics:
 
-- Same logical panel → use the donor's mask as-is (e.g. iPhone 17/17 Pro ←
-  iPhone 16 Pro; 16e/17e ← iPhone 14, whose mask already carries the notch).
-- Different size → 9-slice retarget the donor path: coordinates past the
-  panel midpoint shift by Δw/Δh, corner clusters translate rigidly, centered
-  subpaths (island) shift by Δw/2 (e.g. iPhone Air ← iPhone 16 Pro).
+- Same logical panel → use the donor's mask as-is (e.g. 16e ← iPhone 14,
+  whose mask carries the same notch — Apple confirmed this by giving the
+  real 16e the very same mask UUID).
+- Different size → 9-slice retarget the donor path with `retarget`:
+  coordinates past the panel midpoint shift by Δw/Δh, corner clusters
+  translate rigidly, centered subpaths (island) shift by Δw/2.
+
+Two more geometry cases the script now handles: a mask PDF authored at a
+multiple of the framebuffer (the iPhone Air's is 2×) — coordinates are
+normalized by the page/framebuffer ratio, never assumed to be pixels; and a
+chrome class serving several panel sizes with a composite drawn for only
+one of them (phone12 → 16 Pro Max *and* Air, tablet4 → 11" Air only) —
+stroke-stack composites lend their ring stack shifted to the panel's own
+`sizing` border, nested-fill ones fall back to the 9-slice tiles.
 
 ## 5. Run it
 
 ```sh
 python3 -m venv /tmp/specs-venv && /tmp/specs-venv/bin/pip install pymupdf
-/tmp/specs-venv/bin/python .claude/skills/extract-cupertino-specs/extract_specs.py
+DEVELOPER_DIR=/Applications/Xcode-26.6.0.app/Contents/Developer \
+  /tmp/specs-venv/bin/python .claude/skills/extract-cupertino-specs/extract_specs.py
 # --no-probe   frames only, no simulators booted (fast)
 # --dry-run    report without writing
 # ids...       limit to specific spec ids

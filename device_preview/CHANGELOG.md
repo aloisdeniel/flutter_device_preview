@@ -13,6 +13,15 @@
   The iPhone values were confirmed exact; every iPad's bottom safe-area
   inset was corrected from 20 to 25 logical pixels (both orientations), in
   the specs and the built-in `DevicePresets`.
+- Every Apple device in the catalog now has its own real simulator (Xcode
+  26.6 device profiles, probed on iOS 26.5): the iPhone 16e, 17, 17 Pro,
+  17e and Air no longer borrow another model's artwork or hand-modelled
+  metrics — the 16e/17e notch outline and the Air's squircle come from
+  Apple's own framebuffer masks, and the iPad Airs use the M3 chassis (59
+  pt bezel). Safe areas follow iOS 26: every iPad's top inset is 32 (was
+  24), landscape iPhones report a 20 pt bottom inset (was 21), and the
+  iPhone Air's Dynamic Island band is 68 (was 62). Specs, `DevicePresets`,
+  fixtures and the bundled catalog updated together.
 - The Google Pixel specs are now derived the same way, by an Android
   counterpart skill (`.claude/skills/extract-pixel-specs/`): frame artwork,
   screen shape and the camera punch-hole cutout come from the official
