@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:device_preview_devtools_extension/src/devices/device_catalog.g.dart';
 import 'package:device_preview_devtools_extension/src/gateway_api.dart';
 import 'package:device_preview_devtools_extension/src/panel_controller.dart';
 import 'package:device_preview_devtools_extension/src/platform/platform_io.dart';
@@ -244,7 +245,8 @@ void main() {
       expect(controller!.status, PanelStatus.ready);
     }
 
-    test('an invalidParams rejection does not flip the panel to paused and '
+    test(
+        'an invalidParams rejection does not flip the panel to paused and '
         're-fetches the app state', () async {
       await ready();
       gateway.calls.clear();
@@ -297,7 +299,10 @@ void main() {
       // The app echoes our own write: must not clobber local state.
       gateway.emit('device_preview.stateChanged', {
         'simulation': {'platformBrightness': 'light'},
-        'fit': {'scale': 1.0, 'offset': {'x': 0.0, 'y': 0.0}},
+        'fit': {
+          'scale': 1.0,
+          'offset': {'x': 0.0, 'y': 0.0}
+        },
         'source': 'devtools',
         'requestId': requestId,
       });
@@ -311,7 +316,10 @@ void main() {
 
       gateway.emit('device_preview.stateChanged', {
         'simulation': {'platformBrightness': 'light'},
-        'fit': {'scale': 0.5, 'offset': {'x': 10.0, 'y': 0.0}},
+        'fit': {
+          'scale': 0.5,
+          'offset': {'x': 10.0, 'y': 0.0}
+        },
         'source': 'programmatic',
       });
       await pumpEventQueue();
@@ -328,6 +336,186 @@ void main() {
     });
   });
 
+  group('user devices (imported from JSON)', () {
+    Future<void> ready() async {
+      gateway = FakeGateway(connected: true, available: true);
+      gateway.presetsJson = [testPhonePresetJson];
+      createController();
+      await pumpEventQueue();
+    }
+
+    test(
+        'importUserDevices parses a spec with frame and system UI, lists it '
+        'first and persists it', () async {
+      await ready();
+      final imported =
+          controller!.importUserDevices(jsonEncode(testFramedPresetJson));
+      expect(imported.map((p) => p.id), ['test-framed']);
+      expect(controller!.userDevices.map((p) => p.id), ['test-framed']);
+      expect(controller!.isUserDevice('test-framed'), isTrue);
+      expect(controller!.presets.first.id, 'test-framed');
+      expect(imported.single.frame, testFramedPresetJson['frame']);
+      expect(imported.single.systemUi, testFramedPresetJson['systemUi']);
+      final stored = storage.read(PanelController.userDevicesStorageKey);
+      expect(stored, isNotNull);
+      expect(jsonDecode(stored!), [testFramedPresetJson]);
+    });
+
+    test(
+        'selecting a user device pushes its frame and system UI, and a '
+        'later rotation keeps them', () async {
+      await ready();
+      final imported =
+          controller!.importUserDevices(jsonEncode(testFramedPresetJson));
+      await controller!.selectPreset(imported.single);
+      expect(gateway.simulation?['presetId'], 'test-framed');
+      expect(gateway.simulation?['frame'], testFramedPresetJson['frame']);
+      expect(gateway.simulation?['systemUi'], testFramedPresetJson['systemUi']);
+      expect(controller!.activeDeviceLabel, 'Test Framed Phone');
+      expect(controller!.hasSystemUi, isTrue);
+      await controller!.setOrientation('landscape');
+      expect(gateway.simulation?['frame'], testFramedPresetJson['frame']);
+      expect(gateway.simulation?['systemUi'], testFramedPresetJson['systemUi']);
+      expect(gateway.simulation?['screenSize'], {
+        'width': 800.0,
+        'height': 400.0,
+      });
+    });
+
+    test('a real device_specs catalog entry round-trips through import',
+        () async {
+      await ready();
+      // kDeviceSpecs is generated from device_specs/*.json: the exact format
+      // a user would paste, frame artwork and system UI included.
+      final spec = kDeviceSpecs.firstWhere((s) => s['id'] == 'google-pixel-9');
+      expect(spec['frame'], isNotNull);
+      expect(spec['systemUi'], isNotNull);
+      final imported = controller!.importUserDevices(jsonEncode(spec));
+      expect(imported.single.json, spec);
+      // The user's copy replaces the catalog entry with the same id.
+      expect(
+        controller!.presets.where((p) => p.id == 'google-pixel-9'),
+        hasLength(1),
+      );
+      expect(controller!.isUserDevice('google-pixel-9'), isTrue);
+      await controller!.selectPreset(imported.single);
+      expect(gateway.simulation?['frame'], spec['frame']);
+      expect(gateway.simulation?['systemUi'], spec['systemUi']);
+    });
+
+    test('user devices survive a new session (re-read from storage)', () async {
+      await ready();
+      controller!.importUserDevices(jsonEncode(testFramedPresetJson));
+      controller!.dispose();
+      gateway.dispose();
+      gateway = FakeGateway(connected: true, available: true);
+      createController();
+      await pumpEventQueue();
+      expect(controller!.userDevices.map((p) => p.id), ['test-framed']);
+      expect(controller!.userDevices.single.frame, isNotNull);
+      expect(controller!.userDevices.single.systemUi, isNotNull);
+    });
+
+    test('a JSON array imports several specs; same id replaces', () async {
+      await ready();
+      final first = controller!.importUserDevices(
+        jsonEncode([testFramedPresetJson, testNotchedPresetJson]),
+      );
+      expect(first.map((p) => p.id), ['test-framed', 'test-notched']);
+      final renamed = Map<String, Object?>.from(testFramedPresetJson)
+        ..['name'] = 'Renamed';
+      controller!.importUserDevices(jsonEncode(renamed));
+      expect(
+        controller!.userDevices.map((p) => '${p.id}:${p.name}'),
+        ['test-notched:Test Notched Phone', 'test-framed:Renamed'],
+      );
+    });
+
+    test('a user device hides the app-registered preset with the same id',
+        () async {
+      await ready();
+      expect(
+        controller!.presets.where((p) => p.id == 'test-phone'),
+        hasLength(1),
+      );
+      controller!.importUserDevices(jsonEncode(testPhonePresetJson));
+      await controller!.refresh();
+      expect(
+        controller!.presets.where((p) => p.id == 'test-phone'),
+        hasLength(1),
+      );
+      expect(controller!.isUserDevice('test-phone'), isTrue);
+    });
+
+    test('removeUserDevice forgets and un-persists the device', () async {
+      await ready();
+      controller!.importUserDevices(jsonEncode(testFramedPresetJson));
+      controller!.removeUserDevice('test-framed');
+      expect(controller!.userDevices, isEmpty);
+      expect(storage.read(PanelController.userDevicesStorageKey), isNull);
+      expect(controller!.presets.where((p) => p.id == 'test-framed'), isEmpty);
+    });
+
+    test('invalid specs are rejected with a message and nothing is imported',
+        () {
+      createController();
+      expect(
+        () => controller!.importUserDevices('{oops'),
+        throwsA(isA<FormatException>().having(
+          (e) => e.message,
+          'message',
+          startsWith('Invalid JSON'),
+        )),
+      );
+      expect(
+        () => controller!.importUserDevices('[]'),
+        throwsFormatException,
+      );
+      expect(
+        () => controller!.importUserDevices('42'),
+        throwsFormatException,
+      );
+      expect(
+        () => controller!.importUserDevices(
+          jsonEncode({'name': 'No id', 'platform': 'android'}),
+        ),
+        throwsA(isA<FormatException>().having(
+          (e) => e.message,
+          'message',
+          contains('"id"'),
+        )),
+      );
+      expect(
+        () => controller!.importUserDevices(
+          jsonEncode({
+            'id': 'x',
+            'name': 'X',
+            'platform': 'android',
+            'portraitSize': {'width': 0, 'height': 10},
+            'devicePixelRatio': 2,
+          }),
+        ),
+        throwsA(isA<FormatException>().having(
+          (e) => e.message,
+          'message',
+          contains('portraitSize.width'),
+        )),
+      );
+      // A bad entry in an array rejects the whole array.
+      expect(
+        () => controller!.importUserDevices(
+          jsonEncode([
+            testFramedPresetJson,
+            {'id': 'bad'}
+          ]),
+        ),
+        throwsFormatException,
+      );
+      expect(controller!.userDevices, isEmpty);
+      expect(storage.read(PanelController.userDevicesStorageKey), isNull);
+    });
+  });
+
   group('mutations', () {
     Future<void> ready() async {
       gateway = FakeGateway(connected: true, available: true);
@@ -336,12 +524,10 @@ void main() {
       await pumpEventQueue();
     }
 
-    test('selectPreset builds metric fields and preserves overrides',
-        () async {
+    test('selectPreset builds metric fields and preserves overrides', () async {
       await ready();
       await controller!.setBrightness('dark');
-      await controller!
-          .selectPreset(const PresetView(testPhonePresetJson));
+      await controller!.selectPreset(const PresetView(testPhonePresetJson));
       expect(gateway.simulation, {
         'platformBrightness': 'dark',
         'presetId': 'test-phone',
@@ -359,15 +545,15 @@ void main() {
       });
     });
 
-    test('landscape viewPadding falls back to landscapePadding like '
+    test(
+        'landscape viewPadding falls back to landscapePadding like '
         'DevicePreset.resolve app-side', () async {
       gateway = FakeGateway(connected: true, available: true);
       gateway.presetsJson = [testNotchedPresetJson];
       createController();
       await pumpEventQueue();
 
-      await controller!
-          .selectPreset(const PresetView(testNotchedPresetJson));
+      await controller!.selectPreset(const PresetView(testNotchedPresetJson));
       await controller!.setOrientation('landscape');
 
       // The spec declares landscapePadding but no landscapeViewPadding: the
@@ -473,8 +659,7 @@ void main() {
     test('setOrientation uses the preset landscape metrics (rotation rule)',
         () async {
       await ready();
-      await controller!
-          .selectPreset(const PresetView(testPhonePresetJson));
+      await controller!.selectPreset(const PresetView(testPhonePresetJson));
       await controller!.setOrientation('landscape');
       expect(gateway.simulation!['orientation'], 'landscape');
       expect(
@@ -488,8 +673,7 @@ void main() {
       );
     });
 
-    test('setOrientation applies the rotation rule without a preset',
-        () async {
+    test('setOrientation applies the rotation rule without a preset', () async {
       await ready();
       await controller!.setCustomMetrics(
         width: 400,
@@ -512,8 +696,7 @@ void main() {
     test('selectRealDevice clears metric fields, keeps overrides', () async {
       await ready();
       await controller!.setBrightness('dark');
-      await controller!
-          .selectPreset(const PresetView(testPhonePresetJson));
+      await controller!.selectPreset(const PresetView(testPhonePresetJson));
       await controller!.selectRealDevice();
       expect(gateway.simulation, {'platformBrightness': 'dark'});
     });
@@ -632,8 +815,7 @@ void main() {
       );
     });
 
-    test('an error envelope surfaces a notification and keeps state',
-        () async {
+    test('an error envelope surfaces a notification and keeps state', () async {
       await ready();
       await controller!.setBrightness('dark');
       gateway.cannedResults['ext.device_preview.setSimulation'] = {
@@ -644,8 +826,7 @@ void main() {
       expect(controller!.simulation, {'platformBrightness': 'dark'});
     });
 
-    test('a transport error during mutation surfaces a notification',
-        () async {
+    test('a transport error during mutation surfaces a notification', () async {
       await ready();
       gateway.throwOn['ext.device_preview.setSimulation'] =
           const GatewayException(

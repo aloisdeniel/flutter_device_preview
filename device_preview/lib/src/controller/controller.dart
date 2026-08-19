@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
@@ -49,6 +50,18 @@ abstract class DevicePreviewController implements Listenable {
   /// true.
   Future<void> applyPreset(
     DevicePreset preset, {
+    Orientation orientation = Orientation.portrait,
+    bool resetOverrides = false,
+  });
+
+  /// Decodes a device spec from [json] — either a JSON string or an already
+  /// decoded map, in the `DevicePreset.toJson()` / `device_specs/*.json`
+  /// format — registers it as a preset (replacing any preset with the same
+  /// id) and applies it exactly like [applyPreset].
+  ///
+  /// Throws a [FormatException] when [json] is not a valid device spec.
+  Future<void> applyJson(
+    Object json, {
     Orientation orientation = Orientation.portrait,
     bool resetOverrides = false,
   });
@@ -252,6 +265,53 @@ class DevicePreviewControllerImpl implements DevicePreviewController {
         source: 'programmatic',
       ),
     );
+  }
+
+  @override
+  Future<void> applyJson(
+    Object json, {
+    Orientation orientation = Orientation.portrait,
+    bool resetOverrides = false,
+  }) {
+    final DevicePreset preset = DevicePreset.fromJson(_decodeJsonMap(json));
+    // Registered (not only applied) so that a later [setOrientation] resolves
+    // the preset's explicit landscape safe areas instead of the rotation
+    // rule, and so that DevTools lists the device.
+    _upsertPreset(preset);
+    return applyPreset(
+      preset,
+      orientation: orientation,
+      resetOverrides: resetOverrides,
+    );
+  }
+
+  static Map<String, Object?> _decodeJsonMap(Object json) {
+    Object? decoded = json;
+    if (json is String) {
+      try {
+        decoded = jsonDecode(json);
+      } on FormatException catch (error) {
+        throw FormatException('Invalid device spec JSON: ${error.message}');
+      }
+    }
+    if (decoded is Map) {
+      return Map<String, Object?>.from(decoded);
+    }
+    throw FormatException(
+      'A device spec must be a JSON object, got ${decoded.runtimeType}.',
+    );
+  }
+
+  void _upsertPreset(DevicePreset preset) {
+    final int index = _presets.indexWhere(
+      (DevicePreset p) => p.id == preset.id,
+    );
+    if (index == -1) {
+      _presets.add(preset);
+    } else {
+      _presets[index] = preset;
+    }
+    onPresetsChanged?.call(_presets.length);
   }
 
   DeviceSimulation _resolvePresetSimulation(

@@ -160,8 +160,8 @@ class _Toolbar extends StatelessWidget {
             CheckedPopupMenuItem<void>(
               key: const Key('device_preview_keep_across_restarts'),
               checked: controller.keepAcrossRestarts,
-              onTap: () =>
-                  controller.keepAcrossRestarts = !controller.keepAcrossRestarts,
+              onTap: () => controller.keepAcrossRestarts =
+                  !controller.keepAcrossRestarts,
               child: const Text('Keep across restarts'),
             ),
           ],
@@ -387,15 +387,20 @@ class _PresetPickerButton extends StatelessWidget {
       onPressed: () async {
         final selection = await showDialog<_PresetSelection>(
           context: context,
-          builder: (context) => _PresetPickerDialog(
-            presets: controller.presets,
-            activePresetId: controller.simulation?['presetId'] as String?,
-            hasSimulatedScreen: controller.hasSimulatedScreen,
-          ),
+          builder: (context) => _PresetPickerDialog(controller: controller),
         );
         if (selection == null) return;
         if (selection.realDevice) {
           await controller.selectRealDevice();
+        } else if (selection.importJson) {
+          if (!context.mounted) return;
+          final imported = await showDialog<List<PresetView>>(
+            context: context,
+            builder: (context) => _ImportDeviceDialog(controller: controller),
+          );
+          if (imported != null && imported.isNotEmpty) {
+            await controller.selectPreset(imported.last);
+          }
         } else if (selection.preset != null) {
           await controller.selectPreset(selection.preset!);
         }
@@ -407,27 +412,29 @@ class _PresetPickerButton extends StatelessWidget {
 class _PresetSelection {
   const _PresetSelection.realDevice()
       : realDevice = true,
+        importJson = false,
         preset = null;
-  const _PresetSelection.of(PresetView this.preset) : realDevice = false;
+  const _PresetSelection.importJson()
+      : realDevice = false,
+        importJson = true,
+        preset = null;
+  const _PresetSelection.of(PresetView this.preset)
+      : realDevice = false,
+        importJson = false;
 
   final bool realDevice;
+
+  /// The user asked to import a new device from a JSON spec.
+  final bool importJson;
   final PresetView? preset;
 }
 
-/// Searchable preset list, grouped by device kind then platform.
+/// Searchable preset list: the user's imported devices first, then the
+/// catalog grouped by device kind then platform.
 class _PresetPickerDialog extends StatefulWidget {
-  const _PresetPickerDialog({
-    required this.presets,
-    this.activePresetId,
-    this.hasSimulatedScreen = false,
-  });
+  const _PresetPickerDialog({required this.controller});
 
-  final List<PresetView> presets;
-  final String? activePresetId;
-
-  /// Whether any screen simulation is active — a Custom-metrics simulation
-  /// has no presetId yet is not "Real device".
-  final bool hasSimulatedScreen;
+  final PanelController controller;
 
   @override
   State<_PresetPickerDialog> createState() => _PresetPickerDialogState();
@@ -444,20 +451,34 @@ class _PresetPickerDialogState extends State<_PresetPickerDialog> {
     'desktop': 'Desktop windows',
   };
 
+  bool _matches(PresetView p, String query) =>
+      query.isEmpty ||
+      p.name.toLowerCase().contains(query) ||
+      p.brand.toLowerCase().contains(query) ||
+      p.platform.toLowerCase().contains(query) ||
+      '${p.year}'.contains(query) ||
+      p.id.toLowerCase().contains(query);
+
   @override
   Widget build(BuildContext context) {
+    // Rebuilds when a user device is removed from within the dialog.
+    return ListenableBuilder(
+      listenable: widget.controller,
+      builder: (context, _) => _buildDialog(context),
+    );
+  }
+
+  Widget _buildDialog(BuildContext context) {
+    final controller = widget.controller;
     final theme = Theme.of(context);
     final query = _query.trim().toLowerCase();
-    final filtered = widget.presets
-        .where(
-          (p) =>
-              query.isEmpty ||
-              p.name.toLowerCase().contains(query) ||
-              p.brand.toLowerCase().contains(query) ||
-              p.platform.toLowerCase().contains(query) ||
-              '${p.year}'.contains(query) ||
-              p.id.toLowerCase().contains(query),
-        )
+    final activePresetId = controller.simulation?['presetId'] as String?;
+    // A Custom-metrics simulation has no presetId yet is not "Real device".
+    final hasSimulatedScreen = controller.hasSimulatedScreen;
+    final userDevices =
+        controller.userDevices.where((p) => _matches(p, query)).toList();
+    final filtered = controller.presets
+        .where((p) => !controller.isUserDevice(p.id) && _matches(p, query))
         .toList();
     final byKind = <String, List<PresetView>>{};
     for (final preset in filtered) {
@@ -482,6 +503,20 @@ class _PresetPickerDialogState extends State<_PresetPickerDialog> {
         },
       );
     }
+    Widget groupLabel(String label) => Padding(
+          padding: const EdgeInsets.fromLTRB(
+            defaultSpacing,
+            denseSpacing,
+            defaultSpacing,
+            densePadding,
+          ),
+          child: Text(
+            label,
+            style: theme.textTheme.labelSmall!.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ),
+        );
     return Dialog(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 420, maxHeight: 520),
@@ -510,36 +545,56 @@ class _PresetPickerDialogState extends State<_PresetPickerDialog> {
                     subtitle: const Text(
                       'Clear the screen simulation, keep other overrides',
                     ),
-                    selected: !widget.hasSimulatedScreen,
+                    selected: !hasSimulatedScreen,
                     onTap: () => Navigator.of(context)
                         .pop(const _PresetSelection.realDevice()),
                   ),
-                  for (final kind in orderedKinds) ...[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        defaultSpacing,
-                        denseSpacing,
-                        defaultSpacing,
-                        densePadding,
-                      ),
-                      child: Text(
-                        _kindLabels[kind] ?? kind,
-                        style: theme.textTheme.labelSmall!.copyWith(
-                          color: theme.colorScheme.onSurfaceVariant,
-                        ),
-                      ),
+                  ListTile(
+                    key: const Key('device_preview_import_json_entry'),
+                    leading: const Icon(Icons.data_object),
+                    title: const Text('New device from JSON…'),
+                    subtitle: const Text(
+                      'Paste a device spec; saved for later sessions',
                     ),
+                    onTap: () => Navigator.of(context)
+                        .pop(const _PresetSelection.importJson()),
+                  ),
+                  if (userDevices.isNotEmpty) ...[
+                    groupLabel('My devices'),
+                    for (final preset in userDevices)
+                      ListTile(
+                        key: Key('device_preview_user_device_${preset.id}'),
+                        dense: true,
+                        title: Text(preset.name),
+                        subtitle: Text(_presetSubtitle(preset)),
+                        selected: preset.id == activePresetId,
+                        trailing: IconButton(
+                          key: Key(
+                            'device_preview_user_device_remove_${preset.id}',
+                          ),
+                          tooltip: 'Remove this device',
+                          icon: const Icon(Icons.delete_outline),
+                          iconSize: defaultIconSize,
+                          onPressed: () =>
+                              controller.removeUserDevice(preset.id),
+                        ),
+                        onTap: () => Navigator.of(context)
+                            .pop(_PresetSelection.of(preset)),
+                      ),
+                  ],
+                  for (final kind in orderedKinds) ...[
+                    groupLabel(_kindLabels[kind] ?? kind),
                     for (final preset in byKind[kind]!)
                       ListTile(
                         dense: true,
                         title: Text(preset.name),
                         subtitle: Text(_presetSubtitle(preset)),
-                        selected: preset.id == widget.activePresetId,
+                        selected: preset.id == activePresetId,
                         onTap: () => Navigator.of(context)
                             .pop(_PresetSelection.of(preset)),
                       ),
                   ],
-                  if (filtered.isEmpty)
+                  if (filtered.isEmpty && userDevices.isEmpty)
                     Padding(
                       padding: const EdgeInsets.all(defaultSpacing),
                       child: Text(
@@ -571,6 +626,115 @@ class _PresetPickerDialogState extends State<_PresetPickerDialog> {
       if (dpr != null) '@${dpr}x',
       if (preset.frame != null) 'framed',
     ].join(' · ');
+  }
+}
+
+/// Lets the user paste a device spec (the `device_specs/*.json` format, or a
+/// JSON array of such specs) and import it as a persisted user device.
+class _ImportDeviceDialog extends StatefulWidget {
+  const _ImportDeviceDialog({required this.controller});
+
+  final PanelController controller;
+
+  @override
+  State<_ImportDeviceDialog> createState() => _ImportDeviceDialogState();
+}
+
+class _ImportDeviceDialogState extends State<_ImportDeviceDialog> {
+  final _text = TextEditingController();
+  String? _error;
+
+  static const String _placeholder = '''
+{
+  "id": "acme-phone",
+  "name": "Acme Phone",
+  "brand": "Acme",
+  "platform": "android",
+  "kind": "phone",
+  "portraitSize": {"width": 412, "height": 915},
+  "devicePixelRatio": 2.625,
+  "portraitPadding": {"left": 0, "top": 48, "right": 0, "bottom": 24}
+}''';
+
+  @override
+  void dispose() {
+    _text.dispose();
+    super.dispose();
+  }
+
+  void _import() {
+    try {
+      final imported = widget.controller.importUserDevices(_text.text);
+      Navigator.of(context).pop(imported);
+    } on FormatException catch (error) {
+      setState(() => _error = error.message);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return AlertDialog(
+      title: const Text('New device from JSON'),
+      content: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 480, maxHeight: 420),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'Paste a device spec in the device_specs JSON format '
+              '(id, name, platform, portraitSize and devicePixelRatio are '
+              'required; frame artwork and safe areas are optional). The '
+              'device is saved in this browser and listed under '
+              '"My devices".',
+              style: theme.textTheme.bodySmall,
+            ),
+            const SizedBox(height: denseSpacing),
+            Flexible(
+              child: TextField(
+                key: const Key('device_preview_import_json_field'),
+                controller: _text,
+                autofocus: true,
+                maxLines: null,
+                expands: true,
+                textAlignVertical: TextAlignVertical.top,
+                style: theme.textTheme.bodySmall!.copyWith(
+                  fontFamily: 'monospace',
+                ),
+                decoration: InputDecoration(
+                  hintText: _placeholder,
+                  hintStyle: theme.textTheme.bodySmall!.copyWith(
+                    fontFamily: 'monospace',
+                    color: theme.colorScheme.onSurfaceVariant.withValues(
+                      alpha: 0.5,
+                    ),
+                  ),
+                  border: const OutlineInputBorder(),
+                  errorText: _error,
+                  errorMaxLines: 3,
+                ),
+                onChanged: (_) {
+                  if (_error != null) setState(() => _error = null);
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Cancel'),
+        ),
+        DevToolsButton(
+          key: const Key('device_preview_import_json_apply'),
+          icon: Icons.add,
+          label: 'Import',
+          onPressed: _import,
+        ),
+      ],
+    );
   }
 }
 
@@ -1039,9 +1203,8 @@ class _PlatformSection extends StatelessWidget {
         for (final platform in _targetPlatforms)
           DropdownMenuItem<String?>(value: platform, child: Text(platform)),
       ],
-      onChanged: capable
-          ? (value) => controller.setTargetPlatform(value)
-          : null,
+      onChanged:
+          capable ? (value) => controller.setTargetPlatform(value) : null,
     );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

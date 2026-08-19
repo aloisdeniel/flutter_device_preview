@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+- New `DevicePreviewController.applyJson(json)`: decodes a device spec
+  (a JSON string or map in the `device_specs/*.json` / `DevicePreset.toJson()`
+  format, frame artwork and system UI included), registers it as a preset and
+  applies it.
+- DevTools: the device picker gains a "New device from JSON…" entry. Pasted
+  specs are validated, applied immediately, saved in the browser and listed
+  under "My devices" in later sessions (with a remove button).
+
 ## 3.0.0-prerelease4
 
 - The iPhone and iPad frames are now derived from the official iOS

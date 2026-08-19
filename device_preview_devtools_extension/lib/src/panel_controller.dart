@@ -97,7 +97,8 @@ class PresetView {
   Map<String, Object?>? get portraitSize => _asMap(json['portraitSize']);
 
   /// Device pixel ratio.
-  double? get devicePixelRatio => (json['devicePixelRatio'] as num?)?.toDouble();
+  double? get devicePixelRatio =>
+      (json['devicePixelRatio'] as num?)?.toDouble();
 
   /// Portrait `MediaQuery.padding` as an insets map.
   Map<String, Object?>? get portraitPadding => _asMap(json['portraitPadding']);
@@ -119,7 +120,8 @@ class PresetView {
       _asMap(json['systemGestureInsets']);
 
   /// Display features (foldables), when provided.
-  List<Object?>? get displayFeatures => json['displayFeatures'] as List<Object?>?;
+  List<Object?>? get displayFeatures =>
+      json['displayFeatures'] as List<Object?>?;
 }
 
 /// Raw-JSON-backed view over the protocol state shape (§4 of the design).
@@ -204,6 +206,7 @@ class PanelController extends ChangeNotifier {
   })  : _storage = storage ?? createPlatformStorage(),
         _saveScreenshot = saveScreenshot ?? savePngDownload {
     _keepAcrossRestarts = _storage.read(_keepStorageKey) == 'true';
+    _userDevices = _readStoredUserDevices();
     gateway.connected.addListener(_onConnectionChanged);
     gateway.extensionAvailable.addListener(_onAvailabilityChanged);
     _eventsSubscription = gateway.events.listen(_onEvent);
@@ -239,11 +242,18 @@ class PanelController extends ChangeNotifier {
   /// Presets the inspected app registered itself, minus the ones the built-in
   /// catalog already describes (the catalog entry wins: it has artwork).
   List<PresetView> _customPresets = const <PresetView>[];
+
+  /// Devices the user imported from JSON specs in this panel. Persisted in
+  /// [_storage] (not keyed per inspected app: a device is a device).
+  List<PresetView> _userDevices = const <PresetView>[];
   Map<String, Object?>? _stashedSimulation;
   bool _keepAcrossRestarts = false;
   bool _disposed = false;
 
   static const String _keepStorageKey = 'device_preview.keepAcrossRestarts';
+
+  /// Storage key of the JSON array of user-imported device specs.
+  static const String userDevicesStorageKey = 'device_preview.userDevices';
 
   /// `ServiceExtensionResponse.invalidParams`: the app-side glue rejected the
   /// request payload. The only RPC error that proves the isolate is running.
@@ -268,14 +278,26 @@ class PanelController extends ChangeNotifier {
   /// The active simulation JSON, or null when passing through.
   Map<String, Object?>? get simulation => state?.simulation;
 
-  /// The devices offered by the picker: the built-in catalog, followed by any
-  /// preset the inspected app registered through
-  /// `DevicePreviewController.registerPreset` that the catalog does not
-  /// already cover.
-  List<PresetView> get presets => <PresetView>[
-        ...kBuiltInPresets,
-        ..._customPresets,
-      ];
+  /// The devices offered by the picker: the user's imported devices, the
+  /// built-in catalog (minus any entry a user device overrides by id),
+  /// followed by any preset the inspected app registered through
+  /// `DevicePreviewController.registerPreset` that neither already covers.
+  List<PresetView> get presets {
+    final userIds = _userDevices.map((p) => p.id).toSet();
+    return <PresetView>[
+      ..._userDevices,
+      ...kBuiltInPresets.where((p) => !userIds.contains(p.id)),
+      ..._customPresets.where((p) => !userIds.contains(p.id)),
+    ];
+  }
+
+  /// Devices imported from JSON specs through [importUserDevices], in import
+  /// order. Persisted across sessions.
+  List<PresetView> get userDevices =>
+      List<PresetView>.unmodifiable(_userDevices);
+
+  /// Whether [id] is one of the [userDevices].
+  bool isUserDevice(String id) => _userDevices.any((p) => p.id == id);
 
   /// Whether the "Keep across restarts" toggle is on.
   bool get keepAcrossRestarts => _keepAcrossRestarts;
@@ -352,8 +374,7 @@ class PanelController extends ChangeNotifier {
         gateway.showBannerMessage(
           key: 'device_preview_no_binding',
           type: 'warning',
-          message:
-              'Device Preview is not active in this app. Add '
+          message: 'Device Preview is not active in this app. Add '
               '`DevicePreview.enable()` before `runApp`.',
         );
       });
@@ -442,6 +463,10 @@ class PanelController extends ChangeNotifier {
                 !builtInIds.contains(entry['id'] as String? ?? ''))
               PresetView(Map<String, Object?>.from(entry)),
       ];
+      // A device the user imported here and the app also registered (e.g.
+      // through `applyJson`) is the same device: list it once, under the
+      // user's copy.
+      _customPresets.removeWhere((p) => isUserDevice(p.id));
     } on GatewayException {
       _customPresets = const <PresetView>[];
     }
@@ -463,6 +488,49 @@ class PanelController extends ChangeNotifier {
       final orientation = current['orientation'] as String? ?? 'portrait';
       return _applyPresetSimulation(preset, orientation, current);
     });
+  }
+
+  /// Imports one device spec — or a JSON array of specs — from [jsonText],
+  /// in the `DevicePreset.toJson()` / `device_specs/*.json` format, adds them
+  /// to [userDevices] (replacing any user device with the same id) and
+  /// persists the list for later sessions.
+  ///
+  /// Returns the imported devices. Throws a [FormatException] describing the
+  /// first problem found when the text is not valid JSON or a spec lacks a
+  /// required field; nothing is imported in that case.
+  List<PresetView> importUserDevices(String jsonText) {
+    final Object? decoded;
+    try {
+      decoded = jsonDecode(jsonText);
+    } on FormatException catch (error) {
+      throw FormatException('Invalid JSON: ${error.message}');
+    }
+    final rawSpecs = decoded is List ? decoded : <Object?>[decoded];
+    if (rawSpecs.isEmpty) {
+      throw const FormatException('The JSON array contains no device spec.');
+    }
+    final imported = <PresetView>[
+      for (final raw in rawSpecs) _validateUserDeviceSpec(raw),
+    ];
+    final next = List<PresetView>.of(_userDevices);
+    for (final preset in imported) {
+      next.removeWhere((p) => p.id == preset.id);
+      next.add(preset);
+    }
+    _userDevices = next;
+    _storeUserDevices();
+    notifyListeners();
+    return imported;
+  }
+
+  /// Removes the user device [id] (no-op for catalog or app presets).
+  void removeUserDevice(String id) {
+    final next = List<PresetView>.of(_userDevices)
+      ..removeWhere((p) => p.id == id);
+    if (next.length == _userDevices.length) return;
+    _userDevices = next;
+    _storeUserDevices();
+    notifyListeners();
   }
 
   /// Clears all metric fields ("Real device"), preserving non-metric
@@ -530,9 +598,8 @@ class PanelController extends ChangeNotifier {
       // rotation (before the size swap, using the pre-rotation extents).
       final features = sim['displayFeatures'];
       if (features is List && size != null) {
-        final extent =
-            ((toLandscape ? size['width'] : size['height']) as num?)
-                ?.toDouble();
+        final extent = ((toLandscape ? size['width'] : size['height']) as num?)
+            ?.toDouble();
         if (extent != null) {
           sim['displayFeatures'] = _rotateDisplayFeatures(
             features,
@@ -604,8 +671,7 @@ class PanelController extends ChangeNotifier {
   Future<void> setAccessibilityFlag(String flag, bool? value) {
     return _enqueueWrite(() {
       final sim = _currentSimulation();
-      final accessibility =
-          _asMap(sim['accessibility']) ?? <String, Object?>{};
+      final accessibility = _asMap(sim['accessibility']) ?? <String, Object?>{};
       if (value == null) {
         accessibility.remove(flag);
       } else {
@@ -935,6 +1001,71 @@ class PanelController extends ChangeNotifier {
       _storage.remove(_stashStorageKey);
     } else {
       _storage.write(_stashStorageKey, jsonEncode(sim));
+    }
+  }
+
+  /// Checks the fields the panel and the app both need to turn [raw] into a
+  /// simulation; mirrors the required keys of `DevicePreset.fromJson`.
+  static PresetView _validateUserDeviceSpec(Object? raw) {
+    if (raw is! Map) {
+      throw FormatException(
+        'A device spec must be a JSON object, got ${raw.runtimeType}.',
+      );
+    }
+    final json = _deepCopy(Map<String, Object?>.from(raw));
+    String requireString(String key) {
+      final value = json[key];
+      if (value is! String || value.trim().isEmpty) {
+        throw FormatException('"$key" must be a non-empty string.');
+      }
+      return value;
+    }
+
+    double requirePositive(Object? value, String label) {
+      if (value is! num || !value.isFinite || value <= 0) {
+        throw FormatException('"$label" must be a positive number.');
+      }
+      return value.toDouble();
+    }
+
+    requireString('id');
+    requireString('name');
+    requireString('platform');
+    final size = json['portraitSize'];
+    if (size is! Map) {
+      throw const FormatException(
+        '"portraitSize" must be an object with "width" and "height".',
+      );
+    }
+    requirePositive(size['width'], 'portraitSize.width');
+    requirePositive(size['height'], 'portraitSize.height');
+    requirePositive(json['devicePixelRatio'], 'devicePixelRatio');
+    return PresetView(json);
+  }
+
+  void _storeUserDevices() {
+    if (_userDevices.isEmpty) {
+      _storage.remove(userDevicesStorageKey);
+    } else {
+      _storage.write(
+        userDevicesStorageKey,
+        jsonEncode(_userDevices.map((p) => p.json).toList()),
+      );
+    }
+  }
+
+  List<PresetView> _readStoredUserDevices() {
+    final raw = _storage.read(userDevicesStorageKey);
+    if (raw == null) return const <PresetView>[];
+    try {
+      final decoded = jsonDecode(raw);
+      if (decoded is! List) return const <PresetView>[];
+      return <PresetView>[
+        for (final entry in decoded)
+          if (entry is Map) PresetView(Map<String, Object?>.from(entry)),
+      ];
+    } on FormatException {
+      return const <PresetView>[];
     }
   }
 
