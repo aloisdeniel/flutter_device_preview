@@ -7,7 +7,7 @@
 <meta name="description" content="Switch your running Flutter app to any screen size, safe area, locale, text scale or accessibility setting from Flutter DevTools — no rebuild, no simulator, no device required.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='2' width='24' height='28' rx='4' fill='none' stroke='%234fd1ff' stroke-width='2'/%3E%3Cline x1='10' y1='16' x2='22' y2='16' stroke='%23ffb454' stroke-width='2'/%3E%3Cline x1='16' y1='10' x2='16' y2='22' stroke='%23ffb454' stroke-width='2'/%3E%3C/svg%3E">
 <style>
 :root {
@@ -77,7 +77,11 @@ nav.links a:hover { color: var(--cyan); text-decoration: none; }
 
 /* ---------- hero ---------- */
 .hero { position: relative; padding: 84px 0 72px; overflow: hidden; }
-.hero-grid > .stagger { max-width: 780px; }
+.hero-grid > .stagger {
+  max-width: 780px; position: relative; z-index: 3; padding-right: 28px;
+  --veil: color-mix(in srgb, var(--paper) 86%, transparent);
+  background: var(--veil); box-shadow: 0 0 36px 28px var(--veil); border-radius: 12px;
+}
 h1 {
   font-family: var(--display);
   font-size: clamp(44px, 6.2vw, 76px);
@@ -122,6 +126,138 @@ h1 .outline {
   padding: 2px 4px;
 }
 .copy-btn:hover { color: var(--cyan); }
+
+
+/* ---------- hero illustration: morphing device top ---------- */
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) 500px; gap: 40px; align-items: center; }
+.hero-art {
+  position: relative; height: 440px;
+  display: flex; justify-content: center; align-items: flex-start;
+  --w: 280px;
+  font-family: var(--mono);
+  --t: .8s cubic-bezier(.55, 0, .15, 1);
+}
+.hero-art::after {
+  content: ""; position: absolute; left: -40px; right: -40px; bottom: 0; height: 150px; z-index: 2; pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--paper) 92%);
+}
+.hero-art .grid-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 28px 28px; opacity: .35;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse at 50% 40%, #000 30%, transparent 75%);
+}
+.ha-dev {
+  position: relative; margin-top: 74px; height: 366px;
+  width: var(--w);
+  border: 2px solid var(--cyan); border-bottom: none;
+  border-radius: var(--r, 44px) var(--r, 44px) 0 0;
+  background: linear-gradient(180deg, var(--paper-raised), var(--paper) 70%);
+  box-shadow: 0 0 0 1px rgba(79, 209, 255, .12), 0 30px 80px -30px rgba(79, 209, 255, .35);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+  transition: width var(--t), border-radius var(--t);
+  direction: var(--dir, ltr);
+}
+/* width ruler */
+.ha-ruler {
+  position: absolute; top: 48px; left: 50%; transform: translateX(-50%);
+  width: var(--w); height: 10px;
+  border-left: 1px solid var(--ink-faint); border-right: 1px solid var(--ink-faint);
+  transition: width var(--t);
+}
+.ha-ruler::before { content: ""; position: absolute; left: 0; right: 0; top: 5px; border-top: 1px dashed var(--ink-faint); }
+.ha-ruler span {
+  position: absolute; left: 50%; top: -13px; transform: translate(-50%, -50%);
+  background: var(--paper); padding: 0 8px; font-size: 11px; letter-spacing: .1em; color: var(--ink-dim);
+  white-space: nowrap;
+}
+/* safe-area band */
+.ha-safe {
+  position: absolute; left: 0; right: 0; top: 0; height: var(--inset, 59px);
+  background: repeating-linear-gradient(135deg, rgba(255, 180, 84, .18) 0 1px, transparent 1px 7px);
+  border-bottom: 1px dashed color-mix(in srgb, var(--amber) 70%, transparent);
+  transition: height var(--t);
+}
+.ha-inset {
+  position: absolute; left: calc(50% + var(--w) / 2 + 2px); top: calc(74px + var(--inset, 59px));
+  transform: translateY(-50%); display: flex; align-items: center; gap: 0;
+  transition: left var(--t), top var(--t);
+}
+.ha-inset::before { content: ""; width: 14px; border-top: 1px dashed color-mix(in srgb, var(--amber) 70%, transparent); }
+.ha-inset i {
+  font-style: normal; background: var(--paper); color: var(--amber); font-size: 10px; letter-spacing: .12em; padding: 1px 6px;
+  border: 1px solid color-mix(in srgb, var(--amber) 50%, transparent); border-radius: 4px; white-space: nowrap;
+}
+/* notch / island / punch hole */
+.ha-notch {
+  position: absolute; top: var(--ny, 11px); left: var(--nx, 50%);
+  width: var(--nw, 120px); height: var(--nh, 34px);
+  transform: translateX(-50%) scale(var(--ns, 1));
+  background: #03080f; border: 1px solid var(--line-strong);
+  border-radius: var(--nr, 99px);
+  transition: width var(--t), height var(--t), top var(--t), left var(--t), border-radius var(--t), transform var(--t);
+}
+/* status bar */
+.ha-status {
+  position: absolute; top: 0; left: 26px; right: 26px; height: max(var(--inset, 59px), 28px);
+  display: flex; justify-content: space-between; align-items: center;
+  transition: height var(--t);
+  font-size: 13px; font-weight: 500; color: var(--ink);
+}
+.ha-status .sig { display: flex; gap: 6px; align-items: center; }
+.ha-status .sig b { display: inline-block; width: 18px; height: 9px; border: 1.5px solid var(--ink); border-radius: 3px; position: relative; }
+.ha-status .sig b::after { content: ""; position: absolute; inset: 1.5px; right: 5px; background: var(--green); border-radius: 1px; }
+.ha-status .sig svg { display: block; }
+/* app content */
+.ha-app { position: absolute; left: 26px; right: 26px; top: calc(var(--inset, 59px) + 28px); font-size: 16px; transition: top var(--t), font-size var(--t); }
+.ha-kicker { font-size: .7em; letter-spacing: .16em; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; }
+.ha-title {
+  font-family: var(--display); font-size: 2.1em; line-height: 1.05; letter-spacing: -.02em; color: var(--ink);
+  font-variation-settings: "wght" var(--wght, 700), "opsz" 60;
+  transition: font-variation-settings var(--t);
+  min-height: 72px;
+}
+.ha-title.swap { animation: ha-swap .8s cubic-bezier(.55, 0, .15, 1); }
+@keyframes ha-swap { 0% { opacity: 1; transform: none; } 40% { opacity: 0; transform: translateY(-6px); } 60% { opacity: 0; transform: translateY(8px); } 100% { opacity: 1; transform: none; } }
+.ha-lines { margin-top: 18px; display: grid; gap: 10px; }
+.ha-lines i { display: block; height: 8px; border-radius: 4px; background: var(--line-strong); }
+.ha-lines i:nth-child(2) { width: 82%; } .ha-lines i:nth-child(3) { width: 64%; }
+.ha-card { margin-top: 22px; height: 120px; border-radius: 14px; border: 1px solid var(--line); background: var(--paper-sunken); }
+/* readouts */
+.ha-readout {
+  position: absolute; display: flex; flex-direction: column; gap: 6px;
+  font-size: 10px; letter-spacing: .08em; color: var(--ink-dim); white-space: nowrap;
+}
+.ha-readout.l { right: calc(50% + var(--w) / 2 + 16px); top: 170px; align-items: flex-end; text-align: right; transition: right var(--t); }
+.ha-readout.r { left: calc(50% + var(--w) / 2 + 16px); top: 236px; transition: left var(--t); }
+.ha-readout span { display: block; }
+.ha-readout .k { color: var(--ink-faint); font-size: 9px; letter-spacing: .16em; text-transform: uppercase; }
+.ha-readout .v { color: var(--amber); font-size: 11px; }
+.ha-readout .v.cy { color: var(--cyan); }
+.ha-readout .v.swap { animation: ha-swap .8s cubic-bezier(.55, 0, .15, 1); }
+.ha-name {
+  position: absolute; left: 50%; transform: translateX(-50%); top: 8px;
+  font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink);
+  display: flex; gap: 10px; align-items: center;
+}
+.ha-name::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); }
+
+@media (max-width: 960px) {
+  .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .hero-art { order: -1; height: 330px; margin: -40px 0 0; width: 100%; max-width: 500px; min-width: 0; overflow: visible; }
+  .hero-art .ha-dev { margin-top: 74px; height: 256px; }
+  .hero-art::after { height: 110px; }
+  .hero-grid > .stagger { padding-right: 0; }
+}
+@media (max-width: 560px) {
+  .hero { padding-top: 40px; padding-bottom: 48px; }
+  /* ~half size: layout box is 330px tall, scaled to 165px; pull the following content up by the difference */
+  .hero-art { transform: scale(.5); transform-origin: top left; margin-top: -20px; margin-bottom: -165px; }
+  .hero-art::after { height: 90px; }
+}
 
 /* ---------- interactive demo ---------- */
 .demo-lede { color: var(--ink-dim); max-width: 70ch; margin-bottom: 30px; }
@@ -487,6 +623,25 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
         <button class="copy-btn" data-copy="flutter pub add device_preview">copy</button>
       </div>
     </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="grid-bg"></div>
+      <div class="ha-ruler"><span>402 × 874</span></div>
+      <div class="ha-dev">
+        <div class="ha-safe"></div>
+        <div class="ha-status"><span class="time">9:41</span><span class="sig"><svg width="14" height="10" viewBox="0 0 14 10" fill="var(--ink)"><rect x="0" y="6" width="2.5" height="4" rx=".6"/><rect x="3.8" y="4" width="2.5" height="6" rx=".6"/><rect x="7.6" y="2" width="2.5" height="8" rx=".6"/><rect x="11.4" y="0" width="2.5" height="10" rx=".6"/></svg><b></b></span></div>
+        <div class="ha-notch"></div>
+        <div class="ha-app">
+          <div class="ha-kicker">Today</div>
+          <div class="ha-title">Good<br>morning</div>
+          <div class="ha-lines"><i></i><i></i><i></i></div>
+          <div class="ha-card"></div>
+        </div>
+      </div>
+      <div class="ha-inset"><i>top 59</i></div>
+      <div class="ha-readout l"><span class="k">locale</span><span class="v loc">en_US</span><span class="k" style="margin-top:6px">safe area</span><span class="v ins">59·0·34·0</span></div>
+      <div class="ha-readout r"><span class="k">text weight</span><span class="v cy wgt">800</span><span class="k" style="margin-top:6px">text scale</span><span class="v cy scl">1.0</span></div>
+      <div class="ha-name">iPhone 16 Pro</div>
+    </div>
   </div>
 </div>
 
@@ -833,6 +988,46 @@ void main() {
 </footer>
 
 <script>
+// hero illustration: cycle the simulated device
+(() => {
+  const art = document.querySelector('.hero-art');
+  if (!art) return;
+  const states = [
+    { name: 'iPhone 16 Pro', w: 280, r: 48, size: '402 × 874', notch: { w: 118, h: 34, y: 11, x: '50%', r: 99, s: 1 }, inset: 59, insets: '59·0·34·0', locale: 'en_US', tag: 'en-US', dir: 'ltr', kicker: 'Today', title: 'Good<br>morning', wght: 800, scale: '1.0' },
+    { name: 'Pixel 9', w: 272, r: 36, size: '412 × 923', notch: { w: 18, h: 18, y: 13, x: '50%', r: 99, s: 1 }, inset: 48, insets: '48·0·24·0', locale: 'fr_FR', tag: 'fr-FR', dir: 'ltr', kicker: 'Aujourd’hui', title: 'Bonjour', wght: 500, scale: '1.3' },
+    { name: 'iPad Pro 11', w: 344, r: 26, size: '834 × 1210', notch: { w: 10, h: 10, y: 8, x: '50%', r: 99, s: 0 }, inset: 24, insets: '24·0·20·0', locale: 'ja_JP', tag: 'ja-JP', dir: 'ltr', kicker: '今日', title: 'おはよう<br>ございます', wght: 300, scale: '0.9' },
+    { name: 'iPhone SE', w: 232, r: 0, size: '375 × 667', notch: { w: 60, h: 6, y: 16, x: '50%', r: 3, s: 1 }, inset: 20, insets: '20·0·0·0', locale: 'ar_EG', tag: 'ar-EG', dir: 'rtl', kicker: 'اليوم', title: 'صباح<br>الخير', wght: 700, scale: '1.6' },
+    { name: 'Pixel 9 Pro Fold', w: 324, r: 22, size: '842 × 1076', notch: { w: 16, h: 16, y: 12, x: '88%', r: 99, s: 1 }, inset: 40, insets: '40·0·24·0', locale: 'de_DE', tag: 'de-DE', dir: 'ltr', kicker: 'Heute', title: 'Guten<br>Morgen', wght: 600, scale: '1.0' },
+  ];
+  const dev = art.querySelector('.ha-dev');
+  const q = (sel) => art.querySelector(sel);
+  const time = new Date(2026, 0, 1, 9, 41);
+  let i = 0;
+  const apply = (st, first) => {
+    const sv = (k, v) => dev.style.setProperty(k, v);
+    art.style.setProperty('--w', st.w + 'px'); sv('--r', st.r + 'px'); art.style.setProperty('--inset', st.inset + 'px'); sv('--dir', st.dir);
+    sv('--nw', st.notch.w + 'px'); sv('--nh', st.notch.h + 'px'); sv('--ny', st.notch.y + 'px');
+    sv('--nx', st.notch.x); sv('--nr', st.notch.r + 'px'); sv('--ns', st.notch.s); sv('--wght', st.wght);
+    const swap = (el, html) => {
+      if (first) { el.innerHTML = html; return; }
+      el.classList.remove('swap'); void el.offsetWidth; el.classList.add('swap');
+      setTimeout(() => { el.innerHTML = html; }, 380);
+    };
+    swap(q('.ha-title'), st.title);
+    swap(q('.ha-kicker'), st.kicker);
+    swap(q('.ha-ruler span'), st.size);
+    swap(q('.ha-name'), st.name);
+    swap(q('.ha-inset i'), 'top ' + st.inset);
+    swap(q('.loc'), st.locale); swap(q('.ins'), st.insets); swap(q('.wgt'), String(st.wght)); swap(q('.scl'), st.scale);
+    let t = '9:41';
+    try { t = new Intl.DateTimeFormat(st.tag, { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(time); } catch (_) {}
+    swap(q('.time'), t);
+    q('.ha-app').style.fontSize = (16 * st.scale) + 'px';
+  };
+  apply(states[0], true);
+  setInterval(() => { i = (i + 1) % states.length; apply(states[i]); }, 3000);
+})();
+
 // copy buttons
 document.querySelectorAll('.copy-btn').forEach((btn) => {
   btn.addEventListener('click', async () => {
