@@ -540,12 +540,8 @@ h2 {
 @media (max-width: 940px) { .devtools-grid { grid-template-columns: 1fr; } }
 .devtools-grid p { color: var(--ink-dim); margin-bottom: 14px; }
 .devtools-grid p strong { color: var(--ink); }
-.panel-index { border: 1px solid var(--line-strong); border-radius: 10px; overflow: hidden; }
-.panel-index .pi-row { display: grid; grid-template-columns: 108px minmax(0, 1fr); border-top: 1px solid var(--line); }
-.panel-index .pi-row:first-child { border-top: none; }
-.panel-index .pi-row > * { padding: 13px 16px; }
-.panel-index .pi-k { font-family: var(--mono); font-size: 12.5px; color: var(--cyan); }
-.panel-index .pi-d { color: var(--ink-dim); font-size: 14px; }
+.panel-shot img { display: block; width: 100%; max-width: 400px; margin: 0 auto; border: 1px solid var(--line-strong); border-radius: 12px; box-shadow: 0 24px 60px rgba(0, 0, 0, .45); }
+.panel-shot figcaption { text-align: center; color: var(--ink-faint); font-size: 13px; margin-top: 12px; }
 
 /* testing strip */
 .duo { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 22px; }
@@ -889,13 +885,10 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
         <p><strong>Hot restart doesn't lose your setup.</strong> Turn on <em>Keep across restarts</em> and the panel puts your simulated device back the moment the app returns.</p>
         <p><a class="btn ghost" href="#demo">↑ Try the panel on the live demo</a></p>
       </div>
-      <div class="panel-index reveal">
-        <div class="pi-row"><div class="pi-k">Device</div><div class="pi-d">The catalog, orientation, the simulated system UI, mouse-as-finger — and a custom size when no catalog entry fits.</div></div>
-        <div class="pi-row"><div class="pi-k">Display</div><div class="pi-d">Brightness, text scale, 24-hour time.</div></div>
-        <div class="pi-row"><div class="pi-k">Locale</div><div class="pi-d">The ordered locale list your app resolves against.</div></div>
-        <div class="pi-row"><div class="pi-k">Accessibility</div><div class="pi-d">Seven flags, each on, off, or left as the real device reports it.</div></div>
-        <div class="pi-row"><div class="pi-k">Platform</div><div class="pi-d">The target platform Material and Cupertino adapt to. Debug builds only.</div></div>
-      </div>
+      <figure class="panel-shot reveal">
+        <img src="images/devtools-panel.png" width="460" height="1240" loading="lazy" alt="The device_preview DevTools panel, dark themed, with an iPhone 17 Pro applied: a Device section with orientation, system UI and touch input controls, a Display section with brightness, text scale and 24-hour time, a Locale list, seven tri-state Accessibility flags, and a target Platform picker.">
+        <figcaption>The panel, as it appears in DevTools — every control is a tri-state: on, off, or as the real device.</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -997,7 +990,7 @@ void main() {
     { name: 'Pixel 9', w: 272, r: 36, size: '412 × 923', notch: { w: 18, h: 18, y: 13, x: '50%', r: 99, s: 1 }, inset: 48, insets: '48·0·24·0', locale: 'fr_FR', tag: 'fr-FR', dir: 'ltr', kicker: 'Aujourd’hui', title: 'Bonjour', wght: 500, scale: '1.3' },
     { name: 'iPad Pro 11', w: 344, r: 26, size: '834 × 1210', notch: { w: 10, h: 10, y: 8, x: '50%', r: 99, s: 0 }, inset: 24, insets: '24·0·20·0', locale: 'ja_JP', tag: 'ja-JP', dir: 'ltr', kicker: '今日', title: 'おはよう<br>ございます', wght: 300, scale: '0.9' },
     { name: 'iPhone SE', w: 232, r: 0, size: '375 × 667', notch: { w: 60, h: 6, y: 16, x: '50%', r: 3, s: 1 }, inset: 20, insets: '20·0·0·0', locale: 'ar_EG', tag: 'ar-EG', dir: 'rtl', kicker: 'اليوم', title: 'صباح<br>الخير', wght: 700, scale: '1.6' },
-    { name: 'Pixel 9 Pro Fold', w: 324, r: 22, size: '842 × 1076', notch: { w: 16, h: 16, y: 12, x: '88%', r: 99, s: 1 }, inset: 40, insets: '40·0·24·0', locale: 'de_DE', tag: 'de-DE', dir: 'ltr', kicker: 'Heute', title: 'Guten<br>Morgen', wght: 600, scale: '1.0' },
+    { name: 'Pixel 10 Pro Fold', w: 324, r: 22, size: '852 × 883', notch: { w: 16, h: 16, y: 12, x: '88%', r: 99, s: 1 }, inset: 36, insets: '36·0·24·0', locale: 'de_DE', tag: 'de-DE', dir: 'ltr', kicker: 'Heute', title: 'Guten<br>Morgen', wght: 600, scale: '1.0' },
   ];
   const dev = art.querySelector('.ha-dev');
   const q = (sel) => art.querySelector(sel);

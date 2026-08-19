@@ -9,8 +9,9 @@ import 'json_utils.dart';
 /// top, the gesture pill or navigation bar at the bottom — drawn **on top of**
 /// the app, inside the simulated screen.
 ///
-/// Everything here is decoration: the clock always reads 9:41, the battery is
-/// always the same, nothing updates. It exists so a preview looks like the
+/// Everything here is decoration: the clock is a static drawing that never
+/// ticks (it shows whatever time the artwork was extracted with), the battery
+/// never drains, nothing updates. It exists so a preview looks like the
 /// device it simulates, and so status bar styling can be seen while it is
 /// written.
 ///

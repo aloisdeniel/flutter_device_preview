@@ -28,7 +28,7 @@ void main() {
   // The single integration point: install the device-preview binding before
   // runApp. In release builds this is behaviorally identical to
   // WidgetsFlutterBinding.ensureInitialized() (simulation defaults to
-  // kDebugMode and the wrappers are never installed when disabled).
+  // !kReleaseMode and the wrappers are never installed when disabled).
   DevicePreview.enable();
   runApp(const DevicePreviewExampleApp());
 }
@@ -358,7 +358,7 @@ class _ApiDemoCard extends StatelessWidget {
                 children: <Widget>[
                   FilledButton.tonal(
                     onPressed: () =>
-                        controller.applyPreset(DevicePresets.iPhone16),
+                        controller.applyPreset(DevicePresets.iPhoneSe3),
                     child: const Text('iPhone SE preset'),
                   ),
                   FilledButton.tonal(

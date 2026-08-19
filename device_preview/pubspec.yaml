@@ -4,10 +4,31 @@ description: >-
   metrics, safe areas, locale, brightness, text scale, accessibility flags,
   target platform) at the engine-abstraction level. No in-app UI — driven
   programmatically and by a DevTools extension.
-version: 3.0.0-prerelease6
+version: 3.0.0
 homepage: https://github.com/aloisdeniel/flutter_device_preview
 repository: https://github.com/aloisdeniel/flutter_device_preview
 issue_tracker: https://github.com/aloisdeniel/flutter_device_preview/issues
+funding:
+  - https://www.buymeacoffee.com/aloisdeniel
+topics:
+  - device-preview
+  - responsive
+  - devtools
+  - testing
+  - simulator
+screenshots:
+  - description: >-
+      The todo example running as an iPhone 17 Pro Max — frame, Dynamic
+      Island and simulated status bar included.
+    path: doc/screenshots/iphone-17-pro-max.png
+  - description: >-
+      A hinge-aware two-pane layout on the unfolded Pixel 10 Pro Fold, split
+      at the simulated crease.
+    path: doc/screenshots/pixel-10-pro-fold.png
+  - description: >-
+      Dark brightness and 200% text scale applied to the device-lab example
+      on an iPhone 16 Pro.
+    path: doc/screenshots/iphone-16-pro-dark-200-text.png
 
 environment:
   sdk: '>=3.8.0 <4.0.0'

@@ -1,5 +1,55 @@
 # Changelog
 
+## 3.0.0
+
+The stable 3.0 release — a from-scratch rebuild of Device Preview. If you are
+coming from 2.x, see **Migrating from 2.x** in the README: the integration is
+now a single line and the in-app toolbar is gone.
+
+The one-paragraph version: a custom `WidgetsBinding` simulates device
+characteristics (screen metrics, safe areas, orientation, folds, keyboard
+insets, locales, brightness, text scale, accessibility flags, 24-hour time,
+target platform) at the engine-abstraction level, so your app reads them
+through the same `MediaQuery`, layout and locale-resolution paths it uses on a
+real device — no widget wrapper, no in-app UI, nothing shipped in release
+builds. The simulation is driven from the bundled **Flutter DevTools
+extension**, from Dart through `DevicePreview.controller`, or from widget
+tests via `DevicePreviewBindingMixin`.
+
+Highlights, relative to 2.x:
+
+- **One-line integration**: `DevicePreview.enable(); runApp(MyApp());` — no
+  builder wrapper, no `useInheritedMediaQuery`, no `locale`/`builder` glue on
+  your `MaterialApp`. Off in release builds by default, with zero footprint.
+- **Full framework fidelity**: because the simulation sits below the widget
+  layer, safe areas, hit-testing, locale resolution, text scaling and
+  accessibility flags behave exactly as they do on device — including
+  third-party packages that never heard of Device Preview.
+- **The UI moved to DevTools**: a device picker with framed previews, locale
+  and accessibility controls, orientation, text scale, dark mode, a
+  screenshot button, and a "New device from JSON…" entry that saves custom
+  devices in the browser.
+- **Programmatic + test control**: `applyPreset`, `setOrientation`,
+  `update(copyWith)`, `applyJson`, `registerPreset`, `reset` — and the same
+  simulation in widget tests for golden matrices over many devices.
+- **A rebuilt device catalog** (33 devices): every Apple frame and metric is
+  extracted from the real iOS Simulator (Xcode 26.6 / iOS 26.5) and the
+  Pixels from the official Android emulator skins (Android 16), artwork
+  included; four foldables report their hinge as a display feature; generic
+  phone/tablet/desktop windows round it out. Presets carry their frame and
+  simulated system UI and tree-shake away when unreferenced.
+- **Device frames & system UI in-app too**: `applyPreset` shows the framed
+  device with a live-tinted status bar and gesture pill even without DevTools
+  attached (goldens, CI), painted over the default `DotGridDecoration`
+  letterbox.
+- **Touch input simulation**: the mouse is reported to the app as a finger on
+  touch devices (auto by default), so drags scroll and gestures take their
+  touch paths.
+
+Breaking (from the prereleases, for completeness): `DevicePreview.enable`'s
+flag is the named `enabled` parameter; iPad preset ids/names carry their chip
+(`iPadPro11M4`, …); minimum Flutter is 3.47.0 / Dart 3.8.
+
 ## 3.0.0-prerelease6
 
 - The iPhone SE (3rd gen) home button ring is now a dark grey instead of the

@@ -14,7 +14,7 @@
 
 # device_preview 3.0 — Final Design Document
 
-A custom `WidgetsBinding` that simulates device characteristics (screen metrics, safe areas, locale, brightness, text scale, accessibility flags, target platform) at the engine-abstraction level. **No in-app UI.** Driven programmatically and by a DevTools extension over VM service extensions. All SDK file:line references are Flutter 3.44.0 per the research report.
+A custom `WidgetsBinding` that simulates device characteristics (screen metrics, safe areas, locale, brightness, text scale, accessibility flags, target platform) at the engine-abstraction level. **No in-app UI.** Driven programmatically and by a DevTools extension over VM service extensions. All SDK file:line references are Flutter 3.44.0 per the research report (the shipped package's minimum has since moved to Flutter 3.47.0).
 
 **Design invariants (non-negotiable for implementers):**
 
@@ -74,7 +74,7 @@ repo/
 
 **Decision — no shared protocol package.** The extension app does not import `device_preview` and there is no `device_preview_protocol` package. The extension fetches the preset catalog and all state from the running app over the VM service, treats JSON loosely (unknown keys ignored), and pins compatibility via `protocolVersion`. Rationale: one published package; catalog/protocol can never version-skew because the app is the single source of truth.
 
-Dependencies: `device_preview` → `flutter` only (`sdk: '>=3.8.0 <4.0.0'`, `flutter: '>=3.44.0'` — **no hard upper Flutter bound**; drift is handled by beta-channel CI and fast patch releases, not by constraint solving). Extension app → `devtools_extensions: ^0.5.1`, `devtools_app_shared: ^0.5.1`.
+Dependencies: `device_preview` → `flutter` only (`sdk: '>=3.8.0 <4.0.0'`, `flutter: '>=3.47.0'` — **no hard upper Flutter bound**; drift is handled by beta-channel CI and fast patch releases, not by constraint solving). Extension app → `devtools_extensions: ^0.5.1`, `devtools_app_shared: ^0.5.1`.
 
 `extension/devtools/config.yaml`:
 
@@ -82,7 +82,7 @@ Dependencies: `device_preview` → `flutter` only (`sdk: '>=3.8.0 <4.0.0'`, `flu
 name: device_preview
 issueTracker: https://github.com/aloisdeniel/flutter_device_preview/issues
 version: 3.0.0
-materialIconCodePoint: '0xe154'   # Icons.devices
+materialIconCodePoint: '0xe1cb'   # Icons.devices
 requiresConnection: true
 ```
 
@@ -363,9 +363,9 @@ abstract final class DevicePresets {
   static const DevicePreset iPhoneAir = ...;
   static const DevicePreset iPadPro13M5 = ...;
   static const DevicePreset iPadMini = ...;
-  static const DevicePreset pixel8 = ...;
+  static const DevicePreset pixel10 = ...;
   static const DevicePreset pixel9 = ...;
-  static const DevicePreset pixelTablet = ...;
+  static const DevicePreset pixel10ProFold = ...;
   static const DevicePreset galaxyS24 = ...;
   static const DevicePreset smallDesktopWindow = ...;   // 1024×640 @1x
   static const DevicePreset largeDesktopWindow = ...;   // 1920×1080 @2x

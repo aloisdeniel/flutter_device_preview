@@ -1,0 +1,10 @@
+# Additional exclusions on top of the repository .gitignore, to keep the
+# published archive lean. The example's platform scaffolding is not needed to
+# read or run the example from pub.dev (`flutter create .` regenerates it).
+example/android/
+example/ios/
+example/macos/
+example/web/
+example/*.iml
+example/devtools_options.yaml
+example/pubspec.lock

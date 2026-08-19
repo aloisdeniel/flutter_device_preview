@@ -153,6 +153,8 @@ class TestDevicePreviewBinding extends AutomatedTestWidgetsFlutterBinding
 Then:
 
 ```dart
+import 'package:device_preview/presets.dart';
+
 void main() {
   final binding = TestDevicePreviewBinding.ensureInitialized();
 
@@ -194,7 +196,8 @@ your app never references tree-shake away, artwork included. Frames are
 described in portrait and rotate with the device.
 
 Devices also carry a simulated **system UI** (`DeviceSimulation.systemUi`): a
-static status bar and gesture pill — the clock reads 9:41 and never moves —
+static status bar and gesture pill — the clock is a still drawing that never
+ticks —
 drawn over your app in the device's safe areas. Its colors are not artwork:
 they follow your app's live `SystemUiOverlayStyle`, whether you set it with
 `SystemChrome.setSystemUIOverlayStyle` or through the `AnnotatedRegion` an
@@ -206,6 +209,23 @@ either way.
 The SVG subset renderer used to draw all of this is embedded,
 dependency-free, and exported on its own
 (`package:device_preview/svg.dart`) if you need it.
+
+## Custom devices
+
+A device that is not in the catalog can be registered from Dart —
+`registerPreset(DevicePreset(...))` makes it appear in the DevTools picker
+alongside the built-ins — or supplied as JSON in the
+[`device_specs/`](https://github.com/aloisdeniel/flutter_device_preview/tree/master/device_specs)
+format (which is exactly `DevicePreset.toJson()`, frame artwork and system UI
+included):
+
+```dart
+await c.applyJson(specSource); // registers it as a preset and applies it
+```
+
+The DevTools panel has the same thing in its picker — **New device from
+JSON…** validates a pasted spec, applies it immediately and keeps it under
+**My devices** for later sessions.
 
 ## Touch input
 
@@ -232,10 +252,63 @@ dropped rather than relabelled, and whatever the mouse was hovering is
 released. The scroll wheel and trackpad gestures keep their real kind, so
 wheel scrolling still works. The panel has an **Auto / On / Off** row for it.
 
+## Migrating from 2.x
+
+3.0 is a from-scratch rebuild. The integration shrinks to one line and the
+in-app toolbar is gone — the UI now lives in DevTools.
+
+Before (2.x):
+
+```dart
+void main() => runApp(
+  DevicePreview(
+    enabled: !kReleaseMode,
+    builder: (context) => const MyApp(),
+  ),
+);
+
+// ...and on your app widget:
+MaterialApp(
+  useInheritedMediaQuery: true,
+  locale: DevicePreview.locale(context),
+  builder: DevicePreview.appBuilder,
+)
+```
+
+After (3.0):
+
+```dart
+void main() {
+  DevicePreview.enable(); // !kReleaseMode is already the default
+  runApp(const MyApp());
+}
+```
+
+Delete the `DevicePreview(builder:)` wrapper and all three `MaterialApp`
+lines — `useInheritedMediaQuery`, `locale:` and `builder:` are not needed
+because the simulation now happens below the widget layer, where the
+framework itself reads locales and metrics.
+
+What replaced what:
+
+| 2.x | 3.0 |
+|---|---|
+| The in-app toolbar | The **device_preview** tab in Flutter DevTools |
+| `DevicePreview(enabled: ...)` | `DevicePreview.enable(enabled: ...)` |
+| `Devices.ios.iPhone13` | `DevicePresets.iPhone16` etc. (`package:device_preview/presets.dart`) |
+| `tools:`, custom plugins | `DevicePreview.controller` — build any UI or automation on top |
+| `storage:` | Panel state persists in DevTools; app-side state is yours to latch via `latchConfiguration` |
+| `device_frame` package | Frames are data on the preset (`DeviceFrame`), artwork included |
+
+Custom devices built with `DeviceInfo` become `DevicePreset`s — either in
+Dart via `registerPreset`, or as JSON (the
+[`device_specs/`](https://github.com/aloisdeniel/flutter_device_preview/tree/master/device_specs)
+format) via `applyJson` or the panel's **New device from JSON…** entry.
+
 ## How it works
 
 The simulation happens below the widget layer, which is why it reaches
 `MediaQuery`, layout, gestures and locale resolution without any change to
 your widget tree. If you want the full architecture — the framework seams
 used, the scale-to-fit and pointer maths, the DevTools protocol — see
-[DESIGN.md](../DESIGN.md).
+[DESIGN.md](https://github.com/aloisdeniel/flutter_device_preview/blob/master/DESIGN.md).

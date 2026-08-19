@@ -33,11 +33,13 @@ void main() {
 
 That's the whole integration. Open DevTools, select the **device_preview** tab, and pick a device.
 
-`enable()` is safe to call unconditionally: simulation is active in debug and profile builds and completely off in release, so nothing ships to your users. Pass a value to decide yourself — `DevicePreview.enable(kDebugMode)` for debug only, `DevicePreview.enable(false)` to turn it off.
+`enable()` is safe to call unconditionally: simulation is active in debug and profile builds and completely off in release, so nothing ships to your users. Pass a value to decide yourself — `DevicePreview.enable(enabled: kDebugMode)` for debug only, `DevicePreview.enable(enabled: false)` to turn it off.
 
 Programmatic control:
 
 ```dart
+import 'package:device_preview/presets.dart';
+
 final c = DevicePreview.controller;
 await c.applyPreset(DevicePresets.iPhone16Pro);
 await c.setOrientation(Orientation.landscape);
