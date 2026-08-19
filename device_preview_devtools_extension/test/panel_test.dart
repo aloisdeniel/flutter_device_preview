@@ -111,8 +111,8 @@ void main() {
           .tap(find.byKey(const Key('device_preview_preset_picker_button')));
       await tester.pumpAndSettle();
 
-      // 2026 matches exactly one catalog device, and its subtitle carries the
-      // year between the brand and the metrics.
+      // The 2026 subtitle carries the year between the brand and the
+      // metrics.
       await tester.enterText(
         find.byKey(const Key('device_preview_preset_search')),
         '2026',
@@ -142,7 +142,7 @@ void main() {
       // tail of the list is below the fold and not built).
       expect(
         names.take(4),
-        ['iPhone 17e', 'iPhone 16e', 'iPhone 17', 'iPhone 17 Pro'],
+        ['iPhone 17e', 'iPhone 17', 'iPhone 17 Pro', 'iPhone 17 Pro Max'],
       );
     });
 

@@ -361,7 +361,7 @@ abstract final class DevicePresets {
   static const DevicePreset iPhone17 = ...;
   static const DevicePreset iPhone17Pro = ...;
   static const DevicePreset iPhoneAir = ...;
-  static const DevicePreset iPadPro13 = ...;
+  static const DevicePreset iPadPro13M5 = ...;
   static const DevicePreset iPadMini = ...;
   static const DevicePreset pixel8 = ...;
   static const DevicePreset pixel9 = ...;

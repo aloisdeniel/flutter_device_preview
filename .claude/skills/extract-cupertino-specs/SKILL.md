@@ -125,6 +125,21 @@ therefore geometric, not a file-format transcode:
 - **`size` / `screenOffset`** — composite page size and centered border for
   phones; `logical + 2 × sizing` and `(sizing, sizing)` for tablets.
 
+Two chassis shapes the geometry model also covers:
+
+- **Home-button phones** (`phone` chrome, iPhone SE): the 9-slice `sizing`
+  is asymmetric (28 pt sides, 111 pt forehead and chin), so `border` is an
+  `(x, y)` pair; the profile has **no `framebufferMask`** (a plain
+  rectangular display) and the outline is the screen rect; and the Home
+  button is an `inputs` entry drawn *on top* — a circular stroke in
+  `Home BTN.pdf`, placed with its offset as the top-left origin from the
+  bottom anchor — converted to a disc of the stroke color covered by a disc
+  of the bezel face.
+- **One chrome class, several masks** (tablet4): the M2/M3/M4 Airs share a
+  mask per size, while the iPad (A16) / (10th gen) carry their own (a different
+  display outline) on the very same 820×1180 panel — always read the mask the
+  profile names, never assume it from the panel size.
+
 ## 3. Probe the live metrics
 
 `probe.swift` (next to this file) is a UIKit app with no Xcode project —
