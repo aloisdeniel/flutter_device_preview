@@ -1285,7 +1285,7 @@ abstract final class DevicePresets {
           '  <rect x="2" y="2" width="427" height="885" rx="59" fill="#1f1f1f"/>\n'
           '  <rect x="8" y="8" width="415" height="873" rx="53" fill="#161616"/>\n'
           '  <rect x="14" y="14" width="403" height="861" rx="47" fill="#000000"/>\n'
-          '  <circle cx="215.5" cy="832.5" r="33.5" fill="#ffffff"/>\n'
+          '  <circle cx="215.5" cy="832.5" r="33.5" fill="#3a3a3a"/>\n'
           '  <circle cx="215.5" cy="832.5" r="29.5" fill="#000000"/>\n'
           '</svg>',
     ),

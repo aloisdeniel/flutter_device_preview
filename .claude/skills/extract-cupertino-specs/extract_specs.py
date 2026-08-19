@@ -503,12 +503,18 @@ def home_button(resources, chrome, body, face_color):
     page = pymupdf.open(os.path.join(resources, home["image"] + ".pdf"))[0]
     stroke = next(i for i in page.get_drawings()
                   if i["type"] == "s" and i.get("width"))
+    # Xcode strokes the ring in white, tuned for its light window chrome; on
+    # the dark letterbox it glows. Tone bright rings down to a dark grey that
+    # still reads against the near-black bezel face.
+    ring_color = stroke["color"]
+    if sum(ring_color[:3]) / 3 > 0.5:
+        ring_color = (0x3A / 255, 0x3A / 255, 0x3A / 255)
     w, h = page.rect.width, page.rect.height
     offset = home["offsets"]["normal"]
     cx = body[0] / 2 + offset["x"]
     cy = body[1] + offset["y"] + h / 2
     r = min(w, h) / 2
-    return [("circle", (cx, cy, r), stroke["color"], 1.0),
+    return [("circle", (cx, cy, r), ring_color, 1.0),
             ("circle", (cx, cy, r - stroke["width"]), face_color, 1.0)]
 
 

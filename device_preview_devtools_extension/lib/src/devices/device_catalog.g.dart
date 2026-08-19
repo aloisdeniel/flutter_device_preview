@@ -1004,7 +1004,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
             'y': 111,
           },
           'screenPath': 'M 0,0 L 375,0 L 375,667 L 0,667 Z',
-          'body': '<svg viewBox="0 0 431 889">\n  <rect x="0" y="0" width="431" height="889" rx="61" fill="#000000" fill-opacity="0.5"/>\n  <rect x="1" y="1" width="429" height="887" rx="60" fill="#343434"/>\n  <rect x="2" y="2" width="427" height="885" rx="59" fill="#1f1f1f"/>\n  <rect x="8" y="8" width="415" height="873" rx="53" fill="#161616"/>\n  <rect x="14" y="14" width="403" height="861" rx="47" fill="#000000"/>\n  <circle cx="215.5" cy="832.5" r="33.5" fill="#ffffff"/>\n  <circle cx="215.5" cy="832.5" r="29.5" fill="#000000"/>\n</svg>',
+          'body': '<svg viewBox="0 0 431 889">\n  <rect x="0" y="0" width="431" height="889" rx="61" fill="#000000" fill-opacity="0.5"/>\n  <rect x="1" y="1" width="429" height="887" rx="60" fill="#343434"/>\n  <rect x="2" y="2" width="427" height="885" rx="59" fill="#1f1f1f"/>\n  <rect x="8" y="8" width="415" height="873" rx="53" fill="#161616"/>\n  <rect x="14" y="14" width="403" height="861" rx="47" fill="#000000"/>\n  <circle cx="215.5" cy="832.5" r="33.5" fill="#3a3a3a"/>\n  <circle cx="215.5" cy="832.5" r="29.5" fill="#000000"/>\n</svg>',
         },
         'systemUi': <String, Object?>{
           'statusBar': <String, Object?>{
