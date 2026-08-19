@@ -11,14 +11,16 @@ import '../model/simulation.dart';
 /// behind the simulated device.
 ///
 /// Internal: the binding wraps it around the `DevicePreviewFrame` wrapper
-/// when `DevicePreview.enable` was given a `backgroundDecoration`; it is
+/// when `DevicePreview.enable` has a non-null `backgroundDecoration`; it is
 /// never exported.
 ///
 /// This render object lives in *simulated* logical coordinates — the root
-/// view configuration scales everything it paints by the fit transform — so
-/// covering the real window means painting the inverse-fit image of the
-/// window rectangle. The rectangle moves whenever the fit does (host resize,
-/// device switch), hence the listenable [fit].
+/// view configuration scales everything it paints by the fit transform. The
+/// decoration is nevertheless painted in *real* logical pixels, by undoing
+/// the fit on the canvas first: a gradient, an image or a dot grid then
+/// keeps the same size on screen whatever the simulated device or the fit
+/// scale. The fit changes whenever the letterbox moves (host resize, device
+/// switch), hence the listenable [fit].
 ///
 /// Nothing is painted while no metric simulation is active: the app then
 /// fills the window and the decoration could never be seen.
@@ -34,7 +36,7 @@ class PreviewBackground extends SingleChildRenderObjectWidget {
   });
 
   /// The decoration filling the window around the simulated device.
-  final BoxDecoration decoration;
+  final Decoration decoration;
 
   /// The live simulation; decides whether anything is painted at all.
   final ValueListenable<DeviceSimulation?> simulation;
@@ -73,7 +75,7 @@ class PreviewBackground extends SingleChildRenderObjectWidget {
 class RenderPreviewBackground extends RenderProxyBox {
   /// Creates a render object painting [decoration] behind its child.
   RenderPreviewBackground({
-    required BoxDecoration decoration,
+    required Decoration decoration,
     required ValueListenable<DeviceSimulation?> simulation,
     required ValueListenable<FitTransform> fit,
     required ui.FlutterView hostView,
@@ -86,11 +88,11 @@ class RenderPreviewBackground extends RenderProxyBox {
        _textDirection = textDirection,
        super(child);
 
-  BoxDecoration _decoration;
+  Decoration _decoration;
 
   /// The decoration filling the window around the simulated device.
-  BoxDecoration get decoration => _decoration;
-  set decoration(BoxDecoration value) {
+  Decoration get decoration => _decoration;
+  set decoration(Decoration value) {
     if (value == _decoration) {
       return;
     }
@@ -187,19 +189,23 @@ class RenderPreviewBackground extends RenderProxyBox {
     final FitTransform fit = _fit.value;
     if (simulation != null && simulation.simulatesMetrics && fit.scale > 0) {
       final ui.Size real = _hostView.physicalSize / _hostView.devicePixelRatio;
-      // The real window's corners, mapped back into simulated coordinates.
-      final Rect window = Rect.fromPoints(
-        fit.toSimulatedLogical(Offset.zero),
-        fit.toSimulatedLogical(Offset(real.width, real.height)),
-      ).shift(offset);
       final BoxPainter painter = _painter ??= _decoration.createBoxPainter(
         markNeedsPaint,
       );
+      final ui.Canvas canvas = context.canvas;
+      // Undo the fit: after this, one canvas unit is one real logical pixel
+      // and the origin is the real window's top-left corner.
+      final Offset origin = fit.toSimulatedLogical(Offset.zero) + offset;
+      canvas
+        ..save()
+        ..translate(origin.dx, origin.dy)
+        ..scale(1 / fit.scale, 1 / fit.scale);
       painter.paint(
-        context.canvas,
-        window.topLeft,
-        ImageConfiguration(size: window.size, textDirection: _textDirection),
+        canvas,
+        Offset.zero,
+        ImageConfiguration(size: real, textDirection: _textDirection),
       );
+      canvas.restore();
     }
     super.paint(context, offset);
   }
@@ -207,8 +213,6 @@ class RenderPreviewBackground extends RenderProxyBox {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(
-      DiagnosticsProperty<BoxDecoration>('decoration', _decoration),
-    );
+    properties.add(DiagnosticsProperty<Decoration>('decoration', _decoration));
   }
 }

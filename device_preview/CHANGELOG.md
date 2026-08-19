@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- The area around the simulated device is now painted by default with the
+  new `DotGridDecoration`: a dark grey with a subtle dot pattern (in real
+  pixels, so its density does not change with the device or the fit scale),
+  which keeps dark device bodies readable where the engine's plain black
+  swallowed them. `DevicePreview.enable`'s `backgroundDecoration` now
+  accepts any `Decoration` (not only `BoxDecoration`), is painted in real
+  logical pixels, and `null` now explicitly leaves the area unpainted.
 - New `DevicePreviewController.applyJson(json)`: decodes a device spec
   (a JSON string or map in the `device_specs/*.json` / `DevicePreset.toJson()`
   format, frame artwork and system UI included), registers it as a preset and

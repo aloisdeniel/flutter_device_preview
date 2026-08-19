@@ -15,6 +15,7 @@ import '../service/extensions.dart';
 import '../service/protocol.dart';
 import '../service/screenshot.dart';
 import '../widgets/device_preview_frame.dart';
+import '../widgets/dot_grid_decoration.dart';
 import '../widgets/preview_background.dart';
 import 'preview_flutter_view.dart';
 import 'preview_platform_dispatcher.dart';
@@ -61,7 +62,7 @@ mixin DevicePreviewBindingMixin
         WidgetsBinding {
   static bool _latchedEnabled = !kReleaseMode;
   static EdgeInsets _latchedPadding = EdgeInsets.zero;
-  static BoxDecoration? _latchedBackgroundDecoration;
+  static Decoration? _latchedBackgroundDecoration = const DotGridDecoration();
   static DeviceSimulation? _latchedInitialSimulation;
 
   static const Object _unsetInitialSimulation = Object();
@@ -83,7 +84,7 @@ mixin DevicePreviewBindingMixin
   static void latchConfiguration({
     bool enabled = !kReleaseMode,
     EdgeInsets padding = EdgeInsets.zero,
-    BoxDecoration? backgroundDecoration,
+    Decoration? backgroundDecoration = const DotGridDecoration(),
     Object? initialSimulation = _unsetInitialSimulation,
   }) {
     _latchedEnabled = enabled;
@@ -104,9 +105,10 @@ mixin DevicePreviewBindingMixin
   late final EdgeInsets framePadding = _latchedPadding;
 
   /// The decoration painted across the real window behind the simulated
-  /// device, or null to leave the letterbox unpainted. Latched before init
-  /// and fixed for the binding's lifetime.
-  late final BoxDecoration? backgroundDecoration = _latchedBackgroundDecoration;
+  /// device — a [DotGridDecoration] unless configured otherwise — or null to
+  /// leave the letterbox unpainted. Latched before init and fixed for the
+  /// binding's lifetime.
+  late final Decoration? backgroundDecoration = _latchedBackgroundDecoration;
 
   final PreviewState _state = PreviewState();
   PreviewPlatformDispatcher? _previewDispatcher;
@@ -250,7 +252,7 @@ mixin DevicePreviewBindingMixin
       overlayStyle: _systemOverlayStyle,
       child: rootWidget,
     );
-    final BoxDecoration? decoration = backgroundDecoration;
+    final Decoration? decoration = backgroundDecoration;
     if (decoration != null) {
       wrapped = PreviewBackground(
         decoration: decoration,
@@ -344,7 +346,8 @@ mixin DevicePreviewBindingMixin
       systemStatusBarContrastEnforced: upper.systemStatusBarContrastEnforced,
       systemNavigationBarColor: lower.systemNavigationBarColor,
       systemNavigationBarDividerColor: lower.systemNavigationBarDividerColor,
-      systemNavigationBarIconBrightness: lower.systemNavigationBarIconBrightness,
+      systemNavigationBarIconBrightness:
+          lower.systemNavigationBarIconBrightness,
       systemNavigationBarContrastEnforced:
           lower.systemNavigationBarContrastEnforced,
     );
@@ -573,7 +576,10 @@ class DevicePreview extends BindingBase
   ///
   /// [backgroundDecoration] is painted across the real window behind the
   /// simulated device (visible in the letterbox a metric simulation leaves
-  /// around itself). Left null, nothing is painted there.
+  /// around itself), in real logical pixels. It defaults to a
+  /// [DotGridDecoration] — a dark grey with a subtle dot pattern that keeps
+  /// the device body readable — and can be any [Decoration]; pass `null` to
+  /// leave the letterbox unpainted (transparent).
   ///
   /// ```dart
   /// DevicePreview.enable(
@@ -592,7 +598,7 @@ class DevicePreview extends BindingBase
   static WidgetsBinding enable({
     bool? enabled,
     EdgeInsets padding = EdgeInsets.zero,
-    BoxDecoration? backgroundDecoration,
+    Decoration? backgroundDecoration = const DotGridDecoration(),
   }) {
     if (_instance == null) {
       DevicePreviewBindingMixin.latchConfiguration(
