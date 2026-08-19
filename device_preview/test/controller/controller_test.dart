@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:device_preview/device_preview.dart';
@@ -354,6 +356,198 @@ void main() {
       expect(result.presetId, 'apple-iphone-16');
       expect(result.frame, frame);
       expect(result.systemUi, systemUi);
+    });
+  });
+
+  group('applyJson', () {
+    // A complete spec in the device_specs/*.json format: metrics, frame
+    // artwork and decorative system UI, like every catalog entry.
+    const String spec = '''
+    {
+      "id": "acme-phone",
+      "name": "Acme Phone",
+      "brand": "Acme",
+      "year": 2026,
+      "platform": "android",
+      "kind": "phone",
+      "portraitSize": {"width": 400, "height": 800},
+      "devicePixelRatio": 2.5,
+      "portraitPadding": {"left": 0, "top": 40, "right": 0, "bottom": 20},
+      "landscapePadding": {"left": 40, "top": 0, "right": 40, "bottom": 12},
+      "frame": {
+        "size": {"width": 440, "height": 840},
+        "screenOffset": {"x": 20, "y": 20},
+        "screenPath": "M 0,0 H 400 V 800 H 0 Z",
+        "body": [
+          "<svg viewBox=\\"0 0 440 840\\">",
+          "  <rect x=\\"0\\" y=\\"0\\" width=\\"440\\" height=\\"840\\" rx=\\"40\\" fill=\\"#000\\"/>",
+          "</svg>"
+        ]
+      },
+      "systemUi": {
+        "statusBar": {
+          "inset": 18,
+          "leading": "<svg viewBox=\\"0 0 20 10\\"><rect width=\\"20\\" height=\\"10\\" fill=\\"currentColor\\"/></svg>",
+          "trailing": "<svg viewBox=\\"0 0 30 10\\"><rect width=\\"30\\" height=\\"10\\" fill=\\"currentColor\\"/></svg>"
+        },
+        "navigationBar": {
+          "center": "<svg viewBox=\\"0 0 100 4\\"><rect width=\\"100\\" height=\\"4\\" rx=\\"2\\" fill=\\"currentColor\\"/></svg>",
+          "bottomInset": 8
+        }
+      }
+    }
+    ''';
+
+    test(
+      'decodes the frame and system UI of a device_specs-style spec',
+      () async {
+        final ControllerHarness harness = ControllerHarness();
+        addTearDown(harness.dispose);
+        await harness.controller.applyJson(spec);
+        final DeviceSimulation result = harness.controller.simulation!;
+        final DeviceFrame frame = result.frame!;
+        expect(frame.size, const ui.Size(440, 840));
+        expect(frame.screenOffset, const ui.Offset(20, 20));
+        expect(frame.screenPath, 'M 0,0 H 400 V 800 H 0 Z');
+        expect(frame.body, contains('<svg viewBox="0 0 440 840">'));
+        expect(frame.body, contains('rx="40"'));
+        final SystemUiSimulation systemUi = result.systemUi!;
+        expect(systemUi.statusBar!.inset, 18);
+        expect(systemUi.statusBar!.leading, contains('viewBox="0 0 20 10"'));
+        expect(systemUi.statusBar!.trailing, contains('viewBox="0 0 30 10"'));
+        expect(systemUi.navigationBar!.bottomInset, 8);
+        expect(systemUi.navigationBar!.center, contains('viewBox="0 0 100 4"'));
+        // The registered preset carries the artwork too, so a later
+        // setOrientation keeps it.
+        await harness.controller.setOrientation(Orientation.landscape);
+        expect(harness.controller.simulation!.frame, frame);
+        expect(harness.controller.simulation!.systemUi, systemUi);
+      },
+    );
+
+    test('loads a real catalog spec file from device_specs/', () async {
+      final ControllerHarness harness = ControllerHarness();
+      addTearDown(harness.dispose);
+      final File file = File('../device_specs/google-pixel-9.json');
+      expect(file.existsSync(), isTrue, reason: 'run from device_preview/');
+      await harness.controller.applyJson(file.readAsStringSync());
+      final DeviceSimulation result = harness.controller.simulation!;
+      expect(result.presetId, 'google-pixel-9');
+      expect(result.deviceKind, DeviceKind.phone);
+      expect(result.devicePixelRatio, 2.625);
+      expect(result.frame, isNotNull);
+      expect(result.frame!.body, contains('<svg'));
+      expect(result.frame!.screenPath, isNotEmpty);
+      expect(result.systemUi, isNotNull);
+      expect(result.systemUi!.statusBar, isNotNull);
+      expect(result.systemUi!.navigationBar, isNotNull);
+      final DevicePreset registered = harness.controller.presets.singleWhere(
+        (DevicePreset p) => p.id == 'google-pixel-9',
+      );
+      expect(registered.name, 'Pixel 9');
+      expect(registered.frame, result.frame);
+      expect(registered.systemUi, result.systemUi);
+    });
+
+    test(
+      'decodes a JSON string, registers the preset and applies it',
+      () async {
+        final ControllerHarness harness = ControllerHarness();
+        addTearDown(harness.dispose);
+        final List<int> presetCounts = <int>[];
+        harness.controller.onPresetsChanged = presetCounts.add;
+        await harness.controller.applyJson(spec);
+        final DeviceSimulation? result = harness.controller.simulation;
+        expect(result!.presetId, 'acme-phone');
+        expect(result.screenSize, const ui.Size(400, 800));
+        expect(result.devicePixelRatio, 2.5);
+        expect(result.padding, const EdgeInsets.only(top: 40, bottom: 20));
+        expect(
+          harness.controller.presets.where(
+            (DevicePreset p) => p.id == 'acme-phone',
+          ),
+          hasLength(1),
+        );
+        expect(presetCounts, <int>[DevicePresets.all.length + 1]);
+      },
+    );
+
+    test('accepts an already decoded map and honors orientation', () async {
+      final ControllerHarness harness = ControllerHarness();
+      addTearDown(harness.dispose);
+      await harness.controller.applyJson(
+        jsonDecode(spec) as Map<String, Object?>,
+        orientation: Orientation.landscape,
+      );
+      final DeviceSimulation? result = harness.controller.simulation;
+      expect(result!.orientation, Orientation.landscape);
+      expect(result.screenSize, const ui.Size(800, 400));
+      expect(
+        result.padding,
+        const EdgeInsets.only(left: 40, right: 40, bottom: 12),
+      );
+    });
+
+    test('a later setOrientation resolves the registered spec\'s explicit '
+        'landscape safe areas', () async {
+      final ControllerHarness harness = ControllerHarness();
+      addTearDown(harness.dispose);
+      await harness.controller.applyJson(spec);
+      await harness.controller.setOrientation(Orientation.landscape);
+      expect(
+        harness.controller.simulation!.padding,
+        const EdgeInsets.only(left: 40, right: 40, bottom: 12),
+      );
+    });
+
+    test(
+      're-applying a spec with the same id replaces the registered preset',
+      () async {
+        final ControllerHarness harness = ControllerHarness();
+        addTearDown(harness.dispose);
+        await harness.controller.applyJson(spec);
+        await harness.controller.applyJson(
+          spec.replaceFirst('"name": "Acme Phone"', '"name": "Acme Phone 2"'),
+        );
+        final Iterable<DevicePreset> matches = harness.controller.presets.where(
+          (DevicePreset p) => p.id == 'acme-phone',
+        );
+        expect(matches, hasLength(1));
+        expect(matches.single.name, 'Acme Phone 2');
+      },
+    );
+
+    test('preserves non-metric overrides unless resetOverrides', () async {
+      final ControllerHarness harness = ControllerHarness();
+      addTearDown(harness.dispose);
+      await harness.controller.apply(
+        const DeviceSimulation(platformBrightness: ui.Brightness.dark),
+      );
+      await harness.controller.applyJson(spec);
+      expect(
+        harness.controller.simulation!.platformBrightness,
+        ui.Brightness.dark,
+      );
+      await harness.controller.applyJson(spec, resetOverrides: true);
+      expect(harness.controller.simulation!.platformBrightness, isNull);
+    });
+
+    test('rejects malformed input with a FormatException', () async {
+      final ControllerHarness harness = ControllerHarness();
+      addTearDown(harness.dispose);
+      expect(
+        () => harness.controller.applyJson('not json'),
+        throwsFormatException,
+      );
+      expect(
+        () => harness.controller.applyJson('[1, 2]'),
+        throwsFormatException,
+      );
+      expect(
+        () => harness.controller.applyJson(<String, Object?>{'id': 'x'}),
+        throwsFormatException,
+      );
+      expect(harness.controller.simulation, isNull);
     });
   });
 

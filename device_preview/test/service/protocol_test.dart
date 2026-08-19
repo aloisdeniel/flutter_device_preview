@@ -54,6 +54,13 @@ class _FakeController implements DevicePreviewController {
   }) async => current = preset.resolve(orientation: orientation);
 
   @override
+  Future<void> applyJson(
+    Object json, {
+    Orientation orientation = Orientation.portrait,
+    bool resetOverrides = false,
+  }) async {}
+
+  @override
   Future<void> setOrientation(Orientation orientation) async {}
 
   @override

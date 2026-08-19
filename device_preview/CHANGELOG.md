@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- New `DevicePreviewController.applyJson(json)`: decodes a device spec
+  (a JSON string or map in the `device_specs/*.json` / `DevicePreset.toJson()`
+  format, frame artwork and system UI included), registers it as a preset and
+  applies it.
+- DevTools: the device picker gains a "New device from JSON…" entry. Pasted
+  specs are validated, applied immediately, saved in the browser and listed
+  under "My devices" in later sessions (with a remove button).
 - The Apple catalog now mirrors the iOS 26.5 simulator line-up (21 devices,
   33 in all), every one derived from its real simulator: added iPhone 17 Pro
   Max, iPhone SE (3rd gen) — back as `DevicePresets.iPhoneSe3`, with the
