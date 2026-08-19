@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 3.0.0-prerelease5
 
 - The built-in `DevicePresets` are now generated from the shared device spec
   catalog (`device_specs/` at the repository root) and carry the **complete
