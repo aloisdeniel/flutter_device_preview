@@ -52,16 +52,22 @@ DEVICES = {
     "apple-iphone-16-plus": {"sim": "iPhone 16 Plus"},
     "apple-iphone-16-pro": {"sim": "iPhone 16 Pro"},
     "apple-iphone-16-pro-max": {"sim": "iPhone 16 Pro Max"},
-    "apple-iphone-16e": {"sim": "iPhone 16e"},
     "apple-iphone-17": {"sim": "iPhone 17"},
     "apple-iphone-17-pro": {"sim": "iPhone 17 Pro"},
+    "apple-iphone-17-pro-max": {"sim": "iPhone 17 Pro Max"},
     "apple-iphone-17e": {"sim": "iPhone 17e"},
     "apple-iphone-air": {"sim": "iPhone Air"},
-    "apple-ipad-pro-11": {"sim": "iPad Pro 11-inch (M4)"},
-    "apple-ipad-pro-13": {"sim": "iPad Pro 13-inch (M4)"},
-    # The catalog's 2025 Airs are the M3 generation (tablet4 chrome).
-    "apple-ipad-air-11": {"sim": "iPad Air 11-inch (M3)"},
-    "apple-ipad-air-13": {"sim": "iPad Air 13-inch (M3)"},
+    "apple-iphone-se-3": {"sim": "iPhone SE (3rd generation)"},
+    "apple-ipad-pro-11-m4": {"sim": "iPad Pro 11-inch (M4)"},
+    "apple-ipad-pro-13-m4": {"sim": "iPad Pro 13-inch (M4)"},
+    "apple-ipad-pro-11-m5": {"sim": "iPad Pro 11-inch (M5)"},
+    "apple-ipad-pro-13-m5": {"sim": "iPad Pro 13-inch (M5)"},
+    "apple-ipad-air-11-m2": {"sim": "iPad Air 11-inch (M2)"},
+    "apple-ipad-air-13-m2": {"sim": "iPad Air 13-inch (M2)"},
+    "apple-ipad-air-11-m4": {"sim": "iPad Air 11-inch (M4)"},
+    "apple-ipad-air-13-m4": {"sim": "iPad Air 13-inch (M4)"},
+    "apple-ipad-a16": {"sim": "iPad (A16)"},
+    "apple-ipad-10": {"sim": "iPad (10th generation)"},
     "apple-ipad-mini": {"sim": "iPad mini (A17 Pro)"},
 }
 
@@ -484,17 +490,44 @@ def slice_rings(resources, chrome):
     return rings
 
 
+def home_button(resources, chrome, body, face_color):
+    """The Home button of home-button chromes (`phone`, the iPhone SE
+    chassis): a circular stroke drawn on top of the bezel, anchored to the
+    bottom edge with the input's offset as its top-left origin. Strokes
+    are not in the renderer's subset, so it becomes a filled disc of the
+    stroke color covered by a disc of the bezel face."""
+    home = next((i for i in chrome.get("inputs", [])
+                 if i.get("name") == "home" and i.get("onTop")), None)
+    if home is None:
+        return []
+    page = pymupdf.open(os.path.join(resources, home["image"] + ".pdf"))[0]
+    stroke = next(i for i in page.get_drawings()
+                  if i["type"] == "s" and i.get("width"))
+    w, h = page.rect.width, page.rect.height
+    offset = home["offsets"]["normal"]
+    cx = body[0] / 2 + offset["x"]
+    cy = body[1] + offset["y"] + h / 2
+    r = min(w, h) / 2
+    return [("circle", (cx, cy, r), stroke["color"], 1.0),
+            ("circle", (cx, cy, r - stroke["width"]), face_color, 1.0)]
+
+
 def body_svg(size, shapes, radius):
     w, h = size
     lines = [f'<svg viewBox="0 0 {fmt(w)} {fmt(h)}">']
     for shape in shapes:
         kind, color, opacity = shape[0], shape[-2], shape[-1]
+        tag = "rect"
         if kind == "ring":
             inset = shape[1]
             r = max(0.0, radius - inset)
             attrs = (f'x="{fmt(inset)}" y="{fmt(inset)}" '
                      f'width="{fmt(w - 2 * inset)}" '
                      f'height="{fmt(h - 2 * inset)}" rx="{fmt(r)}"')
+        elif kind == "circle":
+            tag = "circle"
+            cx, cy, r = shape[1]
+            attrs = f'cx="{fmt(cx)}" cy="{fmt(cy)}" r="{fmt(r)}"'
         else:
             rect = shape[1]
             attrs = (f'x="{fmt(rect.x0)}" y="{fmt(rect.y0)}" '
@@ -503,7 +536,7 @@ def body_svg(size, shapes, radius):
         attrs += f' fill="{hex_color(color)}"'
         if opacity < 1.0:
             attrs += f' fill-opacity="{fmt(opacity)}"'
-        lines.append(f"  <rect {attrs}/>")
+        lines.append(f"  <{tag} {attrs}/>")
     lines.append("</svg>")
     return lines
 
@@ -556,20 +589,27 @@ def update_spec(dev, spec_id, mapping, simctl, dry_run):
         sys.exit(f"error: unsupported simpleOutsideBorder in {resources}")
     radius = outside["cornerRadiusX"]
 
+    sizing = chrome["images"]["sizing"]
+    if sizing["leftWidth"] != sizing["rightWidth"] or \
+            sizing["topHeight"] != sizing["bottomHeight"]:
+        sys.exit(f"error: off-center screen in {resources}")
+    # (x, y) bezel border; only home-button chromes have a tall chin/forehead.
+    border = (sizing["leftWidth"], sizing["topHeight"])
+
     composite_name = chrome["images"].get("composite")
     composite_fits = False
     if composite_name and os.path.exists(
             os.path.join(resources, composite_name + ".pdf")):
         page = pymupdf.open(
             os.path.join(resources, composite_name + ".pdf"))[0].rect
-        border = (page.width - donor[0]) / 2
+        inset = (page.width - donor[0]) / 2
         # A chrome class can serve several panel sizes but ship a composite
         # drawn for only one of them (tablet4's is the 11" Air body);
         # off-center means "not this panel", not an error.
-        composite_fits = border > 0 and \
-            border == (page.height - donor[1]) / 2
+        composite_fits = inset > 0 and inset == (page.height - donor[1]) / 2
     if composite_fits:
-        shapes = composite_shapes(resources, chrome, border)
+        border = (inset, inset)
+        shapes = composite_shapes(resources, chrome, inset)
     elif composite_name and os.path.exists(
             os.path.join(resources, composite_name + ".pdf")) and \
             composite_native_border(resources, chrome) is not None:
@@ -580,23 +620,30 @@ def update_spec(dev, spec_id, mapping, simctl, dry_run):
         # re-center it on this panel with the declared border. Nested-fill
         # composites (tablets) fall through to the 9-slice tiles instead.
         native_border = composite_native_border(resources, chrome)
-        border = chrome["images"]["sizing"]["leftWidth"]
         # Ring insets are measured from the composite's body edge; the
         # stack itself does not change with the panel, so shift it by the
         # difference between this panel's border and the native one.
-        shift = border - native_border
+        shift = border[0] - native_border
         shapes = [("ring", round(shape[1] + shift, 2), shape[2], shape[3])
                   for shape in
                   composite_shapes(resources, chrome, native_border)
                   if shape[0] == "ring"]
     else:
-        border = chrome["images"]["sizing"]["leftWidth"]
         shapes = slice_rings(resources, chrome)
-    body = (logical[0] + 2 * border, logical[1] + 2 * border)
+    body = (logical[0] + 2 * border[0], logical[1] + 2 * border[1])
+    face = [shape for shape in shapes if shape[0] == "ring"][-1][2]
+    shapes += home_button(resources, chrome, body, face)
 
-    mask = os.path.join(device_type, "Contents/Resources",
-                        profile["framebufferMask"] + ".pdf")
-    path = screen_path(mask, scale, donor, retarget)
+    if "framebufferMask" in profile:
+        mask = os.path.join(device_type, "Contents/Resources",
+                            profile["framebufferMask"] + ".pdf")
+        path = screen_path(mask, scale, donor, retarget)
+    else:
+        # Pre-notch hardware (iPhone SE): a plain rectangular display, no
+        # mask to carve.
+        path = (f"M 0,0 L {fmt(logical[0])},0 "
+                f"L {fmt(logical[0])},{fmt(logical[1])} "
+                f"L 0,{fmt(logical[1])} Z")
     # The mask has no Dynamic Island cutout (iOS draws the island itself);
     # keep the pill subpaths the spec already models, wound opposite to the
     # outline so nonZero filling punches the hole.
@@ -609,12 +656,14 @@ def update_spec(dev, spec_id, mapping, simctl, dry_run):
 
     spec["frame"] = {
         "size": {"width": fmt_json(body[0]), "height": fmt_json(body[1])},
-        "screenOffset": {"x": fmt_json(border), "y": fmt_json(border)},
+        "screenOffset": {"x": fmt_json(border[0]),
+                         "y": fmt_json(border[1])},
         "screenPath": path,
         "body": body_svg(body, shapes, radius),
     }
 
-    print(f"  frame: body {fmt(body[0])}x{fmt(body[1])} border {fmt(border)}"
+    print(f"  frame: body {fmt(body[0])}x{fmt(body[1])} "
+          f"border {fmt(border[0])},{fmt(border[1])}"
           f" radius {radius} shapes {len(shapes)}")
     if not dry_run:
         text = json.dumps(spec, indent=2)

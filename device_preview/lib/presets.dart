@@ -381,17 +381,18 @@ abstract final class DevicePresets {
     landscapePadding: EdgeInsets.only(left: 59, right: 59, bottom: 20),
   );
 
-  /// iPhone 16e — notch, the 6.1" entry model.
-  static const DevicePreset iPhone16e = DevicePreset(
-    id: 'apple-iphone-16e',
-    name: 'iPhone 16e',
+  /// iPhone SE (3rd generation) — Home button, 4.7" display, no safe area
+  /// beyond the 20 pt status bar.
+  static const DevicePreset iPhoneSe3 = DevicePreset(
+    id: 'apple-iphone-se-3',
+    name: 'iPhone SE (3rd gen)',
     brand: 'Apple',
-    year: 2025,
+    year: 2022,
     platform: TargetPlatform.iOS,
-    portraitSize: ui.Size(390, 844),
-    devicePixelRatio: 3.0,
-    portraitPadding: EdgeInsets.only(top: 47, bottom: 34),
-    landscapePadding: EdgeInsets.only(left: 47, right: 47, bottom: 20),
+    portraitSize: ui.Size(375, 667),
+    devicePixelRatio: 2.0,
+    portraitPadding: EdgeInsets.only(top: 20),
+    landscapePadding: EdgeInsets.zero,
   );
 
   /// iPhone 17e — notch, the 6.1" entry model.
@@ -433,6 +434,19 @@ abstract final class DevicePresets {
     landscapePadding: EdgeInsets.only(left: 62, right: 62, bottom: 20),
   );
 
+  /// iPhone 17 Pro Max — Dynamic Island, 6.9" display.
+  static const DevicePreset iPhone17ProMax = DevicePreset(
+    id: 'apple-iphone-17-pro-max',
+    name: 'iPhone 17 Pro Max',
+    brand: 'Apple',
+    year: 2025,
+    platform: TargetPlatform.iOS,
+    portraitSize: ui.Size(440, 956),
+    devicePixelRatio: 3.0,
+    portraitPadding: EdgeInsets.only(top: 62, bottom: 34),
+    landscapePadding: EdgeInsets.only(left: 62, right: 62, bottom: 20),
+  );
+
   /// iPhone Air — Dynamic Island, 6.5" display.
   static const DevicePreset iPhoneAir = DevicePreset(
     id: 'apple-iphone-air',
@@ -446,10 +460,38 @@ abstract final class DevicePresets {
     landscapePadding: EdgeInsets.only(left: 68, right: 68, bottom: 20),
   );
 
+  /// iPad Pro 13" (M5).
+  static const DevicePreset iPadPro13M5 = DevicePreset(
+    id: 'apple-ipad-pro-13-m5',
+    name: 'iPad Pro 13" (M5)',
+    brand: 'Apple',
+    year: 2025,
+    platform: TargetPlatform.iOS,
+    portraitSize: ui.Size(1032, 1376),
+    devicePixelRatio: 2.0,
+    portraitPadding: EdgeInsets.only(top: 32, bottom: 25),
+    landscapePadding: EdgeInsets.only(top: 32, bottom: 25),
+    kind: DeviceKind.tablet,
+  );
+
+  /// iPad Pro 11" (M5).
+  static const DevicePreset iPadPro11M5 = DevicePreset(
+    id: 'apple-ipad-pro-11-m5',
+    name: 'iPad Pro 11" (M5)',
+    brand: 'Apple',
+    year: 2025,
+    platform: TargetPlatform.iOS,
+    portraitSize: ui.Size(834, 1210),
+    devicePixelRatio: 2.0,
+    portraitPadding: EdgeInsets.only(top: 32, bottom: 25),
+    landscapePadding: EdgeInsets.only(top: 32, bottom: 25),
+    kind: DeviceKind.tablet,
+  );
+
   /// iPad Pro 13" (M4).
-  static const DevicePreset iPadPro13 = DevicePreset(
-    id: 'apple-ipad-pro-13',
-    name: 'iPad Pro 13"',
+  static const DevicePreset iPadPro13M4 = DevicePreset(
+    id: 'apple-ipad-pro-13-m4',
+    name: 'iPad Pro 13" (M4)',
     brand: 'Apple',
     year: 2024,
     platform: TargetPlatform.iOS,
@@ -461,9 +503,9 @@ abstract final class DevicePresets {
   );
 
   /// iPad Pro 11" (M4).
-  static const DevicePreset iPadPro11 = DevicePreset(
-    id: 'apple-ipad-pro-11',
-    name: 'iPad Pro 11"',
+  static const DevicePreset iPadPro11M4 = DevicePreset(
+    id: 'apple-ipad-pro-11-m4',
+    name: 'iPad Pro 11" (M4)',
     brand: 'Apple',
     year: 2024,
     platform: TargetPlatform.iOS,
@@ -474,12 +516,12 @@ abstract final class DevicePresets {
     kind: DeviceKind.tablet,
   );
 
-  /// iPad Air 13" (M3).
-  static const DevicePreset iPadAir13 = DevicePreset(
-    id: 'apple-ipad-air-13',
-    name: 'iPad Air 13"',
+  /// iPad Air 13" (M4).
+  static const DevicePreset iPadAir13M4 = DevicePreset(
+    id: 'apple-ipad-air-13-m4',
+    name: 'iPad Air 13" (M4)',
     brand: 'Apple',
-    year: 2025,
+    year: 2026,
     platform: TargetPlatform.iOS,
     portraitSize: ui.Size(1024, 1366),
     devicePixelRatio: 2.0,
@@ -488,10 +530,52 @@ abstract final class DevicePresets {
     kind: DeviceKind.tablet,
   );
 
-  /// iPad Air 11" (M3).
-  static const DevicePreset iPadAir11 = DevicePreset(
-    id: 'apple-ipad-air-11',
-    name: 'iPad Air 11"',
+  /// iPad Air 11" (M4).
+  static const DevicePreset iPadAir11M4 = DevicePreset(
+    id: 'apple-ipad-air-11-m4',
+    name: 'iPad Air 11" (M4)',
+    brand: 'Apple',
+    year: 2026,
+    platform: TargetPlatform.iOS,
+    portraitSize: ui.Size(820, 1180),
+    devicePixelRatio: 2.0,
+    portraitPadding: EdgeInsets.only(top: 32, bottom: 25),
+    landscapePadding: EdgeInsets.only(top: 32, bottom: 25),
+    kind: DeviceKind.tablet,
+  );
+
+  /// iPad Air 13" (M2).
+  static const DevicePreset iPadAir13M2 = DevicePreset(
+    id: 'apple-ipad-air-13-m2',
+    name: 'iPad Air 13" (M2)',
+    brand: 'Apple',
+    year: 2024,
+    platform: TargetPlatform.iOS,
+    portraitSize: ui.Size(1024, 1366),
+    devicePixelRatio: 2.0,
+    portraitPadding: EdgeInsets.only(top: 32, bottom: 25),
+    landscapePadding: EdgeInsets.only(top: 32, bottom: 25),
+    kind: DeviceKind.tablet,
+  );
+
+  /// iPad Air 11" (M2).
+  static const DevicePreset iPadAir11M2 = DevicePreset(
+    id: 'apple-ipad-air-11-m2',
+    name: 'iPad Air 11" (M2)',
+    brand: 'Apple',
+    year: 2024,
+    platform: TargetPlatform.iOS,
+    portraitSize: ui.Size(820, 1180),
+    devicePixelRatio: 2.0,
+    portraitPadding: EdgeInsets.only(top: 32, bottom: 25),
+    landscapePadding: EdgeInsets.only(top: 32, bottom: 25),
+    kind: DeviceKind.tablet,
+  );
+
+  /// iPad (A16) — 11" entry model.
+  static const DevicePreset iPadA16 = DevicePreset(
+    id: 'apple-ipad-a16',
+    name: 'iPad (A16)',
     brand: 'Apple',
     year: 2025,
     platform: TargetPlatform.iOS,
@@ -502,10 +586,24 @@ abstract final class DevicePresets {
     kind: DeviceKind.tablet,
   );
 
-  /// iPad mini (6th/7th generation).
+  /// iPad (10th generation).
+  static const DevicePreset iPad10 = DevicePreset(
+    id: 'apple-ipad-10',
+    name: 'iPad (10th gen)',
+    brand: 'Apple',
+    year: 2022,
+    platform: TargetPlatform.iOS,
+    portraitSize: ui.Size(820, 1180),
+    devicePixelRatio: 2.0,
+    portraitPadding: EdgeInsets.only(top: 32, bottom: 25),
+    landscapePadding: EdgeInsets.only(top: 32, bottom: 25),
+    kind: DeviceKind.tablet,
+  );
+
+  /// iPad mini (A17 Pro).
   static const DevicePreset iPadMini = DevicePreset(
     id: 'apple-ipad-mini',
-    name: 'iPad mini',
+    name: 'iPad mini (A17 Pro)',
     brand: 'Apple',
     year: 2024,
     platform: TargetPlatform.iOS,
@@ -712,15 +810,22 @@ abstract final class DevicePresets {
     iPhone16Plus,
     iPhone16Pro,
     iPhone16ProMax,
-    iPhone16e,
     iPhone17e,
     iPhone17,
     iPhone17Pro,
+    iPhone17ProMax,
     iPhoneAir,
-    iPadPro13,
-    iPadPro11,
-    iPadAir13,
-    iPadAir11,
+    iPhoneSe3,
+    iPadPro13M5,
+    iPadPro11M5,
+    iPadPro13M4,
+    iPadPro11M4,
+    iPadAir13M4,
+    iPadAir11M4,
+    iPadAir13M2,
+    iPadAir11M2,
+    iPadA16,
+    iPad10,
     iPadMini,
     pixel9,
     pixel10,
