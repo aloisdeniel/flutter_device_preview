@@ -20,8 +20,13 @@ import 'todo.dart' show TodoApp;
 
 void main() {
   // `true` rather than the default: the demo is a *release* web build, where
-  // simulation would otherwise be off.
-  DevicePreview.enable(enabled: true, padding: const EdgeInsets.all(16));
+  // simulation would otherwise be off. No background: the landing page draws
+  // its own dot grid, in the site's colours, behind the transparent canvas.
+  DevicePreview.enable(
+    enabled: true,
+    padding: const EdgeInsets.all(16),
+    backgroundDecoration: null,
+  );
   connectDemoPanel(DevicePreview.maybeController);
   runApp(switch (Uri.base.queryParameters['app']) {
     'todo' => const TodoApp(),

@@ -32,20 +32,22 @@ void main() {
     return (simulation, fit, widget);
   }
 
-  testWidgets('paints the decoration over the real window, in simulated '
+  testWidgets('paints the decoration over the real window, in real '
       'coordinates', (WidgetTester tester) async {
     final (_, _, Widget widget) = buildHarness();
     await tester.pumpWidget(widget);
 
-    // The window corners inverse-mapped through the fit: (0, 0) →
-    // (-200, -100) and (800, 600) → (1400, 1100).
+    // The fit is undone on the canvas — the window origin (0, 0) maps to
+    // (-200, -100) in simulated coordinates, and 1 real px is 2 simulated px
+    // — so the decoration paints the 800x600 window at its real size.
     expect(
       tester.renderObject(find.byType(PreviewBackground)),
       paints
-        ..rect(
-          rect: const Rect.fromLTRB(-200, -100, 1400, 1100),
-          color: kBackground,
-        ),
+        ..save()
+        ..translate(x: -200, y: -100)
+        ..scale(x: 2, y: 2)
+        ..rect(rect: const Rect.fromLTRB(0, 0, 800, 600), color: kBackground)
+        ..restore(),
     );
   });
 
@@ -74,7 +76,10 @@ void main() {
 
     expect(
       tester.renderObject(find.byType(PreviewBackground)),
-      paints..rect(rect: const Rect.fromLTRB(0, 0, 3200, 2400)),
+      paints
+        ..translate(x: 0, y: 0)
+        ..scale(x: 4, y: 4)
+        ..rect(rect: const Rect.fromLTRB(0, 0, 800, 600)),
     );
   });
 }

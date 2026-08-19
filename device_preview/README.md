@@ -53,10 +53,13 @@ DevicePreview.enable(enabled: kDebugMode);  // debug only
 DevicePreview.enable(enabled: false);       // never
 ```
 
-It can also reserve padding around the simulated device and paint a
-background behind it. The safe areas of the hosting platform (a real notch,
-status bar, or home indicator) are automatically added to the padding, so the
-simulated device never hides under the host's own system UI:
+It can also reserve padding around the simulated device and choose the
+background painted behind it. By default that is a `DotGridDecoration` — a
+dark grey with a subtle dot pattern that keeps the device body readable; any
+`Decoration` works, and `null` leaves the area unpainted. The safe areas of
+the hosting platform (a real notch, status bar, or home indicator) are
+automatically added to the padding, so the simulated device never hides
+under the host's own system UI:
 
 ```dart
 DevicePreview.enable(
