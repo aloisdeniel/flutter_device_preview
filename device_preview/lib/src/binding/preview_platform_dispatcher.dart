@@ -381,6 +381,12 @@ class PreviewPlatformDispatcher implements ui.PlatformDispatcher {
   set onKeyData(ui.KeyDataCallback? callback) => host.onKeyData = callback;
 
   @override
+  ui.HitTestCallback? get onHitTest => host.onHitTest;
+
+  @override
+  set onHitTest(ui.HitTestCallback? callback) => host.onHitTest = callback;
+
+  @override
   ui.TimingsCallback? get onReportTimings => host.onReportTimings;
 
   @override

@@ -129,6 +129,8 @@ void main() {
 
     test('pass-through callbacks delegate directly to the host', () {
       void callback() {}
+      ui.HitTestResponse hitTest(ui.HitTestRequest _) =>
+          ui.HitTestResponse.empty;
       dispatcher.onSystemFontFamilyChanged = callback;
       expect(host.onSystemFontFamilyChanged, same(callback));
       expect(dispatcher.onSystemFontFamilyChanged, same(callback));
@@ -140,6 +142,9 @@ void main() {
       expect(host.onPlatformConfigurationChanged, same(callback));
       dispatcher.onDrawFrame = callback;
       expect(host.onDrawFrame, same(callback));
+      dispatcher.onHitTest = hitTest;
+      expect(host.onHitTest, same(hitTest));
+      expect(dispatcher.onHitTest, same(hitTest));
     });
 
     test('scaleFontSize delegates to the host scaler', () {
