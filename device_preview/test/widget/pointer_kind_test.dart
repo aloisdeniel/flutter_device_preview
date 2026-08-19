@@ -456,7 +456,7 @@ void main() {
       expect(DevicePresets.iPhone17Pro.resolve().deviceKind, DeviceKind.phone);
       expect(DevicePresets.iPhone17Pro.resolve().simulatesTouch, isTrue);
       expect(
-        DevicePresets.iPadPro13
+        DevicePresets.iPadPro13M5
             .resolve(orientation: Orientation.landscape)
             .deviceKind,
         DeviceKind.tablet,

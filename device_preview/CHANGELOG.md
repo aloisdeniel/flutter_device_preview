@@ -1,5 +1,21 @@
 # Changelog
 
+## Unreleased
+
+- The Apple catalog now mirrors the iOS 26.5 simulator line-up (21 devices,
+  33 in all), every one derived from its real simulator: added iPhone 17 Pro
+  Max, iPhone SE (3rd gen) — back as `DevicePresets.iPhoneSe3`, with the
+  Home-button chassis, a 20 pt status bar and no other safe area — iPad Pro
+  11"/13" (M5), iPad Air 11"/13" (M2) and (M4), iPad (A16) and iPad (10th
+  gen). The iPad Airs' M3 entries became the M4 generation (same chassis and
+  metrics). Removed iPhone 16e (`DevicePresets.iPhone16e`), which Xcode no
+  longer offers as an iOS 26.5 destination.
+- **Breaking**: the iPad ids and preset names now carry their chip so the
+  generations can coexist: `apple-ipad-pro-11` → `apple-ipad-pro-11-m4`
+  (`DevicePresets.iPadPro11M4`), `apple-ipad-air-11` →
+  `apple-ipad-air-11-m4` (`iPadAir11M4`), and likewise for the 13" models;
+  `apple-ipad-mini` keeps its id but is named "iPad mini (A17 Pro)".
+
 ## 3.0.0-prerelease4
 
 - The iPhone and iPad frames are now derived from the official iOS

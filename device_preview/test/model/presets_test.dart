@@ -7,10 +7,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('DevicePresets catalog', () {
-    test('contains the 26 documented presets with unique ids', () {
-      expect(DevicePresets.all, hasLength(26));
+    test('contains the 33 documented presets with unique ids', () {
+      expect(DevicePresets.all, hasLength(33));
       final ids = DevicePresets.all.map((p) => p.id).toSet();
-      expect(ids, hasLength(26));
+      expect(ids, hasLength(33));
     });
 
     test('every device preset declares a release year', () {
@@ -81,11 +81,13 @@ void main() {
         DevicePresets.iPhone16Plus.portraitSize,
         const ui.Size(430, 932),
       );
-      expect(DevicePresets.iPhone16e.portraitSize, const ui.Size(390, 844));
+      expect(DevicePresets.iPhoneSe3.portraitSize, const ui.Size(375, 667));
+      expect(DevicePresets.iPhoneSe3.devicePixelRatio, 2.0);
       expect(
-        DevicePresets.iPhone16e.portraitPadding,
-        const EdgeInsets.only(top: 47, bottom: 34), // notch, not an island
+        DevicePresets.iPhoneSe3.portraitPadding,
+        const EdgeInsets.only(top: 20), // status bar only, Home button
       );
+      expect(DevicePresets.iPhoneSe3.landscapePadding, EdgeInsets.zero);
       expect(DevicePresets.iPhone16Pro.portraitSize, const ui.Size(402, 874));
       expect(DevicePresets.iPhone16Pro.devicePixelRatio, 3.0);
       expect(
@@ -95,6 +97,10 @@ void main() {
       expect(DevicePresets.iPhone17.portraitSize, const ui.Size(402, 874));
       expect(DevicePresets.iPhone17Pro.portraitSize, const ui.Size(402, 874));
       expect(DevicePresets.iPhone17Pro.devicePixelRatio, 3.0);
+      expect(
+        DevicePresets.iPhone17ProMax.portraitSize,
+        const ui.Size(440, 956),
+      );
       expect(DevicePresets.iPhone17e.portraitSize, const ui.Size(390, 844));
       expect(
         DevicePresets.iPhone17e.portraitPadding,
@@ -102,12 +108,28 @@ void main() {
       );
       expect(DevicePresets.iPhoneAir.portraitSize, const ui.Size(420, 912));
       expect(DevicePresets.iPhoneAir.year, 2025);
-      expect(DevicePresets.iPadPro13.portraitSize, const ui.Size(1032, 1376));
-      expect(DevicePresets.iPadPro13.kind, DeviceKind.tablet);
-      expect(DevicePresets.iPadPro11.portraitSize, const ui.Size(834, 1210));
-      expect(DevicePresets.iPadAir13.portraitSize, const ui.Size(1024, 1366));
-      expect(DevicePresets.iPadAir11.portraitSize, const ui.Size(820, 1180));
-      expect(DevicePresets.iPadAir11.year, 2025);
+      expect(
+        DevicePresets.iPadPro13M5.portraitSize,
+        const ui.Size(1032, 1376),
+      );
+      expect(DevicePresets.iPadPro13M5.kind, DeviceKind.tablet);
+      expect(DevicePresets.iPadPro11M5.portraitSize, const ui.Size(834, 1210));
+      expect(
+        DevicePresets.iPadPro13M4.portraitSize,
+        const ui.Size(1032, 1376),
+      );
+      expect(DevicePresets.iPadPro11M4.portraitSize, const ui.Size(834, 1210));
+      expect(
+        DevicePresets.iPadAir13M4.portraitSize,
+        const ui.Size(1024, 1366),
+      );
+      expect(DevicePresets.iPadAir11M4.portraitSize, const ui.Size(820, 1180));
+      expect(DevicePresets.iPadAir11M4.year, 2026);
+      expect(DevicePresets.iPadAir11M2.portraitSize, const ui.Size(820, 1180));
+      expect(DevicePresets.iPadAir11M2.year, 2024);
+      expect(DevicePresets.iPadA16.portraitSize, const ui.Size(820, 1180));
+      expect(DevicePresets.iPad10.portraitSize, const ui.Size(820, 1180));
+      expect(DevicePresets.iPad10.year, 2022);
       expect(DevicePresets.pixel9.portraitSize, const ui.Size(411.43, 923.43));
       expect(DevicePresets.pixel9.devicePixelRatio, 2.625);
       expect(DevicePresets.pixel10.portraitSize, const ui.Size(411.43, 923.43));
