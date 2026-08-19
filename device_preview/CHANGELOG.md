@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.0-prerelease6
+
+- The iPhone SE (3rd gen) home button ring is now a dark grey instead of the
+  white Xcode strokes it with, so it no longer glows against the dark
+  letterbox.
+
 ## 3.0.0-prerelease5
 
 - The built-in `DevicePresets` are now generated from the shared device spec
