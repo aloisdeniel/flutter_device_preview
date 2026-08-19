@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 3.0.0-prerelease4
 
 - The iPhone and iPad frames are now derived from the official iOS
   Simulator bezel artwork (Xcode's "Show Device Bezels" chrome): exact
