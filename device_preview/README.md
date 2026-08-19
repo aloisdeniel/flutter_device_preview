@@ -97,28 +97,27 @@ Add this small test binding to your `test/` folder. (It is not shipped from
 `lib/`, so that `flutter_test` never lands in your app's own dependencies.)
 
 ```dart
-import 'dart:ui' as ui;
-
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class TestDevicePreviewBinding extends AutomatedTestWidgetsFlutterBinding
     with DevicePreviewBindingMixin {
-  static TestDevicePreviewBinding? _instance;
+  TestDevicePreviewBinding();
 
-  static TestDevicePreviewBinding ensureInitialized({
+  factory TestDevicePreviewBinding.ensureInitialized({
     DeviceSimulation? initialSimulation,
   }) {
     if (_instance == null) {
       DevicePreviewBindingMixin.latchConfiguration(
-        enabled: true,
         initialSimulation: initialSimulation,
       );
       TestDevicePreviewBinding();
     }
     return _instance!;
   }
+
+  static TestDevicePreviewBinding? _instance;
 
   @override
   void initInstances() {
@@ -128,7 +127,7 @@ class TestDevicePreviewBinding extends AutomatedTestWidgetsFlutterBinding
 
   @override
   Widget wrapWithDefaultView(Widget rootWidget) {
-    final ui.FlutterView? wrapperView = previewImplicitView;
+    final wrapperView = previewImplicitView;
     final controller = devicePreview;
     if (wrapperView != null) {
       return View(
