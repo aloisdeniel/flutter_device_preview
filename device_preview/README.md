@@ -184,11 +184,14 @@ await c.update((s) => s.copyWith(
 ));
 ```
 
-Picking a device in DevTools does this for you. The artwork lives in the
-repository's [`device_specs/`](https://github.com/aloisdeniel/flutter_device_preview/tree/master/device_specs)
-catalog and travels over the simulation protocol, so your app only ever holds
-the device it is currently simulating — this package ships no images and no
-SVG dependency. Frames are described in portrait and rotate with the device.
+Picking a device in DevTools does this for you, and every built-in
+`DevicePresets` entry already carries its frame and system UI, so
+`applyPreset` shows the framed device without DevTools attached. The artwork
+is generated from the repository's
+[`device_specs/`](https://github.com/aloisdeniel/flutter_device_preview/tree/master/device_specs)
+catalog into plain `const` data — no images, no SVG dependency, and presets
+your app never references tree-shake away, artwork included. Frames are
+described in portrait and rotate with the device.
 
 Devices also carry a simulated **system UI** (`DeviceSimulation.systemUi`): a
 static status bar and gesture pill — the clock reads 9:41 and never moves —

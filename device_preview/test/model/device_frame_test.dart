@@ -191,9 +191,9 @@ void main() {
       expect(decoded.frame, kFrame);
     });
 
-    test('built-in presets are metrics-only', () {
+    test('built-in presets carry a frame and a brand', () {
       for (final DevicePreset builtIn in DevicePresets.all) {
-        expect(builtIn.frame, isNull, reason: builtIn.id);
+        expect(builtIn.frame, isNotNull, reason: builtIn.id);
         expect(builtIn.brand, isNotNull, reason: builtIn.id);
       }
     });

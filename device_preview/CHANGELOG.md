@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+- The built-in `DevicePresets` are now generated from the shared device spec
+  catalog (`device_specs/` at the repository root) and carry the **complete
+  spec — frame artwork and system UI included** — identical to what the
+  DevTools panel pushes. `applyPreset` therefore shows the framed device
+  without DevTools attached (golden tests, CI). Every preset keeps its name
+  and id; unreferenced presets still tree-shake away, artwork included.
+  Regenerate with `dart run tool/generate_presets.dart` after editing a spec
+  (a guard test fails when the checked-in catalog is stale).
 - The area around the simulated device is now painted by default with the
   new `DotGridDecoration`: a dark grey with a subtle dot pattern (in real
   pixels, so its density does not change with the device or the fit scale),

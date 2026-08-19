@@ -5,20 +5,24 @@ truth** for the device catalog: everything the DevTools panel offers and
 everything it pushes to the previewed app comes from here.
 
 ```console
-# regenerate the extension's catalog after any change
-cd device_preview_devtools_extension
-dart run tool/generate_device_catalog.dart
+# regenerate both generated catalogs after any change
+cd device_preview_devtools_extension && dart run tool/generate_device_catalog.dart
+cd ../device_preview && dart run tool/generate_presets.dart
 ```
 
-The generator writes a single file —
-`device_preview_devtools_extension/lib/src/devices/device_catalog.g.dart` —
-and validates every spec on the way (unknown keys, unknown platforms, screens
-larger than their body, …). `device_catalog_test.dart` fails the suite when
-the checked-in output is stale.
+The extension generator writes
+`device_preview_devtools_extension/lib/src/devices/device_catalog.g.dart` and
+validates every spec on the way (unknown keys, unknown platforms, screens
+larger than their body, …); the package generator writes
+`device_preview/lib/src/presets.g.dart` — the built-in `DevicePresets`, one
+`const DevicePreset` per spec, frame artwork and system UI included.
+`device_catalog_test.dart` and `presets_generated_test.dart` fail their
+suites when a checked-in output is stale, and the latter also proves each
+generated preset equals its spec decoded by `DevicePreset.fromJson`.
 
-The published `device_preview` package contains **no artwork**: the selected
-device's frame travels over the simulation protocol, so an app only ever holds
-the one device it is currently simulating.
+An app therefore holds only the presets it references (`const` entries
+tree-shake, artwork included); a device picked in DevTools still travels over
+the simulation protocol.
 
 ## Format
 
@@ -203,5 +207,7 @@ bar): it is preserved through the tint.
 3. Draw the body with the screen cut-out in mind — it is *behind* the app.
    For the system UI, copy the closest device's `systemUi` and adjust the
    insets; keep every fill on `currentColor` so styling still works.
-4. Regenerate the catalog, then run `flutter test` in
-   `device_preview_devtools_extension`.
+4. Regenerate both catalogs (see above), then run `flutter test` in
+   `device_preview_devtools_extension` and in `device_preview`. A brand-new
+   device may also deserve a doc-comment entry in
+   `device_preview/tool/generate_presets.dart` (`kDescriptions`).

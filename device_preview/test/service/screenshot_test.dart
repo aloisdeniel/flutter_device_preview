@@ -65,7 +65,16 @@ void main() {
 
   testWidgets('a simulated capture covers contentBounds at the simulated '
       'device pixel ratio', (WidgetTester tester) async {
-    await binding.devicePreview!.applyPreset(DevicePresets.iPhone16);
+    // A metrics-only preset (the built-in ones now carry a frame, which
+    // grows the captured contentBounds to the device body).
+    const DevicePreset bare = DevicePreset(
+      id: 'test-bare-iphone-16',
+      name: 'Bare iPhone 16',
+      platform: TargetPlatform.iOS,
+      portraitSize: ui.Size(393, 852),
+      devicePixelRatio: 3.0,
+    );
+    await binding.devicePreview!.applyPreset(bare);
     await tester.pumpWidget(const ColoredBox(color: Color(0xFF2266AA)));
 
     // Mirror the applied simulation in the handler's state, with the fit the
@@ -76,7 +85,7 @@ void main() {
     final Map<String, Object?> result = await capture(tester, state);
 
     expect(result['error'], isNull);
-    // iPhone 16: 393×852 logical at DPR 3 → 1179×2556 pixels, regardless of
+    // 393×852 logical at DPR 3 → 1179×2556 pixels, regardless of
     // the host window's size or ratio. Within one pixel: the engine ceils
     // `bounds × pixelRatio`, so float error can add a pixel.
     expect(result['width'], closeTo(1179, 1));
