@@ -540,7 +540,7 @@ h2 {
 @media (max-width: 940px) { .devtools-grid { grid-template-columns: 1fr; } }
 .devtools-grid p { color: var(--ink-dim); margin-bottom: 14px; }
 .devtools-grid p strong { color: var(--ink); }
-.panel-shot img { display: block; width: 100%; max-width: 400px; margin: 0 auto; border: 1px solid var(--line-strong); border-radius: 12px; box-shadow: 0 24px 60px rgba(0, 0, 0, .45); }
+.panel-shot img { display: block; width: 100%; max-width: 400px; height: auto; aspect-ratio: 1 / 2; object-fit: cover; object-position: top; margin: 0 auto; border: 1px solid var(--line-strong); border-radius: 12px; box-shadow: 0 24px 60px rgba(0, 0, 0, .45); }
 .panel-shot figcaption { text-align: center; color: var(--ink-faint); font-size: 13px; margin-top: 12px; }
 
 /* testing strip */
@@ -886,7 +886,7 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
         <p><a class="btn ghost" href="#demo">↑ Try the panel on the live demo</a></p>
       </div>
       <figure class="panel-shot reveal">
-        <img src="images/devtools-panel.png" width="460" height="1240" loading="lazy" alt="The device_preview DevTools panel, dark themed, with an iPhone 17 Pro applied: a Device section with orientation, system UI and touch input controls, a Display section with brightness, text scale and 24-hour time, a Locale list, seven tri-state Accessibility flags, and a target Platform picker.">
+        <img src="images/devtools-panel.png" width="460" height="920" loading="lazy" alt="The device_preview DevTools panel, dark themed, with an iPhone 17 Pro applied: a Device section with orientation, system UI and touch input controls, a Display section with brightness, text scale and 24-hour time, a Locale list, seven tri-state Accessibility flags, and a target Platform picker.">
         <figcaption>The panel, as it appears in DevTools — every control is a tri-state: on, off, or as the real device.</figcaption>
       </figure>
     </div>
