@@ -66,10 +66,10 @@ void main() {
   });
 
   testWidgets('captures the panel', (WidgetTester tester) async {
-    // A DevTools-sidebar-ish viewport, cropped to a 1:2 aspect ratio so the
-    // website embed stays compact; the panel scrolls, so the lower sections
-    // are simply cut at the fold.
-    tester.view.physicalSize = const ui.Size(460, 920);
+    // A DevTools-sidebar-ish viewport, cropped to a 1:1.5 aspect ratio so
+    // the website embed stays compact; the panel scrolls, so the lower
+    // sections are simply cut at the fold.
+    tester.view.physicalSize = const ui.Size(460, 690);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
 
