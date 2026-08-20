@@ -60,6 +60,25 @@ class DevicePreset {
   /// Unknown keys are ignored; missing required keys or malformed values
   /// throw a [FormatException].
   factory DevicePreset.fromJson(Map<String, Object?> json) {
+    final TargetPlatform platform = decodeEnum(
+      json['platform'],
+      TargetPlatform.values,
+      'platform',
+    );
+    // Bars that do not name their platform get the device's: paint-time
+    // behavior (Android tints bar backgrounds, iOS never does) must follow
+    // the simulated device, not the app's host. Specs in `device_specs/`
+    // rely on this — they never repeat the platform inside `systemUi`.
+    SystemUiSimulation? systemUi = json['systemUi'] == null
+        ? null
+        : SystemUiSimulation.fromJson(decodeMap(json['systemUi'], 'systemUi'));
+    if (systemUi != null && systemUi.platform == null) {
+      systemUi = SystemUiSimulation(
+        statusBar: systemUi.statusBar,
+        navigationBar: systemUi.navigationBar,
+        platform: platform,
+      );
+    }
     return DevicePreset(
       id: decodeString(json['id'], 'id'),
       name: decodeString(json['name'], 'name'),
@@ -67,13 +86,11 @@ class DevicePreset {
           ? null
           : decodeString(json['brand'], 'brand'),
       year: json['year'] == null ? null : decodeInt(json['year'], 'year'),
-      platform: decodeEnum(json['platform'], TargetPlatform.values, 'platform'),
+      platform: platform,
       frame: json['frame'] == null
           ? null
           : DeviceFrame.fromJson(decodeMap(json['frame'], 'frame')),
-      systemUi: json['systemUi'] == null
-          ? null
-          : SystemUiSimulation.fromJson(decodeMap(json['systemUi'], 'systemUi')),
+      systemUi: systemUi,
       portraitSize: decodeSize(json['portraitSize'], 'portraitSize'),
       devicePixelRatio: decodeDouble(
         json['devicePixelRatio'],
@@ -207,13 +224,26 @@ class DevicePreset {
   DeviceSimulation resolve({Orientation orientation = Orientation.portrait}) {
     final EdgeInsets effectivePortraitViewPadding =
         portraitViewPadding ?? portraitPadding;
+    // The bars belong to the simulated device's operating system: stamp the
+    // preset's platform so paint-time behavior (Android tints the bar
+    // backgrounds from the app's `SystemUiOverlayStyle`, iOS never does)
+    // follows the device rather than the host the app runs on.
+    final SystemUiSimulation? resolvedSystemUi = systemUi == null
+        ? null
+        : (systemUi!.platform != null
+              ? systemUi
+              : SystemUiSimulation(
+                  statusBar: systemUi!.statusBar,
+                  navigationBar: systemUi!.navigationBar,
+                  platform: platform,
+                ));
     if (orientation == Orientation.portrait) {
       return DeviceSimulation(
         presetId: id,
         deviceKind: kind,
         screenSize: portraitSize,
         frame: frame,
-        systemUi: systemUi,
+        systemUi: resolvedSystemUi,
         devicePixelRatio: devicePixelRatio,
         padding: portraitPadding,
         viewPadding: effectivePortraitViewPadding,
@@ -235,7 +265,7 @@ class DevicePreset {
       // Frames are described in portrait and rotated at paint time.
       frame: frame,
       // System bars follow the safe areas, which resolve() already rotated.
-      systemUi: systemUi,
+      systemUi: resolvedSystemUi,
       devicePixelRatio: devicePixelRatio,
       padding: resolvedLandscapePadding,
       viewPadding: resolvedLandscapeViewPadding,

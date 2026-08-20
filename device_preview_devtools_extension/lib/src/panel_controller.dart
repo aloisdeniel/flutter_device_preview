@@ -60,6 +60,20 @@ const List<String> kAccessibilityFlags = <String>[
 ///
 /// The extension deliberately does not re-model the domain: unknown keys are
 /// carried along untouched and every getter is null-tolerant.
+/// The `TargetPlatform` names the app-side protocol accepts.
+///
+/// Guards the `systemUi.platform` stamp: a user-imported device may declare
+/// any string, and pushing an unknown name would make the app reject the
+/// whole simulation.
+const Set<String> kTargetPlatforms = <String>{
+  'android',
+  'fuchsia',
+  'iOS',
+  'linux',
+  'macOS',
+  'windows',
+};
+
 @immutable
 class PresetView {
   /// Wraps a raw `DevicePreset.toJson()` map.
@@ -776,9 +790,18 @@ class PanelController extends ChangeNotifier {
     final frame = preset.frame;
     if (frame != null) sim['frame'] = frame;
     // Like the frame, the bars are orientation-independent: they follow the
-    // safe areas, which are resolved below.
+    // safe areas, which are resolved below. They carry the preset's platform
+    // so the app paints them with the simulated device's semantics (Android
+    // tints the bar backgrounds, iOS never does) instead of its own host's.
     final systemUi = preset.systemUi;
-    if (systemUi != null) sim['systemUi'] = systemUi;
+    if (systemUi != null) {
+      sim['systemUi'] = <String, Object?>{
+        ...systemUi,
+        if (systemUi['platform'] == null &&
+            kTargetPlatforms.contains(preset.platform))
+          'platform': preset.platform,
+      };
+    }
     final landscape = orientation == 'landscape';
     final size = preset.portraitSize;
     if (size != null) {

@@ -5,7 +5,8 @@ import 'dart:ui' as ui;
 import 'package:device_preview/device_preview.dart';
 import 'package:device_preview/presets.dart';
 import 'package:device_preview/src/widgets/system_ui_painter.dart';
-import 'package:flutter/foundation.dart' show FlutterExceptionHandler;
+import 'package:flutter/foundation.dart'
+    show FlutterExceptionHandler, defaultTargetPlatform;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/rendering.dart';
@@ -203,6 +204,51 @@ void main() {
       expect(_paintedColors(_frame()), contains(0xFF16181C));
     });
 
+    testWidgets('bar backgrounds follow the simulated device platform, '
+        'not the host', (WidgetTester tester) async {
+      // Under `flutter_test` the app's own platform is Android — the case
+      // where the framework tints bar backgrounds from the app's declared
+      // `SystemUiOverlayStyle`.
+      expect(defaultTargetPlatform, TargetPlatform.android);
+
+      DeviceSimulation simFor(TargetPlatform? platform) => DeviceSimulation(
+        screenSize: const ui.Size(400, 800),
+        padding: const EdgeInsets.only(top: 40, bottom: 30),
+        systemUi: SystemUiSimulation(
+          statusBar: kSystemUi.statusBar,
+          navigationBar: kSystemUi.navigationBar,
+          platform: platform,
+        ),
+      );
+
+      Future<void> pumpUnder(TargetPlatform? platform) async {
+        await binding.devicePreview!.apply(simFor(platform));
+        await tester.pumpWidget(
+          const AnnotatedRegion<SystemUiOverlayStyle>(
+            value: SystemUiOverlayStyle(
+              systemNavigationBarColor: Color(0xFF123456),
+            ),
+            child: ColoredBox(color: Color(0xFF101010)),
+          ),
+        );
+        // Let the binding republish the style and the repaint land.
+        await tester.pump();
+      }
+
+      // An iPhone's bars: iOS never paints bar backgrounds, whatever the
+      // host platform says.
+      await pumpUnder(TargetPlatform.iOS);
+      expect(_paintedFills(_frame()), isNot(contains(0xFF123456)));
+
+      // An Android device's bars: the declared background is painted.
+      await pumpUnder(TargetPlatform.android);
+      expect(_paintedFills(_frame()), contains(0xFF123456));
+
+      // Artwork that does not say falls back to the app's own platform.
+      await pumpUnder(null);
+      expect(_paintedFills(_frame()), contains(0xFF123456));
+    });
+
     testWidgets('showSystemUi: false hides the bars, keeping the safe areas', (
       WidgetTester tester,
     ) async {
@@ -261,6 +307,21 @@ RenderDevicePreviewFrame _frame() {
     visit(view);
   }
   return found.single;
+}
+
+/// Replays the render object's painting and returns the packed colors of its
+/// `drawRect` fills — the bar backgrounds and dividers.
+List<int> _paintedFills(RenderDevicePreviewFrame render) {
+  final _Recorder recorder = _Recorder();
+  try {
+    render.paint(
+      _RecordingContext(ContainerLayer(), render.paintBounds, recorder.canvas),
+      Offset.zero,
+    );
+    return recorder.fills.map(((Rect, int) fill) => fill.$2).toList();
+  } finally {
+    recorder.dispose();
+  }
 }
 
 /// Replays the render object's painting and returns the packed colors it

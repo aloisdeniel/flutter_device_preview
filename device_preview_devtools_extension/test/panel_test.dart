@@ -262,7 +262,10 @@ void main() {
       expect(find.text('New device from JSON'), findsNothing);
       expect(gateway.simulation?['presetId'], 'test-framed');
       expect(gateway.simulation?['frame'], testFramedPresetJson['frame']);
-      expect(gateway.simulation?['systemUi'], testFramedPresetJson['systemUi']);
+      expect(gateway.simulation?['systemUi'], <String, Object?>{
+        ...testFramedPresetJson['systemUi'] as Map<String, Object?>,
+        'platform': testFramedPresetJson['platform'],
+      });
       expect(controller.activeDeviceLabel, 'Test Framed Phone');
       expect(controller.userDevices.map((p) => p.id), ['test-framed']);
 

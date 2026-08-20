@@ -27,7 +27,7 @@ import 'json_utils.dart';
 @immutable
 class SystemUiSimulation {
   /// Creates a system UI description.
-  const SystemUiSimulation({this.statusBar, this.navigationBar});
+  const SystemUiSimulation({this.statusBar, this.navigationBar, this.platform});
 
   /// Decodes a description from the JSON produced by [toJson].
   factory SystemUiSimulation.fromJson(Map<String, Object?> json) {
@@ -40,6 +40,13 @@ class SystemUiSimulation {
           : SystemUiBar.fromJson(
               decodeMap(json['navigationBar'], 'navigationBar'),
             ),
+      platform: json['platform'] == null
+          ? null
+          : decodeEnum(
+              json['platform'],
+              TargetPlatform.values,
+              'systemUi.platform',
+            ),
     );
   }
 
@@ -48,6 +55,15 @@ class SystemUiSimulation {
 
   /// The navigation bar or gesture pill, drawn in the bottom safe area.
   final SystemUiBar? navigationBar;
+
+  /// The platform whose system drew this furniture — the **simulated
+  /// device's** operating system, not the app's `defaultTargetPlatform`.
+  ///
+  /// It decides platform-specific paint behavior: Android tints the bars
+  /// with the app's declared `SystemUiOverlayStyle` background colors, iOS
+  /// never does. Applying a `DevicePreset` fills it in from the preset's
+  /// platform; left null, painting falls back to the app's own platform.
+  final TargetPlatform? platform;
 
   /// Whether nothing would be drawn.
   bool get isEmpty =>
@@ -59,6 +75,7 @@ class SystemUiSimulation {
       'statusBar': statusBar!.toJson(),
     if (navigationBar != null && !navigationBar!.isEmpty)
       'navigationBar': navigationBar!.toJson(),
+    if (platform != null) 'platform': platform!.name,
   };
 
   @override
@@ -68,16 +85,17 @@ class SystemUiSimulation {
     }
     return other is SystemUiSimulation &&
         other.statusBar == statusBar &&
-        other.navigationBar == navigationBar;
+        other.navigationBar == navigationBar &&
+        other.platform == platform;
   }
 
   @override
-  int get hashCode => Object.hash(statusBar, navigationBar);
+  int get hashCode => Object.hash(statusBar, navigationBar, platform);
 
   @override
   String toString() =>
       'SystemUiSimulation(statusBar: $statusBar, '
-      'navigationBar: $navigationBar)';
+      'navigationBar: $navigationBar, platform: $platform)';
 }
 
 /// One system bar: up to three pieces of artwork laid out inside the safe area

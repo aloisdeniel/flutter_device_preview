@@ -214,7 +214,14 @@ class RenderDevicePreviewFrame extends RenderProxyBox {
         platformBrightness:
             simulation.platformBrightness ??
             PlatformDispatcher.instance.platformBrightness,
-        platform: simulation.targetPlatform ?? defaultTargetPlatform,
+        // The bars are the *simulated device's* furniture: their
+        // platform-specific paint behavior follows the device that carried
+        // them, falling back to the app's platform for bar artwork that
+        // does not say (hand-built simulations).
+        platform:
+            simulation.systemUi?.platform ??
+            simulation.targetPlatform ??
+            defaultTargetPlatform,
       ),
       textDirection: _textDirection,
     );

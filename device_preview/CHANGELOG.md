@@ -45,6 +45,12 @@ Highlights, relative to 2.x:
 - **Touch input simulation**: the mouse is reported to the app as a finger on
   touch devices (auto by default), so drags scroll and gestures take their
   touch paths.
+- The simulated system bars now follow the **simulated device's** operating
+  system, not the host's: `SystemUiSimulation.platform` (stamped from the
+  preset by `DevicePreset.resolve` and by the DevTools panel) decides the
+  platform-specific paint behavior, so an app running on an Android host no
+  longer tints a simulated iPhone's status bar and home-indicator band with
+  its Android `SystemUiOverlayStyle` background colors.
 
 Breaking (from the prereleases, for completeness): `DevicePreview.enable`'s
 flag is the named `enabled` parameter; iPad preset ids/names carry their chip

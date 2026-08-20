@@ -45,6 +45,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 29.04 10.98">\n'
@@ -105,6 +106,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 29.04 10.98">\n'
@@ -165,6 +167,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 29.04 10.98">\n'
@@ -225,6 +228,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 29.04 10.98">\n'
@@ -286,6 +290,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 29.04 10.98">\n'
@@ -347,6 +352,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 29.04 10.98">\n'
@@ -408,6 +414,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 29.04 10.98">\n'
@@ -469,6 +476,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 29.04 10.98">\n'
@@ -530,6 +538,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 29.04 10.98">\n'
@@ -591,6 +600,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 29.04 10.98">\n'
@@ -652,6 +662,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 29.04 10.98">\n'
@@ -717,6 +728,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 30.75 11.62">\n'
@@ -782,6 +794,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 30.75 11.62">\n'
@@ -845,6 +858,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 30.75 11.62">\n'
@@ -912,6 +926,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 30.75 11.62">\n'
@@ -975,6 +990,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 30.75 11.62">\n'
@@ -1038,6 +1054,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 30.75 11.62">\n'
@@ -1105,6 +1122,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 30.75 11.62">\n'
@@ -1165,6 +1183,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 30.75 11.62">\n'
@@ -1226,6 +1245,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 30.75 11.62">\n'
@@ -1290,6 +1310,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 25.62 9.68">\n'
@@ -1391,6 +1412,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.android,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 26.48 10.01">\n'
@@ -1459,6 +1481,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.android,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 26.48 10.01">\n'
@@ -1518,6 +1541,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.android,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 26.48 10.01">\n'
@@ -1589,6 +1613,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.android,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 26.48 10.01">\n'
@@ -1660,6 +1685,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.android,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 26.48 10.01">\n'
@@ -1727,6 +1753,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.android,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 26.48 10.01">\n'
@@ -1794,6 +1821,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.android,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 26.48 10.01">\n'
@@ -1873,6 +1901,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.android,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 26.48 10.01">\n'
@@ -1952,6 +1981,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.android,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 26.48 10.01">\n'
@@ -2031,6 +2061,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.android,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 26.48 10.01">\n'

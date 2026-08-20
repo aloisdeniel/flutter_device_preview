@@ -369,7 +369,7 @@ String _emitPreset(Map<String, Object?> spec) {
     buffer.write(_emitFrame(spec['frame'], fileName));
   }
   if (spec['systemUi'] != null) {
-    buffer.write(_emitSystemUi(spec['systemUi'], fileName));
+    buffer.write(_emitSystemUi(spec['systemUi'], platform, fileName));
   }
   buffer
     ..writeln('  );')
@@ -421,12 +421,16 @@ String _emitFrame(Object? frame, String fileName) {
   return buffer.toString();
 }
 
-String _emitSystemUi(Object? systemUi, String fileName) {
+String _emitSystemUi(Object? systemUi, String platform, String fileName) {
   if (systemUi is! Map) {
     throw FormatException('$fileName: "systemUi" must be an object');
   }
   final StringBuffer buffer = StringBuffer()
-    ..writeln('    systemUi: SystemUiSimulation(');
+    ..writeln('    systemUi: SystemUiSimulation(')
+    // The bars belong to the simulated device's operating system; the
+    // platform decides paint-time behavior (Android tints bar backgrounds
+    // from the app's SystemUiOverlayStyle, iOS never does).
+    ..writeln('      platform: TargetPlatform.$platform,');
   for (final String barName in <String>['statusBar', 'navigationBar']) {
     final Object? bar = systemUi[barName];
     if (bar == null) {

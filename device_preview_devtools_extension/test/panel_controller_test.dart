@@ -9,6 +9,14 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'fake_gateway.dart';
 
+/// What the panel pushes for a preset's `systemUi`: the spec's map with the
+/// device's platform stamped in (see `_applyPresetSimulation`).
+Map<String, Object?> stampedSystemUi(Map<String, Object?> spec) =>
+    <String, Object?>{
+      ...spec['systemUi'] as Map<String, Object?>,
+      'platform': spec['platform'],
+    };
+
 void main() {
   late FakeGateway gateway;
   late InMemoryStorage storage;
@@ -370,12 +378,18 @@ void main() {
       await controller!.selectPreset(imported.single);
       expect(gateway.simulation?['presetId'], 'test-framed');
       expect(gateway.simulation?['frame'], testFramedPresetJson['frame']);
-      expect(gateway.simulation?['systemUi'], testFramedPresetJson['systemUi']);
+      expect(
+        gateway.simulation?['systemUi'],
+        stampedSystemUi(testFramedPresetJson),
+      );
       expect(controller!.activeDeviceLabel, 'Test Framed Phone');
       expect(controller!.hasSystemUi, isTrue);
       await controller!.setOrientation('landscape');
       expect(gateway.simulation?['frame'], testFramedPresetJson['frame']);
-      expect(gateway.simulation?['systemUi'], testFramedPresetJson['systemUi']);
+      expect(
+        gateway.simulation?['systemUi'],
+        stampedSystemUi(testFramedPresetJson),
+      );
       expect(gateway.simulation?['screenSize'], {
         'width': 800.0,
         'height': 400.0,
@@ -400,7 +414,7 @@ void main() {
       expect(controller!.isUserDevice('google-pixel-9'), isTrue);
       await controller!.selectPreset(imported.single);
       expect(gateway.simulation?['frame'], spec['frame']);
-      expect(gateway.simulation?['systemUi'], spec['systemUi']);
+      expect(gateway.simulation?['systemUi'], stampedSystemUi(spec));
     });
 
     test('user devices survive a new session (re-read from storage)', () async {
@@ -652,7 +666,12 @@ void main() {
         await controller!.selectPreset(preset);
         expect(gateway.simulation?['presetId'], preset.id);
         expect(gateway.simulation?['frame'], preset.frame);
-        expect(gateway.simulation?['systemUi'], preset.systemUi);
+        expect(
+          gateway.simulation?['systemUi'],
+          preset.systemUi == null
+              ? isNull
+              : stampedSystemUi(preset.json),
+        );
       }
     });
 

@@ -1251,7 +1251,11 @@ document.getElementById('year').textContent = new Date().getFullYear();
     // The frame and the bars are described in portrait and resolved app-side,
     // so rotation never touches them.
     if (preset.frame) sim.frame = preset.frame;
-    if (preset.systemUi) sim.systemUi = preset.systemUi;
+    // The bars carry the device's platform so the app paints them with the
+    // simulated device's semantics instead of the host's.
+    if (preset.systemUi) sim.systemUi = Object.assign(
+      {}, preset.systemUi,
+      preset.systemUi.platform || !preset.platform ? {} : { platform: preset.platform });
     const landscape = orientation === 'landscape';
     const size = preset.portraitSize;
     if (size) {
