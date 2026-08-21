@@ -22,6 +22,8 @@
   "right": 0,
   "bottom": 24
  },
+ "portraitKeyboardHeight": 336,
+ "landscapeKeyboardHeight": 252,
  "frame": {
   "size": {
    "width": 844,

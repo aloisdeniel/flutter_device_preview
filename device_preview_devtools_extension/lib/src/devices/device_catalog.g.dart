@@ -1128,6 +1128,8 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'right': 0,
           'bottom': 32,
         },
+        'portraitKeyboardHeight': 336,
+        'landscapeKeyboardHeight': 252,
         'displayFeatures': <Object?>[
           <String, Object?>{
             'bounds': <String, Object?>{
@@ -1188,6 +1190,8 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'right': 0,
           'bottom': 24,
         },
+        'portraitKeyboardHeight': 336,
+        'landscapeKeyboardHeight': 252,
         'frame': <String, Object?>{
           'size': <String, Object?>{
             'width': 459.05,
@@ -1236,6 +1240,8 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'right': 0,
           'bottom': 24,
         },
+        'portraitKeyboardHeight': 336,
+        'landscapeKeyboardHeight': 252,
         'frame': <String, Object?>{
           'size': <String, Object?>{
             'width': 455.62,
@@ -1284,6 +1290,8 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'right': 0,
           'bottom': 24,
         },
+        'portraitKeyboardHeight': 336,
+        'landscapeKeyboardHeight': 252,
         'frame': <String, Object?>{
           'size': <String, Object?>{
             'width': 384,
@@ -1332,6 +1340,8 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'right': 0,
           'bottom': 24,
         },
+        'portraitKeyboardHeight': 336,
+        'landscapeKeyboardHeight': 252,
         'frame': <String, Object?>{
           'size': <String, Object?>{
             'width': 384,
@@ -1380,6 +1390,8 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'right': 0,
           'bottom': 24,
         },
+        'portraitKeyboardHeight': 336,
+        'landscapeKeyboardHeight': 252,
         'frame': <String, Object?>{
           'size': <String, Object?>{
             'width': 920,
@@ -1428,6 +1440,8 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'right': 0,
           'bottom': 24,
         },
+        'portraitKeyboardHeight': 336,
+        'landscapeKeyboardHeight': 252,
         'frame': <String, Object?>{
           'size': <String, Object?>{
             'width': 844,
@@ -1476,6 +1490,8 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'right': 0,
           'bottom': 24,
         },
+        'portraitKeyboardHeight': 336,
+        'landscapeKeyboardHeight': 252,
         'displayFeatures': <Object?>[
           <String, Object?>{
             'bounds': <String, Object?>{
@@ -1536,6 +1552,8 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'right': 0,
           'bottom': 24,
         },
+        'portraitKeyboardHeight': 336,
+        'landscapeKeyboardHeight': 252,
         'displayFeatures': <Object?>[
           <String, Object?>{
             'bounds': <String, Object?>{
@@ -1596,6 +1614,8 @@ const List<Map<String, Object?>> kDeviceSpecs =
           'right': 0,
           'bottom': 24,
         },
+        'portraitKeyboardHeight': 336,
+        'landscapeKeyboardHeight': 252,
         'displayFeatures': <Object?>[
           <String, Object?>{
             'bounds': <String, Object?>{

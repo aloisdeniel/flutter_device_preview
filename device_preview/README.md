@@ -21,7 +21,7 @@ Control it from **Flutter DevTools**, from **Dart**, or from your **tests**.
 | **Safe areas** | Notches, punch-holes and home indicators, per device and per orientation. |
 | **Orientation** | Portrait ⇄ landscape, with safe areas rotating as the real device rotates them. |
 | **Folds & hinges** | Display features for foldables. |
-| **Keyboard** | The device's software keyboard, raised on demand at the height it really covers, in either orientation — so a form can be checked against it from a desktop, which has no keyboard of its own. Measured per device (every iPhone and iPad today), and the only thing `viewInsets` reports while simulating: the host's own keyboard stays out of the simulated screen. |
+| **Keyboard** | The device's software keyboard, raised on demand at the height it really covers, in either orientation — so a form can be checked against it from a desktop, which has no keyboard of its own. Probed per device for iPhones and iPads, one shared default for Android, and the only thing `viewInsets` reports while simulating: the host's own keyboard stays out of the simulated screen. |
 | **Locales** | An ordered locale list; locale resolution, translations and `Intl` formatting follow. |
 | **Brightness** | Light and dark, applied live. |
 | **Text scale** | Up to 200% and beyond — the fastest way to find overflows. |
@@ -272,12 +272,11 @@ button it covers, the field that does not scroll into view, the sheet that
 loses its bottom padding. On a desktop host there is no keyboard to raise, so
 those bugs normally wait for a real device.
 
-A simulated device brings its own. A device declares the height its stock
-keyboard covers, per orientation — measured on the real thing, so today that
-is every iPhone and iPad in the catalog; an Android keyboard's height belongs
-to the installed keyboard app rather than to the device, and none is claimed
-until it can be measured as reliably. Raising it is one switch in the DevTools
-panel — or one field from Dart:
+A simulated device brings its own. Each device declares the height its stock
+keyboard covers, per orientation: probed on the real thing for every iPhone
+and iPad, and one shared default for the Android devices, whose keyboard
+height belongs to the installed keyboard app rather than to the device.
+Raising it is one switch in the DevTools panel — or one field from Dart:
 
 ```dart
 final preset = DevicePresets.iPhone16Pro;
@@ -302,8 +301,8 @@ band without changing the inset, so the layout is identical either way.
 
 A raised keyboard follows the device: switch to another phone and it comes
 back at *that* phone's height, rotate and it takes the landscape height. A
-device that declares no keyboard — a desktop window, or one whose height has
-not been measured — cannot raise one, and the switch says so by staying off.
+device that declares no keyboard — a desktop window — cannot raise one, and
+the switch says so by staying off.
 
 While a device is simulated, this is the *only* keyboard your app sees:
 `viewInsets` is the simulated keyboard or zero, never the host's. Previewing

@@ -222,12 +222,19 @@ They are measured, not modelled: the probe app of
 simulator and reads the height iOS's own keyboard covers, in both
 orientations.
 
-Only the Apple devices carry them today. An Android keyboard's height is not
-a device property — it belongs to whichever IME is installed — and the
-emulator's Gboard did not report a reproducible height across runs, so the
-Pixel and Galaxy specs declare none rather than an invented one (see
-`.claude/skills/extract-pixel-specs/SKILL.md`). A device that declares no
-height simply cannot raise a keyboard.
+The Apple heights are per device, each probed on its own simulator. **Every
+Android device shares one default — 336 portrait, 252 landscape** — and that
+is deliberate: an Android keyboard's height is not a device property at all,
+it belongs to whichever IME is installed, and the emulator's Gboard did not
+report a reproducible per-device height across runs (see
+`.claude/skills/extract-pixel-specs/SKILL.md`). The default is what Gboard
+covered on a booted Pixel 9 emulator once its layout settled, rounded. Treat
+it as representative rather than exact: it is the right order of magnitude
+for laying a screen out against a keyboard, which is what the simulation is
+for, and it is one number to correct everywhere if a better source appears.
+
+A device may still declare no height at all — the desktop windows do — and a
+device that declares none cannot raise a keyboard.
 
 The height is what a device *has*, never what a simulation *shows*: raising
 the keyboard is a per-simulation choice (`DeviceSimulation.keyboardInset`,

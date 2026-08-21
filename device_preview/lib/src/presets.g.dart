@@ -1442,6 +1442,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 2.625,
     portraitPadding: EdgeInsets.only(top: 54, bottom: 24),
     landscapePadding: EdgeInsets.only(top: 52, bottom: 24),
+    portraitKeyboardHeight: 336,
+    landscapeKeyboardHeight: 252,
     frame: DeviceFrame(
       size: ui.Size(459.05, 964.19),
       screenOffset: ui.Offset(22.48, 20.19),
@@ -1503,6 +1505,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 2.4375,
     portraitPadding: EdgeInsets.only(top: 36, bottom: 32),
     landscapePadding: EdgeInsets.only(top: 56, bottom: 32),
+    portraitKeyboardHeight: 336,
+    landscapeKeyboardHeight: 252,
     displayFeatures: <SimulatedDisplayFeature>[
       SimulatedDisplayFeature(
         bounds: ui.Rect.fromLTRB(425.845, 0, 425.845, 882.87),
@@ -1571,6 +1575,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 2.625,
     portraitPadding: EdgeInsets.only(top: 54, bottom: 24),
     landscapePadding: EdgeInsets.only(top: 52, bottom: 24),
+    portraitKeyboardHeight: 336,
+    landscapeKeyboardHeight: 252,
     frame: DeviceFrame(
       size: ui.Size(455.62, 963.05),
       screenOffset: ui.Offset(20.57, 21.71),
@@ -1631,6 +1637,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 24, bottom: 24),
     landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
+    portraitKeyboardHeight: 336,
+    landscapeKeyboardHeight: 252,
     frame: DeviceFrame(
       size: ui.Size(384, 796),
       screenOffset: ui.Offset(12, 8),
@@ -1703,6 +1711,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 24, bottom: 24),
     landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
+    portraitKeyboardHeight: 336,
+    landscapeKeyboardHeight: 252,
     frame: DeviceFrame(
       size: ui.Size(384, 796),
       screenOffset: ui.Offset(12, 8),
@@ -1775,6 +1785,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 2.0,
     portraitPadding: EdgeInsets.only(top: 24, bottom: 24),
     landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
+    portraitKeyboardHeight: 336,
+    landscapeKeyboardHeight: 252,
     kind: DeviceKind.tablet,
     frame: DeviceFrame(
       size: ui.Size(920, 1444),
@@ -1843,6 +1855,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 2.0,
     portraitPadding: EdgeInsets.only(top: 24, bottom: 24),
     landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
+    portraitKeyboardHeight: 336,
+    landscapeKeyboardHeight: 252,
     kind: DeviceKind.tablet,
     frame: DeviceFrame(
       size: ui.Size(844, 1324),
@@ -1912,6 +1926,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 24, bottom: 24),
     landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
+    portraitKeyboardHeight: 336,
+    landscapeKeyboardHeight: 252,
     displayFeatures: <SimulatedDisplayFeature>[
       SimulatedDisplayFeature(
         bounds: ui.Rect.fromLTRB(0, 420, 360, 420),
@@ -1992,6 +2008,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 2.5,
     portraitPadding: EdgeInsets.only(top: 24, bottom: 24),
     landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
+    portraitKeyboardHeight: 336,
+    landscapeKeyboardHeight: 252,
     displayFeatures: <SimulatedDisplayFeature>[
       SimulatedDisplayFeature(
         bounds: ui.Rect.fromLTRB(0, 489.5, 731, 489.5),
@@ -2072,6 +2090,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 2.625,
     portraitPadding: EdgeInsets.only(top: 24, bottom: 24),
     landscapePadding: EdgeInsets.only(top: 24, bottom: 24),
+    portraitKeyboardHeight: 336,
+    landscapeKeyboardHeight: 252,
     displayFeatures: <SimulatedDisplayFeature>[
       SimulatedDisplayFeature(
         bounds: ui.Rect.fromLTRB(430, 0, 430, 954),

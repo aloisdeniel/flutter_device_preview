@@ -46,9 +46,10 @@ Highlights, relative to 2.x:
 - **Touch input simulation**: the mouse is reported to the app as a finger on
   touch devices (auto by default), so drags scroll and gestures take their
   touch paths.
-- **A simulated software keyboard**: every iPhone and iPad carries the height
-  its own keyboard covers, per orientation — probed from the real simulator
-  like every other metric — and one switch in DevTools (or
+- **A simulated software keyboard**: every device carries the height its
+  keyboard covers, per orientation — probed from its own simulator for the
+  iPhones and iPads, one shared default for the Android devices, whose
+  keyboard height belongs to the installed IME — and one switch in DevTools (or
   `DeviceSimulation.keyboardInset` from Dart) raises it. It arrives as
   `MediaQuery.viewInsets.bottom`, so `resizeToAvoidBottomInset`,
   scroll-into-view and the collapsing bottom safe area all behave as they do

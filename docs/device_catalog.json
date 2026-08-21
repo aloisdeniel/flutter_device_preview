@@ -1856,6 +1856,8 @@
         "right": 0,
         "bottom": 32
       },
+      "portraitKeyboardHeight": 336,
+      "landscapeKeyboardHeight": 252,
       "displayFeatures": [
         {
           "bounds": {
@@ -1948,6 +1950,8 @@
         "right": 0,
         "bottom": 24
       },
+      "portraitKeyboardHeight": 336,
+      "landscapeKeyboardHeight": 252,
       "frame": {
         "size": {
           "width": 459.05,
@@ -2028,6 +2032,8 @@
         "right": 0,
         "bottom": 24
       },
+      "portraitKeyboardHeight": 336,
+      "landscapeKeyboardHeight": 252,
       "frame": {
         "size": {
           "width": 455.62,
@@ -2108,6 +2114,8 @@
         "right": 0,
         "bottom": 24
       },
+      "portraitKeyboardHeight": 336,
+      "landscapeKeyboardHeight": 252,
       "frame": {
         "size": {
           "width": 384,
@@ -2200,6 +2208,8 @@
         "right": 0,
         "bottom": 24
       },
+      "portraitKeyboardHeight": 336,
+      "landscapeKeyboardHeight": 252,
       "frame": {
         "size": {
           "width": 384,
@@ -2292,6 +2302,8 @@
         "right": 0,
         "bottom": 24
       },
+      "portraitKeyboardHeight": 336,
+      "landscapeKeyboardHeight": 252,
       "frame": {
         "size": {
           "width": 920,
@@ -2379,6 +2391,8 @@
         "right": 0,
         "bottom": 24
       },
+      "portraitKeyboardHeight": 336,
+      "landscapeKeyboardHeight": 252,
       "frame": {
         "size": {
           "width": 844,
@@ -2466,6 +2480,8 @@
         "right": 0,
         "bottom": 24
       },
+      "portraitKeyboardHeight": 336,
+      "landscapeKeyboardHeight": 252,
       "displayFeatures": [
         {
           "bounds": {
@@ -2569,6 +2585,8 @@
         "right": 0,
         "bottom": 24
       },
+      "portraitKeyboardHeight": 336,
+      "landscapeKeyboardHeight": 252,
       "displayFeatures": [
         {
           "bounds": {
@@ -2672,6 +2690,8 @@
         "right": 0,
         "bottom": 24
       },
+      "portraitKeyboardHeight": 336,
+      "landscapeKeyboardHeight": 252,
       "displayFeatures": [
         {
           "bounds": {
