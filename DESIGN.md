@@ -1,17 +1,3 @@
-# Judge Scores
-
-| Criterion (1–10) | Design A (minimalist) | Design B (maximalist) |
-|---|---|---|
-| SDK-correctness vs. researched 3.44 internals | **9** — every claim matches the research; gesture-slop formula omits fit-scale | **9** — equally well-cited; letterbox "paint outside bounds" and `OffsetLayer.toImage` claims are the two spots not backed by the research |
-| Robustness across Flutter versions | **9** — smallest surface, compile-loud drift strategy, nothing depends on unclipped roots | **7** — letterbox chrome, screenshot, and the pointer policy state machine each add version-sensitive assumptions |
-| API ergonomics | **7.5** — clean but atomic-override a11y struct is awkward; no partial-update helper; binding-hosted API mixes concerns | **8.5** — controller + `update(mutate)`, tri-state a11y flags, `initialSimulation` for CI are all better; options object slightly over-engineered |
-| DevTools protocol quality | **7** — sound but no versioning, no echo suppression, no restart re-push | **9** — `protocolVersion`, `capabilities`, `requestId` echo, `ready` event, restart re-push are exactly right |
-| Testability | **8** — excellent pure-unit decomposition; but the real binding only ever runs in one e2e smoke | **8.5** — same decomposition **plus** the mixin (`TestDevicePreviewBinding` on the test binding) which closes A's biggest gap |
-
-**Verdict**: A's core (three override seams, stateless pointer remap, no letterbox chrome, compile-loud wrappers) is the right skeleton. B wins on API shape (controller, tri-state a11y, mixin), protocol design, viewInsets mapping, and the fit-scale-aware gesture-slop formula. The synthesis below is A's core with B's controller/protocol/testing grafted on; letterbox painting and the pointer policy machine are cut; screenshot is a capability-flagged optional module.
-
----
-
 # device_preview 3.0 — Final Design Document
 
 A custom `WidgetsBinding` that simulates device characteristics (screen metrics, safe areas, locale, brightness, text scale, accessibility flags, target platform) at the engine-abstraction level. **No in-app UI.** Driven programmatically and by a DevTools extension over VM service extensions. All SDK file:line references are Flutter 3.44.0 per the research report (the shipped package's minimum has since moved to Flutter 3.47.0).
@@ -322,7 +308,8 @@ class FitTransform {
 // package:device_preview/presets.dart
 // ---------------------------------------------------------------------------
 
-/// Metrics-only description of a device. No frame artwork, no images.
+/// Description of a device: metrics, and — as built (§8.2) — its frame
+/// artwork and simulated system UI, as `const` data. No image assets.
 @immutable
 class DevicePreset {
   const DevicePreset({
@@ -351,7 +338,8 @@ class DevicePreset {
 
 enum DeviceKind { phone, tablet, foldable, desktop }
 
-/// Built-in catalog (~15 static const entries; unreferenced ones tree-shake).
+/// Built-in catalog (as built: 33 static const entries generated from
+/// `device_specs/`; unreferenced ones tree-shake, artwork included).
 abstract final class DevicePresets {
   static const DevicePreset iPhoneSe3 = ...;
   static const DevicePreset iPhone16 = ...;
@@ -423,7 +411,7 @@ Lazy `??=` creation inside the getter eliminates all init-order concerns (`Gestu
 
 - `viewId` = **real** implicit viewId (load-bearing: pointer `datum.viewId`, `_viewIdToRenderView` keying at `rendering/binding.dart:343-349`, render/semantics natives, `ViewFocusEvent`).
 - When `simulatesMetrics`: `physicalSize` = simLogical × simDPR; `devicePixelRatio` = simDPR; `physicalConstraints` = `ViewConstraints.tight(simPhysical)` (public ctor); `padding` / `viewPadding` = `PreviewViewPadding implements ui.ViewPadding` (config logical × simDPR; fake pattern — private upstream ctor); `systemGestureInsets` = simulated value or zero; `displayFeatures` = simulated list or `const []`; `displayCornerRadii` = `null` (interface member new in 3.44 — must be implemented).
-- **`viewInsets`** (keyboard): NOT forced to zero. The real inset is mapped into simulated space: `simInsetLogical = hostInsetPhysical / realDPR / fit.scale`, returned as `PreviewViewPadding` at simDPR. Real inset changes arrive via the real `onMetricsChanged` trampoline → `handleMetricsChanged()`. Text fields keep avoiding the real keyboard; geometry is host-faithful, not device-faithful (documented).
+- **`viewInsets`** (keyboard): the simulated device's own, and nothing else — `keyboardInset × simDPR`, or zero. The host's inset is *not* mapped in: it belongs to a screen that is not the one being simulated, so a preview on a phone would otherwise report the host's keyboard inside a simulated iPad (§8.2 deviation 18, which reversed the original decision once a keyboard could be simulated). Pass-through (no metric simulation) still returns the host view's insets untouched.
 - **`gestureSettings`**: `GestureSettings(physicalTouchSlop: hostSlop / realDPR / fit.scale * simDPR)` — because `DeviceGestureSettings.fromView` divides by the wrapper's (simulated) DPR (`gestures/gesture_settings.dart:29-34`), this makes a drag require the same **physical finger travel on the real screen** as without simulation. (Fit-scale term included — B's formula, adopted over A's.)
 - `display` = delegate (nothing in the framework reads it).
 - **`render(scene, {size})`**: delegate to the host view, passing `size: realPhysicalSize` explicitly (belt-and-braces with `toPhysicalSize`, §3.2). **`updateSemantics`**: delegate.
@@ -492,7 +480,7 @@ Debug diagnostic: applying a brightness simulation while `debugBrightnessOverrid
 
 ### 3.5 Screenshot (OPTIONAL MODULE — capability-flagged, failure-isolated)
 
-`ext.device_preview.screenshot` renders `renderView.layer` (the root `TransformLayer`, an `OffsetLayer`) via `toImage(bounds, pixelRatio:)`: bounds = `fit.offset × realDPR & simLogical × fit.scale × realDPR`; `pixelRatio = simDPR / (fit.scale × realDPR)` → exactly simLogical × simDPR pixels; PNG → base64. Entirely inside `service/screenshot.dart`; any failure returns a protocol error envelope and can never affect the simulation core. Advertised via `capabilities.screenshot`; DevTools hides the button when false. This is the **only** optional module in v1.
+`ext.device_preview.screenshot` renders `renderView.layer` (the root `TransformLayer`, an `OffsetLayer`) via `toImage(bounds, pixelRatio:)`: bounds = `fit.offset × realDPR & simLogical × fit.scale × realDPR`; `pixelRatio = simDPR / (fit.scale × realDPR)` → exactly simLogical × simDPR pixels; PNG → base64. Entirely inside `service/screenshot.dart`; any failure returns a protocol error envelope and can never affect the simulation core. Advertised via `capabilities.screenshot`; DevTools hides the button when false. This is the **only** optional module in v1. *(3.0 decision: capture stays a DevTools affordance — there is no `controller.capture()`. A public capture API would put an image-encoding surface, and its cross-version `OffsetLayer.toImage` assumptions, into the package's contract for something goldens already cover with `matchesGoldenFile` under a simulated binding. The repository's own release screenshots drive the module directly from `example/test/screenshots/`, `implementation_imports` and all, which is the honest price of keeping it out of the API.)*
 
 ### 3.6 Threat matrix
 
@@ -517,7 +505,7 @@ Debug diagnostic: applying a brightness simulation while `debugBrightnessOverrid
 
 All registered via raw `developer.registerExtension` (own `ext.device_preview.` prefix — never `ext.flutter.`), inside `if (!kReleaseMode)` so release builds tree-shake them. All request params are strings (VM contract): complex payloads travel as one JSON-encoded string param. Handlers never throw: failures return `{"error": {"code", "message"}}` inside a success response; only malformed JSON returns `ServiceExtensionResponse.error(invalidParams, …)`. Target platform is carried in `simulation.targetPlatform` and applied app-side — DevTools never calls `ext.flutter.platformOverride` (one writer).
 
-`protocolVersion` is **3** (the constant lives in `DevicePreviewProtocol.protocolVersion`; this document mirrors it): version 1 shipped without `simulation.frame` (the screen outline and body artwork), without `simulation.systemUi` (the decorative status bar and gesture pill) and without the `frame` capability flag; version 3 replaced `simulation.pointerKind` with the tri-state `simulation.touchInput` plus `simulation.deviceKind` (an unset `touchInput` follows the simulated device instead of meaning "off"). The additions are additive — an older panel talking to a newer app simply never sends them.
+`protocolVersion` is **4** (the constant lives in `DevicePreviewProtocol.protocolVersion`; this document mirrors it): version 1 shipped without `simulation.frame` (the screen outline and body artwork), without `simulation.systemUi` (the decorative status bar and gesture pill) and without the `frame` capability flag; version 3 replaced `simulation.pointerKind` with the tri-state `simulation.touchInput` plus `simulation.deviceKind` (an unset `touchInput` follows the simulated device instead of meaning "off"), and later grew the optional `simulation.systemUi.platform` without a version bump — a panel that never sends it simply leaves the app painting the bars with its own platform (§8.2); version 4 added `simulation.keyboardInset` and the `keyboard` capability flag (§8.2). The additions are additive — an older panel talking to a newer app simply never sends them.
 
 ### Methods
 
@@ -533,7 +521,7 @@ All registered via raw `developer.registerExtension` (own `ext.device_preview.` 
 
 ```json
 {
-  "protocolVersion": 3,
+  "protocolVersion": 4,
   "enabled": true,
   "simulation": { /* DeviceSimulation.toJson(), or null when passing through */ },
   "realDevice": {
@@ -546,7 +534,8 @@ All registered via raw `developer.registerExtension` (own `ext.device_preview.` 
     "targetPlatform": "iOS"
   },
   "fit": {"scale": 0.82, "offset": {"x": 12.0, "y": 0.0}},
-  "capabilities": {"targetPlatform": true, "screenshot": true, "frame": true}
+  "capabilities": {"targetPlatform": true, "screenshot": true, "frame": true,
+                   "keyboard": true}
 }
 ```
 
@@ -571,6 +560,7 @@ All registered via raw `developer.registerExtension` (own `ext.device_preview.` 
   "padding": {"left": 0, "top": 20, "right": 0, "bottom": 0},
   "viewPadding": {"left": 0, "top": 20, "right": 0, "bottom": 0},
   "systemGestureInsets": {"left": 0, "top": 0, "right": 0, "bottom": 0},
+  "keyboardInset": 336.0,
   "displayFeatures": [{"bounds": {"left": 0, "top": 0, "right": 0, "bottom": 0},
                        "type": "hinge", "state": "postureFlat"}],
   "locales": ["fr-FR", "en-US"],
@@ -586,7 +576,7 @@ All registered via raw `developer.registerExtension` (own `ext.device_preview.` 
 
 | Event kind | Data | When |
 |---|---|---|
-| `device_preview.ready` | `{"protocolVersion": 3}` | Once from `initServiceExtensions` — i.e. again after every hot restart. The DevTools re-push trigger. |
+| `device_preview.ready` | `{"protocolVersion": 4}` | Once from `initServiceExtensions` — i.e. again after every hot restart. The DevTools re-push trigger. |
 | `device_preview.stateChanged` | `{"simulation": {…} \| null, "fit": {…}, "source": "programmatic" \| "devtools" \| "restore", "requestId": "<echoed if provided>"}` | After every successful apply/reset, whatever the source. `requestId` echo lets the panel suppress its own echoes. |
 | `device_preview.presetsChanged` | `{"count": 17}` | On `registerPreset` — panel refetches `listPresets`. |
 
@@ -653,7 +643,7 @@ Every open question from both inputs, decided:
 
 | # | Question | **Decision** | Rationale |
 |---|---|---|---|
-| 1 | Keyboard `viewInsets` while simulating | **Map real insets into simulated space** (B), not zero (A) | Pure math, no SDK risk, and text fields keep avoiding the real keyboard; strictly better than zero. |
+| 1 | Keyboard `viewInsets` while simulating | **Map real insets into simulated space** (B), not zero (A) — *reversed in §8.2 deviation 18: the simulated keyboard, or zero* | Mapping was strictly better than zero while no keyboard could be simulated; once one could, reporting the host's keyboard inside another device stopped making sense. |
 | 2 | SDK interface drift policy | **No hard upper Flutter bound**; beta CI compile job + fast patch releases; per-member checklist test as canary | Hard caps punish users on every Flutter release; compile-loud drift plus CI is the honest mitigation. |
 | 3 | Nonlinear (Android 14+) text scaling | **Linear forever; no curve table** | Engine-native scaler is unreachable; linear matches flutter_test; approximations would mislead more than help. |
 | 4 | Letterbox background | **Engine clear color (black); no chrome painting** | B's paint-outside-bounds trick rests on an undocumented no-root-clip invariant; cosmetic gain, structural risk. |
@@ -674,7 +664,7 @@ Every open question from both inputs, decided:
 | 19 | Gesture slop formula | **Fit-scale-aware: `hostSlop / realDPR / fit.scale × simDPR`** (B) | Preserves physical finger travel on the real screen — what a human at the device actually feels. |
 | 20 | Orientation representation | **Metric fields stored orientation-resolved + `orientation` label** (B); `setOrientation` swaps via preset lookup or the documented rotation rule | Wrappers stay dumb; swap logic is pure and unit-tested. |
 
-**Residual risks, ranked** (all accepted): (1) `implements`-interface drift — structural cost of the approach, mitigated per #2; (2) third-party code holding raw `ui.PlatformDispatcher.instance` sees real values — documented limitation, framework paths audited clean; (3) keyboard geometry is host-faithful, not simulated-device-faithful — documented; (4) `_updateSystemChrome` status-bar cosmetics follow simulated padding — documented; (5) screenshot `OffsetLayer.toImage` coordinate assumptions across SDK versions — isolated module, error-enveloped; (6) screen-reader UX on letterboxed screens — manual checklist item per release.
+**Residual risks, ranked** (all accepted): (1) `implements`-interface drift — structural cost of the approach, mitigated per #2; (2) third-party code holding raw `ui.PlatformDispatcher.instance` sees real values — documented limitation, framework paths audited clean; (3) ~~keyboard geometry is host-faithful, not simulated-device-faithful~~ — closed by §8.2 deviation 18: the keyboard is now the simulated device's, and a text field on a mobile host no longer avoids the *host's* keyboard while previewing; (4) `_updateSystemChrome` status-bar cosmetics follow simulated padding — documented; (5) screenshot `OffsetLayer.toImage` coordinate assumptions across SDK versions — isolated module, error-enveloped; (6) screen-reader UX on letterboxed screens — manual checklist item per release.
 ---
 
 ## 8. As-built deviations (implementation addendum)
@@ -682,7 +672,7 @@ Every open question from both inputs, decided:
 The implementation follows this document with these reviewed deviations:
 
 1. **`platformDispatcher` override placement** — lives on the concrete `DevicePreview`, not the mixin: `TestWidgetsFlutterBinding` narrows the getter's return type to `TestPlatformDispatcher`, so a mixin-level override would be an invalid override when layered over test bindings. Test compositions route simulation through the wrapper *view* instead (`wrapWithDefaultView` → `View(view: previewImplicitView)`), which covers MediaQuery, root layout, the fit matrix, and pointer remap — but not framework reads of `binding.platformDispatcher` (e.g. `WidgetsApp` locale resolution).
-2. **No `lib/test_support.dart`** — shipping it would force `flutter_test` into consumers' regular dependencies. The `TestDevicePreviewBinding` recipe is documented in the README and used internally from `test/support/test_binding.dart`. A separate `device_preview_test` package is the future home if demand appears.
+2. **No `lib/test_support.dart`** — shipping it would force `flutter_test` into consumers' regular dependencies. The `TestDevicePreviewBinding` recipe is documented in the README and used internally from `test/support/test_binding.dart`. *(Reaffirmed for 3.0: the recipe stays a recipe. A `device_preview_test` package would have to version alongside this one for a binding users can equally well paste and adapt to their own test binding; it remains the future home if field feedback asks for it.)*
 3. **Display features rotate with orientation** — `SimulatedDisplayFeature.rotatedToLandscape/rotatedToPortrait` applied by `resolve()`, `setOrientation`, and mirrored in the DevTools panel. `systemGestureInsets` deliberately do *not* rotate (edge semantics are orientation-stable on real platforms); pinned by test.
 4. **Controller mutations are serialized** — `apply`/`update`/`applyPreset`/`setOrientation` run through an internal queue; state commits before the (debug-only) targetPlatform reassemble await, and `stateChanged` posts in a `finally`. DevTools panel writes are serialized the same way.
 5. **`sendPortPlatformMessage(Object port)`** — the web `dart:ui` interface declares `Object`, native declares `SendPort`; `Object` is the only signature valid on both compilers.
@@ -693,10 +683,37 @@ The implementation follows this document with these reviewed deviations:
 Simulating a device's *appearance* — the outline its screen is clipped to and the body painted behind it — added a fourth override seam and moved the catalog. Both contradict decisions taken earlier in this document, deliberately:
 
 7. **A fourth framework seam: `wrapWithDefaultView`** (§0 claimed exactly three). `DevicePreviewBindingMixin` wraps the root widget in `DevicePreviewFrame` — a `RenderProxyBox` that paints the body **outside its own bounds** and pushes a clip path around the app. The alternative, a custom `RenderView`, is not reachable: since the multi-view refactor the `View` widget owns its `RenderView`. The wrapper is inert without a frame (no clip layer, no painting), and compositions that build their own `View` (test bindings) opt in by wrapping with `DevicePreviewFrame` themselves — the same one line the README recipe now carries.
-8. **The device catalog moved into the extension** (§1 decision 11 said the app is the single source of truth). Frames carry artwork; shipping a dozen-odd device bodies inside the published package would tax every app for something only DevTools users see. The catalog is now `device_specs/*.json` at the repository root, generated by `device_preview_devtools_extension/tool/generate_device_catalog.dart` into one `device_catalog.g.dart`, and pushed device-by-device over `setSimulation`. `listPresets` still works and is still merged in (app-registered customs only, deduplicated by id), so the protocol did not lose a capability — only the *default* catalog changed sides. The spec JSON is exactly `DevicePreset.toJson()`, so `DevicePreset.fromJson` reads a spec file directly — `brand`, `year` and `frame` included.
+8. **The device catalog moved into the extension** (§1 decision 11 said the app is the single source of truth). Frames carry artwork; shipping a dozen-odd device bodies inside the published package would tax every app for something only DevTools users see. The catalog is now `device_specs/*.json` at the repository root, generated by `device_preview_devtools_extension/tool/generate_device_catalog.dart` into one `device_catalog.g.dart`, and pushed device-by-device over `setSimulation`. `listPresets` still works and is still merged in (app-registered customs only, deduplicated by id), so the protocol did not lose a capability — only the *default* catalog changed sides. The spec JSON is exactly `DevicePreset.toJson()`, so `DevicePreset.fromJson` reads a spec file directly — `brand`, `year` and `frame` included. *(Half-reversed since: the package generates the same specs into its own `const` presets — see §8.2 deviation 15. The extension keeps its catalog, the app no longer goes without one.)*
 9. **Frames are described in portrait and rotated at paint time** — a quarter turn mapping `(x, y) → (y, portraitWidth − x)`, the same rotation display features use. `setOrientation` therefore leaves `frame` untouched, and `DeviceFrame` needs no landscape variant.
 10. **The letterbox fits the body, not the screen** — `FitTransform.compute` takes an optional `contentBounds` (`DeviceSimulation.contentBounds`: the screen rectangle grown to the body, usually starting at negative coordinates). `offset` remains the position of the simulated origin, so pointer remapping, the root paint matrix and the state shape are unchanged. The screenshot module captures the same rectangle, so a framed device screenshots with its body.
 11. **Simulated system UI** — `DeviceSimulation.systemUi` draws a static status bar and gesture pill over the app. Neither bar declares a height: each fills the safe area on its side, which is already orientation-resolved, so an iPhone's status bar vanishes in landscape and a home-button device gets no pill, with no landscape variant to author. Artwork is tinted at paint time from the app's `SystemUiOverlayStyle` (`fill="currentColor"` shapes follow `SvgDrawing.paint(currentColor:)`), so styling the bars is visible while it is written. Platform-specific paint behavior — Android fills the bar backgrounds from the style's `statusBarColor`/`systemNavigationBarColor`, iOS never does — follows `systemUi.platform`, the **simulated device's** operating system (stamped from the preset by `DevicePreset.resolve` and by the panel), falling back to the app's own `defaultTargetPlatform` for bar artwork that does not say. `showSystemUi` hides them without touching the safe areas — a display switch, invisible to the app.
 12. **The overlay style needs its own annotation lookup.** `RenderView.compositeFrame` probes `AnnotatedRegion<SystemUiOverlayStyle>` at points derived from `paintBounds` — physical coordinates that assume the root transform is a plain `devicePixelRatio` scale. Under [PreviewViewConfiguration] it is not (fit scale + letterbox offset), so the framework's probes land off the simulated screen and find nothing, and `SystemChrome.latestStyle` never sees an `AppBar`'s style while previewing. The binding therefore repeats the lookup with the matrix the frame was actually composited with, and falls back to `SystemChrome.latestStyle` (a `@visibleForTesting` getter, read behind an ignore) for styles set by a direct `setSystemUIOverlayStyle` call. Both are read from a microtask queued after the frame, because `latestStyle` is committed from a microtask of its own.
 13. **Pointer kind simulation** — `DeviceSimulation.touchInput` relabels every host pointer (`retargetPointerKind`, pure, beside the geometric rewrite in the same packet pass). It is a tri-state: unset means *auto*, resolved against `DeviceSimulation.deviceKind` — a phone, tablet or foldable is a touchscreen, a desktop window is not, and neither is a bare custom size — so picking a device is enough to get the right pointer. Reporting a mouse as touch is what makes a preview draggable at all: `ScrollBehavior.dragDevices` excludes the mouse on desktop and the web. Three rules keep it honest: hover events are **dropped** rather than relabelled (a finger cannot hover, and `PointerEventConverter` is stateless so the missing events cannot desynchronize it); pointer *signals* keep their real kind, since the wheel has no touch equivalent; and when the kind changes the binding synthesizes a far-away hover for every known host mouse, because from then on its hovers vanish and whatever it was hovering would stay highlighted forever. `MouseTracker` ignores non-mouse/stylus events, so relabelled pointers never touch mouse state.
 14. **An embedded SVG subset renderer** (`package:device_preview/svg.dart`) — filled paths/rects/circles/ellipses/polygons, groups, transforms, clip paths, flat colors. No dependency was acceptable in a package that depends on flutter alone, and device artwork needs nothing more. Malformed artwork is failure-isolated: reported once through `FlutterError.reportError`, then skipped.
+
+### 8.2 Since 3.0.0-prerelease1 (the catalog comes back, in `const`)
+
+15. **The built-in presets are generated from the specs, artwork included** — reversing the trade in deviation 8. `device_preview/tool/generate_presets.dart` emits `lib/src/presets.g.dart`: one `static const DevicePreset` per `device_specs/*.json`, `frame` and `systemUi` inlined as `const` SVG source strings (≈300 KB of source for 33 devices). The cost feared in 8 does not materialize because the entries are `const` and reached only by name: an app compiles in the devices it mentions and nothing else — `DevicePresets.all` and `byId` are the two escapes that pull the lot. What it buys is `applyPreset` showing a *framed*, bar-carrying device with no DevTools attached, which is what golden tests and CI screenshots need. `device_specs/` stays the single source: `presets_generated_test.dart` fails when the checked-in output drifts, and also asserts each generated preset equals its spec decoded through `DevicePreset.fromJson`. The extension keeps its own generated catalog (deviation 8's `device_catalog.g.dart`) so the panel can list every device before an app attaches, and independently of the package version it talks to.
+16. **Devices from JSON at runtime** — `DevicePreviewController.applyJson(json)` decodes a spec (string or map, the `DevicePreset.toJson()` format), upserts it into the preset list by id and applies it, so a device that is not in the catalog needs no Dart. The panel's **New device from JSON…** entry is the same path over the wire: validated on paste, applied immediately, kept in browser storage under *My devices*.
+17. **The letterbox is painted** (§3.2 originally left it to the engine's black). `DevicePreview.enable` takes `padding` — room reserved around the device, on top of the host's own safe areas, which are always folded in so a preview running on a real phone never slides under its notch — and `backgroundDecoration`, any `Decoration`, painted in **real** logical pixels by an internal render object so a pattern keeps its density whatever the fit scale is. The default is `DotGridDecoration`, dark grey with a dot grid: engine black swallowed dark device bodies. `null` restores the unpainted letterbox.
+18. **A simulated software keyboard** (protocol 4). `DeviceSimulation.keyboardInset` is a bottom view inset in simulated logical pixels; `PreviewFlutterView.viewInsets` reports `keyboardInset × simDPR` and nothing else while metrics are simulated — the host's own keyboard inset no longer maps in (§3.2's rule, reversed here: a host keyboard reported inside a simulated device is a length from the wrong screen), so the insets are zero unless the simulated device raises one. The existing `padding` getter then collapses the bottom safe area under it, exactly as the engines do with a real keyboard. Everything downstream (`resizeToAvoidBottomInset`, scroll-into-view, `SafeArea`) therefore works with no further plumbing. The heights live on the device: `DevicePreset.portraitKeyboardHeight` / `landscapeKeyboardHeight`, measured on the real simulator/emulator like every other metric, with no rotation rule between them. Raising the keyboard is a *simulation* choice, so `resolve()` never does it; `applyPreset` and `setOrientation` re-resolve a raised keyboard to the new device's or orientation's height (a device that declares none drops it), and the DevTools panel mirrors that rule. `DevicePreviewFrame` paints the band under the system bars, gated by `showSystemUi` so hiding it changes nothing the app can observe. It is a near-black fill at **80%** opacity over 45° hatching at a fixed 12 px pitch: translucent because the covered content is exactly what the developer is asking about, hatched so the band still reads as an overlay rather than as a surface the app painted itself. It carries one small monoline keyboard mark — an outline, eight key dots and a space bar, drawn from canvas primitives on a 16-unit grid (the neutral geometry of Vercel's Geist icons) rather than lifted from an icon set, since the package depends on Flutter alone. It says what the space *is*; it is deliberately not a keyboard layout with keys to press.
+
+
+---
+
+## Appendix A — how this design was chosen (historical)
+
+Two candidate designs, A (minimalist) and B (maximalist), were scored before
+this document was written; the synthesis below is A's core with B's
+controller, protocol and testing grafted on. The scores are kept for
+provenance — nothing in the shipped package depends on them.
+
+| Criterion (1–10) | Design A (minimalist) | Design B (maximalist) |
+|---|---|---|
+| SDK-correctness vs. researched 3.44 internals | **9** — every claim matches the research; gesture-slop formula omits fit-scale | **9** — equally well-cited; letterbox "paint outside bounds" and `OffsetLayer.toImage` claims are the two spots not backed by the research |
+| Robustness across Flutter versions | **9** — smallest surface, compile-loud drift strategy, nothing depends on unclipped roots | **7** — letterbox chrome, screenshot, and the pointer policy state machine each add version-sensitive assumptions |
+| API ergonomics | **7.5** — clean but atomic-override a11y struct is awkward; no partial-update helper; binding-hosted API mixes concerns | **8.5** — controller + `update(mutate)`, tri-state a11y flags, `initialSimulation` for CI are all better; options object slightly over-engineered |
+| DevTools protocol quality | **7** — sound but no versioning, no echo suppression, no restart re-push | **9** — `protocolVersion`, `capabilities`, `requestId` echo, `ready` event, restart re-push are exactly right |
+| Testability | **8** — excellent pure-unit decomposition; but the real binding only ever runs in one e2e smoke | **8.5** — same decomposition **plus** the mixin (`TestDevicePreviewBinding` on the test binding) which closes A's biggest gap |
+
+**Verdict**: A's core (three override seams, stateless pointer remap, no letterbox chrome, compile-loud wrappers) is the right skeleton. B wins on API shape (controller, tri-state a11y, mixin), protocol design, viewInsets mapping, and the fit-scale-aware gesture-slop formula. The synthesis below is A's core with B's controller/protocol/testing grafted on; letterbox painting and the pointer policy machine are cut; screenshot is a capability-flagged optional module.

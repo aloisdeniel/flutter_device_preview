@@ -51,6 +51,8 @@ class DevicePreset {
     this.landscapePadding,
     this.landscapeViewPadding,
     this.systemGestureInsets = EdgeInsets.zero,
+    this.portraitKeyboardHeight,
+    this.landscapeKeyboardHeight,
     this.displayFeatures = const <SimulatedDisplayFeature>[],
     this.kind = DeviceKind.phone,
   });
@@ -120,6 +122,18 @@ class DevicePreset {
               json['systemGestureInsets'],
               'systemGestureInsets',
             ),
+      portraitKeyboardHeight: json['portraitKeyboardHeight'] == null
+          ? null
+          : decodeDouble(
+              json['portraitKeyboardHeight'],
+              'portraitKeyboardHeight',
+            ),
+      landscapeKeyboardHeight: json['landscapeKeyboardHeight'] == null
+          ? null
+          : decodeDouble(
+              json['landscapeKeyboardHeight'],
+              'landscapeKeyboardHeight',
+            ),
       displayFeatures: json['displayFeatures'] == null
           ? const <SimulatedDisplayFeature>[]
           : List<SimulatedDisplayFeature>.unmodifiable(
@@ -188,6 +202,25 @@ class DevicePreset {
   /// The system gesture insets, in logical pixels.
   final EdgeInsets systemGestureInsets;
 
+  /// The height the device's software keyboard covers in portrait, in
+  /// logical pixels, or null when the device has no software keyboard (a
+  /// desktop window) or its height has not been measured.
+  ///
+  /// Measured on the device itself, with its stock keyboard and no
+  /// predictive-text row toggled off. Showing it is a per-simulation choice
+  /// ([DeviceSimulation.keyboardInset]), so a preset never turns it on by
+  /// itself: [resolve] leaves the keyboard hidden.
+  final double? portraitKeyboardHeight;
+
+  /// The height the device's software keyboard covers in landscape, in
+  /// logical pixels. See [portraitKeyboardHeight].
+  ///
+  /// Keyboards are shorter in landscape and the ratio is not derivable from
+  /// the portrait height, so there is no rotation rule: a device that
+  /// declares one height and not the other simply has no keyboard in the
+  /// other orientation.
+  final double? landscapeKeyboardHeight;
+
   /// Display features (folds, hinges, cutouts), in portrait logical pixels.
   final List<SimulatedDisplayFeature> displayFeatures;
 
@@ -209,6 +242,22 @@ class DevicePreset {
     right: portrait.top,
     bottom: portrait.bottom,
   );
+
+  /// The keyboard height for [orientation], or null when this device
+  /// declares none.
+  ///
+  /// The value to pass to `DeviceSimulation.copyWith(keyboardInset: …)` to
+  /// raise this device's keyboard:
+  ///
+  /// ```dart
+  /// await c.update(
+  ///   (s) => s.copyWith(keyboardInset: preset.keyboardHeight(s.orientation)),
+  /// );
+  /// ```
+  double? keyboardHeight(Orientation orientation) =>
+      orientation == Orientation.portrait
+      ? portraitKeyboardHeight
+      : landscapeKeyboardHeight;
 
   /// Resolves this preset into a metrics-only [DeviceSimulation] with
   /// [DeviceSimulation.presetId] set.
@@ -301,6 +350,10 @@ class DevicePreset {
     if (landscapeViewPadding != null)
       'landscapeViewPadding': encodeEdgeInsets(landscapeViewPadding!),
     'systemGestureInsets': encodeEdgeInsets(systemGestureInsets),
+    if (portraitKeyboardHeight != null)
+      'portraitKeyboardHeight': portraitKeyboardHeight,
+    if (landscapeKeyboardHeight != null)
+      'landscapeKeyboardHeight': landscapeKeyboardHeight,
     if (displayFeatures.isNotEmpty)
       'displayFeatures': displayFeatures
           .map((SimulatedDisplayFeature f) => f.toJson())
@@ -327,6 +380,8 @@ class DevicePreset {
         other.landscapePadding == landscapePadding &&
         other.landscapeViewPadding == landscapeViewPadding &&
         other.systemGestureInsets == systemGestureInsets &&
+        other.portraitKeyboardHeight == portraitKeyboardHeight &&
+        other.landscapeKeyboardHeight == landscapeKeyboardHeight &&
         listEquals(other.displayFeatures, displayFeatures) &&
         other.kind == kind;
   }
@@ -347,6 +402,8 @@ class DevicePreset {
     landscapePadding,
     landscapeViewPadding,
     systemGestureInsets,
+    portraitKeyboardHeight,
+    landscapeKeyboardHeight,
     Object.hashAll(displayFeatures),
     kind,
   );

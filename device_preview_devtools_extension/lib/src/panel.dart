@@ -353,6 +353,17 @@ class _DeviceSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: denseSpacing),
+        _LabeledRow(
+          label: 'Keyboard',
+          child: Switch(
+            key: const Key('device_preview_keyboard_switch'),
+            value: controller.keyboardInset != null,
+            onChanged: controller.hasKeyboard
+                ? (value) => controller.setKeyboardVisible(value)
+                : null,
+          ),
+        ),
+        const SizedBox(height: denseSpacing),
         _TriStateRow(
           label: 'Touch input',
           triKey: const Key('device_preview_touch_input_toggle'),

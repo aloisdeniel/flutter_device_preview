@@ -220,6 +220,11 @@ String generatePresets(Directory specs) {
   }
   buffer
     ..writeln('  /// All built-in presets.')
+    ..writeln('  ///')
+    ..writeln('  /// Referencing this list (or [byId], which walks it)')
+    ..writeln('  /// keeps every preset — artwork included — in the')
+    ..writeln('  /// build. Name the presets you need to keep the rest')
+    ..writeln('  /// tree-shakable.')
     ..writeln('  static const List<DevicePreset> all = <DevicePreset>[');
   for (final Map<String, Object?> spec in devices) {
     buffer.writeln('    ${_dartName(spec, '')},');
@@ -228,6 +233,9 @@ String generatePresets(Directory specs) {
     ..writeln('  ];')
     ..writeln()
     ..writeln('  /// Returns the built-in preset with the given [id], or null.')
+    ..writeln('  ///')
+    ..writeln('  /// Walks [all], so it defeats tree-shaking: an app')
+    ..writeln('  /// calling it carries the whole catalog.')
     ..writeln('  static DevicePreset? byId(String id) {')
     ..writeln('    for (final DevicePreset preset in all) {')
     ..writeln('      if (preset.id == id) {')
@@ -345,6 +353,18 @@ String _emitPreset(Map<String, Object?> spec) {
   ]) {
     if (spec[key] != null) {
       buffer.writeln('    $key: ${_emitInsets(spec[key], fileName)},');
+    }
+  }
+  for (final String key in <String>[
+    'portraitKeyboardHeight',
+    'landscapeKeyboardHeight',
+  ]) {
+    final Object? height = spec[key];
+    if (height != null) {
+      if (height is! num || height <= 0) {
+        throw FormatException('$fileName: "$key" must be a positive number');
+      }
+      buffer.writeln('    $key: ${_emitNumber(height, fileName)},');
     }
   }
   final Object? features = spec['displayFeatures'];

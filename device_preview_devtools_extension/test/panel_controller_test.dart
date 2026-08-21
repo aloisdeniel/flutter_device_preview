@@ -628,6 +628,61 @@ void main() {
       expect(controller!.showSystemUi, isTrue);
     });
 
+    test('the keyboard rises at the device height and follows the device '
+        'across switches and rotations', () async {
+      await ready();
+      // The panel resolves the raised keyboard's height from the device it
+      // pushed, so the app must report these presets back.
+      gateway.presetsJson = <Map<String, Object?>>[
+        testFramedPresetJson,
+        testPhonePresetJson,
+      ];
+      gateway.emit('device_preview.presetsChanged', {'count': 2});
+      await pumpEventQueue();
+      // Nothing to raise without a device.
+      expect(controller!.hasKeyboard, isFalse);
+
+      await controller!.selectPreset(const PresetView(testFramedPresetJson));
+      expect(controller!.hasKeyboard, isTrue);
+      expect(controller!.keyboardInset, isNull, reason: 'down by default');
+
+      await controller!.setKeyboardVisible(true);
+      expect(gateway.simulation?['keyboardInset'], 300.0);
+      expect(controller!.keyboardInset, 300.0);
+
+      // Rotating picks the device's landscape keyboard.
+      await controller!.setOrientation('landscape');
+      expect(gateway.simulation?['keyboardInset'], 200.0);
+
+      // Switching device keeps it up, at the new device's height. That
+      // device declares no landscape keyboard, so it drops until rotated
+      // back.
+      await controller!.selectPreset(const PresetView(testPhonePresetJson));
+      expect(gateway.simulation?['keyboardInset'], isNull);
+      await controller!.setOrientation('portrait');
+      expect(gateway.simulation?['keyboardInset'], isNull);
+
+      await controller!.selectPreset(const PresetView(testFramedPresetJson));
+      await controller!.setKeyboardVisible(true);
+      await controller!.selectPreset(const PresetView(testPhonePresetJson));
+      expect(gateway.simulation?['keyboardInset'], 250.0);
+
+      await controller!.setKeyboardVisible(false);
+      expect(gateway.simulation, isNot(contains('keyboardInset')));
+      expect(controller!.keyboardInset, isNull);
+    });
+
+    test('the keyboard switch stays inert against an app that cannot raise '
+        'one', () async {
+      await ready();
+      gateway.canKeyboard = false;
+      gateway.presetsJson = <Map<String, Object?>>[testFramedPresetJson];
+      gateway.emit('device_preview.presetsChanged', {'count': 1});
+      await pumpEventQueue();
+      await controller!.selectPreset(const PresetView(testFramedPresetJson));
+      expect(controller!.hasKeyboard, isFalse);
+    });
+
     test('the touch input toggle is independent of the device', () async {
       await ready();
       expect(controller!.touchInput, isNull, reason: 'auto by default');

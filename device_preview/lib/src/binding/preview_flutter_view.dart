@@ -141,25 +141,34 @@ class PreviewFlutterView implements ui.FlutterView {
     );
   }
 
-  /// The real keyboard inset mapped into simulated space.
+  /// The keyboard inset — the simulated device's own, and nothing else.
   ///
-  /// `simInsetLogical = hostInsetPhysical / realDPR / fit.scale`, returned at
-  /// the simulated device pixel ratio. Text fields keep avoiding the real
-  /// keyboard; geometry is host-faithful, not device-faithful.
+  /// While metrics are simulated the host's keyboard is not the simulated
+  /// device's: a preview running on a phone would otherwise report the host's
+  /// keyboard inside a simulated iPad, at a height belonging to neither. So
+  /// the inset is exactly what the simulation says — [DeviceSimulation
+  /// .keyboardInset], expressed in simulated logical pixels and returned at
+  /// the simulated device pixel ratio — or zero when it raises no keyboard.
+  ///
+  /// The cost is that a text field on a mobile host no longer scrolls itself
+  /// clear of the real keyboard while previewing; the simulated keyboard is
+  /// the one to raise for that, and it is the one the app should be laid out
+  /// against anyway.
   @override
   ui.ViewPadding get viewInsets {
     final DeviceSimulation? simulation = _metricSimulation;
     if (simulation == null) {
       return hostView.viewInsets;
     }
-    final ui.ViewPadding hostInsets = hostView.viewInsets;
-    final double k =
-        devicePixelRatio / (hostView.devicePixelRatio * state.fit.scale);
+    final double? keyboard = simulation.keyboardInset;
+    if (keyboard == null) {
+      return PreviewViewPadding.zero;
+    }
     return PreviewViewPadding(
-      left: hostInsets.left * k,
-      top: hostInsets.top * k,
-      right: hostInsets.right * k,
-      bottom: hostInsets.bottom * k,
+      left: 0,
+      top: 0,
+      right: 0,
+      bottom: keyboard * devicePixelRatio,
     );
   }
 

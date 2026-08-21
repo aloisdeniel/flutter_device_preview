@@ -145,6 +145,24 @@ final List<_Scene> _scenes = <_Scene>[
       await tester.pump(const Duration(milliseconds: 100));
     },
   ),
+  _Scene(
+    'iphone-16-pro-keyboard',
+    DevicePresets.iPhone16Pro,
+    // The simulated keyboard, with the add-task sheet riding it: the app
+    // laid out around `viewInsets.bottom` exactly as it would on the phone.
+    // Light, unlike the other scenes: a keyboard band is a flat grey, and
+    // grey on a dark app reads as empty space rather than as a keyboard.
+    tweak: (DeviceSimulation s) => s.copyWith(
+      platformBrightness: Brightness.light,
+      keyboardInset: DevicePresets.iPhone16Pro.keyboardHeight(s.orientation),
+    ),
+    interact: (WidgetTester tester) async {
+      await tester.tap(find.byType(FloatingActionButton));
+      await tester.pumpAndSettle();
+      await tester.enterText(find.byType(TextField), 'Write the release notes');
+      await tester.pump(const Duration(milliseconds: 100));
+    },
+  ),
   // French rather than an RTL locale: the test font manager has no
   // per-family glyph fallback, so non-Latin scripts render as boxes here.
   // The live demo on the landing page shows the Arabic RTL flip instead.

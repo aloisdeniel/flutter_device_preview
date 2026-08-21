@@ -693,6 +693,10 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
             <span class="dp-ctl"><input type="checkbox" class="dp-switch" id="dpSystemUi"></span>
           </div>
           <div class="dp-row">
+            <label class="dp-lbl" for="dpKeyboard">Keyboard</label>
+            <span class="dp-ctl"><input type="checkbox" class="dp-switch" id="dpKeyboard"></span>
+          </div>
+          <div class="dp-row">
             <span class="dp-lbl">Touch input</span>
             <span class="dp-ctl">
               <span class="dp-seg dp-tri" id="dpTouch" role="group" aria-label="Touch input">
@@ -836,7 +840,7 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
       </div>
       <div class="prob reveal">
         <h3>The inset you forgot</h3>
-        <p>Notches, punch-holes, home indicators, hinges and the software keyboard all move in. <code>SafeArea</code>, <code>MediaQuery.padding</code> and <code>viewInsets</code> report the simulated device's values, so content that would hide under a cutout hides now — while you can still fix it.</p>
+        <p>Notches, punch-holes, home indicators and hinges all move in. <code>SafeArea</code>, <code>MediaQuery.padding</code> and <code>displayFeatures</code> report the simulated device's values, so content that would hide under a cutout hides now — while you can still fix it.</p>
       </div>
       <div class="prob reveal">
         <h3>The user who isn't you</h3>
@@ -857,10 +861,10 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
       <div class="spec-row"><div class="k">Safe areas</div><div class="d">Notches, punch-holes and home indicators, correct per device and per orientation. <code>SafeArea</code> and <code>MediaQuery.padding</code> respond.</div><div class="m">SCREEN</div></div>
       <div class="spec-row"><div class="k">Orientation</div><div class="d">Portrait ⇄ landscape in one click, with safe areas rotating the way the real device rotates them.</div><div class="m">SCREEN</div></div>
       <div class="spec-row"><div class="k">Folds &amp; hinges</div><div class="d">Display features for foldables, so hinge-aware layouts can be checked without a foldable on the desk.</div><div class="m">SCREEN</div></div>
-      <div class="spec-row"><div class="k">Device frame</div><div class="d">The device drawn around your app: its screen outline clips the corners, its body is painted behind. Nothing ships in your app — the frame travels from the DevTools catalog when you pick a device.</div><div class="m">SCREEN</div></div>
+      <div class="spec-row"><div class="k">Device frame</div><div class="d">The device drawn around your app: its screen outline clips the corners, its body is painted behind. The artwork is <code>const</code> data on the preset — only the devices you name are compiled in — and travels from the DevTools catalog when you pick one there.</div><div class="m">SCREEN</div></div>
       <div class="spec-row"><div class="k">System UI</div><div class="d">A simulated status bar and gesture pill, laid out from the device's own safe areas and tinted from your app's <code>SystemUiOverlayStyle</code> — so a status bar style is visible while you write it. One switch hides them.</div><div class="m">SCREEN</div></div>
       <div class="spec-row"><div class="k">Touch input</div><div class="d">Your mouse reported to the app as a finger: drag to scroll a list the way a thumb does — the mouse is not a drag device on desktop or the web — with gestures on their touch paths and no hover. The wheel keeps scrolling. Left on <em>auto</em> it follows the device: on for a phone, tablet or foldable, off for a desktop window.</div><div class="m">INPUT</div></div>
-      <div class="spec-row"><div class="k">Keyboard insets</div><div class="d">The software keyboard's <code>viewInsets</code> reach your layout, so you can see what the keyboard covers.</div><div class="m">SCREEN</div></div>
+      <div class="spec-row"><div class="k">Keyboard</div><div class="d">The device's own software keyboard, raised on demand at the height it really covers — measured on the device, in both orientations — so the button it hides, or the field that will not scroll into view, shows up on a desktop that has no keyboard at all. It arrives as <code>MediaQuery.viewInsets</code>, so <code>resizeToAvoidBottomInset</code> and scroll-into-view behave exactly as they do on the phone.</div><div class="m">SCREEN</div></div>
       <div class="spec-row"><div class="k">Locales</div><div class="d">A full ordered locale list — your app's locale resolution, translations and <code>Intl</code> date, number and currency formatting all follow.</div><div class="m">SYSTEM</div></div>
       <div class="spec-row"><div class="k">Brightness</div><div class="d">Light and dark, applied live — <code>ThemeMode.system</code> flips as you toggle.</div><div class="m">SYSTEM</div></div>
       <div class="spec-row"><div class="k">Text scale</div><div class="d">Up to 200% and beyond, the single fastest way to find overflowing rows and clipped labels.</div><div class="m">SYSTEM</div></div>
@@ -1067,7 +1071,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
   // exactly this set and preserves every other override.
   const METRIC_KEYS = ['presetId', 'orientation', 'screenSize', 'frame', 'systemUi',
     'deviceKind', 'devicePixelRatio', 'padding', 'viewPadding', 'systemGestureInsets',
-    'displayFeatures'];
+    'keyboardInset', 'displayFeatures'];
   const A11Y_FLAGS = [
     ['accessibleNavigation', 'Accessible nav'],
     ['invertColors', 'Invert colors'],
@@ -1239,8 +1243,17 @@ document.getElementById('year').textContent = new Date().getFullYear();
     });
   }
 
+  function keyboardHeight(preset, landscape) {
+    if (!preset) return null;
+    const height = landscape ? preset.landscapeKeyboardHeight : preset.portraitKeyboardHeight;
+    return height != null ? height : null;
+  }
+
   function applyPreset(preset, orientation, extra) {
     const sim = currentSim();
+    // A raised keyboard survives the switch, at the new device's height for
+    // the orientation it lands in.
+    const keyboardWasRaised = sim.keyboardInset != null;
     METRIC_KEYS.forEach((key) => delete sim[key]);
     Object.assign(sim, extra || {});
     sim.presetId = preset.id;
@@ -1275,6 +1288,10 @@ document.getElementById('year').textContent = new Date().getFullYear();
     const gestures = preset.systemGestureInsets;
     if (gestures && Object.keys(gestures).some((key) => Number(gestures[key]) !== 0)) {
       sim.systemGestureInsets = gestures;
+    }
+    if (keyboardWasRaised) {
+      const keyboard = keyboardHeight(preset, landscape);
+      if (keyboard != null) sim.keyboardInset = keyboard;
     }
     const features = preset.displayFeatures;
     if (features && features.length) {
@@ -1436,6 +1453,11 @@ document.getElementById('year').textContent = new Date().getFullYear();
     systemUi.checked = !sim || sim.showSystemUi !== false;
     systemUi.disabled = !(sim && sim.systemUi);
 
+    const keyboard = $('dpKeyboard');
+    keyboard.checked = !!(sim && sim.keyboardInset != null);
+    keyboard.disabled = !(sim && keyboardHeight(presetById(sim.presetId),
+      sim.orientation === 'landscape') != null);
+
     const touch = sim && sim.touchInput;
     segValue($('dpTouch'), touch === true ? 'on' : touch === false ? 'off' : '');
 
@@ -1522,6 +1544,13 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
   $('dpSystemUi').addEventListener('change', (event) => {
     mutate('showSystemUi', event.target.checked ? null : false);
+  });
+
+  $('dpKeyboard').addEventListener('change', (event) => {
+    const sim = currentSim();
+    const height = keyboardHeight(presetById(sim.presetId),
+      sim.orientation === 'landscape');
+    mutate('keyboardInset', event.target.checked && height != null ? height : null);
   });
 
   $('dpTouch').addEventListener('click', (event) => {

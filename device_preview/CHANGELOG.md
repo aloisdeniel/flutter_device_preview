@@ -45,6 +45,17 @@ Highlights, relative to 2.x:
 - **Touch input simulation**: the mouse is reported to the app as a finger on
   touch devices (auto by default), so drags scroll and gestures take their
   touch paths.
+- **A simulated software keyboard**: every iPhone and iPad carries the height
+  its own keyboard covers, per orientation — probed from the real simulator
+  like every other metric — and one switch in DevTools (or
+  `DeviceSimulation.keyboardInset` from Dart) raises it. It arrives as
+  `MediaQuery.viewInsets.bottom`, so `resizeToAvoidBottomInset`,
+  scroll-into-view and the collapsing bottom safe area all behave as they do
+  on the device — which is how a form gets checked against the keyboard from
+  a desktop that has none. While a device is simulated it is also the *only*
+  keyboard the app sees: the host's own keyboard inset is no longer mapped
+  into the simulated screen, where it stood for a length of the wrong
+  display.
 - The simulated system bars now follow the **simulated device's** operating
   system, not the host's: `SystemUiSimulation.platform` (stamped from the
   preset by `DevicePreset.resolve` and by the DevTools panel) decides the

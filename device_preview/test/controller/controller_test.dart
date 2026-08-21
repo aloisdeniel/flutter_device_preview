@@ -330,6 +330,91 @@ void main() {
       expect(result.showSystemUi, false);
     });
 
+    test('a raised keyboard survives a device switch, at the new device '
+        'height, and drops on a device that has none', () async {
+      final ControllerHarness harness = ControllerHarness();
+      addTearDown(harness.dispose);
+      const DevicePreset tall = DevicePreset(
+        id: 'tall',
+        name: 'Tall',
+        platform: TargetPlatform.iOS,
+        portraitSize: ui.Size(400, 800),
+        devicePixelRatio: 2,
+        portraitKeyboardHeight: 300,
+        landscapeKeyboardHeight: 200,
+      );
+      const DevicePreset short = DevicePreset(
+        id: 'short',
+        name: 'Short',
+        platform: TargetPlatform.android,
+        portraitSize: ui.Size(360, 720),
+        devicePixelRatio: 2,
+        portraitKeyboardHeight: 250,
+      );
+      const DevicePreset deskless = DevicePreset(
+        id: 'deskless',
+        name: 'Desktop',
+        platform: TargetPlatform.macOS,
+        portraitSize: ui.Size(1024, 640),
+        devicePixelRatio: 1,
+        kind: DeviceKind.desktop,
+      );
+      harness.controller
+        ..registerPreset(tall)
+        ..registerPreset(short)
+        ..registerPreset(deskless);
+
+      await harness.controller.applyPreset(tall);
+      expect(harness.controller.simulation!.keyboardInset, isNull);
+      await harness.controller.update(
+        (DeviceSimulation s) =>
+            s.copyWith(keyboardInset: tall.keyboardHeight(s.orientation)),
+      );
+      expect(harness.controller.simulation!.keyboardInset, 300);
+
+      await harness.controller.applyPreset(short);
+      expect(harness.controller.simulation!.keyboardInset, 250);
+
+      await harness.controller.applyPreset(deskless);
+      expect(harness.controller.simulation!.keyboardInset, isNull);
+    });
+
+    test('rotating a preset device swaps to its landscape keyboard', () async {
+      final ControllerHarness harness = ControllerHarness();
+      addTearDown(harness.dispose);
+      const DevicePreset phone = DevicePreset(
+        id: 'phone',
+        name: 'Phone',
+        platform: TargetPlatform.iOS,
+        portraitSize: ui.Size(400, 800),
+        devicePixelRatio: 2,
+        portraitKeyboardHeight: 300,
+        landscapeKeyboardHeight: 200,
+      );
+      harness.controller.registerPreset(phone);
+      await harness.controller.applyPreset(phone);
+      await harness.controller.update(
+        (DeviceSimulation s) => s.copyWith(keyboardInset: 300),
+      );
+      await harness.controller.setOrientation(Orientation.landscape);
+      expect(harness.controller.simulation!.keyboardInset, 200);
+      await harness.controller.setOrientation(Orientation.portrait);
+      expect(harness.controller.simulation!.keyboardInset, 300);
+    });
+
+    test('raising the keyboard is a metrics change', () async {
+      final ControllerHarness harness = ControllerHarness();
+      addTearDown(harness.dispose);
+      await harness.controller.apply(
+        const DeviceSimulation(screenSize: ui.Size(400, 800)),
+      );
+      harness.handlerCalls.clear();
+      await harness.controller.update(
+        (DeviceSimulation s) => s.copyWith(keyboardInset: 300),
+      );
+      expect(harness.handlerCalls, contains('metrics'));
+    });
+
     test('setOrientation on a preset simulation keeps wire-pushed frame and '
         'systemUi artwork the local preset does not carry', () async {
       final ControllerHarness harness = ControllerHarness();

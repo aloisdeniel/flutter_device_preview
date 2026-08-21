@@ -72,5 +72,7 @@
         "</svg>"
       ]
     }
-  }
+  },
+  "portraitKeyboardHeight": 260,
+  "landscapeKeyboardHeight": 206
 }

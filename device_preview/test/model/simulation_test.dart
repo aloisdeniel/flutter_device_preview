@@ -14,6 +14,7 @@ DeviceSimulation buildFullSimulation() {
     padding: EdgeInsets.fromLTRB(1, 2, 3, 4),
     viewPadding: EdgeInsets.fromLTRB(5, 6, 7, 8),
     systemGestureInsets: EdgeInsets.fromLTRB(9, 10, 11, 12),
+    keyboardInset: 291.0,
     displayFeatures: [
       SimulatedDisplayFeature(
         bounds: ui.Rect.fromLTRB(0, 100, 400, 120),
@@ -59,6 +60,7 @@ void main() {
         'right': 11.0,
         'bottom': 12.0,
       });
+      expect(json['keyboardInset'], 291.0);
       expect(json['displayFeatures'], [
         {
           'bounds': {
@@ -195,6 +197,17 @@ void main() {
       expect(copy.textScaleFactor, 2.0);
     });
 
+    test('int literals are accepted for the double fields', () {
+      final copy = base.copyWith(
+        textScaleFactor: 2,
+        devicePixelRatio: 3,
+        keyboardInset: 291,
+      );
+      expect(copy.textScaleFactor, 2.0);
+      expect(copy.devicePixelRatio, 3.0);
+      expect(copy.keyboardInset, 291.0);
+    });
+
     test('passing null explicitly CLEARS the override', () {
       final copy = base.copyWith(textScaleFactor: null);
       expect(copy.textScaleFactor, isNull);
@@ -209,6 +222,7 @@ void main() {
         padding: null,
         viewPadding: null,
         systemGestureInsets: null,
+        keyboardInset: null,
         displayFeatures: null,
         locales: null,
         platformBrightness: null,

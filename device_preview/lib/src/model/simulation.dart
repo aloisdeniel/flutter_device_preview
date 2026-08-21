@@ -40,6 +40,7 @@ class DeviceSimulation {
     this.padding,
     this.viewPadding,
     this.systemGestureInsets,
+    this.keyboardInset,
     this.displayFeatures,
     this.locales,
     this.platformBrightness,
@@ -94,6 +95,9 @@ class DeviceSimulation {
               json['systemGestureInsets'],
               'systemGestureInsets',
             ),
+      keyboardInset: json['keyboardInset'] == null
+          ? null
+          : decodeDouble(json['keyboardInset'], 'keyboardInset'),
       displayFeatures: json['displayFeatures'] == null
           ? null
           : List<SimulatedDisplayFeature>.unmodifiable(
@@ -229,6 +233,21 @@ class DeviceSimulation {
   /// Zero while simulating metrics if null.
   final EdgeInsets? systemGestureInsets;
 
+  /// The height a simulated software keyboard covers at the bottom of the
+  /// screen, in simulated logical pixels, or null for no keyboard.
+  ///
+  /// It reaches the app as `MediaQuery.viewInsets.bottom` — or the real
+  /// keyboard's own inset, whichever is deeper — so the app reacts exactly as
+  /// it would on the device: a `Scaffold` body shrinks, a scroll view keeps
+  /// the focused field visible, and the bottom safe area collapses under it
+  /// the way the engines collapse it.
+  ///
+  /// A device's measured height lives on its preset (`DevicePreset`'s
+  /// `keyboardHeight`, in `package:device_preview/presets.dart`); this field
+  /// is what a simulation *currently shows*, so it starts null even for a
+  /// device that declares one.
+  final double? keyboardInset;
+
   /// Simulated display features (folds, hinges, cutouts), in logical pixels.
   final List<SimulatedDisplayFeature>? displayFeatures;
 
@@ -268,6 +287,7 @@ class DeviceSimulation {
       padding == null &&
       viewPadding == null &&
       systemGestureInsets == null &&
+      keyboardInset == null &&
       displayFeatures == null &&
       locales == null &&
       platformBrightness == null &&
@@ -306,6 +326,11 @@ class DeviceSimulation {
   /// override (e.g. `copyWith(textScaleFactor: null)` reverts to the real
   /// device value), while omitting the parameter keeps the current value.
   /// [orientation] is non-nullable and cannot be cleared.
+  ///
+  /// The sentinel costs the parameters their static types — they are all
+  /// declared `Object?` — so a wrong type is caught at runtime rather than by
+  /// the compiler. The `double` fields accept any [num], since
+  /// `copyWith(textScaleFactor: 2)` is too easy to write to punish.
   DeviceSimulation copyWith({
     Object? presetId = _unset,
     Orientation? orientation,
@@ -319,6 +344,7 @@ class DeviceSimulation {
     Object? padding = _unset,
     Object? viewPadding = _unset,
     Object? systemGestureInsets = _unset,
+    Object? keyboardInset = _unset,
     Object? displayFeatures = _unset,
     Object? locales = _unset,
     Object? platformBrightness = _unset,
@@ -348,7 +374,7 @@ class DeviceSimulation {
           : deviceKind as DeviceKind?,
       devicePixelRatio: identical(devicePixelRatio, _unset)
           ? this.devicePixelRatio
-          : devicePixelRatio as double?,
+          : (devicePixelRatio as num?)?.toDouble(),
       padding: identical(padding, _unset)
           ? this.padding
           : padding as EdgeInsets?,
@@ -358,6 +384,9 @@ class DeviceSimulation {
       systemGestureInsets: identical(systemGestureInsets, _unset)
           ? this.systemGestureInsets
           : systemGestureInsets as EdgeInsets?,
+      keyboardInset: identical(keyboardInset, _unset)
+          ? this.keyboardInset
+          : (keyboardInset as num?)?.toDouble(),
       displayFeatures: identical(displayFeatures, _unset)
           ? this.displayFeatures
           : displayFeatures as List<SimulatedDisplayFeature>?,
@@ -369,7 +398,7 @@ class DeviceSimulation {
           : platformBrightness as ui.Brightness?,
       textScaleFactor: identical(textScaleFactor, _unset)
           ? this.textScaleFactor
-          : textScaleFactor as double?,
+          : (textScaleFactor as num?)?.toDouble(),
       accessibility: identical(accessibility, _unset)
           ? this.accessibility
           : accessibility as SimulatedAccessibilityFeatures?,
@@ -401,6 +430,7 @@ class DeviceSimulation {
       if (viewPadding != null) 'viewPadding': encodeEdgeInsets(viewPadding!),
       if (systemGestureInsets != null)
         'systemGestureInsets': encodeEdgeInsets(systemGestureInsets!),
+      if (keyboardInset != null) 'keyboardInset': keyboardInset,
       if (displayFeatures != null)
         'displayFeatures': displayFeatures!
             .map((SimulatedDisplayFeature f) => f.toJson())
@@ -434,6 +464,7 @@ class DeviceSimulation {
         other.padding == padding &&
         other.viewPadding == viewPadding &&
         other.systemGestureInsets == systemGestureInsets &&
+        other.keyboardInset == keyboardInset &&
         listEquals(other.displayFeatures, displayFeatures) &&
         listEquals(other.locales, locales) &&
         other.platformBrightness == platformBrightness &&
@@ -457,6 +488,7 @@ class DeviceSimulation {
     padding,
     viewPadding,
     systemGestureInsets,
+    keyboardInset,
     displayFeatures == null ? null : Object.hashAll(displayFeatures!),
     locales == null ? null : Object.hashAll(locales!),
     platformBrightness,
@@ -482,6 +514,7 @@ class DeviceSimulation {
       if (viewPadding != null) 'viewPadding: $viewPadding',
       if (systemGestureInsets != null)
         'systemGestureInsets: $systemGestureInsets',
+      if (keyboardInset != null) 'keyboardInset: $keyboardInset',
       if (displayFeatures != null) 'displayFeatures: $displayFeatures',
       if (locales != null) 'locales: $locales',
       if (platformBrightness != null)

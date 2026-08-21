@@ -40,6 +40,7 @@ const List<String> kMetricSimulationKeys = <String>[
   'padding',
   'viewPadding',
   'systemGestureInsets',
+  'keyboardInset',
   'displayFeatures',
 ];
 
@@ -54,12 +55,6 @@ const List<String> kAccessibilityFlags = <String>[
   'onOffSwitchLabels',
 ];
 
-/// Raw-JSON-backed view over one device: an entry of the generated
-/// [kDeviceSpecs] catalog, or of `ext.device_preview.listPresets` for presets
-/// the app registered itself.
-///
-/// The extension deliberately does not re-model the domain: unknown keys are
-/// carried along untouched and every getter is null-tolerant.
 /// The `TargetPlatform` names the app-side protocol accepts.
 ///
 /// Guards the `systemUi.platform` stamp: a user-imported device may declare
@@ -74,6 +69,12 @@ const Set<String> kTargetPlatforms = <String>{
   'windows',
 };
 
+/// Raw-JSON-backed view over one device: an entry of the generated
+/// [kDeviceSpecs] catalog, or of `ext.device_preview.listPresets` for presets
+/// the app registered itself.
+///
+/// The extension deliberately does not re-model the domain: unknown keys are
+/// carried along untouched and every getter is null-tolerant.
 @immutable
 class PresetView {
   /// Wraps a raw `DevicePreset.toJson()` map.
@@ -94,6 +95,20 @@ class PresetView {
   /// Release year (e.g. `2025`), or null when the device does not declare one
   /// (desktop windows, app-registered presets).
   int? get year => (json['year'] as num?)?.toInt();
+
+  /// The height this device's software keyboard covers in portrait, or null
+  /// when it has none (a desktop window) or none was measured.
+  double? get portraitKeyboardHeight =>
+      (json['portraitKeyboardHeight'] as num?)?.toDouble();
+
+  /// The height this device's software keyboard covers in landscape.
+  double? get landscapeKeyboardHeight =>
+      (json['landscapeKeyboardHeight'] as num?)?.toDouble();
+
+  /// The keyboard height for the given orientation, or null when this device
+  /// declares none for it.
+  double? keyboardHeight({required bool landscape}) =>
+      landscape ? landscapeKeyboardHeight : portraitKeyboardHeight;
 
   /// Screen outline and body artwork, when the device has a frame.
   Map<String, Object?>? get frame => _asMap(json['frame']);
@@ -173,6 +188,9 @@ class StateView {
 
   /// Whether target-platform simulation is available (debug builds only).
   bool get canTargetPlatform => capabilities['targetPlatform'] == true;
+
+  /// Whether the app can raise a simulated software keyboard (protocol 4).
+  bool get canKeyboard => capabilities['keyboard'] == true;
 }
 
 Map<String, Object?>? _asMap(Object? value) =>
@@ -324,6 +342,21 @@ class PanelController extends ChangeNotifier {
 
   /// Whether that system UI is currently shown (the default).
   bool get showSystemUi => simulation?['showSystemUi'] != false;
+
+  /// The height a simulated keyboard currently covers, or null when none is
+  /// raised.
+  double? get keyboardInset =>
+      (simulation?['keyboardInset'] as num?)?.toDouble();
+
+  /// Whether the selected device declares a keyboard for its current
+  /// orientation — the panel's keyboard switch is inert without one.
+  bool get hasKeyboard =>
+      (state?.canKeyboard ?? false) &&
+      hasSimulatedScreen &&
+      activePreset?.keyboardHeight(
+            landscape: simulation?['orientation'] == 'landscape',
+          ) !=
+          null;
 
   /// Whether the host's pointers are reported to the app as touches, or null
   /// — "auto" — to let the selected device decide (touch on a phone, tablet
@@ -649,6 +682,28 @@ class PanelController extends ChangeNotifier {
   Future<void> setShowSystemUi(bool value) =>
       _mutate('showSystemUi', value ? null : false);
 
+  /// Raises or drops the selected device's software keyboard.
+  ///
+  /// The height comes from the device itself, for the orientation it is in;
+  /// a device that declares none cannot raise one, so this is a no-op there.
+  /// Like the app-side controller, a raised keyboard survives switching
+  /// device — with the new device's height (see [_applyPresetSimulation]).
+  Future<void> setKeyboardVisible(bool value) {
+    return _enqueueWrite(() {
+      final sim = _currentSimulation();
+      if (!value) {
+        sim.remove('keyboardInset');
+        return _pushSimulation(sim.isEmpty ? null : sim);
+      }
+      final height = activePreset?.keyboardHeight(
+        landscape: sim['orientation'] == 'landscape',
+      );
+      if (height == null) return Future<void>.value();
+      sim['keyboardInset'] = height;
+      return _pushSimulation(sim);
+    });
+  }
+
   /// Makes the host's mouse act as a finger (`true`), restores it (`false`),
   /// or hands the choice to the selected device (`null`, the default).
   ///
@@ -779,6 +834,10 @@ class PanelController extends ChangeNotifier {
     Map<String, Object?> current,
   ) {
     final sim = Map<String, Object?>.from(current);
+    // A raised keyboard survives the switch, but its height is the new
+    // device's, for the orientation it lands in — the same rule the app-side
+    // controller applies to `applyPreset`.
+    final keyboardWasRaised = current['keyboardInset'] != null;
     for (final key in kMetricSimulationKeys) {
       sim.remove(key);
     }
@@ -836,6 +895,10 @@ class PanelController extends ChangeNotifier {
     if (gestureInsets != null &&
         gestureInsets.values.any((v) => v != 0 && v != 0.0)) {
       sim['systemGestureInsets'] = gestureInsets;
+    }
+    if (keyboardWasRaised) {
+      final keyboard = preset.keyboardHeight(landscape: landscape);
+      if (keyboard != null) sim['keyboardInset'] = keyboard;
     }
     final displayFeatures = preset.displayFeatures;
     if (displayFeatures != null && displayFeatures.isNotEmpty) {

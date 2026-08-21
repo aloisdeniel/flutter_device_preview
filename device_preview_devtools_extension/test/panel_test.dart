@@ -184,6 +184,29 @@ void main() {
       expect(gateway.simulation?['showSystemUi'], isFalse);
     });
 
+    testWidgets('keyboard switch raises the device keyboard', (tester) async {
+      await pumpPanel(tester);
+      final key = const Key('device_preview_keyboard_switch');
+      // Nothing selected: no device to take a keyboard height from.
+      expect(tester.widget<Switch>(find.byKey(key)).onChanged, isNull);
+      expect(tester.widget<Switch>(find.byKey(key)).value, isFalse);
+
+      // testPhonePresetJson is in the app's preset list (see setUp), so the
+      // panel can resolve its keyboard height.
+      await controller.selectPreset(const PresetView(testPhonePresetJson));
+      await tester.pumpAndSettle();
+      expect(tester.widget<Switch>(find.byKey(key)).onChanged, isNotNull);
+
+      await tester.tap(find.byKey(key));
+      await tester.pumpAndSettle();
+      expect(gateway.simulation?['keyboardInset'], 250.0);
+      expect(tester.widget<Switch>(find.byKey(key)).value, isTrue);
+
+      await tester.tap(find.byKey(key));
+      await tester.pumpAndSettle();
+      expect(gateway.simulation, isNot(contains('keyboardInset')));
+    });
+
     testWidgets('touch input tri-state sends auto/on/off', (tester) async {
       await pumpPanel(tester);
       final toggle = find.byKey(const Key('device_preview_touch_input_toggle'));

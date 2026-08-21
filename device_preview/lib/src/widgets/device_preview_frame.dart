@@ -228,9 +228,31 @@ class RenderDevicePreviewFrame extends RenderProxyBox {
     canvas.restore();
   }
 
-  /// Paints the app and, over it, the simulated system UI.
+  /// Paints the band a simulated keyboard covers, over the app but under the
+  /// system bars — where a real keyboard sits, below the gesture pill that
+  /// floats on top of it.
+  ///
+  /// Like the bars, this is decoration: [DeviceSimulation.showSystemUi] hides
+  /// it, and hiding it changes nothing the app can observe — the inset it
+  /// stands for is reported by the view either way, so the layout is
+  /// identical with the band drawn or not.
+  void _paintKeyboard(PaintingContext context, Offset offset) {
+    final DeviceSimulation? simulation = _simulation.value;
+    final double? inset = simulation?.keyboardInset;
+    if (simulation == null || inset == null || !simulation.showSystemUi) {
+      return;
+    }
+    final Canvas canvas = context.canvas;
+    canvas.save();
+    canvas.translate(offset.dx, offset.dy);
+    paintSimulatedKeyboard(canvas, screenSize: size, inset: inset);
+    canvas.restore();
+  }
+
+  /// Paints the app and, over it, the simulated keyboard and system UI.
   void _paintContents(PaintingContext context, Offset offset) {
     super.paint(context, offset);
+    _paintKeyboard(context, offset);
     _paintSystemUi(context, offset);
   }
 

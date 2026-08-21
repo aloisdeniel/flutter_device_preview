@@ -63,7 +63,7 @@ void main() {
       'ext.device_preview.getState',
       isolateId: isolateId,
     );
-    expect(initial.json!['protocolVersion'], 3);
+    expect(initial.json!['protocolVersion'], 4);
     expect(initial.json!['enabled'], true);
     expect(initial.json!['capabilities'], isA<Map<Object?, Object?>>());
     expect(initial.json!['realDevice'], isA<Map<Object?, Object?>>());

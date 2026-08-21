@@ -50,9 +50,11 @@ await DevicePreview.controller.applyPreset(preset);
 | `landscapePadding` | insets | Defaults to the rotation rule: `left = right = portrait.top`, `bottom` kept. |
 | `landscapeViewPadding` | insets | Defaults to `landscapePadding`. |
 | `systemGestureInsets` | insets | Orientation-invariant. |
+| `portraitKeyboardHeight` | number | What the device's stock software keyboard covers in portrait — measured on the device, see below. Omit for a device with no software keyboard. |
+| `landscapeKeyboardHeight` | number | The same in landscape. No rotation rule derives one from the other: a keyboard is not a rotated keyboard. |
 | `displayFeatures` | array | `{bounds: {left, top, right, bottom}, type, state}`, in portrait coordinates. |
 | `frame` | object | The device's appearance — see below. |
-| `systemUi` | object | The device's status bar and gesture pill — see below. |
+| `systemUi` | object | The device's status bar and gesture pill — see below. Its optional `platform` key is stamped from `platform` above; specs leave it out. |
 
 All lengths are logical pixels.
 
@@ -151,6 +153,13 @@ at the top, a gesture pill or navigation bar at the bottom.
 }
 ```
 
+A spec never repeats a `platform` inside `systemUi`: both generators stamp the
+device's top-level `platform` onto the bars, and so do `DevicePreset.fromJson`
+and the DevTools panel. That stamp is what makes the bars paint like the
+**simulated** device's operating system rather than the host the previewed app
+happens to run on (see [Colors](#colors)) — a hand-built `SystemUiSimulation`
+that leaves it null falls back to the app's own platform.
+
 Neither bar declares a height or a position. Each fills the **safe area** on
 its side of the screen — the padding already resolved for the current
 orientation — so an iPhone's status bar disappears in landscape, a
@@ -200,13 +209,40 @@ one an `AppBar` installs:
 Use `fill-opacity` for secondary detail (a battery outline, an empty signal
 bar): it is preserved through the tint.
 
+## Keyboard heights
+
+`portraitKeyboardHeight` and `landscapeKeyboardHeight` are what the device's
+own keyboard covers, in logical pixels — the `viewInsets.bottom` the platform
+reports while it is up, so the numbers include everything that travels with
+the keyboard (the predictive/suggestion row, the iOS home-indicator strip
+below the keys), because the app has to lay out around all of it.
+
+They are measured, not modelled: the probe app of
+`.claude/skills/extract-cupertino-specs` focuses a text field on the booted
+simulator and reads the height iOS's own keyboard covers, in both
+orientations.
+
+Only the Apple devices carry them today. An Android keyboard's height is not
+a device property — it belongs to whichever IME is installed — and the
+emulator's Gboard did not report a reproducible height across runs, so the
+Pixel and Galaxy specs declare none rather than an invented one (see
+`.claude/skills/extract-pixel-specs/SKILL.md`). A device that declares no
+height simply cannot raise a keyboard.
+
+The height is what a device *has*, never what a simulation *shows*: raising
+the keyboard is a per-simulation choice (`DeviceSimulation.keyboardInset`,
+the panel's **Keyboard** switch), and a device that declares no height simply
+cannot raise one.
+
 ## Adding a device
 
 1. Copy the closest existing spec to `<brand>-<model>.json`.
 2. Fix the metrics, keeping the file name and `id` in sync, and set `year`.
 3. Draw the body with the screen cut-out in mind — it is *behind* the app.
    For the system UI, copy the closest device's `systemUi` and adjust the
-   insets; keep every fill on `currentColor` so styling still works.
+   insets; keep every fill on `currentColor` so styling still works. Leave
+   the keyboard heights out rather than guessing them — an absent keyboard
+   is honest, a wrong one is not.
 4. Regenerate both catalogs (see above), then run `flutter test` in
    `device_preview_devtools_extension` and in `device_preview`. A brand-new
    device may also deserve a doc-comment entry in
