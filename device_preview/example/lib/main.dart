@@ -28,7 +28,7 @@ void main() {
   // The single integration point: install the device-preview binding before
   // runApp. In release builds this is behaviorally identical to
   // WidgetsFlutterBinding.ensureInitialized() (simulation defaults to
-  // kDebugMode and the wrappers are never installed when disabled).
+  // !kReleaseMode and the wrappers are never installed when disabled).
   DevicePreview.enable();
   runApp(const DevicePreviewExampleApp());
 }
@@ -358,7 +358,7 @@ class _ApiDemoCard extends StatelessWidget {
                 children: <Widget>[
                   FilledButton.tonal(
                     onPressed: () =>
-                        controller.applyPreset(DevicePresets.iPhone16),
+                        controller.applyPreset(DevicePresets.iPhoneSe3),
                     child: const Text('iPhone SE preset'),
                   ),
                   FilledButton.tonal(
@@ -505,16 +505,17 @@ class PlaygroundPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               sliver: SliverList(
                 delegate: SliverChildListDelegate(<Widget>[
-                  // A text field: focusing it opens the real keyboard, whose
-                  // inset is mapped into simulated space by device_preview so
-                  // scroll-into-view keeps working while simulating.
+                  // A text field. While a device is simulated the app only
+                  // ever sees the *simulated* keyboard (the panel's Keyboard
+                  // switch, or `keyboardInset` from Dart): the host's own
+                  // keyboard belongs to another screen and is kept out.
                   TextField(
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(),
                       labelText: 'Try the keyboard',
                       helperText:
-                          'viewInsets update live on the first tab while '
-                          'this is focused',
+                          'viewInsets show the simulated keyboard on the '
+                          'first tab',
                       prefixIcon: const Icon(Icons.keyboard_alt_outlined),
                       suffixIcon: IconButton(
                         icon: const Icon(Icons.clear),

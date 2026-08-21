@@ -32,6 +32,8 @@ const Set<String> kSpecKeys = <String>{
   'landscapePadding',
   'landscapeViewPadding',
   'systemGestureInsets',
+  'portraitKeyboardHeight',
+  'landscapeKeyboardHeight',
   'displayFeatures',
   'frame',
   'systemUi',
@@ -222,6 +224,15 @@ void _validate(Map<String, Object?> spec, String name) {
   ]) {
     if (spec[key] != null) {
       _validateInsets(spec[key], '$name: $key');
+    }
+  }
+  for (final String key in <String>[
+    'portraitKeyboardHeight',
+    'landscapeKeyboardHeight',
+  ]) {
+    final Object? height = spec[key];
+    if (height != null && (height is! num || height <= 0)) {
+      throw FormatException('$name: "$key" must be a positive number');
     }
   }
   if (spec['displayFeatures'] != null) {

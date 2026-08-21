@@ -226,6 +226,9 @@ mixin DevicePreviewBindingMixin
             // wrapper this binding installs; a composition that builds its
             // own View without DevicePreviewFrame simply ignores the field.
             'frame': simulationEnabled && _controller != null,
+            // The keyboard inset is reported by the wrapper view, so it does
+            // not need the frame wrapper — any enabled simulation has it.
+            'keyboard': simulationEnabled,
           },
         ),
         screenshot: screenshot,

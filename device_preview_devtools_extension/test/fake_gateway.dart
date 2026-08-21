@@ -66,10 +66,13 @@ class FakeGateway implements DevicePreviewGateway {
   /// Whether the app renders wire-pushed frame artwork.
   bool canFrame = true;
 
+  /// Whether the app can raise a simulated software keyboard.
+  bool canKeyboard = true;
+
   // Keep in sync with `DevicePreviewProtocol.protocolVersion` app-side —
   // the fake must advertise what a real 3.0 app sends.
   Map<String, Object?> stateShape() => <String, Object?>{
-        'protocolVersion': 3,
+        'protocolVersion': 4,
         'enabled': enabled,
         'simulation': simulation == null
             ? null
@@ -96,6 +99,7 @@ class FakeGateway implements DevicePreviewGateway {
           'targetPlatform': canTargetPlatform,
           'screenshot': canScreenshot,
           'frame': canFrame,
+          'keyboard': canKeyboard,
         },
       };
 
@@ -187,6 +191,7 @@ const Map<String, Object?> testPhonePresetJson = <String, Object?>{
     'right': 0.0,
     'bottom': 10.0,
   },
+  'portraitKeyboardHeight': 250.0,
 };
 
 /// A preset carrying frame artwork, like the built-in catalog entries.
@@ -205,6 +210,8 @@ const Map<String, Object?> testFramedPresetJson = <String, Object?>{
     'body': '<svg viewBox="0 0 420 820">'
         '<rect x="0" y="0" width="420" height="820" fill="#101010"/></svg>',
   },
+  'portraitKeyboardHeight': 300.0,
+  'landscapeKeyboardHeight': 200.0,
   'systemUi': <String, Object?>{
     'statusBar': <String, Object?>{
       'inset': 12.0,

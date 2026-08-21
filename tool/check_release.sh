@@ -14,6 +14,15 @@ BUILD_DIR="$ROOT/device_preview/extension/devtools/build"
 
 fail() { echo "RELEASE CHECK FAILED: $1" >&2; exit 1; }
 
+echo "== version consistency =="
+# The pubspec version must have a matching CHANGELOG heading (pub.dev shows
+# "no changelog" otherwise), and a final release must not linger on a
+# prerelease suffix by accident.
+VERSION=$(sed -n 's/^version: //p' "$ROOT/device_preview/pubspec.yaml")
+grep -q "^## $VERSION\b" "$ROOT/device_preview/CHANGELOG.md" || fail \
+  "CHANGELOG.md has no '## $VERSION' entry matching pubspec.yaml"
+echo "version $VERSION, changelog entry present"
+
 echo "== DevTools extension bundle =="
 # The compiled extension ships inside the package; publishing without it
 # gives every user a DevTools tab whose iframe 404s.

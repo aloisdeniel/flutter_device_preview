@@ -51,6 +51,8 @@ class DevicePreset {
     this.landscapePadding,
     this.landscapeViewPadding,
     this.systemGestureInsets = EdgeInsets.zero,
+    this.portraitKeyboardHeight,
+    this.landscapeKeyboardHeight,
     this.displayFeatures = const <SimulatedDisplayFeature>[],
     this.kind = DeviceKind.phone,
   });
@@ -60,6 +62,25 @@ class DevicePreset {
   /// Unknown keys are ignored; missing required keys or malformed values
   /// throw a [FormatException].
   factory DevicePreset.fromJson(Map<String, Object?> json) {
+    final TargetPlatform platform = decodeEnum(
+      json['platform'],
+      TargetPlatform.values,
+      'platform',
+    );
+    // Bars that do not name their platform get the device's: paint-time
+    // behavior (Android tints bar backgrounds, iOS never does) must follow
+    // the simulated device, not the app's host. Specs in `device_specs/`
+    // rely on this — they never repeat the platform inside `systemUi`.
+    SystemUiSimulation? systemUi = json['systemUi'] == null
+        ? null
+        : SystemUiSimulation.fromJson(decodeMap(json['systemUi'], 'systemUi'));
+    if (systemUi != null && systemUi.platform == null) {
+      systemUi = SystemUiSimulation(
+        statusBar: systemUi.statusBar,
+        navigationBar: systemUi.navigationBar,
+        platform: platform,
+      );
+    }
     return DevicePreset(
       id: decodeString(json['id'], 'id'),
       name: decodeString(json['name'], 'name'),
@@ -67,13 +88,11 @@ class DevicePreset {
           ? null
           : decodeString(json['brand'], 'brand'),
       year: json['year'] == null ? null : decodeInt(json['year'], 'year'),
-      platform: decodeEnum(json['platform'], TargetPlatform.values, 'platform'),
+      platform: platform,
       frame: json['frame'] == null
           ? null
           : DeviceFrame.fromJson(decodeMap(json['frame'], 'frame')),
-      systemUi: json['systemUi'] == null
-          ? null
-          : SystemUiSimulation.fromJson(decodeMap(json['systemUi'], 'systemUi')),
+      systemUi: systemUi,
       portraitSize: decodeSize(json['portraitSize'], 'portraitSize'),
       devicePixelRatio: decodeDouble(
         json['devicePixelRatio'],
@@ -102,6 +121,18 @@ class DevicePreset {
           : decodeEdgeInsets(
               json['systemGestureInsets'],
               'systemGestureInsets',
+            ),
+      portraitKeyboardHeight: json['portraitKeyboardHeight'] == null
+          ? null
+          : decodeDouble(
+              json['portraitKeyboardHeight'],
+              'portraitKeyboardHeight',
+            ),
+      landscapeKeyboardHeight: json['landscapeKeyboardHeight'] == null
+          ? null
+          : decodeDouble(
+              json['landscapeKeyboardHeight'],
+              'landscapeKeyboardHeight',
             ),
       displayFeatures: json['displayFeatures'] == null
           ? const <SimulatedDisplayFeature>[]
@@ -171,6 +202,25 @@ class DevicePreset {
   /// The system gesture insets, in logical pixels.
   final EdgeInsets systemGestureInsets;
 
+  /// The height the device's software keyboard covers in portrait, in
+  /// logical pixels, or null when the device has no software keyboard (a
+  /// desktop window) or its height has not been measured.
+  ///
+  /// Measured on the device itself, with its stock keyboard and no
+  /// predictive-text row toggled off. Showing it is a per-simulation choice
+  /// ([DeviceSimulation.keyboardInset]), so a preset never turns it on by
+  /// itself: [resolve] leaves the keyboard hidden.
+  final double? portraitKeyboardHeight;
+
+  /// The height the device's software keyboard covers in landscape, in
+  /// logical pixels. See [portraitKeyboardHeight].
+  ///
+  /// Keyboards are shorter in landscape and the ratio is not derivable from
+  /// the portrait height, so there is no rotation rule: a device that
+  /// declares one height and not the other simply has no keyboard in the
+  /// other orientation.
+  final double? landscapeKeyboardHeight;
+
   /// Display features (folds, hinges, cutouts), in portrait logical pixels.
   final List<SimulatedDisplayFeature> displayFeatures;
 
@@ -193,6 +243,22 @@ class DevicePreset {
     bottom: portrait.bottom,
   );
 
+  /// The keyboard height for [orientation], or null when this device
+  /// declares none.
+  ///
+  /// The value to pass to `DeviceSimulation.copyWith(keyboardInset: …)` to
+  /// raise this device's keyboard:
+  ///
+  /// ```dart
+  /// await c.update(
+  ///   (s) => s.copyWith(keyboardInset: preset.keyboardHeight(s.orientation)),
+  /// );
+  /// ```
+  double? keyboardHeight(Orientation orientation) =>
+      orientation == Orientation.portrait
+      ? portraitKeyboardHeight
+      : landscapeKeyboardHeight;
+
   /// Resolves this preset into a metrics-only [DeviceSimulation] with
   /// [DeviceSimulation.presetId] set.
   ///
@@ -207,13 +273,26 @@ class DevicePreset {
   DeviceSimulation resolve({Orientation orientation = Orientation.portrait}) {
     final EdgeInsets effectivePortraitViewPadding =
         portraitViewPadding ?? portraitPadding;
+    // The bars belong to the simulated device's operating system: stamp the
+    // preset's platform so paint-time behavior (Android tints the bar
+    // backgrounds from the app's `SystemUiOverlayStyle`, iOS never does)
+    // follows the device rather than the host the app runs on.
+    final SystemUiSimulation? resolvedSystemUi = systemUi == null
+        ? null
+        : (systemUi!.platform != null
+              ? systemUi
+              : SystemUiSimulation(
+                  statusBar: systemUi!.statusBar,
+                  navigationBar: systemUi!.navigationBar,
+                  platform: platform,
+                ));
     if (orientation == Orientation.portrait) {
       return DeviceSimulation(
         presetId: id,
         deviceKind: kind,
         screenSize: portraitSize,
         frame: frame,
-        systemUi: systemUi,
+        systemUi: resolvedSystemUi,
         devicePixelRatio: devicePixelRatio,
         padding: portraitPadding,
         viewPadding: effectivePortraitViewPadding,
@@ -235,7 +314,7 @@ class DevicePreset {
       // Frames are described in portrait and rotated at paint time.
       frame: frame,
       // System bars follow the safe areas, which resolve() already rotated.
-      systemUi: systemUi,
+      systemUi: resolvedSystemUi,
       devicePixelRatio: devicePixelRatio,
       padding: resolvedLandscapePadding,
       viewPadding: resolvedLandscapeViewPadding,
@@ -271,6 +350,10 @@ class DevicePreset {
     if (landscapeViewPadding != null)
       'landscapeViewPadding': encodeEdgeInsets(landscapeViewPadding!),
     'systemGestureInsets': encodeEdgeInsets(systemGestureInsets),
+    if (portraitKeyboardHeight != null)
+      'portraitKeyboardHeight': portraitKeyboardHeight,
+    if (landscapeKeyboardHeight != null)
+      'landscapeKeyboardHeight': landscapeKeyboardHeight,
     if (displayFeatures.isNotEmpty)
       'displayFeatures': displayFeatures
           .map((SimulatedDisplayFeature f) => f.toJson())
@@ -297,6 +380,8 @@ class DevicePreset {
         other.landscapePadding == landscapePadding &&
         other.landscapeViewPadding == landscapeViewPadding &&
         other.systemGestureInsets == systemGestureInsets &&
+        other.portraitKeyboardHeight == portraitKeyboardHeight &&
+        other.landscapeKeyboardHeight == landscapeKeyboardHeight &&
         listEquals(other.displayFeatures, displayFeatures) &&
         other.kind == kind;
   }
@@ -317,6 +402,8 @@ class DevicePreset {
     landscapePadding,
     landscapeViewPadding,
     systemGestureInsets,
+    portraitKeyboardHeight,
+    landscapeKeyboardHeight,
     Object.hashAll(displayFeatures),
     kind,
   );

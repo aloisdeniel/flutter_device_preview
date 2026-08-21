@@ -337,6 +337,52 @@ void main() {
       }
     });
 
+    test('keyboard heights round-trip and default to null', () {
+      const preset = DevicePreset(
+        id: 'x',
+        name: 'X',
+        platform: TargetPlatform.iOS,
+        portraitSize: Size(400, 800),
+        devicePixelRatio: 2,
+        portraitKeyboardHeight: 291,
+        landscapeKeyboardHeight: 209,
+      );
+      final json = preset.toJson();
+      expect(json['portraitKeyboardHeight'], 291.0);
+      expect(json['landscapeKeyboardHeight'], 209.0);
+      expect(DevicePreset.fromJson(json), preset);
+
+      final bare = DevicePreset.fromJson(<String, Object?>{
+        'id': 'y',
+        'name': 'Y',
+        'platform': 'android',
+        'portraitSize': {'width': 100, 'height': 200},
+        'devicePixelRatio': 2,
+      });
+      expect(bare.portraitKeyboardHeight, isNull);
+      expect(bare.toJson().containsKey('portraitKeyboardHeight'), isFalse);
+    });
+
+    test('keyboardHeight picks the orientation, resolve never raises it', () {
+      const preset = DevicePreset(
+        id: 'x',
+        name: 'X',
+        platform: TargetPlatform.iOS,
+        portraitSize: Size(400, 800),
+        devicePixelRatio: 2,
+        portraitKeyboardHeight: 291,
+        landscapeKeyboardHeight: 209,
+      );
+      expect(preset.keyboardHeight(Orientation.portrait), 291);
+      expect(preset.keyboardHeight(Orientation.landscape), 209);
+      // A preset describes the device, not what it is currently showing.
+      expect(preset.resolve().keyboardInset, isNull);
+      expect(
+        preset.resolve(orientation: Orientation.landscape).keyboardInset,
+        isNull,
+      );
+    });
+
     test('fromJson ignores unknown keys and applies defaults', () {
       final preset = DevicePreset.fromJson(<String, Object?>{
         'id': 'x',

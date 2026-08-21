@@ -31,6 +31,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 2.0,
     portraitPadding: EdgeInsets.only(top: 32, bottom: 25),
     landscapePadding: EdgeInsets.only(top: 32, bottom: 25),
+    portraitKeyboardHeight: 337,
+    landscapeKeyboardHeight: 422,
     kind: DeviceKind.tablet,
     frame: DeviceFrame(
       size: ui.Size(938, 1298),
@@ -45,6 +47,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 29.04 10.98">\n'
@@ -91,6 +94,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 2.0,
     portraitPadding: EdgeInsets.only(top: 32, bottom: 25),
     landscapePadding: EdgeInsets.only(top: 32, bottom: 25),
+    portraitKeyboardHeight: 337,
+    landscapeKeyboardHeight: 422,
     kind: DeviceKind.tablet,
     frame: DeviceFrame(
       size: ui.Size(938, 1298),
@@ -105,6 +110,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 29.04 10.98">\n'
@@ -151,6 +157,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 2.0,
     portraitPadding: EdgeInsets.only(top: 32, bottom: 25),
     landscapePadding: EdgeInsets.only(top: 32, bottom: 25),
+    portraitKeyboardHeight: 337,
+    landscapeKeyboardHeight: 422,
     kind: DeviceKind.tablet,
     frame: DeviceFrame(
       size: ui.Size(938, 1298),
@@ -165,6 +173,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 29.04 10.98">\n'
@@ -211,6 +220,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 2.0,
     portraitPadding: EdgeInsets.only(top: 32, bottom: 25),
     landscapePadding: EdgeInsets.only(top: 32, bottom: 25),
+    portraitKeyboardHeight: 337,
+    landscapeKeyboardHeight: 422,
     kind: DeviceKind.tablet,
     frame: DeviceFrame(
       size: ui.Size(938, 1298),
@@ -225,6 +236,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 29.04 10.98">\n'
@@ -271,6 +283,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 2.0,
     portraitPadding: EdgeInsets.only(top: 32, bottom: 25),
     landscapePadding: EdgeInsets.only(top: 32, bottom: 25),
+    portraitKeyboardHeight: 403,
+    landscapeKeyboardHeight: 498,
     kind: DeviceKind.tablet,
     frame: DeviceFrame(
       size: ui.Size(1142, 1484),
@@ -286,6 +300,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 29.04 10.98">\n'
@@ -332,6 +347,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 2.0,
     portraitPadding: EdgeInsets.only(top: 32, bottom: 25),
     landscapePadding: EdgeInsets.only(top: 32, bottom: 25),
+    portraitKeyboardHeight: 403,
+    landscapeKeyboardHeight: 498,
     kind: DeviceKind.tablet,
     frame: DeviceFrame(
       size: ui.Size(1142, 1484),
@@ -347,6 +364,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 29.04 10.98">\n'
@@ -393,6 +411,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 2.0,
     portraitPadding: EdgeInsets.only(top: 32, bottom: 25),
     landscapePadding: EdgeInsets.only(top: 32, bottom: 25),
+    portraitKeyboardHeight: 340,
+    landscapeKeyboardHeight: 428,
     kind: DeviceKind.tablet,
     frame: DeviceFrame(
       size: ui.Size(864, 1253),
@@ -408,6 +428,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 29.04 10.98">\n'
@@ -454,6 +475,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 2.0,
     portraitPadding: EdgeInsets.only(top: 32, bottom: 25),
     landscapePadding: EdgeInsets.only(top: 32, bottom: 25),
+    portraitKeyboardHeight: 340,
+    landscapeKeyboardHeight: 428,
     kind: DeviceKind.tablet,
     frame: DeviceFrame(
       size: ui.Size(926, 1302),
@@ -469,6 +492,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 29.04 10.98">\n'
@@ -515,6 +539,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 2.0,
     portraitPadding: EdgeInsets.only(top: 32, bottom: 25),
     landscapePadding: EdgeInsets.only(top: 32, bottom: 25),
+    portraitKeyboardHeight: 340,
+    landscapeKeyboardHeight: 428,
     kind: DeviceKind.tablet,
     frame: DeviceFrame(
       size: ui.Size(926, 1302),
@@ -530,6 +556,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 29.04 10.98">\n'
@@ -576,6 +603,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 2.0,
     portraitPadding: EdgeInsets.only(top: 32, bottom: 25),
     landscapePadding: EdgeInsets.only(top: 32, bottom: 25),
+    portraitKeyboardHeight: 403,
+    landscapeKeyboardHeight: 498,
     kind: DeviceKind.tablet,
     frame: DeviceFrame(
       size: ui.Size(1124, 1468),
@@ -591,6 +620,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 29.04 10.98">\n'
@@ -637,6 +667,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 2.0,
     portraitPadding: EdgeInsets.only(top: 32, bottom: 25),
     landscapePadding: EdgeInsets.only(top: 32, bottom: 25),
+    portraitKeyboardHeight: 403,
+    landscapeKeyboardHeight: 498,
     kind: DeviceKind.tablet,
     frame: DeviceFrame(
       size: ui.Size(1124, 1468),
@@ -652,6 +684,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 29.04 10.98">\n'
@@ -698,6 +731,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 59, bottom: 34),
     landscapePadding: EdgeInsets.only(left: 59, right: 59, bottom: 20),
+    portraitKeyboardHeight: 335,
+    landscapeKeyboardHeight: 208,
     frame: DeviceFrame(
       size: ui.Size(429, 888),
       screenOffset: ui.Offset(18, 18),
@@ -717,6 +752,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 30.75 11.62">\n'
@@ -763,6 +799,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 59, bottom: 34),
     landscapePadding: EdgeInsets.only(left: 59, right: 59, bottom: 20),
+    portraitKeyboardHeight: 345,
+    landscapeKeyboardHeight: 208,
     frame: DeviceFrame(
       size: ui.Size(466, 968),
       screenOffset: ui.Offset(18, 18),
@@ -782,6 +820,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 30.75 11.62">\n'
@@ -828,6 +867,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 62, bottom: 34),
     landscapePadding: EdgeInsets.only(left: 62, right: 62, bottom: 20),
+    portraitKeyboardHeight: 335,
+    landscapeKeyboardHeight: 208,
     frame: DeviceFrame(
       size: ui.Size(436, 908),
       screenOffset: ui.Offset(17, 17),
@@ -845,6 +886,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 30.75 11.62">\n'
@@ -891,6 +933,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 62, bottom: 34),
     landscapePadding: EdgeInsets.only(left: 62, right: 62, bottom: 20),
+    portraitKeyboardHeight: 345,
+    landscapeKeyboardHeight: 208,
     frame: DeviceFrame(
       size: ui.Size(474, 990),
       screenOffset: ui.Offset(17, 17),
@@ -912,6 +956,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 30.75 11.62">\n'
@@ -958,6 +1003,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 62, bottom: 34),
     landscapePadding: EdgeInsets.only(left: 62, right: 62, bottom: 20),
+    portraitKeyboardHeight: 335,
+    landscapeKeyboardHeight: 208,
     frame: DeviceFrame(
       size: ui.Size(436, 908),
       screenOffset: ui.Offset(17, 17),
@@ -975,6 +1022,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 30.75 11.62">\n'
@@ -1021,6 +1069,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 62, bottom: 34),
     landscapePadding: EdgeInsets.only(left: 62, right: 62, bottom: 20),
+    portraitKeyboardHeight: 335,
+    landscapeKeyboardHeight: 208,
     frame: DeviceFrame(
       size: ui.Size(436, 908),
       screenOffset: ui.Offset(17, 17),
@@ -1038,6 +1088,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 30.75 11.62">\n'
@@ -1084,6 +1135,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 62, bottom: 34),
     landscapePadding: EdgeInsets.only(left: 62, right: 62, bottom: 20),
+    portraitKeyboardHeight: 345,
+    landscapeKeyboardHeight: 208,
     frame: DeviceFrame(
       size: ui.Size(474, 990),
       screenOffset: ui.Offset(17, 17),
@@ -1105,6 +1158,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 30.75 11.62">\n'
@@ -1151,6 +1205,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 47, bottom: 34),
     landscapePadding: EdgeInsets.only(left: 47, right: 47, bottom: 20),
+    portraitKeyboardHeight: 335,
+    landscapeKeyboardHeight: 208,
     frame: DeviceFrame(
       size: ui.Size(434, 888),
       screenOffset: ui.Offset(22, 22),
@@ -1165,6 +1221,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 30.75 11.62">\n'
@@ -1211,6 +1268,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 3.0,
     portraitPadding: EdgeInsets.only(top: 68, bottom: 34),
     landscapePadding: EdgeInsets.only(left: 68, right: 68, bottom: 20),
+    portraitKeyboardHeight: 345,
+    landscapeKeyboardHeight: 208,
     frame: DeviceFrame(
       size: ui.Size(456, 948),
       screenOffset: ui.Offset(18, 18),
@@ -1226,6 +1285,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 30.75 11.62">\n'
@@ -1273,6 +1333,8 @@ abstract final class DevicePresets {
     devicePixelRatio: 2.0,
     portraitPadding: EdgeInsets.only(top: 20),
     landscapePadding: EdgeInsets.zero,
+    portraitKeyboardHeight: 260,
+    landscapeKeyboardHeight: 206,
     frame: DeviceFrame(
       size: ui.Size(431, 889),
       screenOffset: ui.Offset(28, 111),
@@ -1290,6 +1352,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.iOS,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 25.62 9.68">\n'
@@ -1391,6 +1454,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.android,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 26.48 10.01">\n'
@@ -1459,6 +1523,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.android,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 26.48 10.01">\n'
@@ -1518,6 +1583,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.android,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 26.48 10.01">\n'
@@ -1589,6 +1655,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.android,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 26.48 10.01">\n'
@@ -1660,6 +1727,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.android,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 26.48 10.01">\n'
@@ -1727,6 +1795,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.android,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 26.48 10.01">\n'
@@ -1794,6 +1863,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.android,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 26.48 10.01">\n'
@@ -1873,6 +1943,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.android,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 26.48 10.01">\n'
@@ -1952,6 +2023,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.android,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 26.48 10.01">\n'
@@ -2031,6 +2103,7 @@ abstract final class DevicePresets {
           '</svg>',
     ),
     systemUi: SystemUiSimulation(
+      platform: TargetPlatform.android,
       statusBar: SystemUiBar(
         leading:
             '<svg viewBox="0 0 26.48 10.01">\n'
@@ -2068,6 +2141,11 @@ abstract final class DevicePresets {
   );
 
   /// All built-in presets.
+  ///
+  /// Referencing this list (or [byId], which walks it)
+  /// keeps every preset — artwork included — in the
+  /// build. Name the presets you need to keep the rest
+  /// tree-shakable.
   static const List<DevicePreset> all = <DevicePreset>[
     iPad10,
     iPadA16,
@@ -2105,6 +2183,9 @@ abstract final class DevicePresets {
   ];
 
   /// Returns the built-in preset with the given [id], or null.
+  ///
+  /// Walks [all], so it defeats tree-shaking: an app
+  /// calling it carries the whole catalog.
   static DevicePreset? byId(String id) {
     for (final DevicePreset preset in all) {
       if (preset.id == id) {

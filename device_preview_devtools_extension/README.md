@@ -11,10 +11,12 @@ package: it talks to the running app over the VM service
 ignored), and pins compatibility via `protocolVersion`.
 
 The device catalog is **local** — generated from `device_specs/*.json` at the
-root of the repository into `lib/src/devices/device_catalog.g.dart` — because
-it carries frame artwork that the published package deliberately does not
-ship. Presets the app registers itself (`listPresets`) are appended to it,
-minus the ids the catalog already covers.
+root of the repository into `lib/src/devices/device_catalog.g.dart` — so the
+panel lists every device, with artwork, before an app is even attached, and
+regardless of the package version it is talking to. (The package generates the
+same specs into its own `DevicePresets`, but an app only compiles in the ones
+it names.) Presets the app registers itself (`listPresets`) are appended to
+the catalog, minus the ids it already covers.
 
 ```console
 dart run tool/generate_device_catalog.dart          # after editing a spec

@@ -106,6 +106,26 @@ adb shell dumpsys window               # InsetsSource STATUS_BAR / NAVIGATION_BA
   tooling — a newer Android Studio / cmdline-tools brings newer Pixels.
 - The AVD is always shut down (`adb emu kill`) and deleted afterwards.
 
+### Keyboard heights are not (yet) probed here
+
+`portraitKeyboardHeight` / `landscapeKeyboardHeight` stay **absent** from the
+Pixel specs, and `device_preview`'s keyboard switch is inert for them.
+
+The attempt is recorded because it looks easy and is not: a Flutter probe app
+with an autofocused field (`MediaQuery.viewInsets.bottom`, the same number the
+Cupertino probe reads) does raise the emulator's Gboard, but the height it
+reports on `android-36;google_apis;arm64-v8a` / `pixel_9` is **not
+reproducible** — 194, 300, 312 and 336 dp across four consecutive runs of the
+same AVD, as Gboard resizes itself while its suggestion strip and first-run
+chrome settle, and `dumpsys window`'s `mImeHeight` follows the same wobble.
+Unlike iOS, the height is also not a device property at all: it belongs to
+whichever IME is installed.
+
+Making this trustworthy needs Gboard pinned to a known state (first-run UI
+dismissed, suggestion strip on, one-handed/emoji rows off) and a settling
+rule — several identical samples in a row — before a number is written. Until
+then, no number: an absent keyboard is honest, an invented one is not.
+
 ### Known limits
 
 - The emulator's **cutout overlays** (`cmd overlay list` →

@@ -540,12 +540,7 @@ h2 {
 @media (max-width: 940px) { .devtools-grid { grid-template-columns: 1fr; } }
 .devtools-grid p { color: var(--ink-dim); margin-bottom: 14px; }
 .devtools-grid p strong { color: var(--ink); }
-.panel-index { border: 1px solid var(--line-strong); border-radius: 10px; overflow: hidden; }
-.panel-index .pi-row { display: grid; grid-template-columns: 108px minmax(0, 1fr); border-top: 1px solid var(--line); }
-.panel-index .pi-row:first-child { border-top: none; }
-.panel-index .pi-row > * { padding: 13px 16px; }
-.panel-index .pi-k { font-family: var(--mono); font-size: 12.5px; color: var(--cyan); }
-.panel-index .pi-d { color: var(--ink-dim); font-size: 14px; }
+.panel-shot img { display: block; width: 100%; max-width: 400px; height: auto; aspect-ratio: 1 / 1.5; object-fit: cover; object-position: top; margin: 0 auto; border: 1px solid var(--line-strong); border-radius: 12px; box-shadow: 0 24px 60px rgba(0, 0, 0, .45); }
 
 /* testing strip */
 .duo { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 22px; }
@@ -610,7 +605,7 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
 <div class="hero">
   <div class="sheet hero-grid">
     <div class="stagger">
-      <span class="tag">Flutter · device simulation</span>
+      <span class="tag">Flutter · device preview</span>
       <h1>Every device.<br><span class="accent">One</span> <span class="outline">app run.</span></h1>
       <p class="lede">Switch your running Flutter app to an iPhone, an iPad in landscape or a 200%-text-scale Pixel — <strong>instantly, without a rebuild or a simulator</strong>. Screen size, safe areas, locale, brightness, text scale and accessibility all follow, so layout problems surface while you're still writing the layout.</p>
       <div class="hero-ctas">
@@ -696,6 +691,10 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
           <div class="dp-row">
             <label class="dp-lbl" for="dpSystemUi">System UI</label>
             <span class="dp-ctl"><input type="checkbox" class="dp-switch" id="dpSystemUi"></span>
+          </div>
+          <div class="dp-row">
+            <label class="dp-lbl" for="dpKeyboard">Keyboard</label>
+            <span class="dp-ctl"><input type="checkbox" class="dp-switch" id="dpKeyboard"></span>
           </div>
           <div class="dp-row">
             <span class="dp-lbl">Touch input</span>
@@ -841,7 +840,7 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
       </div>
       <div class="prob reveal">
         <h3>The inset you forgot</h3>
-        <p>Notches, punch-holes, home indicators, hinges and the software keyboard all move in. <code>SafeArea</code>, <code>MediaQuery.padding</code> and <code>viewInsets</code> report the simulated device's values, so content that would hide under a cutout hides now — while you can still fix it.</p>
+        <p>Notches, punch-holes, home indicators and hinges all move in. <code>SafeArea</code>, <code>MediaQuery.padding</code> and <code>displayFeatures</code> report the simulated device's values, so content that would hide under a cutout hides now — while you can still fix it.</p>
       </div>
       <div class="prob reveal">
         <h3>The user who isn't you</h3>
@@ -862,10 +861,10 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
       <div class="spec-row"><div class="k">Safe areas</div><div class="d">Notches, punch-holes and home indicators, correct per device and per orientation. <code>SafeArea</code> and <code>MediaQuery.padding</code> respond.</div><div class="m">SCREEN</div></div>
       <div class="spec-row"><div class="k">Orientation</div><div class="d">Portrait ⇄ landscape in one click, with safe areas rotating the way the real device rotates them.</div><div class="m">SCREEN</div></div>
       <div class="spec-row"><div class="k">Folds &amp; hinges</div><div class="d">Display features for foldables, so hinge-aware layouts can be checked without a foldable on the desk.</div><div class="m">SCREEN</div></div>
-      <div class="spec-row"><div class="k">Device frame</div><div class="d">The device drawn around your app: its screen outline clips the corners, its body is painted behind. Nothing ships in your app — the frame travels from the DevTools catalog when you pick a device.</div><div class="m">SCREEN</div></div>
+      <div class="spec-row"><div class="k">Device frame</div><div class="d">The device drawn around your app: its screen outline clips the corners, its body is painted behind. The artwork is <code>const</code> data on the preset — only the devices you name are compiled in — and travels from the DevTools catalog when you pick one there.</div><div class="m">SCREEN</div></div>
       <div class="spec-row"><div class="k">System UI</div><div class="d">A simulated status bar and gesture pill, laid out from the device's own safe areas and tinted from your app's <code>SystemUiOverlayStyle</code> — so a status bar style is visible while you write it. One switch hides them.</div><div class="m">SCREEN</div></div>
       <div class="spec-row"><div class="k">Touch input</div><div class="d">Your mouse reported to the app as a finger: drag to scroll a list the way a thumb does — the mouse is not a drag device on desktop or the web — with gestures on their touch paths and no hover. The wheel keeps scrolling. Left on <em>auto</em> it follows the device: on for a phone, tablet or foldable, off for a desktop window.</div><div class="m">INPUT</div></div>
-      <div class="spec-row"><div class="k">Keyboard insets</div><div class="d">The software keyboard's <code>viewInsets</code> reach your layout, so you can see what the keyboard covers.</div><div class="m">SCREEN</div></div>
+      <div class="spec-row"><div class="k">Keyboard</div><div class="d">The device's own software keyboard, raised on demand at the height it really covers — measured on the device, in both orientations — so the button it hides, or the field that will not scroll into view, shows up on a desktop that has no keyboard at all. It arrives as <code>MediaQuery.viewInsets</code>, so <code>resizeToAvoidBottomInset</code> and scroll-into-view behave exactly as they do on the phone.</div><div class="m">SCREEN</div></div>
       <div class="spec-row"><div class="k">Locales</div><div class="d">A full ordered locale list — your app's locale resolution, translations and <code>Intl</code> date, number and currency formatting all follow.</div><div class="m">SYSTEM</div></div>
       <div class="spec-row"><div class="k">Brightness</div><div class="d">Light and dark, applied live — <code>ThemeMode.system</code> flips as you toggle.</div><div class="m">SYSTEM</div></div>
       <div class="spec-row"><div class="k">Text scale</div><div class="d">Up to 200% and beyond, the single fastest way to find overflowing rows and clipped labels.</div><div class="m">SYSTEM</div></div>
@@ -889,13 +888,9 @@ footer { border-top: 1px solid var(--line); margin-top: 40px; }
         <p><strong>Hot restart doesn't lose your setup.</strong> Turn on <em>Keep across restarts</em> and the panel puts your simulated device back the moment the app returns.</p>
         <p><a class="btn ghost" href="#demo">↑ Try the panel on the live demo</a></p>
       </div>
-      <div class="panel-index reveal">
-        <div class="pi-row"><div class="pi-k">Device</div><div class="pi-d">The catalog, orientation, the simulated system UI, mouse-as-finger — and a custom size when no catalog entry fits.</div></div>
-        <div class="pi-row"><div class="pi-k">Display</div><div class="pi-d">Brightness, text scale, 24-hour time.</div></div>
-        <div class="pi-row"><div class="pi-k">Locale</div><div class="pi-d">The ordered locale list your app resolves against.</div></div>
-        <div class="pi-row"><div class="pi-k">Accessibility</div><div class="pi-d">Seven flags, each on, off, or left as the real device reports it.</div></div>
-        <div class="pi-row"><div class="pi-k">Platform</div><div class="pi-d">The target platform Material and Cupertino adapt to. Debug builds only.</div></div>
-      </div>
+      <figure class="panel-shot reveal">
+        <img src="images/devtools-panel.png" width="460" height="690" loading="lazy" alt="The device_preview DevTools panel, dark themed, with an iPhone 17 Pro applied: a Device section with orientation, system UI and touch input controls, a Display section with brightness, text scale and 24-hour time, a Locale list, seven tri-state Accessibility flags, and a target Platform picker.">
+      </figure>
     </div>
   </div>
 </section>
@@ -997,7 +992,7 @@ void main() {
     { name: 'Pixel 9', w: 272, r: 36, size: '412 × 923', notch: { w: 18, h: 18, y: 13, x: '50%', r: 99, s: 1 }, inset: 48, insets: '48·0·24·0', locale: 'fr_FR', tag: 'fr-FR', dir: 'ltr', kicker: 'Aujourd’hui', title: 'Bonjour', wght: 500, scale: '1.3' },
     { name: 'iPad Pro 11', w: 344, r: 26, size: '834 × 1210', notch: { w: 10, h: 10, y: 8, x: '50%', r: 99, s: 0 }, inset: 24, insets: '24·0·20·0', locale: 'ja_JP', tag: 'ja-JP', dir: 'ltr', kicker: '今日', title: 'おはよう<br>ございます', wght: 300, scale: '0.9' },
     { name: 'iPhone SE', w: 232, r: 0, size: '375 × 667', notch: { w: 60, h: 6, y: 16, x: '50%', r: 3, s: 1 }, inset: 20, insets: '20·0·0·0', locale: 'ar_EG', tag: 'ar-EG', dir: 'rtl', kicker: 'اليوم', title: 'صباح<br>الخير', wght: 700, scale: '1.6' },
-    { name: 'Pixel 9 Pro Fold', w: 324, r: 22, size: '842 × 1076', notch: { w: 16, h: 16, y: 12, x: '88%', r: 99, s: 1 }, inset: 40, insets: '40·0·24·0', locale: 'de_DE', tag: 'de-DE', dir: 'ltr', kicker: 'Heute', title: 'Guten<br>Morgen', wght: 600, scale: '1.0' },
+    { name: 'Pixel 10 Pro Fold', w: 324, r: 22, size: '852 × 883', notch: { w: 16, h: 16, y: 12, x: '88%', r: 99, s: 1 }, inset: 36, insets: '36·0·24·0', locale: 'de_DE', tag: 'de-DE', dir: 'ltr', kicker: 'Heute', title: 'Guten<br>Morgen', wght: 600, scale: '1.0' },
   ];
   const dev = art.querySelector('.ha-dev');
   const q = (sel) => art.querySelector(sel);
@@ -1076,7 +1071,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
   // exactly this set and preserves every other override.
   const METRIC_KEYS = ['presetId', 'orientation', 'screenSize', 'frame', 'systemUi',
     'deviceKind', 'devicePixelRatio', 'padding', 'viewPadding', 'systemGestureInsets',
-    'displayFeatures'];
+    'keyboardInset', 'displayFeatures'];
   const A11Y_FLAGS = [
     ['accessibleNavigation', 'Accessible nav'],
     ['invertColors', 'Invert colors'],
@@ -1248,8 +1243,17 @@ document.getElementById('year').textContent = new Date().getFullYear();
     });
   }
 
+  function keyboardHeight(preset, landscape) {
+    if (!preset) return null;
+    const height = landscape ? preset.landscapeKeyboardHeight : preset.portraitKeyboardHeight;
+    return height != null ? height : null;
+  }
+
   function applyPreset(preset, orientation, extra) {
     const sim = currentSim();
+    // A raised keyboard survives the switch, at the new device's height for
+    // the orientation it lands in.
+    const keyboardWasRaised = sim.keyboardInset != null;
     METRIC_KEYS.forEach((key) => delete sim[key]);
     Object.assign(sim, extra || {});
     sim.presetId = preset.id;
@@ -1258,7 +1262,11 @@ document.getElementById('year').textContent = new Date().getFullYear();
     // The frame and the bars are described in portrait and resolved app-side,
     // so rotation never touches them.
     if (preset.frame) sim.frame = preset.frame;
-    if (preset.systemUi) sim.systemUi = preset.systemUi;
+    // The bars carry the device's platform so the app paints them with the
+    // simulated device's semantics instead of the host's.
+    if (preset.systemUi) sim.systemUi = Object.assign(
+      {}, preset.systemUi,
+      preset.systemUi.platform || !preset.platform ? {} : { platform: preset.platform });
     const landscape = orientation === 'landscape';
     const size = preset.portraitSize;
     if (size) {
@@ -1280,6 +1288,10 @@ document.getElementById('year').textContent = new Date().getFullYear();
     const gestures = preset.systemGestureInsets;
     if (gestures && Object.keys(gestures).some((key) => Number(gestures[key]) !== 0)) {
       sim.systemGestureInsets = gestures;
+    }
+    if (keyboardWasRaised) {
+      const keyboard = keyboardHeight(preset, landscape);
+      if (keyboard != null) sim.keyboardInset = keyboard;
     }
     const features = preset.displayFeatures;
     if (features && features.length) {
@@ -1441,6 +1453,11 @@ document.getElementById('year').textContent = new Date().getFullYear();
     systemUi.checked = !sim || sim.showSystemUi !== false;
     systemUi.disabled = !(sim && sim.systemUi);
 
+    const keyboard = $('dpKeyboard');
+    keyboard.checked = !!(sim && sim.keyboardInset != null);
+    keyboard.disabled = !(sim && keyboardHeight(presetById(sim.presetId),
+      sim.orientation === 'landscape') != null);
+
     const touch = sim && sim.touchInput;
     segValue($('dpTouch'), touch === true ? 'on' : touch === false ? 'off' : '');
 
@@ -1527,6 +1544,13 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
   $('dpSystemUi').addEventListener('change', (event) => {
     mutate('showSystemUi', event.target.checked ? null : false);
+  });
+
+  $('dpKeyboard').addEventListener('change', (event) => {
+    const sim = currentSim();
+    const height = keyboardHeight(presetById(sim.presetId),
+      sim.orientation === 'landscape');
+    mutate('keyboardInset', event.target.checked && height != null ? height : null);
   });
 
   $('dpTouch').addEventListener('click', (event) => {

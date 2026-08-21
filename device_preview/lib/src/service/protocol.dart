@@ -42,8 +42,12 @@ class DevicePreviewProtocol {
   ///   the `frame` capability flag.
   /// * 3 — `simulation.touchInput` (tri-state) and `simulation.deviceKind`
   ///   replace `simulation.pointerKind`: an unset `touchInput` follows the
-  ///   simulated device instead of meaning "off".
-  static const int protocolVersion = 3;
+  ///   simulated device instead of meaning "off". Later in the same release,
+  ///   `simulation.systemUi.platform` — additive, and inert when absent (the
+  ///   bars fall back to the app's own platform).
+  /// * 4 — `simulation.keyboardInset` (the simulated software keyboard) and
+  ///   the `keyboard` capability flag.
+  static const int protocolVersion = 4;
 
   /// The active controller, or null when simulation is disabled.
   final DevicePreviewController? controller;

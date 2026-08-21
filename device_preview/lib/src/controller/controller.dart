@@ -89,7 +89,7 @@ abstract class DevicePreviewController implements Listenable {
 ///
 /// | Changed fields | Trigger |
 /// |---|---|
-/// | screenSize / frame / devicePixelRatio / padding / viewPadding / systemGestureInsets / displayFeatures / orientation / alwaysUse24HourFormat | recompute fit, then `handleMetricsChanged()` |
+/// | screenSize / frame / devicePixelRatio / padding / viewPadding / systemGestureInsets / keyboardInset / displayFeatures / orientation / alwaysUse24HourFormat | recompute fit, then `handleMetricsChanged()` |
 /// | textScaleFactor | `handleTextScaleFactorChanged()` |
 /// | platformBrightness | `handlePlatformBrightnessChanged()` |
 /// | locales | `handleLocaleChanged()` |
@@ -334,6 +334,13 @@ class DevicePreviewControllerImpl implements DevicePreviewController {
         targetPlatform: current.targetPlatform,
         touchInput: current.touchInput,
         showSystemUi: current.showSystemUi,
+        // A raised keyboard survives a device switch, but its height is the
+        // new device's: what carries over is "the keyboard is up", not how
+        // tall the previous one was. A device that declares no keyboard
+        // height drops it.
+        keyboardInset: current.keyboardInset == null
+            ? null
+            : preset.keyboardHeight(orientation),
       );
     }
     return next;
@@ -383,7 +390,10 @@ class DevicePreviewControllerImpl implements DevicePreviewController {
       // hinge/fold bounds keep describing the same physical location.
       // systemGestureInsets intentionally pass through unchanged — their edge
       // semantics (back-gesture side edges, home area at the bottom) are
-      // orientation-invariant on real devices.
+      // orientation-invariant on real devices. A raised keyboard keeps its
+      // height too: without a preset there is no measured landscape height to
+      // rotate to, and no rule derives one (see
+      // [DevicePreset.landscapeKeyboardHeight]).
       final List<SimulatedDisplayFeature>? features = current.displayFeatures;
       return _applyNow(
         current.copyWith(
@@ -479,6 +489,7 @@ class DevicePreviewControllerImpl implements DevicePreviewController {
         previous?.padding != next?.padding ||
         previous?.viewPadding != next?.viewPadding ||
         previous?.systemGestureInsets != next?.systemGestureInsets ||
+        previous?.keyboardInset != next?.keyboardInset ||
         !listEquals(previous?.displayFeatures, next?.displayFeatures) ||
         (previous?.orientation ?? Orientation.portrait) !=
             (next?.orientation ?? Orientation.portrait) ||

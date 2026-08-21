@@ -33,6 +33,37 @@ void main() {
       );
     });
 
+    test('platform travels and round-trips', () {
+      const SystemUiSimulation ui = SystemUiSimulation(
+        statusBar: SystemUiBar(leading: kClock),
+        platform: TargetPlatform.iOS,
+      );
+      expect(ui.toJson()['platform'], 'iOS');
+      expect(SystemUiSimulation.fromJson(ui.toJson()), ui);
+      // Absent on the wire when unset, and never invented by decoding.
+      expect(kSystemUi.toJson().containsKey('platform'), isFalse);
+      expect(SystemUiSimulation.fromJson(kSystemUi.toJson()).platform, isNull);
+      // Distinguishes values.
+      expect(
+        ui,
+        isNot(
+          const SystemUiSimulation(
+            statusBar: SystemUiBar(leading: kClock),
+            platform: TargetPlatform.android,
+          ),
+        ),
+      );
+    });
+
+    test('an unknown platform name throws', () {
+      expect(
+        () => SystemUiSimulation.fromJson(const <String, Object?>{
+          'platform': 'ios',
+        }),
+        throwsFormatException,
+      );
+    });
+
     test('everything is optional', () {
       final SystemUiSimulation empty = SystemUiSimulation.fromJson(
         const <String, Object?>{},
@@ -152,7 +183,8 @@ void main() {
       );
     });
 
-    test('presets resolve it into both orientations unchanged', () {
+    test('presets resolve it into both orientations, stamped with the '
+        "device's platform", () {
       const DevicePreset preset = DevicePreset(
         id: 'x',
         name: 'X',
@@ -161,12 +193,41 @@ void main() {
         devicePixelRatio: 2,
         systemUi: kSystemUi,
       );
-      expect(preset.resolve().systemUi, kSystemUi);
+      const SystemUiSimulation stamped = SystemUiSimulation(
+        statusBar: SystemUiBar(leading: kClock, inset: 24),
+        navigationBar: SystemUiBar(
+          center: '<svg viewBox="0 0 140 5"/>',
+          bottomInset: 8,
+        ),
+        platform: TargetPlatform.iOS,
+      );
+      expect(preset.resolve().systemUi, stamped);
       expect(
         preset.resolve(orientation: Orientation.landscape).systemUi,
-        kSystemUi,
+        stamped,
       );
-      expect(DevicePreset.fromJson(preset.toJson()), preset);
+      // Decoding stamps too, so a JSON round trip lands on the stamped form
+      // (specs never repeat the platform inside systemUi).
+      final DevicePreset decoded = DevicePreset.fromJson(preset.toJson());
+      expect(decoded.systemUi, stamped);
+      expect(decoded.toJson()['systemUi'], stamped.toJson());
+      expect(DevicePreset.fromJson(decoded.toJson()), decoded);
+    });
+
+    test('an explicit systemUi platform survives resolve', () {
+      const SystemUiSimulation android = SystemUiSimulation(
+        statusBar: SystemUiBar(leading: kClock),
+        platform: TargetPlatform.android,
+      );
+      const DevicePreset preset = DevicePreset(
+        id: 'x',
+        name: 'X',
+        platform: TargetPlatform.iOS,
+        portraitSize: ui.Size(400, 800),
+        devicePixelRatio: 2,
+        systemUi: android,
+      );
+      expect(preset.resolve().systemUi, same(android));
     });
   });
 

@@ -80,5 +80,7 @@
       ],
       "bottomInset": 8
     }
-  }
+  },
+  "portraitKeyboardHeight": 335,
+  "landscapeKeyboardHeight": 208
 }

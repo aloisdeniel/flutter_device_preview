@@ -9,6 +9,14 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'fake_gateway.dart';
 
+/// What the panel pushes for a preset's `systemUi`: the spec's map with the
+/// device's platform stamped in (see `_applyPresetSimulation`).
+Map<String, Object?> stampedSystemUi(Map<String, Object?> spec) =>
+    <String, Object?>{
+      ...spec['systemUi'] as Map<String, Object?>,
+      'platform': spec['platform'],
+    };
+
 void main() {
   late FakeGateway gateway;
   late InMemoryStorage storage;
@@ -370,12 +378,18 @@ void main() {
       await controller!.selectPreset(imported.single);
       expect(gateway.simulation?['presetId'], 'test-framed');
       expect(gateway.simulation?['frame'], testFramedPresetJson['frame']);
-      expect(gateway.simulation?['systemUi'], testFramedPresetJson['systemUi']);
+      expect(
+        gateway.simulation?['systemUi'],
+        stampedSystemUi(testFramedPresetJson),
+      );
       expect(controller!.activeDeviceLabel, 'Test Framed Phone');
       expect(controller!.hasSystemUi, isTrue);
       await controller!.setOrientation('landscape');
       expect(gateway.simulation?['frame'], testFramedPresetJson['frame']);
-      expect(gateway.simulation?['systemUi'], testFramedPresetJson['systemUi']);
+      expect(
+        gateway.simulation?['systemUi'],
+        stampedSystemUi(testFramedPresetJson),
+      );
       expect(gateway.simulation?['screenSize'], {
         'width': 800.0,
         'height': 400.0,
@@ -400,7 +414,7 @@ void main() {
       expect(controller!.isUserDevice('google-pixel-9'), isTrue);
       await controller!.selectPreset(imported.single);
       expect(gateway.simulation?['frame'], spec['frame']);
-      expect(gateway.simulation?['systemUi'], spec['systemUi']);
+      expect(gateway.simulation?['systemUi'], stampedSystemUi(spec));
     });
 
     test('user devices survive a new session (re-read from storage)', () async {
@@ -614,6 +628,61 @@ void main() {
       expect(controller!.showSystemUi, isTrue);
     });
 
+    test('the keyboard rises at the device height and follows the device '
+        'across switches and rotations', () async {
+      await ready();
+      // The panel resolves the raised keyboard's height from the device it
+      // pushed, so the app must report these presets back.
+      gateway.presetsJson = <Map<String, Object?>>[
+        testFramedPresetJson,
+        testPhonePresetJson,
+      ];
+      gateway.emit('device_preview.presetsChanged', {'count': 2});
+      await pumpEventQueue();
+      // Nothing to raise without a device.
+      expect(controller!.hasKeyboard, isFalse);
+
+      await controller!.selectPreset(const PresetView(testFramedPresetJson));
+      expect(controller!.hasKeyboard, isTrue);
+      expect(controller!.keyboardInset, isNull, reason: 'down by default');
+
+      await controller!.setKeyboardVisible(true);
+      expect(gateway.simulation?['keyboardInset'], 300.0);
+      expect(controller!.keyboardInset, 300.0);
+
+      // Rotating picks the device's landscape keyboard.
+      await controller!.setOrientation('landscape');
+      expect(gateway.simulation?['keyboardInset'], 200.0);
+
+      // Switching device keeps it up, at the new device's height. That
+      // device declares no landscape keyboard, so it drops until rotated
+      // back.
+      await controller!.selectPreset(const PresetView(testPhonePresetJson));
+      expect(gateway.simulation?['keyboardInset'], isNull);
+      await controller!.setOrientation('portrait');
+      expect(gateway.simulation?['keyboardInset'], isNull);
+
+      await controller!.selectPreset(const PresetView(testFramedPresetJson));
+      await controller!.setKeyboardVisible(true);
+      await controller!.selectPreset(const PresetView(testPhonePresetJson));
+      expect(gateway.simulation?['keyboardInset'], 250.0);
+
+      await controller!.setKeyboardVisible(false);
+      expect(gateway.simulation, isNot(contains('keyboardInset')));
+      expect(controller!.keyboardInset, isNull);
+    });
+
+    test('the keyboard switch stays inert against an app that cannot raise '
+        'one', () async {
+      await ready();
+      gateway.canKeyboard = false;
+      gateway.presetsJson = <Map<String, Object?>>[testFramedPresetJson];
+      gateway.emit('device_preview.presetsChanged', {'count': 1});
+      await pumpEventQueue();
+      await controller!.selectPreset(const PresetView(testFramedPresetJson));
+      expect(controller!.hasKeyboard, isFalse);
+    });
+
     test('the touch input toggle is independent of the device', () async {
       await ready();
       expect(controller!.touchInput, isNull, reason: 'auto by default');
@@ -652,7 +721,12 @@ void main() {
         await controller!.selectPreset(preset);
         expect(gateway.simulation?['presetId'], preset.id);
         expect(gateway.simulation?['frame'], preset.frame);
-        expect(gateway.simulation?['systemUi'], preset.systemUi);
+        expect(
+          gateway.simulation?['systemUi'],
+          preset.systemUi == null
+              ? isNull
+              : stampedSystemUi(preset.json),
+        );
       }
     });
 

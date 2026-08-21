@@ -70,6 +70,10 @@ ThemeData demoTheme(ColorScheme scheme) {
       centerTitle: false,
       titleTextStyle: TextStyle(
         color: scheme.onSurface,
+        // Named explicitly so the style keeps a real face under
+        // `flutter_test`, where an unnamed family falls back to the
+        // block-glyph test font (see test/screenshots/).
+        fontFamily: 'Roboto',
         fontSize: 19,
         fontWeight: FontWeight.w600,
         letterSpacing: -0.2,

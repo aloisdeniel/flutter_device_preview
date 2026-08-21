@@ -36,6 +36,7 @@ void main() {
     EdgeInsets? padding,
     EdgeInsets? viewPadding,
     EdgeInsets? systemGestureInsets,
+    double? keyboardInset,
     List<SimulatedDisplayFeature>? displayFeatures,
   }) => DeviceSimulation(
     screenSize: screenSize,
@@ -43,6 +44,7 @@ void main() {
     padding: padding,
     viewPadding: viewPadding,
     systemGestureInsets: systemGestureInsets,
+    keyboardInset: keyboardInset,
     displayFeatures: displayFeatures,
   );
 
@@ -148,29 +150,63 @@ void main() {
     test('the keyboard consumes the bottom safe area, like a real engine', () {
       state.simulation = metricSimulation(
         padding: const EdgeInsets.only(top: 20, bottom: 17),
+        keyboardInset: 291,
       );
-      state.fit = const FitTransform(scale: 0.5, offset: ui.Offset.zero);
-      // Real keyboard: hostInsetPhysical=300, realDPR=3, fit.scale=0.5 →
-      // simulated inset 400 physical, far above the 34-physical bottom
-      // padding: padding.bottom collapses to 0 while the keyboard shows.
-      host.viewInsets = const StubViewPadding(bottom: 300);
+      // 291 logical × simDPR 2 = 582 physical, far above the 34-physical
+      // bottom padding: padding.bottom collapses to 0 while it shows.
       expect(view.padding.bottom, 0);
       expect(view.padding.top, 40);
       // viewPadding is NOT reduced — that is exactly the engine contract.
       expect(view.viewPadding.bottom, 34);
       // Keyboard dismissed: the safe area comes back.
-      host.viewInsets = const StubViewPadding();
+      state.simulation = metricSimulation(
+        padding: const EdgeInsets.only(top: 20, bottom: 17),
+      );
       expect(view.padding.bottom, 34);
     });
 
-    test('viewInsets map the real keyboard inset into simulated space', () {
-      // hostInsetPhysical=300, realDPR=3, fit.scale=0.5, simDPR=2:
-      // simInsetLogical = 300 / 3 / 0.5 = 200 → 200 × 2 = 400 physical.
+    test('the host keyboard never reaches a simulated device', () {
+      // A preview running on a phone whose own keyboard is up: the simulated
+      // device has no keyboard raised, so it reports none. The host inset
+      // belongs to a screen that is not the one being simulated.
       host.viewInsets = const StubViewPadding(bottom: 300);
       state.simulation = metricSimulation();
       state.fit = const FitTransform(scale: 0.5, offset: ui.Offset.zero);
-      expect(view.viewInsets.bottom, 400);
+      expect(view.viewInsets.bottom, 0);
       expect(view.viewInsets.top, 0);
+      // Dropping the simulation hands the host's own insets back untouched.
+      state.simulation = null;
+      expect(view.viewInsets, same(host.viewInsets));
+    });
+
+    test('a simulated keyboard raises viewInsets at the simulated ratio', () {
+      // keyboardInset is already in simulated logical pixels: 291 × simDPR.
+      // The fit scale does not enter into it — unlike the host's insets, it
+      // is a length on the simulated screen, not on the real one.
+      state.simulation = metricSimulation(keyboardInset: 291);
+      state.fit = const FitTransform(scale: 0.5, offset: ui.Offset.zero);
+      expect(view.viewInsets.bottom, 582);
+      expect(view.viewInsets.top, 0);
+    });
+
+    test('a simulated keyboard ignores the host keyboard entirely', () {
+      // Whatever the host reports, the simulated device's own keyboard is
+      // what the app sees: 100 logical × simDPR 2 = 200 physical.
+      host.viewInsets = const StubViewPadding(bottom: 300);
+      state.fit = const FitTransform(scale: 0.5, offset: ui.Offset.zero);
+      state.simulation = metricSimulation(keyboardInset: 100);
+      expect(view.viewInsets.bottom, 200);
+    });
+
+    test('a simulated keyboard consumes the bottom safe area', () {
+      state.simulation = metricSimulation(
+        padding: const EdgeInsets.only(top: 20, bottom: 17),
+        keyboardInset: 291,
+      );
+      expect(view.padding.bottom, 0);
+      expect(view.padding.top, 40);
+      // viewPadding is untouched, exactly as with the real keyboard.
+      expect(view.viewPadding.bottom, 34);
     });
 
     test(

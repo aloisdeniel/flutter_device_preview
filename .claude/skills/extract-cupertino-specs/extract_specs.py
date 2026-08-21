@@ -10,7 +10,8 @@ Two sources, per device:
   swiftc, installed on a throwaway simulator of that device type, and
   reports the metrics UIKit actually applies — screen size, scale, and the
   portrait/landscape safe areas — which rewrite `portraitSize`,
-  `devicePixelRatio`, `portraitPadding` and `landscapePadding`.
+  `devicePixelRatio`, `portraitPadding`, `landscapePadding` and the height
+  the stock software keyboard covers in each orientation.
 
 Devices marked `donor` in DEVICES have no simulated counterpart (unreleased
 hardware): their frame artwork is derived from the donor device type, and
@@ -292,6 +293,16 @@ def merge_metrics(spec_id, spec, metrics):
     assign("devicePixelRatio", float(metrics["scale"]))
     assign("portraitPadding", pad(metrics["padding"]))
     assign("landscapePadding", pad(metrics["landscapePadding"]))
+    # Keyboard heights are the one optional part of the probe: a runtime that
+    # refuses to raise a software keyboard reports null, and a spec keeps
+    # whatever it already had rather than losing a measured value to a flake.
+    for key, probed_key in (("portraitKeyboardHeight", "portraitKeyboard"),
+                            ("landscapeKeyboardHeight", "landscapeKeyboard")):
+        height = metrics.get(probed_key)
+        if height:
+            assign(key, fmt_json(height))
+        elif key in spec:
+            print(f"  {key}: kept {spec[key]} (probe raised no keyboard)")
     for change in changes:
         print(f"  {change}")
     return changes
