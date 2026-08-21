@@ -1,10 +1,11 @@
 # Changelog
 
-## 3.0.0
+## 3.0.0-prerelease7
 
-The stable 3.0 release — a from-scratch rebuild of Device Preview. If you are
-coming from 2.x, see **Migrating from 2.x** in the README: the integration is
-now a single line and the in-app toolbar is gone.
+The 3.0 candidate — a from-scratch rebuild of Device Preview, feature-complete
+and awaiting field feedback before the stable release. If you are coming from
+2.x, see **Migrating from 2.x** in the README: the integration is now a single
+line and the in-app toolbar is gone.
 
 The one-paragraph version: a custom `WidgetsBinding` simulates device
 characteristics (screen metrics, safe areas, orientation, folds, keyboard

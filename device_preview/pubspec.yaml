@@ -4,7 +4,7 @@ description: >-
   metrics, safe areas, locale, brightness, text scale, accessibility flags,
   target platform) at the engine-abstraction level. No in-app UI — driven
   programmatically and by a DevTools extension.
-version: 3.0.0
+version: 3.0.0-prerelease7
 homepage: https://github.com/aloisdeniel/flutter_device_preview
 repository: https://github.com/aloisdeniel/flutter_device_preview
 issue_tracker: https://github.com/aloisdeniel/flutter_device_preview/issues
