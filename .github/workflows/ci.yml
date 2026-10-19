@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+# shortcut: checks active 3.0 packages until legacy device_frame parsing/goldens and repository-wide formatting are cleaned; add those gates after cleanup.
+jobs:
+  test:
+    name: Test (${{ matrix.name }} Flutter)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: minimum
+            flutter-version: '3.47.0'
+          - name: latest
+            flutter-version: ''
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ matrix.flutter-version }}
+          channel: stable
+          cache: true
+
+      - name: Check device_preview
+        working-directory: device_preview
+        run: |
+          flutter analyze
+          flutter test
+          flutter test --enable-vmservice test/e2e
+
+      - name: Check DevTools extension
+        working-directory: device_preview_devtools_extension
+        run: |
+          flutter analyze
+          flutter test
+          flutter test --platform=chrome test/platform_storage_web_test.dart
+
+      - name: Analyze device_preview example
+        working-directory: device_preview/example
+        run: flutter analyze
