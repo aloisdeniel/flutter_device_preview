@@ -330,6 +330,14 @@ void main() {
       expect(result.showSystemUi, false);
     });
 
+    test('applyPreset preserves showFrame', () async {
+      final ControllerHarness harness = ControllerHarness();
+      addTearDown(harness.dispose);
+      await harness.controller.apply(const DeviceSimulation(showFrame: false));
+      await harness.controller.applyPreset(DevicePresets.iPhone16);
+      expect(harness.controller.simulation!.showFrame, isFalse);
+    });
+
     test('a raised keyboard survives a device switch, at the new device '
         'height, and drops on a device that has none', () async {
       final ControllerHarness harness = ControllerHarness();

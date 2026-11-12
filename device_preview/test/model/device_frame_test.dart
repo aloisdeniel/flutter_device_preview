@@ -115,6 +115,15 @@ void main() {
       expect(simulation.contentBounds, const ui.Rect.fromLTRB(-10, -10, 110, 210));
     });
 
+    test('is the screen rectangle while the frame is hidden', () {
+      const DeviceSimulation simulation = DeviceSimulation(
+        screenSize: ui.Size(100, 200),
+        frame: kFrame,
+        showFrame: false,
+      );
+      expect(simulation.contentBounds, const ui.Rect.fromLTRB(0, 0, 100, 200));
+    });
+
     test('follows the orientation', () {
       const DeviceSimulation simulation = DeviceSimulation(
         orientation: Orientation.landscape,
@@ -126,6 +135,35 @@ void main() {
 
     test('is empty while passing through', () {
       expect(const DeviceSimulation().contentBounds, ui.Rect.zero);
+    });
+  });
+
+  group('DeviceSimulation.showFrame', () {
+    test('defaults to true and only travels when false', () {
+      expect(const DeviceSimulation().showFrame, isTrue);
+      expect(
+        const DeviceSimulation(frame: kFrame).toJson(),
+        isNot(contains('showFrame')),
+      );
+      const DeviceSimulation hidden = DeviceSimulation(
+        frame: kFrame,
+        showFrame: false,
+      );
+      expect(hidden.toJson()['showFrame'], isFalse);
+      expect(DeviceSimulation.fromJson(hidden.toJson()), hidden);
+      expect(
+        () => DeviceSimulation.fromJson(
+          const <String, Object?>{'showFrame': 'no'},
+        ),
+        throwsFormatException,
+      );
+    });
+
+    test('survives copyWith and separates values', () {
+      const DeviceSimulation simulation = DeviceSimulation(frame: kFrame);
+      expect(simulation.copyWith().showFrame, isTrue);
+      expect(simulation.copyWith(showFrame: false).showFrame, isFalse);
+      expect(simulation.copyWith(showFrame: false), isNot(simulation));
     });
   });
 

@@ -369,7 +369,7 @@ class RenderDevicePreviewFrame extends RenderProxyBox {
         _simulation.value?.orientation ?? Orientation.portrait;
     final ui.Size screenSize = size;
 
-    if (painter.body != null) {
+    if (painter.body != null && (_simulation.value?.showFrame ?? true)) {
       final Canvas canvas = context.canvas;
       canvas.save();
       canvas.translate(offset.dx, offset.dy);

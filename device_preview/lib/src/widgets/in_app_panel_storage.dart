@@ -23,6 +23,7 @@ class InAppPanelPreferences {
     this.foldPosture = FoldablePosture.open,
     this.orientation = Orientation.portrait,
     this.showSystemUi = true,
+    this.showFrame = true,
     this.keyboardVisible = false,
     this.touchInput,
     this.platformBrightness,
@@ -70,6 +71,7 @@ class InAppPanelPreferences {
           enumOrNull(json['orientation'], Orientation.values) ??
           Orientation.portrait,
       showSystemUi: json['showSystemUi'] as bool? ?? true,
+      showFrame: json['showFrame'] as bool? ?? true,
       keyboardVisible: json['keyboardVisible'] as bool? ?? false,
       touchInput: json['touchInput'] as bool?,
       platformBrightness: enumOrNull(
@@ -90,6 +92,7 @@ class InAppPanelPreferences {
   final FoldablePosture foldPosture;
   final Orientation orientation;
   final bool showSystemUi;
+  final bool showFrame;
   final bool keyboardVisible;
   final bool? touchInput;
   final ui.Brightness? platformBrightness;
@@ -106,6 +109,7 @@ class InAppPanelPreferences {
     'foldPosture': foldPosture.name,
     'orientation': orientation.name,
     'showSystemUi': showSystemUi,
+    'showFrame': showFrame,
     'keyboardVisible': keyboardVisible,
     if (touchInput != null) 'touchInput': touchInput,
     if (platformBrightness != null)
@@ -134,6 +138,7 @@ class InAppPanelPreferences {
     if (!simulatesMetrics) {
       return DeviceSimulation(
         orientation: orientation,
+        showFrame: showFrame,
         showSystemUi: showSystemUi,
         touchInput: touchInput,
         platformBrightness: platformBrightness,
@@ -180,6 +185,7 @@ class InAppPanelPreferences {
         : null;
 
     return sim.copyWith(
+      showFrame: showFrame,
       showSystemUi: showSystemUi,
       keyboardInset: kbHeight,
       touchInput: touchInput,

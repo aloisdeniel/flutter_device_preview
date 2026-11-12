@@ -47,8 +47,8 @@ abstract class DevicePreviewController implements Listenable {
 
   /// Builds a simulation from [preset] and applies it, preserving active
   /// non-metric overrides (locale, brightness, text scale, accessibility,
-  /// platform, touch input, system UI visibility) unless [resetOverrides] is
-  /// true.
+  /// platform, touch input, system UI and frame visibility) unless
+  /// [resetOverrides] is true.
   Future<void> applyPreset(
     DevicePreset preset, {
     Orientation orientation = Orientation.portrait,
@@ -355,6 +355,7 @@ class DevicePreviewControllerImpl implements DevicePreviewController {
         targetPlatform: current.targetPlatform,
         touchInput: current.touchInput,
         showSystemUi: current.showSystemUi,
+        showFrame: current.showFrame,
         // A raised keyboard survives a device switch, but its height is the
         // new device's: what carries over is "the keyboard is up", not how
         // tall the previous one was. A device that declares no keyboard

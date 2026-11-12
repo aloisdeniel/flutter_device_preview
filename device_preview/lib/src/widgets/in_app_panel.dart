@@ -228,6 +228,7 @@ class _PreviewInAppShellState extends State<PreviewInAppShell> {
           foldPosture: foldPosture,
           orientation: sim?.orientation ?? Orientation.portrait,
           showSystemUi: sim?.showSystemUi ?? true,
+          showFrame: sim?.showFrame ?? true,
           keyboardVisible: sim?.keyboardInset != null,
           touchInput: sim?.touchInput,
           platformBrightness: sim?.platformBrightness,
@@ -746,6 +747,8 @@ class _InAppDevicePreviewPanelState extends State<_InAppDevicePreviewPanel> {
         simulatesMetrics && presetKeyboardHeight != null;
     final bool isKeyboardUp = sim?.keyboardInset != null;
     final bool hasSystemUi = simulatesMetrics && sim?.systemUi != null;
+    final bool hasFrameBody =
+        simulatesMetrics && (sim?.frame?.body.isNotEmpty ?? false);
     final Brightness? brightness = sim?.platformBrightness;
     final double? textScale = sim?.textScaleFactor;
     final double effectiveTextScale = _draggingTextScale ?? textScale ?? 1.0;
@@ -756,7 +759,7 @@ class _InAppDevicePreviewPanelState extends State<_InAppDevicePreviewPanel> {
       padding: const EdgeInsets.all(14),
       children: <Widget>[
         _SectionCard(
-          title: 'Device',
+          title: 'Device Settings',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
@@ -806,6 +809,49 @@ class _InAppDevicePreviewPanelState extends State<_InAppDevicePreviewPanel> {
                 ),
               ),
               const SizedBox(height: 14),
+              _ControlRow(
+                label: 'Platform',
+                child: SegmentedButton<String>(
+                  showSelectedIcon: false,
+                  segments: const <ButtonSegment<String>>[
+                    ButtonSegment<String>(
+                      value: 'auto',
+                      label: Text('Auto', softWrap: false),
+                    ),
+                    ButtonSegment<String>(
+                      value: 'iOS',
+                      label: Text('iOS', softWrap: false),
+                    ),
+                    ButtonSegment<String>(
+                      value: 'android',
+                      label: Text('Android', softWrap: false),
+                    ),
+                  ],
+                  selected: <String>{
+                    switch (sim?.targetPlatform) {
+                      TargetPlatform.iOS => 'iOS',
+                      TargetPlatform.android => 'android',
+                      _ => 'auto',
+                    },
+                  },
+                  onSelectionChanged: kDebugMode
+                      ? (Set<String> next) {
+                          final TargetPlatform? target = switch (next.first) {
+                            'iOS' => TargetPlatform.iOS,
+                            'android' => TargetPlatform.android,
+                            _ => null,
+                          };
+                          unawaited(
+                            widget.controller.update(
+                              (DeviceSimulation s) =>
+                                  s.copyWith(targetPlatform: target),
+                            ),
+                          );
+                        }
+                      : null,
+                ),
+              ),
+              const SizedBox(height: 12),
               if (isFoldable) ...<Widget>[
                 _ControlRow(
                   label: 'Fold',
@@ -859,20 +905,6 @@ class _InAppDevicePreviewPanelState extends State<_InAppDevicePreviewPanel> {
                 ),
               ),
               const SizedBox(height: 10),
-              _SwitchRow(
-                label: 'System UI bars',
-                value: sim?.showSystemUi ?? true,
-                onChanged: hasSystemUi
-                    ? (bool v) {
-                        unawaited(
-                          widget.controller.update(
-                            (DeviceSimulation s) => s.copyWith(showSystemUi: v),
-                          ),
-                        );
-                      }
-                    : null,
-              ),
-              const SizedBox(height: 4),
               _SwitchRow(
                 label: 'On-screen keyboard',
                 value: isKeyboardUp,
@@ -933,12 +965,12 @@ class _InAppDevicePreviewPanelState extends State<_InAppDevicePreviewPanel> {
         ),
         const SizedBox(height: 14),
         _SectionCard(
-          title: 'Display & Theme',
+          title: 'Device Theme & Display Settings',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               _ControlRow(
-                label: 'Theme',
+                label: 'Device Theme',
                 child: SegmentedButton<String>(
                   showSelectedIcon: false,
                   segments: const <ButtonSegment<String>>[
@@ -979,31 +1011,10 @@ class _InAppDevicePreviewPanelState extends State<_InAppDevicePreviewPanel> {
                   },
                 ),
               ),
-              const SizedBox(height: 12),
-              _ControlRow(
-                label: 'Backdrop',
-                child: SegmentedButton<bool>(
-                  showSelectedIcon: false,
-                  segments: const <ButtonSegment<bool>>[
-                    ButtonSegment<bool>(
-                      value: false,
-                      label: Text('Dark', softWrap: false),
-                    ),
-                    ButtonSegment<bool>(
-                      value: true,
-                      label: Text('Light', softWrap: false),
-                    ),
-                  ],
-                  selected: <bool>{_isLightBackground},
-                  onSelectionChanged: simulatesMetrics
-                      ? (Set<bool> next) => _setLightBackground(next.first)
-                      : null,
-                ),
-              ),
               const SizedBox(height: 14),
               Row(
                 children: <Widget>[
-                  Text('Text scale', style: theme.textTheme.bodySmall),
+                  Text('Device Text Scale', style: theme.textTheme.bodySmall),
                   const Spacer(),
                   Text(
                     textScale == null
@@ -1058,53 +1069,10 @@ class _InAppDevicePreviewPanelState extends State<_InAppDevicePreviewPanel> {
         ),
         const SizedBox(height: 14),
         _SectionCard(
-          title: 'Accessibility & Platform',
+          title: 'Device Accessibility Settings',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              _ControlRow(
-                label: 'Platform',
-                child: SegmentedButton<String>(
-                  showSelectedIcon: false,
-                  segments: const <ButtonSegment<String>>[
-                    ButtonSegment<String>(
-                      value: 'auto',
-                      label: Text('Auto', softWrap: false),
-                    ),
-                    ButtonSegment<String>(
-                      value: 'iOS',
-                      label: Text('iOS', softWrap: false),
-                    ),
-                    ButtonSegment<String>(
-                      value: 'android',
-                      label: Text('Android', softWrap: false),
-                    ),
-                  ],
-                  selected: <String>{
-                    switch (sim?.targetPlatform) {
-                      TargetPlatform.iOS => 'iOS',
-                      TargetPlatform.android => 'android',
-                      _ => 'auto',
-                    },
-                  },
-                  onSelectionChanged: kDebugMode
-                      ? (Set<String> next) {
-                          final TargetPlatform? target = switch (next.first) {
-                            'iOS' => TargetPlatform.iOS,
-                            'android' => TargetPlatform.android,
-                            _ => null,
-                          };
-                          unawaited(
-                            widget.controller.update(
-                              (DeviceSimulation s) =>
-                                  s.copyWith(targetPlatform: target),
-                            ),
-                          );
-                        }
-                      : null,
-                ),
-              ),
-              const SizedBox(height: 10),
               _SwitchRow(
                 label: 'Bold text',
                 value: a11y.boldText ?? false,
@@ -1149,6 +1117,63 @@ class _InAppDevicePreviewPanelState extends State<_InAppDevicePreviewPanel> {
                     ),
                   );
                 },
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 14),
+        _SectionCard(
+          title: 'Previewer Settings',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              _ControlRow(
+                label: 'Previewer Theme',
+                child: SegmentedButton<bool>(
+                  showSelectedIcon: false,
+                  segments: const <ButtonSegment<bool>>[
+                    ButtonSegment<bool>(
+                      value: false,
+                      label: Text('Dark', softWrap: false),
+                    ),
+                    ButtonSegment<bool>(
+                      value: true,
+                      label: Text('Light', softWrap: false),
+                    ),
+                  ],
+                  selected: <bool>{_isLightBackground},
+                  onSelectionChanged: simulatesMetrics
+                      ? (Set<bool> next) => _setLightBackground(next.first)
+                      : null,
+                ),
+              ),
+              const SizedBox(height: 10),
+              _SwitchRow(
+                label: 'Show Device Frame',
+                value: sim?.showFrame ?? true,
+                onChanged: hasFrameBody
+                    ? (bool v) {
+                        unawaited(
+                          widget.controller.update(
+                            (DeviceSimulation s) => s.copyWith(showFrame: v),
+                          ),
+                        );
+                      }
+                    : null,
+              ),
+              const SizedBox(height: 4),
+              _SwitchRow(
+                label: 'Show Status Bar',
+                value: sim?.showSystemUi ?? true,
+                onChanged: hasSystemUi
+                    ? (bool v) {
+                        unawaited(
+                          widget.controller.update(
+                            (DeviceSimulation s) => s.copyWith(showSystemUi: v),
+                          ),
+                        );
+                      }
+                    : null,
               ),
             ],
           ),
@@ -1253,17 +1278,17 @@ class _InAppDevicePreviewPanelState extends State<_InAppDevicePreviewPanel> {
                             .where((DevicePreset p) => p.kind == kind)
                             .toList()
                           ..sort((DevicePreset a, DevicePreset b) {
-                            final int byBrand = (a.brand ?? '').compareTo(
-                              b.brand ?? '',
-                            );
-                            if (byBrand != 0) {
-                              return byBrand;
-                            }
                             final int byYear = (b.year ?? 0).compareTo(
                               a.year ?? 0,
                             );
                             if (byYear != 0) {
                               return byYear;
+                            }
+                            final int byMonth = (b.releaseMonth ?? 0).compareTo(
+                              a.releaseMonth ?? 0,
+                            );
+                            if (byMonth != 0) {
+                              return byMonth;
                             }
                             return a.name.compareTo(b.name);
                           });
