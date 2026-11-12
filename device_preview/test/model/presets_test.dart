@@ -7,10 +7,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('DevicePresets catalog', () {
-    test('contains the 33 documented presets with unique ids', () {
-      expect(DevicePresets.all, hasLength(33));
+    test('contains the 36 documented presets with unique ids', () {
+      expect(DevicePresets.all, hasLength(36));
       final ids = DevicePresets.all.map((p) => p.id).toSet();
-      expect(ids, hasLength(33));
+      expect(ids, hasLength(36));
     });
 
     test('every device preset declares a release year', () {
@@ -26,6 +26,7 @@ void main() {
           .where((p) => p.kind == DeviceKind.foldable)
           .toList();
       expect(foldables.map((p) => p.id), <String>[
+        'apple-iphone-duo',
         'google-pixel-10-pro-fold',
         'samsung-galaxy-z-flip-8',
         'samsung-galaxy-z-fold-8',

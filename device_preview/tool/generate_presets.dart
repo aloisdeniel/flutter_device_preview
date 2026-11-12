@@ -71,7 +71,13 @@ const Map<String, String> kDescriptions = <String, String>{
   'apple-iphone-17-pro-max':
       'iPhone 17 Pro Max — Dynamic Island, 6.9" display.',
   'apple-iphone-17e': 'iPhone 17e — notch, the 6.1" entry model.',
+  'apple-iphone-18-pro': 'iPhone 18 Pro — Dynamic Island, 6.3" display.',
+  'apple-iphone-18-pro-max':
+      'iPhone 18 Pro Max — Dynamic Island, 6.9" display.',
   'apple-iphone-air': 'iPhone Air — Dynamic Island, 6.5" display.',
+  'apple-iphone-duo':
+      'Apple iPhone Duo — 7.6" unfolded inner display, book-style fold with '
+      'a vertical crease at mid-width.',
   'apple-iphone-se-3':
       'iPhone SE (3rd generation) — Home button, 4.7" display, no safe area '
       'beyond the 20 pt status bar.',
