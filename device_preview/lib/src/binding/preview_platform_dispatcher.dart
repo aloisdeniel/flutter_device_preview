@@ -503,6 +503,9 @@ class PreviewPlatformDispatcher implements ui.PlatformDispatcher {
       host.setApplicationLocale(locale);
 
   @override
+  void resetInternalState() => host.resetInternalState();
+
+  @override
   String get initialLifecycleState => host.initialLifecycleState;
 
   @override
