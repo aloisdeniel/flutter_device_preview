@@ -432,6 +432,9 @@ class FakePlatformDispatcher implements ui.PlatformDispatcher {
   void setApplicationLocale(ui.Locale locale) =>
       calls.add('setApplicationLocale');
 
+  @override
+  void resetInternalState() => calls.add('resetInternalState');
+
   // ---------------------------------------------------------------------------
   // Remaining state getters.
   // ---------------------------------------------------------------------------

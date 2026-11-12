@@ -106,6 +106,7 @@ void main() {
       dispatcher.getPersistentIsolateData();
       dispatcher.scheduleWarmUpFrame(beginFrame: () {}, drawFrame: () {});
       dispatcher.setApplicationLocale(const ui.Locale('fr'));
+      dispatcher.resetInternalState();
       dispatcher.requestViewFocusChange(
         viewId: hostView.viewId,
         state: ui.ViewFocusState.focused,
@@ -122,6 +123,7 @@ void main() {
           'getPersistentIsolateData',
           'scheduleWarmUpFrame',
           'setApplicationLocale',
+          'resetInternalState',
           'requestViewFocusChange',
         ]),
       );
