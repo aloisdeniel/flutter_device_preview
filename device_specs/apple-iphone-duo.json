@@ -3,6 +3,7 @@
   "name": "iPhone Duo",
   "brand": "Apple",
   "year": 2026,
+  "releaseMonth": 9,
   "platform": "iOS",
   "kind": "foldable",
   "portraitSize": {

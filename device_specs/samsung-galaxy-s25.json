@@ -3,6 +3,7 @@
  "name": "Galaxy S25",
  "brand": "Samsung",
  "year": 2025,
+ "releaseMonth": 2,
  "platform": "android",
  "kind": "phone",
  "portraitSize": {

@@ -3,6 +3,7 @@
   "name": "iPad (A16)",
   "brand": "Apple",
   "year": 2025,
+  "releaseMonth": 3,
   "platform": "iOS",
   "kind": "tablet",
   "portraitSize": {

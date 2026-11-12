@@ -339,6 +339,13 @@ String _emitPreset(Map<String, Object?> spec) {
     }
     buffer.writeln('    year: $year,');
   }
+  final Object? releaseMonth = spec['releaseMonth'];
+  if (releaseMonth != null) {
+    if (releaseMonth is! int) {
+      throw FormatException('$fileName: "releaseMonth" must be an integer');
+    }
+    buffer.writeln('    releaseMonth: $releaseMonth,');
+  }
   final String platform = _string(spec, 'platform', fileName);
   if (!kPlatforms.contains(platform)) {
     throw FormatException('$fileName: unknown platform "$platform"');

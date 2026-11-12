@@ -3,6 +3,7 @@
   "name": "Pixel 10",
   "brand": "Google",
   "year": 2025,
+  "releaseMonth": 8,
   "platform": "android",
   "kind": "phone",
   "portraitSize": {

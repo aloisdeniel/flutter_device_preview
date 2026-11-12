@@ -15,6 +15,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPad (10th gen)',
         'brand': 'Apple',
         'year': 2022,
+        'releaseMonth': 10,
         'platform': 'iOS',
         'kind': 'tablet',
         'portraitSize': <String, Object?>{
@@ -65,6 +66,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPad (A16)',
         'brand': 'Apple',
         'year': 2025,
+        'releaseMonth': 3,
         'platform': 'iOS',
         'kind': 'tablet',
         'portraitSize': <String, Object?>{
@@ -115,6 +117,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPad Air 11" (M2)',
         'brand': 'Apple',
         'year': 2024,
+        'releaseMonth': 5,
         'platform': 'iOS',
         'kind': 'tablet',
         'portraitSize': <String, Object?>{
@@ -165,6 +168,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPad Air 11" (M4)',
         'brand': 'Apple',
         'year': 2026,
+        'releaseMonth': 3,
         'platform': 'iOS',
         'kind': 'tablet',
         'portraitSize': <String, Object?>{
@@ -215,6 +219,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPad Air 13" (M2)',
         'brand': 'Apple',
         'year': 2024,
+        'releaseMonth': 5,
         'platform': 'iOS',
         'kind': 'tablet',
         'portraitSize': <String, Object?>{
@@ -265,6 +270,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPad Air 13" (M4)',
         'brand': 'Apple',
         'year': 2026,
+        'releaseMonth': 3,
         'platform': 'iOS',
         'kind': 'tablet',
         'portraitSize': <String, Object?>{
@@ -315,6 +321,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPad mini (A17 Pro)',
         'brand': 'Apple',
         'year': 2024,
+        'releaseMonth': 10,
         'platform': 'iOS',
         'kind': 'tablet',
         'portraitSize': <String, Object?>{
@@ -365,6 +372,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPad Pro 11" (M4)',
         'brand': 'Apple',
         'year': 2024,
+        'releaseMonth': 5,
         'platform': 'iOS',
         'kind': 'tablet',
         'portraitSize': <String, Object?>{
@@ -415,6 +423,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPad Pro 11" (M5)',
         'brand': 'Apple',
         'year': 2025,
+        'releaseMonth': 10,
         'platform': 'iOS',
         'kind': 'tablet',
         'portraitSize': <String, Object?>{
@@ -465,6 +474,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPad Pro 13" (M4)',
         'brand': 'Apple',
         'year': 2024,
+        'releaseMonth': 5,
         'platform': 'iOS',
         'kind': 'tablet',
         'portraitSize': <String, Object?>{
@@ -515,6 +525,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPad Pro 13" (M5)',
         'brand': 'Apple',
         'year': 2025,
+        'releaseMonth': 10,
         'platform': 'iOS',
         'kind': 'tablet',
         'portraitSize': <String, Object?>{
@@ -565,6 +576,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPhone 16 Plus',
         'brand': 'Apple',
         'year': 2024,
+        'releaseMonth': 9,
         'platform': 'iOS',
         'kind': 'phone',
         'portraitSize': <String, Object?>{
@@ -615,6 +627,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPhone 16 Pro Max',
         'brand': 'Apple',
         'year': 2024,
+        'releaseMonth': 9,
         'platform': 'iOS',
         'kind': 'phone',
         'portraitSize': <String, Object?>{
@@ -665,6 +678,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPhone 16 Pro',
         'brand': 'Apple',
         'year': 2024,
+        'releaseMonth': 9,
         'platform': 'iOS',
         'kind': 'phone',
         'portraitSize': <String, Object?>{
@@ -715,6 +729,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPhone 16',
         'brand': 'Apple',
         'year': 2024,
+        'releaseMonth': 9,
         'platform': 'iOS',
         'kind': 'phone',
         'portraitSize': <String, Object?>{
@@ -765,6 +780,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPhone 17 Pro Max',
         'brand': 'Apple',
         'year': 2025,
+        'releaseMonth': 9,
         'platform': 'iOS',
         'kind': 'phone',
         'portraitSize': <String, Object?>{
@@ -815,6 +831,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPhone 17 Pro',
         'brand': 'Apple',
         'year': 2025,
+        'releaseMonth': 9,
         'platform': 'iOS',
         'kind': 'phone',
         'portraitSize': <String, Object?>{
@@ -865,6 +882,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPhone 17',
         'brand': 'Apple',
         'year': 2025,
+        'releaseMonth': 9,
         'platform': 'iOS',
         'kind': 'phone',
         'portraitSize': <String, Object?>{
@@ -915,6 +933,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPhone 17e',
         'brand': 'Apple',
         'year': 2026,
+        'releaseMonth': 2,
         'platform': 'iOS',
         'kind': 'phone',
         'portraitSize': <String, Object?>{
@@ -965,6 +984,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPhone 18 Pro Max',
         'brand': 'Apple',
         'year': 2026,
+        'releaseMonth': 9,
         'platform': 'iOS',
         'kind': 'phone',
         'portraitSize': <String, Object?>{
@@ -1015,6 +1035,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPhone 18 Pro',
         'brand': 'Apple',
         'year': 2026,
+        'releaseMonth': 9,
         'platform': 'iOS',
         'kind': 'phone',
         'portraitSize': <String, Object?>{
@@ -1065,6 +1086,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPhone Air',
         'brand': 'Apple',
         'year': 2025,
+        'releaseMonth': 9,
         'platform': 'iOS',
         'kind': 'phone',
         'portraitSize': <String, Object?>{
@@ -1115,6 +1137,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPhone Duo',
         'brand': 'Apple',
         'year': 2026,
+        'releaseMonth': 9,
         'platform': 'iOS',
         'kind': 'foldable',
         'portraitSize': <String, Object?>{
@@ -1177,6 +1200,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'iPhone SE (3rd gen)',
         'brand': 'Apple',
         'year': 2022,
+        'releaseMonth': 3,
         'platform': 'iOS',
         'kind': 'phone',
         'portraitSize': <String, Object?>{
@@ -1271,6 +1295,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'Pixel 10 Pro Fold',
         'brand': 'Google',
         'year': 2025,
+        'releaseMonth': 10,
         'platform': 'android',
         'kind': 'foldable',
         'portraitSize': <String, Object?>{
@@ -1333,6 +1358,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'Pixel 10',
         'brand': 'Google',
         'year': 2025,
+        'releaseMonth': 8,
         'platform': 'android',
         'kind': 'phone',
         'portraitSize': <String, Object?>{
@@ -1383,6 +1409,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'Pixel 9',
         'brand': 'Google',
         'year': 2024,
+        'releaseMonth': 8,
         'platform': 'android',
         'kind': 'phone',
         'portraitSize': <String, Object?>{
@@ -1433,6 +1460,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'Galaxy S24',
         'brand': 'Samsung',
         'year': 2024,
+        'releaseMonth': 1,
         'platform': 'android',
         'kind': 'phone',
         'portraitSize': <String, Object?>{
@@ -1483,6 +1511,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'Galaxy S25',
         'brand': 'Samsung',
         'year': 2025,
+        'releaseMonth': 2,
         'platform': 'android',
         'kind': 'phone',
         'portraitSize': <String, Object?>{
@@ -1533,6 +1562,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'Galaxy Tab S10+',
         'brand': 'Samsung',
         'year': 2024,
+        'releaseMonth': 10,
         'platform': 'android',
         'kind': 'tablet',
         'portraitSize': <String, Object?>{
@@ -1583,6 +1613,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'Galaxy Tab S11',
         'brand': 'Samsung',
         'year': 2025,
+        'releaseMonth': 9,
         'platform': 'android',
         'kind': 'tablet',
         'portraitSize': <String, Object?>{
@@ -1633,6 +1664,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'Galaxy Z Flip8',
         'brand': 'Samsung',
         'year': 2026,
+        'releaseMonth': 7,
         'platform': 'android',
         'kind': 'foldable',
         'portraitSize': <String, Object?>{
@@ -1695,6 +1727,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'Galaxy Z Fold8 Ultra',
         'brand': 'Samsung',
         'year': 2026,
+        'releaseMonth': 7,
         'platform': 'android',
         'kind': 'foldable',
         'portraitSize': <String, Object?>{
@@ -1757,6 +1790,7 @@ const List<Map<String, Object?>> kDeviceSpecs =
         'name': 'Galaxy Z Fold8',
         'brand': 'Samsung',
         'year': 2026,
+        'releaseMonth': 7,
         'platform': 'android',
         'kind': 'foldable',
         'portraitSize': <String, Object?>{

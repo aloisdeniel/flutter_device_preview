@@ -3,6 +3,7 @@
   "name": "Pixel 10 Pro Fold",
   "brand": "Google",
   "year": 2025,
+  "releaseMonth": 10,
   "platform": "android",
   "kind": "foldable",
   "portraitSize": {

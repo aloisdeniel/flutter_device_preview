@@ -3,6 +3,7 @@
   "name": "iPhone 18 Pro",
   "brand": "Apple",
   "year": 2026,
+  "releaseMonth": 9,
   "platform": "iOS",
   "kind": "phone",
   "portraitSize": {

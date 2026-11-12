@@ -3,6 +3,7 @@
   "name": "iPhone SE (3rd gen)",
   "brand": "Apple",
   "year": 2022,
+  "releaseMonth": 3,
   "platform": "iOS",
   "kind": "phone",
   "portraitSize": {

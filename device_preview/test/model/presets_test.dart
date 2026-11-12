@@ -21,6 +21,13 @@ void main() {
       }
     });
 
+    test('every device preset declares a release month', () {
+      for (final preset in DevicePresets.all) {
+        if (preset.kind == DeviceKind.desktop) continue;
+        expect(preset.releaseMonth, inInclusiveRange(1, 12), reason: preset.id);
+      }
+    });
+
     test('every foldable preset reports a flat fold spanning its screen', () {
       final foldables = DevicePresets.all
           .where((p) => p.kind == DeviceKind.foldable)
@@ -406,6 +413,18 @@ void main() {
       );
       expect(DevicePresets.smallDesktopWindow.toJson().containsKey('year'),
           isFalse);
+    });
+
+    test('releaseMonth survives the round trip and defaults to null', () {
+      expect(DevicePresets.iPhone17e.toJson()['releaseMonth'], 2);
+      expect(
+        DevicePreset.fromJson(DevicePresets.iPhone17e.toJson()).releaseMonth,
+        2,
+      );
+      expect(
+        DevicePresets.smallDesktopWindow.toJson().containsKey('releaseMonth'),
+        isFalse,
+      );
     });
 
     test('fromJson throws on a non-integer year', () {
