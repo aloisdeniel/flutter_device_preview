@@ -46,8 +46,9 @@ ui.PointerData? retargetPointerKind(
   ui.PointerData datum,
   ui.PointerDeviceKind kind,
 ) {
-  if (datum.kind == kind || datum.signalKind != null &&
-      datum.signalKind != ui.PointerSignalKind.none) {
+  if (datum.kind == kind ||
+      datum.signalKind != null &&
+          datum.signalKind != ui.PointerSignalKind.none) {
     return datum;
   }
   final bool hovers =
@@ -108,8 +109,9 @@ ui.PointerData rewritePointerData(
   ui.PointerData datum,
   FitTransform fit,
   double realDevicePixelRatio,
-  double simulatedDevicePixelRatio,
-) {
+  double simulatedDevicePixelRatio, {
+  bool unscaledScroll = false,
+}) {
   if (fit == FitTransform.identity &&
       realDevicePixelRatio == simulatedDevicePixelRatio) {
     return datum;
@@ -122,6 +124,9 @@ ui.PointerData rewritePointerData(
   final ui.Offset simulatedLogical = fit.toSimulatedLogical(realLogical);
   final double k =
       simulatedDevicePixelRatio / (realDevicePixelRatio * fit.scale);
+  final double scrollScale = unscaledScroll
+      ? simulatedDevicePixelRatio / realDevicePixelRatio
+      : k;
 
   return ui.PointerData(
     viewId: datum.viewId,
@@ -152,8 +157,8 @@ ui.PointerData rewritePointerData(
     orientation: datum.orientation,
     tilt: datum.tilt,
     platformData: datum.platformData,
-    scrollDeltaX: datum.scrollDeltaX * k,
-    scrollDeltaY: datum.scrollDeltaY * k,
+    scrollDeltaX: datum.scrollDeltaX * scrollScale,
+    scrollDeltaY: datum.scrollDeltaY * scrollScale,
     panX: datum.panX * k,
     panY: datum.panY * k,
     panDeltaX: datum.panDeltaX * k,

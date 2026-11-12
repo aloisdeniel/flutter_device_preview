@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/painting.dart' show Decoration;
 
 import '../model/fit_transform.dart';
 import '../model/simulation.dart';
@@ -27,6 +28,23 @@ class PreviewState {
   /// metric simulation is active).
   FitTransform get fit => fitNotifier.value;
   set fit(FitTransform value) => fitNotifier.value = value;
+
+  /// Incremented on every real host metrics change so host-sized overlays can
+  /// rebuild and re-layout even when [fit] itself is unchanged.
+  final ValueNotifier<int> hostMetricsRevision = ValueNotifier<int>(0);
+
+  /// Optional live override for the window letterbox background decoration,
+  /// controlled by the in-app panel (e.g. Dark vs Light canvas).
+  final ValueNotifier<Decoration?> backgroundDecorationOverride =
+      ValueNotifier<Decoration?>(null);
+
+  /// Interactive bounds of the in-app toolbar in real logical coordinates, or
+  /// null when the toolbar is disabled.
+  ui.Rect? overlayHitRect;
+
+  /// Whether [realLogical] falls inside the in-app toolbar's interactive area.
+  bool hitsOverlay(ui.Offset realLogical) =>
+      overlayHitRect?.contains(realLogical) ?? false;
 
   /// Invoked by the wrapper dispatcher's real `onMetricsChanged` trampoline
   /// before applying the swallow-vs-forward policy.

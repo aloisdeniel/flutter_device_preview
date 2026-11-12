@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import '../../presets.dart';
 import '../binding/preview_state.dart';
 import '../model/fit_transform.dart';
+import '../model/foldable_posture.dart';
 import '../model/real_device_info.dart';
 import '../model/simulation.dart';
 
@@ -136,6 +137,23 @@ class DevicePreviewControllerImpl implements DevicePreviewController {
   /// always added — see [recomputeFit]).
   final EdgeInsets framePadding;
 
+  EdgeInsets _panelInsets = EdgeInsets.zero;
+
+  /// Extra insets reserved by the in-app toolbar when expanded.
+  EdgeInsets get panelInsets => _panelInsets;
+
+  /// Updates the insets reserved by the in-app toolbar and refreshes the fit.
+  void setPanelInsets(EdgeInsets insets) {
+    if (_panelInsets == insets) {
+      return;
+    }
+    _panelInsets = insets;
+    recomputeFit();
+    if (state.simulatesMetrics) {
+      _handleMetricsChanged();
+    }
+  }
+
   final VoidCallback _handleMetricsChanged;
   final VoidCallback _handleTextScaleFactorChanged;
   final VoidCallback _handlePlatformBrightnessChanged;
@@ -213,7 +231,9 @@ class DevicePreviewControllerImpl implements DevicePreviewController {
       // Reserve room for the device body, which surrounds the screen.
       contentBounds: active.contentBounds,
       realInsets:
-          framePadding + EdgeInsets.fromViewPadding(hostView.padding, ratio),
+          framePadding +
+          _panelInsets +
+          EdgeInsets.fromViewPadding(hostView.padding, ratio),
     );
   }
 
@@ -222,6 +242,7 @@ class DevicePreviewControllerImpl implements DevicePreviewController {
   /// when metric simulation is active (the trampoline swallowed the host
   /// notification in that case).
   void handleHostMetricsChanged() {
+    state.hostMetricsRevision.value++;
     recomputeFit();
     if (state.simulatesMetrics) {
       _handleMetricsChanged();
@@ -360,19 +381,35 @@ class DevicePreviewControllerImpl implements DevicePreviewController {
       if (presetId != null) {
         final DevicePreset? preset = _presetById(presetId);
         if (preset != null) {
-          return _applyNow(
-            // Rotation is not a device switch: the frame is described in
-            // portrait and rotated at paint time, so the active artwork must
-            // survive even when the local preset carries none (DevTools
-            // pushes catalog devices whose artwork only exists on the wire,
-            // under the same presetId as the artwork-free built-in preset).
-            _resolvePresetSimulation(
-              preset,
-              orientation: orientation,
-              resetOverrides: false,
-            ).copyWith(frame: current.frame, systemUi: current.systemUi),
-            source: 'programmatic',
-          );
+          final bool wasHalfOpen =
+              current.displayFeatures?.any(
+                (SimulatedDisplayFeature f) =>
+                    f.state == ui.DisplayFeatureState.postureHalfOpened,
+              ) ??
+              false;
+          DeviceSimulation rotated = _resolvePresetSimulation(
+            preset,
+            orientation: orientation,
+            resetOverrides: false,
+          ).copyWith(frame: current.frame, systemUi: current.systemUi);
+          if (wasHalfOpen && rotated.displayFeatures != null) {
+            rotated = rotated.copyWith(
+              displayFeatures: List<SimulatedDisplayFeature>.unmodifiable(
+                rotated.displayFeatures!.map(
+                  (SimulatedDisplayFeature f) =>
+                      f.type == ui.DisplayFeatureType.fold ||
+                          f.type == ui.DisplayFeatureType.hinge
+                      ? SimulatedDisplayFeature(
+                          bounds: f.bounds,
+                          type: f.type,
+                          state: ui.DisplayFeatureState.postureHalfOpened,
+                        )
+                      : f,
+                ),
+              ),
+            );
+          }
+          return _applyNow(rotated, source: 'programmatic');
         }
       }
       // Documented rotation rule (and its inverse for landscape → portrait).
@@ -424,6 +461,16 @@ class DevicePreviewControllerImpl implements DevicePreviewController {
     for (final DevicePreset preset in _presets) {
       if (preset.id == id) {
         return preset;
+      }
+    }
+    if (FoldableCoverSpecs.isCoverId(id)) {
+      final String? baseId = FoldableCoverSpecs.baseId(id);
+      if (baseId != null) {
+        for (final DevicePreset preset in _presets) {
+          if (preset.id == baseId) {
+            return FoldableCoverSpecs.coverFor(preset);
+          }
+        }
       }
     }
     return null;

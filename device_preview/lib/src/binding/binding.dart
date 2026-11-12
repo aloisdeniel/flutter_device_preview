@@ -8,6 +8,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../presets.dart';
 import '../controller/controller.dart';
 import '../model/pointer_rewrite.dart';
 import '../model/simulation.dart';
@@ -16,6 +17,7 @@ import '../service/protocol.dart';
 import '../service/screenshot.dart';
 import '../widgets/device_preview_frame.dart';
 import '../widgets/dot_grid_decoration.dart';
+import '../widgets/in_app_panel.dart';
 import '../widgets/preview_background.dart';
 import 'preview_flutter_view.dart';
 import 'preview_platform_dispatcher.dart';
@@ -61,6 +63,7 @@ mixin DevicePreviewBindingMixin
         RendererBinding,
         WidgetsBinding {
   static bool _latchedEnabled = !kReleaseMode;
+  static bool _latchedToolbar = false;
   static EdgeInsets _latchedPadding = EdgeInsets.zero;
   static Decoration? _latchedBackgroundDecoration = const DotGridDecoration();
   static DeviceSimulation? _latchedInitialSimulation;
@@ -83,11 +86,13 @@ mixin DevicePreviewBindingMixin
   /// while passing `null` explicitly clears the latch.
   static void latchConfiguration({
     bool enabled = !kReleaseMode,
+    bool toolbar = false,
     EdgeInsets padding = EdgeInsets.zero,
     Decoration? backgroundDecoration = const DotGridDecoration(),
     Object? initialSimulation = _unsetInitialSimulation,
   }) {
     _latchedEnabled = enabled;
+    _latchedToolbar = toolbar;
     _latchedPadding = padding;
     _latchedBackgroundDecoration = backgroundDecoration;
     if (!identical(initialSimulation, _unsetInitialSimulation)) {
@@ -98,6 +103,9 @@ mixin DevicePreviewBindingMixin
   /// Whether simulation machinery is installed. Latched before init and
   /// fixed for the binding's lifetime.
   late final bool simulationEnabled = _latchedEnabled;
+
+  /// Whether the in-app developer toolbar is shown inside the host window.
+  late final bool toolbarEnabled = _latchedToolbar;
 
   /// Extra room reserved around the simulated device in the real window, in
   /// real logical pixels. The host's live safe areas are always added on top
@@ -192,7 +200,12 @@ mixin DevicePreviewBindingMixin
       applyTargetPlatformOverride: _applyTargetPlatformOverride,
     );
     _state.onPointerKindChanged = _dismissHostHover;
-    final DeviceSimulation? initial = _latchedInitialSimulation;
+    if (toolbarEnabled) {
+      _controller!.setPanelInsets(kInAppPanelExpandedInsets);
+    }
+    final DeviceSimulation? initial =
+        _latchedInitialSimulation ??
+        (toolbarEnabled ? DevicePresets.iPhone17Pro.resolve() : null);
     _latchedInitialSimulation = null;
     if (initial != null) {
       // Applied before the first frame; only targetPlatform work is async.
@@ -257,12 +270,32 @@ mixin DevicePreviewBindingMixin
     );
     final Decoration? decoration = backgroundDecoration;
     if (decoration != null) {
-      wrapped = PreviewBackground(
-        decoration: decoration,
-        simulation: controller.simulationListenable,
+      wrapped = ValueListenableBuilder<Decoration?>(
+        valueListenable: _state.backgroundDecorationOverride,
+        child: wrapped,
+        builder:
+            (
+              BuildContext context,
+              Decoration? overrideDecoration,
+              Widget? child,
+            ) {
+              return PreviewBackground(
+                decoration: overrideDecoration ?? decoration,
+                simulation: controller.simulationListenable,
+                fit: _state.fitNotifier,
+                hostView: controller.hostView,
+                child: child!,
+              );
+            },
+      );
+    }
+    if (toolbarEnabled) {
+      wrapped = PreviewInAppShell(
+        controller: controller,
+        state: _state,
         fit: _state.fitNotifier,
         hostView: controller.hostView,
-        child: wrapped,
+        app: wrapped,
       );
     }
     return super.wrapWithDefaultView(wrapped);
@@ -600,12 +633,14 @@ class DevicePreview extends BindingBase
   /// [DevicePreviewBindingMixin.latchConfiguration].
   static WidgetsBinding enable({
     bool? enabled,
+    bool toolbar = true,
     EdgeInsets padding = EdgeInsets.zero,
     Decoration? backgroundDecoration = const DotGridDecoration(),
   }) {
     if (_instance == null) {
       DevicePreviewBindingMixin.latchConfiguration(
         enabled: enabled ?? !kReleaseMode,
+        toolbar: toolbar,
         padding: padding,
         backgroundDecoration: backgroundDecoration,
       );

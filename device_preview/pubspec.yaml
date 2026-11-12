@@ -16,19 +16,6 @@ topics:
   - devtools
   - testing
   - simulator
-screenshots:
-  - description: >-
-      The todo example running as an iPhone 17 Pro Max — frame, Dynamic
-      Island and simulated status bar included.
-    path: doc/screenshots/iphone-17-pro-max.png
-  - description: >-
-      A hinge-aware two-pane layout on the unfolded Pixel 10 Pro Fold, split
-      at the simulated crease.
-    path: doc/screenshots/pixel-10-pro-fold.png
-  - description: >-
-      Dark brightness and 200% text scale applied to the device-lab example
-      on an iPhone 16 Pro.
-    path: doc/screenshots/iphone-16-pro-dark-200-text.png
 
 environment:
   sdk: '>=3.8.0 <4.0.0'
@@ -37,6 +24,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  material_ui: ^1.11.0
+  shared_preferences: ^2.5.0
 
 dev_dependencies:
   flutter_test:

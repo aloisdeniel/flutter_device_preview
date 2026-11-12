@@ -270,6 +270,8 @@ class PreviewPlatformDispatcher implements ui.PlatformDispatcher {
   }
 
   ui.PointerDataPacketCallback? _onPointerDataPacket;
+  final Set<int> _overlayActiveDevices = <int>{};
+  final Set<int> _overlayHoveredDevices = <int>{};
 
   @override
   ui.PointerDataPacketCallback? get onPointerDataPacket => _onPointerDataPacket;
@@ -285,6 +287,37 @@ class PreviewPlatformDispatcher implements ui.PlatformDispatcher {
     _onPointerDataPacket?.call(rewritePointerDataPacket(packet));
   }
 
+  bool _isOverlayPointerEvent(ui.PointerData datum, double realRatio) {
+    if (state.overlayHitRect == null) {
+      _overlayActiveDevices.clear();
+      return false;
+    }
+    final ui.Offset realLogical = ui.Offset(
+      datum.physicalX / realRatio,
+      datum.physicalY / realRatio,
+    );
+    switch (datum.change) {
+      case ui.PointerChange.down:
+        final bool inside = state.hitsOverlay(realLogical);
+        if (inside) {
+          _overlayActiveDevices.add(datum.device);
+        }
+        return inside;
+      case ui.PointerChange.up:
+      case ui.PointerChange.cancel:
+      case ui.PointerChange.remove:
+        if (_overlayActiveDevices.remove(datum.device)) {
+          return true;
+        }
+        return state.hitsOverlay(realLogical);
+      default:
+        if (_overlayActiveDevices.contains(datum.device)) {
+          return true;
+        }
+        return state.hitsOverlay(realLogical);
+    }
+  }
+
   /// Rewrites [packet] into simulated physical coordinates when metric
   /// simulation is active, and relabels the pointer kind when the simulation
   /// asks for one.
@@ -298,8 +331,7 @@ class PreviewPlatformDispatcher implements ui.PlatformDispatcher {
     if (wrapper == null) {
       return packet;
     }
-    final ui.PointerDeviceKind? kind =
-        state.simulation?.effectivePointerKind;
+    final ui.PointerDeviceKind? kind = state.simulation?.effectivePointerKind;
     final double realRatio = wrapper.hostView.devicePixelRatio;
     final double simulatedRatio = wrapper.devicePixelRatio;
     final FitTransform fit = state.fit;
@@ -314,6 +346,46 @@ class PreviewPlatformDispatcher implements ui.PlatformDispatcher {
       if (datum.viewId != wrapper.viewId) {
         data.add(datum);
         continue;
+      }
+      final bool overOverlay = _isOverlayPointerEvent(datum, realRatio);
+      if (overOverlay) {
+        if (datum.kind == ui.PointerDeviceKind.mouse) {
+          if (datum.change == ui.PointerChange.remove) {
+            _overlayHoveredDevices.remove(datum.device);
+          } else {
+            _overlayHoveredDevices.add(datum.device);
+          }
+        }
+        data.add(
+          rewritesGeometry
+              ? rewritePointerData(
+                  datum,
+                  fit,
+                  realRatio,
+                  simulatedRatio,
+                  unscaledScroll: true,
+                )
+              : datum,
+        );
+        continue;
+      }
+      if (_overlayHoveredDevices.remove(datum.device) &&
+          kind != null &&
+          datum.kind == ui.PointerDeviceKind.mouse &&
+          datum.change != ui.PointerChange.remove &&
+          datum.change != ui.PointerChange.add) {
+        data.add(
+          ui.PointerData(
+            viewId: datum.viewId,
+            timeStamp: datum.timeStamp,
+            change: ui.PointerChange.hover,
+            kind: ui.PointerDeviceKind.mouse,
+            device: datum.device,
+            physicalX: -100000,
+            physicalY: -100000,
+            synthesized: true,
+          ),
+        );
       }
       ui.PointerData? rewritten = rewritesGeometry
           ? rewritePointerData(datum, fit, realRatio, simulatedRatio)
