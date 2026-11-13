@@ -3,6 +3,7 @@
   "name": "iPhone 16",
   "brand": "Apple",
   "year": 2024,
+  "releaseMonth": 9,
   "platform": "iOS",
   "kind": "phone",
   "portraitSize": {

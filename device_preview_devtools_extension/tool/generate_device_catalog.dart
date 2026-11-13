@@ -23,6 +23,7 @@ const Set<String> kSpecKeys = <String>{
   'name',
   'brand',
   'year',
+  'releaseMonth',
   'platform',
   'kind',
   'portraitSize',
@@ -196,6 +197,13 @@ void _validate(Map<String, Object?> spec, String name) {
   if (year != null && (year is! int || year < 1990 || year > 2100)) {
     throw FormatException(
       '$name: "year" must be a release year between 1990 and 2100, got $year',
+    );
+  }
+  final Object? releaseMonth = spec['releaseMonth'];
+  if (releaseMonth != null &&
+      (releaseMonth is! int || releaseMonth < 1 || releaseMonth > 12)) {
+    throw FormatException(
+      '$name: "releaseMonth" must be between 1 and 12, got $releaseMonth',
     );
   }
   if (!kPlatforms.contains(spec['platform'])) {

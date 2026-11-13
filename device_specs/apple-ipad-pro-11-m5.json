@@ -3,6 +3,7 @@
   "name": "iPad Pro 11\" (M5)",
   "brand": "Apple",
   "year": 2025,
+  "releaseMonth": 10,
   "platform": "iOS",
   "kind": "tablet",
   "portraitSize": {

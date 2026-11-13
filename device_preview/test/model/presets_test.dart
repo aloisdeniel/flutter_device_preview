@@ -7,10 +7,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('DevicePresets catalog', () {
-    test('contains the 33 documented presets with unique ids', () {
-      expect(DevicePresets.all, hasLength(33));
+    test('contains the 36 documented presets with unique ids', () {
+      expect(DevicePresets.all, hasLength(36));
       final ids = DevicePresets.all.map((p) => p.id).toSet();
-      expect(ids, hasLength(33));
+      expect(ids, hasLength(36));
     });
 
     test('every device preset declares a release year', () {
@@ -21,11 +21,19 @@ void main() {
       }
     });
 
+    test('every device preset declares a release month', () {
+      for (final preset in DevicePresets.all) {
+        if (preset.kind == DeviceKind.desktop) continue;
+        expect(preset.releaseMonth, inInclusiveRange(1, 12), reason: preset.id);
+      }
+    });
+
     test('every foldable preset reports a flat fold spanning its screen', () {
       final foldables = DevicePresets.all
           .where((p) => p.kind == DeviceKind.foldable)
           .toList();
       expect(foldables.map((p) => p.id), <String>[
+        'apple-iphone-duo',
         'google-pixel-10-pro-fold',
         'samsung-galaxy-z-flip-8',
         'samsung-galaxy-z-fold-8',
@@ -405,6 +413,18 @@ void main() {
       );
       expect(DevicePresets.smallDesktopWindow.toJson().containsKey('year'),
           isFalse);
+    });
+
+    test('releaseMonth survives the round trip and defaults to null', () {
+      expect(DevicePresets.iPhone17e.toJson()['releaseMonth'], 2);
+      expect(
+        DevicePreset.fromJson(DevicePresets.iPhone17e.toJson()).releaseMonth,
+        2,
+      );
+      expect(
+        DevicePresets.smallDesktopWindow.toJson().containsKey('releaseMonth'),
+        isFalse,
+      );
     });
 
     test('fromJson throws on a non-integer year', () {

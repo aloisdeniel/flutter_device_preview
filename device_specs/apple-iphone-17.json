@@ -3,6 +3,7 @@
   "name": "iPhone 17",
   "brand": "Apple",
   "year": 2025,
+  "releaseMonth": 9,
   "platform": "iOS",
   "kind": "phone",
   "portraitSize": {

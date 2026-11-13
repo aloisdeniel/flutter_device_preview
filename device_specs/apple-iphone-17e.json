@@ -3,6 +3,7 @@
   "name": "iPhone 17e",
   "brand": "Apple",
   "year": 2026,
+  "releaseMonth": 2,
   "platform": "iOS",
   "kind": "phone",
   "portraitSize": {

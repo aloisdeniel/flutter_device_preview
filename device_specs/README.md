@@ -41,6 +41,7 @@ await DevicePreview.controller.applyPreset(preset);
 | `name` | string, **required** | Display name, e.g. `iPhone 16 Pro`. |
 | `brand` | string | Manufacturer, e.g. `Apple`. Groups and sorts the picker. |
 | `year` | integer | Release year, e.g. `2025`. Shown in the picker, which sorts each brand newest first, and matched by its search field. |
+| `releaseMonth` | integer | Release month within `year`, `1`–`12`. Orders devices released in the same year in the in-app panel's picker, newest first. |
 | `platform` | string, **required** | `TargetPlatform` name: `android`, `fuchsia`, `iOS`, `linux`, `macOS`, `windows`. |
 | `kind` | string | `phone` (default), `tablet`, `foldable`, `desktop`. |
 | `portraitSize` | `{width, height}`, **required** | Logical resolution, portrait. |

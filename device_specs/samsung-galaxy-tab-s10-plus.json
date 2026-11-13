@@ -3,6 +3,7 @@
  "name": "Galaxy Tab S10+",
  "brand": "Samsung",
  "year": 2024,
+ "releaseMonth": 10,
  "platform": "android",
  "kind": "tablet",
  "portraitSize": {

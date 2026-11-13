@@ -3,6 +3,7 @@
   "name": "iPad (10th gen)",
   "brand": "Apple",
   "year": 2022,
+  "releaseMonth": 10,
   "platform": "iOS",
   "kind": "tablet",
   "portraitSize": {
