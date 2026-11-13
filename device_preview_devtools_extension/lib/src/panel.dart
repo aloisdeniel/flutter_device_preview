@@ -452,6 +452,7 @@ class _PresetPickerDialog extends StatefulWidget {
 }
 
 class _PresetPickerDialogState extends State<_PresetPickerDialog> {
+  final _searchTextController = TextEditingController();
   String _query = '';
 
   static const _kindOrder = ['phone', 'tablet', 'foldable', 'desktop'];
@@ -461,6 +462,12 @@ class _PresetPickerDialogState extends State<_PresetPickerDialog> {
     'foldable': 'Foldables',
     'desktop': 'Desktop windows',
   };
+
+  @override
+  void dispose() {
+    _searchTextController.dispose();
+    super.dispose();
+  }
 
   bool _matches(PresetView p, String query) =>
       query.isEmpty ||
@@ -539,6 +546,7 @@ class _PresetPickerDialogState extends State<_PresetPickerDialog> {
               padding: const EdgeInsets.all(defaultSpacing),
               child: DevToolsClearableTextField(
                 key: const Key('device_preview_preset_search'),
+                controller: _searchTextController,
                 labelText: 'Search devices',
                 prefixIcon: const Icon(Icons.search),
                 autofocus: true,

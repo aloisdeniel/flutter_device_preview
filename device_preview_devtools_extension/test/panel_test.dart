@@ -106,6 +106,25 @@ void main() {
       expect(find.byType(Dialog), findsNothing);
     });
 
+    testWidgets('preset picker search keeps the typed text', (tester) async {
+      await pumpPanel(tester);
+      await tester
+          .tap(find.byKey(const Key('device_preview_preset_picker_button')));
+      await tester.pumpAndSettle();
+
+      final search = find.byKey(const Key('device_preview_preset_search'));
+      await tester.enterText(search, 'test');
+      await tester.pumpAndSettle();
+      // A rebuild from the panel controller must not wipe the field either.
+      await controller.selectPreset(const PresetView(testPhonePresetJson));
+      await tester.pumpAndSettle();
+
+      final field = tester.widget<TextField>(
+        find.descendant(of: search, matching: find.byType(TextField)),
+      );
+      expect(field.controller!.text, 'test');
+    });
+
     testWidgets('preset picker shows and searches the release year',
         (tester) async {
       await pumpPanel(tester);
