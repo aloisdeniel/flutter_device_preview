@@ -452,9 +452,7 @@ class _PresetPickerDialog extends StatefulWidget {
 }
 
 class _PresetPickerDialogState extends State<_PresetPickerDialog> {
-  // Owned here: without a controller, DevToolsClearableTextField creates an
-  // empty one on every rebuild, which wipes the field after each keystroke.
-  final _search = TextEditingController();
+  final _searchTextController = TextEditingController();
   String _query = '';
 
   static const _kindOrder = ['phone', 'tablet', 'foldable', 'desktop'];
@@ -467,7 +465,7 @@ class _PresetPickerDialogState extends State<_PresetPickerDialog> {
 
   @override
   void dispose() {
-    _search.dispose();
+    _searchTextController.dispose();
     super.dispose();
   }
 
@@ -548,7 +546,7 @@ class _PresetPickerDialogState extends State<_PresetPickerDialog> {
               padding: const EdgeInsets.all(defaultSpacing),
               child: DevToolsClearableTextField(
                 key: const Key('device_preview_preset_search'),
-                controller: _search,
+                controller: _searchTextController,
                 labelText: 'Search devices',
                 prefixIcon: const Icon(Icons.search),
                 autofocus: true,
