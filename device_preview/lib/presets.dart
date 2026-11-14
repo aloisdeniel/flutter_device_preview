@@ -44,6 +44,7 @@ class DevicePreset {
     required this.devicePixelRatio,
     this.brand,
     this.year,
+    this.releaseMonth,
     this.frame,
     this.systemUi,
     this.portraitPadding = EdgeInsets.zero,
@@ -88,6 +89,9 @@ class DevicePreset {
           ? null
           : decodeString(json['brand'], 'brand'),
       year: json['year'] == null ? null : decodeInt(json['year'], 'year'),
+      releaseMonth: json['releaseMonth'] == null
+          ? null
+          : decodeInt(json['releaseMonth'], 'releaseMonth'),
       platform: platform,
       frame: json['frame'] == null
           ? null
@@ -164,6 +168,12 @@ class DevicePreset {
   /// DevTools picker shows it so that a catalog spanning several generations
   /// can be read at a glance.
   final int? year;
+
+  /// The month of [year] the device was released, from 1 to 12. Null when
+  /// unspecified.
+  ///
+  /// Orders devices released in the same year in the in-app picker.
+  final int? releaseMonth;
 
   /// The platform of the device.
   final TargetPlatform platform;
@@ -336,6 +346,7 @@ class DevicePreset {
     'name': name,
     if (brand != null) 'brand': brand,
     if (year != null) 'year': year,
+    if (releaseMonth != null) 'releaseMonth': releaseMonth,
     'platform': platform.name,
     'kind': kind.name,
     'portraitSize': encodeSize(portraitSize),
@@ -370,6 +381,7 @@ class DevicePreset {
         other.name == name &&
         other.brand == brand &&
         other.year == year &&
+        other.releaseMonth == releaseMonth &&
         other.platform == platform &&
         other.frame == frame &&
         other.systemUi == systemUi &&
@@ -392,6 +404,7 @@ class DevicePreset {
     name,
     brand,
     year,
+    releaseMonth,
     platform,
     frame,
     systemUi,

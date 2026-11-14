@@ -3,6 +3,7 @@
  "name": "Galaxy Tab S11",
  "brand": "Samsung",
  "year": 2025,
+ "releaseMonth": 9,
  "platform": "android",
  "kind": "tablet",
  "portraitSize": {

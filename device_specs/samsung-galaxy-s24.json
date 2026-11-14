@@ -3,6 +3,7 @@
   "name": "Galaxy S24",
   "brand": "Samsung",
   "year": 2024,
+  "releaseMonth": 1,
   "platform": "android",
   "kind": "phone",
   "portraitSize": {

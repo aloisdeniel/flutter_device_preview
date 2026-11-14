@@ -32,6 +32,7 @@ class DeviceSimulation {
     this.orientation = Orientation.portrait,
     this.screenSize,
     this.frame,
+    this.showFrame = true,
     this.systemUi,
     this.showSystemUi = true,
     this.touchInput,
@@ -68,6 +69,9 @@ class DeviceSimulation {
       frame: json['frame'] == null
           ? null
           : DeviceFrame.fromJson(decodeMap(json['frame'], 'frame')),
+      showFrame: json['showFrame'] == null
+          ? true
+          : decodeBool(json['showFrame'], 'showFrame'),
       systemUi: json['systemUi'] == null
           ? null
           : SystemUiSimulation.fromJson(decodeMap(json['systemUi'], 'systemUi')),
@@ -164,6 +168,12 @@ class DeviceSimulation {
   /// frame is always described in portrait and rotated with [orientation], so
   /// rotating a simulation leaves this field untouched.
   final DeviceFrame? frame;
+
+  /// Whether the body artwork of [frame] is drawn. True by default.
+  ///
+  /// The screen keeps its outline either way, so hiding the body shows the
+  /// device's screen shape alone, scaled into the room the body used.
+  final bool showFrame;
 
   /// Decorative system UI — status bar, gesture pill — drawn over the app.
   ///
@@ -302,8 +312,8 @@ class DeviceSimulation {
   /// The rectangle the simulation paints into, in simulated logical pixels.
   ///
   /// The screen rectangle, grown to include the device body when a [frame] is
-  /// simulated — the body starts at negative coordinates, so this rectangle
-  /// usually does too. The binding fits *this* rectangle inside the real
+  /// simulated and shown — the body starts at negative coordinates, so this
+  /// rectangle usually does too. The binding fits *this* rectangle inside the real
   /// window, which is what keeps a device body fully visible.
   ///
   /// [ui.Rect.zero] when no metric simulation is active.
@@ -314,7 +324,7 @@ class DeviceSimulation {
     }
     final ui.Rect screen = ui.Offset.zero & size;
     final DeviceFrame? deviceFrame = frame;
-    if (deviceFrame == null || deviceFrame.size.isEmpty) {
+    if (deviceFrame == null || deviceFrame.size.isEmpty || !showFrame) {
       return screen;
     }
     return screen.expandToInclude(deviceFrame.bodyBounds(size, orientation));
@@ -336,6 +346,7 @@ class DeviceSimulation {
     Orientation? orientation,
     Object? screenSize = _unset,
     Object? frame = _unset,
+    bool? showFrame,
     Object? systemUi = _unset,
     bool? showSystemUi,
     Object? touchInput = _unset,
@@ -362,6 +373,7 @@ class DeviceSimulation {
           ? this.screenSize
           : screenSize as ui.Size?,
       frame: identical(frame, _unset) ? this.frame : frame as DeviceFrame?,
+      showFrame: showFrame ?? this.showFrame,
       systemUi: identical(systemUi, _unset)
           ? this.systemUi
           : systemUi as SystemUiSimulation?,
@@ -422,6 +434,7 @@ class DeviceSimulation {
       if (frame != null) 'frame': frame!.toJson(),
       if (systemUi != null) 'systemUi': systemUi!.toJson(),
       // Absent means "shown": only the non-default travels.
+      if (!showFrame) 'showFrame': false,
       if (!showSystemUi) 'showSystemUi': false,
       if (touchInput != null) 'touchInput': touchInput,
       if (deviceKind != null) 'deviceKind': deviceKind!.name,
@@ -456,6 +469,7 @@ class DeviceSimulation {
         other.orientation == orientation &&
         other.screenSize == screenSize &&
         other.frame == frame &&
+        other.showFrame == showFrame &&
         other.systemUi == systemUi &&
         other.showSystemUi == showSystemUi &&
         other.touchInput == touchInput &&
@@ -475,11 +489,12 @@ class DeviceSimulation {
   }
 
   @override
-  int get hashCode => Object.hash(
+  int get hashCode => Object.hashAll(<Object?>[
     presetId,
     orientation,
     screenSize,
     frame,
+    showFrame,
     systemUi,
     showSystemUi,
     touchInput,
@@ -496,7 +511,7 @@ class DeviceSimulation {
     accessibility,
     alwaysUse24HourFormat,
     targetPlatform,
-  );
+  ]);
 
   @override
   String toString() {
@@ -505,6 +520,7 @@ class DeviceSimulation {
       'orientation: ${orientation.name}',
       if (screenSize != null) 'screenSize: $screenSize',
       if (frame != null) 'frame: $frame',
+      if (!showFrame) 'showFrame: false',
       if (systemUi != null) 'systemUi: $systemUi',
       if (!showSystemUi) 'showSystemUi: false',
       if (touchInput != null) 'touchInput: $touchInput',

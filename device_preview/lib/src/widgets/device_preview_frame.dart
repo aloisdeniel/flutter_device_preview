@@ -139,8 +139,7 @@ class RenderDevicePreviewFrame extends RenderProxyBox {
 
   DeviceFramePainter? _painter;
   SystemUiPainter? _systemUiPainter;
-  final LayerHandle<ClipPathLayer> _clipLayer =
-      LayerHandle<ClipPathLayer>();
+  final LayerHandle<ClipPathLayer> _clipLayer = LayerHandle<ClipPathLayer>();
 
   @override
   void attach(PipelineOwner owner) {
@@ -249,9 +248,111 @@ class RenderDevicePreviewFrame extends RenderProxyBox {
     canvas.restore();
   }
 
-  /// Paints the app and, over it, the simulated keyboard and system UI.
+  /// Paints crease / hinge shading across any active half-opened fold display
+  /// feature (tabletop / book posture). Nothing is drawn when fully open.
+  void _paintFoldCrease(PaintingContext context, Offset offset) {
+    final DeviceSimulation? simulation = _simulation.value;
+    final List<SimulatedDisplayFeature>? features = simulation?.displayFeatures;
+    if (simulation == null ||
+        features == null ||
+        features.isEmpty ||
+        !simulation.showSystemUi) {
+      return;
+    }
+    final Canvas canvas = context.canvas;
+    const double bandRadius = 18;
+    for (final SimulatedDisplayFeature feature in features) {
+      if ((feature.type != ui.DisplayFeatureType.fold &&
+              feature.type != ui.DisplayFeatureType.hinge) ||
+          feature.state != ui.DisplayFeatureState.postureHalfOpened) {
+        continue;
+      }
+      final Rect b = feature.bounds;
+      final bool isVertical = b.height >= b.width;
+      canvas.save();
+      canvas.translate(offset.dx, offset.dy);
+      if (isVertical) {
+        final double cx = b.center.dx;
+        final Rect band = Rect.fromLTRB(
+          cx - bandRadius,
+          0,
+          cx + bandRadius,
+          size.height,
+        );
+        canvas.drawRect(
+          band,
+          Paint()
+            ..shader = ui.Gradient.linear(
+              band.centerLeft,
+              band.centerRight,
+              const <Color>[
+                Color(0x00000000),
+                Color(0x38000000),
+                Color(0x00000000),
+              ],
+              const <double>[0.0, 0.5, 1.0],
+            ),
+        );
+        canvas.drawLine(
+          Offset(cx, 0),
+          Offset(cx, size.height),
+          Paint()
+            ..color = const Color(0x55000000)
+            ..strokeWidth = 1.5,
+        );
+        canvas.drawLine(
+          Offset(cx + 1, 0),
+          Offset(cx + 1, size.height),
+          Paint()
+            ..color = const Color(0x33FFFFFF)
+            ..strokeWidth = 1,
+        );
+      } else {
+        final double cy = b.center.dy;
+        final Rect band = Rect.fromLTRB(
+          0,
+          cy - bandRadius,
+          size.width,
+          cy + bandRadius,
+        );
+        canvas.drawRect(
+          band,
+          Paint()
+            ..shader = ui.Gradient.linear(
+              band.topCenter,
+              band.bottomCenter,
+              const <Color>[
+                Color(0x00000000),
+                Color(0x38000000),
+                Color(0x00000000),
+              ],
+              const <double>[0.0, 0.5, 1.0],
+            ),
+        );
+        canvas.drawLine(
+          Offset(0, cy),
+          Offset(size.width, cy),
+          Paint()
+            ..color = const Color(0x55000000)
+            ..strokeWidth = 1.5,
+        );
+        canvas.drawLine(
+          Offset(0, cy + 1),
+          Offset(size.width, cy + 1),
+          Paint()
+            ..color = const Color(0x33FFFFFF)
+            ..strokeWidth = 1,
+        );
+      }
+      canvas.restore();
+    }
+  }
+
+  /// Paints the app and, over it, the fold crease, simulated keyboard and
+  /// system UI.
   void _paintContents(PaintingContext context, Offset offset) {
     super.paint(context, offset);
+    _paintFoldCrease(context, offset);
     _paintKeyboard(context, offset);
     _paintSystemUi(context, offset);
   }
@@ -268,7 +369,7 @@ class RenderDevicePreviewFrame extends RenderProxyBox {
         _simulation.value?.orientation ?? Orientation.portrait;
     final ui.Size screenSize = size;
 
-    if (painter.body != null) {
+    if (painter.body != null && (_simulation.value?.showFrame ?? true)) {
       final Canvas canvas = context.canvas;
       canvas.save();
       canvas.translate(offset.dx, offset.dy);

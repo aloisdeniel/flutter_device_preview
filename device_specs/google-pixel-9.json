@@ -3,6 +3,7 @@
   "name": "Pixel 9",
   "brand": "Google",
   "year": 2024,
+  "releaseMonth": 8,
   "platform": "android",
   "kind": "phone",
   "portraitSize": {

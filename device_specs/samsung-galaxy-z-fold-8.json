@@ -3,6 +3,7 @@
  "name": "Galaxy Z Fold8",
  "brand": "Samsung",
  "year": 2026,
+ "releaseMonth": 7,
  "platform": "android",
  "kind": "foldable",
  "portraitSize": {
